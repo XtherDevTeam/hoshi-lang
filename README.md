@@ -1,6 +1,6 @@
 ## Goals
 
-- [ ] Object-oriented programming (inherit, up-case, down-case, interface)
+- [ ] Object-oriented programming (inherit, up-cast, down-cast, interface)
 - [ ] Closure support
 - [ ] Multi-threading support
 - [ ] Generic programming (template support)
