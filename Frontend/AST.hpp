@@ -20,6 +20,8 @@ namespace Hoshi {
             Literals,
             IdentifierWithTypeDescriptor,
             ArgumentsDecl,
+            TemplateArguments,
+            IdentifierWithTemplateArguments,
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;

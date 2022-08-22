@@ -6,16 +6,39 @@
 Identifier ::= TokIdentifier
 ```
 
+### StaticMemberAccessExpression
+
+```bnf
+StaticMemberAccessExpression ::= Identifier { TokStaticMemberAccessSign FunctionInvokingExpression }
+                               | Identifier { TokStaticMemberAccessSign StaticMemberAccessExpression }
+```
+
 ### Literals
 
 ```bnf
 Literals ::= TokString | TokInteger | TokDecimal | TokBoolean | TokCharacter
 ```
 
+### TemplateArguments
+
+```bnf
+TemplateArguments ::= TokLessThan { { StaticMemberAccessExpressionWithTemplateArguments TokColon } StaticMemberAccessExpressionWithTemplateArguments } TokMoreThan
+```
+
+### StaticMemberAccessExpressionWithTemplateArguments
+
+```bnf
+StaticMemberAccessExpressionWithTemplateArguments ::= StaticMemberAccessExpression { TemplateArguments }
+```
+
+```bnf
+TypeDescriptorParser ::= StaticMemberAccessExpressionWithTemplateArguments
+```
+
 ### IdentifierWithTypeDescriptor
 
 ```bnf
-IdentifierWithTypeDescriptor ::= TokIdentifier ":" TokIdentifier 
+IdentifierWithTypeDescriptor ::= TokIdentifier ":" TypeDescriptorParser 
 ```
 
 ### ArgumentsDecl
@@ -33,14 +56,15 @@ Arguments ::= { { Expression TokColon } Expression}
 ### FunctionInvokingExpression
 
 ```bnf
-FunctionInvokingExpression ::= TokIdentifier TokLeftPartheses Arguments TokRightParentheses
+FunctionInvokingExpression ::= TokIdentifierWithTemplateArguments { TokLeftPartheses Arguments TokRightParentheses }
 ```
 
 ### MemberExpression
 
 ```bnf
 MemberExpression ::= Identifier
-                   | Identifier "." { FunctionInvokingExpression }
+                   | Identifier { "." FunctionInvokingExpression }
+                   | Identifier { "." MemberExpression }
 ```
 
 ### SingleExpression
@@ -49,10 +73,10 @@ MemberExpression ::= Identifier
 SingleExpression ::= [TokPlus | TokMinus | TokBinaryNot | TokIncrementSign | TokDecrementSign] (MemberExpression | Literals) 
 ```
 
-### MultipleExpression
+### MultiplicationExpression
 
 ```bnf
-MultipleExpression ::= SingleExpression { (TokAsterisk | TokSlash | PercentSign) MultipleExpression }
+MultiplicationExpression ::= SingleExpression { (TokAsterisk | TokSlash | PercentSign) MultipleExpression }
 ```
 
 ### AdditionExpression

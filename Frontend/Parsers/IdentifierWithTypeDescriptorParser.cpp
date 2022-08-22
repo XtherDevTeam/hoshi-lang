@@ -4,6 +4,7 @@
 
 #include "IdentifierWithTypeDescriptorParser.hpp"
 #include "IdentifierParser.hpp"
+#include "TypeDescriptorParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -18,7 +19,7 @@ namespace Hoshi {
             if (L.LastToken.Kind != Lexer::TokenKind::TypeDescriptorSign)
                 return {};
             L.Scan();
-            AST Id2 = IdentifierParser(L).Parse();
+            AST Id2 = TypeDescriptorParser(L).Parse();
             if (Id2.IsNotMatchNode())
                 Throw(L"IdentifierWithTypeDescriptorParser", L"Expected a type descriptor");
             else
