@@ -1,5 +1,5 @@
 //
-// Created by p0010 on 22-8-21.
+// Created by Jerry Chou on 22-8-21.
 //
 
 #include "ParserBase.hpp"
@@ -19,6 +19,12 @@ namespace Hoshi {
             L.Line = Line;
             L.Column = Col;
             L.LastToken = LT;
+        }
+
+        void ParserBase::UpdateBackup() {
+            Line = L.Line;
+            Col = L.Column;
+            LT = L.LastToken;
         }
     } // Hoshi
 } // Parser

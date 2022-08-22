@@ -13,34 +13,31 @@ namespace Hoshi {
 
         Hoshi::AST TemplateArgumentsParser::Parse() {
             if (L.LastToken.Kind != Lexer::TokenKind::LessThan) {
-                Rollback();
                 return {};
             }
             L.Scan();
-
             XArray<AST> ASTs;
-            AST Temp;
-            if ((Temp = StaticMemberAccessExpressionParser(L).Parse()).IsNotMatchNode()) {
-                Throw(L"TemplateArgumentsParser", L"Expected a StaticMemberAccessExpression");
-            }
+            AST Temp = StaticMemberAccessExpressionParser(L).Parse();
             while (!Temp.IsNotMatchNode()) {
-                if (L.LastToken.Kind == Lexer::TokenKind::MoreThan) {
-                    break;
-                }
-                else if (L.LastToken.Kind == Lexer::TokenKind::Colon) {
-                    L.Scan();
-                } else {
-                    Throw(L"TemplateArgumentsParser", L"Expected a `,`");
-                    return {};
-                }
                 ASTs.push_back(Temp);
-                Temp = StaticMemberAccessExpressionParser(L).Parse();
+                switch (L.LastToken.Kind) {
+                    case Lexer::TokenKind::Colon: {
+                        L.Scan();
+                        Temp = StaticMemberAccessExpressionParser(L).Parse();
+                        break;
+                    }
+                    case Lexer::TokenKind::MoreThan: {
+                        L.Scan();
+                        return {AST::TreeType::TemplateArguments, ASTs};
+                    }
+                    default: {
+                        Throw(L"TemplateArgumentsParser", L"Unexpected token");
+                        return {};
+                    }
+                }
             }
-            if (L.LastToken.Kind != Lexer::TokenKind::MoreThan) {
-                Throw(L"TemplateArgumentsParser", L"Expected a `>`");
-            }
-            L.Scan();
-            return {AST::TreeType::TemplateArguments, ASTs};
+            Throw(L"TemplateArgumentsParser", L"Expected a `>` to close a template arguments list");
+            return {};
         }
     } // Hoshi
 } // Parser

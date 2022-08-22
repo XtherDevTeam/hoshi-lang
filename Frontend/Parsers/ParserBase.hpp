@@ -1,5 +1,5 @@
 //
-// Created by p0010 on 22-8-21.
+// Created by Jerry Chou on 22-8-21.
 //
 
 #ifndef HOSHI_LANG_PARSERBASE_HPP
@@ -18,6 +18,8 @@ namespace Hoshi {
             XIndexType Line, Col;
 
             void Throw(const XString &ParserName, const XString &Reason) const;
+
+            void UpdateBackup();
 
             void Rollback();
         public:

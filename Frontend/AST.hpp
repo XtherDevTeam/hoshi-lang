@@ -14,14 +14,27 @@ namespace Hoshi {
     public:
         enum class TreeType : int {
 /* AST output AST kinds */
-/* Primary */
+/* PrimaryParser */
             NotMatch,
             Identifier,
             Literals,
-            IdentifierWithTypeDescriptor,
-            ArgumentsDecl,
             TemplateArguments,
+            FunctionInvokeExpression,
+            MemberExpression,
+            StaticMemberAccessExpression,
+            Operator,
+            SingleExpression,
+            MultiplicationExpression,
+            BinaryMoveExpression,
+            AdditionExpression,
+            LogicComparingExpression,
+            LogicEqualExpression,
+            BinaryExpression,
+            BooleanExpression,
+            AsExpression,
             IdentifierWithTemplateArguments,
+            AssignmentExpression,
+            Arguments,
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;

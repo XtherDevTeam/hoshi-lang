@@ -2,26 +2,25 @@
 // Created by Jerry Chou on 22-8-22.
 //
 
-#include "LogicComparingExpressionParser.hpp"
-#include "BinaryMoveExpressionParser.hpp"
+#include "BooleanExpressionParser.hpp"
+#include "BinaryExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
-        LogicComparingExpressionParser::LogicComparingExpressionParser(Lexer &L) : ParserBase(L) {
+        BooleanExpressionParser::BooleanExpressionParser(Lexer &L) : ParserBase(L) {
 
         }
 
-        Hoshi::AST LogicComparingExpressionParser::Parse() {
-            AST Single = BinaryMoveExpressionParser(L).Parse();
+        Hoshi::AST BooleanExpressionParser::Parse() {
+            AST Single = BinaryExpressionParser(L).Parse();
             if (Single.IsNotMatchNode())
                 return {};
             for (;;) {
                 AST Operator;
                 switch (L.LastToken.Kind) {
-                    case Lexer::TokenKind::LessThan:
-                    case Lexer::TokenKind::MoreThan:
-                    case Lexer::TokenKind::MoreThanOrEqual:
-                    case Lexer::TokenKind::LessThanOrEqual:{
+                    case Lexer::TokenKind::BinaryAnd:
+                    case Lexer::TokenKind::BinaryXOR:
+                    case Lexer::TokenKind::BinaryOr:{
                         Operator = {AST::TreeType::Operator, L.LastToken};
                         L.Scan();
                         break;
@@ -40,12 +39,12 @@ namespace Hoshi {
                 }
                 if (Operator.IsNotMatchNode())
                     break;
-                AST RightHandSide = BinaryMoveExpressionParser(L).Parse();
+                AST RightHandSide = BinaryExpressionParser(L).Parse();
                 if (RightHandSide.IsNotMatchNode()) {
-                    Throw (L"LogicComparingExpressionParser", L"Expected a right hand side node");
+                    Throw (L"BooleanExpressionParser", L"Expected a right hand side node");
                     return {};
                 }
-                Single = {AST::TreeType::LogicComparingExpression, {Single, Operator, RightHandSide}};
+                Single = {AST::TreeType::BooleanExpression, {Single, Operator, RightHandSide}};
             }
             return Single;
         }

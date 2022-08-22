@@ -1,8 +1,10 @@
 //
-// Created by p0010 on 22-8-22.
+// Created by Jerry Chou on 22-8-22.
 //
 
 #include "MemberExpressionParser.hpp"
+#include "IdentifierParser.hpp"
+#include "FunctionInvokeExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -11,7 +13,19 @@ namespace Hoshi {
         }
 
         Hoshi::AST MemberExpressionParser::Parse() {
-            return Hoshi::AST();
+            AST Current = IdentifierParser(L).Parse();
+            while (!Current.IsNotMatchNode()) {
+                if (L.LastToken.Kind == Lexer::TokenKind::Dot) {
+                    L.Scan();
+                    Current = {AST::TreeType::MemberExpression, {Current, IdentifierParser(L).Parse()}};
+                    if (Current.Subtrees[1].IsNotMatchNode()) {
+                        Throw(L"MemberExpressionParser", L"Expected a Identifier");
+                    }
+                } else {
+                    break;
+                }
+            }
+            return Current;
         }
     } // Hoshi
 } // Parser

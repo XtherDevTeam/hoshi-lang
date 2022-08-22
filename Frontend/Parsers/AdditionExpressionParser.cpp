@@ -1,8 +1,9 @@
 //
-// Created by p0010 on 22-8-22.
+// Created by Jerry Chou on 22-8-22.
 //
 
 #include "AdditionExpressionParser.hpp"
+#include "MultiplicationExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -11,7 +12,32 @@ namespace Hoshi {
         }
 
         Hoshi::AST AdditionExpressionParser::Parse() {
-            return Hoshi::AST();
+            AST Single = MultiplicationExpressionParser(L).Parse();
+            if (Single.IsNotMatchNode())
+                return {};
+            for (;;) {
+                AST Operator;
+                switch (L.LastToken.Kind) {
+                    case Lexer::TokenKind::Plus:
+                    case Lexer::TokenKind::Minus: {
+                        Operator = {AST::TreeType::Operator, L.LastToken};
+                        L.Scan();
+                        break;
+                    }
+                    default: {
+                        return Single;
+                    }
+                }
+                if (Operator.IsNotMatchNode())
+                    break;
+                AST RightHandSide = MultiplicationExpressionParser(L).Parse();
+                if (RightHandSide.IsNotMatchNode()) {
+                    Throw (L"MultiplicationExpressionParser", L"Expected a right hand side node");
+                    return {};
+                }
+                Single = {AST::TreeType::AdditionExpression, {Single, Operator, RightHandSide}};
+            }
+            return Single;
         }
     } // Hoshi
 } // Parser

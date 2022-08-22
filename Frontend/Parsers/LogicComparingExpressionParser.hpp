@@ -1,5 +1,5 @@
 //
-// Created by p0010 on 22-8-22.
+// Created by Jerry Chou on 22-8-22.
 //
 
 #ifndef HOSHI_LANG_LOGICCOMPARINGEXPRESSIONPARSER_HPP
@@ -12,7 +12,7 @@ namespace Hoshi {
 
         class LogicComparingExpressionParser : ParserBase {
         public:
-            explicit LogicComparingExpressionParser(Hoshi::Lexer &L);
+            explicit LogicComparingExpressionParser(Lexer &L);
 
             Hoshi::AST Parse() override;
         };

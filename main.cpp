@@ -2,6 +2,8 @@
 #include <fstream>
 #include <chrono>
 #include "Frontend/Lexer.hpp"
+#include "Frontend/AST.hpp"
+#include "Frontend/Parsers/AsExpressionParser.hpp"
 
 int main() {
     std::wstring S;
@@ -12,10 +14,7 @@ int main() {
         S.append(Hoshi::string2wstring(f));
     }
     Hoshi::Lexer Lex(S);
-    Hoshi::XIndexType ReadTokenCount = 0;
-    while (Lex.Scan().Kind != Hoshi::Lexer::TokenKind::EoF) {
-        ReadTokenCount++;
-    }
-    std::cout << "Summary: Token count : " << ReadTokenCount << " File size " << S.length() << std::endl;
+    Lex.Scan();
+    Hoshi::AST Tree = Hoshi::Parser::AsExpressionParser(Lex).Parse();
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by p0010 on 22-8-21.
+// Created by Jerry Chou on 22-8-22.
 //
 
 #include "LiteralsParser.hpp"
@@ -13,16 +13,16 @@ namespace Hoshi {
         Hoshi::AST LiteralsParser::Parse() {
             switch (L.LastToken.Kind) {
                 case Lexer::TokenKind::Integer:
-                case Lexer::TokenKind::Decimal:
                 case Lexer::TokenKind::Boolean:
+                case Lexer::TokenKind::Decimal:
                 case Lexer::TokenKind::String:
                 case Lexer::TokenKind::Character: {
-                    AST Res {AST::TreeType::Literals, L.LastToken};
+                    AST Res{AST::TreeType::Literals, L.LastToken};
                     L.Scan();
                     return Res;
                 }
                 default: {
-                    Throw(L"LiteralsParser", L"Expected a literal");
+                    Rollback();
                     return {};
                 }
             }

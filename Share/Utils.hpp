@@ -53,21 +53,4 @@ namespace Hoshi {
     XArray<XString> SplitStrings(const XString &Str, XCharacter Delim);
 } // Hoshi
 
-#define builtin_hash_code_main (Hoshi::XIndexType)246720401
-#define builtin_hash_code___instruction_add__ (Hoshi::XIndexType)3311649630992437956
-#define builtin_hash_code___instruction_sub__ (Hoshi::XIndexType)3311649636331619759
-#define builtin_hash_code___instruction_mul__ (Hoshi::XIndexType)3311649634564791843
-#define builtin_hash_code___instruction_div__ (Hoshi::XIndexType)3311649631887487072
-#define builtin_hash_code___instruction_logic_and__ (Hoshi::XIndexType)14644660971655002197
-#define builtin_hash_code___instruction_logic_or__ (Hoshi::XIndexType)16817227887084709089
-#define builtin_hash_code___instruction_logic_great_equal__ (Hoshi::XIndexType)13125448305185876008
-#define builtin_hash_code___instruction_logic_less_equal__ (Hoshi::XIndexType)18431344767761304264
-#define builtin_hash_code___instruction_logic_great__ (Hoshi::XIndexType)1338563774043296927
-#define builtin_hash_code___instruction_logic_less__ (Hoshi::XIndexType)1136736955235993663
-#define builtin_hash_code___instruction_indexOf__ (Hoshi::XIndexType)15638769911280034172
-#define builtin_hash_code_super (Hoshi::XIndexType)34132452939
-#define builtin_hash_code___native_library_identifier__ (Hoshi::XIndexType)5769486266365919877
-#define builtin_hash_code___HoshiRuntimeEntry__ (Hoshi::XIndexType)14066748763523684209
-#define builtin_has_code_before_destruct (Hoshi::XIndexType)9950176563888314114
-
 #endif //XSCRIPT2_UTILS_HPP

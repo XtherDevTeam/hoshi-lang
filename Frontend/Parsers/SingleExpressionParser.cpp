@@ -1,8 +1,9 @@
 //
-// Created by p0010 on 22-8-22.
+// Created by Jerry Chou on 22-8-22.
 //
 
 #include "SingleExpressionParser.hpp"
+#include "PrimaryParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -11,7 +12,25 @@ namespace Hoshi {
         }
 
         Hoshi::AST SingleExpressionParser::Parse() {
-            return Hoshi::AST();
+            AST Operator;
+            switch (L.LastToken.Kind) {
+                case Lexer::TokenKind::Plus:
+                case Lexer::TokenKind::Minus:
+                case Lexer::TokenKind::BinaryNot:
+                case Lexer::TokenKind::IncrementSign:
+                case Lexer::TokenKind::DecrementSign: {
+                    Operator = {AST::TreeType::Operator, L.LastToken};
+                    L.Scan();
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+            AST Identifier = PrimaryParser(L).Parse();
+            if (Operator.IsNotMatchNode())
+                return Identifier;
+            return {AST::TreeType::SingleExpression, {Operator, Identifier}};
         }
     } // Hoshi
 } // Parser

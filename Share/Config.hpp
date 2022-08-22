@@ -25,32 +25,6 @@ namespace Hoshi {
     template<typename T, typename T1> using XMap = std::unordered_map<T, T1>;
 
     using XHeapIndexType = XIndexType;
-
-    constexpr XIndexType MaxThreadCount = 64;
-
-    /**
-     * Allocate 2097152 elements when heap is created.
-     */
-    constexpr XIndexType EnvHeapDataAllocateSize = 2097152;
-
-    /**
-     * When there are 256 elements in heap, start gc process.
-     */
-    constexpr XIndexType EnvHeapGCStartCondition = 256;
-
-#ifdef XSCRIPT2_COMMIT_VERSION
-    constexpr const wchar_t* CommitVersion = XSCRIPT2_COMMIT_VERSION;
-#endif
 } // Hoshi
-
-#if defined(_WIN32)
-#define DynamicLibraryPostfix L".dll"
-#elif defined(__linux__)
-#define DynamicLibraryPostfix L".so"
-#elif defined(__APPLE__)
-#define DynamicLibraryPostfix L".dylib"
-#else
-#define DynamicLibraryPostfix L""
-#endif
 
 #endif //XSCRIPT2_CONFIG_HPP

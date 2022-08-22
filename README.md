@@ -1,9 +1,9 @@
 ## Goals
 
-- Object-oriented programming (inherit, up-case, down-case, interface)
-- Closure support
-- Multi-threading support
-- Generic programming (template support)
+- [ ] Object-oriented programming (inherit, up-case, down-case, interface)
+- [ ] Closure support
+- [ ] Multi-threading support
+- [ ] Generic programming (template support)
 
 ## Syntax
 
@@ -12,7 +12,7 @@ use Hoshi::IO;
 
 func main () -> void {
     IO.println("Hello, Hoshi.");
-	return;
+    return;
 }
 ```
 
@@ -40,7 +40,7 @@ func main () -> void {
     var i : int = 128;
     var j : uint = i as uint;
     IO.println(Str.fromInt(i));
-	return;
+    return;
 }
 ```
 
@@ -53,6 +53,9 @@ String literals are read-only in hoshi-lang. They are `rstr` type. String litera
 Different expressions will have different priority.
 
 - MemberExpressions : `.`
+- StaticMemberAccessExpressions : `::`
+- FunctionInvokingExpressions : `()`
+- IndexExpressions : `[]`
 - SingleExpressions : `+() !() -() ~() ++ --`
 - MultipleExpressions : `* / %`
 - AdditionExpressions : `+ -`
@@ -61,8 +64,6 @@ Different expressions will have different priority.
 - LogicEqualExpressions : `== !=`
 - BinaryExpressions : `& ^ |`
 - BooleanExpressions : `&& ||`
-- IndexExpressions : `[]`
-- FunctionInvokingExpressions : `()`
 - AsExpression : `as`
 - AssignmentExpressions : `= += -= &= /= %= &= |= ^= ~= <<= >>=`
 
@@ -110,7 +111,7 @@ func main () -> void {
     // compiler will push the object to heap without `new` expression
     var s : Foo = Foo();
     s.say();
-	return;
+    return;
 }
 ```
 
@@ -153,4 +154,6 @@ class Foo {
     }
 }
 ```
+
+### Exceptions
 

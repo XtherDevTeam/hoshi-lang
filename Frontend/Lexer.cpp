@@ -115,10 +115,10 @@ namespace Hoshi {
         else if (String[Position] == L':') {
             NextCharacter();
             if (String[Position] == L':') {
-                NextCharacter();   // Read after '+'
-                LastToken = {TokenKind::TypeDescriptorSign, L":", Line, Column};
-            } else {
+                NextCharacter();
                 LastToken = {TokenKind::StaticMemberAccessSign, L"::", Line, Column};
+            } else {
+                LastToken = {TokenKind::TypeDescriptorSign, L":", Line, Column};
             }
         }
             /* Starts with + */
