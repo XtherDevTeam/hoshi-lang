@@ -21,13 +21,14 @@ namespace Hoshi {
             L.Scan();
 
             Tree = MemberExpressionParser(L).Parse();
-            while (Tree.Type != AST::TreeType::MemberExpression) {
+            while (!Tree.IsNotMatchNode() and Tree.Type != AST::TreeType::MemberExpression) {
                 if (L.LastToken.Kind == Lexer::TokenKind::StaticMemberAccessSign) {
                     L.Scan();
                     if (!Ret.IsNotMatchNode())
                         Ret = {AST::TreeType::StaticMemberAccessExpression, {Ret, Tree}};
                     Tree = MemberExpressionParser(L).Parse();
                 } else {
+                    Ret = {AST::TreeType::StaticMemberAccessExpression, {Ret, Tree}};
                     return Ret;
                 }
             }

@@ -36,6 +36,10 @@ namespace Hoshi {
                     }
                 }
             }
+            if (L.LastToken.Kind == Lexer::TokenKind::RightParentheses) {
+                L.Scan();
+                return {AST::TreeType::Arguments, (XArray<AST>){}};
+            }
             Throw(L"ArgumentsParser", L"Expected a `)` to close a template arguments list");
             return {};
         }

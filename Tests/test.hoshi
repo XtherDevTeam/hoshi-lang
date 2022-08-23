@@ -1,1 +1,1 @@
-Hoshi::IO.println("Hello, world!", wdnmd, wdnmd + 1 + 1 + 114 + 514);
+Hoshi::IO::Get<int>();
