@@ -50,7 +50,7 @@ namespace Hoshi {
             Identifier,
             String,
             Character,
-            ReservedWords,
+            Keywords,
             Integer,
             Decimal,
             Boolean,

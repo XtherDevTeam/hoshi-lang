@@ -57,7 +57,7 @@ namespace Hoshi {
                 LastToken = {
                         std::find(LexerReservedWords.begin(), LexerReservedWords.end(), TempStr) !=
                         LexerReservedWords.end()
-                        ? TokenKind::ReservedWords : TokenKind::Identifier, TempStr, Line, Column};
+                        ? TokenKind::Keywords : TokenKind::Identifier, TempStr, Line, Column};
         }
             /* Digital literals */
         else if (IsDigit(String[Position])) {

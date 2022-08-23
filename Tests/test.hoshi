@@ -1,1 +1,3 @@
-Hoshi::IO::Get<int>();
+func main (argc : int, argv : Array<int>) -> int {
+
+}

@@ -35,6 +35,10 @@ namespace Hoshi {
             IdentifierWithTemplateArguments,
             AssignmentExpression,
             Arguments,
+            IdentifierWithTypeDescriptor,
+            CodeBlock,
+            FunctionDefinition,
+            VariableDeclaration,
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;

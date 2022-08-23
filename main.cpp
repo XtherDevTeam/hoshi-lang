@@ -3,7 +3,7 @@
 #include <chrono>
 #include "Frontend/Lexer.hpp"
 #include "Frontend/AST.hpp"
-#include "Frontend/Parsers/AsExpressionParser.hpp"
+#include "Frontend/Parsers/FunctionDefinitionParser.hpp"
 
 int main() {
     std::wstring S;
@@ -15,6 +15,6 @@ int main() {
     }
     Hoshi::Lexer Lex(S);
     Lex.Scan();
-    Hoshi::AST Tree = Hoshi::Parser::AsExpressionParser(Lex).Parse();
+    Hoshi::AST Tree = Hoshi::Parser::FunctionDefinitionParser(Lex).Parse();
     return 0;
 }

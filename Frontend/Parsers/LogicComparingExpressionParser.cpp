@@ -26,7 +26,7 @@ namespace Hoshi {
                         L.Scan();
                         break;
                     }
-                    case Lexer::TokenKind::ReservedWords:{
+                    case Lexer::TokenKind::Keywords:{
                         if (L.LastToken.Value != L"instanceOf" and L.LastToken.Value != L"implemented") {
                             return Single;
                         }

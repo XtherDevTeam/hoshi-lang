@@ -17,7 +17,7 @@ namespace Hoshi {
             if (LHS.IsNotMatchNode()) {
                 return {};
             }
-            if (L.LastToken != (Lexer::Token) {Lexer::TokenKind::ReservedWords, L"as", 0, 0}) {
+            if (L.LastToken != (Lexer::Token) {Lexer::TokenKind::Keywords, L"as", 0, 0}) {
                 return LHS;
             }
             AST RHS = StaticMemberAccessExpressionParser(L).Parse();

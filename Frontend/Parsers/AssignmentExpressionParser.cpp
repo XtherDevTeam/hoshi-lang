@@ -29,6 +29,7 @@ namespace Hoshi {
                     break;
                 }
                 default: {
+                    Rollback();
                     return {};
                 }
             }
