@@ -10,6 +10,8 @@
 #include "IfStatementParser.hpp"
 #include "WhileStatementParser.hpp"
 #include "ForStatementParser.hpp"
+#include "ExpressionParser.hpp"
+#include "SimpleStatementParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -19,6 +21,10 @@ namespace Hoshi {
 
         Hoshi::AST StatementParser::Parse() {
             AST Result;
+
+            Result = SimpleStatementParser(L).Parse();
+            if (!Result.IsNotMatchNode())
+                return Result;
 
             Result = ForStatementParser(L).Parse();
             if (!Result.IsNotMatchNode())
@@ -40,11 +46,7 @@ namespace Hoshi {
             if (!Result.IsNotMatchNode())
                 return Result;
 
-            Result = AssignmentExpressionParser(L).Parse();
-            if (!Result.IsNotMatchNode())
-                return Result;
-
-            Result = AsExpressionParser(L).Parse();
+            Result = ExpressionParser(L).Parse();
             if (!Result.IsNotMatchNode())
                 return Result;
 

@@ -2,4 +2,5 @@ func main () -> void {
     var i : int = 128;
     var j : uint = i as uint;
     IO::println(Str::fromInt(i));
+    return 114514;
 }

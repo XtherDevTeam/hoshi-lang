@@ -43,6 +43,9 @@ namespace Hoshi {
             IfElseStatement,
             WhileStatement,
             ForStatement,
+            ReturnStatement,
+            BreakStatement,
+            ContinueStatement,
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;

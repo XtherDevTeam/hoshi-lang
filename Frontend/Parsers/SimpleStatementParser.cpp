@@ -3,6 +3,7 @@
 //
 
 #include "SimpleStatementParser.hpp"
+#include "AsExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -11,7 +12,37 @@ namespace Hoshi {
         }
 
         Hoshi::AST SimpleStatementParser::Parse() {
-            return Hoshi::AST();
+            if (L.LastToken.Kind == Lexer::TokenKind::Keywords) {
+                /**
+                 * @biref return control statement
+                 */
+                if (L.LastToken.Value == L"return") {
+                    L.Scan();
+                    AST Result = AsExpressionParser(L).Parse();
+                    if (Result.IsNotMatchNode())
+                        return {AST::TreeType::ReturnStatement, (XArray<AST>){}};
+                    return {AST::TreeType::ReturnStatement, {Result}};
+                }
+                    /**
+                     * @biref continue control statement
+                     */
+                else if (L.LastToken.Value == L"continue") {
+                    L.Scan();
+                    return {AST::TreeType::ContinueStatement, (Lexer::Token) {}};
+                }
+                    /**
+                     * @biref break control statement
+                     */
+                else if (L.LastToken.Value == L"break") {
+                    L.Scan();
+                    return {AST::TreeType::BreakStatement, (Lexer::Token) {}};
+                }
+                else {
+                    return {};
+                }
+            } else {
+                return {};
+            }
         }
     } // Hoshi
 } // Parser

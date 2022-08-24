@@ -8,6 +8,7 @@
 #include "FunctionInvokeExpressionParser.hpp"
 #include "AsExpressionParser.hpp"
 #include "AssignmentExpressionParser.hpp"
+#include "ExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -18,25 +19,13 @@ namespace Hoshi {
         Hoshi::AST PrimaryParser::Parse() {
             if (L.LastToken.Kind == Lexer::TokenKind::LeftParentheses) {
                 L.Scan();
-                AST Expr = AsExpressionParser(L).Parse();
-                if (!Expr.IsNotMatchNode()) {
-                    if (L.LastToken.Kind != Lexer::TokenKind::RightParentheses) {
-                        Throw(L"PrimaryParser", L"Expected a `)`");
-                        return {};
-                    }
-                    L.Scan();
-                    return Expr;
+                AST Expr = ExpressionParser(L).Parse();
+                if (L.LastToken.Kind != Lexer::TokenKind::RightParentheses) {
+                    Throw(L"PrimaryParser", L"Expected a `)`");
+                    return {};
                 }
-                Expr = AssignmentExpressionParser(L).Parse();
-                if (!Expr.IsNotMatchNode()) {
-                    L.Scan();
-                    if (L.LastToken.Kind != Lexer::TokenKind::RightParentheses) {
-                        Throw(L"PrimaryParser", L"Expected a `)`");
-                        return {};
-                    }
-                    L.Scan();
-                    return Expr;
-                }
+                L.Scan();
+                return Expr;
             }
 
             AST Tree = FunctionInvokeExpressionParser(L).Parse();
