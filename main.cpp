@@ -11,7 +11,7 @@ int main() {
     while (!is.eof()) {
         std::string f;
         std::getline(is, f);
-        S.append(Hoshi::string2wstring(f));
+        S.append(Hoshi::string2wstring(f + "\n"));
     }
     Hoshi::Lexer Lex(S);
     Lex.Scan();

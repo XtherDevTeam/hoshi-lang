@@ -6,6 +6,10 @@
 #include "CodeBlockParser.hpp"
 #include "AsExpressionParser.hpp"
 #include "AssignmentExpressionParser.hpp"
+#include "VariableDeclarationParser.hpp"
+#include "IfStatementParser.hpp"
+#include "WhileStatementParser.hpp"
+#include "ForStatementParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -15,6 +19,22 @@ namespace Hoshi {
 
         Hoshi::AST StatementParser::Parse() {
             AST Result;
+
+            Result = ForStatementParser(L).Parse();
+            if (!Result.IsNotMatchNode())
+                return Result;
+
+            Result = WhileStatementParser(L).Parse();
+            if (!Result.IsNotMatchNode())
+                return Result;
+
+            Result = IfStatementParser(L).Parse();
+            if (!Result.IsNotMatchNode())
+                return Result;
+
+            Result = VariableDeclarationParser(L).Parse();
+            if (!Result.IsNotMatchNode())
+                return Result;
 
             Result = CodeBlockParser(L).Parse();
             if (!Result.IsNotMatchNode())

@@ -18,17 +18,8 @@ namespace Hoshi {
             for (;;) {
                 AST Operator;
                 switch (L.LastToken.Kind) {
-                    case Lexer::TokenKind::BinaryAnd:
-                    case Lexer::TokenKind::BinaryXOR:
-                    case Lexer::TokenKind::BinaryOr:{
-                        Operator = {AST::TreeType::Operator, L.LastToken};
-                        L.Scan();
-                        break;
-                    }
-                    case Lexer::TokenKind::Keywords:{
-                        if (L.LastToken.Value != L"instanceOf" and L.LastToken.Value != L"implemented") {
-                            return Single;
-                        }
+                    case Lexer::TokenKind::LogicAnd:
+                    case Lexer::TokenKind::LogicOr: {
                         Operator = {AST::TreeType::Operator, L.LastToken};
                         L.Scan();
                         break;
@@ -41,7 +32,7 @@ namespace Hoshi {
                     break;
                 AST RightHandSide = BinaryExpressionParser(L).Parse();
                 if (RightHandSide.IsNotMatchNode()) {
-                    Throw (L"BooleanExpressionParser", L"Expected a right hand side node");
+                    Throw(L"BooleanExpressionParser", L"Expected a right hand side node");
                     return {};
                 }
                 Single = {AST::TreeType::BooleanExpression, {Single, Operator, RightHandSide}};

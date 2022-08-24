@@ -15,7 +15,7 @@ namespace Hoshi {
         protected:
             Hoshi::Lexer &L;
             Hoshi::Lexer::Token LT;
-            XIndexType Line, Col;
+            XIndexType Line, Col, Pos;
 
             void Throw(const XString &ParserName, const XString &Reason) const;
 

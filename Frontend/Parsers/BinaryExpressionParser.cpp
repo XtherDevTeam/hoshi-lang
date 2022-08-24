@@ -4,6 +4,7 @@
 
 #include "BinaryExpressionParser.hpp"
 #include "LogicComparingExpressionParser.hpp"
+#include "LogicEqualExpressionParser.hpp"
 
 namespace Hoshi {
     namespace Parser {
@@ -12,7 +13,7 @@ namespace Hoshi {
         }
 
         Hoshi::AST BinaryExpressionParser::Parse() {
-            AST Single = LogicComparingExpressionParser(L).Parse();
+            AST Single = LogicEqualExpressionParser(L).Parse();
             if (Single.IsNotMatchNode())
                 return {};
             for (;;) {

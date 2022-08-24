@@ -31,7 +31,7 @@ namespace Hoshi {
                         return {AST::TreeType::TemplateArguments, ASTs};
                     }
                     default: {
-                        Throw(L"TemplateArgumentsParser", L"Unexpected token");
+                        Rollback();
                         return {};
                     }
                 }

@@ -7,7 +7,7 @@
 
 namespace Hoshi {
     namespace Parser {
-        ParserBase::ParserBase(Hoshi::Lexer& L) : L(L), Line(L.Line), Col(L.Column), LT(L.LastToken) {
+        ParserBase::ParserBase(Hoshi::Lexer& L) : L(L), Line(L.Line), Col(L.Column), Pos(L.Position), LT(L.LastToken) {
 
         }
 
@@ -19,12 +19,14 @@ namespace Hoshi {
             L.Line = Line;
             L.Column = Col;
             L.LastToken = LT;
+            L.Position = Pos;
         }
 
         void ParserBase::UpdateBackup() {
             Line = L.Line;
             Col = L.Column;
             LT = L.LastToken;
+            Pos = L.Position;
         }
     } // Hoshi
 } // Parser

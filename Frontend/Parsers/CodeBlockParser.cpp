@@ -21,7 +21,7 @@ namespace Hoshi {
             while (!Temp.IsNotMatchNode()) {
                 ASTs.push_back(Temp);
                 switch (L.LastToken.Kind) {
-                    case Lexer::TokenKind::Colon: {
+                    case Lexer::TokenKind::Semicolon: {
                         L.Scan();
                         Temp = StatementParser(L).Parse();
                         break;
@@ -31,14 +31,24 @@ namespace Hoshi {
                         return {AST::TreeType::CodeBlock, ASTs};
                     }
                     default: {
-                        Throw(L"CodeBlockParser", L"Unexpected token");
-                        return {};
+                        switch (Temp.Type) {
+                            case AST::TreeType::CodeBlock:
+                            case AST::TreeType::IfElseStatement:
+                            case AST::TreeType::IfStatement:
+                            case AST::TreeType::ForStatement:
+                            case AST::TreeType::WhileStatement:
+                                break;
+                            default: {
+                                Throw(L"CodeBlockParser", L"Unexpected token");
+                                return {};
+                            }
+                        }
                     }
                 }
             }
             if (L.LastToken.Kind == Lexer::TokenKind::RightBraces) {
                 L.Scan();
-                return {AST::TreeType::CodeBlock, (XArray<AST>){}};
+                return {AST::TreeType::CodeBlock, ASTs};
             }
             Throw(L"CodeBlockParser", L"Expected a `}` to close a code block");
             return {};

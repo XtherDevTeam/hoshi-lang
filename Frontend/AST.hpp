@@ -39,6 +39,10 @@ namespace Hoshi {
             CodeBlock,
             FunctionDefinition,
             VariableDeclaration,
+            IfStatement,
+            IfElseStatement,
+            WhileStatement,
+            ForStatement,
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;
