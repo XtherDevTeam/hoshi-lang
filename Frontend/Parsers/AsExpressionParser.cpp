@@ -20,6 +20,7 @@ namespace Hoshi {
             if (L.LastToken != (Lexer::Token) {Lexer::TokenKind::Keywords, L"as", 0, 0}) {
                 return LHS;
             }
+            L.Scan();
             AST RHS = StaticMemberAccessExpressionParser(L).Parse();
             return {AST::TreeType::AsExpression, {LHS, RHS}};
         }

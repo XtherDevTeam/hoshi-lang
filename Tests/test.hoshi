@@ -1,5 +1,5 @@
-func main (argc : int, argv : Array<int>) -> int {
-    var i : int;
-    var j : int = 114514;
-    for (var i : int = 0;i < j;++i) ++j;
+func main () -> void {
+    var i : int = 128;
+    var j : uint = i as uint;
+    IO::println(Str::fromInt(i));
 }
