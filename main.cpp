@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <chrono>
 #include "Frontend/Lexer.hpp"
 #include "Frontend/AST.hpp"
 #include "Frontend/Parsers/FunctionDefinitionParser.hpp"
