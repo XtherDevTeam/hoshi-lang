@@ -100,7 +100,7 @@ class Foo {
 class Bar extends Foo {
     public name;
     public say;
-	func constructor () -> void {
+    func constructor () -> void {
         this.constructor();
         this.name = "Bar";
         return;
@@ -135,9 +135,9 @@ func main () -> void {
 
   Up-casting means covert a child class to the parent class.
 
-  
 
-- 
+
+-
 
 ### Generic programming (Template)
 

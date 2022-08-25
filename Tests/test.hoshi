@@ -1,6 +1,6 @@
-func main () -> void {
-    var i : int = 128;
-    var j : uint = i as uint;
-    IO::println(Str::fromInt(i));
-    return 114514;
-}
+class a extends b impl Printable {
+    var a : int;
+    func constructor () : a(114514) -> void {
+        return;
+    }
+};

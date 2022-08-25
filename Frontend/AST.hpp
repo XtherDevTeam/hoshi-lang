@@ -46,6 +46,11 @@ namespace Hoshi {
             ReturnStatement,
             BreakStatement,
             ContinueStatement,
+            ExtendBlock,
+            ImplBlock,
+            MethodDefinition,
+            InitializerList,
+            ClassDefinition
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;
