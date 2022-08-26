@@ -8,6 +8,8 @@ set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
 
 include_directories(ThirdPartyLibraries)
 
+include_directories(Share)
+
 file (GLOB HOSHI_LANG_INCLUDE
         Frontend/*.cpp
         Frontend/Parsers/*.cpp
