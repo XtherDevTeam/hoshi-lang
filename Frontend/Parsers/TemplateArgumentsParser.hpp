@@ -6,7 +6,6 @@
 #define HOSHI_LANG_TEMPLATEARGUMENTSPARSER_HPP
 
 #include "ParserBase.hpp"
-#include "../Lexer.hpp"
 
 namespace Hoshi {
     namespace Parser {

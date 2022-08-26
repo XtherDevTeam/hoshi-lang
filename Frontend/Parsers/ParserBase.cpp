@@ -3,7 +3,7 @@
 //
 
 #include "ParserBase.hpp"
-#include "../../Share/Exceptions/ParserException.hpp"
+#include "Exceptions/ParserException.hpp"
 
 namespace Hoshi {
     namespace Parser {

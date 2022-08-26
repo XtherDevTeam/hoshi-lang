@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_AST_HPP
 #define XSCRIPT2_AST_HPP
 
-#include "../Share/Utils.hpp"
+#include "Utils.hpp"
 #include "Lexer.hpp"
 
 namespace Hoshi {
