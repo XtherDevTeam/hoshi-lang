@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_BYTECODEINTERPRETERROR_HPP
 #define XSCRIPT2_BYTECODEINTERPRETERROR_HPP
 
-#include "../HoshiException.hpp"
+#include "HoshiException.hpp"
 
 namespace Hoshi {
 

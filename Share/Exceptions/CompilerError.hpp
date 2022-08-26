@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_COMPILERERROR_HPP
 #define XSCRIPT2_COMPILERERROR_HPP
 
-#include "../HoshiException.hpp"
+#include "HoshiException.hpp"
 
 namespace Hoshi {
 

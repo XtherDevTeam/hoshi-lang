@@ -4,7 +4,7 @@
 
 #include "Utils.hpp"
 
-#include "../ThirdPartyLibraries/localr.hpp"
+#include "localr.hpp"
 
 namespace Hoshi {
     XIndexType CreatedUnfreeElement;

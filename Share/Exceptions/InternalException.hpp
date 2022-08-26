@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_INTERNALEXCEPTION_HPP
 #define XSCRIPT2_INTERNALEXCEPTION_HPP
 
-#include "../HoshiException.hpp"
+#include "HoshiException.hpp"
 
 namespace Hoshi {
 

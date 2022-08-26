@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_HEAPOVERFLOWEXCEPTION_HPP
 #define XSCRIPT2_HEAPOVERFLOWEXCEPTION_HPP
 
-#include "../HoshiException.hpp"
+#include "HoshiException.hpp"
 
 namespace Hoshi {
 

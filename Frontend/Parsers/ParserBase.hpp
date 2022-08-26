@@ -5,8 +5,8 @@
 #ifndef HOSHI_LANG_PARSERBASE_HPP
 #define HOSHI_LANG_PARSERBASE_HPP
 
-#include "../Lexer.hpp"
-#include "../AST.hpp"
+#include "Lexer.hpp"
+#include "AST.hpp"
 
 namespace Hoshi {
     namespace Parser {

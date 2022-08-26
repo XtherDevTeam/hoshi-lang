@@ -5,8 +5,8 @@
 #ifndef XSCRIPT2_PARSEREXCEPTION_HPP
 #define XSCRIPT2_PARSEREXCEPTION_HPP
 
-#include "../Utils.hpp"
-#include "../HoshiException.hpp"
+#include "Utils.hpp"
+#include "HoshiException.hpp"
 
 namespace Hoshi {
 
