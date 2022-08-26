@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.20)
 project(hoshi_lang)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -12,6 +12,8 @@ file (GLOB HOSHI_LANG_INCLUDE
         Frontend/*.cpp
         Frontend/Parsers/*.cpp
         Share/*.cpp
-        Share/Exceptions/*.cpp)
+        Share/Exceptions/*.cpp
+        Backend/*.cpp
+        Backend/Optimizer/*.cpp)
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})

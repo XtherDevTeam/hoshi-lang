@@ -4,9 +4,12 @@
 #include "Frontend/AST.hpp"
 #include "Frontend/Parsers/InterfaceDefinitionParser.hpp"
 
-int main() {
+int main(int argc, const char **argv) {
     std::wstring S;
-    std::fstream is("../Tests/test.hoshi", std::ios::in);
+    if (argc != 2) {
+        return -1;
+    }
+    std::fstream is(argv[1], std::ios::in);
     while (!is.eof()) {
         std::string f;
         std::getline(is, f);
