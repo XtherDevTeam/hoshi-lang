@@ -74,9 +74,7 @@ use Hoshi::IO;
 use Hoshi::Str;
 
 interface Printable {
-    func toString () -> Str {
-        return "";
-    }
+    virtual print () -> void;
 };
 
 class Foo {
@@ -130,14 +128,12 @@ func main () -> void {
   You can use `interface` to create an interface. Use `class <classname> impl <interface_name>` to make compiler know what interfaces are this class implemented.
 
   Use `<class_name> as <interface_name>` to covert a class to an interface.
+  
+  Inside the compiler, interface is a structure that saves some virtual method pointer, and the `this` pointer of the object.
 
 - **Up-casting**
 
-  Up-casting means covert a child class to the parent class.
-
-
-
--
+  Up-casting means covert a child class to the parent class or interface.
 
 ### Generic programming (Template)
 

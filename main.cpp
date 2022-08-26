@@ -2,8 +2,7 @@
 #include <fstream>
 #include "Frontend/Lexer.hpp"
 #include "Frontend/AST.hpp"
-#include "Frontend/Parsers/FunctionDefinitionParser.hpp"
-#include "Frontend/Parsers/ClassDefinitionParser.hpp"
+#include "Frontend/Parsers/InterfaceDefinitionParser.hpp"
 
 int main() {
     std::wstring S;
@@ -15,6 +14,6 @@ int main() {
     }
     Hoshi::Lexer Lex(S);
     Lex.Scan();
-    Hoshi::AST Tree = Hoshi::Parser::ClassDefinitionParser(Lex).Parse();
+    Hoshi::AST Tree = Hoshi::Parser::InterfaceDefinitionParser(Lex).Parse();
     return 0;
 }

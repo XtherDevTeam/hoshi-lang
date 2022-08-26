@@ -50,7 +50,9 @@ namespace Hoshi {
             ImplBlock,
             MethodDefinition,
             InitializerList,
-            ClassDefinition
+            ClassDefinition,
+            VirtualMethodDeclaration,
+            InterfaceDefinition
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;

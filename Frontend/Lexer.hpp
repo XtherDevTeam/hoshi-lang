@@ -18,7 +18,7 @@ namespace Hoshi {
       */
     static XArray<XString> LexerReservedWords{
             L"func", L"var", L"as", L"return",
-            L"class", L"extends", L"impl", L"interface", L"public", L"template",
+            L"class", L"extends", L"impl", L"interface", L"public", L"template", L"virtual",
             L"if", L"else", L"while", L"for", L"break", L"continue",
             L"use"
     };

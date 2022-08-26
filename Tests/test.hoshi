@@ -1,6 +1,3 @@
-class a extends b impl Printable {
-    var a : int;
-    func constructor () : a(114514) -> void {
-        return;
-    }
+interface Printable {
+    virtual print () -> void;
 };

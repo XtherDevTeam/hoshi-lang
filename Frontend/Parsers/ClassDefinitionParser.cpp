@@ -89,8 +89,14 @@ namespace Hoshi {
                     }
                 }
             }
-            Throw(L"ClassDefinitionParser", L"Unexpected statement");
-            return {};
+            if (L.LastToken.Kind == Lexer::TokenKind::RightBraces) {
+                L.Scan();
+                Block = {AST::TreeType::CodeBlock, ASTs};
+                return {AST::TreeType::ClassDefinition, {Name, Extend, Impl, Block}};
+            } else {
+                Throw(L"ClassDefinitionParser", L"Expected `}`");
+                return {};
+            }
         }
     } // Hoshi
 } // Parser
