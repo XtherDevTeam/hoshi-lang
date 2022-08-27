@@ -28,7 +28,9 @@ namespace Hoshi {
         LESSEQU,  // <=
         NOT, // !
         NEG, // -
-        INV  // ~
+        INV,  // ~
+        JUMP,
+        BRANCH
     };
 
     class IR {
