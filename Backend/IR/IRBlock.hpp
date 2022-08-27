@@ -9,6 +9,17 @@
 #include <vector>
 
 namespace Hoshi {
+    class Argument {
+        /**
+         * @brief Type of the argument
+         */
+        std::string TypeName;
+        /**
+         * @brief Name of the argument
+         */
+        std::string Name;
+    };
+
     class IRBlock {
         /**
          * @brief Name of the block
@@ -19,15 +30,30 @@ namespace Hoshi {
          */
         const std::vector<IR> IRCollection;
         /**
+         * @brief Arguments in the block
+         */
+        const std::vector<Argument> Arguments;
+        /**
          * @brief construct an IRBlock
          * @param Name Name of the block
          * @param IRCollection IR in the block
+         * @param Arguments Arguments in the block
          */
-        IRBlock(const std::string Name, const std::vector<IR> &&IRCollection);
+        IRBlock(const std::string Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments);
     public:
         class Builder {
+            /**
+             * @brief Name of the block
+             */
             std::string Name;
+            /**
+             * @brief IR in the block
+             */
             std::vector<IR> IRCollection;
+            /**
+             * @brief Arguments in the block
+             */
+            std::vector<Argument> Arguments;
         public:
             /**
              * @brief construct an IRBlock Builder
@@ -46,21 +72,32 @@ namespace Hoshi {
              */
             Builder &AddIR(IR ir);
             /**
+             * @brief add Argument to the IRBlock
+             * @param Arg the Argument
+             * @return self
+             */
+            Builder &AddArgument(Argument Arg);
+            /**
              * @brief create an IRBlock
              * @return IRBlock
              */
-            IRBlock build(void);
+            IRBlock build(void) const;
         };
         /**
          * @brief Get the name of the block
          * @return Name of the block
          */
-        const std::string GetName(void);
+        const std::string GetName(void) const;
         /**
          * @brief Get IR of the block
          * @return IR of the block
          */
-        const std::vector<IR> GetIRCollection(void);
+        const std::vector<IR> GetIRCollection(void) const;
+        /**
+         * @brief Get Arguments of the block
+         * @return Arguments of the block
+         */
+        const std::vector<Argument> GetArguments(void) const;
         friend class IRBlock::Builder;
     };
 }

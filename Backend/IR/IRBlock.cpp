@@ -9,23 +9,31 @@ namespace Hoshi {
      * @brief construct an IRBlock
      * @param Name Name of the block
      * @param IRCollection IR in the block
+     * @param Arguments Arguments in the block
      */
-    IRBlock::IRBlock(const std::string Name, const std::vector<IR> &&IRCollection)
-        : Name(Name), IRCollection(std::move(IRCollection)) {
+    IRBlock::IRBlock(const std::string Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments)
+        : Name(Name), IRCollection(std::move(IRCollection)), Arguments(std::move(Arguments)) {
     }
     /**
      * @brief Get the name of the block
      * @return Name of the block
      */
-    const std::string IRBlock::GetName(void) {
+    const std::string IRBlock::GetName(void) const {
         return Name;
     }
     /**
      * @brief Get IR of the block
      * @return IR of the block
      */
-    const std::vector<IR> IRBlock::GetIRCollection(void) {
+    const std::vector<IR> IRBlock::GetIRCollection(void) const {
         return IRCollection;
+    }
+    /**
+     * @brief Get Arguments of the block
+     * @return Arguments of the block
+     */
+    const std::vector<Argument> IRBlock::GetArguments(void) const {
+        return Arguments;
     }
     /**
      * @brief construct an IRBlock Builder
@@ -52,12 +60,21 @@ namespace Hoshi {
         return *this;
     }
     /**
+     * @brief add Argument to the IRBlock
+     * @param Arg the Argument
+     * @return self
+     */
+    IRBlock::Builder &IRBlock::Builder::AddArgument(Argument Arg) {
+        Arguments.push_back(Arg);
+        return *this;
+    }
+    /**
      * @brief create an IRBlock
      * @return IRBlock
      */
-    IRBlock IRBlock::Builder::build(void) {
+    IRBlock IRBlock::Builder::build(void) const {
         if (Name == "")
             throw "The block need a name!";
-        return IRBlock(this->Name, std::move(this->IRCollection));
+        return IRBlock(Name, std::move(IRCollection), std::move(Arguments));
     }
 }

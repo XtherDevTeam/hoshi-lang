@@ -25,7 +25,13 @@ namespace Hoshi {
         IRProgram(const std::string Name, const std::vector<IRBlock> &&Blocks);
     public:
         class Builder {
+            /**
+             * @brief Name of the program
+             */
             std::string Name;
+            /**
+             * @brief IRBlocks in the program
+             */
             std::vector<IRBlock> Blocks;
         public:
             /**
