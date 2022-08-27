@@ -2,59 +2,59 @@
 // Created by theflysong on 2022/8/26.
 //
 
-#include <Oprend.hpp>
+#include <Operand.hpp>
 
 namespace Hoshi {
     /**
-     * @brief Construct a Oprend
+     * @brief Construct a Operand
      */
-    Oprend::Oprend(const OprendType Type, const std::string &&Value)
+    Operand::Operand(const OperandType Type, const std::string &&Value)
         : Type(Type), Value(std::move(Value)), ListValue(), MappingValue()
     {
     }
     /**
-     * @brief Construct a Oprend
+     * @brief Construct a Operand
      */
-    Oprend::Oprend(const std::vector<Oprend> &&ListValue)
-        : Type(OprendType::List), Value(""), ListValue(std::move(ListValue)), MappingValue() {
+    Operand::Operand(const std::vector<Operand> &&ListValue)
+        : Type(OperandType::List), Value(""), ListValue(std::move(ListValue)), MappingValue() {
 
     }
     /**
-     * @brief Construct a Oprend
+     * @brief Construct a Operand
      */
-    Oprend::Oprend(const std::map<std::string, Oprend> &&MappingValue)
-        : Type(OprendType::Mapping), Value(""), ListValue(), MappingValue(std::move(MappingValue)) {
+    Operand::Operand(const std::map<std::string, Operand> &&MappingValue)
+        : Type(OperandType::Mapping), Value(""), ListValue(), MappingValue(std::move(MappingValue)) {
     }
     /**
-     * @brief Get the value of the Oprend
-     * @return Value of the Oprend
+     * @brief Get the value of the Operand
+     * @return Value of the Operand
      */
-    const std::string Oprend::GetValue(void) const {
+    const std::string Operand::GetValue(void) const {
         return Value;
     }
     /**
-     * @brief Get the value of the Oprend
-     * @return Value of the Oprend
+     * @brief Get the value of the Operand
+     * @return Value of the Operand
      */
-    const std::vector<Oprend> Oprend::GetListValue(void) const {
+    const std::vector<Operand> Operand::GetListValue(void) const {
         return ListValue;
     }
     /**
-     * @brief Get the value of the Oprend
-     * @return Value of the Oprend
+     * @brief Get the value of the Operand
+     * @return Value of the Operand
      */
-    const std::map<std::string, Oprend> Oprend::GetMappingValue(void) const {
+    const std::map<std::string, Operand> Operand::GetMappingValue(void) const {
         return MappingValue;
     }
     /**
-     * @brief Get the type of the Oprend
-     * @return Type of the Oprend
+     * @brief Get the type of the Operand
+     * @return Type of the Operand
      */
-    const OprendType Oprend::GetType(void) const {
+    const OperandType Operand::GetType(void) const {
         return Type;
     }
     /**
-     * @brief Empty Oprend
+     * @brief Empty Operand
      */
-    Oprend Oprend::Empty(OprendType::Unknown, "");
+    Operand Operand::Empty(OperandType::Unknown, "");
 } // Hoshi

@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_IR_HPP
 #define XSCRIPT2_IR_HPP
 
-#include <Oprend.hpp>
+#include <Operand.hpp>
 
 namespace Hoshi {
     enum class Opcode : int {
@@ -19,45 +19,45 @@ namespace Hoshi {
          */
         const Opcode Code;
         /**
-         * @brief First Source Oprend
+         * @brief First Source Operand
          */
-        const Oprend SourceOprendA;
+        const Operand SourceOperandA;
         /**
-         * @brief Second Source Oprend
+         * @brief Second Source Operand
          */
-        const Oprend SourceOprendB;
+        const Operand SourceOperandB;
         /**
-         * @brief Destination Oprend
+         * @brief Destination Operand
          */
-        const Oprend DestinationOprend;
+        const Operand DestinationOperand;
     public:
         /**
          * @brief Construct an IR
-         * @param SourceOprendA First Source Oprend
-         * @param SourceOprendB Second Source Oprend
-         * @param DestinationOprend Destination Oprend
+         * @param SourceOperandA First Source Operand
+         * @param SourceOperandB Second Source Operand
+         * @param DestinationOperand Destination Operand
          */
-        IR(const Opcode Code, const Oprend SourceOprendA, const Oprend SourceOprendB, const Oprend DestinationOprend);
+        IR(const Opcode Code, const Operand SourceOperandA, const Operand SourceOperandB, const Operand DestinationOperand);
         /**
          * @brief Get the code of the IR
          * @return Code of the IR
          */
         const Opcode GetCode(void) const;
         /**
-         * @brief Get the first source oprend of the IR
-         * @return First Source Oprend of the IR
+         * @brief Get the first source Operand of the IR
+         * @return First Source Operand of the IR
          */
-        const Oprend GetSourceOprendA(void) const;
+        const Operand GetSourceOperandA(void) const;
         /**
-         * @brief Get the second source oprend of the IR
-         * @return Second Source Oprend of the IR
+         * @brief Get the second source Operand of the IR
+         * @return Second Source Operand of the IR
          */
-        const Oprend GetSourceOprendB(void) const;
+        const Operand GetSourceOperandB(void) const;
         /**
-         * @brief Get the destination oprend of the IR
-         * @return Destination Oprend of the IR
+         * @brief Get the destination Operand of the IR
+         * @return Destination Operand of the IR
          */
-        const Oprend GetDestinationOprend(void) const;
+        const Operand GetDestinationOperand(void) const;
     };
 }
 

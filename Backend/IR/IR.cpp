@@ -7,12 +7,12 @@
 namespace Hoshi {
     /**
      * @brief Construct an IR
-     * @param SourceOprendA First Source Oprend
-     * @param SourceOprendB Second Source Oprend
-     * @param DestinationOprend Destination Oprend
+     * @param SourceOperandA First Source Operand
+     * @param SourceOperandB Second Source Operand
+     * @param DestinationOperand Destination Operand
      */
-    IR::IR(const Opcode Code, const Oprend SourceOprendA, const Oprend SourceOprendB, const Oprend DestinationOprend)
-        : Code(Code), SourceOprendA(SourceOprendA), SourceOprendB(SourceOprendB), DestinationOprend(DestinationOprend) {
+    IR::IR(const Opcode Code, const Operand SourceOperandA, const Operand SourceOperandB, const Operand DestinationOperand)
+        : Code(Code), SourceOperandA(SourceOperandA), SourceOperandB(SourceOperandB), DestinationOperand(DestinationOperand) {
     }
     /**
      * @brief Get the code of the IR
@@ -22,24 +22,24 @@ namespace Hoshi {
         return Code;
     }
     /**
-     * @brief Get the first source oprend of the IR
-     * @return First Source Oprend of the IR
+     * @brief Get the first source Operand of the IR
+     * @return First Source Operand of the IR
      */
-    const Oprend IR::GetSourceOprendA(void) const {
-        return SourceOprendA;
+    const Operand IR::GetSourceOperandA(void) const {
+        return SourceOperandA;
     }
     /**
-     * @brief Get the second source oprend of the IR
-     * @return Second Source Oprend of the IR
+     * @brief Get the second source Operand of the IR
+     * @return Second Source Operand of the IR
      */
-    const Oprend IR::GetSourceOprendB(void) const {
-        return SourceOprendB;
+    const Operand IR::GetSourceOperandB(void) const {
+        return SourceOperandB;
     }
     /**
-     * @brief Get the destination oprend of the IR
-     * @return Destination Oprend of the IR
+     * @brief Get the destination Operand of the IR
+     * @return Destination Operand of the IR
      */
-    const Oprend IR::GetDestinationOprend(void) const {
-        return DestinationOprend;
+    const Operand IR::GetDestinationOperand(void) const {
+        return DestinationOperand;
     }
 }
