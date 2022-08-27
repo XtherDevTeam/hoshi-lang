@@ -5,11 +5,30 @@
 #ifndef XSCRIPT2_IR_HPP
 #define XSCRIPT2_IR_HPP
 
-#include <Operand.hpp>
+#include <IR/Operand.hpp>
 
 namespace Hoshi {
     enum class Opcode : int {
-        NOP
+        NOP,
+        ADD, // +
+        SUB, // -
+        MUL, // *
+        DIV, // /
+        REM, // %
+        SHR, // >>
+        SHL, // <<
+        AND, // &
+        OR,  // |
+        XOR, // ^
+        EQU, // ==
+        NEQ, // !=
+        GREAT, // >
+        LESS, // <
+        GREATEQU, // >=
+        LESSEQU,  // <=
+        NOT, // !
+        NEG, // -
+        INV  // ~
     };
 
     class IR {
