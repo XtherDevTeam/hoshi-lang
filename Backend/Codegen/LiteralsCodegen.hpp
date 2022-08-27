@@ -2,8 +2,8 @@
 // Created by theflysong on 2022/8/27.
 //
 
-#ifndef XSCRIPT2_CODEGEN_HPP
-#define XSCRIPT2_CODEGEN_HPP
+#ifndef XSCRIPT2_LITERALSCODEGEN_HPP
+#define XSCRIPT2_LITERALSCODEGEN_HPP
 
 #include <Config.hpp>
 #include <Codegen/Codegen.hpp>

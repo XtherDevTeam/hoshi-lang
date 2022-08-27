@@ -3,6 +3,7 @@
 //
 
 #include <IR/IRBlock.hpp>
+#include <HoshiException.hpp>
 
 namespace Hoshi {
     /**
@@ -74,7 +75,7 @@ namespace Hoshi {
      */
     IRBlock IRBlock::Builder::build(void) const {
         if (Name == L"")
-            throw "The block need a name!";
+            throw HoshiException(L"The block need a name!");
         return IRBlock(Name, std::move(IRCollection), std::move(Arguments));
     }
 }
