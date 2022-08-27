@@ -21,7 +21,7 @@ namespace Hoshi {
          * @param Destination Jump Destination
          * @param Arguments Arguments of Jump Destination
          */
-        JumpIR(Operand Destination, std::vector<Operand> &&Arguments);
+        JumpIR(Operand Destination, XArray<Operand> &&Arguments);
     };
 
     class BranchIR : public IR {

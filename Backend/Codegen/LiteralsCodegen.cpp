@@ -3,7 +3,7 @@
 //
 
 #include <Codegen/LiteralsCodegen.hpp>
-#include <HoshiException.hpp>
+#include <Exceptions/CompilerError.hpp>
 
 namespace Hoshi {
     LiteralsCodegen LiteralsCodegen::INSTANCE;
@@ -14,7 +14,7 @@ namespace Hoshi {
      */
     XString LiteralsCodegen::visit(AST &ast) {
         if ((! ast.IsLeafNode()) || (ast.Type != AST::TreeType::Literals)) {
-            throw HoshiException(L"Wrong ast has been given to the literals codegen!");
+            throw CompilerError(ast.Node.Line, ast.Node.Column, L"Wrong ast has been given to the literals codegen!");
         }
         return ast.Node.Value;
     }

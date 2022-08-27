@@ -23,6 +23,7 @@ namespace Hoshi {
 
     template<typename T> using XArray = std::vector<T>;
     template<typename T, typename T1> using XMap = std::unordered_map<T, T1>;
+    template<typename T, typename T1> using XTreeMap = std::map<T, T1>;
 
     using XHeapIndexType = XIndexType;
 } // Hoshi

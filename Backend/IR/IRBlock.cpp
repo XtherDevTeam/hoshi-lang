@@ -12,7 +12,7 @@ namespace Hoshi {
      * @param IRCollection IR in the block
      * @param Arguments Arguments in the block
      */
-    IRBlock::IRBlock(const XString Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments)
+    IRBlock::IRBlock(const XString Name, const XArray<IR> &&IRCollection, const XArray<Argument> &&Arguments)
         : Name(Name), IRCollection(std::move(IRCollection)), Arguments(std::move(Arguments)) {
     }
     /**
@@ -26,14 +26,14 @@ namespace Hoshi {
      * @brief Get IR of the block
      * @return IR of the block
      */
-    const std::vector<IR> IRBlock::GetIRCollection(void) const {
+    const XArray<IR> IRBlock::GetIRCollection(void) const {
         return IRCollection;
     }
     /**
      * @brief Get Arguments of the block
      * @return Arguments of the block
      */
-    const std::vector<Argument> IRBlock::GetArguments(void) const {
+    const XArray<Argument> IRBlock::GetArguments(void) const {
         return Arguments;
     }
     /**

@@ -36,11 +36,11 @@ namespace Hoshi {
         /**
          * @brief List form of the Operand
          */
-        const std::vector<Operand> ListValue;
+        const XArray<Operand> ListValue;
         /**
          * @brief Mapping form of the Operand
          */
-        const std::map<XString, Operand> MappingValue;
+        const XTreeMap<XString, Operand> MappingValue;
     public:
         /**
          * @brief Construct a Operand
@@ -52,12 +52,12 @@ namespace Hoshi {
          * @brief Construct a Operand
          * @param ListValue List form value of the Operand
          */
-        Operand(const std::vector<Operand> &&ListValue);
+        Operand(const XArray<Operand> &&ListValue);
         /**
          * @brief Construct a Operand
          * @param MappingValue Mapping form value of the Operand
          */
-        Operand(const std::map<XString, Operand> &&MappingValue);
+        Operand(const XTreeMap<XString, Operand> &&MappingValue);
         /**
          * @brief Get the type of the Operand
          * @return Type of the Operand
@@ -72,17 +72,21 @@ namespace Hoshi {
          * @brief Get the value of the Operand
          * @return Value of the Operand
          */
-        const std::vector<Operand> GetListValue(void) const;
+        const XArray<Operand> GetListValue(void) const;
         /**
          * @brief Get the value of the Operand
          * @return Value of the Operand
          */
-        const std::map<XString, Operand> GetMappingValue(void) const;
+        const XTreeMap<XString, Operand> GetMappingValue(void) const;
         /**
          * @brief Empty Operand
          */
         static Operand Empty;
     };
+
+    const XString ToString(Operand Operand);
+    const XString ToString(XArray<Operand> List);
+    const XString ToString(XTreeMap<XString, Operand> Mapping);
 }
 
 #endif

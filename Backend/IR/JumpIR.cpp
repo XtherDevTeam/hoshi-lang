@@ -18,7 +18,7 @@ namespace Hoshi {
      * @param Destination Jump Destination
      * @param Arguments Arguments of Jump Destination
      */
-    JumpIR::JumpIR(Operand Destination, std::vector<Operand> &&Arguments)
+    JumpIR::JumpIR(Operand Destination, XArray<Operand> &&Arguments)
         : IR(Opcode::JUMP, Destination, Operand(std::move(Arguments)), Operand::Empty) {
     }
     /**
@@ -28,6 +28,6 @@ namespace Hoshi {
      * @param Else Jump If Condition is False
      */
     BranchIR::BranchIR(Operand Condition, Operand If, Operand Else)
-        : IR(Opcode::BRANCH, Condition, Operand(std::vector<Operand>({If, Else})), Operand::Empty) {
+        : IR(Opcode::BRANCH, Condition, Operand(XArray<Operand>({If, Else})), Operand::Empty) {
     }
 }

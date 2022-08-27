@@ -10,7 +10,7 @@ namespace Hoshi {
      * @param Name Name of the program
      * @param Blocks IRBlocks in the program
      */
-    IRProgram::IRProgram(const XString Name, const std::vector<IRBlock> &&Blocks)
+    IRProgram::IRProgram(const XString Name, const XArray<IRBlock> &&Blocks)
         : Name(Name), Blocks(std::move(Blocks)) {
     }
 

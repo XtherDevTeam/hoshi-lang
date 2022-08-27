@@ -33,6 +33,12 @@ namespace Hoshi {
         BRANCH
     };
 
+    /**
+     * @brief Code to String
+     * @return String form of the code
+     */
+    const XString ToString(Opcode Code);
+
     class IR {
     protected:
         /**
@@ -79,7 +85,14 @@ namespace Hoshi {
          * @return Destination Operand of the IR
          */
         const Operand GetDestinationOperand(void) const;
+        friend const XString ToString(IR Code);
     };
+
+    /**
+     * @brief IR to String
+     * @return String form of the ir
+     */
+    const XString ToString(IR ir);
 }
 
 #endif

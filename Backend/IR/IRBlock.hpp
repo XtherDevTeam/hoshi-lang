@@ -29,18 +29,18 @@ namespace Hoshi {
         /**
          * @brief IR in the block
          */
-        const std::vector<IR> IRCollection;
+        const XArray<IR> IRCollection;
         /**
          * @brief Arguments in the block
          */
-        const std::vector<Argument> Arguments;
+        const XArray<Argument> Arguments;
         /**
          * @brief construct an IRBlock
          * @param Name Name of the block
          * @param IRCollection IR in the block
          * @param Arguments Arguments in the block
          */
-        IRBlock(const XString Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments);
+        IRBlock(const XString Name, const XArray<IR> &&IRCollection, const XArray<Argument> &&Arguments);
     public:
         class Builder {
             /**
@@ -50,11 +50,11 @@ namespace Hoshi {
             /**
              * @brief IR in the block
              */
-            std::vector<IR> IRCollection;
+            XArray<IR> IRCollection;
             /**
              * @brief Arguments in the block
              */
-            std::vector<Argument> Arguments;
+            XArray<Argument> Arguments;
         public:
             /**
              * @brief construct an IRBlock Builder
@@ -93,12 +93,12 @@ namespace Hoshi {
          * @brief Get IR of the block
          * @return IR of the block
          */
-        const std::vector<IR> GetIRCollection(void) const;
+        const XArray<IR> GetIRCollection(void) const;
         /**
          * @brief Get Arguments of the block
          * @return Arguments of the block
          */
-        const std::vector<Argument> GetArguments(void) const;
+        const XArray<Argument> GetArguments(void) const;
         friend class IRBlock::Builder;
     };
 }

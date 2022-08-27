@@ -15,14 +15,14 @@ namespace Hoshi {
     /**
      * @brief Construct a Operand
      */
-    Operand::Operand(const std::vector<Operand> &&ListValue)
+    Operand::Operand(const XArray<Operand> &&ListValue)
         : Type(OperandType::List), Value(L""), ListValue(std::move(ListValue)), MappingValue() {
 
     }
     /**
      * @brief Construct a Operand
      */
-    Operand::Operand(const std::map<XString, Operand> &&MappingValue)
+    Operand::Operand(const XTreeMap<XString, Operand> &&MappingValue)
         : Type(OperandType::Mapping), Value(L""), ListValue(), MappingValue(std::move(MappingValue)) {
     }
     /**
@@ -36,14 +36,14 @@ namespace Hoshi {
      * @brief Get the value of the Operand
      * @return Value of the Operand
      */
-    const std::vector<Operand> Operand::GetListValue(void) const {
+    const XArray<Operand> Operand::GetListValue(void) const {
         return ListValue;
     }
     /**
      * @brief Get the value of the Operand
      * @return Value of the Operand
      */
-    const std::map<XString, Operand> Operand::GetMappingValue(void) const {
+    const XTreeMap<XString, Operand> Operand::GetMappingValue(void) const {
         return MappingValue;
     }
     /**
@@ -57,4 +57,33 @@ namespace Hoshi {
      * @brief Empty Operand
      */
     Operand Operand::Empty(OperandType::Unknown, L"");
+    const XString ToString(Operand Operand) {
+        if (Operand.GetType() == OperandType::Mapping) {
+            return ToString(Operand.GetMappingValue());
+        }
+        if (Operand.GetType() == OperandType::List) {
+            return ToString(Operand.GetListValue());
+        }
+        return Operand.GetValue();
+    }
+    const XString ToString(XArray<Operand> List) {
+        XString Str = L"[";
+        for (Operand Op : List) {
+            Str += ToString(Op);
+            Str += L",";
+        }
+        Str[Str.length() - 1] = L']';
+        return Str;
+    }
+    const XString ToString(XTreeMap<XString, Operand> Mapping) {
+        XString Str = L"{";
+        for (auto pair : Mapping) {
+            Str += pair.first;
+            Str += L":";
+            Str += ToString(pair.second);
+            Str += L",";
+        }
+        Str[Str.length() - 1] = L'}';
+        return Str;
+    }
 } // Hoshi
