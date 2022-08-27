@@ -16,7 +16,7 @@ namespace Hoshi {
             switch (L.LastToken.Kind) {
                 case Lexer::TokenKind::Plus:
                 case Lexer::TokenKind::Minus:
-                case Lexer::TokenKind::BinaryNot:
+                case Lexer::TokenKind::Invert:
                 case Lexer::TokenKind::IncrementSign:
                 case Lexer::TokenKind::DecrementSign: {
                     Operator = {AST::TreeType::Operator, L.LastToken};

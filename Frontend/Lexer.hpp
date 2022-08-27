@@ -60,7 +60,7 @@ namespace Hoshi {
             Asterisk,                   // *
             Slash,                      // /
             PercentSign,                // %
-            BinaryNot,                  // ~
+            Invert,                  // ~
             BinaryXOR,                  // ^
             BinaryOr,                   // |
             BinaryAnd,                  // &

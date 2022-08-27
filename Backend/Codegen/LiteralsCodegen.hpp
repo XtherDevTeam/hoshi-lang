@@ -9,7 +9,7 @@
 #include <Codegen/Codegen.hpp>
 
 namespace Hoshi {
-    class LiteralsCodegen : public Codegen<XString> {
+    class LiteralsCodegen : public Codegen<Operand> {
         /**
          * @brief Construct a literals codegen
          */
@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an literal ast and gen the code
          * @return string form of the value of literal
          */
-        virtual XString visit(AST &ast) override final;
+        virtual Operand Visit(AST &ast, IRBlock::Builder &block) override final;
     };
 }
 

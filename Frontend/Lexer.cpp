@@ -306,6 +306,11 @@ namespace Hoshi {
         else if (String[Position] == L'.') {
             NextCharacter();
             LastToken = {TokenKind::Dot, L".", Line, Column};
+        }    
+            /* Invert */
+        else if (String[Position] == L'~') {
+            NextCharacter();
+            LastToken = {TokenKind::Invert, L"~", Line, Column};
         }
             /* End of file */
         else if (String[Position] == L'\0') {
