@@ -6,12 +6,13 @@
 #define XSCRIPT2_VARUTIL_HPP
 
 #include <string>
+#include <Config.hpp>
 
 namespace Hoshi {
-    extern char GlobalNamePrefix;
-    extern char LocalNamePrefix;
-    std::string NewVarName(std::string prefix);
-    std::string NewLabelName(std::string prefix);
+    extern XCharacter GlobalNamePrefix;
+    extern XCharacter LocalNamePrefix;
+    XString NewVarName(XString prefix);
+    XString NewLabelName(XString prefix);
 }
 
 #endif

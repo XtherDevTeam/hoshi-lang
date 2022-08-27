@@ -7,24 +7,25 @@
 
 #include <IR/IR.hpp>
 #include <vector>
+#include <Config.hpp>
 
 namespace Hoshi {
     class Argument {
         /**
          * @brief Type of the argument
          */
-        std::string TypeName;
+        XString TypeName;
         /**
          * @brief Name of the argument
          */
-        std::string Name;
+        XString Name;
     };
 
     class IRBlock {
         /**
          * @brief Name of the block
          */
-        const std::string Name;
+        const XString Name;
         /**
          * @brief IR in the block
          */
@@ -39,13 +40,13 @@ namespace Hoshi {
          * @param IRCollection IR in the block
          * @param Arguments Arguments in the block
          */
-        IRBlock(const std::string Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments);
+        IRBlock(const XString Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments);
     public:
         class Builder {
             /**
              * @brief Name of the block
              */
-            std::string Name;
+            XString Name;
             /**
              * @brief IR in the block
              */
@@ -64,7 +65,7 @@ namespace Hoshi {
              * @param Name name of the IRBlock
              * @return self
              */
-            Builder &SetName(std::string Name);
+            Builder &SetName(XString Name);
             /**
              * @brief add IR to the IRBlock
              * @param ir the IR
@@ -87,7 +88,7 @@ namespace Hoshi {
          * @brief Get the name of the block
          * @return Name of the block
          */
-        const std::string GetName(void) const;
+        const XString GetName(void) const;
         /**
          * @brief Get IR of the block
          * @return IR of the block

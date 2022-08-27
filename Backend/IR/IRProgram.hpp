@@ -12,7 +12,7 @@ namespace Hoshi {
         /**
          * @brief Name of the program
          */
-        const std::string Name;
+        const XString Name;
         /**
          * @brief IRBlocks in the program
          */
@@ -22,13 +22,13 @@ namespace Hoshi {
          * @param Name Name of the program
          * @param Blocks IRBlocks in the program
          */
-        IRProgram(const std::string Name, const std::vector<IRBlock> &&Blocks);
+        IRProgram(const XString Name, const std::vector<IRBlock> &&Blocks);
     public:
         class Builder {
             /**
              * @brief Name of the program
              */
-            std::string Name;
+            XString Name;
             /**
              * @brief IRBlocks in the program
              */
@@ -43,7 +43,7 @@ namespace Hoshi {
              * @param Name name of the IRProgram
              * @return self
              */
-            Builder &SetName(std::string Name);
+            Builder &SetName(XString Name);
             /**
              * @brief add IRBlock to the IRProgram
              * @param Block the Block
@@ -60,7 +60,7 @@ namespace Hoshi {
          * @brief Get the name of the program
          * @return Name of the program
          */
-        const std::string GetName(void);
+        const XString GetName(void);
         /**
          * @brief Get blocks of the program
          * @return Blocks of the program

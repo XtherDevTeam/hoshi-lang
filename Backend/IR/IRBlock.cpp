@@ -11,14 +11,14 @@ namespace Hoshi {
      * @param IRCollection IR in the block
      * @param Arguments Arguments in the block
      */
-    IRBlock::IRBlock(const std::string Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments)
+    IRBlock::IRBlock(const XString Name, const std::vector<IR> &&IRCollection, const std::vector<Argument> &&Arguments)
         : Name(Name), IRCollection(std::move(IRCollection)), Arguments(std::move(Arguments)) {
     }
     /**
      * @brief Get the name of the block
      * @return Name of the block
      */
-    const std::string IRBlock::GetName(void) const {
+    const XString IRBlock::GetName(void) const {
         return Name;
     }
     /**
@@ -39,14 +39,14 @@ namespace Hoshi {
      * @brief construct an IRBlock Builder
      */
     IRBlock::Builder::Builder(void)
-        : Name("") {
+        : Name(L"") {
     }
     /**
      * @brief set the name of the IRBlock
      * @param Name name of the IRBlock
      * @return self
      */
-    IRBlock::Builder &IRBlock::Builder::SetName(std::string Name) {
+    IRBlock::Builder &IRBlock::Builder::SetName(XString Name) {
         this->Name = Name;
         return *this;
     }
@@ -73,7 +73,7 @@ namespace Hoshi {
      * @return IRBlock
      */
     IRBlock IRBlock::Builder::build(void) const {
-        if (Name == "")
+        if (Name == L"")
             throw "The block need a name!";
         return IRBlock(Name, std::move(IRCollection), std::move(Arguments));
     }

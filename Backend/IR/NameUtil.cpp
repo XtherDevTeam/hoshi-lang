@@ -5,19 +5,19 @@
 #include <IR/NameUtil.hpp>
 
 namespace Hoshi {
-    char GlobalNamePrefix = '@';
-    char LocalNamePrefix = '%';
+    XCharacter GlobalNamePrefix = '@';
+    XCharacter LocalNamePrefix = '%';
 
     int VarIndex = 0;
     int LabelIndex = 0;
 
-    std::string NewVarName(std::string prefix) {
+    XString NewVarName(XString prefix) {
         int Idx = VarIndex ++;
-        return prefix + "_var_" + std::to_string(VarIndex);
+        return prefix + L"_var_" + std::to_wstring(VarIndex);
     }
 
-    std::string NewLabelName(std::string prefix) {
+    XString NewLabelName(XString prefix) {
         int Idx = LabelIndex ++;
-        return prefix + "_label_" + std::to_string(VarIndex);
+        return prefix + L"_label_" + std::to_wstring(VarIndex);
     }
 }

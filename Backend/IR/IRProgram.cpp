@@ -10,7 +10,7 @@ namespace Hoshi {
      * @param Name Name of the program
      * @param Blocks IRBlocks in the program
      */
-    IRProgram::IRProgram(const std::string Name, const std::vector<IRBlock> &&Blocks)
+    IRProgram::IRProgram(const XString Name, const std::vector<IRBlock> &&Blocks)
         : Name(Name), Blocks(std::move(Blocks)) {
     }
 
@@ -18,14 +18,14 @@ namespace Hoshi {
      * @brief construct an IRProgram Builder
      */
     IRProgram::Builder::Builder(void)
-        : Name("") {
+        : Name(L"") {
     }
     /**
      * @brief set the name of the IRProgram
      * @param Name name of the IRProgram
      * @return self
      */
-    IRProgram::Builder &IRProgram::Builder::SetName(std::string Name) {
+    IRProgram::Builder &IRProgram::Builder::SetName(XString Name) {
         this->Name = Name;
         return *this;
     }
