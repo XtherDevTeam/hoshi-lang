@@ -4,7 +4,7 @@
 
 #include "ToASTPass.hpp"
 #include "Parsers/GlobalStmtParser.hpp"
-#include "Parsers/MultiplicationExpressionParser.hpp"
+#include "Parsers/AdditionExpressionParser.hpp"
 #include "Exceptions/ParserException.hpp"
 
 namespace Hoshi {
@@ -16,7 +16,7 @@ namespace Hoshi {
         Lexer Lex(LastPass.GetResult());
         Lex.Scan();
         //TODO: tests
-        PassResult.Result = Hoshi::Parser::MultiplicationExpressionParser(Lex).Parse();
+        PassResult.Result = Hoshi::Parser::AdditionExpressionParser(Lex).Parse();
         // XArray<AST> Trees;
         // AST Temp = Hoshi::Parser::GlobalStmtParser(Lex).Parse();
         // while (Temp.IsNotMatchNode()) {
