@@ -2,7 +2,7 @@
 // Created by Jerry Chou on 2022/5/7.
 //
 
-#include "Lexer.hpp"
+#include <Lexer.hpp>
 
 namespace Hoshi {
     LexerException::LexerException() = default;

@@ -7,9 +7,9 @@
 
 #include <algorithm>
 
-#include "Config.hpp"
-#include "Utils.hpp"
-#include "HoshiException.hpp"
+#include <Config.hpp>
+#include <Utils.hpp>
+#include <HoshiException.hpp>
 
 namespace Hoshi {
 
