@@ -5,13 +5,24 @@
 #ifndef XSCRIPT2_PASS_HPP
 #define XSCRIPT2_PASS_HPP
 
+#include <AST.hpp>
+#include <IR/IRProgram.hpp>
+
 namespace Hoshi {
     template<typename ResultType> class PassResult {
+    protected:
+        ResultType Result;
+    public:
         /**
          * @brief Result of This Pass
          */
-        virtual ResultType GetResult(void) = 0 const;
+        virtual ResultType &GetResult(void) {
+            return Result;
+        }
     };
+
+    using ASTPassResult = PassResult<AST>;
+    using IRProgramPassResult = PassResult<IRProgram::Builder>;
 
     template<typename SourceType, typename ResultType> class Pass {
     protected:
@@ -27,7 +38,7 @@ namespace Hoshi {
         /**
          * @brief Construct a Pass
          * @param LastPass Result of Last Pass
-         * @param ResultType Result of This Pass
+         * @param Result Result of This Pass
          */
         Pass(PassResult<SourceType> &LastPass, PassResult<ResultType> &Result)
             : LastPass(LastPass), Result(Result) {
@@ -40,7 +51,7 @@ namespace Hoshi {
          * @brief Get Pass Result
          * @return Pass Result;
          */
-        virtual void PassResult<ResultType> &GetResult(void) const {
+        virtual PassResult<ResultType> &GetResult(void) const {
             return Result;
         }
     };

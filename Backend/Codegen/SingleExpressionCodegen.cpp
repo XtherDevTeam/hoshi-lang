@@ -18,13 +18,13 @@ namespace Hoshi {
      * @brief visit an literal ast and gen the code
      * @return string form of the value of literal
      */
-    Operand SingleExpressionCodegen::Visit(AST &ast, IRBlock::Builder &block) {
+    Operand SingleExpressionCodegen::Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) {
         if (ast.Type != AST::TreeType::SingleExpression) {
             throw CompilerError(ast.Node.Line, ast.Node.Column, L"Wrong ast has been given to the single expression codegen!");
         }
         
         Lexer::Token Operator = ast.GetFirstNotNullToken();
-        Operand value = PrimaryCodegen::INSTANCE.Visit(ast.Subtrees[1], block);
+        Operand value = PrimaryCodegen::INSTANCE.Visit(ast.Subtrees[1], program, block);
         if (Operator.Kind == Lexer::TokenKind::Plus) {
             return value;
         }

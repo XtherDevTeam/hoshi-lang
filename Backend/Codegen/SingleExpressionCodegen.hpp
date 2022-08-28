@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an single expression ast and gen the code
          * @return result variable of Single expression and the ir of single expression
          */
-        virtual Operand Visit(AST &ast, IRBlock::Builder &block) override final;
+        virtual Operand Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) override final;
     };
 }
 

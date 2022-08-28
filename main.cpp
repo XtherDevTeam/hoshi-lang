@@ -20,13 +20,8 @@ int main(int argc, const char **argv) {
         Hoshi::Lexer Lex(S);
         Lex.Scan();
         Hoshi::AST Tree = Hoshi::Parser::SingleExpressionParser(Lex).Parse();
-        Hoshi::IRBlock::Builder Builder;
-        Builder.SetName(L"A");
-        Hoshi::Operand Result = Hoshi::SingleExpressionCodegen::INSTANCE.Visit(Tree, Builder);
-        Hoshi::IRBlock Block = Builder.build();
-        for (Hoshi::IR ir : Block.GetIRCollection()) {
-            std::wcout << ToString(ir) << std::endl;
-        }
+
+        
     } catch (Hoshi::HoshiException e) {
         std::wcout << e.what() << std::endl;
     } catch (Hoshi::LexerException e) {

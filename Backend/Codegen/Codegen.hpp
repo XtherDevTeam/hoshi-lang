@@ -7,6 +7,7 @@
 
 #include <AST.hpp>
 #include <IR/IRBlock.hpp>
+#include <IR/IRProgram.hpp>
 
 namespace Hoshi {
     template<typename Result> class Codegen {
@@ -15,7 +16,7 @@ namespace Hoshi {
          * @brief visit an ast and gen the code
          * @return result
          */
-        virtual Result Visit(AST &ast, IRBlock::Builder &block) = 0;
+        virtual Result Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) = 0;
     };
 }
 

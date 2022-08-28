@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an primary ast and gen the code
          * @return value of primary
          */
-        virtual Operand Visit(AST &ast, IRBlock::Builder &block) override final;
+        virtual Operand Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) override final;
     };
 }
 

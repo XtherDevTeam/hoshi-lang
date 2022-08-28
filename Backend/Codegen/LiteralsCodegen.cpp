@@ -15,7 +15,7 @@ namespace Hoshi {
      * @brief visit an literal ast and gen the code
      * @return string form of the value of literal
      */
-    Operand LiteralsCodegen::Visit(AST &ast, IRBlock::Builder &block) {
+    Operand LiteralsCodegen::Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) {
         if ((! ast.IsLeafNode()) || (ast.Type != AST::TreeType::Literals)) {
             throw CompilerError(ast.Node.Line, ast.Node.Column, L"Wrong ast has been given to the literals codegen!");
         }
