@@ -5,18 +5,17 @@
 #ifndef XSCRIPT2_CODEGEN_HPP
 #define XSCRIPT2_CODEGEN_HPP
 
-#include <AST.hpp>
 #include <IR/IRBlock.hpp>
 #include <IR/IRProgram.hpp>
 
 namespace Hoshi {
-    template<typename Result> class Codegen {
+    template<typename Result, typename NodeType> class Codegen {
     public:
         /**
          * @brief visit an ast and gen the code
          * @return result
          */
-        virtual Result Visit(AST &ast, IRProgram::Builder &Program, IRBlock::Builder &block) = 0;
+        virtual Result Visit(NodeType &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) = 0;
     };
 }
 
