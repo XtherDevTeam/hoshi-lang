@@ -15,9 +15,9 @@ namespace Hoshi {
      * @brief visit an literal ast and gen the code
      * @return string form of the value of literal
      */
-    Operand PrimaryCodegen::Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) {
+    Operand PrimaryCodegen::Visit(AST &ast, IRProgram::Builder &Program, IRBlock::Builder &Block) {
         if (ast.Type == AST::TreeType::Literals) {
-            return LiteralsCodegen::INSTANCE.Visit(ast, program, block);
+            return LiteralsCodegen::INSTANCE.Visit(ast, Program, Block);
         }
         return Operand::Empty;
     }

@@ -3,7 +3,7 @@
 //
 
 #include <Passes/ToIRPass.hpp>
-#include <Codegen/SingleExpressionCodegen.hpp>
+#include <Codegen/MultiplicationExpressionCodegen.hpp>
 
 namespace Hoshi {
     /**
@@ -21,7 +21,7 @@ namespace Hoshi {
         Program.SetName(L"Program");
         IRBlock::Builder Block;
         Block.SetName(L"Start");
-        Hoshi::SingleExpressionCodegen::INSTANCE.Visit(LastPass.GetResult(), Program, Block);
+        Hoshi::MultiplicationExpressionCodegen::INSTANCE.Visit(LastPass.GetResult(), Program, Block);
         Program.AddBlock(Block.build());
         PassResult.Result = std::move(Program);
     }
