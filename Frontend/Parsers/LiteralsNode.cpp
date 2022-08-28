@@ -3,11 +3,11 @@
 //
 
 #include <Parsers/LiteralsNode.hpp>
-#include <Exceptions/ParserException.hpp>
 
 namespace Hoshi {
     LiteralsNode::LiteralsNode(void) = default;
-    
+    LiteralsNode::~LiteralsNode() = default;
+
     LiteralsNode::LiteralsNode(Lexer::Token Literals) 
         : Literals(Literals) {
     }
@@ -20,25 +20,18 @@ namespace Hoshi {
         return L"literals";
     }
 
-    LiteralsNode::Parser::Parser(void) = default;
+    LiteralsNode::Parser::Parser(void) 
+        : CSTNode::Parser<LiteralsNode>({LITERALS_FIRST})
+    {
+    }
 
     LiteralsNode::Parser LiteralsNode::Parser::INSTANCE;
 
-    LiteralsNode LiteralsNode::Parser::Parse(Lexer L) {
-        switch (L.LastToken.Kind) {
-            //Literals
-        case Lexer::TokenKind::Integer:
-        case Lexer::TokenKind::Boolean:
-        case Lexer::TokenKind::Decimal:
-        case Lexer::TokenKind::String:
-        case Lexer::TokenKind::Character: {
-            LiteralsNode Res(L.LastToken);
-            L.Scan();
-            return Res;
-        }
-        default: {
+    LiteralsNode *LiteralsNode::Parser::Parse(Lexer &L) {
+        if (! IsFirstToken(L.LastToken))
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except a literal!");
-        }
-        }
+        LiteralsNode *Result = new LiteralsNode(L.LastToken);
+        L.Scan();
+        return Result;
     }
 }
