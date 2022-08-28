@@ -19,7 +19,7 @@ namespace Hoshi {
     };
 
     /**
-     * @biref A queue implementation for replacing STL
+     * @brief A queue implementation for replacing STL
      * @note C++ STL std::queue woqunimabi, caonimageshabiwanyi. Son of a bitch.
      */
     template<typename T>

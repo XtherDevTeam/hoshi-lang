@@ -24,7 +24,7 @@ namespace Hoshi {
     };
 
     /**
-      * @biref Exceptions of Lexer in Hoshi 2
+      * @brief Exceptions of Lexer in Hoshi 2
       */
     class LexerException : HoshiException {
         std::string message;
@@ -121,12 +121,12 @@ namespace Hoshi {
         Token LastToken;
 
         /**
-         * @biref Default constructor of Lexer
+         * @brief Default constructor of Lexer
          */
         Lexer();
 
         /**
-         * @biref Initialize a Lexer with source codes.
+         * @brief Initialize a Lexer with source codes.
          * @param String Source codes
          */
         explicit Lexer(XString String);
@@ -134,21 +134,57 @@ namespace Hoshi {
         XIndexType Line{}, Column{}, Position{};
 
         /**
-         * @biref Get next character
+         * @brief Get next character
          * @return Next character
          */
         XCharacter NextCharacter();
 
         /**
-         * @biref Get next token
+         * @brief Get next token
          * @return The next token
          */
         Token Scan();
 
         /**
-         * @biref Reset Lexer to initial state.
+         * @brief Reset Lexer to initial state.
          */
         void Reset();
+    private:
+        /**
+         * @brief Get next token as Identifier/Keyword/Boolean
+         * @return The next token
+         */
+        Token ScanAsIdentifier(void);
+        /**
+         * @brief Get next token as Digital
+         * @return The next token
+         */
+        Token ScanAsDigital(void);
+        /**
+         * @brief Get next token as ReadonlyStringLiteral
+         * @return The next token
+         */
+        Token ScanAsReadonlyStringLiteral(void);
+        /**
+         * @brief Get next token as Character
+         * @return The next token
+         */
+        Token ScanAsCharacter(void);
+        /**
+         * @brief Get next token as Single Sign
+         * @return The next token
+         */
+        Token ScanAsSingleSign(void);
+        /**
+         * @brief Get next token as Multiple Sign
+         * @return The next token
+         */
+        Token ScanAsMultipleSign(void);
+        /**
+         * @brief Get next token as Logic Sign
+         * @return The next token
+         */
+        Token ScanAsLogicSign(void);
     };
 
 } // Hoshi

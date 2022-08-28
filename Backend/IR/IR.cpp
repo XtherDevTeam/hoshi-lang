@@ -80,15 +80,15 @@ namespace Hoshi {
      */
     const XString ToString(IR ir) {
         XString str = L"";
-        if (ir.DestinationOperand.GetType() == OperandType::Identifier && ir.DestinationOperand.GetValue() != L"") { //是合法的Destination
+        if (ir.DestinationOperand.GetType() == OperandType::Identifier && ir.DestinationOperand.GetValue() != L"") { //Destination exists
             str += ir.DestinationOperand.GetValue();
             str += L" = ";
         }
         str += ToString(ir.Code);
-        if (ir.SourceOperandA.GetType() != OperandType::Unknown && ir.SourceOperandA.GetValue() != L"") { //是合法的Source
+        if (ir.SourceOperandA.GetType() != OperandType::Unknown && ir.SourceOperandA.GetValue() != L"") { //Source exists
             str += L" ";
             str += ir.SourceOperandA.GetValue();
-            if (ir.SourceOperandB.GetType() != OperandType::Unknown && ir.SourceOperandB.GetValue() != L"") { //是合法的Source
+            if (ir.SourceOperandB.GetType() != OperandType::Unknown && ir.SourceOperandB.GetValue() != L"") { //Source exists
                 str += L", ";
                 str += ir.SourceOperandB.GetValue();
             }
