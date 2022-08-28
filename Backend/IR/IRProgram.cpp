@@ -45,4 +45,18 @@ namespace Hoshi {
     IRProgram IRProgram::Builder::build(void) {
         return IRProgram(Name, std::move(Blocks));
     }
+    /**
+     * @brief Get the name of the program
+     * @return Name of the program
+     */
+    const XString IRProgram::GetName(void) const {
+        return Name;
+    }
+    /**
+     * @brief Get blocks of the program
+     * @return Blocks of the program
+     */
+    const XArray<IRBlock> IRProgram::GetBlocks(void) const {
+        return Blocks;
+    }
 }

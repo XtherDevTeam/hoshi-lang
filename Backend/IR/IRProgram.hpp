@@ -60,12 +60,12 @@ namespace Hoshi {
          * @brief Get the name of the program
          * @return Name of the program
          */
-        const XString GetName(void);
+        const XString GetName(void) const;
         /**
          * @brief Get blocks of the program
          * @return Blocks of the program
          */
-        const XArray<IRBlock> GetBlocks(void);
+        const XArray<IRBlock> GetBlocks(void) const;
         friend class IRProgram::Builder;
     };
 }

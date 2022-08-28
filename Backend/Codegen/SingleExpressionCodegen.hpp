@@ -21,9 +21,9 @@ namespace Hoshi {
         static SingleExpressionCodegen INSTANCE;
         /**
          * @brief visit an single expression ast and gen the code
-         * @return result variable of Single expression and the ir of single expression
+         * @return result variable of Single expression
          */
-        virtual Operand Visit(AST &ast, IRProgram::Builder &program, IRBlock::Builder &block) override final;
+        virtual Operand Visit(AST &ast, IRProgram::Builder &Program, IRBlock::Builder &Block) override final;
     };
 }
 

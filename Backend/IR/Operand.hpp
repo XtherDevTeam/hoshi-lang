@@ -28,19 +28,19 @@ namespace Hoshi {
         /**
          * @brief Type of the Operand
          */
-        const OperandType Type;
+        OperandType Type;
         /**
          * @brief Value of the Operand
          */
-        const XString Value;
+        XString Value;
         /**
          * @brief List form of the Operand
          */
-        const XArray<Operand> ListValue;
+        XArray<Operand> ListValue;
         /**
          * @brief Mapping form of the Operand
          */
-        const XTreeMap<XString, Operand> MappingValue;
+        XTreeMap<XString, Operand> MappingValue;
     public:
         /**
          * @brief Construct a Operand
