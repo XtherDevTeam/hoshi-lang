@@ -21,15 +21,14 @@ namespace Hoshi {
     }
 
     LiteralsNode::Parser::Parser(void) 
-        : CSTNode::Parser<LiteralsNode>({LITERALS_FIRST})
-    {
+        : CSTNode::Parser<LiteralsNode>({LITERALS_FIRST}) {
     }
 
     LiteralsNode::Parser LiteralsNode::Parser::INSTANCE;
 
     LiteralsNode *LiteralsNode::Parser::Parse(Lexer &L) {
         if (! IsFirstToken(L.LastToken))
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except a literal!");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except literal FIRST!");
         LiteralsNode *Result = new LiteralsNode(L.LastToken);
         L.Scan();
         return Result;

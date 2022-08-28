@@ -8,13 +8,13 @@
 #include <Parsers/LiteralsNode.hpp>
 
 namespace Hoshi {
-    class PrimaryExpression : public CSTNode{
+    class PrimaryExpressionNode : public CSTNode{
         LiteralsNode *Literals;
 
-        PrimaryExpression(LiteralsNode *Literals);
+        PrimaryExpressionNode(LiteralsNode *Literals);
     public:
-        PrimaryExpression(void);
-        virtual ~PrimaryExpression();
+        PrimaryExpressionNode(void);
+        virtual ~PrimaryExpressionNode();
 
         LiteralsNode *GetLiterals(void);
 
@@ -22,12 +22,12 @@ namespace Hoshi {
 
         #define PRIMARY_FIRST LITERALS_FIRST
 
-        class Parser : public CSTNode::Parser<PrimaryExpression> {
+        class Parser : public CSTNode::Parser<PrimaryExpressionNode> {
             Parser(void);
         public:
             static Parser INSTANCE;
             
-            virtual PrimaryExpression *Parse(Lexer &L) override;
+            virtual PrimaryExpressionNode *Parse(Lexer &L) override;
         };
     };
 }

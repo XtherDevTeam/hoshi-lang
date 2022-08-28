@@ -5,41 +5,40 @@
 #include <Parsers/PrimaryExpressionNode.hpp>
 
 namespace Hoshi {
-    PrimaryExpression::PrimaryExpression(LiteralsNode *Literals) 
+    PrimaryExpressionNode::PrimaryExpressionNode(LiteralsNode *Literals) 
         : Literals(Literals) {
     }
 
-    PrimaryExpression::PrimaryExpression(void) 
+    PrimaryExpressionNode::PrimaryExpressionNode(void) 
         : Literals(NULL) {
     }
 
-    PrimaryExpression::~PrimaryExpression() {
+    PrimaryExpressionNode::~PrimaryExpressionNode() {
         if (Literals != NULL)
             delete Literals;
     }
 
-    LiteralsNode *PrimaryExpression::GetLiterals(void) {
+    LiteralsNode *PrimaryExpressionNode::GetLiterals(void) {
         return Literals;
     }
 
-    XString PrimaryExpression::GetNodeType(void) {
+    XString PrimaryExpressionNode::GetNodeType(void) {
         return L"primary";
     }
 
-    PrimaryExpression::Parser::Parser(void) 
-        : CSTNode::Parser<PrimaryExpression>({PRIMARY_FIRST})
-    {
+    PrimaryExpressionNode::Parser::Parser(void) 
+        : CSTNode::Parser<PrimaryExpressionNode>({PRIMARY_FIRST}) {
     }
 
-    PrimaryExpression::Parser PrimaryExpression::Parser::INSTANCE;
+    PrimaryExpressionNode::Parser PrimaryExpressionNode::Parser::INSTANCE;
 
-    PrimaryExpression *PrimaryExpression::Parser::Parse(Lexer &L) {
+    PrimaryExpressionNode *PrimaryExpressionNode::Parser::Parse(Lexer &L) {
         if (! IsFirstToken(L.LastToken))
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except a literal!");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except primary expression FIRST!");
 
         if (LiteralsNode::Parser::INSTANCE.IsFirstToken(L.LastToken)) {
             LiteralsNode *Literals = LiteralsNode::Parser::INSTANCE.Parse(L);
-            PrimaryExpression *Primary = new PrimaryExpression(Literals);
+            PrimaryExpressionNode *Primary = new PrimaryExpressionNode(Literals);
             return Primary;
         }
 
