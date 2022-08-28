@@ -52,7 +52,8 @@ namespace Hoshi {
             InitializerList,
             ClassDefinition,
             VirtualMethodDeclaration,
-            InterfaceDefinition
+            InterfaceDefinition,
+            ImportStatement
         } Type;
         Lexer::Token Node;
         XArray<AST> Subtrees;
