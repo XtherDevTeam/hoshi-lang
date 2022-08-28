@@ -5,12 +5,39 @@
 #ifndef XSCRIPT2_IR_HPP
 #define XSCRIPT2_IR_HPP
 
-#include <Operand.hpp>
+#include <IR/Operand.hpp>
 
 namespace Hoshi {
     enum class Opcode : int {
-        NOP
+        NOP,
+        ADD, // +
+        SUB, // -
+        MUL, // *
+        DIV, // /
+        REM, // %
+        SHR, // >>
+        SHL, // <<
+        AND, // &
+        OR,  // |
+        XOR, // ^
+        EQU, // ==
+        NEQ, // !=
+        GREAT, // >
+        LESS, // <
+        GREATEQU, // >=
+        LESSEQU,  // <=
+        NOT, // !
+        NEG, // -
+        INV,  // ~
+        JUMP,
+        BRANCH
     };
+
+    /**
+     * @brief Code to String
+     * @return String form of the code
+     */
+    const XString ToString(Opcode Code);
 
     class IR {
     protected:
@@ -58,7 +85,14 @@ namespace Hoshi {
          * @return Destination Operand of the IR
          */
         const Operand GetDestinationOperand(void) const;
+        friend const XString ToString(IR Code);
     };
+
+    /**
+     * @brief IR to String
+     * @return String form of the ir
+     */
+    const XString ToString(IR ir);
 }
 
 #endif

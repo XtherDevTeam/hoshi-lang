@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <Config.hpp>
 
 namespace Hoshi {
     enum class OperandType : int {
@@ -31,32 +32,32 @@ namespace Hoshi {
         /**
          * @brief Value of the Operand
          */
-        const std::string Value;
+        const XString Value;
         /**
          * @brief List form of the Operand
          */
-        const std::vector<Operand> ListValue;
+        const XArray<Operand> ListValue;
         /**
          * @brief Mapping form of the Operand
          */
-        const std::map<std::string, Operand> MappingValue;
+        const XTreeMap<XString, Operand> MappingValue;
     public:
         /**
          * @brief Construct a Operand
          * @param Type type of the Operand
          * @param Value value of the Operand
          */
-        Operand(const OperandType Type, const std::string &&Value);
+        Operand(const OperandType Type, const XString &&Value);
         /**
          * @brief Construct a Operand
          * @param ListValue List form value of the Operand
          */
-        Operand(const std::vector<Operand> &&ListValue);
+        Operand(const XArray<Operand> &&ListValue);
         /**
          * @brief Construct a Operand
          * @param MappingValue Mapping form value of the Operand
          */
-        Operand(const std::map<std::string, Operand> &&MappingValue);
+        Operand(const XTreeMap<XString, Operand> &&MappingValue);
         /**
          * @brief Get the type of the Operand
          * @return Type of the Operand
@@ -66,22 +67,26 @@ namespace Hoshi {
          * @brief Get the value of the Operand
          * @return Value of the Operand
          */
-        const std::string GetValue(void) const;
+        const XString GetValue(void) const;
         /**
          * @brief Get the value of the Operand
          * @return Value of the Operand
          */
-        const std::vector<Operand> GetListValue(void) const;
+        const XArray<Operand> GetListValue(void) const;
         /**
          * @brief Get the value of the Operand
          * @return Value of the Operand
          */
-        const std::map<std::string, Operand> GetMappingValue(void) const;
+        const XTreeMap<XString, Operand> GetMappingValue(void) const;
         /**
          * @brief Empty Operand
          */
         static Operand Empty;
     };
+
+    const XString ToString(Operand Operand);
+    const XString ToString(XArray<Operand> List);
+    const XString ToString(XTreeMap<XString, Operand> Mapping);
 }
 
 #endif
