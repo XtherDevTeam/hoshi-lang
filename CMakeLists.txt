@@ -19,4 +19,4 @@ file (GLOB HOSHI_LANG_INCLUDE
         Backend/Passes/*.cpp
         Backend/Optimizer/*.cpp)
 
-add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE} Backend/Passes/ToASTPass.cpp Backend/Passes/ToASTPass.hpp)
+add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})

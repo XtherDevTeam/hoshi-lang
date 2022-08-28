@@ -9,28 +9,28 @@
 
 namespace Hoshi {
     enum class Opcode : int {
-        NOP,
-        ADD, // +
-        SUB, // -
-        MUL, // *
-        DIV, // /
-        REM, // %
-        SHR, // >>
-        SHL, // <<
-        AND, // &
-        OR,  // |
-        XOR, // ^
-        EQU, // ==
-        NEQ, // !=
-        GREAT, // >
-        LESS, // <
-        GREATEQU, // >=
-        LESSEQU,  // <=
-        NOT, // !
-        NEG, // -
-        INV,  // ~
-        JUMP,
-        BRANCH
+        Nop,
+        Add, // +
+        Subtract, // -
+        Multiply, // *
+        Divide, // /
+        Remainder, // %
+        ShiftRight, // >>
+        ShiftLeft, // <<
+        And, // &
+        Or,  // |
+        Xor, // ^
+        Equal, // ==
+        NotEqual, // !=
+        Great, // >
+        Less, // <
+        GreatEqual, // >=
+        LessEqual,  // <=
+        Not, // !
+        Negative, // -
+        Invert,  // ~
+        Jump,
+        Branch
     };
 
     /**

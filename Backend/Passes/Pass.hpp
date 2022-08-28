@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_PASS_HPP
 #define XSCRIPT2_PASS_HPP
 
-#include <AST.hpp>
+// #include <AST.hpp>
 #include <IR/IRProgram.hpp>
 
 namespace Hoshi {
@@ -21,7 +21,7 @@ namespace Hoshi {
         }
     };
 
-    using ASTPassResult = PassResult<AST>;
+    // using ASTPassResult = PassResult<AST>;
     using XStringPassResult = PassResult<XString>;
     using IRProgramPassResult = PassResult<IRProgram::Builder>;
 

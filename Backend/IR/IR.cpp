@@ -11,29 +11,29 @@ namespace Hoshi {
      */
     const XString ToString(Opcode Code) {
         switch (Code) {
-        case Opcode::NOP     : return L"nop"     ;
-        case Opcode::ADD     : return L"add"     ;
-        case Opcode::SUB     : return L"sub"     ;
-        case Opcode::MUL     : return L"mul"     ;
-        case Opcode::DIV     : return L"div"     ;
-        case Opcode::REM     : return L"rem"     ;
-        case Opcode::SHR     : return L"shr"     ;
-        case Opcode::SHL     : return L"shl"     ;
-        case Opcode::AND     : return L"and"     ;
-        case Opcode::OR      : return L"or"      ;
-        case Opcode::XOR     : return L"xor"     ;
-        case Opcode::EQU     : return L"equ"     ;
-        case Opcode::NEQ     : return L"neq"     ;
-        case Opcode::GREAT   : return L"great"   ;
-        case Opcode::LESS    : return L"less"    ;
-        case Opcode::GREATEQU: return L"greatequ";
-        case Opcode::LESSEQU : return L"lessequ" ;
-        case Opcode::NOT     : return L"not"     ;
-        case Opcode::NEG     : return L"neg"     ;
-        case Opcode::INV     : return L"inv"     ;
-        case Opcode::JUMP    : return L"jump"    ;
-        case Opcode::BRANCH  : return L"branch"  ;
-        default              : return L"invalid" ;
+        case Opcode::Nop       : return L"nop"       ;
+        case Opcode::Add       : return L"add"       ;
+        case Opcode::Subtract  : return L"subtract"  ;
+        case Opcode::Multiply  : return L"multiply"  ;
+        case Opcode::Divide    : return L"divide"    ;
+        case Opcode::Remainder : return L"remainder" ;
+        case Opcode::ShiftRight: return L"shiftright";
+        case Opcode::ShiftLeft : return L"shiftleft" ;
+        case Opcode::And       : return L"and"       ;
+        case Opcode::Or        : return L"or"        ;
+        case Opcode::Xor       : return L"xor"       ;
+        case Opcode::Equal     : return L"equal"     ;
+        case Opcode::NotEqual  : return L"notequal"  ;
+        case Opcode::Great     : return L"great"     ;
+        case Opcode::Less      : return L"less"      ;
+        case Opcode::GreatEqual: return L"greatequal";
+        case Opcode::LessEqual : return L"lessequ"   ;
+        case Opcode::Not       : return L"not"       ;
+        case Opcode::Negative  : return L"negative"  ;
+        case Opcode::Invert    : return L"invert"    ;
+        case Opcode::Jump      : return L"jump"      ;
+        case Opcode::Branch    : return L"branch"    ;
+        default                : return L"invalid"   ;
         }
     }
     /**
