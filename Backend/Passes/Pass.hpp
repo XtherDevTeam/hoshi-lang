@@ -22,6 +22,7 @@ namespace Hoshi {
     };
 
     using ASTPassResult = PassResult<AST>;
+    using XStringPassResult = PassResult<XString>;
     using IRProgramPassResult = PassResult<IRProgram::Builder>;
 
     template<typename SourceType, typename ResultType> class Pass {
