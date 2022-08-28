@@ -3,6 +3,7 @@
 #include "Frontend/Lexer.hpp"
 #include "Frontend/AST.hpp"
 #include "Frontend/Parsers/MultiplicationExpressionParser.hpp"
+#include <Passes/ToASTPass.hpp>
 #include <Passes/ToIRPass.hpp>
 #include <Passes/XStringInputPassResult.hpp>
 #include <Exceptions/CompilerError.hpp>
@@ -25,14 +26,12 @@ int main(int argc, const char **argv) {
     }
     try {
         try {
-            Hoshi::Lexer Lex(S);
-            Lex.Scan();
-            Hoshi::AST Tree = Hoshi::Parser::MultiplicationExpressionParser(Lex).Parse();
-            DefaultASTPassResult Result;
-            Result.Result = Tree;
-            Hoshi::ToIRPass Pass(Result);
-            Pass.Run();
-            Hoshi::IRProgram Program = Pass.GetResult().GetResult().build();
+            Hoshi::XStringInputPassResult FirstPassResult(S);
+            Hoshi::ToASTPass ASTPass(FirstPassResult);
+            Hoshi::ToIRPass IRPass(ASTPass.GetResult());
+            ASTPass.Run();
+            IRPass.Run();
+            Hoshi::IRProgram Program = IRPass.GetResult().GetResult().build();
             Hoshi::IRBlock Block = Program.GetBlocks()[0];
             for (Hoshi::IR ir : Block.GetIRCollection()) {
                 std::wcout << Hoshi::ToString(ir) << std::endl;

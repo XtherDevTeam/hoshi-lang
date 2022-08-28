@@ -8,7 +8,6 @@
 #include "Pass.hpp"
 
 namespace Hoshi {
-
     class ToASTPassResult : public ASTPassResult {
     public:
         friend class ToASTPass;
@@ -21,11 +20,11 @@ namespace Hoshi {
          * @brief Construct a Pass
          * @param LastPass Result of Last Pass
          */
-        ToASTPass(XStringPassResult LastPass);
+        ToASTPass(XStringPassResult &LastPass);
         /**
          * @brief Run a Pass
          */
-        virtual void Run() override;
+        virtual void Run(void) override;
     };
 
 } // Hoshi
