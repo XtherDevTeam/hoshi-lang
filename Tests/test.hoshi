@@ -1,3 +1,21 @@
+import "libhoshi/hoshi.hmod" as Hoshi;
+
 interface Printable {
     virtual print () -> void;
+}
+
+class B impl Printable {
+    var a : int;
+    func constructor () : a(114514) -> void {
+        return;
+    }
+    // Implementation of Printable::print
+    func print () -> void {
+        Hoshi::IO::println(Hoshi::Str(this.a));
+        return;
+    }
 };
+
+class A extends B impl Printable {
+    var a : int;
+}
