@@ -24,6 +24,7 @@ namespace Hoshi {
          * @return the value of access expression
          */
         virtual Operand Visit(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual VariableSymbolInfo &VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block);
     };
 }
 

@@ -14,7 +14,7 @@ namespace Hoshi {
      */
     LiteralsCodegen LiteralsCodegen::INSTANCE;
     /**
-     * @brief visit an literal ast and gen the code
+     * @brief visit a literal ast and gen the code
      * @return string form of the value of literal
      */
     Operand LiteralsCodegen::Visit(LiteralsNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {

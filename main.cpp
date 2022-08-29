@@ -3,8 +3,10 @@
 #include <Lexer.hpp>
 #include <Passes/Pass.hpp>
 #include <Exceptions/CompilerError.hpp>
-#include <Parsers/BinaryMoveExpressionNode.hpp>
-#include <Codegen/BinaryMoveExpressionCodegen.hpp>
+#include <Parsers/AssignStmtNode.hpp>
+#include <Parsers/ExpressionStmtNode.hpp>
+#include <Codegen/AssignStmtCodegen.hpp>
+#include <Codegen/ExpressionStmtCodegen.hpp>
 
 // class DefaultASTPassResult : public Hoshi::ASTPassResult {
 // public:
@@ -25,14 +27,15 @@ int main(int argc, const char **argv) {
     try {
         Hoshi::Lexer Lex(S);
         Lex.Scan();
-        Hoshi::BinaryMoveExpressionNode *CST = Hoshi::BinaryMoveExpressionNode::Parser::INSTANCE.Parse(Lex);
+        Hoshi::AssignStmtNode *CST0 = Hoshi::AssignStmtNode::Parser::INSTANCE.Parse(Lex);
+        Hoshi::ExpressionStmtNode *CST1 = Hoshi::ExpressionStmtNode::Parser::INSTANCE.Parse(Lex);
 
         Hoshi::IRProgram::Builder Program;
         Program.SetName(L"A");
-        Program.GetContext().VariableTable.AddSymbol(L"a", {L"a", Hoshi::Operand(Hoshi::OperandType::Identifier, L"%a"), L"int"});
         Hoshi::IRBlock::Builder Block;
         Block.SetName(L"A");
-        Hoshi::BinaryMoveExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);
+        Hoshi::AssignStmtCodegen::INSTANCE.Visit(*CST0, Program, Block);
+        Hoshi::ExpressionStmtCodegen::INSTANCE.Visit(*CST1, Program, Block);
         Program.AddBlock(Block.build());
         Hoshi::IRProgram ProgramResult = Program.build();
 
@@ -40,7 +43,8 @@ int main(int argc, const char **argv) {
             std::wcout << Hoshi::ToString(ir) << std::endl;
         }
 
-        delete CST;
+        delete CST0;
+        delete CST1;
     } catch(Hoshi::CompilerError e) {
          std::wcerr << e.what() << std::endl;
     } catch(Hoshi::ParserException e) {

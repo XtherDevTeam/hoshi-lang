@@ -66,8 +66,8 @@ namespace Hoshi {
             BinaryAnd,                  // &
             IncrementSign,              // ++
             DecrementSign,              // --
-            BinaryLeftMove,             // <<
-            BinaryRightMove,            // >>
+            BinaryLeftShift,             // <<
+            BinaryRightShift,            // >>
             AdditionAssignment,         // +=
             SubtractionAssignment,      // -=
             MultiplicationAssignment,   // *=

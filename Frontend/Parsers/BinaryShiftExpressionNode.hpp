@@ -2,20 +2,20 @@
 // Created by chou on 2022/8/29.
 //
 
-#ifndef XSCRIPT2_BINARYMOVEEXPRESSIONNODE_HPP
-#define XSCRIPT2_BINARYMOVEEXPRESSIONNODE_HPP
+#ifndef XSCRIPT2_BINARYSHIFTEXPRESSIONNODE_HPP
+#define XSCRIPT2_BINARYSHIFTEXPRESSIONNODE_HPP
 
 #include <Parsers/AdditionExpressionNode.hpp>
 
 namespace Hoshi {
-    class BinaryMoveExpressionNode : public CSTNode{
+    class BinaryShiftExpressionNode : public CSTNode {
         XArray<AdditionExpressionNode *> Operands;
         XArray<Lexer::Token> Operators;
 
-        BinaryMoveExpressionNode(XArray<AdditionExpressionNode *> Operands, XArray<Lexer::Token> Operators);
+        BinaryShiftExpressionNode(XArray<AdditionExpressionNode *> Operands, XArray<Lexer::Token> Operators);
     public:
-        BinaryMoveExpressionNode(void);
-        virtual ~BinaryMoveExpressionNode();
+        BinaryShiftExpressionNode(void);
+        virtual ~BinaryShiftExpressionNode();
 
         XArray<AdditionExpressionNode *> GetOperands(void);
         AdditionExpressionNode *GetOperands(int index);
@@ -24,14 +24,14 @@ namespace Hoshi {
 
         virtual XString GetNodeType(void) override;
 
-#define BINARYMOVE_FIRST ADDITION_FIRST
+        #define BINARYSHIFT_FIRST ADDITION_FIRST
 
-        class Parser : public CSTNode::Parser<BinaryMoveExpressionNode> {
+        class Parser : public CSTNode::Parser<BinaryShiftExpressionNode> {
             Parser(void);
         public:
             static Parser INSTANCE;
 
-            BinaryMoveExpressionNode *Parse(Lexer &L) override;
+            BinaryShiftExpressionNode *Parse(Lexer &L) override;
         };
     };
 }

@@ -291,7 +291,7 @@ namespace Hoshi {
             }
             if (String[Position] == '<') {
                 NextCharacter();   // Read after '>'
-                return {TokenKind::BinaryLeftMove, L"<<", Line, Column};
+                return {TokenKind::BinaryLeftShift, L"<<", Line, Column};
             }
             return {TokenKind::LessThan, L"<", Line, Column};
         }
@@ -304,7 +304,7 @@ namespace Hoshi {
             } 
             if (String[Position] == '>') {
                 NextCharacter();   // Read after '>'
-                return {TokenKind::BinaryRightMove, L">>", Line, Column};
+                return {TokenKind::BinaryRightShift, L">>", Line, Column};
             }
             return {TokenKind::MoreThan, L">", Line, Column};
         }

@@ -13,7 +13,7 @@ namespace Hoshi {
         return SymbolTable.find(SymbolName) != SymbolTable.end();
     }
 
-    VariableSymbolInfo VariableSymbolTable::GetSymbol(XString SymbolName) {
+    VariableSymbolInfo &VariableSymbolTable::GetSymbol(XString SymbolName) {
         return SymbolTable.at(SymbolName);
     }
 

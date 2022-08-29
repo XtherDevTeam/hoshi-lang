@@ -23,4 +23,14 @@ namespace Hoshi {
 
         return Program.GetContext().VariableTable.GetSymbol(Identifier.Value).Value;
     }
+
+    VariableSymbolInfo &AccessExpressionCodegen::VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+        Lexer::Token Identifier = Node.GetIdentifier();
+
+        if (! Program.GetContext().VariableTable.Exists(Identifier.Value)) {
+            Program.GetContext().VariableTable.AddSymbol(Identifier.Value, {Identifier.Value, Operand::Empty, L"undefined"});
+        }
+
+        return Program.GetContext().VariableTable.GetSymbol(Identifier.Value);
+    }
 }
