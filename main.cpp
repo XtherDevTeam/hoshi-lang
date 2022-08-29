@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <Lexer.hpp>
-#include <Parsers/AdditionExpressionNode.hpp>
 #include <Passes/Pass.hpp>
-#include <Codegen/AdditionExpressionCodegen.hpp>
 #include <Exceptions/CompilerError.hpp>
+#include <Parsers/BinaryMoveExpressionNode.hpp>
+#include <Codegen/BinaryMoveExpressionCodegen.hpp>
 
 // class DefaultASTPassResult : public Hoshi::ASTPassResult {
 // public:
@@ -25,14 +25,14 @@ int main(int argc, const char **argv) {
     try {
         Hoshi::Lexer Lex(S);
         Lex.Scan();
-        Hoshi::AdditionExpressionNode *CST = Hoshi::AdditionExpressionNode::Parser::INSTANCE.Parse(Lex);
+        Hoshi::BinaryMoveExpressionNode *CST = Hoshi::BinaryMoveExpressionNode::Parser::INSTANCE.Parse(Lex);
 
         Hoshi::IRProgram::Builder Program;
         Program.SetName(L"A");
         Program.GetContext().VariableTable.AddSymbol(L"a", {L"a", Hoshi::Operand(Hoshi::OperandType::Identifier, L"%a"), L"int"});
         Hoshi::IRBlock::Builder Block;
         Block.SetName(L"A");
-        Hoshi::AdditionExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);
+        Hoshi::BinaryMoveExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);
         Program.AddBlock(Block.build());
         Hoshi::IRProgram ProgramResult = Program.build();
 
