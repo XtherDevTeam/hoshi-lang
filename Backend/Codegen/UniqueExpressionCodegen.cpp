@@ -37,7 +37,7 @@ namespace Hoshi {
             Block.AddIR(UniqieExprIR(Opcode::Invert, Value, Result));
             return Result;
         }
-
-        return Operand::Empty;
+        
+        throw CompilerError(Node.Line, Node.Column, L"Invalid Unique Expression Operator!");
     }
 }

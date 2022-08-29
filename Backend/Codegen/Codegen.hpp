@@ -7,6 +7,7 @@
 
 #include <IR/IRBlock.hpp>
 #include <IR/IRProgram.hpp>
+#include <Exceptions/CompilerError.hpp>
 
 namespace Hoshi {
     template<typename Result, typename NodeType> class Codegen {

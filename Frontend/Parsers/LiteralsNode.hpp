@@ -8,7 +8,7 @@
 #include <Parsers/CSTNode.hpp>
 
 namespace Hoshi {
-    class LiteralsNode : public CSTNode{
+    class LiteralsNode : public CSTNode {
         Lexer::Token Literals;
 
         LiteralsNode(Lexer::Token Literals);

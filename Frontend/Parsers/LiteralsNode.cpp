@@ -5,11 +5,13 @@
 #include <Parsers/LiteralsNode.hpp>
 
 namespace Hoshi {
-    LiteralsNode::LiteralsNode(void) = default;
+    LiteralsNode::LiteralsNode(void)
+        : Literals({}), CSTNode(0, 0) {
+    }
     LiteralsNode::~LiteralsNode() = default;
 
     LiteralsNode::LiteralsNode(Lexer::Token Literals) 
-        : Literals(Literals) {
+        : Literals(Literals), CSTNode(Literals.Line, Literals.Column) {
     }
 
     Lexer::Token LiteralsNode::GetLiterals(void) {

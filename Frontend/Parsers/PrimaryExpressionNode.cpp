@@ -6,11 +6,11 @@
 
 namespace Hoshi {
     PrimaryExpressionNode::PrimaryExpressionNode(LiteralsNode *Literals) 
-        : Literals(Literals) {
+        : Literals(Literals), CSTNode(Literals->Line, Literals->Column) {
     }
 
     PrimaryExpressionNode::PrimaryExpressionNode(void) 
-        : Literals(NULL) {
+        : Literals(NULL), CSTNode(0, 0) {
     }
 
     PrimaryExpressionNode::~PrimaryExpressionNode() {

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <Lexer.hpp>
-#include <Parsers/UniqueExpressionNode.hpp>
+#include <Parsers/MuliplicationExpressionNode.hpp>
 #include <Passes/Pass.hpp>
-#include <Codegen/UniqueExpressionCodegen.hpp>
+#include <Codegen/MuliplicationExpressionCodegen.hpp>
 #include <Exceptions/CompilerError.hpp>
 
 // class DefaultASTPassResult : public Hoshi::ASTPassResult {
@@ -25,13 +25,13 @@ int main(int argc, const char **argv) {
     try {
         Hoshi::Lexer Lex(S);
         Lex.Scan();
-        Hoshi::UniqueExpressionNode *CST = Hoshi::UniqueExpressionNode::Parser::INSTANCE.Parse(Lex);
+        Hoshi::MuliplicationExpressionNode *CST = Hoshi::MuliplicationExpressionNode::Parser::INSTANCE.Parse(Lex);
 
         Hoshi::IRProgram::Builder Program;
         Program.SetName(L"A");
         Hoshi::IRBlock::Builder Block;
         Block.SetName(L"A");
-        Hoshi::UniqueExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);
+        Hoshi::MuliplicationExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);
         Program.AddBlock(Block.build());
         Hoshi::IRProgram ProgramResult = Program.build();
 

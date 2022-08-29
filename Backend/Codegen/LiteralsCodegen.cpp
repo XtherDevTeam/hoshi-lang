@@ -24,7 +24,7 @@ namespace Hoshi {
         case Lexer::TokenKind::Boolean: return Operand(OperandType::Boolean, std::move(Node.GetLiterals().Value));
         case Lexer::TokenKind::Character: return Operand(OperandType::Character, std::move(Node.GetLiterals().Value));
         case Lexer::TokenKind::String: return Operand(OperandType::ReadonlyStringLiteral, std::move(Node.GetLiterals().Value));
-        default: return Operand::Empty;
         }
+        throw CompilerError(Node.Line, Node.Column, L"Invalid Literals!");
     }
 }

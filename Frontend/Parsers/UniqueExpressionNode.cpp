@@ -6,15 +6,15 @@
 
 namespace Hoshi {
     UniqueExpressionNode::UniqueExpressionNode(PrimaryExpressionNode *Primary) 
-        : Operator({}), Primary(Primary) {
+        : Operator({}), Primary(Primary), CSTNode(Primary->Line, Primary->Column) {
     }
 
     UniqueExpressionNode::UniqueExpressionNode(Lexer::Token Operator, PrimaryExpressionNode *Primary) 
-        : Operator(Operator), Primary(Primary){
+        : Operator(Operator), Primary(Primary), CSTNode(Operator.Line, Operator.Column) {
     }
 
     UniqueExpressionNode::UniqueExpressionNode(void)
-        : Operator({}), Primary(Primary) {
+        : Operator({}), Primary(NULL), CSTNode(0, 0) {
     }
 
     UniqueExpressionNode::~UniqueExpressionNode() {

@@ -22,6 +22,6 @@ namespace Hoshi {
         if (Node.GetLiterals() != NULL) {
             return LiteralsCodegen::INSTANCE.Visit(*Node.GetLiterals(), Program, Block);
         }
-        return Operand::Empty;
+        throw CompilerError(Node.Line, Node.Column, L"Invalid Primary Expression!");
     }
 }
