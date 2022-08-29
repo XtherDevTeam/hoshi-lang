@@ -6,6 +6,7 @@
 #define XSCRIPT2_IRPROGRAM_HPP
 
 #include <IR/IRBlock.hpp>
+#include <IR/ProgramContext.hpp>
 
 namespace Hoshi {
     class IRProgram {
@@ -21,9 +22,14 @@ namespace Hoshi {
          * @brief construct an IRProgram
          * @param Name Name of the program
          * @param Blocks IRBlocks in the program
+         * @param Context Context of the program
          */
-        IRProgram(const XString Name, const XArray<IRBlock> &&Blocks);
+        IRProgram(const XString Name, const XArray<IRBlock> &&Blocks, const ProgramContext &&Context);
     public:
+        /**
+         * @brief Context of the program
+         */
+        const ProgramContext Context;
         class Builder {
             /**
              * @brief Name of the program
@@ -33,6 +39,10 @@ namespace Hoshi {
              * @brief IRBlocks in the program
              */
             XArray<IRBlock> Blocks;
+            /**
+             * @brief Context of the program
+             */
+            ProgramContext Context;
         public:
             /**
              * @brief construct an IRProgram Builder
@@ -50,6 +60,11 @@ namespace Hoshi {
              * @return self
              */
             Builder &AddBlock(IRBlock Block);
+            /**
+             * @brief Get the context of program
+             * @return Context
+             */
+            ProgramContext &GetContext(void);
             /**
              * @brief create an IRProgram
              * @return IRProgram

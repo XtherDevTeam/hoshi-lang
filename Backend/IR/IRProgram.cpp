@@ -10,8 +10,8 @@ namespace Hoshi {
      * @param Name Name of the program
      * @param Blocks IRBlocks in the program
      */
-    IRProgram::IRProgram(const XString Name, const XArray<IRBlock> &&Blocks)
-        : Name(Name), Blocks(std::move(Blocks)) {
+    IRProgram::IRProgram(const XString Name, const XArray<IRBlock> &&Blocks, const ProgramContext &&Context)
+        : Name(Name), Blocks(std::move(Blocks)), Context(std::move(Context)) {
     }
 
     /**
@@ -39,11 +39,18 @@ namespace Hoshi {
         return *this;
     }
     /**
+     * @brief Get the context of program
+     * @return Context
+     */
+    ProgramContext &IRProgram::Builder::GetContext(void) {
+        return Context;
+    }
+    /**
      * @brief create an IRProgram
      * @return IRProgram
      */
     IRProgram IRProgram::Builder::build(void) {
-        return IRProgram(Name, std::move(Blocks));
+        return IRProgram(Name, std::move(Blocks), std::move(Context));
     }
     /**
      * @brief Get the name of the program

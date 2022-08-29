@@ -6,21 +6,26 @@
 #define XSCRIPT2_PRIMARYEXPRESSIONNODE_HPP
 
 #include <Parsers/LiteralsNode.hpp>
+#include <Parsers/AccessExpressionNode.hpp>
 
 namespace Hoshi {
     class PrimaryExpressionNode : public CSTNode{
         LiteralsNode *Literals;
+        AccessExpressionNode *Access;
 
         PrimaryExpressionNode(LiteralsNode *Literals);
+        PrimaryExpressionNode(AccessExpressionNode *Access);
     public:
         PrimaryExpressionNode(void);
         virtual ~PrimaryExpressionNode();
 
         LiteralsNode *GetLiterals(void);
+        AccessExpressionNode *GetAccess(void);
 
         virtual XString GetNodeType(void) override;
 
-        #define PRIMARY_FIRST LITERALS_FIRST
+        #define PRIMARY_FIRST LITERALS_FIRST, \
+                              ACCESS_FIRST
 
         class Parser : public CSTNode::Parser<PrimaryExpressionNode> {
             Parser(void);

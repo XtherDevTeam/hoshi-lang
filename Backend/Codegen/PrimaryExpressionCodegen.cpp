@@ -4,6 +4,7 @@
 
 #include <Codegen/PrimaryExpressionCodegen.hpp>
 #include <Codegen/LiteralsCodegen.hpp>
+#include <Codegen/AccessExpressionCodegen.hpp>
 
 namespace Hoshi {
     /**
@@ -21,6 +22,9 @@ namespace Hoshi {
     Operand PrimaryExpressionCodegen::Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
         if (Node.GetLiterals() != NULL) {
             return LiteralsCodegen::INSTANCE.Visit(*Node.GetLiterals(), Program, Block);
+        }
+        else if (Node.GetAccess() != NULL) {
+            return AccessExpressionCodegen::INSTANCE.Visit(*Node.GetAccess(), Program, Block);
         }
         throw CompilerError(Node.Line, Node.Column, L"Invalid Primary Expression!");
     }

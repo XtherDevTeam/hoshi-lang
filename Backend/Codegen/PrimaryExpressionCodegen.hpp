@@ -20,9 +20,9 @@ namespace Hoshi {
          */
         static PrimaryExpressionCodegen INSTANCE;
         /**
-     * @brief visit an primary expression ast and gen the code
-     * @return the result of primary expression
-     */
+         * @brief visit an primary expression ast and gen the code
+         * @return the result of primary expression
+         */
         virtual Operand Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
     };
 }

@@ -29,6 +29,7 @@ int main(int argc, const char **argv) {
 
         Hoshi::IRProgram::Builder Program;
         Program.SetName(L"A");
+        Program.GetContext().VariableTable.AddSymbol(L"a", {L"a", Hoshi::Operand(Hoshi::OperandType::Identifier, L"%a"), L"int"});
         Hoshi::IRBlock::Builder Block;
         Block.SetName(L"A");
         Hoshi::AdditionExpressionCodegen::INSTANCE.Visit(*CST, Program, Block);

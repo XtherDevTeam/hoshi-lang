@@ -20,9 +20,9 @@ namespace Hoshi {
          */
         static LiteralsCodegen INSTANCE;
         /**
-     * @brief visit an literal ast and gen the code
-     * @return string form of the value of literal
-     */
+         * @brief visit an literal ast and gen the code
+         * @return string form of the value of literal
+         */
         virtual Operand Visit(LiteralsNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
     };
 }

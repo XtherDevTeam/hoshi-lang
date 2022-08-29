@@ -6,11 +6,15 @@
 
 namespace Hoshi {
     PrimaryExpressionNode::PrimaryExpressionNode(LiteralsNode *Literals) 
-        : Literals(Literals), CSTNode(Literals->Line, Literals->Column) {
+        : Literals(Literals), Access(NULL), CSTNode(Literals->Line, Literals->Column) {
+    }
+
+    PrimaryExpressionNode::PrimaryExpressionNode(AccessExpressionNode *Access) 
+        : Literals(NULL), Access(Access), CSTNode(Access->Line, Access->Column) {
     }
 
     PrimaryExpressionNode::PrimaryExpressionNode(void) 
-        : Literals(NULL), CSTNode(0, 0) {
+        : Literals(NULL), Access(NULL), CSTNode(0, 0) {
     }
 
     PrimaryExpressionNode::~PrimaryExpressionNode() {
@@ -20,6 +24,10 @@ namespace Hoshi {
 
     LiteralsNode *PrimaryExpressionNode::GetLiterals(void) {
         return Literals;
+    }
+
+    AccessExpressionNode *PrimaryExpressionNode::GetAccess(void) {
+        return Access;
     }
 
     XString PrimaryExpressionNode::GetNodeType(void) {
@@ -39,6 +47,12 @@ namespace Hoshi {
         if (LiteralsNode::Parser::INSTANCE.IsFirstToken(L.LastToken)) {
             LiteralsNode *Literals = LiteralsNode::Parser::INSTANCE.Parse(L);
             PrimaryExpressionNode *Primary = new PrimaryExpressionNode(Literals);
+            return Primary;
+        }
+
+        if (AccessExpressionNode::Parser::INSTANCE.IsFirstToken(L.LastToken)) {
+            AccessExpressionNode *Access = AccessExpressionNode::Parser::INSTANCE.Parse(L);
+            PrimaryExpressionNode *Primary = new PrimaryExpressionNode(Access);
             return Primary;
         }
 
