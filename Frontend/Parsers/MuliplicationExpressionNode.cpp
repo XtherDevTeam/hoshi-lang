@@ -9,8 +9,8 @@ namespace Hoshi {
         : Operands(Operands), Operators(Operators), CSTNode(Operands[0]->Line, Operands[0]->Column) {
     }
    
-    MuliplicationExpressionNode::MuliplicationExpressionNode(void)
-        : Operands({}), Operators({}), CSTNode(0, 0) {
+    MuliplicationExpressionNode::MuliplicationExpressionNode()
+            : Operands({}), Operators({}), CSTNode(0, 0) {
     }
 
     MuliplicationExpressionNode::~MuliplicationExpressionNode() {
@@ -19,7 +19,7 @@ namespace Hoshi {
         }
     }
 
-    XArray<UniqueExpressionNode *> MuliplicationExpressionNode::GetOperands(void) {
+    XArray<UniqueExpressionNode *> MuliplicationExpressionNode::GetOperands() {
         return Operands;
     }
 
@@ -27,7 +27,7 @@ namespace Hoshi {
         return Operands.at(index);
     }
 
-    XArray<Lexer::Token> MuliplicationExpressionNode::GetOperators(void) {
+    XArray<Lexer::Token> MuliplicationExpressionNode::GetOperators() {
         return Operators;
     }
 
@@ -35,12 +35,12 @@ namespace Hoshi {
         return Operators.at(index);
     }
 
-    XString MuliplicationExpressionNode::GetNodeType(void) {
+    XString MuliplicationExpressionNode::GetNodeType() {
         return L"muliplication";
     }
 
-    MuliplicationExpressionNode::Parser::Parser(void) 
-        : CSTNode::Parser<MuliplicationExpressionNode>({MULIPLICATION_FIRST}) {
+    MuliplicationExpressionNode::Parser::Parser()
+            : CSTNode::Parser<MuliplicationExpressionNode>({MULIPLICATION_FIRST}) {
     }
 
     MuliplicationExpressionNode::Parser MuliplicationExpressionNode::Parser::INSTANCE;

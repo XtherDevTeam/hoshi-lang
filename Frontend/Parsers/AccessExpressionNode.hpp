@@ -29,20 +29,22 @@ namespace Hoshi {
 
         AccessExpressionNode(Lexer::Token Identifier, XArray<AccessOperator> Accesses);
     public:
-        AccessExpressionNode(void);
+        AccessExpressionNode();
+
         virtual ~AccessExpressionNode();
 
-        XArray<AccessOperator> GetAccesses(void);
+        XArray<AccessOperator> GetAccesses();
+
         AccessOperator GetAccesses(int index);
 
-        Lexer::Token GetIdentifier(void);
+        Lexer::Token GetIdentifier();
 
-        virtual XString GetNodeType(void) override;
+        virtual XString GetNodeType() override;
 
         #define ACCESS_FIRST Lexer::TokenKind::Identifier
 
         class Parser : public CSTNode::Parser<AccessExpressionNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
 

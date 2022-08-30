@@ -39,19 +39,19 @@ int main(int argc, const char **argv) {
         Program.AddBlock(Block.build());
         Hoshi::IRProgram ProgramResult = Program.build();
 
-        for (Hoshi::IR ir : ProgramResult.GetBlocks()[0].GetIRCollection()) {
+        for (Hoshi::IR ir: ProgramResult.GetBlocks()[0].GetIRCollection()) {
             std::wcout << Hoshi::ToString(ir) << std::endl;
         }
 
         delete CST0;
         delete CST1;
-    } catch(Hoshi::CompilerError e) {
-         std::wcerr << e.what() << std::endl;
-    } catch(Hoshi::ParserException e) {
-         std::wcerr << e.what() << std::endl;
-    } catch (Hoshi::HoshiException e) {
+    } catch (const Hoshi::CompilerError &e) {
+        std::wcerr << e.what() << std::endl;
+    } catch (const Hoshi::ParserException &e) {
+        std::wcerr << e.what() << std::endl;
+    } catch (const Hoshi::HoshiException &e) {
         std::wcout << e.what() << std::endl;
-    } catch (Hoshi::LexerException e) {
+    } catch (const Hoshi::LexerException &e) {
         std::wcout << e.what() << std::endl;
     }
     return 0;

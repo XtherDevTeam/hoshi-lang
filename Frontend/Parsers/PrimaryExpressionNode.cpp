@@ -13,8 +13,8 @@ namespace Hoshi {
         : Literals(NULL), Access(Access), CSTNode(Access->Line, Access->Column) {
     }
 
-    PrimaryExpressionNode::PrimaryExpressionNode(void) 
-        : Literals(NULL), Access(NULL), CSTNode(0, 0) {
+    PrimaryExpressionNode::PrimaryExpressionNode()
+            : Literals(NULL), Access(NULL), CSTNode(0, 0) {
     }
 
     PrimaryExpressionNode::~PrimaryExpressionNode() {
@@ -22,20 +22,20 @@ namespace Hoshi {
             delete Literals;
     }
 
-    LiteralsNode *PrimaryExpressionNode::GetLiterals(void) {
+    LiteralsNode *PrimaryExpressionNode::GetLiterals() {
         return Literals;
     }
 
-    AccessExpressionNode *PrimaryExpressionNode::GetAccess(void) {
+    AccessExpressionNode *PrimaryExpressionNode::GetAccess() {
         return Access;
     }
 
-    XString PrimaryExpressionNode::GetNodeType(void) {
+    XString PrimaryExpressionNode::GetNodeType() {
         return L"primary";
     }
 
-    PrimaryExpressionNode::Parser::Parser(void) 
-        : CSTNode::Parser<PrimaryExpressionNode>({PRIMARY_FIRST}) {
+    PrimaryExpressionNode::Parser::Parser()
+            : CSTNode::Parser<PrimaryExpressionNode>({PRIMARY_FIRST}) {
     }
 
     PrimaryExpressionNode::Parser PrimaryExpressionNode::Parser::INSTANCE;

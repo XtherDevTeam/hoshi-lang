@@ -14,20 +14,24 @@ namespace Hoshi {
 
         AdditionExpressionNode(XArray<MuliplicationExpressionNode *> Operands, XArray<Lexer::Token> Operators);
     public:
-        AdditionExpressionNode(void);
+        AdditionExpressionNode();
+
         virtual ~AdditionExpressionNode();
 
-        XArray<MuliplicationExpressionNode *> GetOperands(void);
+        XArray<MuliplicationExpressionNode *> GetOperands();
+
         MuliplicationExpressionNode *GetOperands(int index);
-        XArray<Lexer::Token> GetOperators(void);
+
+        XArray<Lexer::Token> GetOperators();
+
         Lexer::Token GetOperators(int index);
 
-        virtual XString GetNodeType(void) override;
+        virtual XString GetNodeType() override;
 
         #define ADDITION_FIRST MULIPLICATION_FIRST
 
         class Parser : public CSTNode::Parser<AdditionExpressionNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
             

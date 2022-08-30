@@ -9,26 +9,31 @@
 #include <Parsers/AccessExpressionNode.hpp>
 
 namespace Hoshi {
-    class PrimaryExpressionNode : public CSTNode{
+    class PrimaryExpressionNode : public CSTNode {
         LiteralsNode *Literals;
         AccessExpressionNode *Access;
 
         PrimaryExpressionNode(LiteralsNode *Literals);
+
         PrimaryExpressionNode(AccessExpressionNode *Access);
+
     public:
-        PrimaryExpressionNode(void);
+        PrimaryExpressionNode();
+
         virtual ~PrimaryExpressionNode();
 
-        LiteralsNode *GetLiterals(void);
-        AccessExpressionNode *GetAccess(void);
+        LiteralsNode *GetLiterals();
 
-        virtual XString GetNodeType(void) override;
+        AccessExpressionNode *GetAccess();
 
-        #define PRIMARY_FIRST LITERALS_FIRST, \
+        virtual XString GetNodeType() override;
+
+#define PRIMARY_FIRST LITERALS_FIRST, \
                               ACCESS_FIRST
 
         class Parser : public CSTNode::Parser<PrimaryExpressionNode> {
-            Parser(void);
+            Parser();
+
         public:
             static Parser INSTANCE;
             

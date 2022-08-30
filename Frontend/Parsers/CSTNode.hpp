@@ -16,7 +16,8 @@ namespace Hoshi {
         int Column;
         CSTNode(int Line, int Column);
         virtual ~CSTNode();
-        virtual XString GetNodeType(void) = 0;
+
+        virtual XString GetNodeType() = 0;
         template<typename NodeType> class Parser {
         protected:
             std::set<Lexer::TokenKind> FIRST;

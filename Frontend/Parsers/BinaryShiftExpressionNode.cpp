@@ -4,13 +4,16 @@
 
 #include "BinaryShiftExpressionNode.hpp"
 
+#include <utility>
+
 namespace Hoshi {
-    BinaryShiftExpressionNode::BinaryShiftExpressionNode(XArray<AdditionExpressionNode *> Operands, XArray<Lexer::Token> Operators)
-        : Operands(Operands), Operators(Operators), CSTNode(Operands[0]->Line, Operands[0]->Column) {
+    BinaryShiftExpressionNode::BinaryShiftExpressionNode(XArray<AdditionExpressionNode *> Operands,
+                                                         XArray<Lexer::Token> Operators)
+            : Operands(Operands), Operators(std::move(Operators)), CSTNode(Operands[0]->Line, Operands[0]->Column) {
     }
 
-    BinaryShiftExpressionNode::BinaryShiftExpressionNode(void)
-        : Operands({}), Operators({}), CSTNode(0, 0) {
+    BinaryShiftExpressionNode::BinaryShiftExpressionNode()
+            : Operands({}), Operators({}), CSTNode(0, 0) {
     }
 
     BinaryShiftExpressionNode::~BinaryShiftExpressionNode() {
@@ -19,7 +22,7 @@ namespace Hoshi {
         }
     }
 
-    XArray<AdditionExpressionNode *> BinaryShiftExpressionNode::GetOperands(void) {
+    XArray<AdditionExpressionNode *> BinaryShiftExpressionNode::GetOperands() {
         return Operands;
     }
 
@@ -27,7 +30,7 @@ namespace Hoshi {
         return Operands.at(index);
     }
 
-    XArray<Lexer::Token> BinaryShiftExpressionNode::GetOperators(void) {
+    XArray<Lexer::Token> BinaryShiftExpressionNode::GetOperators() {
         return Operators;
     }
 
@@ -35,12 +38,12 @@ namespace Hoshi {
         return Operators.at(index);
     }
 
-    XString BinaryShiftExpressionNode::GetNodeType(void) {
+    XString BinaryShiftExpressionNode::GetNodeType() {
         return L"BinaryShift";
     }
 
-    BinaryShiftExpressionNode::Parser::Parser(void)
-        : CSTNode::Parser<BinaryShiftExpressionNode>({BINARYSHIFT_FIRST}) {
+    BinaryShiftExpressionNode::Parser::Parser()
+            : CSTNode::Parser<BinaryShiftExpressionNode>({BINARYSHIFT_FIRST}) {
     }
 
     BinaryShiftExpressionNode::Parser BinaryShiftExpressionNode::Parser::INSTANCE;

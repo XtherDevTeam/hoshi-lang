@@ -59,7 +59,7 @@ Different expressions will have different priority.
 - SingleExpressions : `+() !() -() ~() ++ --`
 - MultipleExpressions : `* / %`
 - AdditionExpressions : `+ -`
-- BinaryMoveExpressions : `<< >>`
+- BinaryShiftExpressions : `<< >>`
 - LogicComparingExpressions : `< <= > >= instanceOf implemented`
 - LogicEqualExpressions : `== !=`
 - BinaryExpressions : `& ^ |`

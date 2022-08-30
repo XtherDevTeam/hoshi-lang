@@ -14,21 +14,27 @@ namespace Hoshi {
         ExpressionNode *Expression;
         Lexer::Token Semicolon;
 
-        AssignStmtNode(AccessExpressionNode *Access, Lexer::Token AssignOperator, ExpressionNode *Expression, Lexer::Token Semicolon);
+        AssignStmtNode(AccessExpressionNode *Access, Lexer::Token AssignOperator, ExpressionNode *Expression,
+                       Lexer::Token Semicolon);
+
     public:
-        AssignStmtNode(void);
+        AssignStmtNode();
+
         virtual ~AssignStmtNode();
 
-        AccessExpressionNode *GetAccess(void);
-        Lexer::Token GetAssignOperator(void);
-        ExpressionNode *GetExpression(void);
+        AccessExpressionNode *GetAccess();
 
-        virtual XString GetNodeType(void) override;
+        Lexer::Token GetAssignOperator();
 
-        #define ASSIGN_FIRST ACCESS_FIRST
+        ExpressionNode *GetExpression();
+
+        virtual XString GetNodeType() override;
+
+#define ASSIGN_FIRST ACCESS_FIRST
 
         class Parser : public CSTNode::Parser<AssignStmtNode> {
-            Parser(void);
+            Parser();
+
         public:
             static Parser INSTANCE;
 

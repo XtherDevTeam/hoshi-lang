@@ -73,9 +73,9 @@ namespace Hoshi {
             MultiplicationAssignment,   // *=
             DivisionAssignment,         // /=
             RemainderAssignment,        // %=
-            MoreThan,                   // >
+            GreaterThan,                   // >
             LessThan,                   // <
-            MoreThanOrEqual,            // >=
+            GreaterThanOrEqual,            // >=
             LessThanOrEqual,            // <=
             Equal,                      // ==
             NotEqual,                   // !=

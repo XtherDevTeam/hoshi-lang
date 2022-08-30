@@ -13,19 +13,23 @@ namespace Hoshi {
         Lexer::Token Semicolon;
 
         ExpressionStmtNode(ExpressionNode *Expression, Lexer::Token Semicolon);
+
     public:
-        ExpressionStmtNode(void);
+        ExpressionStmtNode();
+
         virtual ~ExpressionStmtNode();
 
-        ExpressionNode *GetExpression(void);
-        Lexer::Token GetSemicolon(void);
+        ExpressionNode *GetExpression();
 
-        virtual XString GetNodeType(void) override;
+        Lexer::Token GetSemicolon();
 
-        #define EXPRESSION_STMT_FIRST EXPRESSION_FIRST
+        virtual XString GetNodeType() override;
+
+#define EXPRESSION_STMT_FIRST EXPRESSION_FIRST
 
         class Parser : public CSTNode::Parser<ExpressionStmtNode> {
-            Parser(void);
+            Parser();
+
         public:
             static Parser INSTANCE;
 

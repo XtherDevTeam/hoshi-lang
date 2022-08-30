@@ -14,20 +14,24 @@ namespace Hoshi {
 
         MuliplicationExpressionNode(XArray<UniqueExpressionNode *> Operands, XArray<Lexer::Token> Operators);
     public:
-        MuliplicationExpressionNode(void);
+        MuliplicationExpressionNode();
+
         virtual ~MuliplicationExpressionNode();
 
-        XArray<UniqueExpressionNode *> GetOperands(void);
+        XArray<UniqueExpressionNode *> GetOperands();
+
         UniqueExpressionNode *GetOperands(int index);
-        XArray<Lexer::Token> GetOperators(void);
+
+        XArray<Lexer::Token> GetOperators();
+
         Lexer::Token GetOperators(int index);
 
-        virtual XString GetNodeType(void) override;
+        virtual XString GetNodeType() override;
 
         #define MULIPLICATION_FIRST UNIQUE_FIRST
 
         class Parser : public CSTNode::Parser<MuliplicationExpressionNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
             

@@ -9,21 +9,21 @@ namespace Hoshi {
         : Literals(Literals), CSTNode(Literals.Line, Literals.Column) {
     }
 
-    LiteralsNode::LiteralsNode(void)
-        : Literals({}), CSTNode(0, 0) {
+    LiteralsNode::LiteralsNode()
+            : Literals({}), CSTNode(0, 0) {
     }
     LiteralsNode::~LiteralsNode() = default;
 
-    Lexer::Token LiteralsNode::GetLiterals(void) {
+    Lexer::Token LiteralsNode::GetLiterals() {
         return Literals;
     }
 
-    XString LiteralsNode::GetNodeType(void) {
+    XString LiteralsNode::GetNodeType() {
         return L"literals";
     }
 
-    LiteralsNode::Parser::Parser(void) 
-        : CSTNode::Parser<LiteralsNode>({LITERALS_FIRST}) {
+    LiteralsNode::Parser::Parser()
+            : CSTNode::Parser<LiteralsNode>({LITERALS_FIRST}) {
     }
 
     LiteralsNode::Parser LiteralsNode::Parser::INSTANCE;

@@ -10,28 +10,28 @@ namespace Hoshi {
         : Expression(Expression), Semicolon(Semicolon), CSTNode(Expression->Line, Expression->Column) {
     }
 
-    ExpressionStmtNode::ExpressionStmtNode(void)
-        : Expression(NULL), Semicolon({}), CSTNode(0, 0) {
+    ExpressionStmtNode::ExpressionStmtNode()
+            : Expression(NULL), Semicolon({}), CSTNode(0, 0) {
     }
     ExpressionStmtNode::~ExpressionStmtNode() {
         if (Expression != NULL)
             delete Expression;
     }
 
-    ExpressionNode *ExpressionStmtNode::GetExpression(void) {
+    ExpressionNode *ExpressionStmtNode::GetExpression() {
         return Expression;
     }
 
-    Lexer::Token ExpressionStmtNode::GetSemicolon(void) {
+    Lexer::Token ExpressionStmtNode::GetSemicolon() {
         return Semicolon;
     }
 
-    XString ExpressionStmtNode::GetNodeType(void) {
+    XString ExpressionStmtNode::GetNodeType() {
         return L"expression stmt";
     }
 
-    ExpressionStmtNode::Parser::Parser(void) 
-        : CSTNode::Parser<ExpressionStmtNode>({EXPRESSION_STMT_FIRST}) {
+    ExpressionStmtNode::Parser::Parser()
+            : CSTNode::Parser<ExpressionStmtNode>({EXPRESSION_STMT_FIRST}) {
     }
 
     ExpressionStmtNode::Parser ExpressionStmtNode::Parser::INSTANCE;

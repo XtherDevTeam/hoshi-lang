@@ -10,8 +10,8 @@ namespace Hoshi {
           Semicolon(Semicolon), CSTNode(Access->Line, Access->Column) {
     }
 
-    AssignStmtNode::AssignStmtNode(void)
-        : Access(NULL), AssignOperator({}), Expression(NULL), CSTNode(0, 0) {
+    AssignStmtNode::AssignStmtNode()
+            : Access(NULL), AssignOperator({}), Expression(NULL), CSTNode(0, 0) {
     }
 
     AssignStmtNode::~AssignStmtNode() {
@@ -21,24 +21,24 @@ namespace Hoshi {
             delete Expression;
     }
 
-    AccessExpressionNode *AssignStmtNode::GetAccess(void) {
+    AccessExpressionNode *AssignStmtNode::GetAccess() {
         return Access;
     }
 
-    Lexer::Token AssignStmtNode::GetAssignOperator(void) {
+    Lexer::Token AssignStmtNode::GetAssignOperator() {
         return AssignOperator;
     }
 
-    ExpressionNode *AssignStmtNode::GetExpression(void) {
+    ExpressionNode *AssignStmtNode::GetExpression() {
         return Expression;
     }
 
-    XString AssignStmtNode::GetNodeType(void) {
+    XString AssignStmtNode::GetNodeType() {
         return L"assign stmt";
     }
 
-    AssignStmtNode::Parser::Parser(void) 
-        : CSTNode::Parser<AssignStmtNode>({ASSIGN_FIRST}) {
+    AssignStmtNode::Parser::Parser()
+            : CSTNode::Parser<AssignStmtNode>({ASSIGN_FIRST}) {
     }
 
     AssignStmtNode::Parser AssignStmtNode::Parser::INSTANCE;

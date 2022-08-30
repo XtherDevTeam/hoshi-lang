@@ -13,12 +13,13 @@ namespace Hoshi {
 
         LiteralsNode(Lexer::Token Literals);
     public:
-        LiteralsNode(void);
+        LiteralsNode();
+
         virtual ~LiteralsNode();
 
-        Lexer::Token GetLiterals(void);
+        Lexer::Token GetLiterals();
 
-        virtual XString GetNodeType(void) override;
+        virtual XString GetNodeType() override;
 
         #define LITERALS_FIRST Lexer::TokenKind::Integer, \
             Lexer::TokenKind::Boolean, \
@@ -27,7 +28,7 @@ namespace Hoshi {
             Lexer::TokenKind::Character
 
         class Parser : public CSTNode::Parser<LiteralsNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
 

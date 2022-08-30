@@ -13,8 +13,8 @@ namespace Hoshi {
         : Operator(Operator), Primary(Primary), CSTNode(Operator.Line, Operator.Column) {
     }
 
-    UniqueExpressionNode::UniqueExpressionNode(void)
-        : Operator({}), Primary(NULL), CSTNode(0, 0) {
+    UniqueExpressionNode::UniqueExpressionNode()
+            : Operator({}), Primary(NULL), CSTNode(0, 0) {
     }
 
     UniqueExpressionNode::~UniqueExpressionNode() {
@@ -22,20 +22,20 @@ namespace Hoshi {
             delete Primary;
     }
 
-    Lexer::Token UniqueExpressionNode::GetOperator(void) {
+    Lexer::Token UniqueExpressionNode::GetOperator() {
         return Operator;
     }
 
-    PrimaryExpressionNode *UniqueExpressionNode::GetPrimary(void) {
+    PrimaryExpressionNode *UniqueExpressionNode::GetPrimary() {
         return Primary;
     }
 
-    XString UniqueExpressionNode::GetNodeType(void) {
+    XString UniqueExpressionNode::GetNodeType() {
         return L"unique";
     }
 
-    UniqueExpressionNode::Parser::Parser(void)
-        : CSTNode::Parser<UniqueExpressionNode>({UNIQUE_FIRST}) {
+    UniqueExpressionNode::Parser::Parser()
+            : CSTNode::Parser<UniqueExpressionNode>({UNIQUE_FIRST}) {
     }
 
     UniqueExpressionNode::Parser UniqueExpressionNode::Parser::INSTANCE;

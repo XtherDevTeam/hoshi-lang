@@ -9,8 +9,8 @@ namespace Hoshi {
         : Operands(Operands), Operators(Operators), CSTNode(Operands[0]->Line, Operands[0]->Column) {
     }
    
-    AdditionExpressionNode::AdditionExpressionNode(void)
-        : Operands({}), Operators({}), CSTNode(0, 0) {
+    AdditionExpressionNode::AdditionExpressionNode()
+            : Operands({}), Operators({}), CSTNode(0, 0) {
     }
 
     AdditionExpressionNode::~AdditionExpressionNode() {
@@ -19,7 +19,7 @@ namespace Hoshi {
         }
     }
 
-    XArray<MuliplicationExpressionNode *> AdditionExpressionNode::GetOperands(void) {
+    XArray<MuliplicationExpressionNode *> AdditionExpressionNode::GetOperands() {
         return Operands;
     }
 
@@ -27,7 +27,7 @@ namespace Hoshi {
         return Operands.at(index);
     }
 
-    XArray<Lexer::Token> AdditionExpressionNode::GetOperators(void) {
+    XArray<Lexer::Token> AdditionExpressionNode::GetOperators() {
         return Operators;
     }
 
@@ -35,12 +35,12 @@ namespace Hoshi {
         return Operators.at(index);
     }
 
-    XString AdditionExpressionNode::GetNodeType(void) {
+    XString AdditionExpressionNode::GetNodeType() {
         return L"addition";
     }
 
-    AdditionExpressionNode::Parser::Parser(void) 
-        : CSTNode::Parser<AdditionExpressionNode>({MULIPLICATION_FIRST}) {
+    AdditionExpressionNode::Parser::Parser()
+            : CSTNode::Parser<AdditionExpressionNode>({MULIPLICATION_FIRST}) {
     }
 
     AdditionExpressionNode::Parser AdditionExpressionNode::Parser::INSTANCE;

@@ -13,17 +13,21 @@ namespace Hoshi {
         PrimaryExpressionNode *Primary;
 
         UniqueExpressionNode(PrimaryExpressionNode *Primary);
+
         UniqueExpressionNode(Lexer::Token Operator, PrimaryExpressionNode *Primary);
+
     public:
-        UniqueExpressionNode(void);
+        UniqueExpressionNode();
+
         virtual ~UniqueExpressionNode();
 
-        Lexer::Token GetOperator(void);
-        PrimaryExpressionNode *GetPrimary(void);
+        Lexer::Token GetOperator();
 
-        virtual XString GetNodeType(void) override;
+        PrimaryExpressionNode *GetPrimary();
 
-        #define UNIQUE_FIRST PRIMARY_FIRST, \
+        virtual XString GetNodeType() override;
+
+#define UNIQUE_FIRST PRIMARY_FIRST, \
             Lexer::TokenKind::Plus, \
             Lexer::TokenKind::Minus, \
             Lexer::TokenKind::Invert, \
@@ -31,7 +35,7 @@ namespace Hoshi {
             Lexer::TokenKind::DecrementSign
 
         class Parser : public CSTNode::Parser<UniqueExpressionNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
             

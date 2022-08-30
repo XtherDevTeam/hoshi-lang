@@ -300,13 +300,13 @@ namespace Hoshi {
             NextCharacter();
             if (String[Position] == L'=') {
                 NextCharacter();   // Read after '='
-                return {TokenKind::MoreThanOrEqual, L">=", Line, Column};
+                return {TokenKind::GreaterThanOrEqual, L">=", Line, Column};
             } 
             if (String[Position] == '>') {
                 NextCharacter();   // Read after '>'
                 return {TokenKind::BinaryRightShift, L">>", Line, Column};
             }
-            return {TokenKind::MoreThan, L">", Line, Column};
+            return {TokenKind::GreaterThan, L">", Line, Column};
         }
             /* Binary symbols */
             /* Or */

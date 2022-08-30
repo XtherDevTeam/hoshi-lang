@@ -9,12 +9,12 @@ namespace Hoshi {
         : Identifier(Identifier), Accesses(Accesses), CSTNode(Identifier.Line, Identifier.Column) {
     }
 
-    AccessExpressionNode::AccessExpressionNode(void)
-        : Accesses({}), CSTNode(0, 0) {
+    AccessExpressionNode::AccessExpressionNode()
+            : Accesses({}), CSTNode(0, 0) {
     }
     AccessExpressionNode::~AccessExpressionNode() = default;
 
-    XArray<AccessExpressionNode::AccessOperator> AccessExpressionNode::GetAccesses(void) {
+    XArray<AccessExpressionNode::AccessOperator> AccessExpressionNode::GetAccesses() {
         return Accesses;
     }
     
@@ -22,16 +22,16 @@ namespace Hoshi {
         return Accesses.at(index);
     }
 
-    Lexer::Token AccessExpressionNode::GetIdentifier(void) {
+    Lexer::Token AccessExpressionNode::GetIdentifier() {
         return Identifier;
     }
 
-    XString AccessExpressionNode::GetNodeType(void) {
+    XString AccessExpressionNode::GetNodeType() {
         return L"access";
     }
 
-    AccessExpressionNode::Parser::Parser(void) 
-        : CSTNode::Parser<AccessExpressionNode>({ACCESS_FIRST}) {
+    AccessExpressionNode::Parser::Parser()
+            : CSTNode::Parser<AccessExpressionNode>({ACCESS_FIRST}) {
     }
 
     AccessExpressionNode::Parser AccessExpressionNode::Parser::INSTANCE;

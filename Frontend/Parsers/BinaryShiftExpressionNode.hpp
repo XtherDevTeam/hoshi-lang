@@ -14,20 +14,24 @@ namespace Hoshi {
 
         BinaryShiftExpressionNode(XArray<AdditionExpressionNode *> Operands, XArray<Lexer::Token> Operators);
     public:
-        BinaryShiftExpressionNode(void);
+        BinaryShiftExpressionNode();
+
         virtual ~BinaryShiftExpressionNode();
 
-        XArray<AdditionExpressionNode *> GetOperands(void);
+        XArray<AdditionExpressionNode *> GetOperands();
+
         AdditionExpressionNode *GetOperands(int index);
-        XArray<Lexer::Token> GetOperators(void);
+
+        XArray<Lexer::Token> GetOperators();
+
         Lexer::Token GetOperators(int index);
 
-        virtual XString GetNodeType(void) override;
+        virtual XString GetNodeType() override;
 
         #define BINARYSHIFT_FIRST ADDITION_FIRST
 
         class Parser : public CSTNode::Parser<BinaryShiftExpressionNode> {
-            Parser(void);
+            Parser();
         public:
             static Parser INSTANCE;
 
