@@ -5,11 +5,11 @@
 #ifndef XSCRIPT2_EXPRESSIONNODE_HPP
 #define XSCRIPT2_EXPRESSIONNODE_HPP
 
-#include <Parsers/LogicComparingExpressionNode.hpp>
+#include <Parsers/LogicEqualExpressionNode.hpp>
 
 namespace Hoshi {
-    using ExpressionNode = LogicComparingExpressionNode;
-#define EXPRESSION_FIRST LOGICCOMPARING_FIRST
+    using ExpressionNode = LogicEqualExpressionNode;
+#define EXPRESSION_FIRST LOGICEQUAL_FIRST
 }
 
 #endif
