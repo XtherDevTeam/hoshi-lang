@@ -3,10 +3,11 @@
 //
 
 #include <Parsers/AccessExpressionNode.hpp>
+#include <utility>
 
 namespace Hoshi {
     AccessExpressionNode::AccessExpressionNode(Lexer::Token Identifier, XArray<AccessOperator> Accesses)
-        : Identifier(Identifier), Accesses(Accesses), CSTNode(Identifier.Line, Identifier.Column) {
+        : Identifier(Identifier), Accesses(std::move(Accesses)), CSTNode(Identifier.Line, Identifier.Column) {
     }
 
     AccessExpressionNode::AccessExpressionNode()

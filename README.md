@@ -56,7 +56,7 @@ Different expressions will have different priority.
 - StaticMemberAccessExpressions : `::`
 - FunctionInvokingExpressions : `()`
 - IndexExpressions : `[]`
-- SingleExpressions : `+() !() -() ~() ++ --`
+- UniqueExpressions : `+() !() -() ~() ++ --`
 - MultipleExpressions : `* / %`
 - AdditionExpressions : `+ -`
 - BinaryShiftExpressions : `<< >>`

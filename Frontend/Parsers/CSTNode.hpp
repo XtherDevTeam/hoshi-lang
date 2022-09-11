@@ -12,9 +12,9 @@
 namespace Hoshi {
     class CSTNode {
     public:
-        int Line;
-        int Column;
-        CSTNode(int Line, int Column);
+        XInteger Line;
+        XInteger Column;
+        CSTNode(XInteger Line, XInteger Column);
         virtual ~CSTNode();
 
         virtual XString GetNodeType() = 0;

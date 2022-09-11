@@ -5,10 +5,10 @@
 #ifndef XSCRIPT2_EXPRESSIONCODEGEN_HPP
 #define XSCRIPT2_EXPRESSIONCODEGEN_HPP
 
-#include <Codegen/LogicEqualExpressionCodegen.hpp>
+#include <Codegen/BinaryExpressionCodegen.hpp>
 
 namespace Hoshi {
-    using ExpressionCodegen = LogicEqualExpressionCodegen;
+    using ExpressionCodegen = BinaryExpressionCodegen;
 }
 
 #endif

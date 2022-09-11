@@ -5,7 +5,7 @@
 #include <Parsers/CSTNode.hpp>
 
 namespace Hoshi {
-    CSTNode::CSTNode(int Line, int Column)
+    CSTNode::CSTNode(XInteger Line, XInteger Column)
         : Line(Line), Column(Column) {
     }
     

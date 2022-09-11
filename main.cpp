@@ -39,7 +39,7 @@ int main(int argc, const char **argv) {
         Program.AddBlock(Block.build());
         Hoshi::IRProgram ProgramResult = Program.build();
 
-        for (Hoshi::IR ir: ProgramResult.GetBlocks()[0].GetIRCollection()) {
+        for (const Hoshi::IR& ir: ProgramResult.GetBlocks()[0].GetIRCollection()) {
             std::wcout << Hoshi::ToString(ir) << std::endl;
         }
 
