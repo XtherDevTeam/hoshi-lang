@@ -54,7 +54,7 @@ namespace Hoshi {
         Lexer::Token Semicolon = L.LastToken;
         L.Scan();
 
-        ExpressionStmtNode *Result = new ExpressionStmtNode(Expression, Semicolon);
+        auto *Result = new ExpressionStmtNode(Expression, Semicolon);
         return Result;
     }
 }

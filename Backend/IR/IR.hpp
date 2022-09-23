@@ -29,6 +29,7 @@ namespace Hoshi {
         Not, // !
         Negative, // -
         Invert,  // ~
+        As, // as
         Jump,
         Branch
     };
