@@ -15,11 +15,21 @@
 namespace Hoshi {
     using XBytes = std::string;
     using XString = std::wstring;
+    using XByte = uint8_t;
+    using XShort = int16_t;
+    using XUShort = uint16_t;
+    using XShortInt = int32_t;
+    using XUShortInt = uint32_t;
     using XInteger = int64_t;
-    using XDecimal = double;
+    using XUInteger = uint64_t;
+    using XReal = double;
+    using XFloat = float;
+    using XDecimal = XReal;
     using XBoolean = bool;
-    using XIndexType = uint64_t;
+    using XIndexType = XUInteger;
     using XCharacter = wchar_t;
+    using XShortChar = char;
+    using XSize = XUInteger;
 
     template<typename T> using XArray = std::vector<T>;
     template<typename T, typename T1> using XMap = std::unordered_map<T, T1>;

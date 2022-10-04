@@ -7,12 +7,13 @@
 
 #include <Config.hpp>
 #include <IR/Operand.hpp>
+#include <Type/TypeInfo.hpp>
 
 namespace Hoshi {
     struct VariableSymbolInfo {
         XString Name;
         Operand Value;
-        XString Type;
+        Type *type;
     };
 
     class VariableSymbolTable {

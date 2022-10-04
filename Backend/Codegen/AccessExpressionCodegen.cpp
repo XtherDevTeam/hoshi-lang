@@ -28,7 +28,9 @@ namespace Hoshi {
         Lexer::Token Identifier = Node.GetIdentifier();
 
         if (! Program.GetContext().VariableTable.Exists(Identifier.Value)) {
-            Program.GetContext().VariableTable.AddSymbol(Identifier.Value, {Identifier.Value, Operand::Empty, L"undefined"});
+            Type *UndefinedType = new Type(Type::TTypes::Undefined, new UndefinedTypeInfo());
+            VariableSymbolInfo Symbol = {Identifier.Value, Operand::Empty, UndefinedType};
+            Program.GetContext().VariableTable.AddSymbol(Identifier.Value, Symbol);
         }
 
         return Program.GetContext().VariableTable.GetSymbol(Identifier.Value);

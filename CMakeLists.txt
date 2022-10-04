@@ -17,6 +17,7 @@ file (GLOB HOSHI_LANG_INCLUDE
         Backend/IR/*.cpp
         Backend/Codegen/*.cpp
         Backend/Passes/*.cpp
-        Backend/Optimizer/*.cpp)
+        Backend/Optimizer/*.cpp
+        Backend/Type/*.cpp)
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
