@@ -20,10 +20,10 @@ namespace Hoshi {
      * @brief visit an unique expression ast and gen the code
      * @return the result of unique expression
      */
-    Operand UniqueExpressionCodegen::Visit(UniqueExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+    Operand UniqueExpressionCodegen::Visit(UniqueExpressionNode &Node, IRProgram::Builder &Program) {
+        IRBlock::Builder &Block = *Program.GetContext().CurrentBlock;
         Lexer::Token Operator = Node.GetOperator();
-        Operand Value = PrimaryExpressionCodegen::INSTANCE.Visit(*Node.GetPrimary(), Program, Block);
-
+        Operand Value = PrimaryExpressionCodegen::INSTANCE.Visit(*Node.GetPrimary(), Program);
         if (Operator == Lexer::Token{} || Operator.Kind == Lexer::TokenKind::Plus) {
             return Value;
         }

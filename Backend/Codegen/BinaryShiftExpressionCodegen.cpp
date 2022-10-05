@@ -20,11 +20,12 @@ namespace Hoshi {
      * @brief visit an BinaryShift expression ast and gen the code
      * @return the result of BinaryShift expression
      */
-    Operand BinaryShiftExpressionCodegen::Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
-        Operand LastResult = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0), Program, Block); //The result of last expression ir
+    Operand BinaryShiftExpressionCodegen::Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program) {
+        IRBlock::Builder &Block = *Program.GetContext().CurrentBlock;
+        Operand LastResult = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0), Program); //The result of last expression ir
         for (int i = 0 ; i < Node.GetOperators().size() ; i ++) {
             Lexer::Token OperatorNode = Node.GetOperators(i);
-            Operand ThisOperand = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1), Program, Block); //the operand of this ir
+            Operand ThisOperand = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1), Program); //the operand of this ir
             Operand Result = Operand(OperandType::Identifier, LocalNamePrefix + NewVarName(L"expr")); // the result of this ir
             Opcode Operator;
             switch (OperatorNode.Kind) { //Choose Opcode

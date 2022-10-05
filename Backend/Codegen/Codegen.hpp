@@ -16,7 +16,7 @@ namespace Hoshi {
          * @brief visit an ast and gen the code
          * @return result
          */
-        virtual Result Visit(NodeType &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) = 0;
+        virtual Result Visit(NodeType &Node, IRProgram::Builder &Program) = 0;
     };
 }
 

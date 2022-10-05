@@ -21,9 +21,10 @@ namespace Hoshi {
      * @brief visit an assign stmt ast and gen the code
      * @return the value of assign stmt
      */
-    Operand AssignStmtCodegen::Visit(AssignStmtNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
-        VariableSymbolInfo &Info = AccessExpressionCodegen::INSTANCE.VisitSymbol(*Node.GetAccess(), Program, Block);
-        Operand ExpressionResult = ExpressionCodegen::INSTANCE.Visit(*Node.GetExpression(), Program, Block);
+    Operand AssignStmtCodegen::Visit(AssignStmtNode &Node, IRProgram::Builder &Program) {
+        IRBlock::Builder &Block = *Program.GetContext().CurrentBlock;
+        VariableSymbolInfo &Info = AccessExpressionCodegen::INSTANCE.VisitSymbol(*Node.GetAccess(), Program);
+        Operand ExpressionResult = ExpressionCodegen::INSTANCE.Visit(*Node.GetExpression(), Program);
 
         if (Node.GetAssignOperator().Kind == Lexer::TokenKind::AssignSign) {
             Info.Value = ExpressionResult;

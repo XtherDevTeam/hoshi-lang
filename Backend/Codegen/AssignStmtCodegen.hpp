@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an assign stmt and gen the code
          * @return the value of assign stmt
          */
-        virtual Operand Visit(AssignStmtNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual Operand Visit(AssignStmtNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

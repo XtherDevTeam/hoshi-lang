@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an BinaryShift expression ast and gen the code
          * @return the result of BinaryShift expression
          */
-        virtual Operand Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual Operand Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

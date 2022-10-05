@@ -32,15 +32,34 @@ int main(int argc, const char **argv) {
 
         Hoshi::IRProgram::Builder Program;
         Program.SetName(L"A");
+        Hoshi::IRFunction::Builder Function;
+        Function.SetName(L"A");
         Hoshi::IRBlock::Builder Block;
         Block.SetName(L"A");
-        Hoshi::AssignStmtCodegen::INSTANCE.Visit(*CST0, Program, Block);
-        Hoshi::ExpressionStmtCodegen::INSTANCE.Visit(*CST1, Program, Block);
-        Program.AddBlock(Block.build());
+
+        Program.GetContext().CurrentFunction = &Function;
+        Program.GetContext().CurrentBlock = &Block;
+
+        Hoshi::AssignStmtCodegen::INSTANCE.Visit(*CST0, Program);
+        Hoshi::ExpressionStmtCodegen::INSTANCE.Visit(*CST1, Program);
+
+        Function.AddBlock(Block.build());
+        Program.AddFunction(Function.build());
+        
         Hoshi::IRProgram ProgramResult = Program.build();
 
-        for (const Hoshi::IR& ir: ProgramResult.GetBlocks()[0].GetIRCollection()) {
-            std::wcout << Hoshi::ToString(ir) << std::endl;
+        for (const Hoshi::IRFunction &function : ProgramResult.GetFunctions()) {
+            std::wcout << L"func " << function.GetName() << L"() {" << std::endl;
+
+            for (const Hoshi::IRBlock& block: function.GetBlocks()) {
+                std::wcout << function.GetName() << L":" << std::endl;
+
+                for (const Hoshi::IR& ir: block.GetIRCollection()) {
+                    std::wcout << L"  " << Hoshi::ToString(ir) << std::endl;
+                }
+            }
+
+            std::wcout << L"}" << std::endl;
         }
 
         delete CST0;

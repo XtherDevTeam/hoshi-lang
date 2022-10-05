@@ -18,7 +18,7 @@ namespace Hoshi {
      * @brief visit an expression ast and gen the code
      * @return the value of expression
      */
-    Operand ExpressionStmtCodegen::Visit(ExpressionStmtNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
-        return ExpressionCodegen::INSTANCE.Visit(*Node.GetExpression(), Program, Block);
+    Operand ExpressionStmtCodegen::Visit(ExpressionStmtNode &Node, IRProgram::Builder &Program) {
+        return ExpressionCodegen::INSTANCE.Visit(*Node.GetExpression(), Program);
     }
 }

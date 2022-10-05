@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an primary expression ast and gen the code
          * @return the result of primary expression
          */
-        virtual Operand Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual Operand Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

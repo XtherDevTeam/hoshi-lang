@@ -28,7 +28,7 @@ namespace Hoshi {
          * @return the result of AsShift expression
          */
         Operand
-        Visit(AsExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        Visit(AsExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 
 } // Hoshi

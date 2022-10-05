@@ -28,7 +28,7 @@ namespace Hoshi {
          * @return the result of BinaryShift expression
          */
         Operand
-        Visit(LogicEqualExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        Visit(LogicEqualExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 
 } // Hoshi

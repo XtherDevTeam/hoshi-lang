@@ -27,7 +27,7 @@ namespace Hoshi {
          * @return the result of BooleanShift expression
          */
         Operand
-        Visit(BooleanExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        Visit(BooleanExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 
 } // Hoshi

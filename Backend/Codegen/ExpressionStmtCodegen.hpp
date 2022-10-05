@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit an expression ast and gen the code
          * @return the value of expression
          */
-        virtual Operand Visit(ExpressionStmtNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual Operand Visit(ExpressionStmtNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

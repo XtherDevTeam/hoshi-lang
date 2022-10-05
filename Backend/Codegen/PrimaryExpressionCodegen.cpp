@@ -19,12 +19,12 @@ namespace Hoshi {
      * @brief visit an primary expression ast and gen the code
      * @return the result of primary expression
      */
-    Operand PrimaryExpressionCodegen::Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+    Operand PrimaryExpressionCodegen::Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program) {
         if (Node.GetLiterals() != NULL) {
-            return LiteralsCodegen::INSTANCE.Visit(*Node.GetLiterals(), Program, Block);
+            return LiteralsCodegen::INSTANCE.Visit(*Node.GetLiterals(), Program);
         }
         else if (Node.GetAccess() != NULL) {
-            return AccessExpressionCodegen::INSTANCE.Visit(*Node.GetAccess(), Program, Block);
+            return AccessExpressionCodegen::INSTANCE.Visit(*Node.GetAccess(), Program);
         }
         throw CompilerError(Node.Line, Node.Column, L"Invalid Primary Expression!");
     }

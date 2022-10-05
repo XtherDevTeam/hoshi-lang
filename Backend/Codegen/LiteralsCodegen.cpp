@@ -17,7 +17,7 @@ namespace Hoshi {
      * @brief visit a literal ast and gen the code
      * @return string form of the value of literal
      */
-    Operand LiteralsCodegen::Visit(LiteralsNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+    Operand LiteralsCodegen::Visit(LiteralsNode &Node, IRProgram::Builder &Program) {
         switch (Node.GetLiterals().Kind) {
         case Lexer::TokenKind::Integer: return Operand(OperandType::Integer, std::move(Node.GetLiterals().Value));
         case Lexer::TokenKind::Decimal: return Operand(OperandType::Decimal, std::move(Node.GetLiterals().Value));

@@ -23,7 +23,7 @@ namespace Hoshi {
          * @brief visit a literal ast and gen the code
          * @return string form of the value of literal
          */
-        virtual Operand Visit(LiteralsNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        virtual Operand Visit(LiteralsNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

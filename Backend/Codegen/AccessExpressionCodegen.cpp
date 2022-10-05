@@ -13,7 +13,7 @@ namespace Hoshi {
      * @brief visit an access expression ast and gen the code
      * @return the value of access expression
      */
-    Operand AccessExpressionCodegen::Visit(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+    Operand AccessExpressionCodegen::Visit(AccessExpressionNode &Node, IRProgram::Builder &Program) {
         //TODO: Add Member Access
         Lexer::Token Identifier = Node.GetIdentifier();
 
@@ -24,7 +24,7 @@ namespace Hoshi {
         return Program.GetContext().VariableTable.GetSymbol(Identifier.Value).Value;
     }
 
-    VariableSymbolInfo &AccessExpressionCodegen::VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) {
+    VariableSymbolInfo &AccessExpressionCodegen::VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program) {
         Lexer::Token Identifier = Node.GetIdentifier();
 
         if (! Program.GetContext().VariableTable.Exists(Identifier.Value)) {

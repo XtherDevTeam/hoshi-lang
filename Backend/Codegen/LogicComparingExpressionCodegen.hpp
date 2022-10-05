@@ -27,7 +27,7 @@ namespace Hoshi {
          * @return the result of BinaryShift expression
          */
         virtual Operand
-        Visit(LogicComparingExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
+        Visit(LogicComparingExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 
 } // Hoshi

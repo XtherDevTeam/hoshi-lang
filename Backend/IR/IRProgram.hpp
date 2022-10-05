@@ -5,7 +5,7 @@
 #ifndef XSCRIPT2_IRPROGRAM_HPP
 #define XSCRIPT2_IRPROGRAM_HPP
 
-#include <IR/IRBlock.hpp>
+#include <IR/IRFunction.hpp>
 #include <IR/ProgramContext.hpp>
 
 namespace Hoshi {
@@ -15,16 +15,16 @@ namespace Hoshi {
          */
         const XString Name;
         /**
-         * @brief IRBlocks in the program
+         * @brief IRFunctions in the program
          */
-        const XArray<IRBlock> Blocks;
+        const XArray<IRFunction> Functions;
         /**
          * @brief construct an IRProgram
          * @param Name Name of the program
-         * @param Blocks IRBlocks in the program
+         * @param Functions IRFunctions in the program
          * @param Context Context of the program
          */
-        IRProgram(const XString Name, const XArray<IRBlock> &&Blocks, const ProgramContext &&Context);
+        IRProgram(const XString Name, const XArray<IRFunction> &&Functions, const ProgramContext &&Context);
     public:
         /**
          * @brief Context of the program
@@ -36,9 +36,9 @@ namespace Hoshi {
              */
             XString Name;
             /**
-             * @brief IRBlocks in the program
+             * @brief IRFunctions in the program
              */
-            XArray<IRBlock> Blocks;
+            XArray<IRFunction> Functions;
             /**
              * @brief Context of the program
              */
@@ -55,11 +55,11 @@ namespace Hoshi {
              */
             Builder &SetName(XString Name);
             /**
-             * @brief add IRBlock to the IRProgram
-             * @param Block the Block
+             * @brief add IRFunction to the IRProgram
+             * @param Function the Function
              * @return self
              */
-            Builder &AddBlock(IRBlock Block);
+            Builder &AddFunction(IRFunction &&Function);
             /**
              * @brief Get the context of program
              * @return Context
@@ -80,7 +80,7 @@ namespace Hoshi {
          * @brief Get blocks of the program
          * @return Blocks of the program
          */
-        const XArray<IRBlock> GetBlocks(void) const;
+        const XArray<IRFunction> GetFunctions(void) const;
         friend class IRProgram::Builder;
     };
 }

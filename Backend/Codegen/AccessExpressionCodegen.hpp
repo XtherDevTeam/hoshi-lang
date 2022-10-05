@@ -23,8 +23,8 @@ namespace Hoshi {
          * @brief visit an access expression ast and gen the code
          * @return the value of access expression
          */
-        virtual Operand Visit(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block) override;
-        virtual VariableSymbolInfo &VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program, IRBlock::Builder &Block);
+        virtual Operand Visit(AccessExpressionNode &Node, IRProgram::Builder &Program) override;
+        virtual VariableSymbolInfo &VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program);
     };
 }
 
