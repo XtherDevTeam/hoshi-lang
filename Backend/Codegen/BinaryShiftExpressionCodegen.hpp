@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a BinaryShift expression codegen
          */
-        BinaryShiftExpressionCodegen(void);
+        BinaryShiftExpressionCodegen();
+
     public:
         /**
          * @brief the instance of BinaryShift expression Codegen
          */
         static BinaryShiftExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an BinaryShift expression ast and gen the code
          * @return the result of BinaryShift expression
          */
-        virtual Operand Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

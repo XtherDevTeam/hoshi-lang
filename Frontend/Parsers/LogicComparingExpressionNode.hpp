@@ -18,7 +18,7 @@ namespace Hoshi {
     public:
         LogicComparingExpressionNode();
 
-        virtual ~LogicComparingExpressionNode();
+        ~LogicComparingExpressionNode() override;
 
         XArray<BinaryShiftExpressionNode *> GetOperands();
 

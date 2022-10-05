@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a addition expression codegen
          */
-        AdditionExpressionCodegen(void);
+        AdditionExpressionCodegen();
+
     public:
         /**
          * @brief the instance of addition expression Codegen
          */
         static AdditionExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an addition expression ast and gen the code
          * @return the result of addition expression
          */
-        virtual Operand Visit(AdditionExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(AdditionExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

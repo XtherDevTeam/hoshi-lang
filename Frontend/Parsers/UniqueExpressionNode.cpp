@@ -5,20 +5,20 @@
 #include <Parsers/UniqueExpressionNode.hpp>
 
 namespace Hoshi {
-    UniqueExpressionNode::UniqueExpressionNode(PrimaryExpressionNode *Primary) 
-        : Operator({}), Primary(Primary), CSTNode(Primary->Line, Primary->Column) {
+    UniqueExpressionNode::UniqueExpressionNode(PrimaryExpressionNode *Primary)
+            : Operator({}), Primary(Primary), CSTNode(Primary->Line, Primary->Column) {
     }
 
-    UniqueExpressionNode::UniqueExpressionNode(Lexer::Token Operator, PrimaryExpressionNode *Primary) 
-        : Operator(Operator), Primary(Primary), CSTNode(Operator.Line, Operator.Column) {
+    UniqueExpressionNode::UniqueExpressionNode(Lexer::Token Operator, PrimaryExpressionNode *Primary)
+            : Operator(Operator), Primary(Primary), CSTNode(Operator.Line, Operator.Column) {
     }
 
     UniqueExpressionNode::UniqueExpressionNode()
-            : Operator({}), Primary(NULL), CSTNode(0, 0) {
+            : Operator({}), Primary(nullptr), CSTNode(0, 0) {
     }
 
     UniqueExpressionNode::~UniqueExpressionNode() {
-        if (Primary != NULL)
+        if (Primary != nullptr)
             delete Primary;
     }
 
@@ -39,21 +39,21 @@ namespace Hoshi {
     }
 
     UniqueExpressionNode::Parser UniqueExpressionNode::Parser::INSTANCE;
-            
+
     UniqueExpressionNode *UniqueExpressionNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken))
+        if (!IsFirstToken(L.LastToken))
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except unique expression FIRST!");
 
         if (PrimaryExpressionNode::Parser::INSTANCE.IsFirstToken(L.LastToken)) {
             PrimaryExpressionNode *Primary = PrimaryExpressionNode::Parser::INSTANCE.Parse(L);
-            UniqueExpressionNode *Unique = new UniqueExpressionNode(Primary);
+            auto *Unique = new UniqueExpressionNode(Primary);
             return Unique;
         }
 
         Lexer::Token Operator = L.LastToken;
         L.Scan();
         PrimaryExpressionNode *Primary = PrimaryExpressionNode::Parser::INSTANCE.Parse(L);
-        UniqueExpressionNode *Unique = new UniqueExpressionNode(Operator, Primary);
+        auto *Unique = new UniqueExpressionNode(Operator, Primary);
         return Unique;
     }
 }

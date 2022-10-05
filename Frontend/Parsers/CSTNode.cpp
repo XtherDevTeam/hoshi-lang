@@ -6,8 +6,8 @@
 
 namespace Hoshi {
     CSTNode::CSTNode(XInteger Line, XInteger Column)
-        : Line(Line), Column(Column) {
+            : Line(Line), Column(Column) {
     }
-    
+
     CSTNode::~CSTNode() = default;
 }

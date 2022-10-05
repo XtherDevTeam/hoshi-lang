@@ -11,7 +11,9 @@
 namespace Hoshi {
     extern XCharacter GlobalNamePrefix;
     extern XCharacter LocalNamePrefix;
+
     XString NewVarName(XString prefix);
+
     XString NewLabelName(XString prefix);
 }
 

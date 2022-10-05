@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a assign stmt codegen
          */
-        AssignStmtCodegen(void);
+        AssignStmtCodegen();
+
     public:
         /**
          * @brief the instance of assign stmt Codegen
          */
         static AssignStmtCodegen INSTANCE;
+
         /**
          * @brief visit an assign stmt and gen the code
          * @return the value of assign stmt
          */
-        virtual Operand Visit(AssignStmtNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(AssignStmtNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

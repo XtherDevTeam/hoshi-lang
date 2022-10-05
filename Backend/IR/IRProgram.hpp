@@ -18,18 +18,21 @@ namespace Hoshi {
          * @brief IRFunctions in the program
          */
         const XArray<IRFunction> Functions;
+
         /**
          * @brief construct an IRProgram
          * @param Name Name of the program
          * @param Functions IRFunctions in the program
          * @param Context Context of the program
          */
-        IRProgram(const XString Name, const XArray<IRFunction> &&Functions, const ProgramContext &&Context);
+        IRProgram(XString Name, const XArray<IRFunction> &&Functions, const ProgramContext &&Context);
+
     public:
         /**
          * @brief Context of the program
          */
         const ProgramContext Context;
+
         class Builder {
             /**
              * @brief Name of the program
@@ -47,40 +50,47 @@ namespace Hoshi {
             /**
              * @brief construct an IRProgram Builder
              */
-            Builder(void);
+            Builder();
+
             /**
              * @brief set the name of the IRProgram
              * @param Name name of the IRProgram
              * @return self
              */
             Builder &SetName(XString Name);
+
             /**
              * @brief add IRFunction to the IRProgram
              * @param Function the Function
              * @return self
              */
             Builder &AddFunction(IRFunction &&Function);
+
             /**
              * @brief Get the context of program
              * @return Context
              */
-            ProgramContext &GetContext(void);
+            ProgramContext &GetContext();
+
             /**
              * @brief create an IRProgram
              * @return IRProgram
              */
-            IRProgram build(void);
+            IRProgram build();
         };
+
         /**
          * @brief Get the name of the program
          * @return Name of the program
          */
-        const XString GetName(void) const;
+        XString GetName() const;
+
         /**
          * @brief Get blocks of the program
          * @return Blocks of the program
          */
-        const XArray<IRFunction> GetFunctions(void) const;
+        XArray<IRFunction> GetFunctions() const;
+
         friend class IRProgram::Builder;
     };
 }

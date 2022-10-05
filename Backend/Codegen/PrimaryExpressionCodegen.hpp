@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a primary codegen
          */
-        PrimaryExpressionCodegen(void);
+        PrimaryExpressionCodegen();
+
     public:
         /**
          * @brief the instance of primary Codegen
          */
         static PrimaryExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an primary expression ast and gen the code
          * @return the result of primary expression
          */
-        virtual Operand Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

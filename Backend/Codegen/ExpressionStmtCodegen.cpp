@@ -10,10 +10,12 @@ namespace Hoshi {
      * @brief Construct a expression codegen
      */
     ExpressionStmtCodegen::ExpressionStmtCodegen(void) = default;
+
     /**
      * @brief the instance of expression Codegen
      */
     ExpressionStmtCodegen ExpressionStmtCodegen::INSTANCE;
+
     /**
      * @brief visit an expression ast and gen the code
      * @return the value of expression

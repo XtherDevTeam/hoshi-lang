@@ -17,7 +17,7 @@ namespace Hoshi {
     public:
         ExpressionStmtNode();
 
-        virtual ~ExpressionStmtNode();
+        ~ExpressionStmtNode() override;
 
         ExpressionNode *GetExpression();
 
@@ -33,7 +33,7 @@ namespace Hoshi {
         public:
             static Parser INSTANCE;
 
-            virtual ExpressionStmtNode *Parse(Lexer &L) override;
+            ExpressionStmtNode *Parse(Lexer &L) override;
         };
     };
 }

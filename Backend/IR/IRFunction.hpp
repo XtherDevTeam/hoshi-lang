@@ -17,12 +17,14 @@ namespace Hoshi {
          * @brief IRBlocks in the function
          */
         const XArray<IRBlock> Blocks;
+
         /**
          * @brief construct an IRFunction
          * @param Name Name of the function
          * @param Blocks IRBlocks in the function
          */
-        IRFunction(const XString Name, const XArray<IRBlock> &&Blocks);
+        IRFunction(XString Name, const XArray<IRBlock> &&Blocks);
+
     public:
         class Builder {
             /**
@@ -37,35 +39,41 @@ namespace Hoshi {
             /**
              * @brief construct an IRFunction Builder
              */
-            Builder(void);
+            Builder();
+
             /**
              * @brief set the name of the IRFunction
              * @param Name name of the IRFunction
              * @return self
              */
             Builder &SetName(XString Name);
+
             /**
              * @brief add IRBlock to the IRFunction
              * @param Block the Block
              * @return self
              */
             Builder &AddBlock(IRBlock &&Block);
+
             /**
              * @brief create an IRFunction
              * @return IRFunction
              */
-            IRFunction build(void);
+            IRFunction build();
         };
+
         /**
          * @brief Get the name of the function
          * @return Name of the function
          */
-        const XString GetName(void) const;
+        XString GetName() const;
+
         /**
          * @brief Get blocks of the function
          * @return Blocks of the function
          */
-        const XArray<IRBlock> GetBlocks(void) const;
+        XArray<IRBlock> GetBlocks() const;
+
         friend class IRFunction::Builder;
     };
 }

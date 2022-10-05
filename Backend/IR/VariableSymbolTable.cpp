@@ -21,9 +21,9 @@ namespace Hoshi {
         SymbolTable.erase(SymbolName);
     }
 
-    XArray<VariableSymbolInfo> VariableSymbolTable::GetAllSymbols(void) {
+    XArray<VariableSymbolInfo> VariableSymbolTable::GetAllSymbols() {
         XArray<VariableSymbolInfo> Symbols;
-        for (auto Pair : SymbolTable) {
+        for (const auto& Pair: SymbolTable) {
             Symbols.push_back(Pair.second);
         }
         return Symbols;

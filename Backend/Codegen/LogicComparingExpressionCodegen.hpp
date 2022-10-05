@@ -26,7 +26,7 @@ namespace Hoshi {
          * @brief visit an LogicComparing expression ast and gen the code
          * @return the result of BinaryShift expression
          */
-        virtual Operand
+        Operand
         Visit(LogicComparingExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 

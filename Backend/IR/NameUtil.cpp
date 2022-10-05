@@ -12,12 +12,12 @@ namespace Hoshi {
     int LabelIndex = 0;
 
     XString NewVarName(XString prefix) {
-        int Idx = VarIndex ++;
+        int Idx = VarIndex++;
         return prefix + L"_var_" + std::to_wstring(VarIndex);
     }
 
     XString NewLabelName(XString prefix) {
-        int Idx = LabelIndex ++;
+        int Idx = LabelIndex++;
         return prefix + L"_label_" + std::to_wstring(VarIndex);
     }
 }

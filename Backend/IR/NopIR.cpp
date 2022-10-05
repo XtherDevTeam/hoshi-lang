@@ -8,7 +8,7 @@ namespace Hoshi {
     /**
      * @brief Construct a Nop IR
      */
-    NopIR::NopIR(void)
-        : IR(Opcode::Nop, Operand::Empty, Operand::Empty, Operand::Empty) {
+    NopIR::NopIR()
+            : IR(Opcode::Nop, Operand::Empty, Operand::Empty, Operand::Empty) {
     }
 }

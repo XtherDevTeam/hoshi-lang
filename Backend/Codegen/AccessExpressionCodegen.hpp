@@ -13,17 +13,20 @@ namespace Hoshi {
         /**
          * @brief Construct an access expression codegen
          */
-        AccessExpressionCodegen(void);
+        AccessExpressionCodegen();
+
     public:
         /**
          * @brief the instance of access expression Codegen
          */
         static AccessExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an access expression ast and gen the code
          * @return the value of access expression
          */
-        virtual Operand Visit(AccessExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(AccessExpressionNode &Node, IRProgram::Builder &Program) override;
+
         virtual VariableSymbolInfo &VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program);
     };
 }

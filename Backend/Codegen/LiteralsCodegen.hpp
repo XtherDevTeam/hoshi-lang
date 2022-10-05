@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a literals codegen
          */
-        LiteralsCodegen(void);
+        LiteralsCodegen();
+
     public:
         /**
          * @brief the instance of literals Codegen
          */
         static LiteralsCodegen INSTANCE;
+
         /**
          * @brief visit a literal ast and gen the code
          * @return string form of the value of literal
          */
-        virtual Operand Visit(LiteralsNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(LiteralsNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

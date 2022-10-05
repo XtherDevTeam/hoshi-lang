@@ -12,26 +12,36 @@ namespace Hoshi {
      * @brief Construct a BinaryShift expression codegen
      */
     BinaryShiftExpressionCodegen::BinaryShiftExpressionCodegen(void) = default;
+
     /**
      * @brief the instance of BinaryShift expression Codegen
      */
     BinaryShiftExpressionCodegen BinaryShiftExpressionCodegen::INSTANCE;
+
     /**
      * @brief visit an BinaryShift expression ast and gen the code
      * @return the result of BinaryShift expression
      */
     Operand BinaryShiftExpressionCodegen::Visit(BinaryShiftExpressionNode &Node, IRProgram::Builder &Program) {
         IRBlock::Builder &Block = *Program.GetContext().CurrentBlock;
-        Operand LastResult = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0), Program); //The result of last expression ir
-        for (int i = 0 ; i < Node.GetOperators().size() ; i ++) {
+        Operand LastResult = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0),
+                                                                       Program); //The result of last expression ir
+        for (int i = 0; i < Node.GetOperators().size(); i++) {
             Lexer::Token OperatorNode = Node.GetOperators(i);
-            Operand ThisOperand = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1), Program); //the operand of this ir
-            Operand Result = Operand(OperandType::Identifier, LocalNamePrefix + NewVarName(L"expr")); // the result of this ir
+            Operand ThisOperand = AdditionExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1),
+                                                                            Program); //the operand of this ir
+            Operand Result = Operand(OperandType::Identifier,
+                                     LocalNamePrefix + NewVarName(L"expr")); // the result of this ir
             Opcode Operator;
             switch (OperatorNode.Kind) { //Choose Opcode
-            case Lexer::TokenKind::BinaryLeftShift:  Operator = Opcode::ShiftLeft;      break; // '<<'
-            case Lexer::TokenKind::BinaryRightShift: Operator = Opcode::ShiftRight; break; // '>>'
-            default: throw CompilerError(Node.Line, Node.Column, L"Invalid BinaryShift Expression Operator!");
+                case Lexer::TokenKind::BinaryLeftShift:
+                    Operator = Opcode::ShiftLeft;
+                    break; // '<<'
+                case Lexer::TokenKind::BinaryRightShift:
+                    Operator = Opcode::ShiftRight;
+                    break; // '>>'
+                default:
+                    throw CompilerError(Node.Line, Node.Column, L"Invalid BinaryShift Expression Operator!");
             }
             Block.AddIR(BinaryExprIR(Operator, LastResult, ThisOperand, Result));
             LastResult = Result;

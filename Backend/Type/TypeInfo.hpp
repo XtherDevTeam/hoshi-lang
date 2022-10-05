@@ -10,8 +10,9 @@
 namespace Hoshi {
     class TypeInfo {
     public:
-        virtual const XString GetTypeName(void) = 0;
-        virtual const XSize GetSize(void) = 0;
+        virtual const XString GetTypeName() = 0;
+
+        virtual const XSize GetSize() = 0;
     };
 
     class Type {
@@ -28,13 +29,16 @@ namespace Hoshi {
         const TTypes TType;
         const TypeInfo *Info;
     public:
-        Type(const TTypes TType, const TypeInfo *Info);
+        Type(TTypes TType, const TypeInfo *Info);
+
         ~Type();
-        const TypeInfo *GetInfo(void);
-        const TTypes GetType(void);
+
+        const TypeInfo *GetInfo();
+
+        TTypes GetType();
     };
 
-    class BasicTypeInfo : public TypeInfo{
+    class BasicTypeInfo : public TypeInfo {
     public:
         enum class BasicTypes {
             BYTE, // 1B
@@ -53,16 +57,21 @@ namespace Hoshi {
         const BasicTypes BasicType;
     public:
         BasicTypeInfo(BasicTypes BasicType);
-        const BasicTypes GetType(void);
-        virtual const XString GetTypeName(void) override;
-        virtual const XSize GetSize(void) override;
+
+        BasicTypes GetType();
+
+        const XString GetTypeName() override;
+
+        const XSize GetSize() override;
     };
 
     class UndefinedTypeInfo : public TypeInfo {
     public:
-        UndefinedTypeInfo(void);
-        virtual const XString GetTypeName(void) override;
-        virtual const XSize GetSize(void) override;
+        UndefinedTypeInfo();
+
+        const XString GetTypeName() override;
+
+        const XSize GetSize() override;
     };
 
     //TODO:

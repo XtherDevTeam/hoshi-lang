@@ -8,15 +8,16 @@
 #include <Parsers/MuliplicationExpressionNode.hpp>
 
 namespace Hoshi {
-    class AdditionExpressionNode : public CSTNode{
+    class AdditionExpressionNode : public CSTNode {
         XArray<MuliplicationExpressionNode *> Operands;
         XArray<Lexer::Token> Operators;
 
         AdditionExpressionNode(XArray<MuliplicationExpressionNode *> Operands, XArray<Lexer::Token> Operators);
+
     public:
         AdditionExpressionNode();
 
-        virtual ~AdditionExpressionNode();
+        ~AdditionExpressionNode() override;
 
         XArray<MuliplicationExpressionNode *> GetOperands();
 
@@ -28,14 +29,15 @@ namespace Hoshi {
 
         XString GetNodeType() override;
 
-        #define ADDITION_FIRST MULIPLICATION_FIRST
+#define ADDITION_FIRST MULIPLICATION_FIRST
 
         class Parser : public CSTNode::Parser<AdditionExpressionNode> {
             Parser();
+
         public:
             static Parser INSTANCE;
-            
-            virtual AdditionExpressionNode *Parse(Lexer &L) override;
+
+            AdditionExpressionNode *Parse(Lexer &L) override;
         };
     };
 }

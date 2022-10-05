@@ -10,7 +10,8 @@
 #include <Exceptions/CompilerError.hpp>
 
 namespace Hoshi {
-    template<typename Result, typename NodeType> class Codegen {
+    template<typename Result, typename NodeType>
+    class Codegen {
     public:
         /**
          * @brief visit an ast and gen the code

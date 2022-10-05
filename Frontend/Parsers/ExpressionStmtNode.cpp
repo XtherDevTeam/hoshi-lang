@@ -4,17 +4,19 @@
 
 #include <Parsers/ExpressionStmtNode.hpp>
 #include <Parsers/AssignStmtNode.hpp>
+#include <utility>
 
 namespace Hoshi {
     ExpressionStmtNode::ExpressionStmtNode(ExpressionNode *Expression, Lexer::Token Semicolon)
-        : Expression(Expression), Semicolon(Semicolon), CSTNode(Expression->Line, Expression->Column) {
+            : Expression(Expression), Semicolon(std::move(Semicolon)), CSTNode(Expression->Line, Expression->Column) {
     }
 
     ExpressionStmtNode::ExpressionStmtNode()
-            : Expression(NULL), Semicolon({}), CSTNode(0, 0) {
+            : Expression(nullptr), Semicolon({}), CSTNode(0, 0) {
     }
+
     ExpressionStmtNode::~ExpressionStmtNode() {
-        if (Expression != NULL)
+        if (Expression != nullptr)
             delete Expression;
     }
 
@@ -37,7 +39,7 @@ namespace Hoshi {
     ExpressionStmtNode::Parser ExpressionStmtNode::Parser::INSTANCE;
 
     ExpressionStmtNode *ExpressionStmtNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken)) {
+        if (!IsFirstToken(L.LastToken)) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected expression stmt FIRST");
         }
 
@@ -46,7 +48,7 @@ namespace Hoshi {
         }
 
         ExpressionNode *Expression = ExpressionNode::Parser::INSTANCE.Parse(L);
-        
+
         if (L.LastToken.Kind != Lexer::TokenKind::Semicolon) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected a semicolon ';'!");
         }

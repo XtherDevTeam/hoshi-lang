@@ -155,37 +155,44 @@ namespace Hoshi {
          * @brief Reset Lexer to initial state.
          */
         void Reset();
+
     private:
         /**
          * @brief Get next token as Identifier/Keyword/Boolean
          * @return The next token
          */
         Token ScanAsIdentifier();
+
         /**
          * @brief Get next token as Digital
          * @return The next token
          */
         Token ScanAsDigital();
+
         /**
          * @brief Get next token as ReadonlyStringLiteral
          * @return The next token
          */
         Token ScanAsReadonlyStringLiteral();
+
         /**
          * @brief Get next token as Character
          * @return The next token
          */
         Token ScanAsCharacter();
+
         /**
          * @brief Get next token as Single Sign
          * @return The next token
          */
         Token ScanAsSingleSign();
+
         /**
          * @brief Get next token as Multiple Sign
          * @return The next token
          */
         Token ScanAsMultipleSign();
+
         /**
          * @brief Get next token as Logic Sign
          * @return The next token

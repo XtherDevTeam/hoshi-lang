@@ -3,21 +3,23 @@
 //
 
 #include <Parsers/AssignStmtNode.hpp>
+#include <utility>
 
 namespace Hoshi {
-    AssignStmtNode::AssignStmtNode(AccessExpressionNode *Access, Lexer::Token AssignOperator, ExpressionNode *Expression, Lexer::Token Semicolon)
-        : Access(Access), AssignOperator(AssignOperator), Expression(Expression), 
-          Semicolon(Semicolon), CSTNode(Access->Line, Access->Column) {
+    AssignStmtNode::AssignStmtNode(AccessExpressionNode *Access, Lexer::Token AssignOperator,
+                                   ExpressionNode *Expression, Lexer::Token Semicolon)
+            : Access(Access), AssignOperator(std::move(AssignOperator)), Expression(Expression),
+              Semicolon(std::move(Semicolon)), CSTNode(Access->Line, Access->Column) {
     }
 
     AssignStmtNode::AssignStmtNode()
-            : Access(NULL), AssignOperator({}), Expression(NULL), CSTNode(0, 0) {
+            : Access(nullptr), AssignOperator({}), Expression(nullptr), CSTNode(0, 0) {
     }
 
     AssignStmtNode::~AssignStmtNode() {
-        if (Access != NULL)
+        if (Access != nullptr)
             delete Access;
-        if (Expression != NULL)
+        if (Expression != nullptr)
             delete Expression;
     }
 
@@ -48,49 +50,55 @@ namespace Hoshi {
 
         bool Flag;
         switch (L.LastToken.Kind) {
-        case Lexer::TokenKind::AssignSign: case Lexer::TokenKind::RemainderAssignment:
-        case Lexer::TokenKind::AdditionAssignment: case Lexer::TokenKind::SubtractionAssignment:
-        case Lexer::TokenKind::MultiplicationAssignment: case Lexer::TokenKind::DivisionAssignment:
-            Flag = true;
-            break;
-        default:
-            Flag = false;
-            break;
+            case Lexer::TokenKind::AssignSign:
+            case Lexer::TokenKind::RemainderAssignment:
+            case Lexer::TokenKind::AdditionAssignment:
+            case Lexer::TokenKind::SubtractionAssignment:
+            case Lexer::TokenKind::MultiplicationAssignment:
+            case Lexer::TokenKind::DivisionAssignment:
+                Flag = true;
+                break;
+            default:
+                Flag = false;
+                break;
         }
 
-        if (Access != NULL)
+        if (Access != nullptr)
             delete Access;
 
         return Flag;
     }
 
     AssignStmtNode *AssignStmtNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken)) {
+        if (!IsFirstToken(L.LastToken)) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected assign stmt FIRST");
         }
 
-        if (! IsAssignStmt(L)) {
-            return NULL; //不是Assign Stmt
+        if (!IsAssignStmt(L)) {
+            return nullptr; //不是Assign Stmt
         }
 
         AccessExpressionNode *Access = AccessExpressionNode::Parser::INSTANCE.Parse(L);
 
         bool Flag;
         switch (L.LastToken.Kind) {
-        case Lexer::TokenKind::AssignSign: case Lexer::TokenKind::RemainderAssignment:
-        case Lexer::TokenKind::AdditionAssignment: case Lexer::TokenKind::SubtractionAssignment:
-        case Lexer::TokenKind::MultiplicationAssignment: case Lexer::TokenKind::DivisionAssignment:
-            Flag = true;
-            break;
-        default:
-            Flag = false;
-            break;
+            case Lexer::TokenKind::AssignSign:
+            case Lexer::TokenKind::RemainderAssignment:
+            case Lexer::TokenKind::AdditionAssignment:
+            case Lexer::TokenKind::SubtractionAssignment:
+            case Lexer::TokenKind::MultiplicationAssignment:
+            case Lexer::TokenKind::DivisionAssignment:
+                Flag = true;
+                break;
+            default:
+                Flag = false;
+                break;
         }
 
-        if (! Flag) {
+        if (!Flag) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected assign operator");
         }
-        
+
         Lexer::Token AssignOperator = L.LastToken;
         L.Scan();
 
@@ -103,7 +111,7 @@ namespace Hoshi {
         Lexer::Token Semicolon = L.LastToken;
         L.Scan();
 
-        AssignStmtNode *Result = new AssignStmtNode(Access, AssignOperator, Expression, Semicolon);
+        auto *Result = new AssignStmtNode(Access, AssignOperator, Expression, Semicolon);
         return Result;
     }
 }

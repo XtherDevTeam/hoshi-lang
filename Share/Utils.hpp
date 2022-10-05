@@ -34,7 +34,7 @@ namespace Hoshi {
 
     XDecimal XStringToXDecimal(const XString &T);
 
-    XIndexType HashBytes(const XBytes& Bytes);
+    XIndexType HashBytes(const XBytes &Bytes);
 
     XIndexType Hash(const XString &T);
 

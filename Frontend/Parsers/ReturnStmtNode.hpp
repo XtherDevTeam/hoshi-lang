@@ -15,10 +15,11 @@ namespace Hoshi {
         Lexer::Token Semicolon;
 
         ReturnStmtNode(ExpressionNode *Expr, Lexer::Token Semicolon);
+
     public:
         ReturnStmtNode();
 
-        virtual ~ReturnStmtNode();
+        ~ReturnStmtNode() override;
 
         ExpressionNode *GetExpression();
 

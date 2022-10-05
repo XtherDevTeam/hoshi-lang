@@ -34,13 +34,15 @@ namespace Hoshi {
          * @brief Arguments in the block
          */
         const XArray<Argument> Arguments;
+
         /**
          * @brief construct an IRBlock
          * @param Name Name of the block
          * @param IRCollection IR in the block
          * @param Arguments Arguments in the block
          */
-        IRBlock(const XString Name, const XArray<IR> &&IRCollection, const XArray<Argument> &&Arguments);
+        IRBlock(XString Name, const XArray<IR> &&IRCollection, const XArray<Argument> &&Arguments);
+
     public:
         class Builder {
             /**
@@ -59,46 +61,54 @@ namespace Hoshi {
             /**
              * @brief construct an IRBlock Builder
              */
-            Builder(void);
+            Builder();
+
             /**
              * @brief set the name of the IRBlock
              * @param Name name of the IRBlock
              * @return self
              */
             Builder &SetName(XString Name);
+
             /**
              * @brief add IR to the IRBlock
              * @param ir the IR
              * @return self
              */
             Builder &AddIR(IR ir);
+
             /**
              * @brief add Argument to the IRBlock
              * @param Arg the Argument
              * @return self
              */
             Builder &AddArgument(Argument Arg);
+
             /**
              * @brief create an IRBlock
              * @return IRBlock
              */
-            IRBlock build(void) const;
+            [[nodiscard]] IRBlock build() const;
         };
+
         /**
          * @brief Get the name of the block
          * @return Name of the block
          */
-        const XString GetName(void) const;
+        XString GetName() const;
+
         /**
          * @brief Get IR of the block
          * @return IR of the block
          */
-        const XArray<IR> GetIRCollection(void) const;
+        XArray<IR> GetIRCollection() const;
+
         /**
          * @brief Get Arguments of the block
          * @return Arguments of the block
          */
-        const XArray<Argument> GetArguments(void) const;
+        XArray<Argument> GetArguments() const;
+
         friend class IRBlock::Builder;
     };
 }

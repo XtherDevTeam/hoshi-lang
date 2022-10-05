@@ -13,35 +13,40 @@ namespace Hoshi {
      * @param Arguments Arguments in the block
      */
     IRBlock::IRBlock(const XString Name, const XArray<IR> &&IRCollection, const XArray<Argument> &&Arguments)
-        : Name(Name), IRCollection(std::move(IRCollection)), Arguments(std::move(Arguments)) {
+            : Name(Name), IRCollection(IRCollection), Arguments(Arguments) {
     }
+
     /**
      * @brief Get the name of the block
      * @return Name of the block
      */
-    const XString IRBlock::GetName(void) const {
+    XString IRBlock::GetName() const {
         return Name;
     }
+
     /**
      * @brief Get IR of the block
      * @return IR of the block
      */
-    const XArray<IR> IRBlock::GetIRCollection(void) const {
+    XArray<IR> IRBlock::GetIRCollection() const {
         return IRCollection;
     }
+
     /**
      * @brief Get Arguments of the block
      * @return Arguments of the block
      */
-    const XArray<Argument> IRBlock::GetArguments(void) const {
+    XArray<Argument> IRBlock::GetArguments() const {
         return Arguments;
     }
+
     /**
      * @brief construct an IRBlock Builder
      */
-    IRBlock::Builder::Builder(void)
-        : Name(L"") {
+    IRBlock::Builder::Builder()
+            : {
     }
+
     /**
      * @brief set the name of the IRBlock
      * @param Name name of the IRBlock
@@ -51,6 +56,7 @@ namespace Hoshi {
         this->Name = Name;
         return *this;
     }
+
     /**
      * @brief add IR to the IRBlock
      * @param ir the IR
@@ -60,6 +66,7 @@ namespace Hoshi {
         IRCollection.push_back(ir);
         return *this;
     }
+
     /**
      * @brief add Argument to the IRBlock
      * @param Arg the Argument
@@ -69,12 +76,13 @@ namespace Hoshi {
         Arguments.push_back(Arg);
         return *this;
     }
+
     /**
      * @brief create an IRBlock
      * @return IRBlock
      */
-    IRBlock IRBlock::Builder::build(void) const {
-        if (Name == L"")
+    IRBlock IRBlock::Builder::build() const {
+        if (Name.empty())
             throw HoshiException(L"The block need a name!");
         return IRBlock(Name, std::move(IRCollection), std::move(Arguments));
     }

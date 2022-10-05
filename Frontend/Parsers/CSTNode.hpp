@@ -14,20 +14,26 @@ namespace Hoshi {
     public:
         XInteger Line;
         XInteger Column;
+
         CSTNode(XInteger Line, XInteger Column);
+
         virtual ~CSTNode();
 
         virtual XString GetNodeType() = 0;
-        template<typename NodeType> class Parser {
+
+        template<typename NodeType>
+        class Parser {
         protected:
             std::set<Lexer::TokenKind> FIRST;
         public:
             Parser(std::initializer_list<Lexer::TokenKind> FIRST)
-                : FIRST(FIRST) {
+                    : FIRST(FIRST) {
             }
+
             bool IsFirstToken(Lexer::Token token) {
                 return FIRST.find(token.Kind) != FIRST.end();
             }
+
             virtual NodeType *Parse(Lexer &L) = 0;
         };
     };

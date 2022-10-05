@@ -13,7 +13,7 @@ namespace Hoshi {
     public:
         CompilerError(XIndexType Line, XIndexType Col, const XString &Text);
 
-        const char *what() const noexcept override;
+        [[nodiscard]] const char *what() const noexcept override;
     };
 
 } // Hoshi

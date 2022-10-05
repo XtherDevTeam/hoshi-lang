@@ -16,6 +16,7 @@ namespace Hoshi {
     ReturnStmtNode::ReturnStmtNode()
             : Expr(nullptr), Semicolon({}), CSTNode(0, 0) {
     }
+
     ReturnStmtNode::~ReturnStmtNode() {
         if (Expr != nullptr)
             delete Expr;
@@ -36,7 +37,7 @@ namespace Hoshi {
     ReturnStmtNode::Parser ReturnStmtNode::Parser::INSTANCE;
 
     ReturnStmtNode *ReturnStmtNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken)) {
+        if (!IsFirstToken(L.LastToken)) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected return stmt FIRST");
         }
         L.Scan();

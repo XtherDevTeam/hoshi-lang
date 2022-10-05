@@ -12,7 +12,7 @@ namespace Hoshi {
      * @param SourceOperendB Second Source Oprend
      * @param DestinationOperand Destination Oprend
      */
-    BinaryExprIR::BinaryExprIR(Opcode Code, Operand SourceOperandA, Operand SourceOperandB, Operand DestinationOperand) 
-        : IR(Code, SourceOperandA, SourceOperandB, DestinationOperand) {
+    BinaryExprIR::BinaryExprIR(Opcode Code, Operand SourceOperandA, Operand SourceOperandB, Operand DestinationOperand)
+            : IR(Code, SourceOperandA, SourceOperandB, DestinationOperand) {
     }
 }

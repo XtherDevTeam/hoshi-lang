@@ -9,14 +9,15 @@
 #include <IR/IRProgram.hpp>
 
 namespace Hoshi {
-    template<typename ResultType> class PassResult {
+    template<typename ResultType>
+    class PassResult {
     protected:
         ResultType Result;
     public:
         /**
          * @brief Result of This Pass
          */
-        virtual ResultType &GetResult(void) {
+        virtual ResultType &GetResult() {
             return Result;
         }
     };
@@ -25,7 +26,8 @@ namespace Hoshi {
     using XStringPassResult = PassResult<XString>;
     using IRProgramPassResult = PassResult<IRProgram::Builder>;
 
-    template<typename SourceType, typename ResultType> class Pass {
+    template<typename SourceType, typename ResultType>
+    class Pass {
     protected:
         /**
          * @brief Result of Last Pass
@@ -42,17 +44,19 @@ namespace Hoshi {
          * @param Result Result of This Pass
          */
         Pass(PassResult<SourceType> &LastPass, PassResult<ResultType> &Result)
-            : LastPass(LastPass), Result(Result) {
+                : LastPass(LastPass), Result(Result) {
         }
+
         /**
          * @brief Run a Pass
          */
-        virtual void Run(void) = 0;
+        virtual void Run() = 0;
+
         /**
          * @brief Get Pass Result
          * @return Pass Result;
          */
-        virtual PassResult<ResultType> &GetResult(void) const {
+        virtual PassResult<ResultType> &GetResult() const {
             return Result;
         }
     };

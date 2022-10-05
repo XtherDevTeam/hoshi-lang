@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a muliplication expression codegen
          */
-        MuliplicationExpressionCodegen(void);
+        MuliplicationExpressionCodegen();
+
     public:
         /**
          * @brief the instance of muliplication expression Codegen
          */
         static MuliplicationExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an muliplication expression ast and gen the code
          * @return the result of muliplication expression
          */
-        virtual Operand Visit(MuliplicationExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(MuliplicationExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

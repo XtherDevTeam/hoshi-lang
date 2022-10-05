@@ -12,14 +12,14 @@ namespace Hoshi {
      * @param Blocks IRBlocks in the function
      */
     IRFunction::IRFunction(const XString Name, const XArray<IRBlock> &&Blocks)
-        : Name(Name), Blocks(std::move(Blocks)) {
+            : Name(Name), Blocks(Blocks) {
     }
 
     /**
      * @brief Get the name of the function
      * @return Name of the function
      */
-    const XString IRFunction::GetName(void) const {
+    XString IRFunction::GetName() const {
         return Name;
     }
 
@@ -27,15 +27,15 @@ namespace Hoshi {
      * @brief Get blocks of the function
      * @return Blocks of the function
      */
-    const XArray<IRBlock> IRFunction::GetBlocks(void) const {
+    XArray<IRBlock> IRFunction::GetBlocks() const {
         return Blocks;
     }
 
     /**
      * @brief construct an IRFunction Builder
      */
-    IRFunction::Builder::Builder(void) 
-        : Name(L"") {
+    IRFunction::Builder::Builder()
+            : {
     }
 
     /**
@@ -62,8 +62,8 @@ namespace Hoshi {
      * @brief create an IRFunction
      * @return IRFunction
      */
-    IRFunction IRFunction::Builder::build(void) {
-        if (Name == L"")
+    IRFunction IRFunction::Builder::build() {
+        if (Name.empty())
             throw HoshiException(L"The function need a name!");
         return IRFunction(Name, std::move(Blocks));
     }

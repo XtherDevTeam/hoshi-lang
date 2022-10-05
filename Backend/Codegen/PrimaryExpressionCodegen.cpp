@@ -11,19 +11,20 @@ namespace Hoshi {
      * @brief Construct a primary expression codegen
      */
     PrimaryExpressionCodegen::PrimaryExpressionCodegen(void) = default;
+
     /**
      * @brief the instance of primary expression Codegen
      */
     PrimaryExpressionCodegen PrimaryExpressionCodegen::INSTANCE;
+
     /**
      * @brief visit an primary expression ast and gen the code
      * @return the result of primary expression
      */
     Operand PrimaryExpressionCodegen::Visit(PrimaryExpressionNode &Node, IRProgram::Builder &Program) {
-        if (Node.GetLiterals() != NULL) {
+        if (Node.GetLiterals() != nullptr) {
             return LiteralsCodegen::INSTANCE.Visit(*Node.GetLiterals(), Program);
-        }
-        else if (Node.GetAccess() != NULL) {
+        } else if (Node.GetAccess() != nullptr) {
             return AccessExpressionCodegen::INSTANCE.Visit(*Node.GetAccess(), Program);
         }
         throw CompilerError(Node.Line, Node.Column, L"Invalid Primary Expression!");

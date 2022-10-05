@@ -17,7 +17,7 @@ namespace Hoshi {
     }
 
     BinaryShiftExpressionNode::~BinaryShiftExpressionNode() {
-        for (auto *Node : Operands) {
+        for (auto *Node: Operands) {
             delete Node;
         }
     }
@@ -49,7 +49,7 @@ namespace Hoshi {
     BinaryShiftExpressionNode::Parser BinaryShiftExpressionNode::Parser::INSTANCE;
 
     BinaryShiftExpressionNode *BinaryShiftExpressionNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken))
+        if (!IsFirstToken(L.LastToken))
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except BinaryShift FIRST!");
         XArray<AdditionExpressionNode *> Operands;
         XArray<Lexer::Token> Operators;
@@ -57,21 +57,22 @@ namespace Hoshi {
         bool Flag = false;
         while (true) {
             switch (L.LastToken.Kind) {
-            case Lexer::TokenKind::BinaryLeftShift: case Lexer::TokenKind::BinaryRightShift:
-                Flag = true;
-                break;
-            default:
-                Flag = false;
-                break;
+                case Lexer::TokenKind::BinaryLeftShift:
+                case Lexer::TokenKind::BinaryRightShift:
+                    Flag = true;
+                    break;
+                default:
+                    Flag = false;
+                    break;
             }
-            if (! Flag) {
+            if (!Flag) {
                 break;
             }
             Operators.push_back(L.LastToken);
             L.Scan();
             Operands.push_back(AdditionExpressionNode::Parser::INSTANCE.Parse(L));
         }
-        BinaryShiftExpressionNode *Result = new BinaryShiftExpressionNode(Operands, Operators);
+        auto *Result = new BinaryShiftExpressionNode(Operands, Operators);
         return Result;
     }
 }

@@ -13,17 +13,19 @@ namespace Hoshi {
         /**
          * @brief Construct a unique expression codegen
          */
-        UniqueExpressionCodegen(void);
+        UniqueExpressionCodegen();
+
     public:
         /**
          * @brief the instance of unique expression Codegen
          */
         static UniqueExpressionCodegen INSTANCE;
+
         /**
          * @brief visit an unique expression ast and gen the code
          * @return the result of unique expression
          */
-        virtual Operand Visit(UniqueExpressionNode &Node, IRProgram::Builder &Program) override;
+        Operand Visit(UniqueExpressionNode &Node, IRProgram::Builder &Program) override;
     };
 }
 

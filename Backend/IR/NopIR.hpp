@@ -13,7 +13,7 @@ namespace Hoshi {
         /**
          * @brief Construct a Nop IR
          */
-        NopIR(void);
+        NopIR();
     };
 }
 

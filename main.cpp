@@ -45,16 +45,16 @@ int main(int argc, const char **argv) {
 
         Function.AddBlock(Block.build());
         Program.AddFunction(Function.build());
-        
+
         Hoshi::IRProgram ProgramResult = Program.build();
 
-        for (const Hoshi::IRFunction &function : ProgramResult.GetFunctions()) {
+        for (const Hoshi::IRFunction &function: ProgramResult.GetFunctions()) {
             std::wcout << L"func " << function.GetName() << L"() {" << std::endl;
 
-            for (const Hoshi::IRBlock& block: function.GetBlocks()) {
+            for (const Hoshi::IRBlock &block: function.GetBlocks()) {
                 std::wcout << function.GetName() << L":" << std::endl;
 
-                for (const Hoshi::IR& ir: block.GetIRCollection()) {
+                for (const Hoshi::IR &ir: block.GetIRCollection()) {
                     std::wcout << L"  " << Hoshi::ToString(ir) << std::endl;
                 }
             }

@@ -20,7 +20,7 @@ namespace Hoshi {
     public:
         AssignStmtNode();
 
-        virtual ~AssignStmtNode();
+        ~AssignStmtNode() override;
 
         AccessExpressionNode *GetAccess();
 
@@ -38,8 +38,9 @@ namespace Hoshi {
         public:
             static Parser INSTANCE;
 
-            bool IsAssignStmt(Lexer L);
-            virtual AssignStmtNode *Parse(Lexer &L) override;
+            static bool IsAssignStmt(Lexer L);
+
+            AssignStmtNode *Parse(Lexer &L) override;
         };
     };
 }

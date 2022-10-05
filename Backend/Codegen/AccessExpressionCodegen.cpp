@@ -17,7 +17,7 @@ namespace Hoshi {
         //TODO: Add Member Access
         Lexer::Token Identifier = Node.GetIdentifier();
 
-        if (! Program.GetContext().VariableTable.Exists(Identifier.Value)) {
+        if (!Program.GetContext().VariableTable.Exists(Identifier.Value)) {
             throw CompilerError(Identifier.Line, Identifier.Column, L"Undefined Identifier!");
         }
 
@@ -27,7 +27,7 @@ namespace Hoshi {
     VariableSymbolInfo &AccessExpressionCodegen::VisitSymbol(AccessExpressionNode &Node, IRProgram::Builder &Program) {
         Lexer::Token Identifier = Node.GetIdentifier();
 
-        if (! Program.GetContext().VariableTable.Exists(Identifier.Value)) {
+        if (!Program.GetContext().VariableTable.Exists(Identifier.Value)) {
             Type *UndefinedType = new Type(Type::TTypes::Undefined, new UndefinedTypeInfo());
             VariableSymbolInfo Symbol = {Identifier.Value, Operand::Empty, UndefinedType};
             Program.GetContext().VariableTable.AddSymbol(Identifier.Value, Symbol);

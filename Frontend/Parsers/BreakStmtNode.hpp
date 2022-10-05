@@ -13,10 +13,11 @@ namespace Hoshi {
         Lexer::Token Semicolon;
 
         BreakStmtNode(Lexer::Token Semicolon);
+
     public:
         BreakStmtNode();
 
-        virtual ~BreakStmtNode();
+        ~BreakStmtNode() override;
 
         XString GetNodeType() override;
 

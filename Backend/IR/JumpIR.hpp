@@ -16,6 +16,7 @@ namespace Hoshi {
          * @param Arguments Arguments of Jump Destination
          */
         JumpIR(Operand Destination, std::initializer_list<Operand> &&Arguments);
+
         /**
          * @brief Construct a Jump IR
          * @param Destination Jump Destination

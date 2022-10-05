@@ -13,10 +13,11 @@ namespace Hoshi {
         XArray<Lexer::Token> Operators;
 
         BinaryShiftExpressionNode(XArray<AdditionExpressionNode *> Operands, XArray<Lexer::Token> Operators);
+
     public:
         BinaryShiftExpressionNode();
 
-        virtual ~BinaryShiftExpressionNode();
+        ~BinaryShiftExpressionNode() override;
 
         XArray<AdditionExpressionNode *> GetOperands();
 
@@ -28,10 +29,11 @@ namespace Hoshi {
 
         XString GetNodeType() override;
 
-        #define BINARYSHIFT_FIRST ADDITION_FIRST
+#define BINARYSHIFT_FIRST ADDITION_FIRST
 
         class Parser : public CSTNode::Parser<BinaryShiftExpressionNode> {
             Parser();
+
         public:
             static Parser INSTANCE;
 

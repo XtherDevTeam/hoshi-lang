@@ -13,6 +13,7 @@ namespace Hoshi {
     ContinueStmtNode::ContinueStmtNode()
             : Semicolon({}), CSTNode(0, 0) {
     }
+
     ContinueStmtNode::~ContinueStmtNode() = default;
 
     XString ContinueStmtNode::GetNodeType() {
@@ -26,7 +27,7 @@ namespace Hoshi {
     ContinueStmtNode::Parser ContinueStmtNode::Parser::INSTANCE;
 
     ContinueStmtNode *ContinueStmtNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken)) {
+        if (!IsFirstToken(L.LastToken)) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected continue stmt FIRST");
         }
         L.Scan();

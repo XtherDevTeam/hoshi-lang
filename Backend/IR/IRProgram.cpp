@@ -11,15 +11,16 @@ namespace Hoshi {
      * @param Functions IRFunctionss in the program
      */
     IRProgram::IRProgram(const XString Name, const XArray<IRFunction> &&Functions, const ProgramContext &&Context)
-        : Name(Name), Functions(std::move(Functions)), Context(std::move(Context)) {
+            : Name(Name), Functions(Functions), Context(Context) {
     }
 
     /**
      * @brief construct an IRProgram Builder
      */
-    IRProgram::Builder::Builder(void)
-        : Name(L"") {
+    IRProgram::Builder::Builder()
+            : {
     }
+
     /**
      * @brief set the name of the IRProgram
      * @param Name name of the IRProgram
@@ -29,6 +30,7 @@ namespace Hoshi {
         this->Name = Name;
         return *this;
     }
+
     /**
      * @brief add IRFunction to the IRProgram
      * @param function the function
@@ -38,32 +40,36 @@ namespace Hoshi {
         this->Functions.push_back(Function);
         return *this;
     }
+
     /**
      * @brief Get the context of program
      * @return Context
      */
-    ProgramContext &IRProgram::Builder::GetContext(void) {
+    ProgramContext &IRProgram::Builder::GetContext() {
         return Context;
     }
+
     /**
      * @brief create an IRProgram
      * @return IRProgram
      */
-    IRProgram IRProgram::Builder::build(void) {
+    IRProgram IRProgram::Builder::build() {
         return IRProgram(Name, std::move(Functions), std::move(Context));
     }
+
     /**
      * @brief Get the name of the program
      * @return Name of the program
      */
-    const XString IRProgram::GetName(void) const {
+    XString IRProgram::GetName() const {
         return Name;
     }
+
     /**
      * @brief Get functions of the program
      * @return Functions of the program
      */
-    const XArray<IRFunction> IRProgram::GetFunctions(void) const {
+    XArray<IRFunction> IRProgram::GetFunctions() const {
         return Functions;
     }
 }

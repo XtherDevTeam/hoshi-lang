@@ -12,6 +12,6 @@ namespace Hoshi {
     * @param DestinationOperand Destination Oprend
     */
     UniqieExprIR::UniqieExprIR(Opcode Code, Operand SourceOperand, Operand DestinationOperand)
-        : IR(Code, SourceOperand, Operand::Empty, DestinationOperand) {
+            : IR(Code, SourceOperand, Operand::Empty, DestinationOperand) {
     }
 }

@@ -12,10 +12,12 @@ namespace Hoshi {
      * @brief Construct a unique expression codegen
      */
     UniqueExpressionCodegen::UniqueExpressionCodegen(void) = default;
+
     /**
      * @brief the instance of unique expression Codegen
      */
     UniqueExpressionCodegen UniqueExpressionCodegen::INSTANCE;
+
     /**
      * @brief visit an unique expression ast and gen the code
      * @return the result of unique expression
@@ -26,18 +28,16 @@ namespace Hoshi {
         Operand Value = PrimaryExpressionCodegen::INSTANCE.Visit(*Node.GetPrimary(), Program);
         if (Operator == Lexer::Token{} || Operator.Kind == Lexer::TokenKind::Plus) {
             return Value;
-        }
-        else if (Operator.Kind == Lexer::TokenKind::Minus) {
+        } else if (Operator.Kind == Lexer::TokenKind::Minus) {
             Operand Result = Operand(OperandType::Identifier, LocalNamePrefix + NewVarName(L"expr"));
             Block.AddIR(UniqieExprIR(Opcode::Negative, Value, Result));
             return Result;
-        }
-        else if (Operator.Kind == Lexer::TokenKind::Invert) {
+        } else if (Operator.Kind == Lexer::TokenKind::Invert) {
             Operand Result = Operand(OperandType::Identifier, LocalNamePrefix + NewVarName(L"expr"));
             Block.AddIR(UniqieExprIR(Opcode::Invert, Value, Result));
             return Result;
         }
-        
+
         throw CompilerError(Node.Line, Node.Column, L"Invalid Unique Expression Operator!");
     }
 }

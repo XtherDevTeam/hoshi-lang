@@ -19,7 +19,7 @@ namespace Hoshi {
     public:
         UniqueExpressionNode();
 
-        virtual ~UniqueExpressionNode();
+        ~UniqueExpressionNode() override;
 
         Lexer::Token GetOperator();
 
@@ -36,10 +36,11 @@ namespace Hoshi {
 
         class Parser : public CSTNode::Parser<UniqueExpressionNode> {
             Parser();
+
         public:
             static Parser INSTANCE;
-            
-            virtual UniqueExpressionNode *Parse(Lexer &L) override;
+
+            UniqueExpressionNode *Parse(Lexer &L) override;
         };
     };
 }

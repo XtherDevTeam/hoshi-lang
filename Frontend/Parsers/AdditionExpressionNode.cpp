@@ -3,18 +3,20 @@
 //
 
 #include <Parsers/AdditionExpressionNode.hpp>
+#include <utility>
 
 namespace Hoshi {
-    AdditionExpressionNode::AdditionExpressionNode(XArray<MuliplicationExpressionNode *> Operands, XArray<Lexer::Token> Operators)
-        : Operands(Operands), Operators(Operators), CSTNode(Operands[0]->Line, Operands[0]->Column) {
+    AdditionExpressionNode::AdditionExpressionNode(XArray<MuliplicationExpressionNode *> Operands,
+                                                   XArray<Lexer::Token> Operators)
+            : Operands(Operands), Operators(std::move(Operators)), CSTNode(Operands[0]->Line, Operands[0]->Column) {
     }
-   
+
     AdditionExpressionNode::AdditionExpressionNode()
             : Operands({}), Operators({}), CSTNode(0, 0) {
     }
 
     AdditionExpressionNode::~AdditionExpressionNode() {
-        for (auto *Node : Operands) {
+        for (auto *Node: Operands) {
             delete Node;
         }
     }
@@ -46,7 +48,7 @@ namespace Hoshi {
     AdditionExpressionNode::Parser AdditionExpressionNode::Parser::INSTANCE;
 
     AdditionExpressionNode *AdditionExpressionNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken))
+        if (!IsFirstToken(L.LastToken))
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"Except addition FIRST!");
         XArray<MuliplicationExpressionNode *> Operands;
         XArray<Lexer::Token> Operators;
@@ -54,21 +56,22 @@ namespace Hoshi {
         bool Flag = false;
         while (true) {
             switch (L.LastToken.Kind) {
-            case Lexer::TokenKind::Plus: case Lexer::TokenKind::Minus:
-                Flag = true;
-                break;
-            default: 
-                Flag = false;
-                break;
+                case Lexer::TokenKind::Plus:
+                case Lexer::TokenKind::Minus:
+                    Flag = true;
+                    break;
+                default:
+                    Flag = false;
+                    break;
             }
-            if (! Flag) {
+            if (!Flag) {
                 break;
             }
             Operators.push_back(L.LastToken);
             L.Scan();
             Operands.push_back(MuliplicationExpressionNode::Parser::INSTANCE.Parse(L));
         }
-        AdditionExpressionNode *Result = new AdditionExpressionNode(Operands, Operators);
+        auto *Result = new AdditionExpressionNode(Operands, Operators);
         return Result;
     }
 }

@@ -20,7 +20,7 @@ namespace Hoshi {
     public:
         PrimaryExpressionNode();
 
-        virtual ~PrimaryExpressionNode();
+        ~PrimaryExpressionNode() override;
 
         LiteralsNode *GetLiterals();
 
@@ -36,8 +36,8 @@ namespace Hoshi {
 
         public:
             static Parser INSTANCE;
-            
-            virtual PrimaryExpressionNode *Parse(Lexer &L) override;
+
+            PrimaryExpressionNode *Parse(Lexer &L) override;
         };
     };
 }

@@ -6,7 +6,7 @@
 
 namespace Hoshi {
     BooleanExpressionNode::BooleanExpressionNode(XArray<BinaryExpressionNode *> Operands,
-                                               XArray<Lexer::Token> Operators)
+                                                 XArray<Lexer::Token> Operators)
             : Operands(Operands), Operators(std::move(Operators)), CSTNode(Operands[0]->Line, Operands[0]->Column) {
     }
 

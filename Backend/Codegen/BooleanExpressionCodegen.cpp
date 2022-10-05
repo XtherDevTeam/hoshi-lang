@@ -26,10 +26,12 @@ namespace Hoshi {
      */
     Operand BooleanExpressionCodegen::Visit(BooleanExpressionNode &Node, IRProgram::Builder &Program) {
         IRBlock::Builder &Block = *Program.GetContext().CurrentBlock;
-        Operand LastResult = BinaryExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0), Program); //The result of last expression ir
+        Operand LastResult = BinaryExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(0),
+                                                                     Program); //The result of last expression ir
         for (int i = 0; i < Node.GetOperators().size(); i++) {
             Lexer::Token OperatorNode = Node.GetOperators(i);
-            Operand ThisOperand = BinaryExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1), Program); //the operand of this ir
+            Operand ThisOperand = BinaryExpressionCodegen::INSTANCE.Visit(*Node.GetOperands(i + 1),
+                                                                          Program); //the operand of this ir
             Operand Result = Operand(OperandType::Identifier,
                                      LocalNamePrefix + NewVarName(L"expr")); // the result of this ir
             Opcode Operator;

@@ -38,7 +38,7 @@ namespace Hoshi {
      * @brief Code to String
      * @return String form of the code
      */
-    const XString ToString(Opcode Code);
+    XString ToString(Opcode Code);
 
     class IR {
     protected:
@@ -65,35 +65,41 @@ namespace Hoshi {
          * @param SourceOperandB Second Source Operand
          * @param DestinationOperand Destination Operand
          */
-        IR(const Opcode Code, const Operand SourceOperandA, const Operand SourceOperandB, const Operand DestinationOperand);
+        IR(Opcode Code, Operand SourceOperandA, Operand SourceOperandB,
+           Operand DestinationOperand);
+
         /**
          * @brief Get the code of the IR
          * @return Code of the IR
          */
-        const Opcode GetCode(void) const;
+        Opcode GetCode() const;
+
         /**
          * @brief Get the first source Operand of the IR
          * @return First Source Operand of the IR
          */
-        const Operand GetSourceOperandA(void) const;
+        Operand GetSourceOperandA() const;
+
         /**
          * @brief Get the second source Operand of the IR
          * @return Second Source Operand of the IR
          */
-        const Operand GetSourceOperandB(void) const;
+        Operand GetSourceOperandB() const;
+
         /**
          * @brief Get the destination Operand of the IR
          * @return Destination Operand of the IR
          */
-        const Operand GetDestinationOperand(void) const;
-        friend const XString ToString(IR Code);
+        Operand GetDestinationOperand() const;
+
+        friend XString ToString(IR Code);
     };
 
     /**
      * @brief IR to String
      * @return String form of the ir
      */
-    const XString ToString(IR ir);
+    XString ToString(IR ir);
 }
 
 #endif

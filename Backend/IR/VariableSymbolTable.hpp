@@ -20,10 +20,14 @@ namespace Hoshi {
         XMap<XString, VariableSymbolInfo> SymbolTable;
     public:
         void AddSymbol(XString SymbolName, VariableSymbolInfo SymbolInfo);
+
         bool Exists(XString SymbolName);
+
         VariableSymbolInfo &GetSymbol(XString SymbolName);
+
         void RemoveSymbol(XString SymbolName);
-        XArray<VariableSymbolInfo> GetAllSymbols(void);
+
+        XArray<VariableSymbolInfo> GetAllSymbols();
     };
 }
 

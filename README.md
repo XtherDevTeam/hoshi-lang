@@ -22,7 +22,8 @@ func main () -> void {
 
 There are 6 kinds of basic types in hoshi-lang.
 
-They are `(int) Integer`, `(uint) Unsigned integer`, `(float) Decimal`, `(char) Character`, `(bool) Boolean`, `(rstr) Read-only string literal`.
+They
+are `(int) Integer`, `(uint) Unsigned integer`, `(float) Decimal`, `(char) Character`, `(bool) Boolean`, `(rstr) Read-only string literal`.
 
 ### Type-casting
 
@@ -46,7 +47,8 @@ func main () -> void {
 
 ### String literals
 
-String literals are read-only in hoshi-lang. They are `rstr` type. String literals can be joined to a `Str` object by `Str.join()` method.
+String literals are read-only in hoshi-lang. They are `rstr` type. String literals can be joined to a `Str` object
+by `Str.join()` method.
 
 ### Expressions
 
@@ -119,17 +121,22 @@ func main () -> void {
 
   Compiler will create a `super` member for parent class.
 
-  You can't access any member or method in parent class in outside. To make members or methods in parent class public, you can use `public <method name>;` to declare it in child class. After that, you can access `this.super.blahblah` by `this.blahblah` directly.
+  You can't access any member or method in parent class in outside. To make members or methods in parent class public,
+  you can use `public <method name>;` to declare it in child class. After that, you can access `this.super.blahblah`
+  by `this.blahblah` directly.
 
 - **Interface**
 
-  Interface is a method table that means that a class implemented some feature, and they can return a result just like the interface.
+  Interface is a method table that means that a class implemented some feature, and they can return a result just like
+  the interface.
 
-  You can use `interface` to create an interface. Use `class <classname> impl <interface_name>` to make compiler know what interfaces are this class implemented.
+  You can use `interface` to create an interface. Use `class <classname> impl <interface_name>` to make compiler know
+  what interfaces are this class implemented.
 
   Use `<class_name> as <interface_name>` to covert a class to an interface.
-  
-  Inside the compiler, interface is a structure that saves some virtual method pointer, and the `this` pointer of the object.
+
+  Inside the compiler, interface is a structure that saves some virtual method pointer, and the `this` pointer of the
+  object.
 
 - **Up-casting**
 

@@ -13,6 +13,7 @@ namespace Hoshi {
     BreakStmtNode::BreakStmtNode()
             : Semicolon({}), CSTNode(0, 0) {
     }
+
     BreakStmtNode::~BreakStmtNode() = default;
 
     XString BreakStmtNode::GetNodeType() {
@@ -26,7 +27,7 @@ namespace Hoshi {
     BreakStmtNode::Parser BreakStmtNode::Parser::INSTANCE;
 
     BreakStmtNode *BreakStmtNode::Parser::Parse(Lexer &L) {
-        if (! IsFirstToken(L.LastToken)) {
+        if (!IsFirstToken(L.LastToken)) {
             throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected break stmt FIRST");
         }
         L.Scan();
