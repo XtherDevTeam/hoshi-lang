@@ -26,7 +26,7 @@ namespace Hoshi {
 
         Lexer::Token GetOperators(int index);
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
         #define ADDITION_FIRST MULIPLICATION_FIRST
 

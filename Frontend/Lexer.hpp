@@ -14,16 +14,6 @@
 namespace Hoshi {
 
     /**
-      * Keywords in Hoshi 2
-      */
-    static XArray<XString> LexerReservedWords{
-            L"func", L"var", L"as", L"return",
-            L"class", L"extends", L"impl", L"interface", L"public", L"template", L"virtual",
-            L"if", L"else", L"while", L"for", L"break", L"continue",
-            L"use"
-    };
-
-    /**
       * @brief Exceptions of Lexer in Hoshi 2
       */
     class LexerException : HoshiException {
@@ -94,6 +84,22 @@ namespace Hoshi {
             Dot,                        // .
             TypeDescriptorSign,         // :
             StaticMemberAccessSign,     // ::
+            Func,
+            Var,
+            As,
+            Return,
+            Struct,
+            Impl,
+            Interface,
+            Public,
+            Template,
+            If,
+            Else,
+            While,
+            For,
+            Break,
+            Continue,
+            Use,
             EoF,
         };
 
@@ -154,37 +160,37 @@ namespace Hoshi {
          * @brief Get next token as Identifier/Keyword/Boolean
          * @return The next token
          */
-        Token ScanAsIdentifier(void);
+        Token ScanAsIdentifier();
         /**
          * @brief Get next token as Digital
          * @return The next token
          */
-        Token ScanAsDigital(void);
+        Token ScanAsDigital();
         /**
          * @brief Get next token as ReadonlyStringLiteral
          * @return The next token
          */
-        Token ScanAsReadonlyStringLiteral(void);
+        Token ScanAsReadonlyStringLiteral();
         /**
          * @brief Get next token as Character
          * @return The next token
          */
-        Token ScanAsCharacter(void);
+        Token ScanAsCharacter();
         /**
          * @brief Get next token as Single Sign
          * @return The next token
          */
-        Token ScanAsSingleSign(void);
+        Token ScanAsSingleSign();
         /**
          * @brief Get next token as Multiple Sign
          * @return The next token
          */
-        Token ScanAsMultipleSign(void);
+        Token ScanAsMultipleSign();
         /**
          * @brief Get next token as Logic Sign
          * @return The next token
          */
-        Token ScanAsLogicSign(void);
+        Token ScanAsLogicSign();
     };
 
 } // Hoshi

@@ -25,7 +25,7 @@ namespace Hoshi {
 
         PrimaryExpressionNode *GetPrimary();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
 #define UNIQUE_FIRST PRIMARY_FIRST, \
             Lexer::TokenKind::Plus, \

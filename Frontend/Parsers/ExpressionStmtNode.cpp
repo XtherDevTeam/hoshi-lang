@@ -38,17 +38,17 @@ namespace Hoshi {
 
     ExpressionStmtNode *ExpressionStmtNode::Parser::Parse(Lexer &L) {
         if (! IsFirstToken(L.LastToken)) {
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"except expression stmt FIRST");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected expression stmt FIRST");
         }
 
         if (AssignStmtNode::Parser::INSTANCE.IsAssignStmt(L)) {
-            return NULL; //是Assign Stmt
+            return nullptr; //是Assign Stmt
         }
 
         ExpressionNode *Expression = ExpressionNode::Parser::INSTANCE.Parse(L);
         
         if (L.LastToken.Kind != Lexer::TokenKind::Semicolon) {
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"except a semicolon ';'!");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected a semicolon ';'!");
         }
 
         Lexer::Token Semicolon = L.LastToken;

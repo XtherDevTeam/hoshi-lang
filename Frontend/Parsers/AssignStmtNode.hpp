@@ -28,7 +28,7 @@ namespace Hoshi {
 
         ExpressionNode *GetExpression();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
 #define ASSIGN_FIRST ACCESS_FIRST
 

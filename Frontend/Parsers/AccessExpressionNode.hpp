@@ -39,7 +39,7 @@ namespace Hoshi {
 
         Lexer::Token GetIdentifier();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
         #define ACCESS_FIRST Lexer::TokenKind::Identifier
 

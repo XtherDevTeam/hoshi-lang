@@ -66,7 +66,7 @@ namespace Hoshi {
 
     AssignStmtNode *AssignStmtNode::Parser::Parse(Lexer &L) {
         if (! IsFirstToken(L.LastToken)) {
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"except assign stmt FIRST");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected assign stmt FIRST");
         }
 
         if (! IsAssignStmt(L)) {
@@ -88,7 +88,7 @@ namespace Hoshi {
         }
 
         if (! Flag) {
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"except assign operator");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected assign operator");
         }
         
         Lexer::Token AssignOperator = L.LastToken;
@@ -97,7 +97,7 @@ namespace Hoshi {
         ExpressionNode *Expression = ExpressionNode::Parser::INSTANCE.Parse(L);
 
         if (L.LastToken.Kind != Lexer::TokenKind::Semicolon) {
-            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"except a semicolon ';'!");
+            throw ParserException(L.LastToken.Line, L.LastToken.Column, L"expected a semicolon ';'!");
         }
 
         Lexer::Token Semicolon = L.LastToken;

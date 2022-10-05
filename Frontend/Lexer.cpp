@@ -37,6 +37,7 @@ namespace Hoshi {
     }
 
 #pragma region Scan
+
     Lexer::Token Lexer::Scan() {
         /* White spaces */
         while (String[Position] == L' ' || String[Position] == L'\t' ||
@@ -59,21 +60,41 @@ namespace Hoshi {
         else if (String[Position] == L'\'') {
             return ScanAsCharacter();
         }
-        
+
         switch (String[Position]) {
-        case L'^': case L')': case L'(': case L'[': case L']': case L'{':
-        case L'}': case L';': case L',': case L'.': case L'~': case L'\0':
-            return LastToken = ScanAsSingleSign();
-        case L'+': case L'-': case L'*': case L'/': case L'%': case L':':
-            return LastToken = ScanAsMultipleSign();
-        case L'=': case L'!': case L'>': case L'<': case L'|': case L'&': 
-            return LastToken = ScanAsLogicSign();
+            case L'^':
+            case L')':
+            case L'(':
+            case L'[':
+            case L']':
+            case L'{':
+            case L'}':
+            case L';':
+            case L',':
+            case L'.':
+            case L'~':
+            case L'\0':
+                return LastToken = ScanAsSingleSign();
+            case L'+':
+            case L'-':
+            case L'*':
+            case L'/':
+            case L'%':
+            case L':':
+                return LastToken = ScanAsMultipleSign();
+            case L'=':
+            case L'!':
+            case L'>':
+            case L'<':
+            case L'|':
+            case L'&':
+                return LastToken = ScanAsLogicSign();
         }
         /* Unknown tokens */
         throw LexerException(Line, Column, L"Unknown token : " + std::to_wstring(String[Position]));
     }
 
-    Lexer::Token Lexer::ScanAsIdentifier(void) {
+    Lexer::Token Lexer::ScanAsIdentifier() {
         XString TempStr;
         XIndexType Start = Position;
         while (String[Position] and (IsAlpha(String[Position]) or IsDigit(String[Position]))) NextCharacter();
@@ -81,14 +102,46 @@ namespace Hoshi {
         /* Identify boolean literals */
         if (TempStr == L"True" or TempStr == L"False") {
             return {TokenKind::Boolean, TempStr, Line, Column};
+        } else {
+            if (TempStr == L"func") {
+                return {TokenKind::Func, TempStr, Line, Column};
+            } else if (TempStr == L"var") {
+                return {TokenKind::Var, TempStr, Line, Column};
+            } else if (TempStr == L"as") {
+                return {TokenKind::As, TempStr, Line, Column};
+            } else if (TempStr == L"return") {
+                return {TokenKind::Return, TempStr, Line, Column};
+            } else if (TempStr == L"struct") {
+                return {TokenKind::Struct, TempStr, Line, Column};
+            } else if (TempStr == L"impl") {
+                return {TokenKind::Impl, TempStr, Line, Column};
+            } else if (TempStr == L"interface") {
+                return {TokenKind::Interface, TempStr, Line, Column};
+            } else if (TempStr == L"public") {
+                return {TokenKind::Public, TempStr, Line, Column};
+            } else if (TempStr == L"template") {
+                return {TokenKind::Template, TempStr, Line, Column};
+            } else if (TempStr == L"if") {
+                return {TokenKind::If, TempStr, Line, Column};
+            } else if (TempStr == L"else") {
+                return {TokenKind::Else, TempStr, Line, Column};
+            } else if (TempStr == L"while") {
+                return {TokenKind::While, TempStr, Line, Column};
+            } else if (TempStr == L"for") {
+                return {TokenKind::For, TempStr, Line, Column};
+            } else if (TempStr == L"break") {
+                return {TokenKind::Break, TempStr, Line, Column};
+            } else if (TempStr == L"continue") {
+                return {TokenKind::Continue, TempStr, Line, Column};
+            } else if (TempStr == L"use") {
+                return {TokenKind::Use, TempStr, Line, Column};
+            } else {
+                return {TokenKind::Identifier, TempStr, Line, Column};
+            }
         }
-        else {
-            bool IsKeywords = std::find(LexerReservedWords.begin(), LexerReservedWords.end(), TempStr) != LexerReservedWords.end();
-            return {IsKeywords ? TokenKind::Keywords : TokenKind::Identifier, TempStr, Line, Column};
-        }
-    } 
+    }
 
-    Lexer::Token Lexer::ScanAsDigital(void) {
+    Lexer::Token Lexer::ScanAsDigital() {
         XString TempStr{};
         XIndexType Start = Position;
         while (String[Position] && IsDigit(String[Position])) NextCharacter();
@@ -111,7 +164,7 @@ namespace Hoshi {
      * @brief Get next token as ReadonlyStringLiteral
      * @return The next token
      */
-    Lexer::Token Lexer::ScanAsReadonlyStringLiteral(void) {
+    Lexer::Token Lexer::ScanAsReadonlyStringLiteral() {
         XString TempStr{};
         XCharacter Type = String[Position];
         NextCharacter();
@@ -126,11 +179,12 @@ namespace Hoshi {
         NextCharacter(); // Skip
         return {TokenKind::String, unescape_string(TempStr), Line, Column};
     }
+
     /**
      * @brief Get next token as Character
      * @return The next token
      */
-    Lexer::Token Lexer::ScanAsCharacter(void) {
+    Lexer::Token Lexer::ScanAsCharacter() {
         XString TempStr{};
         XCharacter Type = String[Position];
         NextCharacter();
@@ -145,37 +199,52 @@ namespace Hoshi {
         NextCharacter(); // Skip
         return {TokenKind::Character, unescape_string(TempStr), Line, Column};
     }
+
     /**
      * @brief Get next token as Single Sign
      * @return The next token
      */
-    Lexer::Token Lexer::ScanAsSingleSign(void) {
-            /* XOR */
+    Lexer::Token Lexer::ScanAsSingleSign() {
+        /* XOR */
         XCharacter Sign = String[Position];
         NextCharacter();;
         switch (Sign) {
-        case L'^': return {TokenKind::BinaryXOR, L"^", Line, Column};
-        case L'(': return {TokenKind::LeftParentheses, L"(", Line, Column};
-        case L')': return {TokenKind::RightParentheses, L")", Line, Column};
-        case L'[': return {TokenKind::LeftBracket, L"[", Line, Column};
-        case L']': return {TokenKind::RightBracket, L"]", Line, Column};
-        case L'{': return {TokenKind::LeftBraces, L"{", Line, Column};
-        case L'}': return {TokenKind::RightBraces, L"}", Line, Column};
-        case L';': return {TokenKind::Semicolon, L";", Line, Column};
-        case L',': return {TokenKind::Colon, L",", Line, Column};
-        case L'.': return {TokenKind::Dot, L".", Line, Column};
-        case L'~': return {TokenKind::Invert, L"~", Line, Column};
-        case L'\0': return {TokenKind::EoF, L"", Line, Column};
-        default: return {};
+            case L'^':
+                return {TokenKind::BinaryXOR, L"^", Line, Column};
+            case L'(':
+                return {TokenKind::LeftParentheses, L"(", Line, Column};
+            case L')':
+                return {TokenKind::RightParentheses, L")", Line, Column};
+            case L'[':
+                return {TokenKind::LeftBracket, L"[", Line, Column};
+            case L']':
+                return {TokenKind::RightBracket, L"]", Line, Column};
+            case L'{':
+                return {TokenKind::LeftBraces, L"{", Line, Column};
+            case L'}':
+                return {TokenKind::RightBraces, L"}", Line, Column};
+            case L';':
+                return {TokenKind::Semicolon, L";", Line, Column};
+            case L',':
+                return {TokenKind::Colon, L",", Line, Column};
+            case L'.':
+                return {TokenKind::Dot, L".", Line, Column};
+            case L'~':
+                return {TokenKind::Invert, L"~", Line, Column};
+            case L'\0':
+                return {TokenKind::EoF, L"", Line, Column};
+            default:
+                return {};
         }
     }
+
     /**
      * @brief Get next token as Multiple Sign
      * @return The next token
      */
-    Lexer::Token Lexer::ScanAsMultipleSign(void) {
-            /* Expression symbols */
-            /* Starts with :*/
+    Lexer::Token Lexer::ScanAsMultipleSign() {
+        /* Expression symbols */
+        /* Starts with :*/
         if (String[Position] == L':') {
             NextCharacter();
             if (String[Position] == L':') {
@@ -184,20 +253,20 @@ namespace Hoshi {
             }
             return {TokenKind::TypeDescriptorSign, L":", Line, Column};
         }
-            /* Starts with + */
+        /* Starts with + */
         if (String[Position] == L'+') {
             NextCharacter();
             if (String[Position] == L'=') {
                 NextCharacter();   // Read after '='
                 return {TokenKind::AdditionAssignment, L"+=", Line, Column};
-            } 
+            }
             if (String[Position] == L'+') {
                 NextCharacter();   // Read after '+'
                 return {TokenKind::IncrementSign, L"++", Line, Column};
-            } 
+            }
             return {TokenKind::Plus, L"+", Line, Column};
         }
-            /* Starts with - */
+        /* Starts with - */
         if (String[Position] == L'-') {
             NextCharacter();
             if (String[Position] == L'=') {
@@ -214,7 +283,7 @@ namespace Hoshi {
             }
             return {TokenKind::Minus, L"-", Line, Column};
         }
-            /* Starts with * */
+        /* Starts with * */
         if (String[Position] == L'*') {
             NextCharacter();
             if (String[Position] == L'=') {
@@ -223,7 +292,7 @@ namespace Hoshi {
             }
             return {TokenKind::Asterisk, L"*", Line, Column};
         }
-            /* Starts with / */
+        /* Starts with / */
         if (String[Position] == L'/') {
             NextCharacter();
             if (String[Position] == L'=') {
@@ -234,15 +303,15 @@ namespace Hoshi {
                 return Scan();
             } else if (String[Position] == L'*') {
                 NextCharacter();
-                while ((String[Position] != L'*' or String[Position+1] != L'/') and String[Position] != '\0')
+                while ((String[Position] != L'*' or String[Position + 1] != L'/') and String[Position] != '\0')
                     NextCharacter();
                 NextCharacter();
                 NextCharacter();
                 return Scan();
             }
-            return {TokenKind::Slash, (std::wstring){std::filesystem::path::preferred_separator}, Line, Column};
+            return {TokenKind::Slash, (std::wstring) {std::filesystem::path::preferred_separator}, Line, Column};
         }
-            /* Starts with % */
+        /* Starts with % */
         if (String[Position] == L'%') {
             NextCharacter();
             if (String[Position] == L'=') {
@@ -258,7 +327,7 @@ namespace Hoshi {
      * @brief Get next token as Logic Sign
      * @return The next token
      */
-    Lexer::Token Lexer::ScanAsLogicSign(void) {
+    Lexer::Token Lexer::ScanAsLogicSign() {
         /* Logic symbols */
         /* Starts with = */
         if (String[Position] == L'=') {
@@ -273,16 +342,16 @@ namespace Hoshi {
             }
             return {TokenKind::AssignSign, L"=", Line, Column};
         }
-            /* Starts with ! */
+        /* Starts with ! */
         if (String[Position] == L'!') {
             NextCharacter();
             if (String[Position] == L'=') {
                 NextCharacter();   // Read after '='
                 return {TokenKind::NotEqual, L"!=", Line, Column};
-            } 
+            }
             throw LexerException(Line, Column, L"Unknown token : " + std::to_wstring(String[Position]));
         }
-            /* Starts with < */
+        /* Starts with < */
         if (String[Position] == L'<') {
             NextCharacter();
             if (String[Position] == L'=') {
@@ -295,21 +364,21 @@ namespace Hoshi {
             }
             return {TokenKind::LessThan, L"<", Line, Column};
         }
-            /* Starts with > */
+        /* Starts with > */
         if (String[Position] == L'>') {
             NextCharacter();
             if (String[Position] == L'=') {
                 NextCharacter();   // Read after '='
                 return {TokenKind::GreaterThanOrEqual, L">=", Line, Column};
-            } 
+            }
             if (String[Position] == '>') {
                 NextCharacter();   // Read after '>'
                 return {TokenKind::BinaryRightShift, L">>", Line, Column};
             }
             return {TokenKind::GreaterThan, L">", Line, Column};
         }
-            /* Binary symbols */
-            /* Or */
+        /* Binary symbols */
+        /* Or */
         if (String[Position] == L'|') {
             NextCharacter();
             if (String[Position] == L'|') {
@@ -318,7 +387,7 @@ namespace Hoshi {
             }
             return {TokenKind::BinaryOr, L"|", Line, Column};
         }
-            /* And */
+        /* And */
         if (String[Position] == L'&') {
             NextCharacter();
             if (String[Position] == L'&') {
@@ -329,6 +398,7 @@ namespace Hoshi {
         }
         return {};
     }
+
 #pragma endregion
 
     void Lexer::Reset() {
@@ -337,8 +407,8 @@ namespace Hoshi {
 
     Lexer::Token::Token() : Kind(TokenKind::EoF), Line(0), Column(0), Value() {}
 
-    Lexer::Token::Token(Lexer::TokenKind Kind, XString Value, XIndexType Line, XIndexType Column) 
-        : Kind(Kind), Line(Line), Column(Column), Value(std::move(Value)) {
+    Lexer::Token::Token(Lexer::TokenKind Kind, XString Value, XIndexType Line, XIndexType Column)
+            : Kind(Kind), Line(Line), Column(Column), Value(std::move(Value)) {
     }
 
     bool Lexer::Token::operator==(const Lexer::Token &rhs) const {

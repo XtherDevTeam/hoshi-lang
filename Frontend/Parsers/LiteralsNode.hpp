@@ -19,7 +19,7 @@ namespace Hoshi {
 
         Lexer::Token GetLiterals();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
         #define LITERALS_FIRST Lexer::TokenKind::Integer, \
             Lexer::TokenKind::Boolean, \

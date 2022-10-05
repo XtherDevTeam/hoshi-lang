@@ -23,7 +23,7 @@ namespace Hoshi {
 
         Lexer::Token GetSemicolon();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
 #define EXPRESSION_STMT_FIRST EXPRESSION_FIRST
 

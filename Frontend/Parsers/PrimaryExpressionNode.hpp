@@ -26,7 +26,7 @@ namespace Hoshi {
 
         AccessExpressionNode *GetAccess();
 
-        virtual XString GetNodeType() override;
+        XString GetNodeType() override;
 
 #define PRIMARY_FIRST LITERALS_FIRST, \
                               ACCESS_FIRST
