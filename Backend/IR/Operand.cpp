@@ -16,7 +16,7 @@ namespace Hoshi {
      * @brief Construct a Operand
      */
     Operand::Operand(const XArray<Operand> &&ListValue)
-            : Type(OperandType::List), , ListValue(ListValue), MappingValue() {
+            : Type(OperandType::List), ListValue(ListValue), MappingValue() {
 
     }
 
@@ -24,7 +24,7 @@ namespace Hoshi {
      * @brief Construct a Operand
      */
     Operand::Operand(const XTreeMap<XString, Operand> &&MappingValue)
-            : Type(OperandType::Mapping), , ListValue(), MappingValue(MappingValue) {
+            : Type(OperandType::Mapping), ListValue(), MappingValue(MappingValue) {
     }
 
     /**

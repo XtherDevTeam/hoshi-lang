@@ -44,7 +44,7 @@ namespace Hoshi {
      * @brief construct an IRBlock Builder
      */
     IRBlock::Builder::Builder()
-            : {
+    {
     }
 
     /**

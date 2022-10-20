@@ -35,7 +35,7 @@ namespace Hoshi {
      * @brief construct an IRFunction Builder
      */
     IRFunction::Builder::Builder()
-            : {
+            {
     }
 
     /**

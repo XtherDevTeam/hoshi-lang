@@ -18,7 +18,7 @@ namespace Hoshi {
      * @brief construct an IRProgram Builder
      */
     IRProgram::Builder::Builder()
-            : {
+            {
     }
 
     /**
