@@ -29,6 +29,12 @@ namespace Hoshi {
 
         ~StmtNode() override;
 
+        ReturnStmtNode *GetReturnStmt(void);
+        ExpressionStmtNode *GetExpressionStmt(void);
+        AssignStmtNode *GetAssignStmt(void);
+        BreakStmtNode *GetBreakStmt(void);
+        ContinueStmtNode *GetContinueStmt(void);
+
         XString GetNodeType() override;
 
 #define STMT_FIRST RETURN_STMT_FIRST, \

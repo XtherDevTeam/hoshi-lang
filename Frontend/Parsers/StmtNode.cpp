@@ -42,6 +42,21 @@ namespace Hoshi {
         if (BreakStmt != nullptr) delete BreakStmt;
         if (ContinueStmt != nullptr) delete ContinueStmt;
     }
+    ReturnStmtNode *StmtNode::GetReturnStmt(void) {
+        return ReturnStmt;
+    }
+    ExpressionStmtNode *StmtNode::GetExpressionStmt(void) {
+        return ExpressionStmt;
+    }
+    AssignStmtNode *StmtNode::GetAssignStmt(void) {
+        return AssignStmt;
+    }
+    BreakStmtNode *StmtNode::GetBreakStmt(void) {
+        return BreakStmt;
+    }
+    ContinueStmtNode *StmtNode::GetContinueStmt(void) {
+        return ContinueStmt;
+    }
     XString StmtNode::GetNodeType() {
         return L"stmt";
     }
