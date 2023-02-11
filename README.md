@@ -1,155 +1,212 @@
-## Goals
+# The design of hoshi-lang programming language
 
-- [ ] Object-oriented programming (inherit, up-cast, down-cast, interface)
-- [ ] Closure support
-- [ ] Multi-threading support
-- [ ] Generic programming (template support)
+
+
+## Intro
+
+I've made dynamic-typed language for serval years, now I'm trying to make something new. I'm going to make a static-typed, strong-typed programming language which supports modern programming design like `Generic Programming` `Object Oriented Programming`.
+
+**Design Ideas: **Concise, Strong, Fast.
 
 ## Syntax
 
-```dart
-use Hoshi::IO;
+```rust
+use io "std/io";
 
-func main () -> void {
-    IO.println("Hello, Hoshi.");
-    return;
+interface hello {
+  say() : null
+}
+
+struct s_a {
+  a: i32,
+  b: deci,
+  constructor(),
+  constructor(a: int, b: deci),
+}
+
+impl s_a {
+  constructor() {
+    this.a = 0
+    this.b = 0.0
+  },
+  constructor(a: int, b: deci) {
+    this.a = a
+    this.b = b
+  }
+}
+
+impl hello for s_a {
+	say() : null {
+    io::println("fuck you!")
+    return null
+  }
+}
+
+func main(argv: Vec<rstr>) : int {
+  let a = s_a(114514, 1919.810)
+  cast<hello>(a).say()
+	io::println("Hello, world!")
+	return 0;
 }
 ```
 
-## Design
+Here is an example.
 
-### Basic types
 
-There are 6 kinds of basic types in hoshi-lang.
 
-They are `(int) Integer`, `(uint) Unsigned integer`, `(float) Decimal`, `(char) Character`, `(bool) Boolean`, `(rstr) Read-only string literal`.
+## OOP
 
-### Type-casting
+我他妈直接快进
 
-You must specify the target type explicitly in the casting statement.
+OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。`hoshi-lang` 的 OOP 由三个部分组成，`interface` 接口、`struct` 结构体、`impl` 实现接口。
 
-Reference expression: `as expression`
+`interface` 是抽象接口，包含一组方法和成员，可以被 `struct` 实现。`interface` 里只包含方法的声明，不包含实现，实现由 `struct` 完成。
 
-Like these following code:
+`struct` 可以使用 `impl for` 结构实现接口。语法如 `impl [interface] for [struct] { implmentation }`。
 
-```dart
-use Hoshi::IO;
-use Hoshi::Str;
+`struct` 所实现的接口在 `struct` 的尾部占用所需的内存空间，当程序使用 `cast<interface>(struct)` 来转换 `struct` 到接口时，会直接将 `interface` 实现所占用的 `frame` 指针返回。
 
-func main () -> void {
-    var i : int = 128;
-    var j : uint = i as uint;
-    IO.println(Str.fromInt(i));
-    return;
-}
-```
+## Ref
 
-### String literals
+引用可以理解为与原来对象具有相同内存地址的对象。使用 `&object` 来获取一个对象的引用。函数传递参数时可以使用引用来传递，E.g. `func a(arg: s_a&)` 这行声明的参数 `arg` 传递 `s_a` 的引用，而不会复制构造一个新的对象。
 
-String literals are read-only in hoshi-lang. They are `rstr` type. String literals can be joined to a `Str` object by `Str.join()` method.
+## GC
 
-### Expressions
+GC的实现有点清奇，基本为引用计数模式，当对象创建时，会更新计数，引用被创建时也会更新计数，当对象或引用离开当前作用域时，就会减少计数。当最后一次减少计数操作发生时，便会调用 `runtime` 提供的函数销毁对象。
 
-Different expressions will have different priority.
+更新计数和减少计数可以通过在对象生成一个名为 `gc_refcount_increase` 和 `gc_refcount_decrease` 的方法来完成，更新计数时调用 `gc_refcount_increase` 来完成，减少计数时调用 `gc_refcount_decrease` 来完成。这样可以确保更新到对象里面的对象指针。
 
-- MemberExpressions : `.`
-- StaticMemberAccessExpressions : `::`
-- FunctionInvokingExpressions : `()`
-- IndexExpressions : `[]`
-- SingleExpressions : `+() !() -() ~() ++ --`
-- MultipleExpressions : `* / %`
-- AdditionExpressions : `+ -`
-- BinaryMoveExpressions : `<< >>`
-- LogicComparingExpressions : `< <= > >= instanceOf implemented`
-- LogicEqualExpressions : `== !=`
-- BinaryExpressions : `& ^ |`
-- BooleanExpressions : `&& ||`
-- AsExpression : `as`
-- AssignmentExpressions : `= += -= &= /= %= &= |= ^= ~= <<= >>=`
+因为结构体无法创建一个没有声明的结构体实例，所以不需要担心循环引用的问题。
 
-### Classes
+## Module
 
-```dart
-use Hoshi::IO;
-use Hoshi::Str;
+`hoshi-lang` 提供了将项目模块化的功能，使用 `use` 语句即可导入模块。
 
-interface Printable {
-    virtual print () -> void;
+如 `use io "std/io"` 就是从 `hoshiModulesPath` 中寻找 `std/io` 这个模块并使用 `io` 这个名字导入。
+
+一个模块可以是一个 `hoshi` 源文件，也可以是一个包含一组模块的目录。
+
+在引入目录形式的模块时会导入目录下的所有 `hoshi` 源文件。
+
+当检测到重复模块加载时，会使用已经处理完成的 `AST` 挂载到 `use` 语句，`hoshi-lang` 编译器内部会维护一个序号 `hoshiModuleId` 在加载模组时会使用当前序号当作当前导入模组的ID，将其十六进制化后添加到符号名头部。主包不作处理。
+
+`use` 语句会先使用指定的 `prefix` 编译指定的模块，然后在符号表加入模块的别名。
+
+## Generic
+
+### Template arguments
+
+`Generic Programming` 将会是 `hoshi-lang` 的一大重要特性，`hoshi-lang` 主要使用 `template` 来实现 `GP`，`template` 即模板，在类或函数声明时的标识符后加上 `<>` 符号来声明一个模板类或函数的模板参数。
+
+E.g.
+
+```rust
+interface hello {
+  say() : null
 };
-
-class Foo {
-    var name : Str;
-    
-    // new expression will invoke this method with `this` pointer without any other arguments
-    // the default constructor will be the constructor without any arguments
-    // if there's no default constructor, compiler will throw a exception.
-    func constructor () -> void {
-        // you must access members with `this`.
-        this.name = "Foo";
-        return;
-    }
-    
-    func say () -> void {
-        IO.println( ("Watashino namae ha: " as Str) + name );
-        return;
-    }
+struct s_a<T> {
+  i: T,
+  fuck<T1>(a: T1) : null,
 };
-
-class Bar extends Foo {
-    public name;
-    public say;
-    func constructor () -> void {
-        this.constructor();
-        this.name = "Bar";
-        return;
-    }
-}
-
-func main () -> void {
-    // compiler will push the object to heap without `new` expression
-    var s : Foo = Foo();
-    s.say();
+impl s_a {
+  fuck<T1>(a: T1) : null {
+    io::print(a);
+    return i;
+  }
+};
+impl hello for s_a {
+  say() : null {
+    io::println("114514");
     return;
+  }
 }
 ```
 
-- **Inheritance**
 
-  Classes in hoshi-lang can be inherited by `extends`.
 
-  Compiler will create a `super` member for parent class.
+## Variadic arguments
 
-  You can't access any member or method in parent class in outside. To make members or methods in parent class public, you can use `public <method name>;` to declare it in child class. After that, you can access `this.super.blahblah` by `this.blahblah` directly.
+`Variadic arguments (变长参数)` 是 `GP` 的一个附带特性，在模板函数中，`vaArgs` 是变长参数的模板类型，可放于函数参数尾部接收变长参数。
 
-- **Interface**
+E.g.
 
-  Interface is a method table that means that a class implemented some feature, and they can return a result just like the interface.
-
-  You can use `interface` to create an interface. Use `class <classname> impl <interface_name>` to make compiler know what interfaces are this class implemented.
-
-  Use `<class_name> as <interface_name>` to covert a class to an interface.
-  
-  Inside the compiler, interface is a structure that saves some virtual method pointer, and the `this` pointer of the object.
-
-- **Up-casting**
-
-  Up-casting means covert a child class to the parent class or interface.
-
-### Generic programming (Template)
-
-```dart
-use Hoshi::IO;
-use Hoshi::Str;
-
-template <typename T>
-class Foo {
-    var a : T;
-    func constructor (a : T) -> void {
-        this.a = a;
-        return;
-    }
+```rust
+func a<fT>(f: fT, args: vaArgs) {
+  return fT(args);
 }
 ```
 
-### Exceptions
+上例是使用变长参数 `args` 调用函数 `f` 的例子。
 
+此外，当使用变长参数去调用只含有单参数的函数时，会自动展开为多次函数调用；当变长参数对象被放置在调用参数尾部进行调用时，会自动添加这些参数到调用参数尾部。
+
+
+
+## Syntax definition
+
+```java
+basicLiterals ::= TOK_string | TOK_integer | TOK_decimal | TOK_boolean | TOK_char | "null"
+identifier ::= TOK_identifier
+identifierWithTypeSpec ::= identifier ":" typeSpec
+defTemplateArgSpec ::= identifier
+						    		 | identifier "impl" identifier
+defTemplateArg ::= "<" [ { defTemplateArgSpec "," } defTemplateArgSpec ] ">"
+templateArgSpec ::= typeSpec
+templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
+invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
+definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
+funcTypeSpec ::= "func" definitionArguments ":" typeSpec codeBlock
+typeSpec ::= accessExpression
+           | funcTypeSpec
+subscript ::= "[" rExpr "]"
+identifierWithTemplateArg ::= identifier
+                            | identifier TemplateArg
+identifierWithDefTemplateArg ::= identifier
+                               | identifier defTemplateArg
+subscriptExpression ::= identifierWithTemplateArg
+                      | identifierWithTemplateArg invocationArguments
+                      | identifierWithTemplateArg subscript
+accessExpression ::= { identifier "::" } identifierWithTemplateArg
+memberExpression ::= { identifier "::" } subscriptExpression { "." subscriptExpression }
+primary ::= memberExpression | basicLiterals | "(" rExpr ")"
+uniqueExpr ::= primary { ( "++" | "--" | "!" | "~" | "-" | "&" ) primary }
+mulExpr ::= uniqueExpr { ( "*" | "/" | "%" ) uniqueExpr }
+addExpr ::= mulExpr { ( "+" | "-" ) mulExpr }
+shiftExpr ::= addExpr { ( "<<" | ">>" ) addExpr }
+relationalExpr ::= shiftExpr { ( "<" | ">" | "<=" | ">=" ) shiftExpr }
+equalityExpr ::= relationalExpr { ( "==" | "!=" ) relationalExpr }
+andExpr ::= equalityExpr { "&" equalityExpr }
+exclusiveExpr ::= andExpr { "^" andExpr }
+inclusiveExpr ::= exclusiveExpr { "|" exclusiveExpr }
+logicalAndExpr ::= inclusiveExpr { "&&" inclusiveExpr }
+logicalOrExpr ::= logicalAndExpr { "||" logicalAndExpr }
+rExpr ::= logicalOrExpr
+useStmt ::= "use" identifier TOK_string
+funcDefStmt ::= "func" identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+interfaceDefInnerPair ::= identifier ":" typeSpec
+                        | identifierWithDefTemplateArg definitionArguments ":" typeSpec
+interfaceDefInner ::= "{" [ interfaceDefInnerPair { "," interfaceDefInnerPair } ] "}"
+interfaceDefStmt ::= "interface" identifier interfaceDefInner
+structDefInnerPair ::= identifier ":" typeSpec
+                     | identifierWithDefTemplateArg definitionArguments ":" typeSpec
+                     | "constructor" definitionArguments
+structDefInner ::= "{" [ structDefInnerPair { "," structDefInnerPair } ] "}"
+structDefStmt ::= "struct" identifierWithDefTemplateArg structDefInner
+implInnerPair ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+                | "constructor" definitionArguments codeBlock
+implInner ::= "{" [ implInnerPair { "," implInnerPair } ] "}"
+implStmt ::= "impl" identifierWithDefTemplateArg implInner
+           | "impl" identifierWithDefTemplateArg "for" identifierWithDefTemplateArg implInner
+letAssignmentPair ::= identifier "=" rExpr
+letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
+globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
+ifStmt ::= "if" "(" rExpr ")" codeBlock [ "elif" codeBlock ] [ "else" codeBlock ]
+whileStmt ::= "while" "(" rExpr ")" codeBlock
+forStmt ::= "for" "(" inCodeBlockStmt ";" rExpr ";" inCodeBlockStmt ")" codeBlock
+forEachStmt ::= "forEach" "(" identifier ":" rExpr ")" codeBlock
+returnStmt ::= "return" rExpr
+continueStmt ::= "continue"
+breakStmt ::= "break"
+inCodeBlockStmt ::= ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt | breakStmt | letStmt | codeBlock | rExpr
+codeBlock ::= "{" { inCodeBlockStmt } "}"
+```
