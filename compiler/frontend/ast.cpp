@@ -37,7 +37,7 @@ namespace hoshi {
         return *spec;
     }
 
-    vec<typeSpec *> &templateArg::get() {
+    vec<templateArgSpec *> &templateArg::get() {
         return spec;
     }
 
@@ -57,16 +57,12 @@ namespace hoshi {
         return *resultType;
     }
 
-    codeBlock &funcTypeSpec::getBlock() const {
-        return *block;
-    }
-
     bool typeSpec::isFuncTypeSpec() const {
         return func;
     }
 
-    accessExpr &typeSpec::getAccessExpr() const {
-        return *access;
+    memberExpr &typeSpec::getMemberExpr() const {
+        return *member;
     }
 
     funcTypeSpec &typeSpec::getTypeSpec() const {
@@ -105,20 +101,8 @@ namespace hoshi {
         return *arg;
     }
 
-    subscriptExpr &subscriptExpr::getSubscript() const {
+    subscript &subscriptExpr::getSubscript() const {
         return *subscript;
-    }
-
-    vec<identifier *> &accessExpr::getPrefix() {
-        return prefix;
-    }
-
-    identifierWithTemplateArg &accessExpr::getTerm() const {
-        return *term;
-    }
-
-    vec<identifier *> &memberExpr::getPrefix() {
-        return prefix;
     }
 
     vec<subscriptExpr *> &memberExpr::getTerms() {
@@ -301,20 +285,12 @@ namespace hoshi {
         return *var;
     }
 
-    identifierWithDefTemplateArg &interfaceDefInnerPair::getMethodId() {
-        return *id;
-    }
-
-    definitionArguments &interfaceDefInnerPair::getMethodArgs() {
-        return *args;
-    }
-
-    typeSpec &interfaceDefInnerPair::getMethodResultType() {
-        return *resultType;
-    }
-
     bool interfaceDefInnerPair::isMethod() {
         return !var;
+    }
+
+    innerMethodDecl &interfaceDefInnerPair::getMethod() {
+        return *method;
     }
 
     vec<interfaceDefInnerPair *> &interfaceDefInner::getInner() {
@@ -333,20 +309,12 @@ namespace hoshi {
         return *var;
     }
 
-    definitionArguments &structDefInnerPair::getConArgs() {
-        return *conArgs;
+    constructorDecl &structDefInnerPair::getConstructor() {
+        return *con;
     }
 
-    identifierWithDefTemplateArg &structDefInnerPair::getMethodId() {
-        return *methodId;
-    }
-
-    definitionArguments &structDefInnerPair::getMethodArgs() {
-        return *methodArgs;
-    }
-
-    typeSpec &structDefInnerPair::getMethodResultType() {
-        return *methodResultType;
+    innerMethodDecl &structDefInnerPair::getMethod() {
+        return *method;
     }
 
     vec<structDefInnerPair *> &structDefInner::getInner() {
@@ -361,48 +329,36 @@ namespace hoshi {
         return *inner;
     }
 
-    identifierWithTypeSpec &implInnerPair::getVar() {
-        return *var;
+    constructorDef &implInnerPair::getConstructor() {
+        return *con;
     }
 
-    definitionArguments &implInnerPair::getConArgs() {
-        return *conArgs;
+    innerMethodDef &implInnerPair::getMethod() {
+        return *met;
     }
 
-    codeBlock &implInnerPair::getConBlock() {
-        return *conBlock;
-    }
-
-    identifierWithDefTemplateArg &implInnerPair::getMethodId() {
-        return *methodId;
-    }
-
-    definitionArguments &implInnerPair::getMethodArgs() {
-        return *methodArgs;
-    }
-
-    typeSpec &implInnerPair::getMethodResultType() {
-        return *methodResultType;
-    }
-
-    codeBlock &implInnerPair::getMethodBlock() {
-        return *methodBlock;
+    bool implInnerPair::isConstructor() const {
+        return con;
     }
 
     vec<implInnerPair *> &implInner::getInner() {
         return inner;
     }
 
-    identifierWithDefTemplateArg &implStmt::getInterfaceId() {
+    identifier &implStmt::getInterfaceId() {
         return *interfaceName;
     }
 
-    identifierWithDefTemplateArg &implStmt::getStructId() {
+    identifier &implStmt::getStructId() {
         return *structName;
     }
 
     bool implStmt::isImplForStmt() {
         return interfaceName;
+    }
+
+    implInner &implStmt::getInner() {
+        return *inner;
     }
 
     identifier &letAssignmentPair::getLhs() {
@@ -465,12 +421,20 @@ namespace hoshi {
         return *afterStmt;
     }
 
+    codeBlock &forStmt::getBlock() {
+        return *block;
+    }
+
     identifier &forEachStmt::getVar() {
         return *var;
     }
 
     rExpr &forEachStmt::getContainer() {
         return *container;
+    }
+
+    codeBlock &forEachStmt::getBlock() {
+        return *block;
     }
 
     rExpr &returnStmt::getValue() {
@@ -487,5 +451,453 @@ namespace hoshi {
 
     vec<inCodeBlockStmt *> &codeBlock::getStmts() {
         return stmts;
+    }
+
+    void finalizeAST(funcTypeSpec *ptr) {
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->resultType);
+        delete ptr;
+    }
+
+    void finalizeAST(definitionArguments *ptr) {
+        for (auto &i: ptr->get())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(invocationArguments *ptr) {
+        for (auto &i: ptr->get())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(templateArg *ptr) {
+        for (auto &i: ptr->get())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(templateArgSpec *ptr) {
+        finalizeAST(ptr->spec);
+        delete ptr;
+    }
+
+    void finalizeAST(defTemplateArg *ptr) {
+        for (auto &i: ptr->get())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(defTemplateArgSpec *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->impl);
+        delete ptr;
+    }
+
+    void finalizeAST(identifierWithTypeSpec *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->spec);
+        delete ptr;
+    }
+
+    void finalizeAST(typeSpec *ptr) {
+        if (ptr->isFuncTypeSpec())
+            finalizeAST(ptr->func);
+        else
+            finalizeAST(ptr->member);
+        delete ptr;
+    }
+
+    void finalizeAST(identifier *ptr) {
+        delete ptr;
+    }
+
+    void finalizeAST(basicLiterals *ptr) {
+        delete ptr;
+    }
+
+    void finalizeAST(subscript *ptr) {
+        finalizeAST(ptr->expr);
+        delete ptr;
+    }
+
+    void finalizeAST(identifierWithDefTemplateArg *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->arg);
+        delete ptr;
+    }
+
+    void finalizeAST(identifierWithTemplateArg *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->arg);
+        delete ptr;
+    }
+
+    void finalizeAST(subscriptExpr *ptr) {
+        finalizeAST(ptr->id);
+        if (ptr->isInvocation())
+            finalizeAST(ptr->arg);
+        else
+            finalizeAST(ptr->subscript);
+        delete ptr;
+    }
+
+    void finalizeAST(memberExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+    }
+
+    void finalizeAST(primary *ptr) {
+        switch (ptr->kind) {
+            case 0:
+                finalizeAST(ptr->member);
+                break;
+            case 1:
+                finalizeAST(ptr->literals);
+                break;
+            case 2:
+                finalizeAST(ptr->expr);
+                break;
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(uniqueExpr *ptr) {
+        finalizeAST(ptr->lhs);
+        delete ptr;
+    }
+
+    void finalizeAST(mulExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(addExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(shiftExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(relationalExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(equalityExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(andExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(exclusiveExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(inclusiveExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(logicalAndExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(logicalOrExpr *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(rExpr *ptr) {
+        finalizeAST(ptr->expr);
+        delete ptr;
+    }
+
+    void finalizeAST(codeBlock *ptr) {
+        for (auto &i: ptr->getStmts())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(useStmt *ptr) {
+        finalizeAST(ptr->name);
+        delete ptr;
+    }
+
+    void finalizeAST(funcDefStmt *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->resultType);
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void finalizeAST(interfaceDefInner *ptr) {
+        for (auto &i: ptr->getInner())
+            finalizeAST(i);
+
+        delete ptr;
+    }
+
+    void finalizeAST(interfaceDefInnerPair *ptr) {
+        if (ptr->isMethod()) {
+            finalizeAST(ptr->method);
+        } else {
+            finalizeAST(ptr->var);
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(interfaceDefStmt *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->inner);
+        delete ptr;
+    }
+
+    void finalizeAST(structDefInnerPair *ptr) {
+        switch (ptr->kind) {
+            case 0:
+                finalizeAST(ptr->var);
+                break;
+            case 1:
+                finalizeAST(ptr->con);
+                break;
+            case 2:
+                finalizeAST(ptr->method);
+                break;
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(structDefInner *ptr) {
+        for (auto &i: ptr->getInner())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(structDefStmt *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->inner);
+        delete ptr;
+    }
+
+    void finalizeAST(implInnerPair *ptr) {
+        if (ptr->isConstructor()) {
+            finalizeAST(ptr->con);
+        } else {
+            finalizeAST(ptr->met);
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(implInner *ptr) {
+        for (auto &i: ptr->getInner())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void finalizeAST(implStmt *ptr) {
+        if (ptr->isImplForStmt())
+            finalizeAST(ptr->interfaceName);
+        finalizeAST(ptr->structName);
+        finalizeAST(ptr->inner);
+        delete ptr;
+    }
+
+    void finalizeAST(letAssignmentPair *ptr) {
+        finalizeAST(ptr->lhs);
+        finalizeAST(ptr->rhs);
+        delete ptr;
+    }
+
+    void finalizeAST(letStmt *ptr) {
+        for (auto &i: ptr->getTerms())
+            finalizeAST(i);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(globalStmt *ptr) {
+        switch (ptr->kind) {
+            case globalStmt::vKind::useStmt:
+                finalizeAST(ptr->value.useStmt);
+                break;
+            case globalStmt::vKind::interfaceDefStmt:
+                finalizeAST(ptr->value.interfaceDefStmt);
+                break;
+            case globalStmt::vKind::structDefStmt:
+                finalizeAST(ptr->value.structDefStmt);
+                break;
+            case globalStmt::vKind::implStmt:
+                finalizeAST(ptr->value.implStmt);
+                break;
+            case globalStmt::vKind::letStmt:
+                finalizeAST(ptr->value.letStmt);
+                break;
+        }
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(ifStmt *ptr) {
+        finalizeAST(ptr->ifB.cond);
+        finalizeAST(ptr->ifB.block);
+        for (auto &i: ptr->elifB) {
+            finalizeAST(i.cond);
+            finalizeAST(i.block);
+        }
+        if (ptr->elseB)
+            finalizeAST(ptr->elseB);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(whileStmt *ptr) {
+        finalizeAST(ptr->cond);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(forStmt *ptr) {
+        finalizeAST(ptr->initStmt);
+        finalizeAST(ptr->cond);
+        finalizeAST(ptr->afterStmt);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(forEachStmt *ptr) {
+        finalizeAST(ptr->var);
+        finalizeAST(ptr->container);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(returnStmt *ptr) {
+        finalizeAST(ptr->value);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(continueStmt *ptr) {
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(breakStmt *ptr) {
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(inCodeBlockStmt *ptr) {
+        switch (ptr->kind) {
+            case inCodeBlockStmt::vKind::ifStmt:
+                finalizeAST(ptr->value.ifStmt);
+                break;
+            case inCodeBlockStmt::vKind::whileStmt:
+                finalizeAST(ptr->value.whileStmt);
+                break;
+            case inCodeBlockStmt::vKind::forEachStmt:
+                finalizeAST(ptr->value.whileStmt);
+                break;
+            case inCodeBlockStmt::vKind::returnStmt:
+                finalizeAST(ptr->value.returnStmt);
+                break;
+            case inCodeBlockStmt::vKind::continueStmt:
+                finalizeAST(ptr->value.continueStmt);
+                break;
+            case inCodeBlockStmt::vKind::breakStmt:
+                finalizeAST(ptr->value.breakStmt);
+                break;
+            case inCodeBlockStmt::vKind::letStmt:
+                finalizeAST(ptr->value.letStmt);
+                break;
+            case inCodeBlockStmt::vKind::codeBlock:
+                finalizeAST(ptr->value.codeBlock);
+                break;
+            case inCodeBlockStmt::vKind::rExpr:
+                finalizeAST(ptr->value.rExpr);
+                break;
+        }
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(innerMethodDecl *ptr) {
+        finalizeAST(ptr->resultType);
+        finalizeAST(ptr->name);
+        finalizeAST(ptr->args);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(innerMethodDef *ptr) {
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->name);
+        finalizeAST(ptr->resultType);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(constructorDecl *ptr) {
+        finalizeAST(ptr->args);
+        delete ptr;
+    }
+
+    void hoshi::finalizeAST(constructorDef *ptr) {
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    identifierWithTypeSpec &innerMethodDecl::getName() {
+        return *name;
+    }
+
+    definitionArguments &innerMethodDecl::getArgs() {
+        return *args;
+    }
+
+    typeSpec &innerMethodDecl::getResultType() {
+        return *resultType;
+    }
+
+    identifierWithTypeSpec &innerMethodDef::getName() {
+        return *name;
+    }
+
+    definitionArguments &innerMethodDef::getArgs() {
+        return *args;
+    }
+
+    typeSpec &innerMethodDef::getResultType() {
+        return *resultType;
+    }
+
+    codeBlock &innerMethodDef::getBlock() {
+        return *block;
+    }
+
+    definitionArguments &constructorDecl::getArgs() {
+        return *args;
+    }
+
+    definitionArguments &constructorDef::getArgs() {
+        return *args;
+    }
+
+    codeBlock &constructorDef::getBlock() {
+        return *block;
     }
 } // hoshi

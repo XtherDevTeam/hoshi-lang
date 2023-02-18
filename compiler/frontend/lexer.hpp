@@ -20,6 +20,7 @@ namespace hoshi {
             uint64_t line, col;
             enum class tokenKind {
                 identifier,
+                character,
                 string,
                 integer,
                 decimal,
@@ -33,6 +34,7 @@ namespace hoshi {
                 binaryXor,
                 binaryOr,
                 binaryAnd,
+                binaryNot,
                 logicNot,
                 incrementSign,
                 decrementSign,
@@ -63,24 +65,25 @@ namespace hoshi {
                 comma,      // ,
                 dot,        // .
                 sharp,      // #
+                kUse,
+                kFunc,
+                kInterface,
+                kConstructor,
+                kStruct,
+                kImpl,
+                kLet,
+                kIn,
                 kFor,
                 kForEach,
                 kWhile,
+                kIf,
+                kElif,
+                kElse,
+                kReturn,
                 kContinue,
                 kBreak,
-                kReturn,
-                kFunc,
-                kClosure,
-                kLet,
-                kAs,
-                kIn,
-                kIf,
-                kElse,
-                kThrow,
-                kTry,
-                kCatch,
+                kCast,
                 kNull,
-                kWith,
                 eof,
             } kind;
 
@@ -190,6 +193,8 @@ namespace hoshi {
         token orStart();
 
         token xorStart();
+
+        token binaryNotStart();
     };
 
 } // rex

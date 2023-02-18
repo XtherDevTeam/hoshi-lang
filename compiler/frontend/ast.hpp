@@ -4,15 +4,23 @@
 //
 // Created by XIaokang00010 on 2023/1/24.
 //
-
 #ifndef HOSHI_LANG_AST_HPP
 #define HOSHI_LANG_AST_HPP
 
 #include <share/def.hpp>
-
 #include "lexer.hpp"
 
 namespace hoshi {
+    class innerMethodDef;
+
+    class constructorDef;
+
+    class innerMethodDecl;
+
+    class constructorDecl;
+
+    class subscript;
+
     class basicLiterals;
 
     class identifier;
@@ -42,8 +50,6 @@ namespace hoshi {
     class identifierWithDefTemplateArg;
 
     class subscriptExpr;
-
-    class accessExpr;
 
     class memberExpr;
 
@@ -171,9 +177,9 @@ namespace hoshi {
 
     class templateArg {
     public:
-        vec<typeSpec *> spec;
+        vec<templateArgSpec *> spec;
 
-        vec<typeSpec *> &get();
+        vec<templateArgSpec *> &get();
     };
 
     class invocationArguments {
@@ -194,23 +200,21 @@ namespace hoshi {
     public:
         definitionArguments *args;
         typeSpec *resultType;
-        codeBlock *block;
 
         definitionArguments &getArgs() const;
 
         typeSpec &getResultType() const;
 
-        codeBlock &getBlock() const;
     };
 
     class typeSpec {
     public:
-        accessExpr *access;
+        memberExpr *member;
         funcTypeSpec *func;
 
         bool isFuncTypeSpec() const;
 
-        accessExpr &getAccessExpr() const;
+        memberExpr &getMemberExpr() const;
 
         funcTypeSpec &getTypeSpec() const;
     };
@@ -246,7 +250,7 @@ namespace hoshi {
     public:
         identifierWithTemplateArg *id;
         invocationArguments *arg;
-        subscriptExpr *subscript;
+        subscript *subscript;
 
         bool isInvocation() const;
 
@@ -254,25 +258,12 @@ namespace hoshi {
 
         invocationArguments &getArg() const;
 
-        subscriptExpr &getSubscript() const;
-    };
-
-    class accessExpr {
-    public:
-        vec<identifier *> prefix;
-        identifierWithTemplateArg *term;
-
-        vec<identifier *> &getPrefix();
-
-        identifierWithTemplateArg &getTerm() const;
+        hoshi::subscript &getSubscript() const;
     };
 
     class memberExpr {
     public:
-        vec<identifier *> prefix;
         vec<subscriptExpr *> terms;
-
-        vec<identifier *> &getPrefix();
 
         vec<subscriptExpr *> &getTerms();
     };
@@ -294,7 +285,7 @@ namespace hoshi {
     class uniqueExpr {
     public:
         lexer::token op;
-        primary *lhs;
+        primary *lhs{};
 
         lexer::token &getOp();
 
@@ -441,6 +432,7 @@ namespace hoshi {
     };
 
     class funcDefStmt {
+    public:
         identifierWithDefTemplateArg *id;
         definitionArguments *args;
         typeSpec *resultType;
@@ -463,15 +455,9 @@ namespace hoshi {
         identifierWithTypeSpec &getVar();
 
         // method
-        identifierWithDefTemplateArg *id;
-        definitionArguments *args;
-        typeSpec *resultType;
+        innerMethodDecl *method;
 
-        identifierWithDefTemplateArg &getMethodId();
-
-        definitionArguments &getMethodArgs();
-
-        typeSpec &getMethodResultType();
+        innerMethodDecl &getMethod();
 
         bool isMethod();
     };
@@ -500,21 +486,15 @@ namespace hoshi {
         // member var
         identifierWithTypeSpec *var;
         // constructor
-        definitionArguments *conArgs;
+        constructorDecl *con;
         // method
-        identifierWithDefTemplateArg *methodId;
-        definitionArguments *methodArgs;
-        typeSpec *methodResultType;
+        innerMethodDecl *method;
 
         identifierWithTypeSpec &getVar();
 
-        definitionArguments &getConArgs();
+        constructorDecl &getConstructor();
 
-        identifierWithDefTemplateArg &getMethodId();
-
-        definitionArguments &getMethodArgs();
-
-        typeSpec &getMethodResultType();
+        innerMethodDecl &getMethod();
     };
 
     class structDefInner {
@@ -527,7 +507,6 @@ namespace hoshi {
     class structDefStmt {
     public:
         identifierWithDefTemplateArg *id;
-
         structDefInner *inner;
 
         identifierWithDefTemplateArg &getId();
@@ -537,32 +516,16 @@ namespace hoshi {
 
     class implInnerPair {
     public:
-        // 0 is member 1 is constructor 2 is method
-        int8_t kind;
-        // member var
-        identifierWithTypeSpec *var;
         // constructor
-        definitionArguments *conArgs;
-        codeBlock *conBlock;
+        constructorDef *con;
         // method
-        identifierWithDefTemplateArg *methodId;
-        definitionArguments *methodArgs;
-        typeSpec *methodResultType;
-        codeBlock *methodBlock;
+        innerMethodDef *met;
 
-        identifierWithTypeSpec &getVar();
+        constructorDef &getConstructor();
 
-        definitionArguments &getConArgs();
+        innerMethodDef &getMethod();
 
-        codeBlock &getConBlock();
-
-        identifierWithDefTemplateArg &getMethodId();
-
-        definitionArguments &getMethodArgs();
-
-        typeSpec &getMethodResultType();
-
-        codeBlock &getMethodBlock();
+        bool isConstructor() const;
     };
 
     class implInner {
@@ -574,12 +537,15 @@ namespace hoshi {
 
     class implStmt {
     public:
-        identifierWithDefTemplateArg *interfaceName;
-        identifierWithDefTemplateArg *structName;
+        identifier *interfaceName;
+        identifier *structName;
+        implInner *inner;
 
-        identifierWithDefTemplateArg &getInterfaceId();
+        identifier &getInterfaceId();
 
-        identifierWithDefTemplateArg &getStructId();
+        identifier &getStructId();
+
+        implInner &getInner();
 
         bool isImplForStmt();
     };
@@ -665,22 +631,28 @@ namespace hoshi {
         inCodeBlockStmt *initStmt;
         rExpr *cond;
         inCodeBlockStmt *afterStmt;
+        codeBlock *block;
 
         inCodeBlockStmt &getInitStmt();
 
         rExpr &getCond();
 
         inCodeBlockStmt &getAfterStmt();
+
+        codeBlock &getBlock();
     };
 
     class forEachStmt {
     public:
         identifier *var;
         rExpr *container;
+        codeBlock *block;
 
         identifier &getVar();
 
         rExpr &getContainer();
+
+        codeBlock &getBlock();
     };
 
     class returnStmt {
@@ -691,11 +663,9 @@ namespace hoshi {
     };
 
     class continueStmt {
-
     };
 
     class breakStmt {
-
     };
 
     class inCodeBlockStmt {
@@ -703,6 +673,7 @@ namespace hoshi {
         enum class vKind : int16_t {
             ifStmt,
             whileStmt,
+            forStmt,
             forEachStmt,
             returnStmt,
             continueStmt,
@@ -722,6 +693,7 @@ namespace hoshi {
             letStmt *letStmt;
             codeBlock *codeBlock;
             rExpr *rExpr;
+            forStmt *forStmt;
             void *ptr;
 
             template<typename T>
@@ -733,14 +705,170 @@ namespace hoshi {
         vValue &getValue();
     };
 
+    class innerMethodDecl {
+    public:
+        identifierWithTypeSpec *name;
+        definitionArguments *args;
+        typeSpec *resultType;
+
+        identifierWithTypeSpec &getName();
+
+        definitionArguments &getArgs();
+
+        typeSpec &getResultType();
+    };
+
+    class innerMethodDef {
+    public:
+        identifierWithTypeSpec *name;
+        definitionArguments *args;
+        typeSpec *resultType;
+        codeBlock *block;
+
+        identifierWithTypeSpec &getName();
+
+        definitionArguments &getArgs();
+
+        typeSpec &getResultType();
+
+        codeBlock &getBlock();
+    };
+
+    class constructorDecl {
+    public:
+        definitionArguments *args;
+
+        definitionArguments &getArgs();
+    };
+
+    class constructorDef {
+    public:
+        definitionArguments *args;
+        codeBlock *block;
+
+        definitionArguments &getArgs();
+
+        codeBlock &getBlock();
+    };
+
     class codeBlock {
     public:
         vec<inCodeBlockStmt *> stmts;
 
         vec<inCodeBlockStmt *> &getStmts();
     };
+
+    void finalizeAST(basicLiterals *ptr);
+
+    void finalizeAST(identifier *ptr);
+
+    void finalizeAST(typeSpec *ptr);
+
+    void finalizeAST(identifierWithTypeSpec *ptr);
+
+    void finalizeAST(defTemplateArgSpec *ptr);
+
+    void finalizeAST(defTemplateArg *ptr);
+
+    void finalizeAST(templateArgSpec *ptr);
+
+    void finalizeAST(templateArg *ptr);
+
+    void finalizeAST(invocationArguments *ptr);
+
+    void finalizeAST(definitionArguments *ptr);
+
+    void finalizeAST(funcTypeSpec *ptr);
+
+    void finalizeAST(subscript *ptr);
+
+    void finalizeAST(identifierWithDefTemplateArg *ptr);
+
+    void finalizeAST(identifierWithTemplateArg *ptr);
+
+    void finalizeAST(subscriptExpr *ptr);
+
+    void finalizeAST(memberExpr *ptr);
+
+    void finalizeAST(primary *ptr);
+
+    void finalizeAST(uniqueExpr *ptr);
+
+    void finalizeAST(mulExpr *ptr);
+
+    void finalizeAST(addExpr *ptr);
+
+    void finalizeAST(shiftExpr *ptr);
+
+    void finalizeAST(relationalExpr *ptr);
+
+    void finalizeAST(equalityExpr *ptr);
+
+    void finalizeAST(andExpr *ptr);
+
+    void finalizeAST(exclusiveExpr *ptr);
+
+    void finalizeAST(inclusiveExpr *ptr);
+
+    void finalizeAST(logicalAndExpr *ptr);
+
+    void finalizeAST(logicalOrExpr *ptr);
+
+    void finalizeAST(rExpr *ptr);
+
+    void finalizeAST(codeBlock *ptr);
+
+    void finalizeAST(useStmt *ptr);
+
+    void finalizeAST(funcDefStmt *ptr);
+
+    void finalizeAST(interfaceDefInner *ptr);
+
+    void finalizeAST(interfaceDefInnerPair *ptr);
+
+    void finalizeAST(interfaceDefStmt *ptr);
+
+    void finalizeAST(structDefInnerPair *ptr);
+
+    void finalizeAST(structDefInner *ptr);
+
+    void finalizeAST(structDefStmt *ptr);
+
+    void finalizeAST(implInnerPair *ptr);
+
+    void finalizeAST(implInner *ptr);
+
+    void finalizeAST(implStmt *ptr);
+
+    void finalizeAST(letAssignmentPair *ptr);
+
+    void finalizeAST(letStmt *ptr);
+
+    void finalizeAST(globalStmt *ptr);
+
+    void finalizeAST(ifStmt *ptr);
+
+    void finalizeAST(whileStmt *ptr);
+
+    void finalizeAST(forStmt *ptr);
+
+    void finalizeAST(forEachStmt *ptr);
+
+    void finalizeAST(returnStmt *ptr);
+
+    void finalizeAST(continueStmt *ptr);
+
+    void finalizeAST(breakStmt *ptr);
+
+    void finalizeAST(inCodeBlockStmt *ptr);
+
+    void finalizeAST(innerMethodDecl *ptr);
+
+    void finalizeAST(innerMethodDef *ptr);
+
+    void finalizeAST(constructorDecl *ptr);
+
+    void finalizeAST(constructorDef *ptr);
 } // hoshi
-
 #endif //HOSHI_LANG_AST_HPP
-
 #pragma clang diagnostic pop

@@ -83,7 +83,9 @@ namespace hoshi {
             return curToken = xorStart();
         } else if (curCh == L'#') {
             return curToken = sharpStart();
-        }else if (curCh == L'\0') {
+        } else if (curCh == L'!') {
+            return curToken = notStart();
+        } else if (curCh == L'\0') {
             return curToken = {line, col, token::tokenKind::eof, false};
         } else {
             throw std::runtime_error("hoshi::lexer::scan() - undefined token");
@@ -115,28 +117,30 @@ namespace hoshi {
             tok.kind = token::tokenKind::kWhile;
         } else if (tempStr == L"func") {
             tok.kind = token::tokenKind::kFunc;
-        } else if (tempStr == L"lambda") {
-            tok.kind = token::tokenKind::kClosure;
+        } else if (tempStr == L"use") {
+            tok.kind = token::tokenKind::kUse;
         } else if (tempStr == L"let") {
             tok.kind = token::tokenKind::kLet;
-        } else if (tempStr == L"as") {
-            tok.kind = token::tokenKind::kAs;
+        } else if (tempStr == L"cast") {
+            tok.kind = token::tokenKind::kCast;
         } else if (tempStr == L"in") {
             tok.kind = token::tokenKind::kIn;
         } else if (tempStr == L"if") {
             tok.kind = token::tokenKind::kIf;
         } else if (tempStr == L"else") {
             tok.kind = token::tokenKind::kElse;
-        } else if (tempStr == L"try") {
-            tok.kind = token::tokenKind::kTry;
-        } else if (tempStr == L"catch") {
-            tok.kind = token::tokenKind::kCatch;
-        } else if (tempStr == L"throw") {
-            tok.kind = token::tokenKind::kThrow;
+        } else if (tempStr == L"elif") {
+            tok.kind = token::tokenKind::kElif;
+        } else if (tempStr == L"interface") {
+            tok.kind = token::tokenKind::kInterface;
+        } else if (tempStr == L"constructor") {
+            tok.kind = token::tokenKind::kConstructor;
+        } else if (tempStr == L"struct") {
+            tok.kind = token::tokenKind::kStruct;
+        } else if (tempStr == L"impl") {
+            tok.kind = token::tokenKind::kImpl;
         } else if (tempStr == L"null") {
             tok.kind = token::tokenKind::kNull;
-        } else if (tempStr == L"with") {
-            tok.kind = token::tokenKind::kWith;
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";
@@ -149,7 +153,7 @@ namespace hoshi {
 
     lexer::token lexer::strStart() {
         wchar strV = curCh;
-        lexer::token tok{line, col, token::tokenKind::string, wstr()};
+        lexer::token tok{line, col, strV == L'"' ? token::tokenKind::string : token::tokenKind::character, wstr()};
         getCh();
         while (curCh != strV) {
             if (curCh == '\\') {
@@ -163,6 +167,8 @@ namespace hoshi {
         std::wistringstream ss{tok.strVal};
         tok.strVal = {};
         parseString(ss, tok.strVal);
+        if (tok.strVal.size() > 1)
+            throw std::runtime_error("lexer::strStart() - character literal length > 1");
         return tok;
     }
 
@@ -423,6 +429,12 @@ namespace hoshi {
         return tok;
     }
 
+    lexer::token lexer::binaryNotStart() {
+        lexer::token tok{line, col, token::tokenKind::binaryNot};
+        getCh();
+        return tok;
+    }
+
     lexer::token::vBasicValue::vBasicValue(int64_t v) : vInt(v) {
 
     }
@@ -464,7 +476,8 @@ namespace hoshi {
 
     }
 
-    lexer::lexerState::lexerState(int64_t line, int64_t col, std::istream::pos_type pos, wchar curCh, lexer::token curToken)
+    lexer::lexerState::lexerState(int64_t line, int64_t col, std::istream::pos_type pos, wchar curCh,
+                                  lexer::token curToken)
             :
             line(line), col(col), pos(pos), curCh(curCh), curToken(std::move(curToken)) {
 

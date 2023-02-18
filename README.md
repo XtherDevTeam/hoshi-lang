@@ -37,16 +37,16 @@ impl s_a {
 
 impl hello for s_a {
 	say() : null {
-    io::println("fuck you!")
-    return null
-  }
+      io.println("fuck you!")
+      return null
+    }
 }
 
 func main(argv: Vec<rstr>) : int {
   let a = s_a(114514, 1919.810)
   cast<hello>(a).say()
-	io::println("Hello, world!")
-	return 0;
+  io.println("Hello, world!")
+  return 0;
 }
 ```
 
@@ -110,13 +110,13 @@ struct s_a<T> {
 };
 impl s_a {
   fuck<T1>(a: T1) : null {
-    io::print(a);
+    io.print(a);
     return i;
   }
 };
 impl hello for s_a {
   say() : null {
-    io::println("114514");
+    io.println("114514");
     return;
   }
 }
@@ -155,7 +155,7 @@ templateArgSpec ::= typeSpec
 templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
 invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
 definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
-funcTypeSpec ::= "func" definitionArguments ":" typeSpec codeBlock
+funcTypeSpec ::= "func" definitionArguments ":" typeSpec
 typeSpec ::= accessExpression
            | funcTypeSpec
 subscript ::= "[" rExpr "]"
@@ -166,8 +166,7 @@ identifierWithDefTemplateArg ::= identifier
 subscriptExpression ::= identifierWithTemplateArg
                       | identifierWithTemplateArg invocationArguments
                       | identifierWithTemplateArg subscript
-accessExpression ::= { identifier "::" } identifierWithTemplateArg
-memberExpression ::= { identifier "::" } subscriptExpression { "." subscriptExpression }
+memberExpression ::= subscriptExpression { "." subscriptExpression }
 primary ::= memberExpression | basicLiterals | "(" rExpr ")"
 uniqueExpr ::= primary { ( "++" | "--" | "!" | "~" | "-" | "&" ) primary }
 mulExpr ::= uniqueExpr { ( "*" | "/" | "%" ) uniqueExpr }
@@ -183,20 +182,24 @@ logicalOrExpr ::= logicalAndExpr { "||" logicalAndExpr }
 rExpr ::= logicalOrExpr
 useStmt ::= "use" identifier TOK_string
 funcDefStmt ::= "func" identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
-interfaceDefInnerPair ::= identifier ":" typeSpec
-                        | identifierWithDefTemplateArg definitionArguments ":" typeSpec
+innerMethodDecl ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec
+innerMethodDef ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+constructorDecl ::= "constructor" definitionArguments
+constructorDef ::= "constructor" definitionArguments codeBlock
+interfaceDefInnerPair ::= identifierWithTypeSpec
+                        | innerMethodDecl
 interfaceDefInner ::= "{" [ interfaceDefInnerPair { "," interfaceDefInnerPair } ] "}"
 interfaceDefStmt ::= "interface" identifier interfaceDefInner
-structDefInnerPair ::= identifier ":" typeSpec
-                     | identifierWithDefTemplateArg definitionArguments ":" typeSpec
-                     | "constructor" definitionArguments
+structDefInnerPair ::= identifierWithTypeSpec
+                     | innerMethodDecl
+                     | constructDecl
 structDefInner ::= "{" [ structDefInnerPair { "," structDefInnerPair } ] "}"
 structDefStmt ::= "struct" identifierWithDefTemplateArg structDefInner
 implInnerPair ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
-                | "constructor" definitionArguments codeBlock
+                | constructorDef
 implInner ::= "{" [ implInnerPair { "," implInnerPair } ] "}"
-implStmt ::= "impl" identifierWithDefTemplateArg implInner
-           | "impl" identifierWithDefTemplateArg "for" identifierWithDefTemplateArg implInner
+implStmt ::= "impl" identifier implInner
+           | "impl" identifier "for" identifier implInner
 letAssignmentPair ::= identifier "=" rExpr
 letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
 globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt

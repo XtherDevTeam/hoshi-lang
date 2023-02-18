@@ -8,4 +8,6 @@ namespace hoshi {
     template<typename t>
     using vec = std::vector<t>;
     void parseString(std::wistream &input, wstr &value) ;
+
+    void panic(int64_t line, int64_t col, const std::string &msg);
 }
