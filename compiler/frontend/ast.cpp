@@ -57,10 +57,6 @@ namespace hoshi {
         return *resultType;
     }
 
-    bool typeSpec::isFuncTypeSpec() const {
-        return func;
-    }
-
     memberExpr &typeSpec::getMemberExpr() const {
         return *member;
     }
@@ -501,10 +497,16 @@ namespace hoshi {
     }
 
     void finalizeAST(typeSpec *ptr) {
-        if (ptr->isFuncTypeSpec())
-            finalizeAST(ptr->func);
-        else
-            finalizeAST(ptr->member);
+        switch (ptr->kind) {
+            case 0:
+                finalizeAST(ptr->member);
+                break;
+            case 1:
+                finalizeAST(ptr->func);
+                break;
+            case 2:
+                break;
+        }
         delete ptr;
     }
 
@@ -861,7 +863,7 @@ namespace hoshi {
         delete ptr;
     }
 
-    identifierWithTypeSpec &innerMethodDecl::getName() {
+    identifier &innerMethodDecl::getName() {
         return *name;
     }
 
@@ -873,7 +875,7 @@ namespace hoshi {
         return *resultType;
     }
 
-    identifierWithTypeSpec &innerMethodDef::getName() {
+    identifier &innerMethodDef::getName() {
         return *name;
     }
 
@@ -899,5 +901,9 @@ namespace hoshi {
 
     codeBlock &constructorDef::getBlock() {
         return *block;
+    }
+
+    vec<globalStmt *> &hoshiModule::getStmts() {
+        return stmts;
     }
 } // hoshi

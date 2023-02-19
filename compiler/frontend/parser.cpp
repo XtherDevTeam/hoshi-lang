@@ -35,6 +35,7 @@ namespace hoshi {
     }
 
     void parse(identifierWithTypeSpec *&o, lexer &lex) {
+        lex.saveState();
         identifier *id;
         typeSpec *spec;
         parse(id, lex);
@@ -45,10 +46,13 @@ namespace hoshi {
         if (lex.curToken.kind == lexer::token::tokenKind::colon) {
             lex.scan();
         } else {
-            panic(lex.line, lex.col, "expected `:` in identifier with typeSpec");
+            lex.returnState();
+            finalizeAST(id);
+            o = nullptr;
             return;
         }
         parse(spec, lex);
+        lex.dropState();
         o = new identifierWithTypeSpec{id, spec};
     }
 
@@ -224,14 +228,19 @@ namespace hoshi {
     void hoshi::parse(typeSpec *&o, lexer &lex) {
         memberExpr *expr;
         funcTypeSpec *spec;
+        if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
+            lex.scan();
+            o = new typeSpec{2, nullptr, nullptr, true};
+            return;
+        }
         parse(spec, lex);
         if (spec) {
-            o = new typeSpec{nullptr, spec};
+            o = new typeSpec{1, nullptr, spec, false};
             return;
         }
         parse(expr, lex);
         if (expr) {
-            o = new typeSpec{expr, nullptr};
+            o = new typeSpec{0, expr, nullptr, false};
             return;
         }
         o = nullptr;
@@ -370,6 +379,7 @@ namespace hoshi {
                 panic(lex.line, lex.col, "expected `)` after rightValueExpr while parsing primary");
             }
         }
+        o = nullptr;
     }
 
     void hoshi::parse(uniqueExpr *&o, lexer &lex) {
@@ -426,13 +436,12 @@ namespace hoshi {
     void hoshi::parse(addExpr *&o, lexer &lex) {
         vec<mulExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         mulExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::plus || b.kind == lexer::token::tokenKind::minus) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::plus || lex.curToken.kind == lexer::token::tokenKind::minus) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -450,14 +459,13 @@ namespace hoshi {
     void hoshi::parse(shiftExpr *&o, lexer &lex) {
         vec<addExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         addExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::binaryShiftLeft ||
-                   b.kind == lexer::token::tokenKind::binaryShiftRight) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::binaryShiftLeft ||
+                    lex.curToken.kind == lexer::token::tokenKind::binaryShiftRight) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -475,14 +483,13 @@ namespace hoshi {
     void hoshi::parse(relationalExpr *&o, lexer &lex) {
         vec<shiftExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         shiftExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::lessThan || b.kind == lexer::token::tokenKind::greaterThan ||
-                   b.kind == lexer::token::tokenKind::lessEqual || b.kind == lexer::token::tokenKind::greaterEqual) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::lessThan || lex.curToken.kind == lexer::token::tokenKind::greaterThan ||
+                    lex.curToken.kind == lexer::token::tokenKind::lessEqual || lex.curToken.kind == lexer::token::tokenKind::greaterEqual) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -500,13 +507,12 @@ namespace hoshi {
     void hoshi::parse(equalityExpr *&o, lexer &lex) {
         vec<relationalExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         relationalExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::equal || b.kind == lexer::token::tokenKind::notEqual) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::equal || lex.curToken.kind == lexer::token::tokenKind::notEqual) {
+                vecB.push_back( lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -524,13 +530,12 @@ namespace hoshi {
     void hoshi::parse(andExpr *&o, lexer &lex) {
         vec<equalityExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         equalityExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::logicAnd) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::logicAnd) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -548,13 +553,12 @@ namespace hoshi {
     void hoshi::parse(exclusiveExpr *&o, lexer &lex) {
         vec<andExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         andExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::binaryXor) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::binaryXor) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -572,13 +576,12 @@ namespace hoshi {
     void hoshi::parse(inclusiveExpr *&o, lexer &lex) {
         vec<exclusiveExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         exclusiveExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::binaryOr) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::binaryOr) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -596,13 +599,12 @@ namespace hoshi {
     void hoshi::parse(logicalAndExpr *&o, lexer &lex) {
         vec<inclusiveExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         inclusiveExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::logicAnd) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::logicAnd) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -620,13 +622,12 @@ namespace hoshi {
     void hoshi::parse(logicalOrExpr *&o, lexer &lex) {
         vec<logicalAndExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         logicalAndExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::logicOr) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::logicOr) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {
@@ -807,11 +808,11 @@ namespace hoshi {
             parse(a, lex);
             if (!a)
                 break;
+            vecA.push_back(a);
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
             else
                 break;
-            vecA.push_back(a);
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
             lex.scan();
@@ -961,7 +962,7 @@ namespace hoshi {
             panic(lex.line, lex.col, "expected left-hand-side in letAssignmentPair");
             return;
         }
-        if (lex.curToken.kind == lexer::token::tokenKind::equal) {
+        if (lex.curToken.kind == lexer::token::tokenKind::assignSign) {
             lex.scan();
         } else {
             panic(lex.line, lex.col, "expected `=` after left-hand-side in letAssignmentPair");
@@ -987,14 +988,10 @@ namespace hoshi {
         while (true) {
             parse(a, lex);
             vecA.push_back(a);
-            if (lex.curToken.kind != lexer::token::tokenKind::semicolon) {
-                lex.scan();
-                break;
-            }
             if (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
             } else {
-                panic(lex.line, lex.col, "expected `,` after letAssignmentPair");
+                break;
             }
         }
         o = new letStmt{vecA};
@@ -1006,6 +1003,7 @@ namespace hoshi {
         structDefStmt *c;
         implStmt *d;
         letStmt *e;
+        funcDefStmt *f;
 
         parse(a, lex);
         if (a) {
@@ -1034,6 +1032,12 @@ namespace hoshi {
         parse(e, lex);
         if (e) {
             o = new globalStmt{globalStmt::vKind::letStmt, e};
+            return;
+        }
+
+        parse(f, lex);
+        if (f) {
+            o = new globalStmt{globalStmt::vKind::funcDefStmt, f};
             return;
         }
 
@@ -1267,6 +1271,11 @@ namespace hoshi {
 
     void hoshi::parse(inCodeBlockStmt *&o, lexer &lex) {
         o = new inCodeBlockStmt{inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
+        parse(o->value.letStmt, lex);
+        if (o->value.ptr) {
+            o->kind = inCodeBlockStmt::vKind::letStmt;
+            return;
+        }
         parse(o->value.ifStmt, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::ifStmt;
@@ -1445,6 +1454,22 @@ namespace hoshi {
             panic(lex.line, lex.col, "expected codeBlock after arguments");
             return;
         }
+    }
+
+    void hoshi::parse(hoshiModule *&o, lexer &lex) {
+        vec<globalStmt *> vecA;
+        globalStmt *a;
+        while (true) {
+            if (lex.curToken.kind == lexer::token::tokenKind::eof)
+                break;
+            parse(a, lex);
+            if (!a) {
+                panic(lex.line, lex.col, "expected globalStmt");
+                return;
+            }
+            vecA.push_back(a);
+        }
+        o = new hoshiModule{vecA};
     }
 }
 

@@ -158,6 +158,7 @@ definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeS
 funcTypeSpec ::= "func" definitionArguments ":" typeSpec
 typeSpec ::= accessExpression
            | funcTypeSpec
+           | "null"
 subscript ::= "[" rExpr "]"
 identifierWithTemplateArg ::= identifier
                             | identifier TemplateArg
@@ -203,6 +204,7 @@ implStmt ::= "impl" identifier implInner
 letAssignmentPair ::= identifier "=" rExpr
 letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
 globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
+hoshiModule ::= { globalStmt }
 ifStmt ::= "if" "(" rExpr ")" codeBlock [ "elif" codeBlock ] [ "else" codeBlock ]
 whileStmt ::= "while" "(" rExpr ")" codeBlock
 forStmt ::= "for" "(" inCodeBlockStmt ";" rExpr ";" inCodeBlockStmt ")" codeBlock

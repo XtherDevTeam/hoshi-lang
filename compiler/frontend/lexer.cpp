@@ -5,7 +5,7 @@
 #include "lexer.hpp"
 
 namespace hoshi {
-    lexer::lexer(std::wistream &ss) : stream(ss), line(0), col(0), curCh() {
+    lexer::lexer(std::wstringstream ss) : stream(std::move(ss)), line(0), col(0), curCh() {
         getCh();
     }
 
@@ -14,7 +14,7 @@ namespace hoshi {
         if (!stream) {
             throw std::runtime_error("hoshi::lexer::getCh() - eof");
         }
-        if (!stream.get(curCh)) {
+        if (!stream.get(curCh) || stream.fail()) {
             curCh = '\0';
         }
         if (curCh == L'\n') {
@@ -28,7 +28,7 @@ namespace hoshi {
 
     lexer::token lexer::scan() {
         if (curCh == '\0') {
-            return {line, col, token::tokenKind::eof};
+            return curToken = lexer::token {line, col, token::tokenKind::eof};
         }
         while (curCh == ' ' or curCh == '\n' or curCh == '\r' or curCh == '\t') getCh();
         if (std::isalpha(curCh) or curCh == '_') {
@@ -167,7 +167,7 @@ namespace hoshi {
         std::wistringstream ss{tok.strVal};
         tok.strVal = {};
         parseString(ss, tok.strVal);
-        if (tok.strVal.size() > 1)
+        if (strV == L'\'' && tok.strVal.size() > 1)
             throw std::runtime_error("lexer::strStart() - character literal length > 1");
         return tok;
     }

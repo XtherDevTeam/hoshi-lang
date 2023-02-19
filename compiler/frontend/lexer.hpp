@@ -14,7 +14,7 @@
 namespace hoshi {
 
     class lexer {
-        std::wistream &stream;
+        std::wstringstream stream;
     public:
         struct token {
             uint64_t line, col;
@@ -132,7 +132,7 @@ namespace hoshi {
 
         void getCh();
 
-        explicit lexer(std::wistream &ss);
+        explicit lexer(std::wstringstream ss);
 
         void saveState();
 

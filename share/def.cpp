@@ -61,4 +61,16 @@ namespace hoshi {
     void panic(int64_t line, int64_t col, const std::string &msg) {
         throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
     }
+
+    std::wstring string2wstring(const std::string &v) {
+        std::wstring result;
+        utf8Unicode::utf8ToUnicode(v, result);
+        return result;
+    }
+
+    std::string wstring2string(const std::wstring &v) {
+        std::string result;
+        utf8Unicode::unicodeToUtf8(v, result);
+        return result;
+    }
 }

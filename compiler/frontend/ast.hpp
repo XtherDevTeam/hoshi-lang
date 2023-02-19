@@ -11,6 +11,8 @@
 #include "lexer.hpp"
 
 namespace hoshi {
+    class hoshiModule;
+
     class innerMethodDef;
 
     class constructorDef;
@@ -209,10 +211,10 @@ namespace hoshi {
 
     class typeSpec {
     public:
+        int16_t kind; // 0 is member 1 is func 2 is null
         memberExpr *member;
         funcTypeSpec *func;
-
-        bool isFuncTypeSpec() const;
+        bool isNull;
 
         memberExpr &getMemberExpr() const;
 
@@ -571,10 +573,12 @@ namespace hoshi {
     public:
         enum class vKind : int16_t {
             useStmt,
+            funcDefStmt,
             interfaceDefStmt,
             structDefStmt,
             implStmt,
-            letStmt
+            letStmt,
+            hoshiModule,
         } kind;
 
         union vValue {
@@ -583,6 +587,8 @@ namespace hoshi {
             structDefStmt *structDefStmt;
             implStmt *implStmt;
             letStmt *letStmt;
+            hoshiModule *hoshiModule;
+            funcDefStmt *funcDefStmt;
             void *ptr;
 
             template<typename T>
@@ -707,11 +713,11 @@ namespace hoshi {
 
     class innerMethodDecl {
     public:
-        identifierWithTypeSpec *name;
+        identifier *name;
         definitionArguments *args;
         typeSpec *resultType;
 
-        identifierWithTypeSpec &getName();
+        identifier &getName();
 
         definitionArguments &getArgs();
 
@@ -720,12 +726,12 @@ namespace hoshi {
 
     class innerMethodDef {
     public:
-        identifierWithTypeSpec *name;
+        identifier *name;
         definitionArguments *args;
         typeSpec *resultType;
         codeBlock *block;
 
-        identifierWithTypeSpec &getName();
+        identifier &getName();
 
         definitionArguments &getArgs();
 
@@ -756,6 +762,13 @@ namespace hoshi {
         vec<inCodeBlockStmt *> stmts;
 
         vec<inCodeBlockStmt *> &getStmts();
+    };
+
+    class hoshiModule {
+    public:
+        vec<globalStmt *> stmts;
+
+        vec<globalStmt *> &getStmts();
     };
 
     void finalizeAST(basicLiterals *ptr);

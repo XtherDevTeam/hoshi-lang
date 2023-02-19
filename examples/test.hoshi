@@ -1,0 +1,5 @@
+func test() : int {
+    let i = 0
+    let b = 1 + 1 + 4 + 514
+    return i + b
+}

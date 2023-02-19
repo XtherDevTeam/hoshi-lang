@@ -12,6 +12,7 @@ file (GLOB HOSHI_LANG_INCLUDE
         compiler/*.cpp
         compiler/frontend/*.cpp
         runtime/*.cpp
-        share/*.cpp)
+        share/*.cpp
+        pass/*.cpp)
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})

@@ -123,6 +123,8 @@ namespace hoshi {
 
     void parse(constructorDef *&o, lexer &lex);
 
+    void parse(hoshiModule *&o, lexer &lex);
+
 }
 
 #endif //HOSHI_LANG_PARSER_HPP
