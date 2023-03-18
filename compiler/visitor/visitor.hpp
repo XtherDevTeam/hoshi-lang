@@ -1,25 +1,53 @@
 //
-// Created by XIaokang00010 on 2023/3/4.
+// Created by XIaokang00010 on 2023/3/11.
 //
 
 #ifndef HOSHI_LANG_VISITOR_HPP
 #define HOSHI_LANG_VISITOR_HPP
 
-#include <compiler/frontend/ast.hpp>
-#include <compiler/ir/ir.hpp>
+#include <compiler/visitor/codegenEnv.hpp>
+#include "compiler/frontend/ast.hpp"
 
 namespace hoshi {
     class visitor {
-        irContext *cxt;
-        irBuilder *builder;
+        codegenEnv &env;
     public:
-        void setContext(irContext *c);
+        visitor(codegenEnv &e);
 
-        void visitModule(const wstr &moduleName, hoshiModule *target);
+        llvm::Value *visit(basicLiterals *target);
 
-        void visitInFunc(basicLiterals *literals);
+        llvm::Value *visit(identifier *target);
+
+        llvm::Value *visit(subscriptExpr *target);
+
+        llvm::Value *visit(memberExpr *target);
+
+        llvm::Value *visit(primary *target);
+
+        llvm::Value *visit(uniqueExpr *target);
+
+        llvm::Value *visit(mulExpr *target);
+
+        llvm::Value *visit(addExpr *target);
+
+        llvm::Value *visit(shiftExpr *target);
+
+        llvm::Value *visit(relationalExpr *target);
+
+        llvm::Value *visit(equalityExpr *target);
+
+        llvm::Value *visit(andExpr *target);
+
+        llvm::Value *visit(exclusiveExpr *target);
+
+        llvm::Value *visit(inclusiveExpr *target);
+
+        llvm::Value *visit(logicalAndExpr *target);
+
+        llvm::Value *visit(logicalOrExpr *target);
+
+        llvm::Value *visit(rExpr *target);
     };
-
-} // hoshi
+}
 
 #endif //HOSHI_LANG_VISITOR_HPP

@@ -1,3 +1,9 @@
+#ifndef HOSHI_DEF_HPP
+#define HOSHI_DEF_HPP
+
+#include <llvm/IR/IRBuilder.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/LLVMContext.h>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -76,6 +82,6 @@ namespace hoshi {
             else
                 throw std::runtime_error("indexPool: invalid index");
         }
-
     };
 }
+#endif
