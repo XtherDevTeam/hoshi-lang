@@ -115,6 +115,34 @@ namespace yoi {
 
         yoi::wstr to_string();
     };
+
+    class IRStructDefinition {
+    public:
+        std::string name;
+        yoi::vec<IRValueType> fieldTypes;
+        yoi::vec<IRFunctionDefinition> methodDefinitions;
+
+        IRStructDefinition(const std::string &name, const yoi::vec<IRValueType> &fieldTypes, const yoi::vec<IRFunctionDefinition> &methodDefinitions);
+
+        yoi::wstr to_string();
+    };
+
+    class IRStringLiteralPool {
+    public:
+        yoi::indexPool<yoi::wstr> pool;
+
+        yoi::indexT addStringLiteral(const yoi::wstr &str);
+
+        yoi::wstr &getStringLiteral(yoi::indexT index);
+    };
+
+    class IRModule {
+    public:
+        yoi::indexTable<yoi::wstr, IRFunctionDefinition> functionTable;
+        yoi::indexTable<yoi::wstr, IRStructDefinition> structTable;
+        yoi::indexTable<yoi::wstr, IRValueType> globalVariables;
+        IRStringLiteralPool stringLiteralPool;
+    };
 } // yoi
 
 #endif //HOSHI_LANG_IR_H

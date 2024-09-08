@@ -73,4 +73,22 @@ namespace yoi {
     IRValueType::IRValueType(IRValueType::valueType type) : type(type), objectPrototypeIndex(0) {
 
     }
+
+    IRStructDefinition::IRStructDefinition(const std::string &name, const vec <IRValueType> &fieldTypes,
+                                           const vec <IRFunctionDefinition> &methodDefinitions) : name(name), fieldTypes(fieldTypes), methodDefinitions(methodDefinitions) {
+
+    }
+
+    yoi::wstr IRStructDefinition::to_string() {
+        // TODO
+        return {};
+    }
+
+    yoi::indexT IRStringLiteralPool::addStringLiteral(const wstr &str) {
+        return pool.put(str);
+    }
+
+    yoi::wstr &IRStringLiteralPool::getStringLiteral(yoi::indexT index) {
+        return pool[index];
+    }
 } // yoi

@@ -12,10 +12,11 @@ namespace yoi {
     class visitor {
     public:
         std::shared_ptr<moduleContext> moduleContext;
+        std::shared_ptr<yoi::IRModule> irModule;
 
         visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext);
 
-        void visit();
+        std::shared_ptr<yoi::IRModule> visit();
 
         void visit(yoi::hoshiModule *module);
 
