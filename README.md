@@ -1,4 +1,4 @@
-# The design of hoshi-lang programming language
+# The design of yoi-lang programming language
 
 
 
@@ -58,7 +58,7 @@ Here is an example.
 
 我他妈直接快进
 
-OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。`hoshi-lang` 的 OOP 由三个部分组成，`interface` 接口、`struct` 结构体、`impl` 实现接口。
+OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。`yoi-lang` 的 OOP 由三个部分组成，`interface` 接口、`struct` 结构体、`impl` 实现接口。
 
 `interface` 是抽象接口，包含一组方法和成员，可以被 `struct` 实现。`interface` 里只包含方法的声明，不包含实现，实现由 `struct` 完成。
 
@@ -80,15 +80,15 @@ GC的实现有点清奇，基本为引用计数模式，当对象创建时，会
 
 ## Module
 
-`hoshi-lang` 提供了将项目模块化的功能，使用 `use` 语句即可导入模块。
+`yoi-lang` 提供了将项目模块化的功能，使用 `use` 语句即可导入模块。
 
 如 `use io "std/io"` 就是从 `hoshiModulesPath` 中寻找 `std/io` 这个模块并使用 `io` 这个名字导入。
 
-一个模块可以是一个 `hoshi` 源文件，也可以是一个包含一组模块的目录。
+一个模块可以是一个 `yoi` 源文件，也可以是一个包含一组模块的目录。
 
-在引入目录形式的模块时会导入目录下的所有 `hoshi` 源文件。
+在引入目录形式的模块时会导入目录下的所有 `yoi` 源文件。
 
-当检测到重复模块加载时，会使用已经处理完成的 `AST` 挂载到 `use` 语句，`hoshi-lang` 编译器内部会维护一个序号 `hoshiModuleId` 在加载模组时会使用当前序号当作当前导入模组的ID，将其十六进制化后添加到符号名头部。主包不作处理。
+当检测到重复模块加载时，会使用已经处理完成的 `AST` 挂载到 `use` 语句，`yoi-lang` 编译器内部会维护一个序号 `hoshiModuleId` 在加载模组时会使用当前序号当作当前导入模组的ID，将其十六进制化后添加到符号名头部。主包不作处理。
 
 `use` 语句会先使用指定的 `prefix` 编译指定的模块，然后在符号表加入模块的别名。
 
@@ -96,7 +96,7 @@ GC的实现有点清奇，基本为引用计数模式，当对象创建时，会
 
 ### Template arguments
 
-`Generic Programming` 将会是 `hoshi-lang` 的一大重要特性，`hoshi-lang` 主要使用 `template` 来实现 `GP`，`template` 即模板，在类或函数声明时的标识符后加上 `<>` 符号来声明一个模板类或函数的模板参数。
+`Generic Programming` 将会是 `yoi-lang` 的一大重要特性，`yoi-lang` 主要使用 `template` 来实现 `GP`，`template` 即模板，在类或函数声明时的标识符后加上 `<>` 符号来声明一个模板类或函数的模板参数。
 
 E.g.
 
@@ -135,6 +135,8 @@ func a<fT>(f: fT, args: vaArgs) {
   return fT(args);
 }
 ```
+
+
 
 上例是使用变长参数 `args` 调用函数 `f` 的例子。
 

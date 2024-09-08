@@ -8,7 +8,7 @@
 #include "lexer.hpp"
 #include "ast.hpp"
 
-namespace hoshi {
+namespace yoi {
     void parse(basicLiterals *&o, lexer &lex);
 
     void parse(identifier *&o, lexer &lex);

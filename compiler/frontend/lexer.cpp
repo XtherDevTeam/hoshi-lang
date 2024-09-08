@@ -4,7 +4,7 @@
 
 #include "lexer.hpp"
 
-namespace hoshi {
+namespace yoi {
     lexer::lexer(std::wstringstream ss) : stream(std::move(ss)), line(0), col(0), curCh() {
         getCh();
     }

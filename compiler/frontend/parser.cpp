@@ -7,8 +7,8 @@
 
 #include "parser.hpp"
 
-namespace hoshi {
-    void parse(hoshi::basicLiterals *&o, hoshi::lexer &lex) {
+namespace yoi {
+    void parse(yoi::basicLiterals *&o, yoi::lexer &lex) {
         switch (lex.curToken.kind) {
             case lexer::token::tokenKind::integer:
             case lexer::token::tokenKind::decimal:
@@ -16,7 +16,7 @@ namespace hoshi {
             case lexer::token::tokenKind::string:
             case lexer::token::tokenKind::boolean:
             case lexer::token::tokenKind::kNull:
-                o = new hoshi::basicLiterals{lex.curToken};
+                o = new yoi::basicLiterals{lex.curToken};
                 lex.scan();
                 break;
             default:
@@ -56,7 +56,7 @@ namespace hoshi {
         o = new identifierWithTypeSpec{id, spec};
     }
 
-    void hoshi::parse(defTemplateArgSpec *&o, lexer &lex) {
+    void yoi::parse(defTemplateArgSpec *&o, lexer &lex) {
         identifier *id;
         identifier *impl;
         parse(id, lex);
@@ -106,13 +106,13 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(templateArgSpec *&o, lexer &lex) {
+    void yoi::parse(templateArgSpec *&o, lexer &lex) {
         typeSpec *spec;
         parse(spec, lex);
         o = spec ? new templateArgSpec{spec} : nullptr;
     }
 
-    void hoshi::parse(templateArg *&o, lexer &lex) {
+    void yoi::parse(templateArg *&o, lexer &lex) {
         lex.saveState();
         if (lex.curToken.kind != lexer::token::tokenKind::lessThan) {
             lex.dropState();
@@ -143,7 +143,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(invocationArguments *&o, lexer &lex) {
+    void yoi::parse(invocationArguments *&o, lexer &lex) {
         if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
             o = nullptr;
             return;
@@ -170,7 +170,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(definitionArguments *&o, lexer &lex) {
+    void yoi::parse(definitionArguments *&o, lexer &lex) {
         if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
             o = nullptr;
             return;
@@ -197,7 +197,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(funcTypeSpec *&o, lexer &lex) {
+    void yoi::parse(funcTypeSpec *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kFunc)
             lex.scan();
         else {
@@ -225,7 +225,7 @@ namespace hoshi {
         o = new funcTypeSpec{args, spec};
     }
 
-    void hoshi::parse(typeSpec *&o, lexer &lex) {
+    void yoi::parse(typeSpec *&o, lexer &lex) {
         memberExpr *expr;
         funcTypeSpec *spec;
         if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
@@ -246,7 +246,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(subscript *&o, lexer &lex) {
+    void yoi::parse(subscript *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
             lex.scan();
         } else {
@@ -268,7 +268,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(identifierWithTemplateArg *&o, lexer &lex) {
+    void yoi::parse(identifierWithTemplateArg *&o, lexer &lex) {
         identifierWithTemplateArg *node;
         identifier *id;
         templateArg *arg;
@@ -286,7 +286,7 @@ namespace hoshi {
         o->arg = arg;
     }
 
-    void hoshi::parse(identifierWithDefTemplateArg *&o, lexer &lex) {
+    void yoi::parse(identifierWithDefTemplateArg *&o, lexer &lex) {
         identifierWithDefTemplateArg *node;
         identifier *id;
         defTemplateArg *arg;
@@ -304,7 +304,7 @@ namespace hoshi {
         o->arg = arg;
     }
 
-    void hoshi::parse(subscriptExpr *&o, lexer &lex) {
+    void yoi::parse(subscriptExpr *&o, lexer &lex) {
         subscriptExpr *expr;
         identifierWithTemplateArg *a;
         invocationArguments *b;
@@ -330,7 +330,7 @@ namespace hoshi {
         o = expr;
     }
 
-    void hoshi::parse(memberExpr *&o, lexer &lex) {
+    void yoi::parse(memberExpr *&o, lexer &lex) {
         vec<subscriptExpr *> vecA;
         subscriptExpr *a;
         parse(a, lex);
@@ -350,7 +350,7 @@ namespace hoshi {
         o = new memberExpr{vecA};
     }
 
-    void hoshi::parse(primary *&o, lexer &lex) {
+    void yoi::parse(primary *&o, lexer &lex) {
         memberExpr *a;
         basicLiterals *b;
         rExpr *c;
@@ -382,7 +382,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(uniqueExpr *&o, lexer &lex) {
+    void yoi::parse(uniqueExpr *&o, lexer &lex) {
         lex.saveState();
         lexer::token t{};
         switch (lex.curToken.kind) {
@@ -408,7 +408,7 @@ namespace hoshi {
         lex.dropState();
     }
 
-    void hoshi::parse(mulExpr *&o, lexer &lex) {
+    void yoi::parse(mulExpr *&o, lexer &lex) {
         vec<uniqueExpr *> vecA;
         vec<lexer::token> vecB;
         lexer::token b;
@@ -433,7 +433,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(addExpr *&o, lexer &lex) {
+    void yoi::parse(addExpr *&o, lexer &lex) {
         vec<mulExpr *> vecA;
         vec<lexer::token> vecB;
         mulExpr *a;
@@ -456,7 +456,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(shiftExpr *&o, lexer &lex) {
+    void yoi::parse(shiftExpr *&o, lexer &lex) {
         vec<addExpr *> vecA;
         vec<lexer::token> vecB;
         addExpr *a;
@@ -480,7 +480,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(relationalExpr *&o, lexer &lex) {
+    void yoi::parse(relationalExpr *&o, lexer &lex) {
         vec<shiftExpr *> vecA;
         vec<lexer::token> vecB;
         shiftExpr *a;
@@ -504,7 +504,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(equalityExpr *&o, lexer &lex) {
+    void yoi::parse(equalityExpr *&o, lexer &lex) {
         vec<relationalExpr *> vecA;
         vec<lexer::token> vecB;
         relationalExpr *a;
@@ -527,14 +527,14 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(andExpr *&o, lexer &lex) {
+    void yoi::parse(andExpr *&o, lexer &lex) {
         vec<equalityExpr *> vecA;
         vec<lexer::token> vecB;
         equalityExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::logicAnd) {
+            while (lex.curToken.kind == lexer::token::tokenKind::binaryAnd) {
                 vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
@@ -550,7 +550,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(exclusiveExpr *&o, lexer &lex) {
+    void yoi::parse(exclusiveExpr *&o, lexer &lex) {
         vec<andExpr *> vecA;
         vec<lexer::token> vecB;
         andExpr *a;
@@ -573,7 +573,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(inclusiveExpr *&o, lexer &lex) {
+    void yoi::parse(inclusiveExpr *&o, lexer &lex) {
         vec<exclusiveExpr *> vecA;
         vec<lexer::token> vecB;
         exclusiveExpr *a;
@@ -596,7 +596,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(logicalAndExpr *&o, lexer &lex) {
+    void yoi::parse(logicalAndExpr *&o, lexer &lex) {
         vec<inclusiveExpr *> vecA;
         vec<lexer::token> vecB;
         inclusiveExpr *a;
@@ -619,7 +619,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(logicalOrExpr *&o, lexer &lex) {
+    void yoi::parse(logicalOrExpr *&o, lexer &lex) {
         vec<logicalAndExpr *> vecA;
         vec<lexer::token> vecB;
         logicalAndExpr *a;
@@ -642,7 +642,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(rExpr *&o, lexer &lex) {
+    void yoi::parse(rExpr *&o, lexer &lex) {
         logicalOrExpr *expr;
         parse(expr, lex);
         if (expr) {
@@ -654,7 +654,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(codeBlock *&o, lexer &lex) {
+    void yoi::parse(codeBlock *&o, lexer &lex) {
         vec<inCodeBlockStmt *> stmts;
         inCodeBlockStmt *stmt;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
@@ -678,7 +678,7 @@ namespace hoshi {
         o = new codeBlock{stmts};
     }
 
-    void hoshi::parse(useStmt *&o, lexer &lex) {
+    void yoi::parse(useStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kUse) {
             lex.scan();
         } else {
@@ -701,7 +701,7 @@ namespace hoshi {
         o = new useStmt{id, str};
     }
 
-    void hoshi::parse(funcDefStmt *&o, lexer &lex) {
+    void yoi::parse(funcDefStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kFunc)
             lex.scan();
         else {
@@ -741,7 +741,7 @@ namespace hoshi {
         o = new funcDefStmt{name, args, spec, block};
     }
 
-    void hoshi::parse(interfaceDefInnerPair *&o, lexer &lex) {
+    void yoi::parse(interfaceDefInnerPair *&o, lexer &lex) {
         identifierWithTypeSpec *var;
         innerMethodDecl *method;
         parse(method, lex);
@@ -757,7 +757,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(structDefInnerPair *&o, lexer &lex) {
+    void yoi::parse(structDefInnerPair *&o, lexer &lex) {
         identifierWithTypeSpec *var;
         innerMethodDecl *method;
         constructorDecl *con;
@@ -779,7 +779,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(implInnerPair *&o, lexer &lex) {
+    void yoi::parse(implInnerPair *&o, lexer &lex) {
         innerMethodDef *method;
         constructorDef *con;
         parse(con, lex);
@@ -795,7 +795,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(interfaceDefInner *&o, lexer &lex) {
+    void yoi::parse(interfaceDefInner *&o, lexer &lex) {
         vec<interfaceDefInnerPair *> vecA;
         interfaceDefInnerPair *a;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
@@ -823,7 +823,7 @@ namespace hoshi {
         o = new interfaceDefInner{vecA};
     }
 
-    void hoshi::parse(structDefInner *&o, lexer &lex) {
+    void yoi::parse(structDefInner *&o, lexer &lex) {
         vec<structDefInnerPair *> vecA;
         structDefInnerPair *a;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
@@ -851,7 +851,7 @@ namespace hoshi {
         o = new structDefInner{vecA};
     }
 
-    void hoshi::parse(implInner *&o, lexer &lex) {
+    void yoi::parse(implInner *&o, lexer &lex) {
         vec<implInnerPair *> vecA;
         implInnerPair *a;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
@@ -879,7 +879,7 @@ namespace hoshi {
         o = new implInner{vecA};
     }
 
-    void hoshi::parse(interfaceDefStmt *&o, lexer &lex) {
+    void yoi::parse(interfaceDefStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kInterface)
             lex.scan();
         else {
@@ -901,7 +901,7 @@ namespace hoshi {
         o = new interfaceDefStmt{id, inner};
     }
 
-    void hoshi::parse(structDefStmt *&o, lexer &lex) {
+    void yoi::parse(structDefStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kStruct)
             lex.scan();
         else {
@@ -923,7 +923,7 @@ namespace hoshi {
         o = new structDefStmt{id, inner};
     }
 
-    void hoshi::parse(implStmt *&o, lexer &lex) {
+    void yoi::parse(implStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kImpl)
             lex.scan();
         else {
@@ -954,7 +954,7 @@ namespace hoshi {
         o = new implStmt{first, second, inner};
     }
 
-    void hoshi::parse(letAssignmentPair *&o, lexer &lex) {
+    void yoi::parse(letAssignmentPair *&o, lexer &lex) {
         identifier *lhs;
         rExpr *rhs;
         parse(lhs, lex);
@@ -976,7 +976,7 @@ namespace hoshi {
         o = new letAssignmentPair{lhs, rhs};
     }
 
-    void hoshi::parse(letStmt *&o, lexer &lex) {
+    void yoi::parse(letStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kLet) {
             lex.scan();
         } else {
@@ -997,7 +997,7 @@ namespace hoshi {
         o = new letStmt{vecA};
     }
 
-    void hoshi::parse(globalStmt *&o, lexer &lex) {
+    void yoi::parse(globalStmt *&o, lexer &lex) {
         useStmt *a;
         interfaceDefStmt *b;
         structDefStmt *c;
@@ -1044,7 +1044,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(ifStmt *&o, lexer &lex) {
+    void yoi::parse(ifStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kIf) {
             lex.scan();
         } else {
@@ -1074,7 +1074,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(ifStmt::ifBlock &o, lexer &lex) {
+    void yoi::parse(ifStmt::ifBlock &o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
@@ -1102,7 +1102,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(whileStmt *&o, lexer &lex) {
+    void yoi::parse(whileStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kWhile) {
             lex.scan();
         } else {
@@ -1142,7 +1142,7 @@ namespace hoshi {
         o = new whileStmt{expr, block};
     }
 
-    void hoshi::parse(forStmt *&o, lexer &lex) {
+    void yoi::parse(forStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kFor) {
             lex.scan();
         } else {
@@ -1196,7 +1196,7 @@ namespace hoshi {
         o = new forStmt{initStmt, cond, afterStmt, block};
     }
 
-    void hoshi::parse(forEachStmt *&o, lexer &lex) {
+    void yoi::parse(forEachStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kForEach) {
             lex.scan();
         } else {
@@ -1239,7 +1239,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(returnStmt *&o, lexer &lex) {
+    void yoi::parse(returnStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kReturn) {
             lex.scan();
             o = new returnStmt{};
@@ -1249,7 +1249,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(continueStmt *&o, lexer &lex) {
+    void yoi::parse(continueStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kContinue) {
             lex.scan();
             o = new continueStmt{};
@@ -1259,7 +1259,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(breakStmt *&o, lexer &lex) {
+    void yoi::parse(breakStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kBreak) {
             lex.scan();
             o = new breakStmt{};
@@ -1269,7 +1269,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(inCodeBlockStmt *&o, lexer &lex) {
+    void yoi::parse(inCodeBlockStmt *&o, lexer &lex) {
         o = new inCodeBlockStmt{inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
         parse(o->value.letStmt, lex);
         if (o->value.ptr) {
@@ -1331,7 +1331,7 @@ namespace hoshi {
         o = nullptr;
     }
 
-    void hoshi::parse(innerMethodDecl *&o, lexer &lex) {
+    void yoi::parse(innerMethodDecl *&o, lexer &lex) {
         lex.saveState();
         o = new innerMethodDecl{nullptr, nullptr, nullptr};
         parse(o->name, lex);
@@ -1371,7 +1371,7 @@ namespace hoshi {
         lex.dropState();
     }
 
-    void hoshi::parse(innerMethodDef *&o, lexer &lex) {
+    void yoi::parse(innerMethodDef *&o, lexer &lex) {
         lex.saveState();
         o = new innerMethodDef{nullptr, nullptr, nullptr, nullptr};
         parse(o->name, lex);
@@ -1421,7 +1421,7 @@ namespace hoshi {
         lex.dropState();
     }
 
-    void hoshi::parse(constructorDecl *&o, lexer &lex) {
+    void yoi::parse(constructorDecl *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kConstructor) {
             lex.scan();
         } else {
@@ -1436,7 +1436,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(constructorDef *&o, lexer &lex) {
+    void yoi::parse(constructorDef *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kConstructor) {
             lex.scan();
         } else {
@@ -1456,7 +1456,7 @@ namespace hoshi {
         }
     }
 
-    void hoshi::parse(hoshiModule *&o, lexer &lex) {
+    void yoi::parse(hoshiModule *&o, lexer &lex) {
         vec<globalStmt *> vecA;
         globalStmt *a;
         while (true) {

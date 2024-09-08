@@ -4,7 +4,7 @@
 
 #include "pass.hpp"
 
-namespace hoshi {
+namespace yoi {
     template<typename fromT, typename toT>
     passResult<toT> pass(passResult<fromT> from) {
         return {};

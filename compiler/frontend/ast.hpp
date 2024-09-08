@@ -10,7 +10,7 @@
 #include <share/def.hpp>
 #include "lexer.hpp"
 
-namespace hoshi {
+namespace yoi {
     class hoshiModule;
 
     class innerMethodDef;
@@ -260,7 +260,7 @@ namespace hoshi {
 
         invocationArguments &getArg() const;
 
-        hoshi::subscript &getSubscript() const;
+        yoi::subscript &getSubscript() const;
     };
 
     class memberExpr {

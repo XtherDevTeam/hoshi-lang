@@ -4,7 +4,7 @@
 
 #include "ast.hpp"
 
-namespace hoshi {
+namespace yoi {
     lexer::token &basicLiterals::get() {
         return node;
     }
@@ -737,7 +737,7 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(globalStmt *ptr) {
+    void yoi::finalizeAST(globalStmt *ptr) {
         switch (ptr->kind) {
             case globalStmt::vKind::useStmt:
                 finalizeAST(ptr->value.useStmt);
@@ -758,7 +758,7 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(ifStmt *ptr) {
+    void yoi::finalizeAST(ifStmt *ptr) {
         finalizeAST(ptr->ifB.cond);
         finalizeAST(ptr->ifB.block);
         for (auto &i: ptr->elifB) {
@@ -770,13 +770,13 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(whileStmt *ptr) {
+    void yoi::finalizeAST(whileStmt *ptr) {
         finalizeAST(ptr->cond);
         finalizeAST(ptr->block);
         delete ptr;
     }
 
-    void hoshi::finalizeAST(forStmt *ptr) {
+    void yoi::finalizeAST(forStmt *ptr) {
         finalizeAST(ptr->initStmt);
         finalizeAST(ptr->cond);
         finalizeAST(ptr->afterStmt);
@@ -784,27 +784,27 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(forEachStmt *ptr) {
+    void yoi::finalizeAST(forEachStmt *ptr) {
         finalizeAST(ptr->var);
         finalizeAST(ptr->container);
         finalizeAST(ptr->block);
         delete ptr;
     }
 
-    void hoshi::finalizeAST(returnStmt *ptr) {
+    void yoi::finalizeAST(returnStmt *ptr) {
         finalizeAST(ptr->value);
         delete ptr;
     }
 
-    void hoshi::finalizeAST(continueStmt *ptr) {
+    void yoi::finalizeAST(continueStmt *ptr) {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(breakStmt *ptr) {
+    void yoi::finalizeAST(breakStmt *ptr) {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(inCodeBlockStmt *ptr) {
+    void yoi::finalizeAST(inCodeBlockStmt *ptr) {
         switch (ptr->kind) {
             case inCodeBlockStmt::vKind::ifStmt:
                 finalizeAST(ptr->value.ifStmt);
@@ -837,14 +837,14 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(innerMethodDecl *ptr) {
+    void yoi::finalizeAST(innerMethodDecl *ptr) {
         finalizeAST(ptr->resultType);
         finalizeAST(ptr->name);
         finalizeAST(ptr->args);
         delete ptr;
     }
 
-    void hoshi::finalizeAST(innerMethodDef *ptr) {
+    void yoi::finalizeAST(innerMethodDef *ptr) {
         finalizeAST(ptr->args);
         finalizeAST(ptr->name);
         finalizeAST(ptr->resultType);
@@ -852,12 +852,12 @@ namespace hoshi {
         delete ptr;
     }
 
-    void hoshi::finalizeAST(constructorDecl *ptr) {
+    void yoi::finalizeAST(constructorDecl *ptr) {
         finalizeAST(ptr->args);
         delete ptr;
     }
 
-    void hoshi::finalizeAST(constructorDef *ptr) {
+    void yoi::finalizeAST(constructorDef *ptr) {
         finalizeAST(ptr->args);
         finalizeAST(ptr->block);
         delete ptr;

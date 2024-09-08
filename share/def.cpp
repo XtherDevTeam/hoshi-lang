@@ -4,7 +4,7 @@
 
 #include <share/def.hpp>
 
-namespace hoshi {
+namespace yoi {
     void parseString(std::wistream &input, wstr &value) {
         wchar ch = '\0';
         while (input) {

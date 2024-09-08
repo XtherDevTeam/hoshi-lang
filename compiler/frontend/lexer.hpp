@@ -11,7 +11,7 @@
 #include <istream>
 #include <share/def.hpp>
 
-namespace hoshi {
+namespace yoi {
 
     class lexer {
         std::wstringstream stream;

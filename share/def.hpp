@@ -1,18 +1,16 @@
 #ifndef HOSHI_DEF_HPP
 #define HOSHI_DEF_HPP
 
-#include <llvm/IR/IRBuilder.h>
-#include <llvm/IR/Module.h>
-#include <llvm/IR/LLVMContext.h>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <share/utfutils.hpp>
 
-namespace hoshi {
+namespace yoi {
     using wstr = std::wstring;
     using wchar = wstr::value_type;
     using vdeci = double;
+    using indexT = uint64_t;
     template<typename t>
     using vec = std::vector<t>;
 

@@ -10,7 +10,7 @@
 #include "compiler/frontend/ast.hpp"
 #include "compiler/frontend/parser.hpp"
 
-namespace hoshi {
+namespace yoi {
     template<typename resultT>
     class passResult {
     protected:
