@@ -65,8 +65,8 @@ namespace yoi {
     class indexPool {
         vec<T> pool;
     public:
-        int64_t put(const T &t) {
-            int64_t i = 0;
+        yoi::indexT put(const T &t) {
+            yoi::indexT i = 0;
             for (; i < pool.size(); i++)
                 if (pool[i] == t)
                     return i;
@@ -74,7 +74,7 @@ namespace yoi {
             return i;
         }
 
-        T &operator[](int64_t i) {
+        T &operator[](yoi::indexT i) {
             if (i < pool.size())
                 return pool[i];
             else

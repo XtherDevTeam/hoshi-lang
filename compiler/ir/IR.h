@@ -20,6 +20,7 @@ namespace yoi {
             stringLiteral,
             objectReference,
             code_block,
+            tempVar,
         } type;
 
         union operandValue {
@@ -49,6 +50,7 @@ namespace yoi {
     public:
         enum class Opcode {
             unknown = 0,
+            store,
         } opcode;
 
         yoi::vec<IROperand> operands;
@@ -71,24 +73,9 @@ namespace yoi {
         yoi::wstr to_string();
     };
 
-    class IRBuilder {
-        std::vector<IRCodeBlock> codeBlocks;
-        std::stack<yoi::indexT> codeBlockStack;
-    public:
-        IRBuilder() = default;
-
-        yoi::indexT createCodeBlock();
-
-        IRCodeBlock &getCurrentCodeBlock();
-
-        IRCodeBlock &getCodeBlock(yoi::indexT index);
-
-        void popCodeBlock();
-
-        std::vector<IRCodeBlock> finish();
-    };
 
     class IRValueType {
+    public:
         enum class valueType : yoi::indexT {
             integer = 0,
             decimal,
@@ -103,6 +90,26 @@ namespace yoi {
         IRValueType(valueType type);
 
         IRValueType(valueType type, yoi::indexT objectPrototypeIndex);
+    };
+
+    class IRBuilder {
+        std::vector<IRCodeBlock> codeBlocks;
+        std::stack<yoi::indexT> codeBlockStack;
+        std::vector<IRValueType> tempVars;
+    public:
+        IRBuilder() = default;
+
+        yoi::indexT createCodeBlock();
+
+        IRCodeBlock &getCurrentCodeBlock();
+
+        IRCodeBlock &getCodeBlock(yoi::indexT index);
+
+        void popCodeBlock();
+
+        std::tuple<std::vector<IRCodeBlock>, std::vector<IRValueType>> yield();
+
+        yoi::IROperand createTempVar(const IRValueType &type);
     };
 
     class IRFunctionDefinition {
@@ -138,6 +145,7 @@ namespace yoi {
 
     class IRModule {
     public:
+        yoi::indexT identifier;
         yoi::indexTable<yoi::wstr, IRFunctionDefinition> functionTable;
         yoi::indexTable<yoi::wstr, IRStructDefinition> structTable;
         yoi::indexTable<yoi::wstr, IRValueType> globalVariables;

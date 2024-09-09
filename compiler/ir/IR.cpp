@@ -45,8 +45,21 @@ namespace yoi {
         return codeBlocks[index];
     }
 
-    std::vector<IRCodeBlock> IRBuilder::finish() {
-        return std::move(codeBlocks);
+    std::tuple<std::vector<IRCodeBlock>, std::vector<IRValueType>> IRBuilder::yield() {
+        return {std::move(codeBlocks), std::move(tempVars)};
+    }
+
+    yoi::IROperand IRBuilder::createTempVar(const yoi::IRValueType &type) {
+        tempVars.push_back(type);
+        return {IROperand::operandType::tempVar, {yoi::indexT{tempVars.size() - 1}}};
+    }
+
+    IRCodeBlock &IRBuilder::getCurrentCodeBlock() {
+        return codeBlocks.back();
+    }
+
+    void IRBuilder::popCodeBlock() {
+        codeBlocks.pop_back();
     }
 
     void IRCodeBlock::insert(const IR &ir) {
