@@ -21,41 +21,20 @@ namespace yoi {
     yoi::IROperand visitor::visit(yoi::basicLiterals *basicLiterals) {
         switch (basicLiterals->node.kind) {
             case yoi::lexer::token::tokenKind::integer: {
-                auto var = moduleContext->getIRBuilder().createTempVar(IRValueType::valueType::integer);
-                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
-                        {IR::Opcode::store, vec < IROperand > {
-                                {IROperand::operandType::integer, {(int64_t) 1}}, var}});
-                return var;
+                return {IROperand::operandType::integer, {basicLiterals->node.basicVal.vInt}};
             }
             case yoi::lexer::token::tokenKind::decimal: {
-                auto var = moduleContext->getIRBuilder().createTempVar(IRValueType::valueType::decimal);
-                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
-                        {IR::Opcode::store, vec < IROperand > {
-                                {IROperand::operandType::decimal, {(int64_t) 1}}, var}});
-                return var;
+                return {IROperand::operandType::decimal, {basicLiterals->node.basicVal.vDeci}};
             }
             case yoi::lexer::token::tokenKind::string: {
-                auto var = moduleContext->getIRBuilder().createTempVar(IRValueType::valueType::stringLiteral);
                 auto literalIndex = irModule->stringLiteralPool.addStringLiteral(basicLiterals->node.strVal);
-                moduleContext->getIRBuilder().getCurrentCodeBlock().insert({
-                    IR::Opcode::store, vec < IROperand > {
-                            {IROperand::operandType::stringLiteral, literalIndex}, var}
-                });
-                return var;
+                return {IROperand::operandType::stringLiteral, literalIndex};
             }
             case yoi::lexer::token::tokenKind::boolean: {
-                auto var = moduleContext->getIRBuilder().createTempVar(IRValueType::valueType::boolean);
-                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
-                        {IR::Opcode::store, vec < IROperand > {
-                                {IROperand::operandType::boolean, {(int64_t) 1}}, var}});
-                return var;
+                return {IROperand::operandType::boolean, {basicLiterals->node.basicVal.vBool}};
             }
             case yoi::lexer::token::tokenKind::character: {
-                auto var = moduleContext->getIRBuilder().createTempVar(IRValueType::valueType::character);
-                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
-                        {IR::Opcode::store, vec < IROperand > {
-                                {IROperand::operandType::character, {(int64_t) 1}}, var}});
-                return var;
+                return {IROperand::operandType::character, {basicLiterals->node.strVal.front()}};
             }
             default: {
                 panic(basicLiterals->node.line, basicLiterals->node.col, "Unexpected basic literal type");
@@ -81,8 +60,80 @@ namespace yoi {
         }
     }
 
-    void visitor::visit(yoi::uniqueExpr *uniqueExpr) {
+    IROperand visitor::visit(yoi::uniqueExpr *uniqueExpr) {
+        auto var = visit(&uniqueExpr->getLhs());
+        switch (uniqueExpr->getOp().kind) {
+            case lexer::token::tokenKind::incrementSign: {
+                if (var.type == IROperand::operandType::objectReference) {} // TODO: dereference
+                assert(var.type == IROperand::operandType::localVar, uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected operand type for increment/decrement");
+                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                        {IR::Opcode::increment, {var}}
+                        );
+                break;
+            }
+            case lexer::token::tokenKind::decrementSign: {
+                if (var.type == IROperand::operandType::objectReference) {} // TODO: dereference
+                assert(var.type == IROperand::operandType::localVar, uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected operand type for increment/decrement");
+                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                        {IR::Opcode::decrement, {var}}
+                        );
+                break;
+            }
+            case lexer::token::tokenKind::binaryNot: {
+                if (var.type == IROperand::operandType::objectReference) {} // TODO: dereference
+                assert(var.type == IROperand::operandType::localVar, uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected operand type for unary operator");
+                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                        {IR::Opcode::bitwiseNot, {var}}
+                        );
+                break;
+            }
+            case lexer::token::tokenKind::minus: {
+                if (var.type == IROperand::operandType::objectReference) {} // TODO: dereference
+                assert(var.type == IROperand::operandType::localVar, uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected operand type for unary operator");
+                moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                        {IR::Opcode::negate, {var}}
+                        );
+                break;
+            }
+            default: {
+                panic(uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected unique expression type");
+                return {};
+            }
+        }
+        return var;
+    }
 
+    yoi::IROperand visitor::visit(yoi::mulExpr *mulExpr) {
+        auto term = mulExpr->getTerms().begin();
+        auto op = mulExpr->getOp().begin();
+        auto lhs = visit(*term);
+        for (term++; term != mulExpr->getTerms().end(); op++) {
+            if (term == mulExpr->getTerms().end()) {
+                break;
+            }
+            auto rhs = visit(*term);
+            switch (op->kind) {
+                case lexer::token::tokenKind::asterisk: {
+                    moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                            {IR::Opcode::mul, {lhs, rhs}}
+                    );
+                }
+                case lexer::token::tokenKind::slash: {
+                    moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                            {IR::Opcode::div, {lhs, rhs}}
+                    );
+                }
+                case lexer::token::tokenKind::percentSign: {
+                    moduleContext->getIRBuilder().getCurrentCodeBlock().insert(
+                            {IR::Opcode::mod, {lhs, rhs}}
+                    );
+                }
+                default: {
+                    panic(op->line, op->col, "Unexpected binary operator");
+                    return {};
+                }
+            }
+        }
     }
 
 

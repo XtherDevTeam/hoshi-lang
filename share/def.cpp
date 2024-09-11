@@ -62,6 +62,12 @@ namespace yoi {
         throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
     }
 
+    void assert(bool condition, int64_t line, int64_t col, const std::string &msg) {
+        if (not condition) {
+            throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
+        }
+    }
+
     std::wstring string2wstring(const std::string &v) {
         std::wstring result;
         utf8Unicode::utf8ToUnicode(v, result);

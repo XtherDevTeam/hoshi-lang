@@ -62,7 +62,7 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::primary *primary);
 
-        void visit(yoi::uniqueExpr *uniqueExpr);
+        IROperand visit(yoi::uniqueExpr *uniqueExpr);
 
         yoi::IROperand visit(yoi::mulExpr *mulExpr);
 

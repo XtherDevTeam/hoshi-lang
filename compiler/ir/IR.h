@@ -6,6 +6,8 @@
 #define HOSHI_LANG_IR_H
 
 #include "share/def.hpp"
+#include <map>
+#include <ranges>
 
 namespace yoi {
 
@@ -21,13 +23,14 @@ namespace yoi {
             objectReference,
             code_block,
             tempVar,
+            localVar,
         } type;
 
         union operandValue {
             int64_t integer;
             double decimal;
             bool boolean;
-            char character;
+            yoi::wchar character;
             yoi::indexT stringLiteralIndex;
             yoi::indexT symbolIndex;
             yoi::indexT codeBlockIndex;
@@ -39,6 +42,10 @@ namespace yoi {
             operandValue(double decimal);
 
             operandValue(yoi::indexT indexV);
+
+            operandValue(bool boolean);
+
+            operandValue(yoi::wchar character);
         } value;
 
         IROperand();
@@ -51,6 +58,13 @@ namespace yoi {
         enum class Opcode {
             unknown = 0,
             store,
+            increment,
+            decrement,
+            negate,
+            bitwiseNot,
+            mul,
+            mod,
+            div
         } opcode;
 
         yoi::vec<IROperand> operands;
@@ -92,6 +106,24 @@ namespace yoi {
         IRValueType(valueType type, yoi::indexT objectPrototypeIndex);
     };
 
+    class IRVariableTable {
+        yoi::vec<IRValueType> variables;
+        yoi::vec<std::map<yoi::wstr, yoi::indexT>> variableNameIndexMap;
+
+    public:
+        IRVariableTable() = default;
+
+        yoi::indexT createScope();
+
+        yoi::indexT lookup(const yoi::wstr &name);
+
+        IRValueType &get(yoi::indexT index);
+
+        IRValueType &operator[](const yoi::wstr &name);
+
+        void popScope();
+    };
+
     class IRBuilder {
         std::vector<IRCodeBlock> codeBlocks;
         std::stack<yoi::indexT> codeBlockStack;
@@ -110,15 +142,24 @@ namespace yoi {
         std::tuple<std::vector<IRCodeBlock>, std::vector<IRValueType>> yield();
 
         yoi::IROperand createTempVar(const IRValueType &type);
+
+        IRValueType getTempVar(yoi::indexT index);
+
+        yoi::IROperand createLocalVar(const IRValueType &type);
+
+        IRValueType getLocalVar(yoi::indexT index);
     };
 
     class IRFunctionDefinition {
     public:
-        std::string name;
+        yoi::wstr name;
         yoi::vec<IRValueType> argumentTypes;
         yoi::vec<IRCodeBlock> codeBlock;
+        IRVariableTable variableTable;
 
-        IRFunctionDefinition(const std::string &name, const yoi::vec <IRCodeBlock> &codeBlock, const yoi::vec <IRValueType> &argumentTypes);
+        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <IRCodeBlock> &codeBlock, const yoi::vec <IRValueType> &argumentTypes);
+
+        IRVariableTable &getVariableTable();
 
         yoi::wstr to_string();
     };
@@ -129,7 +170,7 @@ namespace yoi {
         yoi::vec<IRValueType> fieldTypes;
         yoi::vec<IRFunctionDefinition> methodDefinitions;
 
-        IRStructDefinition(const std::string &name, const yoi::vec<IRValueType> &fieldTypes, const yoi::vec<IRFunctionDefinition> &methodDefinitions);
+        IRStructDefinition(const yoi::wstr &name, const yoi::vec<IRValueType> &fieldTypes, const yoi::vec<IRFunctionDefinition> &methodDefinitions);
 
         yoi::wstr to_string();
     };

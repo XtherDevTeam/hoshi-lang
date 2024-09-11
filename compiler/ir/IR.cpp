@@ -15,7 +15,15 @@ namespace yoi {
 
     }
 
+    IROperand::operandValue::operandValue(bool boolean) : boolean(boolean) {
+
+    }
+
     IROperand::operandValue::operandValue(double decimal) : decimal(decimal) {
+
+    }
+
+    IROperand::operandValue::operandValue(yoi::wchar character) : character(character) {
 
     }
 
@@ -62,6 +70,10 @@ namespace yoi {
         codeBlocks.pop_back();
     }
 
+    IRValueType IRBuilder::getTempVar(yoi::indexT index) {
+        return tempVars[index];
+    }
+
     void IRCodeBlock::insert(const IR &ir) {
         codeBlock.emplace_back(ir);
     }
@@ -71,12 +83,16 @@ namespace yoi {
         return {};
     }
 
-    IRFunctionDefinition::IRFunctionDefinition(const std::string &name, const yoi::vec <IRCodeBlock> &codeBlock,
+    IRFunctionDefinition::IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <IRCodeBlock> &codeBlock,
                                                const yoi::vec <IRValueType> &argumentTypes) : name(name), argumentTypes(argumentTypes), codeBlock(codeBlock) {}
 
     yoi::wstr IRFunctionDefinition::to_string() {
         // TODO
         return {};
+    }
+
+    IRVariableTable &IRFunctionDefinition::getVariableTable() {
+        return variableTable;
     }
 
     IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT objectPrototypeIndex) : type(type), objectPrototypeIndex(objectPrototypeIndex) {
@@ -87,7 +103,7 @@ namespace yoi {
 
     }
 
-    IRStructDefinition::IRStructDefinition(const std::string &name, const vec <IRValueType> &fieldTypes,
+    IRStructDefinition::IRStructDefinition(const yoi::wstr &name, const vec <IRValueType> &fieldTypes,
                                            const vec <IRFunctionDefinition> &methodDefinitions) : name(name), fieldTypes(fieldTypes), methodDefinitions(methodDefinitions) {
 
     }
@@ -103,5 +119,32 @@ namespace yoi {
 
     yoi::wstr &IRStringLiteralPool::getStringLiteral(yoi::indexT index) {
         return pool[index];
+    }
+
+    yoi::indexT IRVariableTable::lookup(const wstr &name) {
+        for (auto &it : std::ranges::reverse_view(variableNameIndexMap)) {
+            if (auto item = it.find(name); item != it.end()) {
+                return item->second;
+            }
+        }
+        panic(0, 0, wstring2string(L"Undefined variable: " + name));
+        return 0; // make compiler happy
+    }
+
+    yoi::indexT IRVariableTable::createScope() {
+        variableNameIndexMap.emplace_back();
+        return (yoi::indexT)variableNameIndexMap.size() - 1;
+    }
+
+    void IRVariableTable::popScope() {
+        variableNameIndexMap.pop_back();
+    }
+
+    IRValueType &IRVariableTable::get(yoi::indexT index) {
+        return variables[index];
+    }
+
+    IRValueType &IRVariableTable::operator[](const wstr &name) {
+        return variables[lookup(name)];
     }
 } // yoi
