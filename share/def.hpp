@@ -1,9 +1,12 @@
 #ifndef HOSHI_DEF_HPP
 #define HOSHI_DEF_HPP
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <sstream>
+#include <stack>
+#include <memory>
 #include <share/utfutils.hpp>
 
 namespace yoi {

@@ -166,7 +166,7 @@ namespace yoi {
 
     class IRStructDefinition {
     public:
-        std::string name;
+        yoi::wstr name;
         yoi::vec<IRValueType> fieldTypes;
         yoi::vec<IRFunctionDefinition> methodDefinitions;
 

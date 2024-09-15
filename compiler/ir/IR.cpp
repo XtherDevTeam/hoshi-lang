@@ -2,6 +2,7 @@
 // Created by XIaokang00010 on 2024/9/6.
 //
 
+#include <ranges>
 #include "IR.h"
 
 namespace yoi {
