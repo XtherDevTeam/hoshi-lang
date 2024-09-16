@@ -19,9 +19,9 @@ namespace yoi {
 
     void parseString(std::wistream &input, wstr &value);
 
-    void panic(int64_t line, int64_t col, const std::string &msg);
+    void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 
-    void assert(bool cond, int64_t line, int64_t col, const std::string &msg);
+    void assert(bool cond, yoi::indexT line, yoi::indexT col, const std::string &msg);
 
     std::wstring string2wstring(const std::string &v);
 
@@ -86,5 +86,10 @@ namespace yoi {
                 throw std::runtime_error("indexPool: invalid index");
         }
     };
+
+    template<typename T>
+    std::shared_ptr<T> managedPtr(const T &v) {
+        return std::make_shared<T>(v);
+    }
 }
 #endif

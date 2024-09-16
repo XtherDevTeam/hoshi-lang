@@ -16,7 +16,7 @@ namespace yoi {
             case lexer::token::tokenKind::string:
             case lexer::token::tokenKind::boolean:
             case lexer::token::tokenKind::kNull:
-                o = new yoi::basicLiterals{lex.curToken};
+                o = new yoi::basicLiterals(lex.curToken, lex.curToken);
                 lex.scan();
                 break;
             default:
@@ -27,7 +27,7 @@ namespace yoi {
 
     void parse(identifier *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::identifier) {
-            o = new identifier{lex.curToken};
+            o = new identifier{lex.curToken, lex.curToken};
             lex.scan();
         } else {
             o = nullptr;
@@ -53,7 +53,7 @@ namespace yoi {
         }
         parse(spec, lex);
         lex.dropState();
-        o = new identifierWithTypeSpec{id, spec};
+        o = new identifierWithTypeSpec{lex.curToken, id, spec};
     }
 
     void parse(defTemplateArgSpec *&o, lexer &lex) {
@@ -71,7 +71,7 @@ namespace yoi {
                 panic(lex.line, lex.col, "expected identifier after `impl` in defTemplateArgSpec");
                 return;
             }
-            o = new defTemplateArgSpec{id, impl};
+            o = new defTemplateArgSpec{lex.curToken, id, impl};
         }
     }
 
@@ -96,7 +96,7 @@ namespace yoi {
         }
         if (lex.curToken.kind == lexer::token::tokenKind::greaterThan) {
             lex.scan();
-            o = new defTemplateArg{specs};
+            o = new defTemplateArg{lex.curToken, specs};
             lex.dropState();
         } else {
             for (auto &i: specs) finalizeAST(i);
@@ -109,7 +109,7 @@ namespace yoi {
     void parse(templateArgSpec *&o, lexer &lex) {
         typeSpec *spec;
         parse(spec, lex);
-        o = spec ? new templateArgSpec{spec} : nullptr;
+        o = spec ? new templateArgSpec{lex.curToken, spec} : nullptr;
     }
 
     void parse(templateArg *&o, lexer &lex) {
@@ -133,7 +133,7 @@ namespace yoi {
         }
         if (lex.curToken.kind == lexer::token::tokenKind::greaterThan) {
             lex.scan();
-            o = new templateArg{specs};
+            o = new templateArg{lex.curToken, specs};
             lex.dropState();
         } else {
             lex.returnState();
@@ -162,7 +162,7 @@ namespace yoi {
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
-            o = new invocationArguments{args};
+            o = new invocationArguments{lex.curToken, args};
         } else {
             for (auto &i: args) finalizeAST(i);
             panic(lex.line, lex.col, "expected `]` to close an arguments node");
@@ -189,7 +189,7 @@ namespace yoi {
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
-            o = new definitionArguments{args};
+            o = new definitionArguments{lex.curToken, args};
         } else {
             for (auto &i: args) finalizeAST(i);
             panic(lex.line, lex.col, "expected `]` to close an arguments node");
@@ -222,7 +222,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected typeSpec after `:`");
             return;
         }
-        o = new funcTypeSpec{args, spec};
+        o = new funcTypeSpec{lex.curToken, args, spec};
     }
 
     void parse(typeSpec *&o, lexer &lex) {
@@ -230,17 +230,17 @@ namespace yoi {
         funcTypeSpec *spec;
         if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
             lex.scan();
-            o = new typeSpec{2, nullptr, nullptr, true};
+            o = new typeSpec{lex.curToken, 2, nullptr, nullptr, true};
             return;
         }
         parse(spec, lex);
         if (spec) {
-            o = new typeSpec{1, nullptr, spec, false};
+            o = new typeSpec{lex.curToken, 1, nullptr, spec, false};
             return;
         }
         parse(expr, lex);
         if (expr) {
-            o = new typeSpec{0, expr, nullptr, false};
+            o = new typeSpec{lex.curToken, 0, expr, nullptr, false};
             return;
         }
         o = nullptr;
@@ -261,7 +261,7 @@ namespace yoi {
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
             lex.scan();
-            o = new subscript{r};
+            o = new subscript{lex.curToken, r};
         } else {
             panic(lex.line, lex.col, "expected `]` to close a subscript");
             return;
@@ -277,7 +277,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        node = new identifierWithTemplateArg{id, nullptr};
+        node = new identifierWithTemplateArg{lex.curToken, id, nullptr};
         parse(arg, lex);
         if (!arg) {
             o = node;
@@ -295,7 +295,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        node = new identifierWithDefTemplateArg{id, nullptr};
+        node = new identifierWithDefTemplateArg{lex.curToken, id, nullptr};
         parse(arg, lex);
         if (!arg) {
             o = node;
@@ -314,7 +314,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        expr = new subscriptExpr{a, nullptr, nullptr};
+        expr = new subscriptExpr{lex.curToken, a, nullptr, nullptr};
         parse(b, lex);
         if (b) {
             expr->arg = b;
@@ -347,7 +347,7 @@ namespace yoi {
             }
             parse(a, lex);
         }
-        o = new memberExpr{vecA};
+        o = new memberExpr{lex.curToken, vecA};
     }
 
     void parse(primary *&o, lexer &lex) {
@@ -356,19 +356,19 @@ namespace yoi {
         rExpr *c;
         parse(a, lex);
         if (a) {
-            o = new primary{0, a, nullptr, nullptr};
+            o = new primary{lex.curToken, 0, a, nullptr, nullptr};
             return;
         }
         parse(b, lex);
         if (b) {
-            o = new primary{1, nullptr, b, nullptr};
+            o = new primary{lex.curToken, 1, nullptr, b, nullptr};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
             parse(c, lex);
             if (c) {
-                o = new primary{2, nullptr, nullptr, c};
+                o = new primary{lex.curToken, 2, nullptr, nullptr, c};
             } else {
                 panic(lex.line, lex.col, "expected rightValueExpr after `(` while parsing primary");
             }
@@ -404,7 +404,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new uniqueExpr{t, expr};
+        o = new uniqueExpr{lex.curToken, t, expr};
         lex.dropState();
     }
 
@@ -427,7 +427,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new mulExpr{vecA, vecB};
+            o = new mulExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -450,7 +450,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new addExpr{vecA, vecB};
+            o = new addExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -474,7 +474,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new shiftExpr{vecA, vecB};
+            o = new shiftExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -498,7 +498,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new relationalExpr{vecA, vecB};
+            o = new relationalExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -521,7 +521,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new equalityExpr{vecA, vecB};
+            o = new equalityExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -544,7 +544,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new andExpr{vecA, vecB};
+            o = new andExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -567,7 +567,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new exclusiveExpr{vecA, vecB};
+            o = new exclusiveExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -590,7 +590,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new inclusiveExpr{vecA, vecB};
+            o = new inclusiveExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -613,7 +613,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new logicalAndExpr{vecA, vecB};
+            o = new logicalAndExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -636,7 +636,7 @@ namespace yoi {
                 }
                 vecA.push_back(a);
             }
-            o = new logicalOrExpr{vecA, vecB};
+            o = new logicalOrExpr{lex.curToken, vecA, vecB};
         } else {
             o = nullptr;
         }
@@ -646,7 +646,7 @@ namespace yoi {
         logicalOrExpr *expr;
         parse(expr, lex);
         if (expr) {
-            o = new rExpr{expr};
+            o = new rExpr{lex.curToken, expr};
             return;
         } else {
             o = nullptr;
@@ -675,7 +675,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected `}` to close codeBlock");
             return;
         }
-        o = new codeBlock{stmts};
+        o = new codeBlock{lex.curToken, stmts};
     }
 
     void parse(useStmt *&o, lexer &lex) {
@@ -698,7 +698,7 @@ namespace yoi {
         }
         str = lex.curToken;
         lex.scan();
-        o = new useStmt{id, str};
+        o = new useStmt{lex.curToken, id, str};
     }
 
     void parse(funcDefStmt *&o, lexer &lex) {
@@ -738,7 +738,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected codeBlock after typeSpec");
             return;
         }
-        o = new funcDefStmt{name, args, spec, block};
+        o = new funcDefStmt{lex.curToken, name, args, spec, block};
     }
 
     void parse(interfaceDefInnerPair *&o, lexer &lex) {
@@ -746,12 +746,12 @@ namespace yoi {
         innerMethodDecl *method;
         parse(method, lex);
         if (method) {
-            o = new interfaceDefInnerPair{nullptr, method};
+            o = new interfaceDefInnerPair{lex.curToken, nullptr, method};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new interfaceDefInnerPair{var, nullptr};
+            o = new interfaceDefInnerPair{lex.curToken, var, nullptr};
             return;
         }
         o = nullptr;
@@ -763,17 +763,17 @@ namespace yoi {
         constructorDecl *con;
         parse(con, lex);
         if (con) {
-            o = new structDefInnerPair{1, nullptr, con, nullptr};
+            o = new structDefInnerPair{lex.curToken, 1, nullptr, con, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new structDefInnerPair{2, nullptr, nullptr, method};
+            o = new structDefInnerPair{lex.curToken, 2, nullptr, nullptr, method};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new structDefInnerPair{0, nullptr, nullptr, method};
+            o = new structDefInnerPair{lex.curToken, 0, nullptr, nullptr, method};
             return;
         }
         o = nullptr;
@@ -784,12 +784,12 @@ namespace yoi {
         constructorDef *con;
         parse(con, lex);
         if (con) {
-            o = new implInnerPair{con, nullptr};
+            o = new implInnerPair{lex.curToken, con, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new implInnerPair{nullptr, method};
+            o = new implInnerPair{lex.curToken, nullptr, method};
             return;
         }
         o = nullptr;
@@ -820,7 +820,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected `}` to close interfaceDefInner");
             return;
         }
-        o = new interfaceDefInner{vecA};
+        o = new interfaceDefInner{lex.curToken, vecA};
     }
 
     void parse(structDefInner *&o, lexer &lex) {
@@ -848,7 +848,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected `}` to close structDefInner");
             return;
         }
-        o = new structDefInner{vecA};
+        o = new structDefInner{lex.curToken, vecA};
     }
 
     void parse(implInner *&o, lexer &lex) {
@@ -876,7 +876,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected `}` to close implInner");
             return;
         }
-        o = new implInner{vecA};
+        o = new implInner{lex.curToken, vecA};
     }
 
     void parse(interfaceDefStmt *&o, lexer &lex) {
@@ -898,7 +898,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected interfaceDefInner after identifier");
             return;
         }
-        o = new interfaceDefStmt{id, inner};
+        o = new interfaceDefStmt{lex.curToken, id, inner};
     }
 
     void parse(structDefStmt *&o, lexer &lex) {
@@ -920,7 +920,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected structDefInner after identifier");
             return;
         }
-        o = new structDefStmt{id, inner};
+        o = new structDefStmt{lex.curToken, id, inner};
     }
 
     void parse(implStmt *&o, lexer &lex) {
@@ -951,7 +951,7 @@ namespace yoi {
             return;
         }
 
-        o = new implStmt{first, second, inner};
+        o = new implStmt{lex.curToken, first, second, inner};
     }
 
     void parse(letAssignmentPair *&o, lexer &lex) {
@@ -973,7 +973,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected right-hand-side in letAssignmentPair");
             return;
         }
-        o = new letAssignmentPair{lhs, rhs};
+        o = new letAssignmentPair{lex.curToken, lhs, rhs};
     }
 
     void parse(letStmt *&o, lexer &lex) {
@@ -994,7 +994,7 @@ namespace yoi {
                 break;
             }
         }
-        o = new letStmt{vecA};
+        o = new letStmt{lex.curToken, vecA};
     }
 
     void parse(globalStmt *&o, lexer &lex) {
@@ -1007,37 +1007,37 @@ namespace yoi {
 
         parse(a, lex);
         if (a) {
-            o = new globalStmt{globalStmt::vKind::useStmt, a};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::useStmt, a};
             return;
         }
 
         parse(b, lex);
         if (b) {
-            o = new globalStmt{globalStmt::vKind::interfaceDefStmt, b};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::interfaceDefStmt, b};
             return;
         }
 
         parse(c, lex);
         if (c) {
-            o = new globalStmt{globalStmt::vKind::structDefStmt, c};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::structDefStmt, c};
             return;
         }
 
         parse(d, lex);
         if (d) {
-            o = new globalStmt{globalStmt::vKind::implStmt, d};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::implStmt, d};
             return;
         }
 
         parse(e, lex);
         if (e) {
-            o = new globalStmt{globalStmt::vKind::letStmt, e};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::letStmt, e};
             return;
         }
 
         parse(f, lex);
         if (f) {
-            o = new globalStmt{globalStmt::vKind::funcDefStmt, f};
+            o = new globalStmt{lex.curToken, globalStmt::vKind::funcDefStmt, f};
             return;
         }
 
@@ -1052,7 +1052,7 @@ namespace yoi {
             return;
         }
 
-        o = new ifStmt{{}, {}, nullptr};
+        o = new ifStmt{lex.curToken, {}, {}, nullptr};
         ifStmt::ifBlock i{};
         codeBlock *block;
 
@@ -1139,7 +1139,7 @@ namespace yoi {
             return;
         }
 
-        o = new whileStmt{expr, block};
+        o = new whileStmt{lex.curToken, expr, block};
     }
 
     void parse(forStmt *&o, lexer &lex) {
@@ -1193,7 +1193,7 @@ namespace yoi {
         if (!block) {
             panic(lex.line, lex.col, "expected codeBlock after `)`");
         }
-        o = new forStmt{initStmt, cond, afterStmt, block};
+        o = new forStmt{lex.curToken, initStmt, cond, afterStmt, block};
     }
 
     void parse(forEachStmt *&o, lexer &lex) {
@@ -1203,7 +1203,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new forEachStmt{nullptr, nullptr, nullptr};
+        o = new forEachStmt{lex.curToken, nullptr, nullptr, nullptr};
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
@@ -1270,7 +1270,7 @@ namespace yoi {
     }
 
     void parse(inCodeBlockStmt *&o, lexer &lex) {
-        o = new inCodeBlockStmt{inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
+        o = new inCodeBlockStmt{lex.curToken, inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
         parse(o->value.letStmt, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::letStmt;
@@ -1333,7 +1333,7 @@ namespace yoi {
 
     void parse(innerMethodDecl *&o, lexer &lex) {
         lex.saveState();
-        o = new innerMethodDecl{nullptr, nullptr, nullptr};
+        o = new innerMethodDecl{lex.curToken, nullptr, nullptr, nullptr};
         parse(o->name, lex);
         if (!o->name) {
             lex.returnState();
@@ -1373,7 +1373,7 @@ namespace yoi {
 
     void parse(innerMethodDef *&o, lexer &lex) {
         lex.saveState();
-        o = new innerMethodDef{nullptr, nullptr, nullptr, nullptr};
+        o = new innerMethodDef{lex.curToken, nullptr, nullptr, nullptr, nullptr};
         parse(o->name, lex);
         if (!o->name) {
             lex.returnState();
@@ -1428,7 +1428,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new constructorDecl{nullptr};
+        o = new constructorDecl{lex.curToken, nullptr};
         parse(o->args, lex);
         if (!o->args) {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
@@ -1443,7 +1443,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new constructorDef{nullptr, nullptr};
+        o = new constructorDef{lex.curToken, nullptr, nullptr};
         parse(o->args, lex);
         if (!o->args) {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
@@ -1469,7 +1469,7 @@ namespace yoi {
             }
             vecA.push_back(a);
         }
-        o = new hoshiModule{vecA};
+        o = new hoshiModule{lex.curToken, vecA};
     }
 }
 

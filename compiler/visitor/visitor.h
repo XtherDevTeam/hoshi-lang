@@ -52,7 +52,7 @@ namespace yoi {
 
         void visit(yoi::typeSpec *typeSpec);
 
-        void visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
+        IROperand visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
         void visit(yoi::identifierWithDefTemplateArg *identifierWithDefTemplateArg);
 
@@ -62,7 +62,7 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::primary *primary);
 
-        IROperand visit(yoi::uniqueExpr *uniqueExpr);
+        yoi::IROperand visit(yoi::uniqueExpr *uniqueExpr);
 
         yoi::IROperand visit(yoi::mulExpr *mulExpr);
 
@@ -86,7 +86,7 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::rExpr *rExpr);
 
-        yoi::IROperand visit(yoi::codeBlock *codeBlock);
+        void visit(yoi::codeBlock *codeBlock);
 
         yoi::IROperand visit(yoi::useStmt *useStmt);
 

@@ -77,6 +77,10 @@ namespace yoi {
         return *arg;
     }
 
+    bool identifierWithTemplateArg::hasTemplateArg() const {
+        return arg;
+    }
+
     identifier &identifierWithDefTemplateArg::getId() const {
         return *id;
     }
@@ -99,6 +103,10 @@ namespace yoi {
 
     subscript &subscriptExpr::getSubscript() const {
         return *subscript;
+    }
+
+    bool subscriptExpr::isSubscript() const {
+        return subscript;
     }
 
     vec<subscriptExpr *> &memberExpr::getTerms() {
@@ -905,5 +913,21 @@ namespace yoi {
 
     vec<globalStmt *> &hoshiModule::getStmts() {
         return stmts;
+    }
+
+    const std::tuple<yoi::indexT, yoi::indexT> &AST::getLocation() {
+        return {token.line, token.col};
+    }
+
+    AST::AST() : token() {}
+
+    AST::AST(lexer::token token) : token(std::move(token)) {}
+
+    yoi::indexT AST::getColumn() {
+        return token.col;
+    }
+
+    yoi::indexT AST::getLine() {
+        return token.line;
     }
 } // hoshi
