@@ -89,6 +89,10 @@ namespace yoi {
         return *arg;
     }
 
+    bool identifierWithDefTemplateArg::hasDefTemplateArg() const {
+        return arg;
+    }
+
     bool subscriptExpr::isInvocation() const {
         return arg;
     }
@@ -107,6 +111,10 @@ namespace yoi {
 
     bool subscriptExpr::isSubscript() const {
         return subscript;
+    }
+
+    bool subscriptExpr::isIdentifier() const {
+        return id;
     }
 
     vec<subscriptExpr *> &memberExpr::getTerms() {

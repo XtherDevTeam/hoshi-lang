@@ -12,10 +12,6 @@ namespace yoi {
 
     }
 
-    yoi::symbolTable &moduleContext::getSymbolTable() {
-        return symbols;
-    }
-
     yoi::hoshiModule &moduleContext::getModuleAST() {
         return *moduleAST;
     }
@@ -30,5 +26,9 @@ namespace yoi {
 
     void moduleContext::popIRBuilder() {
         IRBuilderStack.pop();
+    }
+
+    std::shared_ptr<yoi::compilerContext> moduleContext::getCompilerContext() {
+        return compilerContext;
     }
 } // hoshi

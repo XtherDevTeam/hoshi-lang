@@ -18,6 +18,32 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRModule> visit();
 
+        /**
+         * @brief check if the subscript expression is a module name
+         * @param it The subscript expression being checked
+         * @param currentModule The current module being checked, -1 if not in a module
+         * @return -1 if not a module name, otherwise the index of the module in the module table
+         */
+        yoi::indexT isModuleName(subscriptExpr *it, yoi::indexT currentModule) const;
+
+        /**
+         * @brief search and return extern entry by identifier in target module
+         * @param moduleIndex the index of target module
+         * @param identifier the identifier to search
+         * @return the extern entry
+         * @throw std::runtime_error if identifier not found
+         */
+        yoi::IRExternEntry getExternEntry(yoi::indexT moduleIndex, yoi::identifier *identifier) const;
+
+        /**
+         * Add an extern entry to the module if it does not exist.
+         * @param moduleIndex the index of module begin imported
+         * @param identifier the identifier of the extern entry
+         * @return the index of the extern entry in the module's extern table
+         * @throws std::runtime_error if the identifier is not found in the module
+         */
+        yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier);
+
         void visit(yoi::hoshiModule *module);
 
         yoi::IROperand visit(yoi::subscript *subscript);
@@ -26,37 +52,15 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::identifier *identifier);
 
-        void visit(yoi::innerMethodDef *innerMethodDef);
-
-        void visit(yoi::constructorDef *constructorDef);
-
-        void visit(yoi::innerMethodDecl *innerMethodDecl);
-
-        void visit(yoi::constructorDecl *constructorDecl);
-
-        void visit(yoi::identifierWithTypeSpec *identifierWithTypeSpec);
-
-        void visit(yoi::defTemplateArgSpec *defTemplateArgSpec);
-
-        void visit(yoi::defTemplateArg *defTemplateArg);
-
-        void visit(yoi::templateArgSpec *templateArgSpec);
-
-        void visit(yoi::templateArg *templateArg);
-
-        void visit(yoi::invocationArguments *invocationArguments);
-
-        void visit(yoi::definitionArguments *definitionArguments);
-
-        void visit(yoi::funcTypeSpec *funcTypeSpec);
-
-        void visit(yoi::typeSpec *typeSpec);
+        yoi::IROperand visitExtern(yoi::identifier *identifier, yoi::indexT targetModule);
 
         IROperand visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
-        void visit(yoi::identifierWithDefTemplateArg *identifierWithDefTemplateArg);
+        yoi::IROperand visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule);
 
         yoi::IROperand visit(yoi::subscriptExpr *subscriptExpr);
+
+        yoi::IROperand visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
         yoi::IROperand visit(yoi::memberExpr *memberExpr);
 
@@ -88,29 +92,17 @@ namespace yoi {
 
         void visit(yoi::codeBlock *codeBlock);
 
-        yoi::IROperand visit(yoi::useStmt *useStmt);
+        void visit(yoi::useStmt *useStmt);
 
-        yoi::IROperand visit(yoi::funcDefStmt *funcDefStmt);
+        IRValueType parseTypeSpec(yoi::typeSpec *typeSpec);
 
-        yoi::IROperand visit(yoi::interfaceDefInnerPair *interfaceDefInnerPair);
-
-        yoi::IROperand visit(yoi::interfaceDefInner *interfaceDefInner);
+        void visit(yoi::funcDefStmt *funcDefStmt);
 
         yoi::IROperand visit(yoi::interfaceDefStmt *interfaceDefStmt);
 
-        yoi::IROperand visit(yoi::structDefInnerPair *structDefInnerPair);
-
-        yoi::IROperand visit(yoi::structDefInner *structDefInner);
-
         yoi::IROperand visit(yoi::structDefStmt *structDefStmt);
 
-        yoi::IROperand visit(yoi::implInnerPair *implInnerPair);
-
-        yoi::IROperand visit(yoi::implInner *implInner);
-
         yoi::IROperand visit(yoi::implStmt *implStmt);
-
-        yoi::IROperand visit(yoi::letAssignmentPair *letAssignmentPair);
 
         yoi::IROperand visit(yoi::letStmt *letStmt);
 
@@ -131,8 +123,6 @@ namespace yoi {
         yoi::IROperand visit(yoi::breakStmt *breakStmt);
 
         yoi::IROperand visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
-
-
     };
 
 } // yoi

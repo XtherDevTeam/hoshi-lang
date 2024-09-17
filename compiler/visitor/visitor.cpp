@@ -609,7 +609,17 @@ namespace yoi {
 
     yoi::IROperand visitor::visit(yoi::memberExpr *memberExpr) {
         auto it = memberExpr->getTerms().begin();
-        auto lhs = visit(*it);
+        yoi::indexT targetModule = -1;
+        while (it != memberExpr->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+            it++;
+        }
+        IROperand lhs;
+        if (targetModule == -1) {
+            lhs = visit(*it);
+        } else {
+            lhs = visitExtern(*it, targetModule);
+        }
+
         for (; it != memberExpr->getTerms().end();) {
             auto rhsIt = *++it;
             auto termType = moduleContext->getIRBuilder().extractValueType(lhs);
@@ -692,6 +702,108 @@ namespace yoi {
             // TODO: what the heck is this
         } else {
             return visit(identifierWithTemplateArg->id);
+        }
+    }
+
+    void visitor::visit(yoi::useStmt *useStmt) {
+        // TODO: dummy
+    }
+
+    void visitor::visit(yoi::funcDefStmt *funcDefStmt) {
+        auto funcName = funcDefStmt->getId();
+        if (funcName.hasDefTemplateArg()) {
+            // TODO: function template
+        } else {
+            auto funcType = funcDefStmt->getResultType();
+
+        }
+    }
+
+    IRValueType visitor::parseTypeSpec(yoi::typeSpec *typeSpec) {
+        switch (typeSpec->kind) {
+            case 0: {
+                // member
+
+            }
+            case 1: {
+                // func
+            }
+            case 2: {
+                // null
+            }
+        }
+    }
+
+    yoi::indexT visitor::isModuleName(subscriptExpr *it, yoi::indexT currentModule) const {
+        if(it->isIdentifier() && !it->getId().hasTemplateArg()) {
+            std::shared_ptr<yoi::IRModule> target = currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getIRObjectFile()->modules[currentModule];
+            if (auto x = target->moduleImports.find(it->getId().id->node.strVal); x != target->moduleImports.end() ) {
+                return moduleContext->getCompilerContext()->getIRObjectFile()->modules.getIndex(x->second);
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    yoi::IRExternEntry visitor::getExternEntry(yoi::indexT moduleIndex, yoi::identifier *identifier) const {
+        try {
+            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->globalVariables.getIndex(identifier->node.strVal);
+            return {IRExternEntry::externType::globalVar, identifier->node.strVal, moduleIndex, res};
+        } catch (std::runtime_error &) {}
+        try {
+            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->functionTable.getIndex(identifier->node.strVal);
+            return {IRExternEntry::externType::function, identifier->node.strVal, moduleIndex, res};
+        } catch (std::runtime_error &) {}
+        try {
+            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->structTable.getIndex(identifier->node.strVal);
+            return {IRExternEntry::externType::structType, identifier->node.strVal, moduleIndex, res};
+        } catch (std::runtime_error &) {}
+        panic(0, 0, "undefined identifier");
+        return {};
+    }
+
+
+    yoi::indexT visitor::addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier) {
+        // extern entry format: moduleIndex#identifier
+        yoi::wstr key = std::to_wstring(moduleIndex) + L"#" + identifier->node.strVal;
+        try {
+            auto it = irModule->externTable.getIndex(key);
+            return it;
+        }  catch (std::runtime_error &) {
+            // not found, add a new entry
+            return irModule->externTable.put(key, managedPtr(getExternEntry(moduleIndex, identifier)));
+        }
+    }
+
+    yoi::IROperand visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
+        try {
+            auto entry = addExternEntryIfNotExists(targetModule, identifier);
+            moduleContext->getIRBuilder().insert({IR::Opcode::load_extern,{{IROperand::operandType::index, entry}}});
+        } catch (std::runtime_error &) {
+            // not found, panic
+            panic(identifier->getLine(), identifier->getColumn(), "undefined identifier: " + wstring2string(identifier->node.strVal));
+            return {};
+        }
+    }
+
+    yoi::IROperand
+    visitor::visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule) {
+        if (identifierWithTemplateArg->hasTemplateArg()) {
+            // TODO: what the heck is this
+        } else {
+            return visitExtern(identifierWithTemplateArg->id, targetModule);
+        }
+    }
+
+    yoi::IROperand visitor::visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule) {
+        if (subscriptExpr->isSubscript()) {
+            // TODO: subscript
+        } else if (subscriptExpr->isInvocation()) {
+            // TODO: method call
+        } else {
+            return visitExtern(subscriptExpr->id, targetModule);
         }
     }
 } // yoi

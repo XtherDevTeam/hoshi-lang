@@ -32,8 +32,8 @@ namespace yoi {
         vec<std::pair<A, B>> indexes;
     public:
 
-        int64_t put(const A &a, const B &b) {
-            for (int64_t i = 0;i < indexes.size();i++)
+        yoi::indexT put(const A &a, const B &b) {
+            for (yoi::indexT i = 0;i < indexes.size();i++)
                 if (indexes[i].first == a) {
                     indexes[i].second = b;
                     return i;
@@ -50,15 +50,15 @@ namespace yoi {
             throw std::runtime_error("indexTable: invalid index");
         }
 
-        B &operator[](int64_t k) {
+        B &operator[](yoi::indexT k) {
             if (k < indexes.size())
                 return indexes[k].second;
             else
                 throw std::runtime_error("indexTable: invalid index");
         }
 
-        int64_t getIndex(const A& k) {
-            for (int64_t i = 0;i < indexes.size();i++)
+        yoi::indexT getIndex(const A& k) {
+            for (yoi::indexT i = 0;i < indexes.size();i++)
                 if (indexes[i].first == k) {
                     return i;
                 }

@@ -261,6 +261,8 @@ namespace yoi {
         identifier &getId() const;
 
         defTemplateArg &getArg() const;
+
+        bool hasDefTemplateArg() const;
     };
 
     class subscriptExpr : public AST {
@@ -272,6 +274,8 @@ namespace yoi {
         bool isInvocation() const;
 
         bool isSubscript() const;
+
+        bool isIdentifier() const;
 
         identifierWithTemplateArg &getId() const;
 
