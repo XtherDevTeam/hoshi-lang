@@ -20,12 +20,8 @@ namespace yoi {
         std::map<yoi::wstr, std::shared_ptr<moduleContext>> referencedModules;
         std::shared_ptr<yoi::compilerContext> compilerContext;
         std::stack<yoi::IRBuilder> IRBuilderStack;
-
-        yoi::symbolTable symbols;
     public:
         moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path, const std::shared_ptr<yoi::hoshiModule> &AST);
-
-        yoi::symbolTable &getSymbolTable();
 
         yoi::hoshiModule &getModuleAST();
 
@@ -34,6 +30,8 @@ namespace yoi {
         void pushIRBuilder(const yoi::IRBuilder &builder);
 
         void popIRBuilder();
+
+        std::shared_ptr<yoi::compilerContext> getCompilerContext();
     };
 
 } // hoshi

@@ -8,4 +8,8 @@ namespace yoi {
     void compilerContext::compileModule(const yoi::wstr &filepath) {
 
     }
+
+    const std::shared_ptr<IRObjectFile> &compilerContext::getIRObjectFile() const {
+        return irObjectFile;
+    }
 } // yoi

@@ -263,4 +263,14 @@ namespace yoi {
         variableNameIndexMap.back()[name] = variables.size() - 1;
         return variables.size() - 1;
     }
+
+    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRValueType> &externVar) : type(externType::globalVar), name(name), externVar(externVar) {}
+
+    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRFunctionDefinition> &externFunc) : type(externType::function), name(name), externFunc(externFunc) {}
+
+    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRStructDefinition> &externStruct) : type(externType::structType), name(name), externStruct(externStruct) {}
+
+    IRExternEntry::externType IRExternEntry::getExternType() {
+        return type;
+    }
 } // yoi

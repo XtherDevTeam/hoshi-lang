@@ -103,7 +103,7 @@ namespace yoi {
             deref,
             multiply, basic_cast, add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global
+            load_global, load_extern
         } opcode;
 
         yoi::vec<IROperand> operands;
@@ -199,12 +199,35 @@ namespace yoi {
         yoi::wstr &getStringLiteral(yoi::indexT index);
     };
 
+    class IRExternEntry {
+    public:
+        enum class externType {
+            globalVar,
+            function,
+            structType
+        } type;
+
+        yoi::wstr name;
+        yoi::indexT affiliateModule;
+        yoi::indexT itemIndex;
+
+        IRExternEntry() = default;
+
+        IRExternEntry(externType type, const yoi::wstr &name, yoi::indexT affiliateModule, yoi::indexT itemIndex) : type(type), name(name), affiliateModule(affiliateModule), itemIndex(itemIndex) {
+
+        }
+
+        externType getExternType();
+    };
+
     class IRModule : std::enable_shared_from_this<IRModule> {
     public:
         yoi::indexT identifier;
+        std::map<yoi::wstr, yoi::wstr> moduleImports;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> functionTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
         IRStringLiteralPool stringLiteralPool;
     };
 
@@ -267,6 +290,15 @@ namespace yoi {
         void jumpOp(yoi::indexT target);
 
         void jumpIfOp(IR::Opcode op, const yoi::IROperand &condition, yoi::indexT target);
+    };
+
+    class IRObjectFile {
+    public:
+        /* saves all compiled modules, indexed by their path */
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRModule>> modules;
+        /* one module that has renamed all functions and variables to their final names */
+        std::shared_ptr<IRModule> compiledModule;
+        yoi::indexT entryModule;
     };
 } // yoi
 

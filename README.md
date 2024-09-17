@@ -157,7 +157,8 @@ templateArgSpec ::= typeSpec
 templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
 invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
 definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
-funcTypeSpec ::= "func" definitionArguments ":" typeSpec
+funcTypeSpecArgs ::= "(" [ { typeSpec "," } typeSpec ] ")"
+funcTypeSpec ::= "func" funcTypeSpecArgs ":" typeSpec
 typeSpec ::= accessExpression
            | funcTypeSpec
            | "null"
