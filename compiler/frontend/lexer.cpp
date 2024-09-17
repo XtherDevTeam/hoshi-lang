@@ -86,7 +86,7 @@ namespace yoi {
         } else if (curCh == L'!') {
             return curToken = notStart();
         } else if (curCh == L'\0') {
-            return curToken = {line, col, token::tokenKind::eof, false};
+            return curToken = {line, col, token::tokenKind::eof, token::vBasicValue{false}};
         } else {
             throw std::runtime_error("hoshi::lexer::scan() - undefined token");
         }

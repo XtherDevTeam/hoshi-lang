@@ -130,9 +130,7 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::breakStmt *breakStmt);
 
-        yoi::IROperand visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
-
-
+        void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
     };
 
 } // yoi

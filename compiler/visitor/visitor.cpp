@@ -520,7 +520,7 @@ namespace yoi {
             moduleContext->getIRBuilder().getCodeBlock(exitWithTrueBlock).insert({IR::Opcode::store, {{IROperand::operandType::boolean, true}, resultTmpVar}});
             moduleContext->getIRBuilder().getCodeBlock(exitWithTrueBlock).insert({IR::Opcode::jump, {IROperand{IROperand::operandType::codeBlock, exitBlock}}});
 
-            moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::store, {{IROperand::operandType::boolean, false}, resultTmpVar}});
+            moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::store, {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}, resultTmpVar}});
             moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
 
             auto rhs = visit(*++term);
@@ -547,6 +547,8 @@ namespace yoi {
                 }
             }
         }
+
+        return lhs;
     }
 
     yoi::IROperand visitor::visit(yoi::logicalOrExpr *logicalOrExpr) {
@@ -563,7 +565,7 @@ namespace yoi {
             moduleContext->getIRBuilder().getCodeBlock(exitWithTrueBlock).insert({IR::Opcode::store, {{IROperand::operandType::boolean, true}, resultTmpVar}});
             moduleContext->getIRBuilder().getCodeBlock(exitWithTrueBlock).insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
 
-            moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::store, {{IROperand::operandType::boolean, false}, resultTmpVar}});
+            moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::store, {{IROperand::operandType::boolean, IROperand::operandValue{false}}, resultTmpVar}});
             moduleContext->getIRBuilder().getCodeBlock(exitWithFalseBlock).insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
 
             auto rhs = visit(*++term);
@@ -641,47 +643,41 @@ namespace yoi {
                 }
             }
         }
+        return lhs;
     }
 
-    yoi::IROperand visitor::visit(yoi::inCodeBlockStmt *inCodeBlockStmt) {
+    void visitor::visit(yoi::inCodeBlockStmt *inCodeBlockStmt) {
         switch (inCodeBlockStmt->getKind()) {
             case inCodeBlockStmt::vKind::ifStmt:
                 visit(inCodeBlockStmt->getValue().ifStmt);
-                return {};
             case inCodeBlockStmt::vKind::whileStmt:
                 visit(inCodeBlockStmt->getValue().whileStmt);
-                return {};
             case inCodeBlockStmt::vKind::forStmt:
                 visit(inCodeBlockStmt->getValue().forStmt);
-                return {};
             case inCodeBlockStmt::vKind::forEachStmt:
                 visit(inCodeBlockStmt->getValue().forEachStmt);
-                return {};
             case inCodeBlockStmt::vKind::returnStmt:
                 visit(inCodeBlockStmt->getValue().returnStmt);
-                return {};
             case inCodeBlockStmt::vKind::continueStmt:
                 visit(inCodeBlockStmt->getValue().continueStmt);
-                return {};
             case inCodeBlockStmt::vKind::breakStmt:
                 visit(inCodeBlockStmt->getValue().breakStmt);
-                return {};
             case inCodeBlockStmt::vKind::letStmt:
                 visit(inCodeBlockStmt->getValue().letStmt);
-                return {};
             case inCodeBlockStmt::vKind::codeBlock:
                 visit(inCodeBlockStmt->getValue().codeBlock);
-                return {};
             case inCodeBlockStmt::vKind::rExpr:
-                return visit(inCodeBlockStmt->getValue().rExpr);
+                visit(inCodeBlockStmt->getValue().rExpr);
         }
     }
 
     yoi::IROperand visitor::visit(yoi::subscriptExpr *subscriptExpr) {
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
+            return {};
         } else if (subscriptExpr->isInvocation()) {
             // TODO: method call
+            return {};
         } else {
             return visit(subscriptExpr->id);
         }
@@ -690,6 +686,7 @@ namespace yoi {
     yoi::IROperand visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
             // TODO: what the heck is this
+            return {};
         } else {
             return visit(identifierWithTemplateArg->id);
         }
