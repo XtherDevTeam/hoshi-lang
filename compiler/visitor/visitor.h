@@ -44,9 +44,9 @@ namespace yoi {
          */
         yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier);
 
-        void visit(yoi::hoshiModule *module);
+        bool isVisitingGlobalScope() const;
 
-        yoi::IROperand visit(yoi::subscript *subscript);
+        void visit(yoi::hoshiModule *module);
 
         yoi::IROperand visit(yoi::basicLiterals *basicLiterals);
 
@@ -94,6 +94,18 @@ namespace yoi {
 
         void visit(yoi::useStmt *useStmt);
 
+        IRValueType parseTypeSpec(yoi::identifier *identifier);
+
+        IRValueType parseTypeSpec(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
+
+        IRValueType parseTypeSpec(yoi::subscriptExpr *subscriptExpr);
+
+        IRValueType parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule);
+
+        IRValueType parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule);
+
+        IRValueType parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
+
         IRValueType parseTypeSpec(yoi::typeSpec *typeSpec);
 
         void visit(yoi::funcDefStmt *funcDefStmt);
@@ -106,15 +118,15 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::letStmt *letStmt);
 
-        yoi::IROperand visit(yoi::globalStmt *globalStmt);
+        void visit(yoi::globalStmt *globalStmt);
 
-        yoi::IROperand visit(yoi::ifStmt *ifStmt);
+        void visit(yoi::ifStmt *ifStmt);
 
-        yoi::IROperand visit(yoi::whileStmt *whileStmt);
+        void visit(yoi::whileStmt *whileStmt);
 
-        yoi::IROperand visit(yoi::forStmt *forStmt);
+        void visit(yoi::forStmt *forStmt);
 
-        yoi::IROperand visit(yoi::forEachStmt *forEachStmt);
+        void visit(yoi::forEachStmt *forEachStmt);
 
         yoi::IROperand visit(yoi::returnStmt *returnStmt);
 
@@ -122,7 +134,45 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::breakStmt *breakStmt);
 
-        yoi::IROperand visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
+        void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
+
+        /*
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::identifier *identifier);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::subscriptExpr *subscriptExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::memberExpr *memberExpr);
+
+        std::shared_ptr<yoi::IRValueType> getExprTypeInfo(yoi::basicLiterals * primary);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::primary *primary);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::uniqueExpr *uniqueExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::mulExpr *mulExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::addExpr *addExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::shiftExpr *shiftExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::relationalExpr *relationalExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::equalityExpr *equalityExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::andExpr *andExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::exclusiveExpr *exclusiveExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::inclusiveExpr *inclusiveExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::logicalAndExpr *logicalAndExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::logicalOrExpr *logicalOrExpr);
+
+        std::shared_ptr<IRValueType> getExprTypeInfo(yoi::rExpr *rExpr);
+        */
     };
 
 } // yoi

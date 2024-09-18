@@ -599,7 +599,6 @@ namespace yoi {
             structDefStmt,
             implStmt,
             letStmt,
-            hoshiModule,
         } kind;
 
         union vValue {
@@ -608,12 +607,11 @@ namespace yoi {
             structDefStmt *structDefStmt;
             implStmt *implStmt;
             letStmt *letStmt;
-            hoshiModule *hoshiModule;
             funcDefStmt *funcDefStmt;
             void *ptr;
 
             template<typename T>
-            vValue(T *t) : ptr((void *) t) {}
+            vValue(T *t) : ptr(static_cast<void *>(t)) {}
         } value;
 
         vKind &getKind();
@@ -641,6 +639,8 @@ namespace yoi {
         vec<ifBlock> &getElifBlock();
 
         codeBlock &getElseBlock();
+
+        bool hasElseBlock() const;
     };
 
     class whileStmt : public AST {
@@ -687,6 +687,8 @@ namespace yoi {
         rExpr *value;
 
         rExpr &getValue();
+
+        bool hasValue() const;
     };
 
     class continueStmt : public AST {

@@ -160,8 +160,11 @@ namespace yoi {
         insert(IR(op, {condition, IROperand(IROperand::operandType::codeBlock, target)}));
     }
 
-    void IRBuilder::switchCodeBlock(yoi::indexT index) {
+
+    yoi::indexT IRBuilder::switchCodeBlock(yoi::indexT index) {
+        auto res = currentCodeBlockIndex;
         currentCodeBlockIndex = index;
+        return res;
     }
 
     yoi::indexT IRBuilder::getCurrentCodeBlockIndex() {
@@ -181,12 +184,19 @@ namespace yoi {
         return {};
     }
 
-    IRFunctionDefinition::IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::shared_ptr<IRCodeBlock>> &codeBlock,
-                                               const yoi::vec <std::shared_ptr<IRValueType>> &argumentTypes) : name(name), argumentTypes(argumentTypes), codeBlock(codeBlock) {}
+    yoi::vec<IR> & IRCodeBlock::getIRArray() {
+        return codeBlock;
+    }
 
     yoi::wstr IRFunctionDefinition::to_string() {
         // TODO
         return {};
+    }
+
+    IRFunctionDefinition::IRFunctionDefinition(const yoi::wstr &name,
+        const yoi::vec<std::shared_ptr<IRValueType>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType):
+        name(name), argumentTypes(argumentTypes), returnType(returnType), variableTable(), tempVars(), codeBlock() {
+
     }
 
     IRVariableTable &IRFunctionDefinition::getVariableTable() {
@@ -264,13 +274,12 @@ namespace yoi {
         return variables.size() - 1;
     }
 
-    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRValueType> &externVar) : type(externType::globalVar), name(name), externVar(externVar) {}
+    IRExternEntry::IRExternEntry(externType type, const yoi::wstr &name, yoi::indexT affiliateModule,
+        yoi::indexT itemIndex): type(type), name(name), affiliateModule(affiliateModule), itemIndex(itemIndex) {
 
-    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRFunctionDefinition> &externFunc) : type(externType::function), name(name), externFunc(externFunc) {}
+    }
 
-    IRExternEntry::IRExternEntry(const wstr &name, const std::shared_ptr<IRStructDefinition> &externStruct) : type(externType::structType), name(name), externStruct(externStruct) {}
-
-    IRExternEntry::externType IRExternEntry::getExternType() {
+    IRExternEntry::externType IRExternEntry::getExternType() const {
         return type;
     }
 } // yoi

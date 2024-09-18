@@ -681,6 +681,308 @@ namespace yoi {
         }
     }
 
+    /*
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::identifier *identifier) {
+        auto &id = identifier->node.strVal;
+        try {
+            auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable()[id];
+            return valType;
+        } catch (std::runtime_error &e) {
+
+        }
+        try {
+            auto valType = irModule->globalVariables[id];
+            return valType;
+        } catch (std::runtime_error &e) {
+            panic(identifier->node.line, identifier->node.col, "Undefined identifier");
+        }
+        return {};
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::identifierWithTemplateArg *identifierWithTemplateArg) {
+        if (identifierWithTemplateArg->hasTemplateArg()) {
+            // TODO: what the heck is this
+            return {};
+        } else {
+            return getExprTypeInfo(identifierWithTemplateArg->id);
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::subscriptExpr *subscriptExpr) {
+        if (subscriptExpr->isSubscript()) {
+            // TODO: subscript
+            return {};
+        } else if (subscriptExpr->isInvocation()) {
+            // TODO: method call
+            return {};
+        } else {
+            return getExprTypeInfo(subscriptExpr->id);
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::memberExpr *memberExpr) {
+        auto it = memberExpr->getTerms().begin();
+        yoi::indexT targetModule = -1;
+        while (it != memberExpr->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+            it++;
+        }
+        std::shared_ptr<IRValueType> termType;
+        if (targetModule == -1) {
+            termType = getExprTypeInfo(*it);
+        } else {
+            termType = getExternType(*it, targetModule);
+        }
+
+        for (; it != memberExpr->getTerms().end();) {
+            auto rhsIt = *++it;
+            assert(termType->type == IRValueType::valueType::structType, rhsIt->getLine(), rhsIt->getColumn(), "Not struct type");
+            if (rhsIt->isInvocation()) {
+                // TODO: method call
+            } else if (rhsIt->isSubscript()) {
+                // TODO: subscript
+            } else {
+                auto memberName = rhsIt->id;
+                if(memberName->hasTemplateArg()) {
+                    // TODO: what the heck is this
+                } else {
+                    auto nameInfo = irModule->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                    switch (nameInfo.type) {
+                        case IRStructDefinition::nameInfo::nameType::field: {
+                            termType = managedPtr(IRValueType{IRValueType::valueType::lvalue, irModule->structTable[termType->typeIndex]->fieldTypes[nameInfo.index]});
+                            break;
+                        }
+                        case IRStructDefinition::nameInfo::nameType::method: {
+                            // TODO: method type
+                            panic(rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return termType;
+    }
+
+    std::shared_ptr<yoi::IRValueType> visitor::getExprTypeInfo(yoi::basicLiterals *primary) {
+        switch (primary->node.kind) {
+            case lexer::token::tokenKind::integer: {
+                return managedPtr(IRValueType{IRValueType::valueType::integer});
+            }
+            case lexer::token::tokenKind::boolean: {
+                return managedPtr(IRValueType{IRValueType::valueType::boolean});
+            }
+            case lexer::token::tokenKind::decimal: {
+                return managedPtr(IRValueType{IRValueType::valueType::decimal});
+            }
+            case lexer::token::tokenKind::string: {
+                // TODO: string type
+            }
+            case lexer::token::tokenKind::character: {
+                return managedPtr(IRValueType{IRValueType::valueType::character});
+            }
+            default: {
+                panic(primary->getLine(), primary->getColumn(), "Unsupported literal type");
+            }
+        }
+        return {};
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::primary *primary) {
+        switch (primary->kind) {
+            case 0: {
+                // member expr
+                return getExprTypeInfo(primary->member);
+            }
+            case 1: {
+                // basic literals
+                return getExprTypeInfo(primary->literals);
+            }
+            case 2: {
+                // rExpr
+                return getExprTypeInfo(primary->expr);
+            }
+        }
+        return {};
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::uniqueExpr *uniqueExpr) {
+        switch (uniqueExpr->op.kind) {
+            case lexer::token::tokenKind::incrementSign:
+            case lexer::token::tokenKind::decrementSign: {
+                return getExprTypeInfo(uniqueExpr->lhs);
+            }
+            case lexer::token::tokenKind::binaryNot: {
+                auto l = getExprTypeInfo(uniqueExpr->lhs);
+                if (l->type == IRValueType::valueType::lvalue) {
+                    return l->lvalueType;
+                } else {
+                    return l;
+                }
+            }
+            default: {
+                panic(uniqueExpr->getLine(), uniqueExpr->getColumn(), "Unsupported unique expression operator");
+            }
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::mulExpr *mulExpr) {
+        auto it = mulExpr->getTerms().begin();
+        auto op = mulExpr->getOp().begin();
+        auto lhs = getExprTypeInfo(*it);
+        for (; op != mulExpr->getOp().end(); ++op) {
+            auto rhs = getExprTypeInfo(*++it);
+            if (lhs->type == IRValueType::valueType::lvalue && lhs->lvalueType->type == IRValueType::valueType::structType or
+                rhs->type == IRValueType::valueType::lvalue && rhs->lvalueType->type == IRValueType::valueType::structType) {
+                // TODO: overload
+            }
+            if (lhs->type == IRValueType::valueType::decimal) {
+                // pass
+            } else if (rhs->type == IRValueType::valueType::decimal) {
+                lhs = rhs;
+            }
+        }
+        return lhs;
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::addExpr *addExpr) {
+        auto it = addExpr->getTerms().begin();
+        auto op = addExpr->getOp().begin();
+        auto lhs = getExprTypeInfo(*it);
+        for (; op != addExpr->getOp().end(); ++op) {
+            auto rhs = getExprTypeInfo(*++it);
+            if (lhs->type == IRValueType::valueType::lvalue && lhs->lvalueType->type == IRValueType::valueType::structType or
+                rhs->type == IRValueType::valueType::lvalue && rhs->lvalueType->type == IRValueType::valueType::structType) {
+                // TODO: overload
+            }
+            if (lhs->type == IRValueType::valueType::lvalue)
+                lhs = lhs->lvalueType;
+            if (rhs->type == IRValueType::valueType::lvalue)
+                rhs = rhs->lvalueType;
+
+            if (lhs->type == IRValueType::valueType::decimal) {
+                // pass
+            } else if (rhs->type == IRValueType::valueType::decimal) {
+                lhs = rhs;
+            }
+        }
+        return lhs;
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::shiftExpr *shiftExpr) {
+        auto it = shiftExpr->getTerms().begin();
+        auto op = shiftExpr->getOp().begin();
+        auto lhs = getExprTypeInfo(*it);
+        for (; op != shiftExpr->getOp().end(); ++op) {
+            auto rhs = getExprTypeInfo(*++it);
+            if (lhs->type == IRValueType::valueType::lvalue && lhs->lvalueType->type == IRValueType::valueType::structType or
+                rhs->type == IRValueType::valueType::lvalue && rhs->lvalueType->type == IRValueType::valueType::structType) {
+                // TODO: overload
+            }
+            if (lhs->type == IRValueType::valueType::lvalue)
+                lhs = lhs->lvalueType;
+            if (rhs->type == IRValueType::valueType::lvalue)
+                rhs = rhs->lvalueType;
+            assert(lhs->type == IRValueType::valueType::integer && rhs->type == IRValueType::valueType::integer, shiftExpr->getLine(), shiftExpr->getColumn(), "Invalid shift expression");
+            lhs = rhs;
+        }
+        return lhs;
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::relationalExpr *relationalExpr) {
+        if (relationalExpr->getOp().empty()) {
+            // follow the first term
+            return getExprTypeInfo(relationalExpr->getTerms().front());
+        } else {
+            // TODO: always booleans except for overload, but we don't care for now
+            return managedPtr(IRValueType{IRValueType::valueType::boolean});
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::equalityExpr *equalityExpr) {
+        if (equalityExpr->getOp().empty()) {
+            // follow the first term
+            return getExprTypeInfo(equalityExpr->getTerms().front());
+        } else {
+            // TODO: always booleans except for overload, but we don't care for now
+            return managedPtr(IRValueType{IRValueType::valueType::boolean});
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::andExpr *andExpr) {
+        if (andExpr->getOp().empty()) {
+            // follow the first term
+            return getExprTypeInfo(andExpr->getTerms().front());
+        } else {
+            // TODO: always booleans except for overload, but we don't care for now
+            return managedPtr(IRValueType{IRValueType::valueType::boolean});
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::exclusiveExpr *exclusiveExpr) {
+        auto it = exclusiveExpr->getTerms().begin();
+        auto op = exclusiveExpr->getOp().begin();
+        auto lhs = getExprTypeInfo(*it);
+        for (; op != exclusiveExpr->getOp().end(); ++op) {
+            auto rhs = getExprTypeInfo(*++it);
+            if (lhs->type == IRValueType::valueType::lvalue && lhs->lvalueType->type == IRValueType::valueType::structType or
+                rhs->type == IRValueType::valueType::lvalue && rhs->lvalueType->type == IRValueType::valueType::structType) {
+                // TODO: overload
+                }
+            if (lhs->type == IRValueType::valueType::lvalue)
+                lhs = lhs->lvalueType;
+            if (rhs->type == IRValueType::valueType::lvalue)
+                rhs = rhs->lvalueType;
+            assert(lhs->type == IRValueType::valueType::integer && rhs->type == IRValueType::valueType::integer, shiftExpr->getLine(), shiftExpr->getColumn(), "Invalid shift expression");
+            lhs = rhs;
+        }
+        return lhs;
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::inclusiveExpr *inclusiveExpr) {
+        auto it = inclusiveExpr->getTerms().begin();
+        auto op = inclusiveExpr->getOp().begin();
+        auto lhs = getExprTypeInfo(*it);
+        for (; op != inclusiveExpr->getOp().end(); ++op) {
+            auto rhs = getExprTypeInfo(*++it);
+            if (lhs->type == IRValueType::valueType::lvalue && lhs->lvalueType->type == IRValueType::valueType::structType or
+                rhs->type == IRValueType::valueType::lvalue && rhs->lvalueType->type == IRValueType::valueType::structType) {
+                // TODO: overload
+                }
+            if (lhs->type == IRValueType::valueType::lvalue)
+                lhs = lhs->lvalueType;
+            if (rhs->type == IRValueType::valueType::lvalue)
+                rhs = rhs->lvalueType;
+            assert(lhs->type == IRValueType::valueType::integer && rhs->type == IRValueType::valueType::integer, inclusiveExpr->getLine(), inclusiveExpr->getColumn(), "Invalid shift expression");
+            lhs = rhs;
+        }
+        return lhs;
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::logicalAndExpr *logicalAndExpr) {
+        if (logicalAndExpr->getOp().empty()) {
+            // follow the first term
+            return getExprTypeInfo(logicalAndExpr->getTerms().front());
+        } else {
+            // TODO: always booleans except for overload, but we don't care for now
+            return managedPtr(IRValueType{IRValueType::valueType::boolean});
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::logicalOrExpr *logicalOrExpr) {
+        if (logicalOrExpr->getOp().empty()) {
+            // follow the first term
+            return getExprTypeInfo(logicalOrExpr->getTerms().front());
+        } else {
+            // TODO: always booleans except for overload, but we don't care for now
+            return managedPtr(IRValueType{IRValueType::valueType::boolean});
+        }
+    }
+
+    std::shared_ptr<IRValueType> visitor::getExprTypeInfo(yoi::rExpr *rExpr) {
+        return getExprTypeInfo(rExpr->expr);
+    }
+    */
+
     yoi::IROperand visitor::visit(yoi::subscriptExpr *subscriptExpr) {
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
@@ -706,27 +1008,302 @@ namespace yoi {
         // TODO: dummy
     }
 
+    IRValueType visitor::parseTypeSpec(yoi::identifier *identifier) {
+        auto &typeName = identifier->node.strVal;
+        try {
+            auto typeIndex = irModule->structTable.getIndex(typeName);
+            return IRValueType{IRValueType::valueType::structType, typeIndex};
+        } catch(std::runtime_error &e) {
+                panic(identifier->getLine(), identifier->getColumn(), "Undefined type: " + wstring2string(typeName));
+        }
+    }
+
     void visitor::visit(yoi::funcDefStmt *funcDefStmt) {
         auto funcName = funcDefStmt->getId();
         if (funcName.hasDefTemplateArg()) {
             // TODO: function template
         } else {
-            auto funcType = funcDefStmt->getResultType();
+            auto funcType = parseTypeSpec(&funcDefStmt->getResultType());
+            std::vector<std::shared_ptr<IRValueType>> argTypes;
+            std::shared_ptr<IRFunctionDefinition> func = std::make_shared<IRFunctionDefinition>(funcName.getId().node.strVal, argTypes, managedPtr(funcType));
 
         }
+    }
+
+    yoi::IROperand visitor::visit(yoi::interfaceDefStmt *interfaceDefStmt) {
+
+    }
+
+    yoi::IROperand visitor::visit(yoi::structDefStmt *structDefStmt) {
+        // TODO: implement struct definition
+        panic(structDefStmt->getLine(), structDefStmt->getColumn(), "Struct definition is not implemented yet");
+    }
+
+    yoi::IROperand visitor::visit(yoi::implStmt *implStmt) {
+        // TODO: implement implementation
+        panic(implStmt->getLine(), implStmt->getColumn(), "Implementation definition is not implemented yet");
+    }
+
+    yoi::IROperand visitor::visit(yoi::letStmt *letStmt) {
+        for (auto &i : letStmt->terms) {
+            auto operand = visit(i->rhs);
+            auto type = moduleContext->getIRBuilder().extractValueType(operand);
+            if (isVisitingGlobalScope()) {
+                // global variable
+                irModule->globalVariables.put(i->lhs->node.strVal, type);
+            } else {
+                moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->node.strVal, type);
+            }
+        }
+    }
+
+    void visitor::visit(yoi::globalStmt *globalStmt) {
+        switch (globalStmt->kind) {
+            case globalStmt::vKind::useStmt: {
+                visit(globalStmt->value.useStmt);
+                break;
+            }
+            case globalStmt::vKind::implStmt: {
+                visit(globalStmt->value.implStmt);
+                break;
+            }
+            case globalStmt::vKind::letStmt: {
+                visit(globalStmt->value.letStmt);
+                break;
+            }
+            case globalStmt::vKind::funcDefStmt: {
+                visit(globalStmt->value.funcDefStmt);
+                break;
+            }
+            case globalStmt::vKind::structDefStmt: {
+                visit(globalStmt->value.structDefStmt);
+                break;
+            }
+            case globalStmt::vKind::interfaceDefStmt: {
+                visit(globalStmt->value.interfaceDefStmt);
+                break;
+            }
+            default: {
+                panic(globalStmt->getLine(), globalStmt->getColumn(), "Unsupported global statement type");
+            }
+        }
+    }
+
+    void visitor::visit(yoi::ifStmt *ifStmt) {
+        auto cond = visit(ifStmt->getIfBlock().cond);
+        cond = moduleContext->getIRBuilder().deref(cond);
+        auto condType = moduleContext->getIRBuilder().extractValueType(cond);
+        assert(condType->type == IRValueType::valueType::boolean, ifStmt->getLine(), ifStmt->getColumn(), "The type in if-condition must be boolean");
+
+        auto ifBlock = moduleContext->getIRBuilder().createCodeBlock();
+
+        moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, cond, ifBlock);
+        auto back = moduleContext->getIRBuilder().switchCodeBlock(ifBlock);
+        visit(ifStmt->getIfBlock().block);
+        moduleContext->getIRBuilder().switchCodeBlock(back);
+
+        for (auto &i : ifStmt->elifB) {
+            auto elifCond = visit(i.cond);
+            elifCond = moduleContext->getIRBuilder().deref(elifCond);
+            auto elifCondType = moduleContext->getIRBuilder().extractValueType(elifCond);
+            assert(elifCondType->type == IRValueType::valueType::boolean, i.cond->getLine(), i.cond->getColumn(), "The type in elif-condition must be boolean");
+
+            auto elifBlock = moduleContext->getIRBuilder().createCodeBlock();
+            moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, elifCond, elifBlock);
+            auto back = moduleContext->getIRBuilder().switchCodeBlock(elifBlock);
+            visit(i.block);
+            moduleContext->getIRBuilder().switchCodeBlock(back);
+        }
+
+        if (ifStmt->hasElseBlock()) {
+            auto elseBlock = moduleContext->getIRBuilder().createCodeBlock();
+            moduleContext->getIRBuilder().jumpOp(elseBlock);
+            auto back = moduleContext->getIRBuilder().switchCodeBlock(elseBlock);
+            visit(ifStmt->elseB);
+            moduleContext->getIRBuilder().switchCodeBlock(back);
+        }
+    }
+
+    void visitor::visit(yoi::whileStmt *whileStmt) {
+        auto condBlock = moduleContext->getIRBuilder().createCodeBlock();
+        moduleContext->getIRBuilder().jumpOp(condBlock);
+        auto back = moduleContext->getIRBuilder().switchCodeBlock(condBlock);
+
+        auto cond = visit(whileStmt->cond);
+        cond = moduleContext->getIRBuilder().deref(cond);
+        auto condType = moduleContext->getIRBuilder().extractValueType(cond);
+        assert(condType->type == IRValueType::valueType::boolean, whileStmt->getLine(), whileStmt->getColumn(), "The type in while-condition must be boolean");
+
+        auto whileBlock = moduleContext->getIRBuilder().createCodeBlock();
+        auto outBlock = moduleContext->getIRBuilder().createCodeBlock();
+
+        moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, cond, whileBlock);
+        moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_false, cond, outBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(whileBlock);
+        visit(whileStmt->block);
+
+        // replace dummy_break and dummy_continue with jump to the cond block
+        for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
+            if (i.opcode == IR::Opcode::dummy_break) {
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}};
+            } else if (i.opcode == IR::Opcode::dummy_continue) {
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, condBlock}}};
+            }
+        }
+
+        moduleContext->getIRBuilder().jumpOp(condBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(outBlock);
+    }
+
+    void visitor::visit(yoi::forStmt *forStmt) {
+        moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().createScope();
+        auto initBlock = moduleContext->getIRBuilder().createCodeBlock();
+        auto condBlock = moduleContext->getIRBuilder().createCodeBlock();
+        auto codeBlock = moduleContext->getIRBuilder().createCodeBlock();
+        auto afterBlock = moduleContext->getIRBuilder().createCodeBlock();
+        auto outBlock = moduleContext->getIRBuilder().createCodeBlock();
+
+        moduleContext->getIRBuilder().jumpOp(initBlock);
+
+        moduleContext->getIRBuilder().switchCodeBlock(initBlock);
+        visit(forStmt->initStmt);
+
+        moduleContext->getIRBuilder().jumpOp(condBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(condBlock);
+        auto cond = visit(forStmt->cond);
+        cond = moduleContext->getIRBuilder().deref(cond);
+        auto condType = moduleContext->getIRBuilder().extractValueType(cond);
+        assert(condType->type == IRValueType::valueType::boolean, forStmt->getLine(), forStmt->getColumn(), "The type in for-condition must be boolean");
+
+        moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, cond, codeBlock);
+        moduleContext->getIRBuilder().jumpOp(outBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(codeBlock);
+        visit(forStmt->block);
+
+        // replace dummy_break and dummy_continue with jump to the cond block
+        for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
+            if (i.opcode == IR::Opcode::dummy_break) {
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}};
+            } else if (i.opcode == IR::Opcode::dummy_continue) {
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, codeBlock}}};
+            }
+        }
+
+        moduleContext->getIRBuilder().jumpOp(afterBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(afterBlock);
+        visit(forStmt->afterStmt);
+
+        moduleContext->getIRBuilder().jumpOp(condBlock);
+        moduleContext->getIRBuilder().switchCodeBlock(outBlock);
+
+        moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().popScope();
+    }
+
+    void visitor::visit(yoi::forEachStmt *forEachStmt) {
+        // TODO: implement foreach statement
+        panic(forEachStmt->getLine(), forEachStmt->getColumn(), "forEach statement is not implemented yet");
+    }
+
+    yoi::IROperand visitor::visit(yoi::returnStmt *returnStmt) {
+        if (returnStmt->hasValue()) {
+            auto operand = visit(returnStmt->value);
+            auto type = moduleContext->getIRBuilder().extractValueType(operand);
+            moduleContext->getIRBuilder().insert({IR::Opcode::ret, {operand}});
+        } else {
+            moduleContext->getIRBuilder().insert({IR::Opcode::ret, {}});
+        }
+    }
+
+    yoi::IROperand visitor::visit(yoi::continueStmt *continueStmt) {
+        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_continue, {}});
+    }
+
+    yoi::IROperand visitor::visit(yoi::breakStmt *breakStmt) {
+        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_break, {}});
+    }
+
+    IRValueType visitor::parseTypeSpec(yoi::identifierWithTemplateArg *identifierWithTemplateArg) {
+        if (identifierWithTemplateArg->hasTemplateArg()) {
+            // TODO: what the heck is this
+            return {IRValueType::valueType::null};
+        } else {
+            return parseTypeSpec(identifierWithTemplateArg->id);
+        }
+    }
+
+    IRValueType visitor::parseTypeSpec(yoi::subscriptExpr *subscriptExpr) {
+        if (subscriptExpr->isInvocation()) {
+            // TODO: method call
+            return {IRValueType::valueType::null};
+        } else if (subscriptExpr->isSubscript()) {
+            // TODO: subscript
+            return {IRValueType::valueType::null};
+        } else {
+            return parseTypeSpec(subscriptExpr->id);
+        }
+    }
+
+    IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
+        auto &mod = moduleContext->getCompilerContext()->getIRObjectFile()->modules[targetModule];
+        auto exId = addExternEntryIfNotExists(targetModule, identifier);
+        auto ex = irModule->externTable[exId];
+        assert(ex->type == IRExternEntry::externType::structType, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected struct type");
+        return {IRValueType::valueType::structType, exId};
+    }
+
+    IRValueType visitor::parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
+                                             yoi::indexT targetModule) {
+        if (identifierWithTemplateArg->hasTemplateArg()) {
+            // TODO: what the heck is this
+            return {IRValueType::valueType::null};
+        } else {
+            return parseTypeSpecExtern(identifierWithTemplateArg->id, targetModule);
+        }
+    }
+
+    IRValueType visitor::parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule) {
+        if (subscriptExpr->isInvocation()) {
+            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier with function invocation");
+        } else if (subscriptExpr->isSubscript()) {
+            // TODO: subscript
+            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier with subscript");
+        } else {
+            return parseTypeSpecExtern(subscriptExpr->id, targetModule);
+        }
+        return {IRValueType::valueType::null};
     }
 
     IRValueType visitor::parseTypeSpec(yoi::typeSpec *typeSpec) {
         switch (typeSpec->kind) {
             case 0: {
                 // member
+                auto it = typeSpec->member->getTerms().begin();
+                yoi::indexT targetModule = -1;
+                while (it != typeSpec->member->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+                    it++;
+                }
 
+                IRValueType lhs{IRValueType::valueType::integer};
+                if (targetModule == -1) {
+                    lhs = parseTypeSpec(*it);
+                } else {
+                    lhs = parseTypeSpecExtern(*it, targetModule);
+                }
+                assert(++it != typeSpec->member->getTerms().end(), typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
+                return lhs;
             }
             case 1: {
                 // func
+                // TODO: Implement function type
+                return {IRValueType::valueType::null};
             }
             case 2: {
                 // null
+                return {IRValueType::valueType::null};
+            }
+            default: {
+                panic(typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
+                return {IRValueType::valueType::null};
             }
         }
     }
@@ -772,6 +1349,10 @@ namespace yoi {
             // not found, add a new entry
             return irModule->externTable.put(key, managedPtr(getExternEntry(moduleIndex, identifier)));
         }
+    }
+
+    bool visitor::isVisitingGlobalScope() const {
+        return moduleContext->getIRBuilder().irFuncDefinition()->name == L"glob_initializer";
     }
 
     yoi::IROperand visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule) {

@@ -1242,10 +1242,15 @@ namespace yoi {
     void parse(returnStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kReturn) {
             lex.scan();
-            o = new returnStmt{};
+            rExpr *expr;
+            parse(expr, lex);
+            if (expr) {
+                o = new returnStmt{lex.curToken, expr};
+            } else {
+                o = new returnStmt{lex.curToken, nullptr};
+            }
         } else {
             o = nullptr;
-            return;
         }
     }
 

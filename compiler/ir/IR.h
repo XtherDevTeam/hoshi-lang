@@ -20,6 +20,7 @@ namespace yoi {
             stringLiteral,
             structType,
             lvalue,
+            null,
         } type;
 
         yoi::indexT typeIndex;
@@ -103,7 +104,7 @@ namespace yoi {
             deref,
             multiply, basic_cast, add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, load_extern
+            load_global, load_extern, dummy_break, dummy_continue, ret
         } opcode;
 
         yoi::vec<IROperand> operands;
@@ -116,7 +117,7 @@ namespace yoi {
     };
 
     class IRCodeBlock {
-        std::vector<IR> codeBlock;
+        yoi::vec<IR> codeBlock;
 
     public:
         IRCodeBlock() = default;
@@ -124,6 +125,8 @@ namespace yoi {
         void insert(const IR &ir);
 
         yoi::wstr to_string();
+
+        yoi::vec<IR> &getIRArray();
     };
 
     class IRVariableTable {
@@ -157,11 +160,12 @@ namespace yoi {
     public:
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> argumentTypes;
+        std::shared_ptr<IRValueType> returnType;
         std::vector<std::shared_ptr<IRValueType>> tempVars;
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
 
-        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::shared_ptr<IRCodeBlock>> &codeBlock, const yoi::vec <std::shared_ptr<IRValueType>> &argumentTypes);
+        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::shared_ptr<IRValueType>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType);
 
         IRVariableTable &getVariableTable();
 
@@ -213,11 +217,9 @@ namespace yoi {
 
         IRExternEntry() = default;
 
-        IRExternEntry(externType type, const yoi::wstr &name, yoi::indexT affiliateModule, yoi::indexT itemIndex) : type(type), name(name), affiliateModule(affiliateModule), itemIndex(itemIndex) {
+        IRExternEntry(externType type, const yoi::wstr &name, yoi::indexT affiliateModule, yoi::indexT itemIndex);
 
-        }
-
-        externType getExternType();
+        externType getExternType() const;
     };
 
     class IRModule : std::enable_shared_from_this<IRModule> {
@@ -250,7 +252,12 @@ namespace yoi {
 
         yoi::indexT getCurrentCodeBlockIndex();
 
-        void switchCodeBlock(yoi::indexT index);
+        /**
+         * Switch to the specified code block.
+         * @param index the index of the code block to switch to
+         * @return the index of the previous code block
+         */
+        yoi::indexT switchCodeBlock(yoi::indexT index);
 
         IRCodeBlock &getCodeBlock(yoi::indexT index);
 

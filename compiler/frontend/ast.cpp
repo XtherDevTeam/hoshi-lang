@@ -413,6 +413,10 @@ namespace yoi {
         return *elseB;
     }
 
+    bool ifStmt::hasElseBlock() const {
+        return elseB;
+    }
+
     rExpr &whileStmt::getCond() {
         return *cond;
     }
@@ -451,6 +455,10 @@ namespace yoi {
 
     rExpr &returnStmt::getValue() {
         return *value;
+    }
+
+    bool returnStmt::hasValue() const {
+        return value;
     }
 
     inCodeBlockStmt::vKind &inCodeBlockStmt::getKind() {
