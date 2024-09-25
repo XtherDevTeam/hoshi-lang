@@ -8,30 +8,30 @@
 #include "share/def.hpp"
 #include <map>
 #include <ranges>
+#include <compiler/compilerContext.h>
 
 namespace yoi {
     class IRValueType {
     public:
         enum class valueType : yoi::indexT {
-            integer = 0,
-            decimal,
-            boolean,
-            character,
+            integerRaw = 0,
+            decimalRaw,
+            booleanRaw,
+            characterObject,
             stringLiteral,
-            structType,
-            lvalue,
+            structObject,
             null,
+            integerObject,
+            booleanObject,
+            decimalObject,
+            stringObject,
         } type;
 
         yoi::indexT typeIndex;
 
-        std::shared_ptr<IRValueType> lvalueType;
-
         IRValueType(valueType type);
 
         IRValueType(valueType type, yoi::indexT objectPrototypeIndex);
-
-        IRValueType(valueType type, std::shared_ptr<IRValueType> lvalueType);
 
         bool isBasicType() const;
     };
@@ -45,14 +45,14 @@ namespace yoi {
             boolean,
             character,
             stringLiteral,
-            tempVar,
             codeBlock,
             index,
             /* a local var operand can only be used in a load_local instruction for loading a local variable, not available for other instructions */
             localVar,
             /* same for global var */
             globalVar,
-
+            /* same for extern var */
+            externVar,
         } type;
 
         union operandValue {
@@ -104,7 +104,9 @@ namespace yoi {
             deref,
             multiply, basic_cast, add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, load_extern, dummy_break, dummy_continue, ret
+            load_global, load_extern, dummy_break, dummy_continue, ret,
+            push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
+            store_global, store_local, store_member, store_extern
         } opcode;
 
         yoi::vec<IROperand> operands;
@@ -161,7 +163,6 @@ namespace yoi {
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> argumentTypes;
         std::shared_ptr<IRValueType> returnType;
-        std::vector<std::shared_ptr<IRValueType>> tempVars;
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
 
@@ -234,15 +235,16 @@ namespace yoi {
     };
 
     class IRBuilder {
+        std::shared_ptr<compilerContext> compilerCtx;
         std::shared_ptr<IRModule> currentModule;
         std::shared_ptr<IRFunctionDefinition> currentFunction;
         std::vector<std::shared_ptr<IRCodeBlock>> codeBlocks;
+        std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
-        std::vector<std::shared_ptr<IRValueType>> tempVars;
     public:
         IRBuilder() = delete;
 
-        IRBuilder(std::shared_ptr<IRModule> currentModule, std::shared_ptr<IRFunctionDefinition> currentFunction);
+        IRBuilder(std::shared_ptr<compilerContext> compilerCtx,std::shared_ptr<IRModule> currentModule, std::shared_ptr<IRFunctionDefinition> currentFunction);
 
         yoi::indexT createCodeBlock();
 
@@ -263,40 +265,39 @@ namespace yoi {
 
         void yield();
 
-        yoi::IROperand createTempVar(const std::shared_ptr<IRValueType> &type);
-
-        IRValueType getTempVar(yoi::indexT index);
-
-        void insert(const IR &ir);
+        void insert(const IR &ir, yoi::indexT insertionPoint = 0xffffffff);
 
         yoi::IROperand createLocalVar(const yoi::wstr &varName, const std::shared_ptr<IRValueType> &type);
 
         IRValueType getLocalVar(yoi::indexT index);
 
-        /**
-         * @brief Extract the value type from an operand, returning their IRValueType definition if they are localVar or globalVar,
-         * returning the IRValueType from tempVar, otherwise return the corresponding IRValueType for the operand type.
-         * @param operand The operand to extract the value type from.
-         * @return The value type of the operand.
-         * @author Jerry Chau
-         */
-        std::shared_ptr<IRValueType> extractValueType(const IROperand &operand);
+        const std::shared_ptr<IRValueType> &getLhsFromTempVarStack();
 
-        /**
-         * @brief Dereference an operand, returning the value type of the dereferenced operand. It will only work for tempVar with lvalue type.
-         * @param operand The operand to dereference.
-         * @return The value type of the dereferenced operand.
-         * @author Jerry Chau
-         */
-        yoi::IROperand deref(const yoi::IROperand &operand);
+        const std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
 
-        yoi::IROperand basicCast(const yoi::IROperand &operand, const std::shared_ptr<IRValueType> &type);
+        void IRBuilder::basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint);
 
-        yoi::IROperand arithmeticOp(IR::Opcode op, const yoi::IROperand &left, const yoi::IROperand &right);
+        void uniqueArithmeticOp(IR::Opcode op);
+
+        void arithmeticOp(IR::Opcode op);
 
         void jumpOp(yoi::indexT target);
 
-        void jumpIfOp(IR::Opcode op, const yoi::IROperand &condition, yoi::indexT target);
+        void jumpIfOp(IR::Opcode op, yoi::indexT target);
+
+        void pushOp(IR::Opcode op, const yoi::IROperand &constV);
+
+        void loadOp(IR::Opcode op, const yoi::IROperand &operand);
+
+        void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
+
+        void storeOp(IR::Opcode op, const yoi::IROperand &operand);
+
+        void storeMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
+
+        void retOp();
+
+        yoi::indexT getCurrentInsertionPoint();
     };
 
     class IRObjectFile {

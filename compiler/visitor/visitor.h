@@ -46,49 +46,55 @@ namespace yoi {
 
         bool isVisitingGlobalScope() const;
 
+        /**
+         * Visitor methods
+         * These methods received a pointer to the corresponding AST node and
+         * return an index of the current position in IR array.
+         */
+
         void visit(yoi::hoshiModule *module);
 
-        yoi::IROperand visit(yoi::basicLiterals *basicLiterals);
+        yoi::indexT visit(yoi::basicLiterals *basicLiterals);
 
-        yoi::IROperand visit(yoi::identifier *identifier);
+        yoi::indexT visit(yoi::identifier *identifier);
 
         yoi::IROperand visitExtern(yoi::identifier *identifier, yoi::indexT targetModule);
 
-        IROperand visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
+        yoi::indexT visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
         yoi::IROperand visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule);
 
-        yoi::IROperand visit(yoi::subscriptExpr *subscriptExpr);
+        yoi::indexT visit(yoi::subscriptExpr *subscriptExpr);
 
         yoi::IROperand visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
-        yoi::IROperand visit(yoi::memberExpr *memberExpr);
+        yoi::indexT visit(yoi::memberExpr *memberExpr);
 
-        yoi::IROperand visit(yoi::primary *primary);
+        yoi::indexT visit(yoi::primary *primary);
 
-        yoi::IROperand visit(yoi::uniqueExpr *uniqueExpr);
+        yoi::indexT visit(yoi::uniqueExpr *uniqueExpr);
 
-        yoi::IROperand visit(yoi::mulExpr *mulExpr);
+        yoi::indexT visit(yoi::mulExpr *mulExpr);
 
-        yoi::IROperand visit(yoi::addExpr *addExpr);
+        void visit(yoi::addExpr *addExpr);
 
-        yoi::IROperand visit(yoi::shiftExpr *shiftExpr);
+        yoi::indexT visit(yoi::shiftExpr *shiftExpr);
 
-        yoi::IROperand visit(yoi::relationalExpr *relationalExpr);
+        yoi::indexT visit(yoi::relationalExpr *relationalExpr);
 
-        yoi::IROperand visit(yoi::equalityExpr *equalityExpr);
+        yoi::indexT visit(yoi::equalityExpr *equalityExpr);
 
-        yoi::IROperand visit(yoi::andExpr *andExpr);
+        yoi::indexT visit(yoi::andExpr *andExpr);
 
-        yoi::IROperand visit(yoi::exclusiveExpr *exclusiveExpr);
+        yoi::indexT visit(yoi::exclusiveExpr *exclusiveExpr);
 
-        yoi::IROperand visit(yoi::inclusiveExpr *inclusiveExpr);
+        yoi::indexT visit(yoi::inclusiveExpr *inclusiveExpr);
 
-        yoi::IROperand visit(yoi::logicalAndExpr *logicalAndExpr);
+        yoi::indexT visit(yoi::logicalAndExpr *logicalAndExpr);
 
-        yoi::IROperand visit(yoi::logicalOrExpr *logicalOrExpr);
+        yoi::indexT visit(yoi::logicalOrExpr *logicalOrExpr);
 
-        yoi::IROperand visit(yoi::rExpr *rExpr);
+        yoi::indexT visit(yoi::rExpr *rExpr);
 
         void visit(yoi::codeBlock *codeBlock);
 
@@ -116,23 +122,23 @@ namespace yoi {
 
         yoi::IROperand visit(yoi::implStmt *implStmt);
 
-        yoi::IROperand visit(yoi::letStmt *letStmt);
+        yoi::indexT visit(yoi::letStmt *letStmt);
 
         void visit(yoi::globalStmt *globalStmt);
 
-        void visit(yoi::ifStmt *ifStmt);
+        yoi::indexT visit(yoi::ifStmt *ifStmt);
 
-        void visit(yoi::whileStmt *whileStmt);
+        yoi::indexT visit(yoi::whileStmt *whileStmt);
 
-        void visit(yoi::forStmt *forStmt);
+        yoi::indexT visit(yoi::forStmt *forStmt);
 
         void visit(yoi::forEachStmt *forEachStmt);
 
-        yoi::IROperand visit(yoi::returnStmt *returnStmt);
+        yoi::indexT visit(yoi::returnStmt *returnStmt);
 
-        yoi::IROperand visit(yoi::continueStmt *continueStmt);
+        yoi::indexT visit(yoi::continueStmt *continueStmt);
 
-        yoi::IROperand visit(yoi::breakStmt *breakStmt);
+        yoi::indexT visit(yoi::breakStmt *breakStmt);
 
         void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
 

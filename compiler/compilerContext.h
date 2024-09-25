@@ -6,14 +6,20 @@
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
 #include "share/def.hpp"
-#include "compiler/ir/IR.h"
 #include <map>
 
 namespace yoi {
     class moduleContext;
 
+    class IRObjectFile;
+
+    class IRStructDefinition;
+
+    class IRValueType;
+
     class compilerContext {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
         std::map<yoi::indexT, bool> isModuleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
 
@@ -23,6 +29,24 @@ namespace yoi {
         void compileModule(const yoi::wstr &filepath);
 
         const std::shared_ptr<IRObjectFile>& getIRObjectFile() const;
+
+        static yoi::IRStructDefinition getIntObjectDefinition();
+
+        static yoi::IRStructDefinition getBooleanObjectDefinition();
+
+        static yoi::IRStructDefinition getDecimalObjectDefinition();
+
+        static yoi::IRStructDefinition getStringObjectDefinition();
+
+        void initializeSharedObjects();
+
+        yoi::IRValueType getIntObjectType();
+
+        yoi::IRValueType getBoolObjectType();
+
+        yoi::IRValueType getDeciObjectType();
+
+        yoi::IRValueType getStrObjectType();
     };
 
 } // yoi
