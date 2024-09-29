@@ -394,6 +394,7 @@ namespace yoi {
                 break;
             }
             default: {
+                t.kind == lexer::token::tokenKind::unknown;
                 break;
             }
         }

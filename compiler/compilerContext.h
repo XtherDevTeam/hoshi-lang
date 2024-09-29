@@ -17,13 +17,15 @@ namespace yoi {
 
     class IRValueType;
 
-    class compilerContext {
+    class compilerContext : public std::enable_shared_from_this<compilerContext> {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
         std::map<yoi::indexT, bool> isModuleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
 
     public:
+        compilerContext() = default;
+
         compilerContext(const compilerContext& context) = default;
 
         void compileModule(const yoi::wstr &filepath);

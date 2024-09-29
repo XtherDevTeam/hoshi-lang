@@ -142,7 +142,7 @@ namespace yoi {
     }
 
     uniqueExpr::operator bool() const {
-        return op.kind != lexer::token::tokenKind::eof;
+        return op.kind != lexer::token::tokenKind::unknown;
     }
 
     vec<uniqueExpr *> &mulExpr::getTerms() {

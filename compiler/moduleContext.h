@@ -16,12 +16,12 @@ namespace yoi {
 
     class moduleContext {
         yoi::wstr path;
-        std::shared_ptr<yoi::hoshiModule> moduleAST;
+        yoi::hoshiModule *moduleAST;
         std::map<yoi::wstr, std::shared_ptr<moduleContext>> referencedModules;
         std::shared_ptr<yoi::compilerContext> compilerContext;
         std::stack<yoi::IRBuilder> IRBuilderStack;
     public:
-        moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path, const std::shared_ptr<yoi::hoshiModule> &AST);
+        moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path, yoi::hoshiModule *moduleAST);
 
         yoi::hoshiModule &getModuleAST();
 

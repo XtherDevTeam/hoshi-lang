@@ -2,6 +2,7 @@
 // Created by XIaokang00010 on 2023/2/10.
 //
 
+#include <filesystem>
 #include <share/def.hpp>
 
 namespace yoi {
@@ -78,5 +79,16 @@ namespace yoi {
         std::string result;
         utf8Unicode::unicodeToUtf8(v, result);
         return result;
+    }
+
+    yoi::wstr realpath(const std::wstring &path) {
+        std::wstring result;
+        std::filesystem::path p(wstring2string(path));
+        std::error_code ec;
+        if (auto res = std::filesystem::absolute(p, ec); ec)
+            throw std::runtime_error("Unable to resolve real path: [Errno " + std::to_string(ec.value()) + "]" +
+                                     ec.message());
+        else
+            return string2wstring(res.string());
     }
 }

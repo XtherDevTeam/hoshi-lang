@@ -1,20 +1,20 @@
 #include <iostream>
-#include <pass/pass.hpp>
+#include <compiler/frontend/lexer.hpp>
+#include <share/def.hpp>
+#include <sstream>
+#include <compiler/compilerContext.h>
+#include <compiler/frontend/ast.hpp>
 
 int main(int argc, const char **argv) {
-    auto fp = fopen(argv[1], "r+");
-    if (!fp)
-        throw std::runtime_error("invalid filename");
-    fseek(fp, 0, SEEK_END);
-    auto size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    auto *a = new std::string(size, 0);
-    fread(a->data(), size, 1, fp);
-    auto *b = new yoi::wstr{yoi::string2wstring(*a)};
-    delete a;
-
-    auto &&lex = yoi::pass<yoi::wstr, yoi::lexer>({*b});
-    yoi::hoshiModule *mod = yoi::pass<yoi::lexer, yoi::hoshiModule *>(std::move(lex)).get();
-    delete b;
+    std::shared_ptr<yoi::compilerContext> compilerCtx = std::make_shared<yoi::compilerContext>();
+    compilerCtx->initializeSharedObjects();
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
+        return 1;
+    }
+    std::string in = argv[1];
+    yoi::wstr input = yoi::string2wstring(in);
+    compilerCtx->compileModule(input);
+    std::cout << "Compile successfully!" << std::endl;
     return 0;
 }

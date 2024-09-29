@@ -19,6 +19,7 @@ namespace yoi {
         struct token {
             uint64_t line, col;
             enum class tokenKind {
+                unknown = 0,
                 identifier,
                 character,
                 string,

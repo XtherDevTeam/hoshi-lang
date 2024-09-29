@@ -91,5 +91,7 @@ namespace yoi {
     std::shared_ptr<T> managedPtr(const T &v) {
         return std::make_shared<T>(v);
     }
+
+    yoi::wstr realpath(const std::wstring &path);
 }
 #endif

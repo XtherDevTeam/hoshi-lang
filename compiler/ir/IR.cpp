@@ -97,14 +97,12 @@ namespace yoi {
 
     const std::shared_ptr<IRValueType> & IRBuilder::getLhsFromTempVarStack() {
         assert(tempVarStack.size() > 1, 0, 0, "tempVarStack is empty.");
-        auto it = tempVarStack.rbegin();
-        return *(--it);
+        return tempVarStack[tempVarStack.size() - 2];
     }
 
     const std::shared_ptr<IRValueType> & IRBuilder::getRhsFromTempVarStack() {
         assert(tempVarStack.size() > 0, 0, 0, "tempVarStack is empty.");
-        auto it = tempVarStack.rbegin();
-        return *it;
+        return tempVarStack[tempVarStack.size() - 1];
     }
 
     void IRBuilder::basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint) {
@@ -171,6 +169,7 @@ namespace yoi {
                 break;
             }
         }
+        insert({op, {}});
     }
 
     void IRBuilder::jumpOp(yoi::indexT target) {

@@ -9,13 +9,20 @@ namespace yoi {
         irModule = std::make_shared<yoi::IRModule>();
     }
 
+    visitor::visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
+        const std::shared_ptr<yoi::IRModule> &irModule) : moduleContext(moduleContext), irModule(irModule) {
+
+    }
+
     std::shared_ptr<yoi::IRModule> visitor::visit() {
         visit(&moduleContext->getModuleAST());
         return irModule;
     }
 
     void visitor::visit(yoi::hoshiModule *module) {
-        // TODO
+        for (auto &stmt : module->stmts) {
+            visit(stmt);
+        }
     }
 
     yoi::indexT visitor::visit(yoi::basicLiterals *basicLiterals) {
@@ -55,17 +62,19 @@ namespace yoi {
         try {
             auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable()[id];
             moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, valType});
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
-            panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
+            // let it go, try to find it in global variables
         }
         try {
             auto valType = irModule->globalVariables[id];
             moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, valType});
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
         }
         // TODO: add support for extern variables
-        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+
     }
 
     yoi::indexT visitor::visit(yoi::primary *primary) {
@@ -89,7 +98,7 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::uniqueExpr *uniqueExpr) {
         visit(uniqueExpr->lhs);
-        auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+        auto &lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         switch (uniqueExpr->getOp().kind) {
             case lexer::token::tokenKind::incrementSign: {
                 // TODO: add support for overloading
@@ -107,6 +116,10 @@ namespace yoi {
                 // TODO: add support for overloading
                 assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Not basic type for bitwise not");
                 moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::bitwiseNot);
+                break;
+            }
+            case lexer::token::tokenKind::unknown: {
+                // no op now
                 break;
             }
             default: {
@@ -548,7 +561,11 @@ namespace yoi {
         }
 
         for (; it != memberExpr->getTerms().end();) {
-            auto rhsIt = *++it;
+            ++it;
+            if (it == memberExpr->getTerms().end()) {
+                break;
+            }
+            auto rhsIt = *it;
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
             if (rhsIt->isInvocation()) {
@@ -581,24 +598,34 @@ namespace yoi {
         switch (inCodeBlockStmt->getKind()) {
             case inCodeBlockStmt::vKind::ifStmt:
                 visit(inCodeBlockStmt->getValue().ifStmt);
+                break;
             case inCodeBlockStmt::vKind::whileStmt:
                 visit(inCodeBlockStmt->getValue().whileStmt);
+                break;
             case inCodeBlockStmt::vKind::forStmt:
                 visit(inCodeBlockStmt->getValue().forStmt);
+                break;
             case inCodeBlockStmt::vKind::forEachStmt:
                 visit(inCodeBlockStmt->getValue().forEachStmt);
+                break;
             case inCodeBlockStmt::vKind::returnStmt:
                 visit(inCodeBlockStmt->getValue().returnStmt);
+                break;
             case inCodeBlockStmt::vKind::continueStmt:
                 visit(inCodeBlockStmt->getValue().continueStmt);
+                break;
             case inCodeBlockStmt::vKind::breakStmt:
                 visit(inCodeBlockStmt->getValue().breakStmt);
+                break;
             case inCodeBlockStmt::vKind::letStmt:
                 visit(inCodeBlockStmt->getValue().letStmt);
+                break;
             case inCodeBlockStmt::vKind::codeBlock:
                 visit(inCodeBlockStmt->getValue().codeBlock);
+                break;
             case inCodeBlockStmt::vKind::rExpr:
                 visit(inCodeBlockStmt->getValue().rExpr);
+                break;
         }
     }
 
@@ -935,7 +962,18 @@ namespace yoi {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{IRValueType::valueType::structObject, typeIndex};
         } catch(std::runtime_error &e) {
-                panic(identifier->getLine(), identifier->getColumn(), "Undefined type: " + wstring2string(typeName));
+            // let it go
+        }
+        if (typeName == L"int") {
+            return moduleContext->getCompilerContext()->getIntObjectType();
+        } else if (typeName == L"bool") {
+            return moduleContext->getCompilerContext()->getBoolObjectType();
+        } else if (typeName == L"deci") {
+            return moduleContext->getCompilerContext()->getDeciObjectType();
+        } else if (typeName == L"string") {
+            return moduleContext->getCompilerContext()->getStrObjectType();
+        } else {
+            panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }
     }
 
@@ -948,6 +986,12 @@ namespace yoi {
             std::vector<std::shared_ptr<IRValueType>> argTypes;
             std::shared_ptr<IRFunctionDefinition> func = std::make_shared<IRFunctionDefinition>(funcName.getId().node.strVal, argTypes, managedPtr(funcType));
 
+            auto funcIndex = irModule->functionTable.put(funcName.getId().node.strVal, func);
+
+            moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+            visit(funcDefStmt->block);
+            moduleContext->getIRBuilder().yield();
+            moduleContext->popIRBuilder();
         }
     }
 
@@ -1217,7 +1261,7 @@ namespace yoi {
                 } else {
                     lhs = parseTypeSpecExtern(*it, targetModule);
                 }
-                assert(++it != typeSpec->member->getTerms().end(), typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
+                assert(it != typeSpec->member->getTerms().end(), typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
                 return lhs;
             }
             case 1: {

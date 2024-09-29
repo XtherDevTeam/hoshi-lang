@@ -7,9 +7,9 @@
 #include <utility>
 
 namespace yoi {
-    moduleContext::moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path,
-                                 const std::shared_ptr<yoi::hoshiModule> &AST) : compilerContext(std::move(compilerContext)), path(std::move(path)), moduleAST(AST) {
 
+    moduleContext::moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path,
+        yoi::hoshiModule *moduleAST) : compilerContext(std::move(compilerContext)), path(std::move(path)), moduleAST(moduleAST) {
     }
 
     yoi::hoshiModule &moduleContext::getModuleAST() {

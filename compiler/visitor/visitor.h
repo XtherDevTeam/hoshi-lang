@@ -16,6 +16,8 @@ namespace yoi {
 
         visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext);
 
+        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext, const std::shared_ptr<yoi::IRModule> &irModule);
+
         std::shared_ptr<yoi::IRModule> visit();
 
         /**
