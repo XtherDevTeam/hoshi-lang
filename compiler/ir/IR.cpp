@@ -236,12 +236,12 @@ namespace yoi {
         insert({op, {constV}});
     }
 
-    void IRBuilder::loadOp(IR::Opcode op, const yoi::IROperand &operand) {
-        switch (operand.type) {
+    void IRBuilder::loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType>& expectedType) {
+        switch (source.type) {
             case IROperand::operandType::localVar:
             case IROperand::operandType::globalVar:
             case IROperand::operandType::externVar: {
-                tempVarStack.emplace_back(operand.lvalueType);
+                tempVarStack.emplace_back(expectedType);
                 break;
             }
             default: {
@@ -249,7 +249,7 @@ namespace yoi {
                 break;
             }
         }
-        insert({op, {operand}});
+        insert({op, {source}});
     }
 
     void IRBuilder::loadMemberOp(const yoi::IROperand &memberIndex,
@@ -273,6 +273,17 @@ namespace yoi {
             }
         }
         insert({op, {operand}});
+    }
+
+    void IRBuilder::invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount,
+                             const std::shared_ptr<IRValueType> &returnType) {
+        for (yoi::indexT i = 0; i < funcArgsCount; i++) {
+            tempVarStack.pop_back();
+        }
+        tempVarStack.push_back(returnType);
+        insert(IR(IR::Opcode::invoke, {
+                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, funcArgsCount}
+                  }));
     }
 
     void IRBuilder::retOp() {
@@ -392,7 +403,7 @@ namespace yoi {
 
     }
 
-    yoi::wstr IRStructDefinition::to_string() {
+    yoi::wstr IRStructDefinition::to_string(yoi::indexT indent) {
         // TODO
         return {};
     }

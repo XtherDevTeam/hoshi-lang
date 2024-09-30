@@ -268,7 +268,7 @@ namespace yoi {
     class subscriptExpr : public AST {
     public:
         identifierWithTemplateArg *id;
-        invocationArguments *arg;
+        invocationArguments *args;
         subscript *subscript;
 
         bool isInvocation() const;

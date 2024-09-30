@@ -114,7 +114,7 @@ namespace yoi {
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, load_extern, dummy_break, dummy_continue, ret,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, FINAL
+            store_global, store_local, store_member, store_extern, FINAL, invoke
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;
@@ -202,7 +202,7 @@ namespace yoi {
 
         const nameInfo &lookupName(const yoi::wstr &name);
 
-        yoi::wstr to_string();
+        yoi::wstr to_string(yoi::indexT indent = 0);
     };
 
     class IRStringLiteralPool {
@@ -286,7 +286,7 @@ namespace yoi {
 
         const std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
 
-        void IRBuilder::basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint);
+        void basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint);
 
         void uniqueArithmeticOp(IR::Opcode op);
 
@@ -298,13 +298,21 @@ namespace yoi {
 
         void pushOp(IR::Opcode op, const yoi::IROperand &constV);
 
-        void loadOp(IR::Opcode op, const yoi::IROperand &operand);
+        void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType>& expectedType);
 
         void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
 
         void storeOp(IR::Opcode op, const yoi::IROperand &operand);
 
         void storeMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
+
+        /**
+         * @brief Invoke a function with the given arguments.
+         * @param funcIndex The index of function in irModule->functionTable
+         * @param funcArgsCount The number of arguments of invocation.
+         * @param returnType The return type of the function. Need for push the return value type to tempVarStack.
+         */
+        void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType);
 
         void retOp();
 

@@ -317,7 +317,7 @@ namespace yoi {
         expr = new subscriptExpr{lex.curToken, a, nullptr, nullptr};
         parse(b, lex);
         if (b) {
-            expr->arg = b;
+            expr->args = b;
             o = expr;
             return;
         }

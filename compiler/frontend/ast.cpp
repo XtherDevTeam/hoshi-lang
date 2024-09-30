@@ -94,7 +94,7 @@ namespace yoi {
     }
 
     bool subscriptExpr::isInvocation() const {
-        return arg;
+        return args;
     }
 
     identifierWithTemplateArg &subscriptExpr::getId() const {
@@ -102,7 +102,7 @@ namespace yoi {
     }
 
     invocationArguments &subscriptExpr::getArg() const {
-        return *arg;
+        return *args;
     }
 
     subscript &subscriptExpr::getSubscript() const {
@@ -562,7 +562,7 @@ namespace yoi {
     void finalizeAST(subscriptExpr *ptr) {
         finalizeAST(ptr->id);
         if (ptr->isInvocation())
-            finalizeAST(ptr->arg);
+            finalizeAST(ptr->args);
         else
             finalizeAST(ptr->subscript);
         delete ptr;

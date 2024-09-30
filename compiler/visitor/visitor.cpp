@@ -56,15 +56,17 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::identifier *identifier) {
         auto &id = identifier->node.strVal;
         try {
-            auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable()[id];
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, valType});
+            auto index = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().lookup(id);
+            auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().get(index);
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{index}}, valType);
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
             // let it go, try to find it in global variables
         }
         try {
-            auto valType = irModule->globalVariables[id];
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, valType});
+            auto index = irModule->globalVariables.getIndex(id);
+            auto valType = irModule->globalVariables[index];
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, yoi::indexT{index}}, valType);
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
@@ -932,9 +934,17 @@ namespace yoi {
             // TODO: subscript
             return {};
         } else if (subscriptExpr->isInvocation()) {
-            // TODO: method call
-
-            return {};
+            try {
+                auto funcIndex = irModule->functionTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                auto func = irModule->functionTable[funcIndex];
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                }
+                moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            } catch(...) {
+                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function: " + wstring2string(subscriptExpr->id->getId().get().strVal));
+            }
         } else {
             return visit(subscriptExpr->id);
         }
