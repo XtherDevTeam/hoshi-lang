@@ -7,6 +7,7 @@
 #include <sstream>
 #include <stack>
 #include <memory>
+#include "magic_enum.h"
 #include <share/utfutils.hpp>
 
 namespace yoi {
@@ -21,7 +22,7 @@ namespace yoi {
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 
-    void assert(bool cond, yoi::indexT line, yoi::indexT col, const std::string &msg);
+    void yoi_assert(bool cond, yoi::indexT line, yoi::indexT col, const std::string &msg);
 
     std::wstring string2wstring(const std::string &v);
 
@@ -93,5 +94,43 @@ namespace yoi {
     }
 
     yoi::wstr realpath(const std::wstring &path);
+
+    template <typename enumT, enumT TSize = enumT::FINAL>
+    class [[nodiscard]] enum_range final {
+        using type = std::underlying_type_t<enumT>;
+
+        public:
+        // The iterator that can be used to loop through all values
+        //
+        class [[nodiscard]] iterator final {
+            enumT value{static_cast<enumT>(0)};
+
+            public:
+            constexpr iterator() noexcept = default;
+            constexpr iterator(enumT e) noexcept : value{e} {}
+
+            constexpr auto operator*() const noexcept -> enumT { return value; }
+            constexpr auto operator-> () const & noexcept -> const enumT* {
+                return &value;
+            }
+            constexpr auto operator++() & noexcept -> iterator {
+                value = static_cast<enumT>(1 + static_cast<type>(value));
+                return *this;
+            }
+
+            [[nodiscard]] constexpr auto operator==(iterator i) -> bool { return i.value == value; }
+            [[nodiscard]] constexpr auto operator!=(iterator i) -> bool { return i.value != value; }
+        };
+
+        constexpr auto begin() const noexcept -> iterator { return iterator{}; }
+        constexpr auto cbegin() const noexcept -> iterator { return iterator{}; }
+
+        constexpr auto end() const noexcept -> iterator { return iterator{TSize}; }
+        constexpr auto cend() const noexcept -> iterator { return iterator{TSize}; }
+
+        [[nodiscard]] constexpr auto size() const noexcept -> type {
+            return static_cast<type>(TSize);
+        }
+    };
 }
 #endif

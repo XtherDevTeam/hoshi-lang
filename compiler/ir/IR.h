@@ -34,6 +34,8 @@ namespace yoi {
         IRValueType(valueType type, yoi::indexT objectPrototypeIndex);
 
         bool isBasicType() const;
+
+        yoi::wstr to_string() const;
     };
 
     class IROperand {
@@ -53,7 +55,10 @@ namespace yoi {
             globalVar,
             /* same for extern var */
             externVar,
+            FINAL
         } type;
+
+        static enum_range<operandType> IROperandTypeEnumRange;
 
         union operandValue {
             int64_t integer;
@@ -86,10 +91,13 @@ namespace yoi {
         IROperand(operandType type, std::shared_ptr<IRValueType> lvalueType);
 
         std::shared_ptr<IRValueType> getLvalueType();
+
+        yoi::wstr to_string() const;
     };
 
     class IR {
     public:
+
         enum class Opcode {
             unknown = 0,
             store,
@@ -106,8 +114,10 @@ namespace yoi {
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, load_extern, dummy_break, dummy_continue, ret,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern
+            store_global, store_local, store_member, store_extern, FINAL
         } opcode;
+
+        static enum_range<Opcode> IROpCodeEnumRange;
 
         yoi::vec<IROperand> operands;
 
@@ -115,7 +125,7 @@ namespace yoi {
 
         IR(Opcode opcode, const yoi::vec<IROperand> &operands);
 
-        yoi::wstr to_string();
+        yoi::wstr to_string() const;
     };
 
     class IRCodeBlock {
@@ -126,7 +136,7 @@ namespace yoi {
 
         void insert(const IR &ir);
 
-        yoi::wstr to_string();
+        yoi::wstr to_string(yoi::indexT indent = 0);
 
         yoi::vec<IR> &getIRArray();
     };
@@ -170,7 +180,7 @@ namespace yoi {
 
         IRVariableTable &getVariableTable();
 
-        yoi::wstr to_string();
+        yoi::wstr to_string(yoi::indexT indent = 0);
     };
 
     class IRStructDefinition {
@@ -226,6 +236,7 @@ namespace yoi {
     class IRModule : std::enable_shared_from_this<IRModule> {
     public:
         yoi::indexT identifier;
+        bool compiled;
         std::map<yoi::wstr, yoi::wstr> moduleImports;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> functionTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
@@ -302,10 +313,9 @@ namespace yoi {
 
     class IRObjectFile {
     public:
-        /* saves all compiled modules, indexed by their path */
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRModule>> modules;
         /* one module that has renamed all functions and variables to their final names */
         std::shared_ptr<IRModule> compiledModule;
+
         yoi::indexT entryModule;
     };
 } // yoi

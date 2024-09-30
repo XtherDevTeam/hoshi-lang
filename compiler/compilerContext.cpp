@@ -12,7 +12,27 @@
 #include "visitor/visitor.h"
 
 namespace yoi {
-    void compilerContext::compileModule(const yoi::wstr &filepath) {
+    std::shared_ptr<IRModule> compilerContext::getImportedModule(yoi::indexT index) {
+        return moduleImported[index];
+    }
+
+    std::shared_ptr<IRModule> compilerContext::getImportedModule(const yoi::wstr &modRealPath) {
+        try {
+            auto it = moduleImported.find(getModuleIndexByRealPath( modRealPath ));
+            if (it == moduleImported.end()) {
+                return nullptr;
+            }
+            return it->second;
+        } catch (const std::runtime_error &e) {
+            return nullptr;
+        }
+    }
+
+    yoi::indexT compilerContext::getModuleIndexByRealPath(const yoi::wstr &modRealPath) {
+        return modules.getIndex(modRealPath);
+    }
+
+    yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
         auto fp = fopen(wstring2string(realpath(filepath)).c_str(), "r+");
         if (!fp)
             throw std::runtime_error("invalid filename");
@@ -30,10 +50,12 @@ namespace yoi {
         hoshiModule *mod;
         yoi::parse(mod, l);
         std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), filepath, mod);
+        std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
         auto idx = modules.put(filepath, modCtx);
-        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx);
+        moduleImported[idx] = irMod;
+        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod);
         vis->visit();
-        isModuleImported[idx] = true;
+        return idx;
     }
 
     const std::shared_ptr<IRObjectFile> &compilerContext::getIRObjectFile() const {

@@ -5,6 +5,8 @@
 #include <ranges>
 #include "IR.h"
 
+#include <compiler/frontend/ast.hpp>
+
 namespace yoi {
     IROperand::operandValue::operandValue() : stringLiteralIndex(0) {}
 
@@ -44,13 +46,46 @@ namespace yoi {
         return lvalueType;
     }
 
+    yoi::wstr IROperand::to_string() const {
+        switch (type) {
+            case operandType::integer:
+                return L"int(" + std::to_wstring(value.integer) + L")";
+            case operandType::decimal:
+                return L"double(" + std::to_wstring(value.decimal) + L")";
+            case operandType::boolean:
+                return L"bool(" + yoi::wstr(value.boolean ? L"true" : L"false") + L")";
+            case operandType::character:
+                return L"char(" + yoi::wstr(1, value.character) + L")";
+            case operandType::stringLiteral:
+                return L"string_const#" + std::to_wstring(value.stringLiteralIndex);
+            case operandType::codeBlock:
+                return L"codeBlock#" + std::to_wstring(value.codeBlockIndex);
+            case operandType::index:
+                return L"index(" + std::to_wstring(value.symbolIndex) + L")";
+            case operandType::localVar:
+                return L"localVar#" + std::to_wstring(value.symbolIndex);
+            case operandType::globalVar:
+                return L"globalVar#" + std::to_wstring(value.symbolIndex);
+            case operandType::externVar:
+                return L"externVar#" + std::to_wstring(value.symbolIndex);
+            default:
+                return L"unknown";
+        }
+    }
+
     IR::IR(IR::Opcode opcode, const vec<IROperand> &operands) : opcode(opcode), operands(operands) {
 
     }
 
-    yoi::wstr IR::to_string() {
-        // TODO
-        return {};
+    yoi::wstr IR::to_string() const {
+        yoi::wstr r;
+        r += string2wstring(magic_enum::enum_name<>(opcode).data());
+        r += L" ";
+        for (auto &operand : operands) {
+            r += operand.to_string();
+            r += L" ";
+        }
+        return r;
     }
 
     IRBuilder::IRBuilder(std::shared_ptr<compilerContext> compilerCtx, std::shared_ptr<IRModule> currentModule,
@@ -96,12 +131,12 @@ namespace yoi {
     }
 
     const std::shared_ptr<IRValueType> & IRBuilder::getLhsFromTempVarStack() {
-        assert(tempVarStack.size() > 1, 0, 0, "tempVarStack is empty.");
+        yoi_assert(tempVarStack.size() > 1, 0, 0, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 2];
     }
 
     const std::shared_ptr<IRValueType> & IRBuilder::getRhsFromTempVarStack() {
-        assert(tempVarStack.size() > 0, 0, 0, "tempVarStack is empty.");
+        yoi_assert(tempVarStack.size() > 0, 0, 0, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 1];
     }
 
@@ -144,7 +179,7 @@ namespace yoi {
         tempVarStack.pop_back();
         auto left = tempVarStack.back();
         tempVarStack.pop_back();
-        assert(left->type == right->type, 0, 0, "Type mismatch in multiplication operation.");
+        yoi_assert(left->type == right->type, 0, 0, "Type mismatch in multiplication operation.");
         // push result to tempVarStack
         switch (op) {
             case IR::Opcode::add:
@@ -180,7 +215,7 @@ namespace yoi {
         // fetch condition from tempVarStack
         auto condition = tempVarStack.back();
         tempVarStack.pop_back();
-        assert(condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
+        yoi_assert(condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
         // insert jumpIf operation
         insert(IR(op, {IROperand(IROperand::operandType::codeBlock, target)}));
     }
@@ -270,9 +305,12 @@ namespace yoi {
         codeBlock.emplace_back(ir);
     }
 
-    yoi::wstr IRCodeBlock::to_string() {
-        // TODO
-        return {};
+    yoi::wstr IRCodeBlock::to_string(yoi::indexT indent) {
+        yoi::wstr r;
+        for (auto &ir : codeBlock) {
+            r += yoi::wstr(indent, L' ') + ir.to_string() + L"\n";
+        }
+        return r;
     }
 
     yoi::vec<IR> & IRCodeBlock::getIRArray() {
@@ -280,9 +318,22 @@ namespace yoi {
     }
 
 
-    yoi::wstr IRFunctionDefinition::to_string() {
-        // TODO
-        return {};
+    yoi::wstr IRFunctionDefinition::to_string(yoi::indexT indent) {
+        yoi::wstr r;
+        r += yoi::wstr(indent, L' ') + L"func " + name + L"(";
+        if (!argumentTypes.empty()) {
+            for (auto it = argumentTypes.begin(); it != argumentTypes.end() - 1; ++it) {
+                r += (*it)->to_string() + L", ";
+            }
+            r += argumentTypes.back()->to_string();
+        }
+        r += L") {\n";
+        for (auto idx = 0; idx < codeBlock.size(); ++idx) {
+            r += yoi::wstr(indent + 4, L' ') + L"block#" + std::to_wstring(idx) + L":\n";
+            r += codeBlock[idx]->to_string(indent + 8);
+        }
+        r += yoi::wstr(indent, L' ') + L"}\n";
+        return r;
     }
 
     IRFunctionDefinition::IRFunctionDefinition(const yoi::wstr &name,
@@ -305,6 +356,35 @@ namespace yoi {
 
     bool IRValueType::isBasicType() const {
         return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject;
+    }
+
+    yoi::wstr IRValueType::to_string() const {
+        switch (type) {
+            case valueType::integerRaw:
+                return L"int_literal";
+            case valueType::decimalRaw:
+                return L"deci_literal";
+            case valueType::booleanRaw:
+                return L"bool_literal";
+            case valueType::characterObject:
+                return L"char";
+            case valueType::stringLiteral:
+                return L"string";
+            case valueType::structObject:
+                return L"struct#" + std::to_wstring(typeIndex);
+            case valueType::null:
+                return L"null";
+            case valueType::integerObject:
+                return L"int";
+            case valueType::booleanObject:
+                return L"bool";
+            case valueType::decimalObject:
+                return L"decimal";
+            case valueType::stringObject:
+                return L"string";
+            default:
+                return L"unknown";
+        }
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo>& nameInfoMap, const vec <std::shared_ptr<IRValueType>> &fieldTypes,

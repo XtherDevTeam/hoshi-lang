@@ -63,7 +63,7 @@ namespace yoi {
         throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
     }
 
-    void assert(bool condition, yoi::indexT line, yoi::indexT col, const std::string &msg) {
+    void yoi_assert(bool condition, yoi::indexT line, yoi::indexT col, const std::string &msg) {
         if (not condition) {
             throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
         }

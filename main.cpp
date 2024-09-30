@@ -4,6 +4,7 @@
 #include <sstream>
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
+#include <compiler/ir/IR.h>
 
 int main(int argc, const char **argv) {
     std::shared_ptr<yoi::compilerContext> compilerCtx = std::make_shared<yoi::compilerContext>();
@@ -14,7 +15,9 @@ int main(int argc, const char **argv) {
     }
     std::string in = argv[1];
     yoi::wstr input = yoi::string2wstring(in);
-    compilerCtx->compileModule(input);
-    std::cout << "Compile successfully!" << std::endl;
+    auto idx = compilerCtx->compileModule(input);
+    auto func = compilerCtx->getImportedModule(idx)->functionTable[L"test"];
+
+    std::cout << yoi::wstring2string(func->to_string()) << std::endl;
     return 0;
 }

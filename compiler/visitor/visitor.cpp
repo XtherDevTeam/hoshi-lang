@@ -5,12 +5,8 @@
 #include "visitor.h"
 
 namespace yoi {
-    visitor::visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext): moduleContext(moduleContext) {
-        irModule = std::make_shared<yoi::IRModule>();
-    }
-
     visitor::visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
-        const std::shared_ptr<yoi::IRModule> &irModule) : moduleContext(moduleContext), irModule(irModule) {
+                     const std::shared_ptr<yoi::IRModule> &irModule) : moduleContext(moduleContext), irModule(irModule) {
 
     }
 
@@ -102,19 +98,19 @@ namespace yoi {
         switch (uniqueExpr->getOp().kind) {
             case lexer::token::tokenKind::incrementSign: {
                 // TODO: add support for overloading
-                assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Lvalue type must be basic type for decrement");
+                yoi_assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Lvalue type must be basic type for decrement");
                 moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::increment);
                 break;
             }
             case lexer::token::tokenKind::decrementSign: {
                 // TODO: add support for overloading
-                assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Lvalue type must be basic type for decrement");
+                yoi_assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Lvalue type must be basic type for decrement");
                 moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::decrement);
                 break;
             }
             case lexer::token::tokenKind::binaryNot: {
                 // TODO: add support for overloading
-                assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Not basic type for bitwise not");
+                yoi_assert(lhs->isBasicType(), uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Not basic type for bitwise not");
                 moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::bitwiseNot);
                 break;
             }
@@ -142,7 +138,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::asterisk: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for multiplication");
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for multiplication");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
@@ -152,7 +148,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::slash: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for multiplication");
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for multiplication");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
@@ -162,7 +158,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::percentSign: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::integerObject, op->line, op->col, "Not basic type for multiplication");
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::integerObject, op->line, op->col, "Not basic type for multiplication");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mod);
                     break;
                 }
@@ -188,7 +184,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::plus: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for addition");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -199,7 +195,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::minus: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for subtraction");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -230,14 +226,14 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::binaryShiftLeft: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject &&
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
                            rhsType->type == IRValueType::valueType::integerObject, op->line, op->col,
                            "Not basic type for left shift");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::left_shift);
                     break;
                 }
                 case lexer::token::tokenKind::binaryShiftRight: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject &&
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
                            rhsType->type == IRValueType::valueType::integerObject, op->line, op->col,
                            "Not basic type for right shift");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::right_shift);
@@ -266,7 +262,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::lessThan: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for less than");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -277,7 +273,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::greaterThan: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for greater than");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -288,7 +284,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::lessEqual: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for less than or equal");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -299,7 +295,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::greaterEqual: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for greater than or equal");
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for greater than or equal");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
@@ -331,7 +327,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::equal: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col,
                            "Not basic type for equal");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
@@ -342,7 +338,7 @@ namespace yoi {
                     break;
                 }
                 case lexer::token::tokenKind::notEqual: {
-                    assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for not");
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for not");
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
@@ -374,7 +370,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::binaryAnd: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject &&
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
                            rhsType->type == IRValueType::valueType::integerObject, op->line, op->col,
                            "Not basic type for binary and");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_and);
@@ -403,7 +399,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::binaryXor: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject &&
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
                            rhsType->type == IRValueType::valueType::integerObject, op->line, op->col,
                            "Not basic type for binary xor");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_xor);
@@ -432,7 +428,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::binaryOr: {
-                    assert(lhsType->type == IRValueType::valueType::integerObject &&
+                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
                            rhsType->type == IRValueType::valueType::integerObject, op->line, op->col,
                            "Not basic type for binary or");
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_or);
@@ -467,14 +463,14 @@ namespace yoi {
             auto &lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             switch (op->kind) {
                 case lexer::token::tokenKind::logicAnd: {
-                    assert(lhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
+                    yoi_assert(lhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
                            "Not boolean type for logical and");
                     // FIXED: jump_if_false should receive a parameter from stack
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_false,exitWithFalseBlock);
 
                     visit(*++term);
                     auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    assert(rhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
+                    yoi_assert(rhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
                            "Not boolean type for logical and");
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_false, exitWithFalseBlock);
                     moduleContext->getIRBuilder().jumpOp(exitWithTrueBlock);
@@ -510,14 +506,14 @@ namespace yoi {
             auto &lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             switch (op->kind) {
                 case lexer::token::tokenKind::logicAnd: {
-                    assert(lhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
+                    yoi_assert(lhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
                            "Not boolean type for logical and");
                     // FIXED: jump_if_false should receive a parameter from stack
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, exitWithTrueBlock);
 
                     visit(*++term);
                     auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    assert(rhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
+                    yoi_assert(rhsType->type == IRValueType::valueType::booleanObject, op->line, op->col,
                            "Not boolean type for logical and");
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, exitWithTrueBlock);
                     moduleContext->getIRBuilder().jumpOp(exitWithFalseBlock);
@@ -567,7 +563,7 @@ namespace yoi {
             }
             auto rhsIt = *it;
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
+            yoi_assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
             if (rhsIt->isInvocation()) {
                 // TODO: method call
             } else if (rhsIt->isSubscript()) {
@@ -937,6 +933,7 @@ namespace yoi {
             return {};
         } else if (subscriptExpr->isInvocation()) {
             // TODO: method call
+
             return {};
         } else {
             return visit(subscriptExpr->id);
@@ -1061,7 +1058,7 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::ifStmt *ifStmt) {
         visit(ifStmt->getIfBlock().cond);
         auto condType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-        assert(condType->type == IRValueType::valueType::booleanObject, ifStmt->getLine(), ifStmt->getColumn(), "The type in if-condition must be boolean");
+        yoi_assert(condType->type == IRValueType::valueType::booleanObject, ifStmt->getLine(), ifStmt->getColumn(), "The type in if-condition must be boolean");
 
         auto ifBlock = moduleContext->getIRBuilder().createCodeBlock();
 
@@ -1073,7 +1070,7 @@ namespace yoi {
         for (auto &i : ifStmt->elifB) {
             visit(i.cond);
             auto elifCondType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            assert(elifCondType->type == IRValueType::valueType::booleanObject, i.cond->getLine(), i.cond->getColumn(), "The type in elif-condition must be boolean");
+            yoi_assert(elifCondType->type == IRValueType::valueType::booleanObject, i.cond->getLine(), i.cond->getColumn(), "The type in elif-condition must be boolean");
 
             auto elifBlock = moduleContext->getIRBuilder().createCodeBlock();
             moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, elifBlock);
@@ -1099,7 +1096,7 @@ namespace yoi {
 
         visit(whileStmt->cond);
         auto condType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-        assert(condType->type == IRValueType::valueType::booleanObject, whileStmt->getLine(), whileStmt->getColumn(), "The type in while-condition must be boolean");
+        yoi_assert(condType->type == IRValueType::valueType::booleanObject, whileStmt->getLine(), whileStmt->getColumn(), "The type in while-condition must be boolean");
 
         auto whileBlock = moduleContext->getIRBuilder().createCodeBlock();
         auto outBlock = moduleContext->getIRBuilder().createCodeBlock();
@@ -1141,7 +1138,7 @@ namespace yoi {
         moduleContext->getIRBuilder().switchCodeBlock(condBlock);
         visit(forStmt->cond);
         auto condType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-        assert(condType->type == IRValueType::valueType::booleanObject, forStmt->getLine(), forStmt->getColumn(), "The type in for-condition must be boolean");
+        yoi_assert(condType->type == IRValueType::valueType::booleanObject, forStmt->getLine(), forStmt->getColumn(), "The type in for-condition must be boolean");
 
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, codeBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
@@ -1216,10 +1213,10 @@ namespace yoi {
     }
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
-        auto &mod = moduleContext->getCompilerContext()->getIRObjectFile()->modules[targetModule];
+        auto mod = moduleContext->getCompilerContext()->getImportedModule(targetModule);
         auto exId = addExternEntryIfNotExists(targetModule, identifier);
         auto ex = irModule->externTable[exId];
-        assert(ex->type == IRExternEntry::externType::structType, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected struct type");
+        yoi_assert(ex->type == IRExternEntry::externType::structType, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected struct type");
         return {IRValueType::valueType::structObject, exId};
     }
 
@@ -1261,7 +1258,7 @@ namespace yoi {
                 } else {
                     lhs = parseTypeSpecExtern(*it, targetModule);
                 }
-                assert(it != typeSpec->member->getTerms().end(), typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
+                yoi_assert(it != typeSpec->member->getTerms().end(), typeSpec->getLine(), typeSpec->getColumn(), "Type specifier is not valid.");
                 return lhs;
             }
             case 1: {
@@ -1282,9 +1279,9 @@ namespace yoi {
 
     yoi::indexT visitor::isModuleName(subscriptExpr *it, yoi::indexT currentModule) const {
         if(it->isIdentifier() && !it->getId().hasTemplateArg()) {
-            std::shared_ptr<yoi::IRModule> target = currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getIRObjectFile()->modules[currentModule];
+            std::shared_ptr<yoi::IRModule> target = currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getImportedModule(currentModule);
             if (auto x = target->moduleImports.find(it->getId().id->node.strVal); x != target->moduleImports.end() ) {
-                return moduleContext->getCompilerContext()->getIRObjectFile()->modules.getIndex(x->second);
+                return moduleContext->getCompilerContext()->getModuleIndexByRealPath(x->second);
             } else {
                 return -1;
             }
@@ -1295,15 +1292,15 @@ namespace yoi {
 
     yoi::IRExternEntry visitor::getExternEntry(yoi::indexT moduleIndex, yoi::identifier *identifier) const {
         try {
-            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->globalVariables.getIndex(identifier->node.strVal);
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->globalVariables.getIndex(identifier->node.strVal);
             return {IRExternEntry::externType::globalVar, identifier->node.strVal, moduleIndex, res};
         } catch (std::runtime_error &) {}
         try {
-            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->functionTable.getIndex(identifier->node.strVal);
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->functionTable.getIndex(identifier->node.strVal);
             return {IRExternEntry::externType::function, identifier->node.strVal, moduleIndex, res};
         } catch (std::runtime_error &) {}
         try {
-            auto res = moduleContext->getCompilerContext()->getIRObjectFile()->modules[moduleIndex]->structTable.getIndex(identifier->node.strVal);
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier->node.strVal);
             return {IRExternEntry::externType::structType, identifier->node.strVal, moduleIndex, res};
         } catch (std::runtime_error &) {}
         panic(0, 0, "undefined identifier");

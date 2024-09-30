@@ -1,5 +1,9 @@
+func test1() : int {
+    return 114514
+}
+
 func test() : int {
     let i = 0
     let b = 1 + 1 + 4 + 514
-    return i + b
+    return i + test1() + b
 }
