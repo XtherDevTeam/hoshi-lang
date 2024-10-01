@@ -172,7 +172,9 @@ subscriptExpression ::= identifierWithTemplateArg
                       | identifierWithTemplateArg subscript
 memberExpression ::= subscriptExpression { "." subscriptExpression }
 primary ::= memberExpression | basicLiterals | "(" rExpr ")"
-uniqueExpr ::= primary { ( "++" | "--" | "!" | "~" | "-" | "&" ) primary }
+uniqueExpr ::= ( "++" | "--" | "!" | "~" | "-" | "&" ) primary
+             | primary
+leftExpr ::= uniqueExpr { ( "=" | "+=" | "-=" | "*=" | "/=" | "%=" ) uniqueExpr }
 mulExpr ::= uniqueExpr { ( "*" | "/" | "%" ) uniqueExpr }
 addExpr ::= mulExpr { ( "+" | "-" ) mulExpr }
 shiftExpr ::= addExpr { ( "<<" | ">>" ) addExpr }

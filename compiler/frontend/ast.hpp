@@ -142,6 +142,8 @@ namespace yoi {
 
     class codeBlock;
 
+    class leftExpr;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -317,12 +319,27 @@ namespace yoi {
         operator bool() const;
     };
 
+    class leftExpr : public AST {
+    public:
+        lexer::token op;
+        uniqueExpr *lhs;
+        rExpr *rhs;
+
+        lexer::token &getOp();
+
+        uniqueExpr &getLhs() const;
+
+        rExpr &getRhs() const;
+
+        bool hasRhs() const;
+    };
+
     class mulExpr : public AST {
     public:
-        vec<uniqueExpr *> terms;
+        vec<leftExpr *> terms;
         vec<lexer::token> ops;
 
-        vec<uniqueExpr *> &getTerms();
+        vec<leftExpr *> &getTerms();
 
         vec<lexer::token> &getOp();
 
@@ -793,6 +810,10 @@ namespace yoi {
 
         vec<globalStmt *> &getStmts();
     };
+
+    void finalizeAST(hoshiModule *ptr);
+
+    void finalizeAST(leftExpr *ptr);
 
     void finalizeAST(basicLiterals *ptr);
 

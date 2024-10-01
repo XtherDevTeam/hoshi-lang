@@ -55,6 +55,7 @@ namespace yoi {
         moduleImported[idx] = irMod;
         std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod);
         vis->visit();
+        finalizeAST(mod);
         return idx;
     }
 
@@ -73,8 +74,7 @@ namespace yoi {
         yoi::IRStructDefinition def{
             L"int",
             {{L"ptr", info}},
-            {managedPtr(valType)},
-            {}
+            {managedPtr(valType)}
         };
         return def;
     }
@@ -90,8 +90,7 @@ namespace yoi {
         yoi::IRStructDefinition def{
             L"bool",
             {{L"ptr", info}},
-            {managedPtr(valType)},
-            {}
+            {managedPtr(valType)}
         };
         return def;
     }
@@ -107,8 +106,7 @@ namespace yoi {
         yoi::IRStructDefinition def{
             L"deci",
             {{L"ptr", info}},
-            {managedPtr(valType)},
-            {}
+            {managedPtr(valType)}
         };
         return def;
     }
@@ -124,8 +122,7 @@ namespace yoi {
         yoi::IRStructDefinition def{
             L"string",
             {{L"ptr", info}},
-            {managedPtr(valType)},
-            {}
+            {managedPtr(valType)}
         };
         return def;
     }
@@ -163,5 +160,9 @@ namespace yoi {
             IRValueType::valueType::stringObject,
             {sharedObjectDefinition.getIndex(L"string")}
         };
+    }
+
+    yoi::IRValueType compilerContext::getNoneObjectType() {
+        return {IRValueType::valueType::none, {}};
     }
 } // yoi

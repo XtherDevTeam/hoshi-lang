@@ -25,6 +25,7 @@ namespace yoi {
             booleanObject,
             decimalObject,
             stringObject,
+            none,
         } type;
 
         yoi::indexT typeIndex;
@@ -112,9 +113,9 @@ namespace yoi {
             deref,
             multiply, basic_cast, add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, load_extern, dummy_break, dummy_continue, ret,
+            load_global, load_extern, dummy_break, dummy_continue, ret, ret_void,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, FINAL, invoke
+            store_global, store_local, store_member, store_extern, FINAL, invoke, invoke_extern
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;
@@ -144,6 +145,8 @@ namespace yoi {
     class IRVariableTable {
         yoi::vec<std::shared_ptr<IRValueType>> variables;
         yoi::vec<std::map<yoi::wstr, yoi::indexT>> variableNameIndexMap;
+        std::map<yoi::indexT, yoi::indexT> variableScopeMap;
+        std::map<yoi::indexT, yoi::wstr> reversedVariableNameMap;
 
     public:
         IRVariableTable() = default;
@@ -166,6 +169,8 @@ namespace yoi {
         yoi::indexT put(const yoi::wstr &name, const std::shared_ptr<IRValueType> &type);
 
         void popScope();
+
+        yoi::wstr to_string(yoi::indexT indent = 0);
     };
 
     class IRFunctionDefinition {
@@ -176,18 +181,33 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
 
-        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::shared_ptr<IRValueType>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType);
+        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType);
 
         IRVariableTable &getVariableTable();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
+
+        struct Builder {
+            yoi::wstr name;
+            yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
+            std::shared_ptr<IRValueType> returnType;
+
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &addArgument(const yoi::wstr &argumentName, const std::shared_ptr<IRValueType> &argumentType);
+
+            Builder &setReturnType(const std::shared_ptr<IRValueType> &returnType);
+
+            std::shared_ptr<IRFunctionDefinition> yield();
+        };
     };
 
     class IRStructDefinition {
     public:
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> fieldTypes;
-        yoi::vec<std::shared_ptr<IRFunctionDefinition>> methodDefinitions;
 
         struct nameInfo {
             enum class nameType {
@@ -198,11 +218,27 @@ namespace yoi {
         };
         std::map<yoi::wstr, nameInfo> nameIndexMap;
 
-        IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo> &nameIndexMap, const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes, const yoi::vec<std::shared_ptr<IRFunctionDefinition>> &methodDefinitions);
+        IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo> &nameIndexMap, const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes);
 
         const nameInfo &lookupName(const yoi::wstr &name);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
+
+        struct Builder {
+            yoi::wstr name;
+            std::map<yoi::wstr, nameInfo> nameIndexMap;
+            yoi::vec<std::shared_ptr<IRValueType>> fieldTypes;
+
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &addField(const yoi::wstr &fieldName, const std::shared_ptr<IRValueType> &fieldType);
+
+            Builder &addMethod(const yoi::wstr &methodName, yoi::indexT index);
+
+            std::shared_ptr<IRStructDefinition> yield();
+        };
     };
 
     class IRStringLiteralPool {
@@ -243,6 +279,8 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
         IRStringLiteralPool stringLiteralPool;
+
+        yoi::wstr to_string(yoi::indexT indent = 0);
     };
 
     class IRBuilder {
@@ -286,7 +324,7 @@ namespace yoi {
 
         const std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
 
-        void basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint);
+        void basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint, bool lhs = false);
 
         void uniqueArithmeticOp(IR::Opcode op);
 
@@ -304,19 +342,23 @@ namespace yoi {
 
         void storeOp(IR::Opcode op, const yoi::IROperand &operand);
 
-        void storeMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
+        void storeMemberOp(const yoi::IROperand &memberIndex);
 
         /**
          * @brief Invoke a function with the given arguments.
          * @param funcIndex The index of function in irModule->functionTable
          * @param funcArgsCount The number of arguments of invocation.
          * @param returnType The return type of the function. Need for push the return value type to tempVarStack.
+         * @param externalInvocation If true, the function is invoked from an external module.
          */
-        void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType);
+        void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType, bool
+                      externalInvocation = false);
 
         void retOp();
 
         yoi::indexT getCurrentInsertionPoint();
+
+        void popFromTempVarStack();
     };
 
     class IRObjectFile {

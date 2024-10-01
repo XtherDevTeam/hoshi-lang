@@ -1,9 +1,26 @@
+struct aaa {
+    x: int,
+    y: int,
+    constructor(x: int, y: int)
+}
+
+impl aaa {
+    constructor(x: int, y: int) {
+        this.x = x
+        this.y = y
+    }
+}
+
 func test1() : int {
     return 114514
 }
 
 func test() : int {
     let i = 0
-    let b = 1 + 1 + 4 + 514
-    return i + b + test1()
+    let b = 1 + 1 + 4 + 514.00
+    if (b == 520.00) {
+        return 2233
+    } else {
+        return i + b + test1()
+    }
 }

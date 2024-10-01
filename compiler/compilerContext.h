@@ -73,6 +73,8 @@ namespace yoi {
         yoi::IRValueType getDeciObjectType();
 
         yoi::IRValueType getStrObjectType();
+
+        yoi::IRValueType getNoneObjectType();
     };
 
 } // yoi

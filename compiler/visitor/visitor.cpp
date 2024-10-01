@@ -11,7 +11,15 @@ namespace yoi {
     }
 
     std::shared_ptr<yoi::IRModule> visitor::visit() {
+        auto globInitializer = managedPtr(IRFunctionDefinition{L"yoimiya_glob_initializer", {}, managedPtr(moduleContext->getCompilerContext()->getIntObjectType())});
+        irModule->functionTable.put(L"yoimiya_glob_initializer", globInitializer);
+        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&moduleContext->getModuleAST());
+        moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue(0ull)});
+        moduleContext->getIRBuilder().retOp();
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
         return irModule;
     }
 
@@ -53,12 +61,16 @@ namespace yoi {
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
-    yoi::indexT visitor::visit(yoi::identifier *identifier) {
+    yoi::indexT visitor::visit(yoi::identifier *identifier, bool isStoreOp) {
         auto &id = identifier->node.strVal;
         try {
             auto index = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().lookup(id);
             auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().get(index);
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{index}}, valType);
+            if (isStoreOp) {
+                moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local, {IROperand::operandType::localVar, yoi::indexT{index}});
+            } else {
+                moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{index}}, valType);
+            }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
             // let it go, try to find it in global variables
@@ -66,7 +78,11 @@ namespace yoi {
         try {
             auto index = irModule->globalVariables.getIndex(id);
             auto valType = irModule->globalVariables[index];
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, yoi::indexT{index}}, valType);
+            if (isStoreOp) {
+                moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global, {IROperand::operandType::globalVar, yoi::indexT{index}});
+            } else {
+                moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, yoi::indexT{index}}, valType);
+            }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
@@ -75,10 +91,10 @@ namespace yoi {
 
     }
 
-    yoi::indexT visitor::visit(yoi::primary *primary) {
+    yoi::indexT visitor::visit(yoi::primary *primary, bool isStoreOp) {
         switch (primary->kind) {
             case 0:
-                visit(primary->member);
+                visit(primary->member, isStoreOp);
                 break;
             case 1:
                 visit(primary->literals);
@@ -94,8 +110,8 @@ namespace yoi {
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
-    yoi::indexT visitor::visit(yoi::uniqueExpr *uniqueExpr) {
-        visit(uniqueExpr->lhs);
+    yoi::indexT visitor::visit(yoi::uniqueExpr *uniqueExpr, bool isStoreOp) {
+        visit(uniqueExpr->lhs, isStoreOp);
         auto &lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         switch (uniqueExpr->getOp().kind) {
             case lexer::token::tokenKind::incrementSign: {
@@ -124,6 +140,95 @@ namespace yoi {
                 panic(uniqueExpr->getOp().line, uniqueExpr->getOp().col, "Unexpected unique expression operator");
             }
         }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::visit(yoi::leftExpr *leftExpr) {
+        if (leftExpr->hasRhs()) {
+            switch (leftExpr->getOp().kind) {
+                case lexer::token::tokenKind::assignSign: {
+                    visit(leftExpr->rhs);
+                    visit(leftExpr->lhs, true);
+                    break;
+                }
+                case lexer::token::tokenKind::additionAssignment: {
+                    auto lhsPos = visit(leftExpr->lhs);
+                    auto rhsPos = visit(leftExpr->rhs);
+                    auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+                    auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (lhs->type == IRValueType::valueType::structObject || rhs->type == IRValueType::valueType::structObject) {
+                        // TODO: add support for overloading
+                    }
+                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(), leftExpr->getOp().line, leftExpr->getOp().col, "Not basic type for addition");
+                    if (lhs->type == IRValueType::valueType::decimalObject && rhs->type == IRValueType::valueType::integerObject) {
+                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                    } else if (lhs->type == IRValueType::valueType::integerObject && rhs->type == IRValueType::valueType::decimalObject) {
+                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                    }
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
+                    visit(leftExpr->lhs, true);
+                    break;
+                }
+                case lexer::token::tokenKind::subtractionAssignment: {
+                    auto lhsPos = visit(leftExpr->lhs);
+                    auto rhsPos = visit(leftExpr->rhs);
+                    auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+                    auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (lhs->type == IRValueType::valueType::structObject || rhs->type == IRValueType::valueType::structObject) {
+                        // TODO: add support for overloading
+                    }
+                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(), leftExpr->getOp().line, leftExpr->getOp().col, "Not basic type for subtraction");
+                    if (lhs->type == IRValueType::valueType::decimalObject && rhs->type == IRValueType::valueType::integerObject) {
+                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                    } else if (lhs->type == IRValueType::valueType::integerObject && rhs->type == IRValueType::valueType::decimalObject) {
+                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                    }
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
+                    visit(leftExpr->lhs, true);
+                    break;
+                }
+                case lexer::token::tokenKind::multiplicationAssignment: {
+                    auto lhsPos = visit(leftExpr->lhs);
+                    auto rhsPos = visit(leftExpr->rhs);
+                    auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+                    auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (lhs->type == IRValueType::valueType::structObject || rhs->type == IRValueType::valueType::structObject) {
+                        // TODO: add support for overloading
+                    }
+                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(), leftExpr->getOp().line, leftExpr->getOp().col, "Not basic type for multiplication");
+                    if (lhs->type == IRValueType::valueType::decimalObject && rhs->type == IRValueType::valueType::integerObject) {
+                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                    } else if (lhs->type == IRValueType::valueType::integerObject && rhs->type == IRValueType::valueType::decimalObject) {
+                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                    }
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
+                    visit(leftExpr->lhs, true);
+                    break;
+                }
+                case lexer::token::tokenKind::divisionAssignment: {
+                    auto lhsPos = visit(leftExpr->lhs);
+                    auto rhsPos = visit(leftExpr->rhs);
+                    auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+                    auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (lhs->type == IRValueType::valueType::structObject || rhs->type == IRValueType::valueType::structObject) {
+                        // TODO: add support for overloading
+                    }
+                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(), leftExpr->getOp().line, leftExpr->getOp().col, "Not basic type for division");
+                    if (lhs->type == IRValueType::valueType::decimalObject && rhs->type == IRValueType::valueType::integerObject) {
+                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                    } else if (lhs->type == IRValueType::valueType::integerObject && rhs->type == IRValueType::valueType::decimalObject) {
+                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                    }
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
+                    visit(leftExpr->lhs, true);
+                    break;
+                }
+                default: {
+                    panic(leftExpr->getOp().line, leftExpr->getOp().col, "Unexpected left expression operator, received: " + wstring2string(leftExpr->getOp().strVal));
+                }
+            }
+        }
+        visit(leftExpr->lhs);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -168,11 +273,12 @@ namespace yoi {
                     panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
             }
+            lhsPos = rhsPos;
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
-    void visitor::visit(yoi::addExpr *addExpr) {
+    yoi::indexT visitor::visit(yoi::addExpr *addExpr) {
         auto term = addExpr->getTerms().begin();
         auto op = addExpr->getOp().begin();
         auto lhsPos = visit(*term);
@@ -191,7 +297,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
                     break;
@@ -202,7 +308,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
                     break;
@@ -211,7 +317,9 @@ namespace yoi {
                     panic(op->line, op->col, "Unexpected addition expression operator");
                 }
             }
+            lhsPos = rhsPos;
         }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::indexT visitor::visit(yoi::shiftExpr *shiftExpr) {
@@ -269,7 +377,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::less_than);
                     break;
@@ -280,7 +388,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_than);
                     break;
@@ -301,7 +409,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_equal);
                     break;
@@ -310,6 +418,7 @@ namespace yoi {
                     panic(op->line, op->col, "Unexpected relational expression operator");
                 }
             }
+            lhsPos = rhsPos;
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -334,7 +443,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::equal);
                     break;
@@ -344,7 +453,7 @@ namespace yoi {
                     if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
                         moduleContext->getIRBuilder().basicCast(lhsType, rhsPos);
                     } else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos);
+                        moduleContext->getIRBuilder().basicCast(rhsType, lhsPos, true);
                     }
                     moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::not_equal);
                     break;
@@ -354,6 +463,7 @@ namespace yoi {
                     return {};
                 }
             }
+            lhsPos = rhsPos;
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -383,6 +493,7 @@ namespace yoi {
                     return {};
                 }
             }
+            lhsPos = rhsPos;
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -412,6 +523,7 @@ namespace yoi {
                     return {};
                 }
             }
+
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -441,6 +553,7 @@ namespace yoi {
                     return {};
                 }
             }
+
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -484,6 +597,7 @@ namespace yoi {
                     return {};
                 }
             }
+
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -527,6 +641,7 @@ namespace yoi {
                     return {};
                 }
             }
+
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -536,9 +651,12 @@ namespace yoi {
         return visit(&rExpr->getExpr());
     }
 
-    void visitor::visit(yoi::codeBlock *codeBlock) {
-        auto block = moduleContext->getIRBuilder().createCodeBlock();
-        moduleContext->getIRBuilder().switchCodeBlock(block);
+    void visitor::visit(yoi::codeBlock *codeBlock, bool notEmitNewBlockInstruction) {
+        if (!notEmitNewBlockInstruction) {
+            auto block = moduleContext->getIRBuilder().createCodeBlock();
+            moduleContext->getIRBuilder().jumpOp(block);
+            moduleContext->getIRBuilder().switchCodeBlock(block);
+        }
         moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().createScope();
         for (auto stmt : codeBlock->getStmts()) {
             visit(stmt);
@@ -546,16 +664,16 @@ namespace yoi {
         moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().popScope();
     }
 
-    yoi::indexT visitor::visit(yoi::memberExpr *memberExpr) {
+    yoi::indexT visitor::visit(yoi::memberExpr *memberExpr, bool isStoreOp) {
         auto it = memberExpr->getTerms().begin();
         yoi::indexT targetModule = -1;
         while (it != memberExpr->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
             it++;
         }
         if (targetModule == -1) {
-            visit(*it);
+            visit(*it, isStoreOp);
         } else {
-            visitExtern(*it, targetModule);
+            visitExtern(*it, targetModule, isStoreOp);
         }
 
         for (; it != memberExpr->getTerms().end();) {
@@ -579,7 +697,11 @@ namespace yoi {
                     switch (nameInfo.type) {
                         case IRStructDefinition::nameInfo::nameType::field: {
                             auto tempVarType = irModule->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
-                            moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, termType);
+                            if (isStoreOp) {
+                                moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, nameInfo.index});
+                            } else {
+                                moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, termType);
+                            }
                             break;
                         }
                         case IRStructDefinition::nameInfo::nameType::method: {
@@ -623,6 +745,8 @@ namespace yoi {
                 break;
             case inCodeBlockStmt::vKind::rExpr:
                 visit(inCodeBlockStmt->getValue().rExpr);
+                // balance the stack
+                moduleContext->getIRBuilder().popFromTempVarStack();
                 break;
         }
     }
@@ -929,7 +1053,7 @@ namespace yoi {
     }
     */
 
-    yoi::indexT visitor::visit(yoi::subscriptExpr *subscriptExpr) {
+    yoi::indexT visitor::visit(yoi::subscriptExpr *subscriptExpr, bool isStoreOp) {
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
             return {};
@@ -950,7 +1074,7 @@ namespace yoi {
         }
     }
 
-    yoi::indexT visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg) {
+    yoi::indexT visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
             // TODO: what the heck is this
             return {};
@@ -984,36 +1108,144 @@ namespace yoi {
         }
     }
 
-    void visitor::visit(yoi::funcDefStmt *funcDefStmt) {
+    yoi::indexT visitor::visit(yoi::funcDefStmt *funcDefStmt) {
         auto funcName = funcDefStmt->getId();
         if (funcName.hasDefTemplateArg()) {
             // TODO: function template
         } else {
             auto funcType = parseTypeSpec(&funcDefStmt->getResultType());
-            std::vector<std::shared_ptr<IRValueType>> argTypes;
-            std::shared_ptr<IRFunctionDefinition> func = std::make_shared<IRFunctionDefinition>(funcName.getId().node.strVal, argTypes, managedPtr(funcType));
+            IRFunctionDefinition::Builder builder;
+            builder.setName(funcName.getId().node.strVal);
+            builder.setReturnType(managedPtr(funcType));
+            for (auto &i : funcDefStmt->getArgs().get()) {
+                auto argName = i->getId().node.strVal;
+                auto argType = managedPtr(parseTypeSpec(i->spec));
+                builder.addArgument(argName, argType);
+            }
+            auto func = builder.yield();
 
-            auto funcIndex = irModule->functionTable.put(funcName.getId().node.strVal, func);
+            irModule->functionTable.put(funcName.getId().node.strVal, func);
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
-            visit(funcDefStmt->block);
+            moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+            visit(funcDefStmt->block, true);
             moduleContext->getIRBuilder().yield();
             moduleContext->popIRBuilder();
         }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::IROperand visitor::visit(yoi::interfaceDefStmt *interfaceDefStmt) {
 
     }
 
-    yoi::IROperand visitor::visit(yoi::structDefStmt *structDefStmt) {
-        // TODO: implement struct definition
-        panic(structDefStmt->getLine(), structDefStmt->getColumn(), "Struct definition is not implemented yet");
+    yoi::indexT visitor::visit(yoi::structDefStmt *structDefStmt) {
+        if (structDefStmt->id->hasDefTemplateArg()) {
+            // TODO: struct template
+        }
+        auto &structName = structDefStmt->id->getId().get().strVal;
+        // occupy a slot in the struct table
+        auto structIndex = irModule->structTable.put(structName, {});
+
+        IRStructDefinition::Builder builder;
+        builder.setName(structName);
+        for (auto &i : structDefStmt->getInner().getInner()) {
+            switch (i->kind) {
+                case 0: {
+                    // member
+                    auto memberName = i->getVar().getId().get().strVal;
+                    auto memberType = managedPtr(parseTypeSpec(i->getVar().spec));
+                    builder.addField(memberName, memberType);
+                    break;
+                }
+                case 1: {
+                    // constructor
+                    IRFunctionDefinition::Builder constructorBuilder;
+                    auto funcName = L"struct#" + structName + L"#" + L"constructor";
+                    constructorBuilder.setName(funcName).setReturnType(managedPtr(moduleContext->getCompilerContext()->getNoneObjectType()));
+                    // add this pointer as the first argument
+                    constructorBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, structIndex}));
+
+                    for (auto &arg : i->getConstructor().getArgs().get()) {
+                        auto argName = arg->getId().get().strVal;
+                        auto argType = managedPtr(parseTypeSpec(arg->spec));
+                        constructorBuilder.addArgument(argName, argType);
+                    }
+                    auto func = constructorBuilder.yield();
+                    builder.addMethod(L"constructor", irModule->functionTable.put(funcName, func));
+                    break;
+                }
+                case 2: {
+                    // method
+                    auto methodName = L"struct#" + structName + L"#" + i->getMethod().getName().get().strVal;
+                    auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+                    IRFunctionDefinition::Builder methodBuilder;
+
+                    methodBuilder.setName(methodName);
+
+                    // add this pointer as the first argument
+                    methodBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, structIndex}));
+
+                    for (auto &arg : i->getMethod().getArgs().get()) {
+                        auto argName = arg->getId().get().strVal;
+                        auto argType = managedPtr(parseTypeSpec(arg->spec));
+                        methodBuilder.addArgument(argName, argType);
+                    }
+                    auto func = methodBuilder.yield();
+                    builder.addMethod(methodName, irModule->functionTable.put(methodName, func));
+                    break;
+                }
+            }
+        }
+        auto structType = builder.yield();
+        irModule->structTable[structIndex] = structType;
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
-    yoi::IROperand visitor::visit(yoi::implStmt *implStmt) {
-        // TODO: implement implementation
-        panic(implStmt->getLine(), implStmt->getColumn(), "Implementation definition is not implemented yet");
+    yoi::indexT visitor::visit(yoi::implStmt *implStmt) {
+        if (implStmt->isImplForStmt()) {
+            // TODO: interface implementation
+        } else {
+            // struct implementation
+            auto structName = implStmt->getStructId().get().strVal;
+            yoi::indexT structIndex;
+
+            try {
+                auto structIndex = irModule->structTable.getIndex(structName);
+            } catch(std::runtime_error &e) {
+                panic(implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(implStmt->getStructId().get().strVal));
+            }
+
+            auto &structType = irModule->structTable[structName];
+            for (auto &i : implStmt->getInner().getInner()) {
+                if (i->isConstructor()) {
+                    // fetch constructor func decl from irModule
+                    auto funcName = L"struct#" + structName + L"#" + L"constructor";
+                    auto funcIndex = irModule->functionTable.getIndex(funcName);
+                    auto func = irModule->functionTable[funcIndex];
+                    // push a new irFuncBuilder for the constructor
+                    moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+                    // build code blocks
+                    moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                    visit(i->getConstructor().block, true);
+                    moduleContext->getIRBuilder().yield();
+                    moduleContext->popIRBuilder();
+                } else {
+                    // fetch method decl from irModule
+                    auto methodName = L"struct#" + structName + L"#" + i->getMethod().getName().get().strVal;
+                    auto methodIndex = irModule->functionTable.getIndex(methodName);
+                    auto method = irModule->functionTable[methodIndex];
+                    // push a new irFuncBuilder for the method
+                    moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, method});
+                    // build code blocks
+                    moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                    visit(i->getMethod().block, true);
+                    moduleContext->getIRBuilder().yield();
+                    moduleContext->popIRBuilder();
+                }
+            }
+        }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::indexT visitor::visit(yoi::letStmt *letStmt) {
@@ -1074,7 +1306,7 @@ namespace yoi {
 
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, ifBlock);
         auto back = moduleContext->getIRBuilder().switchCodeBlock(ifBlock);
-        visit(ifStmt->getIfBlock().block);
+        visit(ifStmt->getIfBlock().block, true);
         moduleContext->getIRBuilder().switchCodeBlock(back);
 
         for (auto &i : ifStmt->elifB) {
@@ -1085,7 +1317,7 @@ namespace yoi {
             auto elifBlock = moduleContext->getIRBuilder().createCodeBlock();
             moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, elifBlock);
             auto back = moduleContext->getIRBuilder().switchCodeBlock(elifBlock);
-            visit(i.block);
+            visit(i.block, true);
             moduleContext->getIRBuilder().switchCodeBlock(back);
         }
 
@@ -1093,7 +1325,7 @@ namespace yoi {
             auto elseBlock = moduleContext->getIRBuilder().createCodeBlock();
             moduleContext->getIRBuilder().jumpOp(elseBlock);
             auto back = moduleContext->getIRBuilder().switchCodeBlock(elseBlock);
-            visit(ifStmt->elseB);
+            visit(ifStmt->elseB, true);
             moduleContext->getIRBuilder().switchCodeBlock(back);
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -1114,7 +1346,7 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, whileBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
         moduleContext->getIRBuilder().switchCodeBlock(whileBlock);
-        visit(whileStmt->block);
+        visit(whileStmt->block, true);
 
         // replace dummy_break and dummy_continue with jump to the cond block
         for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
@@ -1153,7 +1385,7 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, codeBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
         moduleContext->getIRBuilder().switchCodeBlock(codeBlock);
-        visit(forStmt->block);
+        visit(forStmt->block, true);
 
         // replace dummy_break and dummy_continue with jump to the cond block
         for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
@@ -1331,22 +1563,27 @@ namespace yoi {
     }
 
     bool visitor::isVisitingGlobalScope() const {
-        return moduleContext->getIRBuilder().irFuncDefinition()->name == L"glob_initializer";
+        return moduleContext->getIRBuilder().irFuncDefinition()->name == L"yoimiya_glob_initializer";
     }
 
-    yoi::IROperand visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
+    yoi::indexT visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule, bool isStoreOp) {
         try {
-            auto entry = addExternEntryIfNotExists(targetModule, identifier);
-            moduleContext->getIRBuilder().insert({IR::Opcode::load_extern,{{IROperand::operandType::index, entry}}});
+            auto entryIndex = addExternEntryIfNotExists(targetModule, identifier);
+            auto entry = irModule->externTable[entryIndex];
+            yoi_assert(entry->type == IRExternEntry::externType::globalVar, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected global variable");
+            auto valType = moduleContext->getCompilerContext()->getImportedModule(targetModule)->globalVariables[identifier->node.strVal];
+            // moduleContext->getIRBuilder().insert({IR::Opcode::load_extern,{{IROperand::operandType::index, entry}}});
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_extern, {IROperand::operandType::index, entryIndex}, valType);\
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::runtime_error &) {
             // not found, panic
             panic(identifier->getLine(), identifier->getColumn(), "undefined identifier: " + wstring2string(identifier->node.strVal));
-            return {};
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
     }
 
-    yoi::IROperand
-    visitor::visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule) {
+    yoi::indexT
+    visitor::visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
             // TODO: what the heck is this
         } else {
@@ -1354,11 +1591,18 @@ namespace yoi {
         }
     }
 
-    yoi::IROperand visitor::visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule) {
+    yoi::indexT visitor::visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule, bool isStoreOp) {
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
         } else if (subscriptExpr->isInvocation()) {
-            // TODO: method call
+            auto funcIndex = addExternEntryIfNotExists(targetModule, subscriptExpr->id->id);
+            yoi_assert(irModule->externTable[funcIndex]->type == IRExternEntry::externType::function, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier, expected function");
+            auto funcType = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable[subscriptExpr->id->id->node.strVal];
+            for (auto &arg : subscriptExpr->args->arg) {
+                visit(arg);
+            }
+            moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->arg.size(), funcType->returnType, true);
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } else {
             return visitExtern(subscriptExpr->id, targetModule);
         }

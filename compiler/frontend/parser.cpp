@@ -183,8 +183,11 @@ namespace yoi {
         while (t) {
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
-            else
+            else {
+                args.push_back(t);
                 break;
+            }
+            args.push_back(t);
             parse(t, lex);
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
@@ -409,11 +412,45 @@ namespace yoi {
         lex.dropState();
     }
 
+    void parse(leftExpr *&o, lexer &lex) {
+        uniqueExpr *a;
+        lexer::token t{};
+        rExpr *expr;
+
+        parse(a, lex);
+        if (!a) {
+            o = nullptr;
+            return;
+        }
+
+        switch (lex.curToken.kind) {
+            case lexer::token::tokenKind::assignSign:
+            case lexer::token::tokenKind::additionAssignment:
+            case lexer::token::tokenKind::subtractionAssignment:
+            case lexer::token::tokenKind::multiplicationAssignment:
+            case lexer::token::tokenKind::divisionAssignment: {
+                t = lex.curToken;
+                lex.scan();
+                parse(expr, lex);
+                if (!expr) {
+                    panic(lex.line, lex.col, "expected rightValueExpr after assignment operator");
+                    return;
+                }
+                o = new leftExpr{lex.curToken, t, a, expr};
+                break;
+            }
+            default: {
+                o = new leftExpr{lex.curToken, t, a, nullptr};
+                break;
+            }
+        }
+    }
+
     void parse(mulExpr *&o, lexer &lex) {
-        vec<uniqueExpr *> vecA;
+        vec<leftExpr *> vecA;
         vec<lexer::token> vecB;
         lexer::token b;
-        uniqueExpr *a;
+        leftExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
@@ -774,7 +811,7 @@ namespace yoi {
         }
         parse(var, lex);
         if (var) {
-            o = new structDefInnerPair{lex.curToken, 0, nullptr, nullptr, method};
+            o = new structDefInnerPair{lex.curToken, 0, var, nullptr, nullptr};
             return;
         }
         o = nullptr;
@@ -839,8 +876,10 @@ namespace yoi {
                 break;
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
-            else
+            else {
+                vecA.push_back(a);
                 break;
+            }
             vecA.push_back(a);
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
@@ -865,10 +904,13 @@ namespace yoi {
             parse(a, lex);
             if (!a)
                 break;
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
+            if (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
-            else
+            }
+            else {
+                vecA.push_back(a);
                 break;
+            }
             vecA.push_back(a);
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
@@ -951,8 +993,11 @@ namespace yoi {
             panic(lex.line, lex.col, "expected implInner after interface or struct name");
             return;
         }
-
-        o = new implStmt{lex.curToken, first, second, inner};
+        if (second) {
+            o = new implStmt{lex.curToken, first, second, inner};
+        } else {
+             o = new implStmt{lex.curToken, {}, first, inner};
+        }
     }
 
     void parse(letAssignmentPair *&o, lexer &lex) {

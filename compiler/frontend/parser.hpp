@@ -45,6 +45,8 @@ namespace yoi {
 
     void parse(uniqueExpr *&o, lexer &lex);
 
+    void parse(leftExpr *&o, lexer &lex);
+
     void parse(mulExpr *&o, lexer &lex);
 
     void parse(addExpr *&o, lexer &lex);

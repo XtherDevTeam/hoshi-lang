@@ -145,7 +145,23 @@ namespace yoi {
         return op.kind != lexer::token::tokenKind::unknown;
     }
 
-    vec<uniqueExpr *> &mulExpr::getTerms() {
+    lexer::token & leftExpr::getOp() {
+        return op;
+    }
+
+    uniqueExpr & leftExpr::getLhs() const {
+        return *lhs;
+    }
+
+    rExpr & leftExpr::getRhs() const {
+        return *rhs;
+    }
+
+    bool leftExpr::hasRhs() const {
+        return rhs != nullptr;
+    }
+
+    vec<leftExpr *> &mulExpr::getTerms() {
         return terms;
     }
 
@@ -549,13 +565,15 @@ namespace yoi {
 
     void finalizeAST(identifierWithDefTemplateArg *ptr) {
         finalizeAST(ptr->id);
-        finalizeAST(ptr->arg);
+        if (ptr->hasDefTemplateArg())
+            finalizeAST(ptr->arg);
         delete ptr;
     }
 
     void finalizeAST(identifierWithTemplateArg *ptr) {
         finalizeAST(ptr->id);
-        finalizeAST(ptr->arg);
+        if (ptr->hasTemplateArg())
+            finalizeAST(ptr->arg);
         delete ptr;
     }
 
@@ -563,7 +581,7 @@ namespace yoi {
         finalizeAST(ptr->id);
         if (ptr->isInvocation())
             finalizeAST(ptr->args);
-        else
+        else if (ptr->isSubscript())
             finalizeAST(ptr->subscript);
         delete ptr;
     }
@@ -929,6 +947,19 @@ namespace yoi {
 
     vec<globalStmt *> &hoshiModule::getStmts() {
         return stmts;
+    }
+
+    void finalizeAST(hoshiModule *ptr) {
+        for (auto stmt : ptr->getStmts()) {
+            finalizeAST(stmt);
+        }
+    }
+
+    void finalizeAST(leftExpr *ptr) {
+        if (ptr->hasRhs()) {
+            finalizeAST(ptr->rhs);
+        }
+        finalizeAST(ptr->lhs);
     }
 
     const std::tuple<yoi::indexT, yoi::indexT> &AST::getLocation() {

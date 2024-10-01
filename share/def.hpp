@@ -40,7 +40,7 @@ namespace yoi {
                     return i;
                 }
             indexes.push_back({a, b});
-            return indexes.size();
+            return indexes.size() - 1;
         }
 
         B &operator[](const A &k) {
@@ -65,6 +65,24 @@ namespace yoi {
                 }
             throw std::runtime_error("indexTable: invalid key");
         }
+
+        class iterator {
+            vec<std::pair<A, B>>::iterator it;
+        public:
+            iterator(vec<std::pair<A, B>>::iterator it) : it(it) {}
+
+            bool operator!=(const iterator &other) const { return it!= other.it; }
+
+            iterator &operator++() { ++it; return *this; }
+
+            std::pair<A, B> &operator*() { return *it; }
+        };
+
+        iterator begin() { return iterator(indexes.begin()); }
+
+        iterator end() { return iterator(indexes.end()); }
+
+        yoi::indexT size() const { return indexes.size(); }
     };
 
     template<typename T>
