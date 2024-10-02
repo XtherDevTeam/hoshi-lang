@@ -22,8 +22,21 @@ namespace yoi {
     class compilerContext : public std::enable_shared_from_this<compilerContext> {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> sharedValueType;
         std::map<yoi::indexT, std::shared_ptr<IRModule>> moduleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
+
+        yoi::IRValueType getIntObject();
+
+        yoi::IRValueType getBoolObject();
+
+        yoi::IRValueType getDeciObject();
+
+        yoi::IRValueType getStrObject();
+
+        yoi::IRValueType getNoneObject();
+
+        yoi::IRValueType getCharObject();
 
     public:
         compilerContext() = default;
@@ -64,17 +77,21 @@ namespace yoi {
 
         static yoi::IRStructDefinition getStringObjectDefinition();
 
+        static yoi::IRStructDefinition getCharObjectDefinition();
+
         void initializeSharedObjects();
 
-        yoi::IRValueType getIntObjectType();
+        std::shared_ptr<yoi::IRValueType> getIntObjectType();
 
-        yoi::IRValueType getBoolObjectType();
+        std::shared_ptr<yoi::IRValueType> getBoolObjectType();
 
-        yoi::IRValueType getDeciObjectType();
+        std::shared_ptr<yoi::IRValueType> getDeciObjectType();
 
-        yoi::IRValueType getStrObjectType();
+        std::shared_ptr<yoi::IRValueType> getStrObjectType();
 
-        yoi::IRValueType getNoneObjectType();
+        std::shared_ptr<yoi::IRValueType> getCharObjectType();
+
+        std::shared_ptr<yoi::IRValueType> getNoneObjectType();
     };
 
 } // yoi

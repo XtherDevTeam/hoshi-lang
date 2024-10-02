@@ -157,15 +157,15 @@ namespace yoi {
         switch(valType->type) {
             case IRValueType::valueType::integerObject:
                 insert({IR::Opcode::basic_cast_int, {}}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = managedPtr(compilerCtx->getIntObjectType());
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = compilerCtx->getIntObjectType();
                 break;
             case IRValueType::valueType::decimalObject:
                 insert({IR::Opcode::basic_cast_deci, {}}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = managedPtr(compilerCtx->getDeciObjectType());
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = compilerCtx->getDeciObjectType();
                 break;
             case IRValueType::valueType::booleanObject:
                 insert({IR::Opcode::basic_cast_bool, {}}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = managedPtr(compilerCtx->getBoolObjectType());
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) = compilerCtx->getBoolObjectType();
                 break;
             default: {
                 panic(0, 0, "Unsupported type for basicCast");
@@ -196,7 +196,9 @@ namespace yoi {
             case IR::Opcode::sub:
             case IR::Opcode::mul:
             case IR::Opcode::div:
-            case IR::Opcode::mod: {
+            case IR::Opcode::mod:
+            case IR::Opcode::left_shift:
+            case IR::Opcode::right_shift: {
                 tempVarStack.emplace_back(left);
                 break;
             }
@@ -206,7 +208,7 @@ namespace yoi {
             case IR::Opcode::greater_equal:
             case IR::Opcode::equal:
             case IR::Opcode::not_equal: {
-                tempVarStack.emplace_back(managedPtr(compilerCtx->getBoolObjectType()));
+                tempVarStack.emplace_back(compilerCtx->getBoolObjectType());
                 break;
             }
             default: {
@@ -233,13 +235,13 @@ namespace yoi {
     void IRBuilder::pushOp(IR::Opcode op, const yoi::IROperand &constV) {
         if (constV.type == IROperand::operandType::integer) {
             // tempVarStack.push_back()
-            tempVarStack.emplace_back(managedPtr(compilerCtx->getIntObjectType()));
+            tempVarStack.emplace_back(compilerCtx->getIntObjectType());
         } else if (constV.type == IROperand::operandType::boolean) {
-            tempVarStack.emplace_back(managedPtr(compilerCtx->getBoolObjectType()));
+            tempVarStack.emplace_back(compilerCtx->getBoolObjectType());
         } else if (constV.type == IROperand::operandType::decimal) {
-            tempVarStack.emplace_back(managedPtr(compilerCtx->getDeciObjectType()));
+            tempVarStack.emplace_back(compilerCtx->getDeciObjectType());
         } else if (constV.type == IROperand::operandType::stringLiteral) {
-            tempVarStack.emplace_back(managedPtr(compilerCtx->getStrObjectType()));
+            tempVarStack.emplace_back(compilerCtx->getStrObjectType());
         } else {
             panic(0, 0, "Unsupported constant type for pushOp");
         }
@@ -286,6 +288,9 @@ namespace yoi {
     }
 
     void IRBuilder::storeMemberOp(const yoi::IROperand &memberIndex) {
+        // pop rhs and lhs from tempVarStack
+        tempVarStack.pop_back();
+        tempVarStack.pop_back();
         insert({IR::Opcode::store_member, {memberIndex}});
     }
 
@@ -401,7 +406,7 @@ namespace yoi {
         return variableTable;
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT objectPrototypeIndex) : type(type), typeIndex(objectPrototypeIndex) {
+    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex) : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex) {
 
     }
 
@@ -411,6 +416,10 @@ namespace yoi {
 
     bool IRValueType::isBasicType() const {
         return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject;
+    }
+
+    bool IRValueType::is1ByteType() const {
+        return type == valueType::booleanRaw || type == valueType::charRaw;
     }
 
     yoi::wstr IRValueType::to_string() const {
@@ -442,6 +451,10 @@ namespace yoi {
             default:
                 return L"unknown";
         }
+    }
+
+    bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
+        return type == rhs.type && typeIndex == rhs.typeIndex;
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo>& nameInfoMap, const vec <std::shared_ptr<IRValueType>> &fieldTypes) : name(name), nameIndexMap(nameInfoMap), fieldTypes(fieldTypes) {

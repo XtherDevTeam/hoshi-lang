@@ -13,8 +13,9 @@ namespace yoi {
     public:
         std::shared_ptr<moduleContext> moduleContext;
         std::shared_ptr<yoi::IRModule> irModule;
+        yoi::indexT currentModuleIndex;
 
-        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext, const std::shared_ptr<yoi::IRModule> &irModule);
+        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext, const std::shared_ptr<yoi::IRModule> &irModule, yoi::indexT moduleIndex);
 
         std::shared_ptr<yoi::IRModule> visit();
 
@@ -45,6 +46,8 @@ namespace yoi {
         yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier);
 
         bool isVisitingGlobalScope() const;
+
+        void emitBasicCastInBasicArithOpByLhsAndRhs(yoi::indexT lhs, yoi::indexT rhs);
 
         /**
          * Visitor methods

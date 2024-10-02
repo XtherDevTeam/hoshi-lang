@@ -9,6 +9,7 @@
 #include "frontend/lexer.hpp"
 #include "frontend/parser.hpp"
 #include "ir/IR.h"
+#include "ir/IROptimizer.hpp"
 #include "visitor/visitor.h"
 
 namespace yoi {
@@ -53,8 +54,12 @@ namespace yoi {
         std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
         auto idx = modules.put(filepath, modCtx);
         moduleImported[idx] = irMod;
-        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod);
+        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
         vis->visit();
+        for (auto &i : irMod->functionTable) {
+            IROptimizer optimizer{shared_from_this(), irMod};
+            optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
+        }
         finalizeAST(mod);
         return idx;
     }
@@ -113,7 +118,7 @@ namespace yoi {
 
     yoi::IRStructDefinition compilerContext::getStringObjectDefinition() {
         IRValueType valType{
-            IRValueType::valueType::integerRaw,
+            IRValueType::valueType::stringLiteral,
         };
         IRStructDefinition::nameInfo info{
             IRStructDefinition::nameInfo::nameType::field,
@@ -127,42 +132,101 @@ namespace yoi {
         return def;
     }
 
+    yoi::IRStructDefinition compilerContext::getCharObjectDefinition() {
+        IRValueType valType{
+            IRValueType::valueType::charRaw,
+        };
+        IRStructDefinition::nameInfo info{
+            IRStructDefinition::nameInfo::nameType::field,
+        };
+        yoi::IRStructDefinition def{
+            L"char",
+            {{L"ptr", info}},
+            {managedPtr(valType)}
+        };
+        return def;
+    }
+
     void compilerContext::initializeSharedObjects() {
         sharedObjectDefinition.put(L"int", managedPtr(getIntObjectDefinition()));
         sharedObjectDefinition.put(L"bool", managedPtr(getBooleanObjectDefinition()));
         sharedObjectDefinition.put(L"deci", managedPtr(getDecimalObjectDefinition()));
         sharedObjectDefinition.put(L"string", managedPtr(getStringObjectDefinition()));
+        sharedObjectDefinition.put(L"char", managedPtr(getCharObjectDefinition()));
+
+        sharedValueType.put(L"int", managedPtr(getIntObject()));
+        sharedValueType.put(L"bool", managedPtr(getBoolObject()));
+        sharedValueType.put(L"deci", managedPtr(getDeciObject()));
+        sharedValueType.put(L"string", managedPtr(getStrObject()));
+        sharedValueType.put(L"char", managedPtr(getCharObject()));
+        sharedValueType.put(L"none", managedPtr(getNoneObject()));
     }
 
-    yoi::IRValueType compilerContext::getIntObjectType() {
+    std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType() {
+        return sharedValueType[L"int"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getBoolObjectType() {
+        return sharedValueType[L"bool"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getDeciObjectType() {
+        return sharedValueType[L"deci"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getStrObjectType() {
+        return sharedValueType[L"string"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getCharObjectType() {
+        return sharedValueType[L"char"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getNoneObjectType() {
+        return sharedValueType[L"none"];
+    }
+
+    yoi::IRValueType compilerContext::getIntObject() {
         return {
             IRValueType::valueType::integerObject,
+            static_cast<yoi::indexT>(-1),
             {sharedObjectDefinition.getIndex(L"int")}
         };
     }
 
-    yoi::IRValueType compilerContext::getBoolObjectType() {
+    yoi::IRValueType compilerContext::getBoolObject() {
         return {
             IRValueType::valueType::booleanObject,
+            static_cast<yoi::indexT>(-1),
             {sharedObjectDefinition.getIndex(L"bool")}
         };
     }
 
-    yoi::IRValueType compilerContext::getDeciObjectType() {
+    yoi::IRValueType compilerContext::getDeciObject() {
         return {
             IRValueType::valueType::decimalObject,
+            static_cast<yoi::indexT>(-1),
             {sharedObjectDefinition.getIndex(L"deci")}
         };
     }
 
-    yoi::IRValueType compilerContext::getStrObjectType() {
+    yoi::IRValueType compilerContext::getStrObject() {
         return {
             IRValueType::valueType::stringObject,
+            static_cast<yoi::indexT>(-1),
             {sharedObjectDefinition.getIndex(L"string")}
         };
     }
 
-    yoi::IRValueType compilerContext::getNoneObjectType() {
-        return {IRValueType::valueType::none, {}};
+    yoi::IRValueType compilerContext::getNoneObject() {
+        return {IRValueType::valueType::none, static_cast<yoi::indexT>(-1), {}};
+    }
+
+    yoi::IRValueType compilerContext::getCharObject() {
+        return {
+            IRValueType::valueType::characterObject,
+            static_cast<yoi::indexT>(-1),
+            {sharedObjectDefinition.getIndex(L"char")}
+        };
     }
 } // yoi
