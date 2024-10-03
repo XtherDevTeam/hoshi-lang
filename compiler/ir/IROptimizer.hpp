@@ -176,6 +176,8 @@ namespace yoi {
 
         IROptimizer &reduceRedundantJump();
 
+        IROptimizer &reduceRedundantCodeAfterRet();
+
         IROptimizer &doOptimizationForCurrentFunction();
     };
 

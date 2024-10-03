@@ -649,25 +649,84 @@ namespace yoi {
                 case IR::Opcode::basic_cast_bool: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
-                    simulationStack.push(compilerCtx->getBoolObjectType(),
-                                         value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                         value.possibleValue);
+                    // judge whether this is evaluable
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.boolValue = value.possibleValue.intValue != 0;
+                            break;
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.boolValue = value.possibleValue.deciValue != 0.0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.boolValue = value.possibleValue.charValue != 0;
+                            break;
+                            default:
+                                break;
+                        }
+                        value.type = compilerCtx->getBoolObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = IR{IR::Opcode::nop, {}};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getBoolObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
+                                             value.possibleValue);
+                    }
                     break;
                 }
                 case IR::Opcode::basic_cast_int: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
-                    simulationStack.push(compilerCtx->getIntObjectType(),
-                                         value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                         value.possibleValue);
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.deciValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.intValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.charValue);
+                            break;
+                            default:
+                        }
+                        value.type = compilerCtx->getIntObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = IR{IR::Opcode::nop, {}};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getIntObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
+                                             value.possibleValue);
+                    }
                     break;
                 }
                 case IR::Opcode::basic_cast_deci: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
-                    simulationStack.push(compilerCtx->getDeciObjectType(),
-                                         value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                         value.possibleValue);
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.intValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.deciValue = value.possibleValue.boolValue ? 1.0 : 0.0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.charValue);
+                            break;
+                            default:
+                        }
+                        value.type = compilerCtx->getDeciObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = IR{IR::Opcode::nop, {}};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getDeciObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
+                                             value.possibleValue);
+                    }
                     break;
                 }
                 case IR::Opcode::add: {
@@ -995,7 +1054,9 @@ namespace yoi {
                             insIndex = generatePushOp(it->second.possibleValue, insIndex);
                         } else {
                             // if we can't guess the value, we can't optimize it
-                            simulationStack.push(it->second.possibleValue.type, {currentCodeBlockIndex, {insIndex}});
+                            // find the local variable definition
+                            auto type = targetFunction->getVariableTable().get(ins.operands[0].value.symbolIndex);
+                            simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});
                             it->second.isReadAfterStore = true;
                         }
                     } else {
@@ -1074,12 +1135,14 @@ namespace yoi {
                 }
                 case IR::Opcode::load_member: {
                     // we can't optimize it
-                    auto type = simulationStack.peek(0).type->typeIndex;
-                    auto structDef = irModule->structTable[type];
+                    auto value = simulationStack.peek(0);
+                    auto type = value.type->typeIndex;
+                    auto targetModule = compilerCtx->getImportedModule(value.type->typeAffiliateModule);
+                    auto structDef = targetModule->structTable[type];
                     auto memberIndex = ins.operands[0].value.symbolIndex;
                     auto memberDef = structDef->fieldTypes[memberIndex];
                     simulationStack.pop();
-                    simulationStack.push(memberDef, {currentCodeBlockIndex, {insIndex}});
+                    simulationStack.push(memberDef, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
                     break;
                 }
                 case IR::Opcode::store_member: {
@@ -1105,10 +1168,12 @@ namespace yoi {
                     auto returnType = function->returnType;
                     auto argTypes = function->argumentTypes;
                     auto argCount = function->argumentTypes.size();
+                    SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}};
                     for (int i = 0; i < argCount; i++) {
+                        contributedInstructions = contributedInstructions + simulationStack.peek(i).contributedInstructions;
                         simulationStack.pop();
                     }
-                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}});
+                    simulationStack.push(returnType, contributedInstructions);
                     break;
                 }
                 case IR::Opcode::invoke_extern: {
@@ -1130,6 +1195,8 @@ namespace yoi {
                     if (condition.hasPossibleValue) {
                         if (condition.possibleValue.boolValue) {
                             // if the condition is true, we can jump to the target block directly
+                            // reduce redundant condition
+                            insIndex = reduce(condition.contributedInstructions, insIndex);
                             ins.opcode = IR::Opcode::jump;
                         } else {
                             // if the condition is false, we can ignore the jump instruction
@@ -1148,6 +1215,8 @@ namespace yoi {
                     if (condition.hasPossibleValue) {
                         if (!condition.possibleValue.boolValue) {
                             // if the condition is false, we can jump to the target block directly
+                            // reduce redundant condition
+                            insIndex = reduce(condition.contributedInstructions, insIndex);
                             ins.opcode = IR::Opcode::jump;
                         } else {
                             // if the condition is true, we can ignore the jump instruction
@@ -1209,12 +1278,22 @@ namespace yoi {
         return *this;
     }
 
+    IROptimizer & IROptimizer::reduceRedundantCodeAfterRet() {
+        auto it = std::find_if(targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().begin(), targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().end(),
+            [&](const IR &ins) { return ins.opcode == IR::Opcode::ret; });
+        if (it != targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().end()) {
+            // if the last instruction is a ret, we can ignore all the instructions after it
+            targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().erase(it + 1, targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().end());
+        }
+        return *this;
+    }
+
     IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             currentCodeBlockIndex = i;
-            this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeBlocks();
+            this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();
         }
-        this->reduceRedundantNop().reduceRedundantJump();
+        this->reduceRedundantNop().reduceRedundantJump().reduceRedundantCodeBlocks();
         return *this;
     }
 } // yoi

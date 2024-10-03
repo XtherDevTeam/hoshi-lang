@@ -133,7 +133,11 @@ namespace yoi {
         if (insertionPoint == 0xffffffff) {
             getCurrentCodeBlock().getIRArray().push_back(ir);
         } else {
-            getCurrentCodeBlock().getIRArray().insert(getCurrentCodeBlock().getIRArray().begin() + insertionPoint, ir);
+            auto insPoint = getCurrentCodeBlock().getIRArray().begin() + insertionPoint;
+            if (insPoint != getCurrentCodeBlock().getIRArray().end()) {
+                insPoint++;
+            }
+            getCurrentCodeBlock().getIRArray().insert(insPoint, ir);
         }
     }
 
