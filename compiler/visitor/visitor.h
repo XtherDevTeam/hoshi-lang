@@ -25,7 +25,7 @@ namespace yoi {
          * @param currentModule The current module being checked, -1 if not in a module
          * @return -1 if not a module name, otherwise the index of the module in the module table
          */
-        yoi::indexT isModuleName(subscriptExpr *it, yoi::indexT currentModule) const;
+        yoi::indexT isModuleName(identifierWithTemplateArg *it, yoi::indexT currentModule) const;
 
         /**
          * @brief search and return extern entry by identifier in target module
@@ -119,9 +119,16 @@ namespace yoi {
 
         IRValueType parseTypeSpec(yoi::typeSpec *typeSpec);
 
+        yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
+
+        yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc, yoi::identifier *structName);
+
+        std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRStructDefinition>> parseInterfaceName(
+         yoi::externModuleAccessExpression *structDef);
+
         yoi::indexT visit(yoi::funcDefStmt *funcDefStmt);
 
-        yoi::IROperand visit(yoi::interfaceDefStmt *interfaceDefStmt);
+        yoi::indexT visit(yoi::interfaceDefStmt *interfaceDefStmt);
 
         yoi::indexT visit(yoi::structDefStmt *structDefStmt);
 

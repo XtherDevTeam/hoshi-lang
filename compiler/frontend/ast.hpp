@@ -144,6 +144,8 @@ namespace yoi {
 
     class leftExpr;
 
+    class externModuleAccessExpression;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -227,11 +229,11 @@ namespace yoi {
     class typeSpec : public AST {
     public:
         int16_t kind; // 0 is member 1 is func 2 is null
-        memberExpr *member;
+        externModuleAccessExpression *member;
         funcTypeSpec *func;
         bool isNull;
 
-        memberExpr &getMemberExpr() const;
+        externModuleAccessExpression &getMemberExpr() const;
 
         funcTypeSpec &getTypeSpec() const;
     };
@@ -511,10 +513,10 @@ namespace yoi {
 
     class interfaceDefStmt : public AST {
     public:
-        identifier *id;
+        identifierWithDefTemplateArg *id;
         interfaceDefInner *inner;
 
-        identifier &getId();
+        identifierWithDefTemplateArg &getId();
 
         interfaceDefInner &getInner();
     };
@@ -577,13 +579,13 @@ namespace yoi {
 
     class implStmt : public AST {
     public:
-        identifier *interfaceName;
-        identifier *structName;
+        externModuleAccessExpression *interfaceName;
+        identifierWithDefTemplateArg *structName;
         implInner *inner;
 
-        identifier &getInterfaceId();
+        externModuleAccessExpression &getInterfaceId();
 
-        identifier &getStructId();
+        identifierWithDefTemplateArg &getStructId();
 
         implInner &getInner();
 
@@ -810,6 +812,17 @@ namespace yoi {
 
         vec<globalStmt *> &getStmts();
     };
+
+    class externModuleAccessExpression : public AST {
+        public:
+            vec<identifierWithTemplateArg *> terms;
+
+            vec<identifierWithTemplateArg *> &getTerms();
+
+            bool isIdentifier() const;
+    };
+
+    void finalizeAST(externModuleAccessExpression *ptr);
 
     void finalizeAST(hoshiModule *ptr);
 

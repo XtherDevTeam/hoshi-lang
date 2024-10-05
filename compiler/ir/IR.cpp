@@ -270,6 +270,7 @@ namespace yoi {
 
     void IRBuilder::loadMemberOp(const yoi::IROperand &memberIndex,
                                  const std::shared_ptr<IRValueType> &memberType) {
+        tempVarStack.pop_back();
         tempVarStack.emplace_back(memberType);
         insert({IR::Opcode::load_member, {memberIndex}});
     }
@@ -309,8 +310,12 @@ namespace yoi {
                   }));
     }
 
-    void IRBuilder::retOp() {
+    void IRBuilder::retOp(bool returnWithNone) {
         // fetch return value from tempVarStack
+        if (returnWithNone) {
+            insert(IR(IR::Opcode::ret_none, {}));
+            return;
+        }
         auto retValue = tempVarStack.back();
         tempVarStack.pop_back();
         insert(IR(IR::Opcode::ret, {}));

@@ -37,6 +37,8 @@ namespace yoi {
 
     void parse(identifierWithDefTemplateArg *&o, lexer &lex);
 
+    void parse(externModuleAccessExpression *&o, lexer &lex);
+
     void parse(subscriptExpr *&o, lexer &lex);
 
     void parse(memberExpr *&o, lexer &lex);

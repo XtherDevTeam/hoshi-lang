@@ -57,7 +57,7 @@ namespace yoi {
         return *resultType;
     }
 
-    memberExpr &typeSpec::getMemberExpr() const {
+    externModuleAccessExpression &typeSpec::getMemberExpr() const {
         return *member;
     }
 
@@ -325,7 +325,7 @@ namespace yoi {
         return inner;
     }
 
-    identifier &interfaceDefStmt::getId() {
+    identifierWithDefTemplateArg &interfaceDefStmt::getId() {
         return *id;
     }
 
@@ -373,11 +373,11 @@ namespace yoi {
         return inner;
     }
 
-    identifier &implStmt::getInterfaceId() {
+    externModuleAccessExpression &implStmt::getInterfaceId() {
         return *interfaceName;
     }
 
-    identifier &implStmt::getStructId() {
+    identifierWithDefTemplateArg &implStmt::getStructId() {
         return *structName;
     }
 
@@ -949,10 +949,26 @@ namespace yoi {
         return stmts;
     }
 
+    vec<identifierWithTemplateArg *> &externModuleAccessExpression::getTerms() {
+        return terms;
+    }
+
+    bool externModuleAccessExpression::isIdentifier() const {
+        return terms.size() == 1;
+    }
+
+    void finalizeAST(externModuleAccessExpression *ptr) {
+        for (auto &term : ptr->getTerms()) {
+            finalizeAST(term);
+        }
+        delete ptr;
+    }
+
     void finalizeAST(hoshiModule *ptr) {
         for (auto stmt : ptr->getStmts()) {
             finalizeAST(stmt);
         }
+        delete ptr;
     }
 
     void finalizeAST(leftExpr *ptr) {
@@ -960,6 +976,7 @@ namespace yoi {
             finalizeAST(ptr->rhs);
         }
         finalizeAST(ptr->lhs);
+        delete ptr;
     }
 
     const std::tuple<yoi::indexT, yoi::indexT> &AST::getLocation() {

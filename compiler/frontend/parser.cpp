@@ -229,7 +229,7 @@ namespace yoi {
     }
 
     void parse(typeSpec *&o, lexer &lex) {
-        memberExpr *expr;
+        externModuleAccessExpression *expr;
         funcTypeSpec *spec;
         if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
             lex.scan();
@@ -305,6 +305,28 @@ namespace yoi {
             return;
         }
         o->arg = arg;
+    }
+
+    void parse(externModuleAccessExpression *&o, lexer &lex) {
+        vec<identifierWithTemplateArg *> vecA;
+        identifierWithTemplateArg *a;
+        parse(a, lex);
+        if (!a) {
+            o = nullptr;
+            return;
+        }
+        while (true) {
+            vecA.push_back(a);
+            if (lex.curToken.kind != lexer::token::tokenKind::dot) {
+                break;
+            } else if (a->hasTemplateArg()) {
+                panic(lex.line, lex.col, "expected identifier (except the last term) in externModuleAccessExpression");
+            } else {
+                lex.scan();
+            }
+            parse(a, lex);
+        }
+        o = new externModuleAccessExpression{lex.curToken, vecA};
     }
 
     void parse(subscriptExpr *&o, lexer &lex) {
@@ -397,7 +419,7 @@ namespace yoi {
                 break;
             }
             default: {
-                t.kind == lexer::token::tokenKind::unknown;
+                t.kind = lexer::token::tokenKind::unknown;
                 break;
             }
         }
@@ -929,7 +951,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        identifier *id;
+        identifierWithDefTemplateArg *id;
         interfaceDefInner *inner;
         parse(id, lex);
         if (!id) {
@@ -973,21 +995,30 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        identifier *first{}, *second{};
+        lex.saveState();
+
+        externModuleAccessExpression *first{};
+        identifierWithDefTemplateArg *second{};
         implInner *inner;
-        parse(first, lex);
-        if (!first) {
-            panic(lex.line, lex.col, "expected interface or struct name after `impl`");
+
+        parse(second, lex);
+
+        if (!second) {
+            panic(lex.line, lex.col, "expected struct name after `impl`");
             return;
         }
-        if (lex.curToken.kind == lexer::token::tokenKind::kFor) {
-            second = first;
+        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
+            lex.scan();
             parse(first, lex);
+
             if (!first) {
-                panic(lex.line, lex.col, "expected struct name after `for`");
+                panic(lex.line, lex.col, "expected interface name after `:`");
                 return;
             }
+        } else {
+            // nothing happens
         }
+
         parse(inner, lex);
         if (!inner) {
             panic(lex.line, lex.col, "expected implInner after interface or struct name");
@@ -996,7 +1027,7 @@ namespace yoi {
         if (second) {
             o = new implStmt{lex.curToken, first, second, inner};
         } else {
-             o = new implStmt{lex.curToken, {}, first, inner};
+             o = new implStmt{lex.curToken, {}, second, inner};
         }
     }
 
@@ -1100,7 +1131,6 @@ namespace yoi {
 
         o = new ifStmt{lex.curToken, {}, {}, nullptr};
         ifStmt::ifBlock i{};
-        codeBlock *block;
 
         parse(i, lex);
         o->ifB = i;

@@ -1,3 +1,7 @@
+interface Test {
+    yield() : int
+}
+
 struct aaa {
     x: int,
     y: int,
@@ -8,6 +12,12 @@ impl aaa {
     constructor(x: int, y: int) {
         this.x = x
         this.y = y
+    }
+}
+
+impl aaa : Test {
+    yield() : int {
+        return this.super.x + this.super.y
     }
 }
 

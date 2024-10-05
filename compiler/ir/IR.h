@@ -7,7 +7,6 @@
 
 #include "share/def.hpp"
 #include <map>
-#include <ranges>
 #include <compiler/compilerContext.h>
 
 namespace yoi {
@@ -118,7 +117,7 @@ namespace yoi {
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, load_extern, dummy_break, dummy_continue, ret, ret_void,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, invoke, invoke_extern, nop, FINAL
+            store_global, store_local, store_member, store_extern, invoke, invoke_extern, nop, FINAL, ret_none
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;
@@ -357,7 +356,7 @@ namespace yoi {
         void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType, bool
                       externalInvocation = false);
 
-        void retOp();
+        void retOp(bool returnWithNone = false);
 
         yoi::indexT getCurrentInsertionPoint();
 

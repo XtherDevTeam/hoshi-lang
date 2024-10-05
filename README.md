@@ -151,15 +151,15 @@ basicLiterals ::= TOK_string | TOK_integer | TOK_decimal | TOK_boolean | TOK_cha
 identifier ::= TOK_identifier
 identifierWithTypeSpec ::= identifier ":" typeSpec
 defTemplateArgSpec ::= identifier
-						    		 | identifier "impl" identifier
+					 | identifier "impl" externModuleAccessExpression # TODO
 defTemplateArg ::= "<" [ { defTemplateArgSpec "," } defTemplateArgSpec ] ">"
 templateArgSpec ::= typeSpec
 templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
 invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
 definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
 funcTypeSpecArgs ::= "(" [ { typeSpec "," } typeSpec ] ")"
-funcTypeSpec ::= "func" funcTypeSpecArgs ":" typeSpec
-typeSpec ::= accessExpression
+funcTypeSpec ::= "func" definitionArguments ":" typeSpec
+typeSpec ::= externModuleAccessExpression
            | funcTypeSpec
            | "null"
 subscript ::= "[" rExpr "]"
@@ -167,6 +167,9 @@ identifierWithTemplateArg ::= identifier
                             | identifier TemplateArg
 identifierWithDefTemplateArg ::= identifier
                                | identifier defTemplateArg
+externModuleAccessExpression ::= identifier { "." identifierWithTemplateArg }
+lambdaDefinition ::= "(" [ memberExpression "as" identifier ] ")" "=>" definitionArguments codeBlock  
+subscriptTypeSpec ::= externModuleAccessExpression { "[" TOK_integer "]" }
 subscriptExpression ::= identifierWithTemplateArg
                       | identifierWithTemplateArg invocationArguments
                       | identifierWithTemplateArg subscript
@@ -204,8 +207,8 @@ structDefStmt ::= "struct" identifierWithDefTemplateArg structDefInner
 implInnerPair ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
                 | constructorDef
 implInner ::= "{" [ implInnerPair { "," implInnerPair } ] "}"
-implStmt ::= "impl" identifier implInner
-           | "impl" identifier "for" identifier implInner
+implStmt ::= "impl" externModuleAccessExpression implInner
+           | "impl" externModuleAccessExpression ":" identifierWithDefTemplateArg implInner
 letAssignmentPair ::= identifier "=" rExpr
 letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
 globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
