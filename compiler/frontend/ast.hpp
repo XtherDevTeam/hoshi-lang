@@ -466,7 +466,7 @@ namespace yoi {
     class useStmt : public AST {
     public:
         identifier *name;
-        lexer::token &path;
+        lexer::token path;
 
         identifier &getName();
 

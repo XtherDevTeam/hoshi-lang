@@ -686,8 +686,8 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::memberExpr *memberExpr, bool isStoreOp) {
         auto it = memberExpr->getTerms().begin();
-        yoi::indexT targetModule = currentModuleIndex;
-        while (it != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
+        yoi::indexT targetModule = -1;
+        while (it + 1 != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
             it++;
         }
         if (targetModule == -1) {
@@ -706,7 +706,32 @@ namespace yoi {
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             yoi_assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
             if (rhsIt->isInvocation()) {
-                // TODO: method call
+                // what we get so far is the struct object, which can be the `this` pointer,
+                // also, we need to inquiry the function index from nameInfo to invoke it.
+                auto memberName = rhsIt->id;
+                auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                switch (nameInfo.type) {
+                    case IRStructDefinition::nameInfo::nameType::field: {
+                        // crazy
+                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
+                        break;
+                    }
+                    case IRStructDefinition::nameInfo::nameType::method: {
+                        auto funcIndex = nameInfo.index;
+                        auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
+                        for (auto &arg : rhsIt->args->get()) {
+                            visit(arg);
+                        }
+                        if (termType->typeAffiliateModule == currentModuleIndex) {
+                            moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
+                        } else {
+                            // extern function invocation
+                            // add extern entry or use existing one
+                            auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
+                            moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
+                        }
+                    }
+                }
             } else if (rhsIt->isSubscript()) {
                 // TODO: subscript
             } else {
@@ -802,8 +827,10 @@ namespace yoi {
         }
     }
 
-    void visitor::visit(yoi::useStmt *useStmt) {
-        // TODO: dummy
+    yoi::indexT visitor::visit(yoi::useStmt *useStmt) {
+        auto index = moduleContext->getCompilerContext()->compileModule(useStmt->path.strVal);
+        irModule->moduleImports[useStmt->name->get().strVal] = index;
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     IRValueType visitor::parseTypeSpec(yoi::identifier *identifier) {
@@ -822,6 +849,10 @@ namespace yoi {
             return *moduleContext->getCompilerContext()->getDeciObjectType();
         } else if (typeName == L"string") {
             return *moduleContext->getCompilerContext()->getStrObjectType();
+        } else if (typeName == L"none") {
+            return *moduleContext->getCompilerContext()->getNoneObjectType();
+        } else if (typeName == L"char") {
+            return *moduleContext->getCompilerContext()->getCharObjectType();
         } else {
             panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }
@@ -924,7 +955,7 @@ namespace yoi {
                     auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
                     IRFunctionDefinition::Builder methodBuilder;
 
-                    methodBuilder.setName(methodName);
+                    methodBuilder.setName(methodName).setReturnType(methodType);
 
                     // add this pointer as the first argument
                     methodBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
@@ -935,7 +966,7 @@ namespace yoi {
                         methodBuilder.addArgument(argName, argType);
                     }
                     auto func = methodBuilder.yield();
-                    builder.addMethod(methodName, irModule->functionTable.put(methodName, func));
+                    builder.addMethod(i->getMethod().getName().get().strVal, irModule->functionTable.put(methodName, func));
                     break;
                 }
             }
@@ -1254,6 +1285,7 @@ namespace yoi {
             moduleContext->getIRBuilder().retOp();
         } else {
             // TODO: return void
+            moduleContext->getIRBuilder().retOp(true);
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -1291,7 +1323,7 @@ namespace yoi {
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
         auto mod = moduleContext->getCompilerContext()->getImportedModule(targetModule);
-        auto exId = addExternEntryIfNotExists(targetModule, identifier);
+        auto exId = addExternEntryIfNotExists(targetModule, identifier->node.strVal);
         auto ex = irModule->externTable[exId];
         yoi_assert(ex->type == IRExternEntry::externType::structType, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected struct type");
         return {IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), exId};
@@ -1324,8 +1356,8 @@ namespace yoi {
             case 0: {
                 // member
                 auto it = typeSpec->member->getTerms().begin();
-                yoi::indexT targetModule = currentModuleIndex;
-                while (it != typeSpec->member->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+                yoi::indexT targetModule = -1;
+                while (it + 1 != typeSpec->member->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
                     it++;
                 }
 
@@ -1377,8 +1409,8 @@ namespace yoi {
         yoi::externModuleAccessExpression *structDef) {
         // modules~
         auto it = structDef->getTerms().begin();
-        yoi::indexT targetModule = currentModuleIndex;
-        while (it != structDef->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+        yoi::indexT targetModule = -1;
+        while (it + 1 != structDef->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
             it++;
         }
         if (targetModule == -1) {
@@ -1401,7 +1433,7 @@ namespace yoi {
         if(!it->hasTemplateArg()) {
             std::shared_ptr<yoi::IRModule> target = currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getImportedModule(currentModule);
             if (auto x = target->moduleImports.find(it->getId().node.strVal); x != target->moduleImports.end() ) {
-                return moduleContext->getCompilerContext()->getModuleIndexByRealPath(x->second);
+                return x->second;
             } else {
                 return -1;
             }
@@ -1410,27 +1442,27 @@ namespace yoi {
         }
     }
 
-    yoi::IRExternEntry visitor::getExternEntry(yoi::indexT moduleIndex, yoi::identifier *identifier) const {
+    yoi::IRExternEntry visitor::getExternEntry(yoi::indexT moduleIndex, const yoi::wstr &identifier) const {
         try {
-            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->globalVariables.getIndex(identifier->node.strVal);
-            return {IRExternEntry::externType::globalVar, identifier->node.strVal, moduleIndex, res};
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->globalVariables.getIndex(identifier);
+            return {IRExternEntry::externType::globalVar, identifier, moduleIndex, res};
         } catch (std::runtime_error &) {}
         try {
-            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->functionTable.getIndex(identifier->node.strVal);
-            return {IRExternEntry::externType::function, identifier->node.strVal, moduleIndex, res};
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->functionTable.getIndex(identifier);
+            return {IRExternEntry::externType::function, identifier, moduleIndex, res};
         } catch (std::runtime_error &) {}
         try {
-            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier->node.strVal);
-            return {IRExternEntry::externType::structType, identifier->node.strVal, moduleIndex, res};
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier);
+            return {IRExternEntry::externType::structType, identifier, moduleIndex, res};
         } catch (std::runtime_error &) {}
         panic(0, 0, "undefined identifier");
         return {};
     }
 
 
-    yoi::indexT visitor::addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier) {
+    yoi::indexT visitor::addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier) {
         // extern entry format: moduleIndex#identifier
-        yoi::wstr key = std::to_wstring(moduleIndex) + L"#" + identifier->node.strVal;
+        yoi::wstr key = std::to_wstring(moduleIndex) + L"#" + identifier;
         try {
             auto it = irModule->externTable.getIndex(key);
             return it;
@@ -1467,7 +1499,7 @@ namespace yoi {
 
     yoi::indexT visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule, bool isStoreOp) {
         try {
-            auto entryIndex = addExternEntryIfNotExists(targetModule, identifier);
+            auto entryIndex = addExternEntryIfNotExists(targetModule, identifier->get().strVal);
             auto entry = irModule->externTable[entryIndex];
             yoi_assert(entry->type == IRExternEntry::externType::globalVar, identifier->getLine(), identifier->getColumn(), "Invalid type specifier, expected global variable");
             auto valType = moduleContext->getCompilerContext()->getImportedModule(targetModule)->globalVariables[identifier->node.strVal];
@@ -1494,7 +1526,7 @@ namespace yoi {
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
         } else if (subscriptExpr->isInvocation()) {
-            auto funcIndex = addExternEntryIfNotExists(targetModule, subscriptExpr->id->id);
+            auto funcIndex = addExternEntryIfNotExists(targetModule, subscriptExpr->id->id->get().strVal);
             yoi_assert(irModule->externTable[funcIndex]->type == IRExternEntry::externType::function, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier, expected function");
             auto funcType = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable[subscriptExpr->id->id->node.strVal];
             for (auto &arg : subscriptExpr->args->arg) {

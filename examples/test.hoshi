@@ -1,3 +1,5 @@
+use test1 "examples/test1.hoshi"
+
 interface Test {
     yield() : int
 }
@@ -5,19 +7,31 @@ interface Test {
 struct aaa {
     x: int,
     y: int,
-    constructor(x: int, y: int)
+    constructor(x: int, y: int),
+    a(): none
 }
 
 impl aaa {
     constructor(x: int, y: int) {
         this.x = x
         this.y = y
+    },
+    a() : none {
+        this.x += 1
+        return
     }
 }
 
 impl aaa : Test {
     yield() : int {
         return this.super.x + this.super.y
+    }
+}
+
+impl aaa : test1.ExternalInterface {
+    test() : none {
+        this.super.a()
+        return
     }
 }
 

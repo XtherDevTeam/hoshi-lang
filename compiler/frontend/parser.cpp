@@ -746,7 +746,7 @@ namespace yoi {
             return;
         }
         identifier *id;
-        lexer::token str;
+        lexer::token str{};
         parse(id, lex);
         if (!id) {
             panic(lex.line, lex.col, "expected identifier after `use`");

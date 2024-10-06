@@ -11,6 +11,10 @@ namespace yoi {
         const std::set<yoi::indexT> &instructions): codeBlockIndex(codeBlockIndex), instructions(instructions) {
     }
 
+    IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
+        const std::set<yoi::indexT> &instructions, bool optimizable)  : codeBlockIndex(codeBlockIndex), instructions(    instructions), optimizable(optimizable) {
+    }
+
     IROptimizer::SimulationStack::Item::ContributedInstructionSet &IROptimizer::SimulationStack::Item::
     ContributedInstructionSet::insert(yoi::indexT index) {
         instructions.insert(index);
@@ -101,6 +105,9 @@ namespace yoi {
 
     yoi::indexT IROptimizer::reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions,
         yoi::indexT currentIndex) {
+        if (not contributedInstructions.optimizable) {
+            return currentIndex;
+        }
         for (auto i : contributedInstructions) {
             targetFunction->codeBlock[contributedInstructions.codeBlockIndex]->getIRArray()[i] = {IR::Opcode::nop, {}};
             // If the current code block index is greater than the index of the instruction being processed,
@@ -1164,11 +1171,12 @@ namespace yoi {
                 }
                 case IR::Opcode::invoke: {
                     // we can't optimize it
+                    // in case of which this got optimized in tempVar reduction, we set optimizable flag to false
                     auto function = irModule->functionTable[ins.operands[0].value.symbolIndex];
                     auto returnType = function->returnType;
                     auto argTypes = function->argumentTypes;
                     auto argCount = function->argumentTypes.size();
-                    SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}};
+                    SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}, false};
                     for (int i = 0; i < argCount; i++) {
                         contributedInstructions = contributedInstructions + simulationStack.peek(i).contributedInstructions;
                         simulationStack.pop();
@@ -1186,7 +1194,7 @@ namespace yoi {
                     for (int i = 0; i < argCount; i++) {
                         simulationStack.pop();
                     }
-                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}});
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::jump_if_true: {
@@ -1266,8 +1274,11 @@ namespace yoi {
     IROptimizer & IROptimizer::reduceRedundantJump() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             auto &codeBlock = targetFunction->codeBlock[i]->getIRArray();
+            if (codeBlock.empty()) {
+                continue;
+            }
             // if the above instruction of current jump is a jump, we can ignore the current jump
-            for (auto it = codeBlock.begin() + 1; !codeBlock.empty() && it != codeBlock.end();) {
+            for (auto it = codeBlock.begin() + 1; it != codeBlock.end();) {
                 if ((it - 1)->opcode == IR::Opcode::jump && it->opcode == IR::Opcode::jump) {
                     it = codeBlock.erase(it);
                 } else {

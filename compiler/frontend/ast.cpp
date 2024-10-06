@@ -834,7 +834,8 @@ namespace yoi {
     }
 
     void finalizeAST(returnStmt *ptr) {
-        finalizeAST(ptr->value);
+        if (ptr->hasValue())
+            finalizeAST(ptr->value);
         delete ptr;
     }
 

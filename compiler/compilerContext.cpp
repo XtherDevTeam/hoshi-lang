@@ -34,34 +34,40 @@ namespace yoi {
     }
 
     yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
-        auto fp = fopen(wstring2string(realpath(filepath)).c_str(), "r+");
-        if (!fp)
-            throw std::runtime_error("invalid filename");
-        fseek(fp, 0, SEEK_END);
-        auto size = ftell(fp);
-        fseek(fp, 0, SEEK_SET);
-        auto *a = new std::string(size, 0);
-        fread(a->data(), size, 1, fp);
-        auto *b = new yoi::wstr{yoi::string2wstring(*a)};
-        delete a;
+        auto rFilepath = realpath(filepath);
+        try {
+            return modules.getIndex(rFilepath);
+        } catch (const std::runtime_error &e) {
+            auto fp = fopen(wstring2string(rFilepath).c_str(), "r");
+            if (!fp)
+                throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
+            fseek(fp, 0, SEEK_END);
+            auto size = ftell(fp);
+            fseek(fp, 0, SEEK_SET);
+            auto *a = new std::string(size, 0);
+            fread(a->data(), size, 1, fp);
+            auto *b = new yoi::wstr{yoi::string2wstring(*a)};
+            delete a;
+            fclose(fp);
 
-        yoi::lexer l{std::wstringstream(*b)};
-        l.scan();
-        delete b;
-        hoshiModule *mod;
-        yoi::parse(mod, l);
-        std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), filepath, mod);
-        std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
-        auto idx = modules.put(filepath, modCtx);
-        moduleImported[idx] = irMod;
-        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
-        vis->visit();
-        for (auto &i : irMod->functionTable) {
-            IROptimizer optimizer{shared_from_this(), irMod};
-            optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
+            yoi::lexer l{std::wstringstream(*b)};
+            l.scan();
+            delete b;
+            hoshiModule *mod;
+            yoi::parse(mod, l);
+            std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), rFilepath, mod);
+            std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
+            auto idx = modules.put(rFilepath, modCtx);
+            moduleImported[idx] = irMod;
+            std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
+            vis->visit();
+            for (auto &i : irMod->functionTable) {
+                IROptimizer optimizer{shared_from_this(), irMod};
+                optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
+            }
+            finalizeAST(mod);
+            return idx;
         }
-        finalizeAST(mod);
-        return idx;
     }
 
     const std::shared_ptr<IRObjectFile> &compilerContext::getIRObjectFile() const {

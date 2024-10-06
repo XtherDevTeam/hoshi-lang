@@ -25,10 +25,13 @@ namespace yoi {
                 struct ContributedInstructionSet {
                     yoi::indexT codeBlockIndex;
                     std::set<yoi::indexT> instructions;
+                    bool optimizable{true};
 
                     ContributedInstructionSet() = default;
 
                     ContributedInstructionSet(yoi::indexT codeBlockIndex, const std::set<yoi::indexT> &instructions);
+
+                    ContributedInstructionSet(yoi::indexT codeBlockIndex, const std::set<yoi::indexT> &instructions, bool optimizable);
 
                     ContributedInstructionSet &insert(yoi::indexT index);
 

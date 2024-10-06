@@ -310,6 +310,18 @@ namespace yoi {
                   }));
     }
 
+    void IRBuilder::invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount,
+        const std::shared_ptr<IRValueType> &returnType, bool externalInvocation) {
+        // this pointer is popped from tempVarStack
+        for (yoi::indexT i = 0; i < methodArgsCount + 1; i++) {
+            tempVarStack.pop_back();
+        }
+        tempVarStack.push_back(returnType);
+        insert(IR(externalInvocation ? IR::Opcode::invoke_extern : IR::Opcode::invoke, {
+                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount}
+                  }));
+    }
+
     void IRBuilder::retOp(bool returnWithNone) {
         // fetch return value from tempVarStack
         if (returnWithNone) {

@@ -275,7 +275,7 @@ namespace yoi {
     public:
         yoi::indexT identifier;
         bool compiled;
-        std::map<yoi::wstr, yoi::wstr> moduleImports;
+        std::map<yoi::wstr, yoi::indexT> moduleImports;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> functionTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;
@@ -355,6 +355,8 @@ namespace yoi {
          */
         void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType, bool
                       externalInvocation = false);
+
+        void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
 
         void retOp(bool returnWithNone = false);
 

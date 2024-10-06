@@ -34,7 +34,7 @@ namespace yoi {
          * @return the extern entry
          * @throw std::runtime_error if identifier not found
          */
-        yoi::IRExternEntry getExternEntry(yoi::indexT moduleIndex, yoi::identifier *identifier) const;
+        yoi::IRExternEntry getExternEntry(yoi::indexT moduleIndex, const yoi::wstr &identifier) const;
 
         /**
          * Add an extern entry to the module if it does not exist.
@@ -43,7 +43,7 @@ namespace yoi {
          * @return the index of the extern entry in the module's extern table
          * @throws std::runtime_error if the identifier is not found in the module
          */
-        yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, yoi::identifier *identifier);
+        yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
 
         bool isVisitingGlobalScope() const;
 
@@ -103,7 +103,7 @@ namespace yoi {
 
         void visit(yoi::codeBlock *codeBlock, bool notEmitNewBlockInstruction = false);
 
-        void visit(yoi::useStmt *useStmt);
+        yoi::indexT visit(yoi::useStmt *useStmt);
 
         IRValueType parseTypeSpec(yoi::identifier *identifier);
 
