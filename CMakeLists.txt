@@ -3,13 +3,17 @@ project(hoshi_lang)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#find_package(LLVM REQUIRED CONFIG)
+find_package(LLVM REQUIRED CONFIG)
 
-#include_directories(${LLVM_INCLUDE_DIRS})
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 
-#add_definitions(${LLVM_DEFINITIONS})
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
-#llvm_map_components_to_libnames(llvm_libs support core irreader)
+include_directories(${LLVM_INCLUDE_DIRS})
+
+add_definitions(${LLVM_DEFINITIONS})
+
+llvm_map_components_to_libnames(llvm_libs support core irreader)
 
 #set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
