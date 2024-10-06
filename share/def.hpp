@@ -2,6 +2,7 @@
 #define HOSHI_DEF_HPP
 
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -29,7 +30,7 @@ namespace yoi {
     std::string wstring2string(const std::wstring &v);
 
     template<typename A, typename B>
-    class indexTable {
+    class indexTableDeprecated {
         vec<std::pair<A, B>> indexes;
     public:
 
@@ -83,6 +84,79 @@ namespace yoi {
         iterator end() { return iterator(indexes.end()); }
 
         yoi::indexT size() const { return indexes.size(); }
+    };
+
+    template<typename A, typename B>
+    class indexTable {
+        std::map<A, yoi::indexT> indexes;
+        std::vector<std::pair<A, B>> values;
+    public:
+        yoi::indexT put(const A &a, const B &b) {
+            if (auto it = indexes.find(a); it == indexes.end()) {
+                indexes[a] = values.size();
+                values.push_back({a, b});
+                return values.size() - 1;
+            } else {
+                values[it->second].second = b;
+                return it->second;
+            }
+        }
+        yoi::indexT put_create(const A &a, const B &b) {
+            if (auto it = indexes.find(a); it == indexes.end()) {
+                indexes[a] = values.size();
+                values.push_back({a, b});
+                return values.size() - 1;
+            } else {
+                throw std::invalid_argument("indexTable: key already exists");
+            }
+        }
+        B &operator[](const A &k) {
+            if (auto it = indexes.find(k); it == indexes.end()) {
+                throw std::runtime_error("indexTableRefactored: invalid key");
+            } else {
+                return values[it->second].second;
+            }
+        }
+
+        B &operator[](yoi::indexT k) {
+            if (k < indexes.size()) {
+                return values[k].second;
+            } else {
+                throw std::runtime_error("indexTableRefactored: invalid index");
+            }
+        }
+        yoi::indexT getIndex(const A &k) {
+            if (auto it = indexes.find(k); it == indexes.end()) {
+                throw std::runtime_error("indexTableRefactored: invalid key");
+            } else {
+                return it->second;
+            }
+        }
+        // iterate over all values
+        class iterator {
+            std::vector<std::pair<A, B>>::iterator it;
+        public:
+            iterator(std::vector<std::pair<A, B>>::iterator it) : it(it) {}
+            bool operator!=(const iterator &other) const { return it!= other.it; }
+            iterator &operator++() { ++it; return *this; }
+            std::pair<A, B> &operator*() { return *it; }
+            iterator operator+(yoi::indexT i) const {
+                return iterator(it + i);
+            }
+            std::pair<A, B> *operator->() {
+                return &(*it);
+            }
+        };
+
+        iterator begin() { return iterator(values.begin()); }
+
+        iterator end() { return iterator(values.end()); }
+
+        yoi::indexT size() const { return values.size(); }
+
+        bool contains(const A &k) const {
+            return indexes.find(k)!= indexes.end();
+        }
     };
 
     template<typename T>
