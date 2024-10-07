@@ -635,7 +635,7 @@ namespace yoi {
     IROptimizer &IROptimizer::reduceRedundantConstantExpr() {
         for (yoi::indexT insIndex = 0; insIndex < targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().size();++insIndex) {
             auto &ins = targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray()[insIndex];
-            std::cout << currentCodeBlockIndex << " " << insIndex << " " <<  wstring2string(ins.to_string()) << std::endl;
+            // std::cout << currentCodeBlockIndex << " " << insIndex << " " <<  wstring2string(ins.to_string()) << std::endl;
             switch (ins.opcode) {
                 case IR::Opcode::push_boolean: {
                     simulationStack.push(compilerCtx->getBoolObjectType(), {currentCodeBlockIndex,{insIndex}}, ins.operands[0].value.boolean);
@@ -1258,11 +1258,6 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer & IROptimizer::reduceRedundantCodeBlocks() {
-        // TODO: implement this
-        return *this;
-    }
-
     IROptimizer & IROptimizer::reduceRedundantNop() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             auto &codeBlock = targetFunction->codeBlock[i]->getIRArray();
@@ -1299,12 +1294,65 @@ namespace yoi {
         return *this;
     }
 
+    IROptimizer& IROptimizer::controlFlowOptimization() {
+        std::map<yoi::indexT, std::vector<indexT>> G; // graph
+        std::map<yoi::indexT, std::vector<indexT>> reverseG; // record the predecessors of each block
+        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
+            G[i] = {};
+            if (not reverseG.contains(i)) reverseG[i] = {};
+            for (auto &ins : targetFunction->codeBlock[i]->getIRArray()) {
+                switch (ins.opcode) {
+                    case IR::Opcode::jump:
+                    case IR::Opcode::jump_if_true:
+                    case IR::Opcode::jump_if_false:
+                        G[i].push_back(ins.operands[0].value.codeBlockIndex);
+                        reverseG[ins.operands[0].value.codeBlockIndex].push_back(i);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        // remove the blocks that have no predecessors
+        for (auto it = reverseG.begin(); it != reverseG.end(); it++) {
+            if (it->second.empty() && it->first != 0) {
+                targetFunction->codeBlock[it->first]->getIRArray() = {};
+                // do not erase it cuz we need to keep the index of the block
+            }
+        }
+        // identify the out block
+        for (auto it = G.begin(); it != G.end(); it++) {
+            if (it->second.empty()) {
+                auto &targetBlock = targetFunction->codeBlock[it->first];
+                // if the block has no successor, it's the out block
+                if (targetBlock->getIRArray().empty()) {
+                    if (reverseG[it->first].empty()) {
+                        // no predecessor, and no successor, and no instructions, it's empty block, do nothing
+                    } else {
+                        // has predecessor, but no successor, it's the out block but with empty instructions
+                        warning(0, 0, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                    }
+                    continue;
+                }
+                if (targetBlock->getIRArray().back().opcode != IR::Opcode::ret && targetBlock->getIRArray().back().opcode != IR::Opcode::ret_none) {
+                    // there's no return instruction, add a ret instruction at the end of the block if it returns none
+                    if (targetFunction->returnType->type == IRValueType::valueType::none) {
+                        targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}});
+                    } else {
+                        warning(0, 0, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                    }
+                }
+            }
+        }
+        return *this;
+    }
+
     IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             currentCodeBlockIndex = i;
             this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();
         }
-        this->reduceRedundantNop().reduceRedundantJump().reduceRedundantCodeBlocks();
+        this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization();
         return *this;
     }
 } // yoi

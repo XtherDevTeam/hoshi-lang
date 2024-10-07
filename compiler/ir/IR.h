@@ -115,9 +115,9 @@ namespace yoi {
             increment,
             decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, load_extern, dummy_break, dummy_continue, ret, ret_void,
+            load_global, load_extern, dummy_break, dummy_continue, ret, ret_none,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, invoke, invoke_extern, nop, FINAL, ret_none
+            store_global, store_local, store_member, store_extern, invoke, invoke_extern, nop, FINAL,
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;

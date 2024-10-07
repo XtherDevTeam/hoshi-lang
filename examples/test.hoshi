@@ -35,10 +35,6 @@ impl aaa : test1.ExternalInterface {
     }
 }
 
-func test1() : int {
-    return 114514
-}
-
 func test() : int {
     let i = 0
     let b = 1 + 1 + 4 + 514.00

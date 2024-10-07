@@ -23,6 +23,8 @@ namespace yoi {
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 
+    void warning(yoi::indexT line, yoi::indexT col, const std::string &msg);
+
     void yoi_assert(bool cond, yoi::indexT line, yoi::indexT col, const std::string &msg);
 
     std::wstring string2wstring(const std::string &v);

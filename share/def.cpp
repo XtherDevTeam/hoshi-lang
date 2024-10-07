@@ -3,6 +3,7 @@
 //
 
 #include <filesystem>
+#include <iostream>
 #include <share/def.hpp>
 
 namespace yoi {
@@ -61,6 +62,10 @@ namespace yoi {
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg) {
         throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
+    }
+
+    void warning(yoi::indexT line, yoi::indexT col, const std::string& msg) {
+        std::cerr << "[Yoi-lang warning] At line " << line << " col " << col << ": " << msg << std::endl;
     }
 
     void yoi_assert(bool condition, yoi::indexT line, yoi::indexT col, const std::string &msg) {

@@ -173,13 +173,13 @@ namespace yoi {
 
         IROptimizer &reduceRedundantTempVar();
 
-        IROptimizer &reduceRedundantCodeBlocks();
-
         IROptimizer &reduceRedundantNop();
 
         IROptimizer &reduceRedundantJump();
 
         IROptimizer &reduceRedundantCodeAfterRet();
+
+        IROptimizer &controlFlowOptimization();
 
         IROptimizer &doOptimizationForCurrentFunction();
     };
