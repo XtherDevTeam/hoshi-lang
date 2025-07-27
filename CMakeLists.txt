@@ -27,6 +27,7 @@ file (GLOB HOSHI_LANG_INCLUDE
         compiler/frontend/*.cpp
         compiler/visitor/*.cpp
         compiler/ir/*.cpp
+        compiler/llvmCodegen/*.cpp
         runtime/*.cpp
         share/*.cpp
         pass/*.cpp)
