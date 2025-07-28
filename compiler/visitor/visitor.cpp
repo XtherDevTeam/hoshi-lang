@@ -6,6 +6,7 @@
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <stdexcept>
 #include <utility>
 
 namespace yoi {
@@ -88,7 +89,7 @@ namespace yoi {
                 moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, yoi::indexT{index}}, valType);
             }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-        } catch (std::runtime_error &e) {
+        } catch (std::length_error &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
         }
         // TODO: add support for extern variables
@@ -712,37 +713,49 @@ namespace yoi {
             }
             auto rhsIt = *it;
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            yoi_assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
             if (rhsIt->isInvocation()) {
-                // what we get so far is the struct object, which can be the `this` pointer,
-                // also, we need to inquiry the function index from nameInfo to invoke it.
-                auto memberName = rhsIt->id;
-                auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
-                switch (nameInfo.type) {
-                    case IRStructDefinition::nameInfo::nameType::field: {
-                        // crazy
-                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
-                        break;
-                    }
-                    case IRStructDefinition::nameInfo::nameType::method: {
-                        auto funcIndex = nameInfo.index;
-                        auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
-                        for (auto &arg : rhsIt->args->get()) {
-                            visit(arg);
+                if (termType->type == IRValueType::valueType::structObject) {
+                    // what we get so far is the struct object, which can be the `this` pointer,
+                    // also, we need to inquiry the function index from nameInfo to invoke it.
+                    auto memberName = rhsIt->id;
+                    auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                    switch (nameInfo.type) {
+                        case IRStructDefinition::nameInfo::nameType::field: {
+                            // crazy
+                            panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
+                            break;
                         }
-                        if (termType->typeAffiliateModule == currentModuleIndex) {
-                            moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
-                        } else {
-                            // extern function invocation
-                            // add extern entry or use existing one
-                            auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
-                            moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
+                        case IRStructDefinition::nameInfo::nameType::method: {
+                            auto funcIndex = nameInfo.index;
+                            auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
+                            for (auto &arg : rhsIt->args->get()) {
+                                visit(arg);
+                            }
+                            if (termType->typeAffiliateModule == currentModuleIndex) {
+                                moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
+                            } else {
+                                // extern function invocation
+                                // add extern entry or use existing one
+                                auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
+                                moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
+                            }
                         }
                     }
+                } else if (termType->type == IRValueType::valueType::interfaceObject) {
+                    auto methodName = rhsIt->id;
+                    auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap.getIndex(methodName->getId().get().strVal);
+                    auto method = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap[methodIdx];
+                    yoi_assert(method->argumentTypes.size() == rhsIt->args->get().size(), rhsIt->getLine(), rhsIt->getColumn(), "Argument count does not match"); // this
+                    // this pointer has been passed as the first argument
+                    for (auto &arg : rhsIt->args->get()) {
+                        visit(arg);
+                    }
+                    moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, rhsIt->args->get().size(), method->returnType);
                 }
             } else if (rhsIt->isSubscript()) {
                 // TODO: subscript
             } else {
+                yoi_assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
                 auto memberName = rhsIt->id;
                 if(memberName->hasTemplateArg()) {
                     // TODO: what the heck is this
@@ -818,7 +831,7 @@ namespace yoi {
                 }
                 moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch(...) {
+            } catch(std::length_error &e) {
                 // panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function: " + wstring2string(subscriptExpr->id->getId().get().strVal));
                 // pass
             }
@@ -837,7 +850,8 @@ namespace yoi {
                 yoi_assert(constructorIndex.type == IRStructDefinition::nameInfo::nameType::method, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Constructor is a field (expect a method)");
                 auto constructor = irModule->functionTable[constructorIndex.index];
                 moduleContext->getIRBuilder().invokeMethodOp(constructorIndex.index, subscriptExpr->args->get().size(), constructor->returnType);
-            } catch (...) {
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            } catch (std::length_error &e) {
                 // pass
             }
             try {
@@ -856,7 +870,8 @@ namespace yoi {
                 // to put it simple, interfaceIndex will be extern as interfaceImpl is extern
                 auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
                 moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
-            } catch (...) {
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            } catch (std::length_error &e) {
                 // no related function, struct or interface found, throw an error
                 panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct or interface: " + wstring2string(subscriptExpr->id->getId().get().strVal));
             }
@@ -885,7 +900,7 @@ namespace yoi {
         try {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
-        } catch(std::runtime_error &e) {
+        } catch(std::length_error &e) {
             // let it go
         }
         if (typeName == L"int") {
@@ -1003,7 +1018,7 @@ namespace yoi {
                     // constructor
                     IRFunctionDefinition::Builder constructorBuilder;
                     auto funcName = L"struct#" + structName + L"#" + L"constructor";
-                    constructorBuilder.setName(funcName).setReturnType(moduleContext->getCompilerContext()->getNoneObjectType());
+                    constructorBuilder.setName(funcName).setReturnType(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex}));
                     // add this pointer as the first argument
                     constructorBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
 

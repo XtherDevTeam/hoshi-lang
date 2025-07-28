@@ -90,10 +90,10 @@ namespace yoi {
         return r;
     }
 
-    IRInterfaceImplementationDefinition::IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap) : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods), virtualMethodIndexMap(virtualMethodIndexMap) {
+    IRInterfaceImplementationDefinition::IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, yoi::indexT implInterfaceIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap) : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods), virtualMethodIndexMap(virtualMethodIndexMap), implInterfaceIndex(implInterfaceIndex) {
     }
 
-    IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::vec<std::shared_ptr<IRFunctionDefinition>> &methodSignatures, const std::map<yoi::wstr, yoi::indexT> &methodMap) : name(name), methodSignatures(methodSignatures), methodMap(methodMap) {
+    IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap) : name(name), methodMap(methodMap) {
     }
 
     yoi::wstr IRModule::to_string(yoi::indexT indent)
@@ -331,6 +331,16 @@ namespace yoi {
                   }));
     }
 
+    void IRBuilder::invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation) {
+        for (yoi::indexT i = 0; i < methodArgsCount + 1; i++) {
+            tempVarStack.pop_back();
+        }
+        tempVarStack.push_back(returnType);
+        insert(IR(externalInvocation ? IR::Opcode::invoke_virtual_extern : IR::Opcode::invoke_virtual, {
+                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount}
+                  }));
+    }
+
     void IRBuilder::retOp(bool returnWithNone) {
         // fetch return value from tempVarStack
         if (returnWithNone) {
@@ -455,7 +465,7 @@ namespace yoi {
     }
 
     std::shared_ptr<IRInterfaceImplementationDefinition> IRInterfaceImplementationDefinition::Builder::yield() {
-        return std::make_shared<IRInterfaceImplementationDefinition>(std::move(name), implStructIndex, implInterfaceIndex, std::move(virtualMethods), std::move(virtualMethodIndexMap));
+        return std::make_shared<IRInterfaceImplementationDefinition>(IRInterfaceImplementationDefinition{std::move(name), implStructIndex, implInterfaceIndex, std::move(virtualMethods), std::move(virtualMethodIndexMap)});
     }
 
     IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::setName(const yoi::wstr &interfaceName) {
@@ -464,13 +474,12 @@ namespace yoi {
     }
 
     IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::addMethod(const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature) {
-        this->methodSignatures.emplace_back(methodSignature);
-        this->methodMap[methodName] = this->methodSignatures.size() - 1;
+        this->methodMap.put_create(methodName, methodSignature);
         return *this;
     }
 
     std::shared_ptr<IRInterfaceInstanceDefinition> IRInterfaceInstanceDefinition::Builder::yield() {
-        return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(methodSignatures));
+        return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(methodMap));
     }
 
     IRFunctionDefinition::Builder & IRFunctionDefinition::Builder::addArgument(const yoi::wstr &argumentName,

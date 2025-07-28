@@ -5,6 +5,7 @@
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
 #include <compiler/ir/IR.h>
+#include <stdexcept>
 
 int main(int argc, const char **argv) {
     try {
@@ -20,7 +21,7 @@ int main(int argc, const char **argv) {
         auto str = compilerCtx->getImportedModule(idx)->to_string();
 
         std::cout << yoi::wstring2string(str) << std::endl;
-    } catch (const std::exception &e) {
+    } catch (const std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }
     return 0;

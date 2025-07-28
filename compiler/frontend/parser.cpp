@@ -154,6 +154,7 @@ namespace yoi {
         rExpr *t;
         parse(t, lex);
         while (t) {
+            args.emplace_back(t);
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
             else
@@ -165,7 +166,7 @@ namespace yoi {
             o = new invocationArguments{lex.curToken, args};
         } else {
             for (auto &i: args) finalizeAST(i);
-            panic(lex.line, lex.col, "expected `]` to close an arguments node");
+            panic(lex.line, lex.col, "expected `)` to close an arguments node");
             return;
         }
     }

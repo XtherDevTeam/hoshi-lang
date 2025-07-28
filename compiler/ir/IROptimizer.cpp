@@ -3,6 +3,8 @@
 //
 
 #include "IROptimizer.hpp"
+#include "compiler/ir/IR.h"
+#include "share/def.hpp"
 
 #include <iostream>
 
@@ -100,6 +102,7 @@ namespace yoi {
     }
 
     IROptimizer::SimulationStack::Item &IROptimizer::SimulationStack::peek(yoi::indexT index) {
+        assert(index < items.size());
         return items[items.size() - 1 - index];
     }
 
@@ -1114,7 +1117,7 @@ namespace yoi {
 
                     if(*definitionType != *value.type) {
                         // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_local: type mismatch");
+                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_global: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -1136,7 +1139,7 @@ namespace yoi {
 
                     if(*definitionType != *value.type) {
                         // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_local: type mismatch");
+                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_extern: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -1180,7 +1183,7 @@ namespace yoi {
                     auto argCount = function->argumentTypes.size();
                     SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}, false};
                     for (int i = 0; i < argCount; i++) {
-                        contributedInstructions = contributedInstructions + simulationStack.peek(i).contributedInstructions;
+                        contributedInstructions = contributedInstructions + simulationStack.peek(0).contributedInstructions;
                         simulationStack.pop();
                     }
                     simulationStack.push(returnType, contributedInstructions);
@@ -1194,6 +1197,69 @@ namespace yoi {
                     auto argTypes = function->argumentTypes;
                     auto argCount = function->argumentTypes.size();
                     for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::invoke_virtual: {
+                    auto argCount = ins.operands[1].value.symbolIndex;
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[0].value.symbolIndex]->returnType;
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_struct: {
+                    auto structDef = irModule->structTable[ins.operands[0].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, irModule->identifier, ins.operands[0].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_struct_extern: {
+                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
+                    auto structDef = compilerCtx->getImportedModule(externDef->affiliateModule)->structTable[externDef->itemIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, externDef->affiliateModule, externDef->itemIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_interface: {
+                    auto interfaceDef = irModule->interfaceTable[ins.operands[0].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, irModule->identifier, ins.operands[0].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_interface_extern: {
+                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
+                    auto interfaceDef = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceTable[externDef->itemIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, externDef->affiliateModule, externDef->itemIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::invoke_virtual_extern: {
+                    auto argCount = ins.operands[1].value.symbolIndex;
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
+                    auto function = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceTable[externDef->itemIndex]->methodMap[externDef->itemIndex];
+                    auto returnType = function->returnType;
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::construct_interface_impl: {
+                    auto interfaceImplDef = irModule->interfaceImplementationTable[ins.operands[0].value.symbolIndex];
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, irModule->identifier, ins.operands[0].value.symbolIndex});
+                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
+                    for (int i = 0; i < argCount + 1; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::construct_interface_impl_extern: {
+                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
+                    auto interfaceImplDef = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceImplementationTable[externDef->itemIndex];
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, externDef->affiliateModule, externDef->itemIndex});
+                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
+                    for (int i = 0; i < argCount + 1; i++) {
                         simulationStack.pop();
                     }
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});

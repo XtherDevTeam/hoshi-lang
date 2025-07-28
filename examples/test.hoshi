@@ -24,13 +24,13 @@ impl aaa {
 
 impl aaa : Test {
     yield() : int {
-        return this.super.x + this.super.y
+        return this.x + this.y
     }
 }
 
 impl aaa : test1.ExternalInterface {
     test() : none {
-        this.super.a()
+        this.a()
         return
     }
 }
@@ -54,4 +54,10 @@ func test2(cond: bool) : int {
         a = 224
     }
     return a
+}
+
+func test3() : int {
+    let x = aaa(1, 2)
+    let y = Test(x)
+    return y.yield()
 }

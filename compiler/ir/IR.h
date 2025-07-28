@@ -122,6 +122,7 @@ namespace yoi {
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
             store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
             new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
+            invoke_virtual, invoke_virtual_extern,
             nop, FINAL,
         } opcode;
 
@@ -256,7 +257,7 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
-        IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
+        IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, yoi::indexT implInterfaceIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -284,17 +285,15 @@ namespace yoi {
     class IRInterfaceInstanceDefinition {
     public:
         yoi::wstr name;
-        yoi::vec<std::shared_ptr<IRFunctionDefinition>> methodSignatures;
-        std::map<yoi::wstr, yoi::indexT> methodMap;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
 
-        IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::vec<std::shared_ptr<IRFunctionDefinition>> &methodSignatures, const std::map<yoi::wstr, yoi::indexT> &methodMap);
+        IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
         struct Builder {
             yoi::wstr name;
-            yoi::vec<std::shared_ptr<IRFunctionDefinition>> methodSignatures;
-            std::map<yoi::wstr, yoi::indexT> methodMap;
+            yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
 
             Builder() = default;
 
@@ -424,6 +423,8 @@ namespace yoi {
                       externalInvocation = false);
 
         void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
+
+        void invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
 
         void retOp(bool returnWithNone = false);
 

@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <map>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -109,12 +110,12 @@ namespace yoi {
                 values.push_back({a, b});
                 return values.size() - 1;
             } else {
-                throw std::invalid_argument("indexTable: key already exists");
+                throw std::length_error("indexTable: key already exists");
             }
         }
         B &operator[](const A &k) {
             if (auto it = indexes.find(k); it == indexes.end()) {
-                throw std::runtime_error("indexTableRefactored: invalid key");
+                throw std::length_error("indexTableRefactored: invalid key");
             } else {
                 return values[it->second].second;
             }
@@ -124,12 +125,12 @@ namespace yoi {
             if (k < indexes.size()) {
                 return values[k].second;
             } else {
-                throw std::runtime_error("indexTableRefactored: invalid index");
+                throw std::length_error("indexTableRefactored: invalid index");
             }
         }
         yoi::indexT getIndex(const A &k) {
             if (auto it = indexes.find(k); it == indexes.end()) {
-                throw std::runtime_error("indexTableRefactored: invalid key");
+                throw std::length_error("indexTableRefactored: invalid key");
             } else {
                 return it->second;
             }

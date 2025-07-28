@@ -11,6 +11,7 @@
 #include "ir/IR.h"
 #include "ir/IROptimizer.hpp"
 #include "visitor/visitor.h"
+#include <stdexcept>
 
 namespace yoi {
     std::shared_ptr<IRModule> compilerContext::getImportedModule(yoi::indexT index) {
@@ -37,7 +38,7 @@ namespace yoi {
         auto rFilepath = realpath(filepath);
         try {
             return modules.getIndex(rFilepath);
-        } catch (const std::runtime_error &e) {
+        } catch (const std::length_error &e) {
             auto fp = fopen(wstring2string(rFilepath).c_str(), "r");
             if (!fp)
                 throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
