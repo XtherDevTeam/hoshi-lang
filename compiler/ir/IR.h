@@ -24,6 +24,9 @@ namespace yoi {
             booleanObject,
             decimalObject,
             stringObject,
+            virtualMethod,
+            pointerObject, // a placeholder for void* in llvmCodegen for unified interface this pointer
+            interfaceObject,
             none,
             charRaw,
         } type;
@@ -117,7 +120,9 @@ namespace yoi {
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, load_extern, dummy_break, dummy_continue, ret, ret_none,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, invoke, invoke_extern, nop, FINAL,
+            store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
+            new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
+            nop, FINAL,
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;
@@ -243,6 +248,64 @@ namespace yoi {
         };
     };
 
+    class IRInterfaceImplementationDefinition {
+    public:
+        yoi::wstr name;
+        yoi::indexT implStructIndex;
+        yoi::indexT implInterfaceIndex;
+        yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
+        std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
+
+        IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
+
+        yoi::wstr to_string(yoi::indexT indent = 0);
+
+        struct Builder {
+            yoi::wstr name;
+            yoi::indexT implStructIndex;
+            yoi::indexT implInterfaceIndex;
+            yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
+            std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
+
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &setImplStructIndex(yoi::indexT implStructIndex);
+
+            Builder &setImplInterfaceIndex(yoi::indexT implInterfaceIndex);
+
+            Builder &addVirtualMethod(const yoi::wstr &methodName, const std::shared_ptr<IRValueType> &methodType);
+
+            std::shared_ptr<IRInterfaceImplementationDefinition> yield();
+        };
+    };
+
+    class IRInterfaceInstanceDefinition {
+    public:
+        yoi::wstr name;
+        yoi::vec<std::shared_ptr<IRFunctionDefinition>> methodSignatures;
+        std::map<yoi::wstr, yoi::indexT> methodMap;
+
+        IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::vec<std::shared_ptr<IRFunctionDefinition>> &methodSignatures, const std::map<yoi::wstr, yoi::indexT> &methodMap);
+
+        yoi::wstr to_string(yoi::indexT indent = 0);
+
+        struct Builder {
+            yoi::wstr name;
+            yoi::vec<std::shared_ptr<IRFunctionDefinition>> methodSignatures;
+            std::map<yoi::wstr, yoi::indexT> methodMap;
+
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &addMethod(const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature);
+
+            std::shared_ptr<IRInterfaceInstanceDefinition> yield();
+        };
+    };
+
     class IRStringLiteralPool {
     public:
         yoi::indexPool<yoi::wstr> pool;
@@ -257,7 +320,9 @@ namespace yoi {
         enum class externType {
             globalVar,
             function,
-            structType
+            structType,
+            interfaceType,
+            interfaceImplType,
         } type;
 
         yoi::wstr name;
@@ -280,6 +345,8 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceDefinition>> interfaceTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
         IRStringLiteralPool stringLiteralPool;
 
         yoi::wstr to_string(yoi::indexT indent = 0);
@@ -359,6 +426,12 @@ namespace yoi {
         void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
 
         void retOp(bool returnWithNone = false);
+
+        void newStructOp(yoi::indexT structIndex, bool isExternal = false);
+
+        void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false);
+
+        void constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false);
 
         yoi::indexT getCurrentInsertionPoint();
 

@@ -2,8 +2,10 @@
 // Created by XIaokang00010 on 2024/9/6.
 //
 
+#include <memory>
 #include <ranges>
 #include "IR.h"
+#include "share/def.hpp"
 
 #include <compiler/frontend/ast.hpp>
 
@@ -88,7 +90,14 @@ namespace yoi {
         return r;
     }
 
-    yoi::wstr IRModule::to_string(yoi::indexT indent) {
+    IRInterfaceImplementationDefinition::IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap) : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods), virtualMethodIndexMap(virtualMethodIndexMap) {
+    }
+
+    IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::vec<std::shared_ptr<IRFunctionDefinition>> &methodSignatures, const std::map<yoi::wstr, yoi::indexT> &methodMap) : name(name), methodSignatures(methodSignatures), methodMap(methodMap) {
+    }
+
+    yoi::wstr IRModule::to_string(yoi::indexT indent)
+    {
         yoi::wstr r;
         r += yoi::wstr(indent, L' ') + L"Module#" + std::to_wstring(identifier) + L" {\n";
         for (auto &function : functionTable) {
@@ -333,6 +342,33 @@ namespace yoi {
         insert(IR(IR::Opcode::ret, {}));
     }
 
+    void IRBuilder::newStructOp(yoi::indexT structIndex, bool isExternal) {
+        if (isExternal) {
+            auto &entry = this->currentModule->externTable[structIndex];
+            insert(IR{IR::Opcode::new_struct_extern, {IROperand(IROperand::operandType::index, structIndex)}});
+            tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::structObject, entry->affiliateModule, entry->itemIndex}));
+        } else {
+            insert(IR{IR::Opcode::new_struct, {IROperand(IROperand::operandType::index, structIndex)}});
+            tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::structObject, this->currentModule->identifier, structIndex}));
+        }
+    }
+
+    void IRBuilder::newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal)  {
+        if (isExternal) {
+            auto &entry = this->currentModule->externTable[interfaceIndex];
+            insert(IR{IR::Opcode::new_interface_extern, {IROperand(IROperand::operandType::index, interfaceIndex)}});
+            tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, entry->affiliateModule, entry->itemIndex}));
+        } else {
+            insert(IR{IR::Opcode::new_interface, {IROperand(IROperand::operandType::index, interfaceIndex)}});
+            tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, this->currentModule->identifier, interfaceIndex}));
+        }
+    }
+
+    void IRBuilder::constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal) {
+        this->tempVarStack.pop_back(); // remove structObject from tempVarStack
+        insert(IR{isExternal ? IR::Opcode::construct_interface_impl_extern : IR::Opcode::construct_interface_impl, {IROperand(IROperand::operandType::index, interfaceImplIndex)}});
+    }
+
     yoi::indexT IRBuilder::getCurrentInsertionPoint() {
         return (yoi::indexT)getCurrentCodeBlock().getIRArray().size();
     }
@@ -395,6 +431,46 @@ namespace yoi {
     IRFunctionDefinition::Builder & IRFunctionDefinition::Builder::setName(const yoi::wstr &name) {
         this->name = name;
         return *this;
+    }
+
+    IRInterfaceImplementationDefinition::Builder &IRInterfaceImplementationDefinition::Builder::setName(const yoi::wstr &interfaceName) {
+        this->name = interfaceName;
+        return *this;
+    }
+    
+    IRInterfaceImplementationDefinition::Builder &IRInterfaceImplementationDefinition::Builder::setImplStructIndex(yoi::indexT implStructIndex) {
+        this->implStructIndex = implStructIndex;
+        return *this;
+    }
+
+    IRInterfaceImplementationDefinition::Builder &IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex(yoi::indexT implInterfaceIndex) {
+        this->implInterfaceIndex = implInterfaceIndex;
+        return *this;
+    }
+
+    IRInterfaceImplementationDefinition::Builder &IRInterfaceImplementationDefinition::Builder::addVirtualMethod(const yoi::wstr &methodName, const std::shared_ptr<IRValueType> &methodType) {
+        this->virtualMethods.emplace_back(methodType);
+        this->virtualMethodIndexMap[methodName] = this->virtualMethods.size() - 1;
+        return *this;
+    }
+
+    std::shared_ptr<IRInterfaceImplementationDefinition> IRInterfaceImplementationDefinition::Builder::yield() {
+        return std::make_shared<IRInterfaceImplementationDefinition>(std::move(name), implStructIndex, implInterfaceIndex, std::move(virtualMethods), std::move(virtualMethodIndexMap));
+    }
+
+    IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::setName(const yoi::wstr &interfaceName) {
+        this->name = interfaceName;
+        return *this;
+    }
+
+    IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::addMethod(const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature) {
+        this->methodSignatures.emplace_back(methodSignature);
+        this->methodMap[methodName] = this->methodSignatures.size() - 1;
+        return *this;
+    }
+
+    std::shared_ptr<IRInterfaceInstanceDefinition> IRInterfaceInstanceDefinition::Builder::yield() {
+        return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(methodSignatures));
     }
 
     IRFunctionDefinition::Builder & IRFunctionDefinition::Builder::addArgument(const yoi::wstr &argumentName,

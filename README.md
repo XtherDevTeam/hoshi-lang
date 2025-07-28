@@ -44,7 +44,8 @@ impl hello for s_a {
 
 func main(argv: Vec<rstr>) : int {
   let a = s_a(114514, 1919.810)
-  cast<hello>(a).say()
+  let sayer = hello(a)
+  sayer.say()
   io.println("Hello, world!")
   return 0;
 }

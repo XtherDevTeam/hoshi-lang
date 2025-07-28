@@ -68,6 +68,14 @@ namespace yoi {
         std::cerr << "[Yoi-lang warning] At line " << line << " col " << col << ": " << msg << std::endl;
     }
 
+    /**
+     * @brief Asserts a condition that would be true and throws a runtime_error if it is false.
+     * 
+     * @param condition the condition to be asserted.
+     * @param line the line number in source code.
+     * @param col the column number in source code.
+     * @param msg the error message to be displayed.
+     */
     void yoi_assert(bool condition, yoi::indexT line, yoi::indexT col, const std::string &msg) {
         if (not condition) {
             throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);

@@ -70,9 +70,9 @@ namespace yoi {
         }
 
         class iterator {
-            vec<std::pair<A, B>>::iterator it;
+            typename vec<std::pair<A, B>>::iterator it;
         public:
-            iterator(vec<std::pair<A, B>>::iterator it) : it(it) {}
+            iterator(typename vec<std::pair<A, B>>::iterator it) : it(it) {}
 
             bool operator!=(const iterator &other) const { return it!= other.it; }
 
@@ -136,9 +136,9 @@ namespace yoi {
         }
         // iterate over all values
         class iterator {
-            std::vector<std::pair<A, B>>::iterator it;
+            typename std::vector<std::pair<A, B>>::iterator it;
         public:
-            iterator(std::vector<std::pair<A, B>>::iterator it) : it(it) {}
+            iterator(typename std::vector<std::pair<A, B>>::iterator it) : it(it) {}
             bool operator!=(const iterator &other) const { return it!= other.it; }
             iterator &operator++() { ++it; return *this; }
             std::pair<A, B> &operator*() { return *it; }

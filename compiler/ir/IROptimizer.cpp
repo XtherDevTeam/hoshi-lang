@@ -697,6 +697,7 @@ namespace yoi {
                                 value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.charValue);
                             break;
                             default:
+                            break;
                         }
                         value.type = compilerCtx->getIntObjectType();
                         insIndex = reduce(value.contributedInstructions, insIndex);
@@ -724,6 +725,7 @@ namespace yoi {
                                 value.possibleValue.deciValue = static_cast<double>(value.possibleValue.charValue);
                             break;
                             default:
+                            break;
                         }
                         value.type = compilerCtx->getDeciObjectType();
                         insIndex = reduce(value.contributedInstructions, insIndex);

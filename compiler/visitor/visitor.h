@@ -5,7 +5,9 @@
 #ifndef HOSHI_LANG_VISITOR_H
 #define HOSHI_LANG_VISITOR_H
 
-#include "compiler/moduleContext.h"
+#include "compiler/ir/IR.h"
+#include <compiler/moduleContext.h>
+#include <memory>
 
 namespace yoi {
 
@@ -48,6 +50,12 @@ namespace yoi {
         bool isVisitingGlobalScope() const;
 
         void emitBasicCastInBasicArithOpByLhsAndRhs(yoi::indexT lhs, yoi::indexT rhs);
+
+        yoi::wstr getInterfaceNameStr(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc);
+
+        yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
+
+        yoi::wstr getFuncUniqueNameStr(const std::shared_ptr<IRFunctionDefinition> &func);
 
         /**
          * Visitor methods
@@ -121,9 +129,9 @@ namespace yoi {
 
         yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
-        yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc, yoi::identifier *structName);
+        yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc, const std::pair<yoi::indexT, yoi::indexT> &structSrc);
 
-        std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRStructDefinition>> parseInterfaceName(
+        std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>> parseInterfaceName(
          yoi::externModuleAccessExpression *structDef);
 
         yoi::indexT visit(yoi::funcDefStmt *funcDefStmt);

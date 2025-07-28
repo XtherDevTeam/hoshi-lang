@@ -16,7 +16,7 @@ namespace yoi {
             case lexer::token::tokenKind::string:
             case lexer::token::tokenKind::boolean:
             case lexer::token::tokenKind::kNull:
-                o = new yoi::basicLiterals(lex.curToken, lex.curToken);
+                o = new yoi::basicLiterals{lex.curToken, lex.curToken};
                 lex.scan();
                 break;
             default:
@@ -262,7 +262,7 @@ namespace yoi {
             panic(lex.line, lex.col, "expected rightValueExpr in subscript");
             return;
         }
-        if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+        if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
             lex.scan();
             o = new subscript{lex.curToken, r};
         } else {

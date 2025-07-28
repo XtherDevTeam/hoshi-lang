@@ -3,6 +3,10 @@
 //
 
 #include "visitor.h"
+#include "compiler/compilerContext.h"
+#include "compiler/ir/IR.h"
+#include "share/def.hpp"
+#include <utility>
 
 namespace yoi {
     visitor::visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
@@ -690,11 +694,15 @@ namespace yoi {
         while (it + 1 != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
             it++;
         }
+        // from this point, it try to evaluate and find the lhs of the member expression
+        // however, we must take an specific occasion into account, which is the struct construction and interface construction.
+        
+        bool whetherLastTerm = it + 1 == memberExpr->getTerms().end();
+
         if (targetModule == -1) {
-            bool test = it + 1 == memberExpr->getTerms().end();
-            visit(*it, isStoreOp && test);
+            visit(*it, isStoreOp && whetherLastTerm);
         } else {
-            visitExtern(*it, targetModule, isStoreOp && it + 1 == memberExpr->getTerms().end());
+            visitExtern(*it, targetModule, isStoreOp && whetherLastTerm);
         }
 
         for (; it != memberExpr->getTerms().end();) {
@@ -811,7 +819,46 @@ namespace yoi {
                 moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             } catch(...) {
-                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function: " + wstring2string(subscriptExpr->id->getId().get().strVal));
+                // panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function: " + wstring2string(subscriptExpr->id->getId().get().strVal));
+                // pass
+            }
+            try {
+                auto structIndex = irModule->structTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                auto structType = irModule->structTable[structIndex];
+                // for (auto &arg : subscriptExpr->args->get()) {
+                //     visit(arg);
+                // }
+                moduleContext->getIRBuilder().newStructOp(structIndex);
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                }
+                // get constructor
+                auto constructorIndex = structType->lookupName(L"constructor");
+                yoi_assert(constructorIndex.type == IRStructDefinition::nameInfo::nameType::method, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Constructor is a field (expect a method)");
+                auto constructor = irModule->functionTable[constructorIndex.index];
+                moduleContext->getIRBuilder().invokeMethodOp(constructorIndex.index, subscriptExpr->args->get().size(), constructor->returnType);
+            } catch (...) {
+                // pass
+            }
+            try {
+                auto interfaceIndex = irModule->interfaceTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                auto interfaceType = irModule->interfaceTable[interfaceIndex];
+                yoi_assert(subscriptExpr->getArg().get().size() == 1, subscriptExpr->getArg().getLine(), subscriptExpr->getArg().getColumn(), "Expect only one argument as targeted struct in interface constructor invocation");
+                moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
+                auto arg = subscriptExpr->getArg().get().front();
+                visit(arg);
+                auto structValue = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                auto interfaceImplName = getInterfaceImplName(std::make_pair(currentModuleIndex, interfaceIndex), std::make_pair(structValue->typeAffiliateModule, structValue->typeIndex));
+                // interfaceImpl will stay within targeted struct's module, cuz struct can only be implemented within the same module.
+                // auto interfaceImpl = moduleContext->getCompilerContext()->getImportedModule(structValue->typeAffiliateModule)->interfaceImplementationTable[interfaceImplName];
+                // auto interfaceExternIndex = irModule ->externTable.put(interfaceImplName, managedPtr(IRExternEntry{IRExternEntry::externType::interfaceType, interfaceImplName, structValue->typeAffiliateModule, interfaceImpl->implInterfaceIndex}));
+                // obviously, when interfaceIndex can be invoked without memberExpr, it means it isn't a foreign interface, no extern entry needed.
+                // to put it simple, interfaceIndex will be extern as interfaceImpl is extern
+                auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
+            } catch (...) {
+                // no related function, struct or interface found, throw an error
+                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct or interface: " + wstring2string(subscriptExpr->id->getId().get().strVal));
             }
         } else {
             return visit(subscriptExpr->id, isStoreOp);
@@ -890,26 +937,46 @@ namespace yoi {
             // TODO: interface template
         }
         auto &interfaceName = interfaceDefStmt->id->getId().get().strVal;
-        auto structName = L"interface#" + interfaceName;
-        // occupy a slot in the interface table
-        auto interfaceIndex = irModule->structTable.put(structName, {});
-        IRStructDefinition::Builder builder;
-        builder.setName(structName);
+        // auto structName = L"interface#" + interfaceName;
+        // // occupy a slot in the interface table
+        // auto interfaceIndex = irModule->structTable.put(structName, {});
+        // IRStructDefinition::Builder builder;
+        // builder.setName(structName);
+        // for (auto &i : interfaceDefStmt->getInner().getInner()) {
+        //     yoi_assert(i->isMethod(), i->getLine(), i->getColumn(), "Interface member must be a method");
+        //     auto methodName = L"interface#" + interfaceName + L"#" + i->getMethod().getName().get().strVal;
+        //     auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+        //     IRFunctionDefinition::Builder methodBuilder;
+        //     methodBuilder.setName(methodName).setReturnType(methodType);
+        //     for (auto &arg : i->getMethod().getArgs().get()) {
+        //         auto argName = arg->getId().get().strVal;
+        //         auto argType = managedPtr(parseTypeSpec(arg->spec));
+        //         methodBuilder.addArgument(argName, argType);
+        //     }
+        //     auto func = methodBuilder.yield();
+        //     builder.addMethod(i->getMethod().getName().get().strVal, irModule->functionTable.put(methodName, func));
+        // }
+        // irModule->structTable[interfaceIndex] = builder.yield();
+        // return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        IRInterfaceInstanceDefinition::Builder builder;
+        builder.setName(interfaceName);
         for (auto &i : interfaceDefStmt->getInner().getInner()) {
             yoi_assert(i->isMethod(), i->getLine(), i->getColumn(), "Interface member must be a method");
-            auto methodName = L"interface#" + interfaceName + L"#" + i->getMethod().getName().get().strVal;
-            auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+
+            auto methodName = i->getMethod().getName().get().strVal;
+            auto methodResultType = managedPtr(parseTypeSpec(i->getMethod().resultType));
             IRFunctionDefinition::Builder methodBuilder;
-            methodBuilder.setName(methodName).setReturnType(methodType);
+            methodBuilder.setName(methodName).setReturnType(methodResultType);
             for (auto &arg : i->getMethod().getArgs().get()) {
                 auto argName = arg->getId().get().strVal;
                 auto argType = managedPtr(parseTypeSpec(arg->spec));
                 methodBuilder.addArgument(argName, argType);
             }
             auto func = methodBuilder.yield();
-            builder.addMethod(i->getMethod().getName().get().strVal, irModule->functionTable.put(methodName, func));
+            builder.addMethod(methodName, func);
         }
-        irModule->structTable[interfaceIndex] = builder.yield();
+        auto interfaceType = builder.yield();
+        irModule->interfaceTable.put(interfaceName, interfaceType);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -983,88 +1050,119 @@ namespace yoi {
             // and interface itself has a field self, which is the struct pointer.
             // also, it is fucking stupid to use `this.super` to access the struct pointer, so we can do special handling for interface implementation in visit(memberExpr *memberExpr, bool isStoreOp)
             // dumb, you can't know whether it is an interface without `this.`
-            IRStructDefinition::Builder builder;
-            auto interfaceName = parseInterfaceName(implStmt->interfaceName);
-            auto structName = implStmt->getStructId().getId().get().strVal;
-            auto interfaceStructName = getInterfaceImplName(interfaceName.first, implStmt->getStructId().id);
-            builder.setName(interfaceStructName);
-            // occupy a slot in the struct table
-            auto interfaceIndex = irModule->structTable.put(interfaceStructName, {});
-            indexT structIndex;
+            // IRStructDefinition::Builder builder;
+            // auto interfaceName = parseInterfaceName(implStmt->interfaceName);
+            // auto structName = implStmt->getStructId().getId().get().strVal;
+            // auto interfaceStructName = getInterfaceImplName(interfaceName.first, implStmt->getStructId().id);
+            // builder.setName(interfaceStructName);
+            // // occupy a slot in the struct table
+            // auto interfaceIndex = irModule->structTable.put(interfaceStructName, {});
+            // auto interfaceStructType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, interfaceIndex});
+            // auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
 
+            // for (auto &i : implStmt->getInner().getInner()) {
+            //     if (i->isConstructor()) {
+            //         panic(i->getLine(), i->getColumn(), "Constructor cannot be implemented for interface");
+            //     } else {
+            //         if (not interfaceName.second->nameIndexMap.contains(i->getMethod().getName().get().strVal)) {
+            //             panic(i->getLine(), i->getColumn(), "Out-of-line implementation of method in impl for" + wstring2string(structName));
+            //         }
+            //         auto methodName = interfaceStructName + L"#" + i->getMethod().getName().get().strVal;
+            //         auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+            //         IRFunctionDefinition::Builder methodBuilder;
+            //         methodBuilder.setName(methodName).setReturnType(methodType);
+            //         // add this pointer as the first argument
+            //         methodBuilder.addArgument(L"this", interfaceStructType);
+            //         for (auto &arg : i->getMethod().getArgs().get()) {
+            //             auto argName = arg->getId().get().strVal;
+            //             auto argType = managedPtr(parseTypeSpec(arg->spec));
+            //             methodBuilder.addArgument(argName, argType);
+            //         }
+            //         auto func = methodBuilder.yield();
+
+            //         auto funcSlot = irModule->functionTable.put(methodName, func);
+            //         builder.addMethod(i->getMethod().getName().get().strVal, funcSlot);
+            //     }
+            // }
+            // // check the count of methods in the interface and the implementation
+            // yoi_assert(builder.nameIndexMap.size() == interfaceName.second->nameIndexMap.size(), implStmt->getLine(), implStmt->getColumn(), "The count of methods in the interface and the implementation do not match");
+            // // add the struct pointer to the interface
+            // builder.addField(L"super", structType);
+            // // add constructor
+            // auto conFuncName = interfaceStructName + L"#" + L"constructor";
+            // auto conFuncSlot = irModule->functionTable.put(conFuncName, {});
+            // IRFunctionDefinition::Builder constructorBuilder;
+            // constructorBuilder
+            //     .setName(conFuncName)
+            //     .setReturnType(moduleContext->getCompilerContext()->getNoneObjectType())
+            //     .addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, interfaceIndex}))
+            //     .addArgument(L"object", structType);
+            // auto conFunc = constructorBuilder.yield();
+            // builder.addMethod(L"constructor", conFuncSlot);
+            // irModule->functionTable[conFuncSlot] = conFunc;
+
+            // // construct the constructor
+            // moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, conFunc});
+            // moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+            // moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{1}}, structType);
+            // moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar,  IROperand::operandValue(yoi::indexT{0})}, interfaceStructType);
+            // moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, IROperand::operandValue(yoi::indexT{0})});
+            // moduleContext->getIRBuilder().retOp(true);
+            // moduleContext->getIRBuilder().yield();
+            // moduleContext->popIRBuilder();
+
+            // irModule->structTable[interfaceIndex] = builder.yield();
+
+            // // compile the rest of the implementation
+            // for (auto &i : implStmt->getInner().getInner()) {
+            //     auto func = irModule->functionTable[irModule->structTable[interfaceIndex]->nameIndexMap[i->getMethod().name->get().strVal].index];
+            //     moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+            //     moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+            //     // compile func def
+            //     visit(i->getMethod().block, true);
+            //     moduleContext->getIRBuilder().yield();
+            //     moduleContext->popIRBuilder();
+            // }
+            // the aforementioned is deprecated, we add InterfaceInstanceDefinition instead of StructDefinition to the interface table
+            auto interfaceName = parseInterfaceName(implStmt->interfaceName);
+            indexT structIndex;
             try {
                 // fetch struct decl from irModule
-                structIndex = irModule->structTable.getIndex(structName);
+                structIndex = irModule->structTable.getIndex(implStmt->getStructId().getId().get().strVal);
             } catch(std::runtime_error &e) {
-                panic(implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structName));
+                panic(implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(implStmt->getStructId().getId().get().strVal));
                 return {};
             }
-            auto interfaceStructType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, interfaceIndex});
-            auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
+            auto interfaceImplName = getInterfaceImplName(interfaceName.first, std::make_pair(currentModuleIndex, structIndex));
+
+            // occupy a slot in the interface table
+            auto interfaceImplIndex = irModule->interfaceImplementationTable.put(interfaceImplName, {});
+
+            IRInterfaceImplementationDefinition::Builder builder;
+            builder.setName(interfaceImplName);
+            builder.setImplStructIndex(structIndex);
+            builder.setImplInterfaceIndex(interfaceImplIndex);
 
             for (auto &i : implStmt->getInner().getInner()) {
-                if (i->isConstructor()) {
-                    panic(i->getLine(), i->getColumn(), "Constructor cannot be implemented for interface");
-                } else {
-                    if (not interfaceName.second->nameIndexMap.contains(i->getMethod().getName().get().strVal)) {
-                        panic(i->getLine(), i->getColumn(), "Out-of-line implementation of method in impl for" + wstring2string(structName));
-                    }
-                    auto methodName = interfaceStructName + L"#" + i->getMethod().getName().get().strVal;
-                    auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
-                    IRFunctionDefinition::Builder methodBuilder;
-                    methodBuilder.setName(methodName).setReturnType(methodType);
-                    // add this pointer as the first argument
-                    methodBuilder.addArgument(L"this", interfaceStructType);
-                    for (auto &arg : i->getMethod().getArgs().get()) {
-                        auto argName = arg->getId().get().strVal;
-                        auto argType = managedPtr(parseTypeSpec(arg->spec));
-                        methodBuilder.addArgument(argName, argType);
-                    }
-                    auto func = methodBuilder.yield();
-
-                    auto funcSlot = irModule->functionTable.put(methodName, func);
-                    builder.addMethod(i->getMethod().getName().get().strVal, funcSlot);
+                yoi_assert(!i->isConstructor(), i->getLine(), i->getColumn(), "Constructor cannot be implemented for interface");
+                auto methodName = interfaceImplName + L"#" + i->getMethod().getName().get().strVal;
+                auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+                IRFunctionDefinition::Builder methodBuilder;
+                methodBuilder.setName(methodName).setReturnType(methodType);
+                // add this pointer as the first argument
+                methodBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
+                for (auto &arg : i->getMethod().getArgs().get()) {
+                    auto argName = arg->getId().get().strVal;
+                    auto argType = managedPtr(parseTypeSpec(arg->spec));
+                    methodBuilder.addArgument(argName, argType);
                 }
+                auto func = methodBuilder.yield();
+                auto funcIndex = irModule->functionTable.put(methodName, func);
+                builder.addVirtualMethod(i->getMethod().getName().get().strVal, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, static_cast<yoi::indexT>(currentModuleIndex), funcIndex}));
             }
-            // check the count of methods in the interface and the implementation
-            yoi_assert(builder.nameIndexMap.size() == interfaceName.second->nameIndexMap.size(), implStmt->getLine(), implStmt->getColumn(), "The count of methods in the interface and the implementation do not match");
-            // add the struct pointer to the interface
-            builder.addField(L"super", structType);
-            // add constructor
-            auto conFuncName = interfaceStructName + L"#" + L"constructor";
-            auto conFuncSlot = irModule->functionTable.put(conFuncName, {});
-            IRFunctionDefinition::Builder constructorBuilder;
-            constructorBuilder
-                .setName(conFuncName)
-                .setReturnType(moduleContext->getCompilerContext()->getNoneObjectType())
-                .addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, interfaceIndex}))
-                .addArgument(L"object", structType);
-            auto conFunc = constructorBuilder.yield();
-            builder.addMethod(L"constructor", conFuncSlot);
-            irModule->functionTable[conFuncSlot] = conFunc;
-
-            // construct the constructor
-            moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, conFunc});
-            moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{1}}, structType);
-            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar,  IROperand::operandValue(yoi::indexT{0})}, interfaceStructType);
-            moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, IROperand::operandValue(yoi::indexT{0})});
-            moduleContext->getIRBuilder().retOp(true);
-            moduleContext->getIRBuilder().yield();
-            moduleContext->popIRBuilder();
-
-            irModule->structTable[interfaceIndex] = builder.yield();
-
-            // compile the rest of the implementation
-            for (auto &i : implStmt->getInner().getInner()) {
-                auto func = irModule->functionTable[irModule->structTable[interfaceIndex]->nameIndexMap[i->getMethod().name->get().strVal].index];
-                moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
-                moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-                // compile func def
-                visit(i->getMethod().block, true);
-                moduleContext->getIRBuilder().yield();
-                moduleContext->popIRBuilder();
-            }
+            auto interfaceImplType = builder.yield();
+            // place the interface implementation in the interface table
+            irModule->interfaceImplementationTable[interfaceImplIndex] = interfaceImplType;
         } else {
             // struct implementation
             // TODO: template implementation
@@ -1357,7 +1455,7 @@ namespace yoi {
                 // member
                 auto it = typeSpec->member->getTerms().begin();
                 yoi::indexT targetModule = -1;
-                while (it + 1 != typeSpec->member->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+                while (it + 1 != typeSpec->member->getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != -1) {
                     it++;
                 }
 
@@ -1401,16 +1499,16 @@ namespace yoi {
     }
 
     yoi::wstr visitor::getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc,
-        yoi::identifier *structName) {
-        return L"interfaceImpl#" + std::to_wstring(interfaceSrc.first) + L"#" + std::to_wstring(interfaceSrc.second) + L"#" + structName->node.strVal;
+        const std::pair<yoi::indexT, yoi::indexT> &structSrc) {
+        return L"interfaceImpl#" + std::to_wstring(interfaceSrc.first) + L"#" + std::to_wstring(interfaceSrc.second) + L"#" + std::to_wstring(structSrc.first) + L"#" + std::to_wstring(structSrc.second);
     }
 
-    std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRStructDefinition>> visitor::parseInterfaceName(
+    std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>> visitor::parseInterfaceName(
         yoi::externModuleAccessExpression *structDef) {
         // modules~
         auto it = structDef->getTerms().begin();
         yoi::indexT targetModule = -1;
-        while (it + 1 != structDef->getTerms().end() && (targetModule = isModuleName(*it, -1)) != -1) {
+        while (it + 1 != structDef->getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != -1) {
             it++;
         }
         if (targetModule == -1) {
@@ -1418,11 +1516,10 @@ namespace yoi {
         }
         yoi_assert(it + 1 == structDef->getTerms().end(), structDef->getLine(), structDef->getColumn(), "Invalid interface name");
         auto interfaceName = parseIdentifierWithTemplateArg(*it);
-        auto realStructName = L"interface#" + interfaceName;
         try {
             auto target = moduleContext->getCompilerContext()->getImportedModule(targetModule);
-            auto interfaceIndex = target->structTable.getIndex(realStructName);
-            return std::make_pair(std::make_pair(targetModule, interfaceIndex), target->structTable[interfaceIndex]);
+            auto interfaceIndex = target->interfaceTable.getIndex(interfaceName);
+            return std::make_pair(std::make_pair(targetModule, interfaceIndex), target->interfaceTable[interfaceIndex]);
         } catch (std::runtime_error &) {
             panic(structDef->getLine(), structDef->getColumn(), "Undefined interface: " + wstring2string(interfaceName));
         }
@@ -1455,7 +1552,16 @@ namespace yoi {
             auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier);
             return {IRExternEntry::externType::structType, identifier, moduleIndex, res};
         } catch (std::runtime_error &) {}
-        panic(0, 0, "undefined identifier");
+        try {
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->interfaceTable.getIndex(identifier);
+            return {IRExternEntry::externType::interfaceType, identifier, moduleIndex, res};
+        } catch (std::runtime_error &) {}
+        try {
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->interfaceImplementationTable.getIndex(identifier);
+            return {IRExternEntry::externType::interfaceImplType, identifier, moduleIndex, res};
+        } catch (std::runtime_error &) {}
+
+        panic(0, 0, "undefined identifier: not known global variable, function, struct or interface type");
         return {};
     }
 
@@ -1497,6 +1603,54 @@ namespace yoi {
 
     }
 
+    yoi::wstr visitor::getInterfaceNameStr(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc) {
+        return L"interface#" + std::to_wstring(interfaceSrc.first) + L"#" + std::to_wstring(interfaceSrc.second);
+    }
+
+    yoi::wstr visitor::getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type) {
+        yoi::wstr res;
+        switch (type->type) {
+        case IRValueType::valueType::integerObject:
+            res = L"int";
+            break;
+        case IRValueType::valueType::decimalObject:
+            res = L"deci";
+            break;
+        case IRValueType::valueType::booleanObject:
+            res = L"bool";
+            break;
+        case IRValueType::valueType::stringObject:
+            res = L"str";
+            break;
+        case IRValueType::valueType::structObject:
+            res = L"struct#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
+            break;
+        case IRValueType::valueType::null:
+            res = L"null";
+            break;
+        case IRValueType::valueType::virtualMethod:
+            res = L"virtualMethod#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
+            break;
+        default:
+            panic(0, 0, "Invalid type");
+            break;
+        }
+        return res;
+    }
+
+    yoi::wstr visitor::getFuncUniqueNameStr(const std::shared_ptr<IRFunctionDefinition> &func) {
+        auto funcName = func->name;
+        auto funcType = func->returnType;
+        yoi::wstr res = L"func#" + funcName + L"#" + getTypeSpecUniqueNameStr(funcType) + L"#";
+        for (auto &arg : func->argumentTypes) {
+            res += getTypeSpecUniqueNameStr(arg) + L"#";
+        }
+        if (!func->argumentTypes.empty()) {
+            res.pop_back();
+        }
+        return res;
+    }
+
     yoi::indexT visitor::visitExtern(yoi::identifier *identifier, yoi::indexT targetModule, bool isStoreOp) {
         try {
             auto entryIndex = addExternEntryIfNotExists(targetModule, identifier->get().strVal);
@@ -1523,16 +1677,63 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule, bool isStoreOp) {
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
+
         if (subscriptExpr->isSubscript()) {
             // TODO: subscript
         } else if (subscriptExpr->isInvocation()) {
-            auto funcIndex = addExternEntryIfNotExists(targetModule, subscriptExpr->id->id->get().strVal);
-            yoi_assert(irModule->externTable[funcIndex]->type == IRExternEntry::externType::function, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier, expected function");
-            auto funcType = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable[subscriptExpr->id->id->node.strVal];
-            for (auto &arg : subscriptExpr->args->arg) {
-                visit(arg);
+            auto externalIndex = addExternEntryIfNotExists(targetModule, subscriptExpr->id->getId().get().strVal);
+            switch (irModule->externTable[externalIndex]->type) {
+                case IRExternEntry::externType::globalVar: {
+                    // TODO: global variable with function call
+                    panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid global variable with function call");
+                    break;
+                }
+                case IRExternEntry::externType::function: {
+                    auto funcIndex = targetedModule->functionTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                    auto func = targetedModule->functionTable[funcIndex];
+                    yoi_assert(func->argumentTypes.size() == subscriptExpr->args->get().size(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid argument count for function call");
+                    for (auto &arg : subscriptExpr->args->get()) {
+                        visit(arg);
+                    }
+                    moduleContext->getIRBuilder().invokeOp(externalIndex, subscriptExpr->args->get().size(), func->returnType, true);
+                    break;
+                }
+                case IRExternEntry::externType::structType: {
+                    // struct constructor
+                    auto structIndex = targetedModule->structTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                    auto structType = targetedModule->structTable[structIndex];
+                    // for (auto &arg : subscriptExpr->args->get()) {
+                    //     visit(arg);
+                    // }
+                    moduleContext->getIRBuilder().newStructOp(structIndex);
+                    for (auto &arg : subscriptExpr->args->get()) {
+                        visit(arg);
+                    }
+                    // get constructor
+                    auto constructorIndex = structType->lookupName(L"constructor");
+                    yoi_assert(constructorIndex.type == IRStructDefinition::nameInfo::nameType::method, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Constructor is a field (expect a method)");
+                    auto constructor = targetedModule->functionTable[constructorIndex.index];
+                    moduleContext->getIRBuilder().invokeMethodOp(addExternEntryIfNotExists(targetModule, constructor->name), subscriptExpr->args->get().size(), constructor->returnType, true);
+                    break;
+                }
+                case IRExternEntry::externType::interfaceType: {
+                    // interface constructor
+                    auto interfaceIndex = targetedModule->interfaceTable.getIndex(subscriptExpr->id->getId().get().strVal);
+                    auto interfaceType = targetedModule->interfaceTable[interfaceIndex];
+                    yoi_assert(subscriptExpr->getArg().get().size() == 1, subscriptExpr->getArg().getLine(), subscriptExpr->getArg().getColumn(), "Expect only one argument as targeted struct in interface constructor invocation");
+                    auto arg = subscriptExpr->getArg().get().front();                    
+                    visit(arg);
+                    auto structValue = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    auto interfaceImplName = getInterfaceImplName(std::make_pair(currentModuleIndex, interfaceIndex), std::make_pair(structValue->typeAffiliateModule, structValue->typeIndex));
+                    auto interfaceImplIndex = targetedModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                    moduleContext->getIRBuilder().constructInterfaceImplOp(addExternEntryIfNotExists(targetModule, interfaceImplName), true);
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
-            moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->arg.size(), funcType->returnType, true);
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } else {
             return visitExtern(subscriptExpr->id, targetModule);
