@@ -1,0 +1,30 @@
+interface Addable {
+    add() : int
+}
+
+struct Point {
+    x: int,
+    y: int,
+    constructor(x: int, y: int)
+}
+
+impl Point {
+    constructor(x: int, y: int) {
+        this.x = x
+        this.y = y
+        return this
+    }
+}
+
+impl Point : Addable {
+    add() : int {
+        return this.x + this.y
+    }
+}
+
+func main() : int {
+    let p1 = Point(1, 2)
+    let interface_obj = Addable(p1)
+    let result = interface_obj.add()
+    return result
+}

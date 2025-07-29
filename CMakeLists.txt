@@ -32,6 +32,15 @@ file (GLOB HOSHI_LANG_INCLUDE
         share/*.cpp
         pass/*.cpp)
 
+file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
+        runtime/*.cpp
+        runtime/memory/*.cpp
+)
+
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
+
+add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLUDE})
+
+target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
 target_link_libraries(hoshi_lang ${llvm_libs})

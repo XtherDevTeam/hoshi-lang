@@ -71,10 +71,10 @@ OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。`yoi-lang` 的
 
 ## Objects
 
-在此处，所有数据类型均为对象，除了 `integerRaw` 等原始类型之外，在 LLVM IR 生成过程中栈上的均为指向对应空间的指针类型。
-在 push 系列命令中，所有字面值将全部转换为 object。在 llvmCodegen 中可创建对应的 helper function 用于生成指定字面值的对象。
+在此处，**所有数据类型**均为对象，除了 `integerRaw` 等原始类型在 push 时被转换为 object，在 `integerObject` 参与运算时解引用获得 `raw` 类型之外，在 LLVM IR 生成过程中栈上的**均为指向对应空间的指针类型**。
+在 push 系列命令中，所有字面值将全部转换为对应的 integerObject、booleanObject、decimalObject。在 llvmCodegen 中可创建对应的 helper function 用于生成指定字面值的对象，在 llvmCodegen 初始化时完成基础类型对应 object 的 llvm struct 和 gc_x 函数创建工作。
 
-所有对象（基础数据类型、接口、结构体）在创建过程中，或作为右值被传递时，均会更新引用计数（减小原对象（若存在）引用计数，增加新对象引用计数）。
+**所有**对象（基础数据类型如 `int` `deci` `bool` `char`、接口、结构体）在创建过程中，或作为右值被传递时，均会更新引用计数（减小原对象（若存在）引用计数，增加新对象引用计数）。
 同理，在销毁过程中，作为右值参与运算结束，会减小原对象引用计数。
 当引用计数变为 0 时，自动销毁。
 

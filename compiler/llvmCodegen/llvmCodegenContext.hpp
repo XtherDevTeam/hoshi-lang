@@ -41,9 +41,16 @@ private:
     std::unique_ptr<llvm::Module> TheModule;
     std::unique_ptr<llvm::IRBuilder<>> Builder;
 
+    // Runtime functions
+    llvm::Function* runtimeObjectAllocFunc = nullptr;
+    llvm::Function* runtimeFinalizeObjectFunc = nullptr;
+
     // Yoi language context
     std::shared_ptr<compilerContext> compilerCtx;
     std::shared_ptr<IRModule> yoiModule;
+
+    // Singleton None object
+    llvm::GlobalVariable* noneObjectSingleton = nullptr;
 
     struct StackValue {
         llvm::Value* llvmValue;
@@ -60,9 +67,13 @@ private:
     // Mappings from yoi IR to LLVM IR
     std::map<yoi::indexT, llvm::GlobalVariable*> globalValues; // Maps global var index to GlobalVariable
     std::map<yoi::wstr, llvm::Function*> functionMap; // Maps yoi function names to LLVM functions
-    std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>, llvm::StructType*> structTypeMap; // Maps (module_id, struct_idx) to LLVM struct type
+    std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>, llvm::StructType*> structTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM struct type
 
     // Helper methods
+    void declareRuntimeFunctions();
+
+    void generateBasicTypesAndFunctions();
+
     void generateDeclarations();
     void generateStructDeclarations();
     void generateGlobalDeclarations();
@@ -70,19 +81,24 @@ private:
 
     void generateImplementations();
     void generateStructImplementations();
+    void generateStructGCFunctions();
+    void generateInterfaceGCWrappers();
     void generateFunctionImplementations();
     void generateFunction(IRFunctionDefinition& funcDef);
+    void generateFunctionExitCleanup();
     void generateCodeBlock(IRCodeBlock& block, yoi::indexT blockIdx);
-    llvm::Type* getPointeeTypeFromValue(llvm::Value* PtrValue);
     void generateInstruction(const IR& instr);
 
     llvm::Type* yoiTypeToLLVMType(const std::shared_ptr<IRValueType>& type);
     llvm::FunctionType* getFunctionType(const std::shared_ptr<IRFunctionDefinition>& funcDef);
     llvm::Constant* getGlobalInitializer(const std::shared_ptr<IRValueType>& type);
 
-    // Helpers for specific instructions
+    // Helpers for specific instructions & object model
     void handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat);
     void handleComparison(llvm::CmpInst::Predicate pred, bool isFloat);
+    llvm::Value* createBasicObject(const std::shared_ptr<IRValueType>& yoiType, llvm::Value* rawValue);
+    llvm::Value* unboxValue(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType);
+    void callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease);
 
 };
 

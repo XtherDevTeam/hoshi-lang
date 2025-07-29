@@ -1550,7 +1550,7 @@ namespace yoi {
             auto target = moduleContext->getCompilerContext()->getImportedModule(targetModule);
             auto interfaceIndex = target->interfaceTable.getIndex(interfaceName);
             return std::make_pair(std::make_pair(targetModule, interfaceIndex), target->interfaceTable[interfaceIndex]);
-        } catch (std::runtime_error &) {
+        } catch (std::length_error &) {
             panic(structDef->getLine(), structDef->getColumn(), "Undefined interface: " + wstring2string(interfaceName));
         }
 
