@@ -8,6 +8,7 @@
 #include "share/def.hpp"
 
 #include <compiler/frontend/ast.hpp>
+#include <stdexcept>
 
 namespace yoi {
     IROperand::operandValue::operandValue() : stringLiteralIndex(0) {}
@@ -580,7 +581,11 @@ namespace yoi {
     }
 
     const IRStructDefinition::nameInfo &IRStructDefinition::lookupName(const wstr &name) {
-        return nameIndexMap.at(name);
+        try {
+            return nameIndexMap.at(name);
+        } catch (std::out_of_range &e) {
+            throw std::length_error("Undefined field: " + yoi::wstring2string(name));
+        }
     }
 
     IRStructDefinition::Builder & IRStructDefinition::Builder::setName(const yoi::wstr &name) {

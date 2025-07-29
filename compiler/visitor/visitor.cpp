@@ -718,28 +718,32 @@ namespace yoi {
                     // what we get so far is the struct object, which can be the `this` pointer,
                     // also, we need to inquiry the function index from nameInfo to invoke it.
                     auto memberName = rhsIt->id;
-                    auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
-                    switch (nameInfo.type) {
-                        case IRStructDefinition::nameInfo::nameType::field: {
-                            // crazy
-                            panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
-                            break;
-                        }
-                        case IRStructDefinition::nameInfo::nameType::method: {
-                            auto funcIndex = nameInfo.index;
-                            auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
-                            for (auto &arg : rhsIt->args->get()) {
-                                visit(arg);
+                    try {
+                        auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                        switch (nameInfo.type) {
+                            case IRStructDefinition::nameInfo::nameType::field: {
+                                // crazy
+                                panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
+                                break;
                             }
-                            if (termType->typeAffiliateModule == currentModuleIndex) {
-                                moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
-                            } else {
-                                // extern function invocation
-                                // add extern entry or use existing one
-                                auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
-                                moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
+                            case IRStructDefinition::nameInfo::nameType::method: {
+                                auto funcIndex = nameInfo.index;
+                                auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
+                                for (auto &arg : rhsIt->args->get()) {
+                                    visit(arg);
+                                }
+                                if (termType->typeAffiliateModule == currentModuleIndex) {
+                                    moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
+                                } else {
+                                    // extern function invocation
+                                    // add extern entry or use existing one
+                                    auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
+                                    moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
+                                }
                             }
                         }
+                    } catch (std::length_error &e) {
+                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
                     }
                 } else if (termType->type == IRValueType::valueType::interfaceObject) {
                     auto methodName = rhsIt->id;
@@ -760,20 +764,24 @@ namespace yoi {
                 if(memberName->hasTemplateArg()) {
                     // TODO: what the heck is this
                 } else {
-                    auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
-                    switch (nameInfo.type) {
-                        case IRStructDefinition::nameInfo::nameType::field: {
-                            auto tempVarType = irModule->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
-                            if (isStoreOp) {
-                                moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, nameInfo.index});
-                            } else {
-                                moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, tempVarType);
+                    try {
+                        auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                        switch (nameInfo.type) {
+                            case IRStructDefinition::nameInfo::nameType::field: {
+                                auto tempVarType = irModule->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
+                                if (isStoreOp) {
+                                    moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, nameInfo.index});
+                                } else {
+                                    moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, tempVarType);
+                                }
+                                break;
                             }
-                            break;
+                            case IRStructDefinition::nameInfo::nameType::method: {
+                                panic(rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
+                            }
                         }
-                        case IRStructDefinition::nameInfo::nameType::method: {
-                            panic(rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
-                        }
+                    } catch (std::length_error &e) {
+                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
                     }
                 }
             }
@@ -1174,6 +1182,13 @@ namespace yoi {
                 auto func = methodBuilder.yield();
                 auto funcIndex = irModule->functionTable.put(methodName, func);
                 builder.addVirtualMethod(i->getMethod().getName().get().strVal, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, static_cast<yoi::indexT>(currentModuleIndex), funcIndex}));
+
+                // compile code block
+                moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
+                moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                visit(i->getMethod().block, true);
+                moduleContext->getIRBuilder().yield();
+                moduleContext->popIRBuilder();
             }
             auto interfaceImplType = builder.yield();
             // place the interface implementation in the interface table
