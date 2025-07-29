@@ -328,7 +328,7 @@ namespace yoi {
         }
         tempVarStack.push_back(returnType);
         insert(IR(externalInvocation ? IR::Opcode::invoke_extern : IR::Opcode::invoke, {
-                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount}
+                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount + 1}
                   }));
     }
 
@@ -338,7 +338,7 @@ namespace yoi {
         }
         tempVarStack.push_back(returnType);
         insert(IR(externalInvocation ? IR::Opcode::invoke_virtual_extern : IR::Opcode::invoke_virtual, {
-                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount}
+                      {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, methodArgsCount + 1}
                   }));
     }
 

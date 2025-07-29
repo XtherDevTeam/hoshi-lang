@@ -63,13 +63,37 @@ OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。`yoi-lang` 的
 
 `interface` 是抽象接口，包含一组方法和成员，可以被 `struct` 实现。`interface` 里只包含方法的声明，不包含实现，实现由 `struct` 完成。
 
-`struct` 可以使用 `impl for` 结构实现接口。语法如 `impl [interface] for [struct] { implmentation }`。
-
-`struct` 所实现的接口在 `struct` 的尾部占用所需的内存空间，当程序使用 `cast<interface>(struct)` 来转换 `struct` 到接口时，会直接将 `interface` 实现所占用的 `frame` 指针返回。
+`struct` 可以使用 `impl :` 结构实现接口。语法如 `impl [interface] : [struct] { implmentation }`。
 
 ## Ref
 
 引用可以理解为与原来对象具有相同内存地址的对象。使用 `&object` 来获取一个对象的引用。函数传递参数时可以使用引用来传递，E.g. `func a(arg: s_a&)` 这行声明的参数 `arg` 传递 `s_a` 的引用，而不会复制构造一个新的对象。
+
+## Objects
+
+在此处，所有数据类型均为对象，除了 `integerRaw` 等原始类型之外，在 LLVM IR 生成过程中栈上的均为指向对应空间的指针类型。
+在 push 系列命令中，所有字面值将全部转换为 object。在 llvmCodegen 中可创建对应的 helper function 用于生成指定字面值的对象。
+
+所有对象（基础数据类型、接口、结构体）在创建过程中，或作为右值被传递时，均会更新引用计数（减小原对象（若存在）引用计数，增加新对象引用计数）。
+同理，在销毁过程中，作为右值参与运算结束，会减小原对象引用计数。
+当引用计数变为 0 时，自动销毁。
+
+基础数据类型对象创建时调用 `basic_[data type name]_gc_refcount_increase` 进行增加引用计数调用 `basic_[data type name]_gc_refcount_decrease` 减小引用计数。
+structObjecct 对象创建时调用 `struct_[moduleIndex]_[structIndex]_gc_refcount_increase` 进行增加引用计数调用 `struct_[moduleIndex]_[structIndex]_gc_refcount_decrease` 减小引用计数。
+interfaceObject 对象创建时调用 `interface_gc_refcount_increase` 进行增加引用计数调用 `interface_gc_refcount_decrease` 减小引用计数，其通过对应该函数执行 this 指针上对应的虚函数完成相应逻辑。
+
+所有对象均为 llvmCodegen 过程中的 struct 类型，对于基础类型，可在初始化 llvmCodegen 上下文过程中完成类型的创建和对应 `gc` 系列函数的定义。
+所有对象在创建时，均调用签名为 `void* gc_object_alloc(unsigned long long sizeOfObject)` 的运行时函数完成内存开辟。
+
+对于 `gc_refcount_increase` / `gc_refcount_decrease` 系列函数，其签名应为 `void gc_function_name(objectType* ptr);`，
+
+执行流程如下：
+
+1. 接受有且仅有一个 this 指针参数
+2. 操作位于对象头部的 `gc_refcount` 递增或递减
+3. 若引用计数小于或等于0，则调用提前声明的 `runtime_finalize_object(void* objectPtr)` 进行销毁
+
+对于 structObject， `gc_refcount_increase` / `gc_refcount_decrease` 系列函数应在 llvmCodegen 创建数据类型时一并创建，并实现对应功能，在 llvmCodegen 实现可创建对应 helper function 模块化该过程。
 
 ## GC
 
@@ -78,6 +102,20 @@ GC的实现有点清奇，基本为引用计数模式，当对象创建时，会
 更新计数和减少计数可以通过在对象生成一个名为 `gc_refcount_increase` 和 `gc_refcount_decrease` 的方法来完成，更新计数时调用 `gc_refcount_increase` 来完成，减少计数时调用 `gc_refcount_decrease` 来完成。这样可以确保更新到对象里面的对象指针。
 
 因为结构体无法创建一个没有声明的结构体实例，所以不需要担心循环引用的问题。
+
+对于接口的GC，在 `Interface.md` 中讲到，我们的 `interfaceObject` 在实例化后为存储`this`指针和虚函数集合的结构体，同时 `interfaceImpl` 在 llvmCodegen 时应该将对应的 GC 函数生成为 `interfaceImpl#interfaceModuleIdx#interfaceIdx#structModuleIdx#structIdx#gc_refcount_increase` 和 `interfaceImpl#interfaceModuleIdx#interfaceIdx#structModuleIdx#structIdx#gc_refcount_decrease` 的虚函数，用于增加和减少指向 `struct` 的 this 指针的引用计数。
+
+一个接口任意 `impl` 的通用 `interfaceObject` 对象的 `gc_refcount_increase` 和 `gc_refcount_decrease` 将会调用如上所述的两个虚函数，进行对应引用计数操作。
+
+接口在 llvmCodegen 中的 struct 结构如下
+
+| offset | data |
+| --- | --- |
+| 0~7 byte | gc_refcount `unsigned long long` |
+| 8~15 byte | `this` pointer to the struct |
+| 16~23 byte | virtual method pointer to `interfaceImpl#interfaceModuleIdx#interfaceIdx#structModuleIdx#structIdx#gc_refcount_increase` |
+| 24~31 byte | virtual method pointer to `interfaceImpl#interfaceModuleIdx#interfaceIdx#structModuleIdx#structIdx#gc_refcount_decrease` |
+| 31 byte ~ ... | virtual method pointers to methods defined in `interfaceObject` |
 
 ## Module
 

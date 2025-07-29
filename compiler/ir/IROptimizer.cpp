@@ -1204,10 +1204,11 @@ namespace yoi {
                 }
                 case IR::Opcode::invoke_virtual: {
                     auto argCount = ins.operands[1].value.symbolIndex;
-                    for (int i = 0; i < argCount; i++) {
+                    for (int i = 0; i < argCount - 1; i++) {
                         simulationStack.pop();
                     }
                     auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[0].value.symbolIndex]->returnType;
+                    simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
@@ -1420,7 +1421,16 @@ namespace yoi {
             currentCodeBlockIndex = i;
             this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();
         }
-        this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization();
+        this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization().reduceEmptyCodeBlock();
         return *this;
     }
-} // yoi
+    IROptimizer &IROptimizer::reduceEmptyCodeBlock() {
+        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
+            if (targetFunction->codeBlock[i]->getIRArray().empty()) {
+                targetFunction->codeBlock.erase(targetFunction->codeBlock.begin() + i);
+                i--;
+            }
+        }
+        return *this;
+    }
+} // namespace yoi

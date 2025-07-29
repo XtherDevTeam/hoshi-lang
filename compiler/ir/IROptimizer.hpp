@@ -182,6 +182,8 @@ namespace yoi {
         IROptimizer &controlFlowOptimization();
 
         IROptimizer &doOptimizationForCurrentFunction();
+
+        IROptimizer &reduceEmptyCodeBlock();
     };
 
 } // yoi

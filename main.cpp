@@ -5,6 +5,8 @@
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
 #include <compiler/ir/IR.h>
+#include <compiler/llvmCodegen/llvmCodegenContext.hpp>
+#include <llvm/Support/raw_ostream.h>
 #include <stdexcept>
 
 int main(int argc, const char **argv) {
@@ -18,9 +20,20 @@ int main(int argc, const char **argv) {
         std::string in = argv[1];
         yoi::wstr input = yoi::string2wstring(in);
         auto idx = compilerCtx->compileModule(input);
-        auto str = compilerCtx->getImportedModule(idx)->to_string();
+        auto yoiModule = compilerCtx->getImportedModule(idx);
 
+        std::cout << "--- yoi-lang IR ---\n";
+        auto str = yoiModule->to_string();
         std::cout << yoi::wstring2string(str) << std::endl;
+        std::cout << "--- End yoi-lang IR ---\n\n";
+
+        std::cout << "--- LLVM IR ---\n";
+        yoi::LLVMCodegen llvmCodegen(compilerCtx, yoiModule);
+        llvmCodegen.generate();
+        llvmCodegen.getModule()->print(llvm::outs(), nullptr);
+        std::cout << "\n--- End LLVM IR ---\n";
+
+
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }

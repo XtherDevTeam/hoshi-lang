@@ -179,6 +179,10 @@ namespace yoi {
         void popScope();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
+
+        // Getters for LLVMCodegen
+        const yoi::vec<std::shared_ptr<IRValueType>>& getVariables() const { return variables; }
+        const std::map<yoi::indexT, yoi::wstr>& getReversedVariableNameMap() const { return reversedVariableNameMap; }
     };
 
     class IRFunctionDefinition {

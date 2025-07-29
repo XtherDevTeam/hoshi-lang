@@ -60,5 +60,5 @@ func test2(cond: bool) : int {
 func test3() : int {
     let x = aaa(1, 2)
     let y = Test(x)
-    return y.yield()
+    return y.yield() + y.yield()
 }
