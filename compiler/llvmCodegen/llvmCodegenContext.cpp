@@ -550,7 +550,7 @@ void LLVMCodegen::generateInstruction(const IR& instr) {
             auto* llvmStructType = structTypeMap.at(key);
             auto* gep = Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
             
-            auto yoiStructDef = compilerCtx->getImportedModule(std::get<1>(key))->structTable[std::get<2>(key)];
+            auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
             auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
             llvm::Type* loadedType = yoiTypeToLLVMType(memberYoiType);
             auto* loadedMember = Builder->CreateLoad(loadedType, gep, "loadmember");
@@ -572,7 +572,7 @@ void LLVMCodegen::generateInstruction(const IR& instr) {
             auto* llvmStructType = structTypeMap.at(key);
             auto* gep = Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
 
-            auto yoiStructDef = compilerCtx->getImportedModule(std::get<1>(key))->structTable[std::get<2>(key)];
+            auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
             auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
 
             callGcFunction(valueToStore.llvmValue, valueToStore.yoiType, true);
@@ -758,7 +758,7 @@ void LLVMCodegen::generateInstruction(const IR& instr) {
             auto vtableSlotIndex = methodVTableIndex + 4;
             auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, vtableSlotIndex, "vtable_slot_ptr");
             
-            auto interfaceDef = compilerCtx->getImportedModule(std::get<1>(interfaceKey))->interfaceTable[std::get<2>(interfaceKey)];
+            auto interfaceDef = compilerCtx->getIRObjectFile()->compiledModule->interfaceTable[std::get<2>(interfaceKey)];
             auto methodDef = interfaceDef->methodMap[methodVTableIndex];
             auto* funcType = getFunctionType(methodDef);
             

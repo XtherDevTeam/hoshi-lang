@@ -135,6 +135,9 @@ namespace yoi {
                 return it->second;
             }
         }
+        yoi::indexT size() {
+            return values.size();
+        }
         // iterate over all values
         class iterator {
             typename std::vector<std::pair<A, B>>::iterator it;
@@ -174,7 +177,7 @@ namespace yoi {
             pool.push_back(t);
             return i;
         }
-
+        yoi::indexT size() const { return pool.size(); }
         T &operator[](yoi::indexT i) {
             if (i < pool.size())
                 return pool[i];

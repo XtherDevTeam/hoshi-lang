@@ -29,6 +29,11 @@ namespace yoi {
             return nullptr;
         }
     }
+    
+    const std::map<indexT, std::shared_ptr<IRModule>> &compilerContext::getCompiledModules() const {
+        return moduleImported;
+    }
+
 
     yoi::indexT compilerContext::getModuleIndexByRealPath(const yoi::wstr &modRealPath) {
         return modules.getIndex(modRealPath);
@@ -59,6 +64,7 @@ namespace yoi {
             std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), rFilepath, mod);
             std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
             auto idx = modules.put(rFilepath, modCtx);
+            irMod->identifier = idx;
             moduleImported[idx] = irMod;
             std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
             vis->visit();
@@ -236,4 +242,8 @@ namespace yoi {
             {sharedObjectDefinition.getIndex(L"char")}
         };
     }
-} // yoi
+    void compilerContext::setIRObjectFile(
+        const std::shared_ptr<IRObjectFile> &irObjectFile) {
+      this->irObjectFile = irObjectFile;
+    }
+    } // namespace yoi

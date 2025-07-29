@@ -56,6 +56,13 @@ namespace yoi {
          * @return The IRModule, nullptr if not found.
          */
         std::shared_ptr<IRModule> getImportedModule(const yoi::wstr &modRealPath);
+        
+        /**
+         * Get all compiled IR modules.
+         * @return A map from module ID to the IRModule.
+         */
+        const std::map<yoi::indexT, std::shared_ptr<IRModule>>& getCompiledModules() const;
+
 
         /**
          * Get the index of the module by module real path.
@@ -68,6 +75,8 @@ namespace yoi {
         yoi::indexT compileModule(const yoi::wstr &filepath);
 
         const std::shared_ptr<IRObjectFile>& getIRObjectFile() const;
+
+        void setIRObjectFile(const std::shared_ptr<IRObjectFile> &irObjectFile);
 
         static yoi::IRStructDefinition getIntObjectDefinition();
 
