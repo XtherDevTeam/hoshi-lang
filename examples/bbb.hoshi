@@ -1,4 +1,7 @@
 func main() : int {
-    let a = 22 + 33
-    return a
+    let b = 0
+    for (let i = 1; i <= 1048576; i += 1) {
+        b += i
+    }
+    return b
 }

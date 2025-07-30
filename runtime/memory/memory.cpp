@@ -6,10 +6,14 @@
 #include <cstdlib>
 
 extern "C" void *runtime_object_alloc(long size_in_bytes) { 
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Allocating %ld bytes of memory.\n", size_in_bytes);
+    #endif
     return malloc(size_in_bytes);
 }
 extern "C" void runtime_finalize_object(void *object) { 
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Finalizing object at %p.\n", object);
+    #endif
     free(object);
 }
