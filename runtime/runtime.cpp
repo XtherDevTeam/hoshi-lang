@@ -8,5 +8,8 @@ int main(int argc, char *argv[]) {
     YoiIntegerObject *result = yoimiya_entry();
     int resultVal = static_cast<int>(result->value);
     basic_int_gc_refcount_decrease(result);
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+    printf("[Elysia/DEBUG] Yoi-lang runtime finished, result: %d.\n", resultVal);
+    #endif
     return resultVal;
 }

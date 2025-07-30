@@ -47,6 +47,7 @@ namespace yoi {
 
         void linkStringLiterals();
         void linkStructsAndInterfaces();
+        void linkInterfaceImplementations();
         void linkGlobals();
         void linkFunctions();
         void createEntryFunction();

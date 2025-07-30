@@ -151,10 +151,10 @@ namespace yoi {
                 Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
             }
             llvm::Value* thisPtr = incFunction->arg_begin();
-            llvm::Value* refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
-            llvm::Value* oldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), refCountPtr, "old_refcount");
-            llvm::Value* newRefCount = Builder->CreateAdd(oldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(newRefCount, refCountPtr);
+            llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
+            llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
+            llvm::Value* incNewRefCount = Builder->CreateAdd(incOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
+            Builder->CreateStore(incNewRefCount, incRefCountPtr);
             Builder->CreateRetVoid();
 
             // --- Generate gc_refcount_decrease ---
@@ -162,11 +162,22 @@ namespace yoi {
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
             functionMap[string2wstring(decFuncName)] = decFunction;
+            
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
+            auto* returnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction); // New block
+            auto* continueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction); // New block
             auto* finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
             auto* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
+            
             Builder->SetInsertPoint(entryBlock);
+            thisPtr = decFunction->arg_begin();
+            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmStructPtrType), "is_null");
+            Builder->CreateCondBr(isNull, returnEarlyBlock, continueDecrementBlock); // Conditional branch
 
+            Builder->SetInsertPoint(returnEarlyBlock);
+            Builder->CreateRetVoid(); // Return early for null
+
+            Builder->SetInsertPoint(continueDecrementBlock); // Continue with existing logic here
             if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
                 std::string debugStr = "Decreasing refcount of " + typeName + " object";
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
@@ -174,14 +185,12 @@ namespace yoi {
                 auto* debugStrPtr = Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(Builder->getInt8Ty(), 0));
                 Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
             }
+            llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
+            llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
+            llvm::Value* decNewRefCount = Builder->CreateSub(decOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
+            Builder->CreateStore(decNewRefCount, decRefCountPtr);
 
-            thisPtr = decFunction->arg_begin();
-            refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
-            oldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), refCountPtr, "old_refcount");
-            newRefCount = Builder->CreateSub(oldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(newRefCount, refCountPtr);
-
-            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(newRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
+            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(decNewRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
             Builder->CreateCondBr(shouldFinalize, finalizeBlock, continueBlock);
 
             Builder->SetInsertPoint(finalizeBlock);
@@ -331,10 +340,20 @@ namespace yoi {
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
+            auto* returnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction); // New block
+            auto* continueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction); // New block
             auto* finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
             auto* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
+
             Builder->SetInsertPoint(entryBlock);
             thisPtr = decFunction->arg_begin();
+            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmStructPtrType), "is_null");
+            Builder->CreateCondBr(isNull, returnEarlyBlock, continueDecrementBlock); // Conditional branch
+
+            Builder->SetInsertPoint(returnEarlyBlock);
+            Builder->CreateRetVoid(); // Return early for null
+
+            Builder->SetInsertPoint(continueDecrementBlock); // Continue with existing logic here
             refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             oldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), refCountPtr, "old_refcount");
             newRefCount = Builder->CreateSub(oldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
@@ -369,25 +388,55 @@ namespace yoi {
 
             auto wrapperBaseName = wstring2string(implDef->name);
 
+            // --- Generate Increase Wrapper ---
             auto incWrapperName = wrapperBaseName + "_gc_refcount_increase";
             auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
             auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
             functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
-            auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
-            Builder->SetInsertPoint(incBlock);
-            llvm::Value* thisAsI8 = incWrapperFunc->arg_begin();
-            llvm::Value* castedThis = Builder->CreateBitCast(thisAsI8, structPtrType, "casted_this");
-            Builder->CreateCall(structIncFunc, castedThis);
+            
+            auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
+            // No specific null check needed here as increase on null is generally a no-op,
+            // and a concrete increase function (struct_X_gc_refcount_increase) will be called,
+            // which now also has null checks in the basic type definitions, or it's implicitly handled
+            // if the underlying struct_X_gc_refcount_increase is guaranteed to not be called with null.
+            // However, for consistency and robustness, it's safer to add it here.
+            auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incWrapperFunc);
+            auto* incContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", incWrapperFunc);
+
+            Builder->SetInsertPoint(incEntryBlock);
+            llvm::Value* thisAsI8_inc = incWrapperFunc->arg_begin();
+            llvm::Value* isNull_inc = Builder->CreateICmpEQ(thisAsI8_inc, llvm::ConstantPointerNull::get(llvm::PointerType::get(Builder->getInt8Ty(), 0)), "is_null");
+            Builder->CreateCondBr(isNull_inc, incReturnEarlyBlock, incContinueBlock);
+
+            Builder->SetInsertPoint(incReturnEarlyBlock);
             Builder->CreateRetVoid();
 
+            Builder->SetInsertPoint(incContinueBlock);
+            llvm::Value* castedThis_inc = Builder->CreateBitCast(thisAsI8_inc, structPtrType, "casted_this");
+            Builder->CreateCall(structIncFunc, castedThis_inc);
+            Builder->CreateRetVoid();
+
+
+            // --- Generate Decrease Wrapper ---
             auto decWrapperName = wrapperBaseName + "_gc_refcount_decrease";
             auto* decWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, decWrapperName, TheModule.get());
             functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
-            auto* decBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
-            Builder->SetInsertPoint(decBlock);
-            thisAsI8 = decWrapperFunc->arg_begin();
-            castedThis = Builder->CreateBitCast(thisAsI8, structPtrType, "casted_this");
-            Builder->CreateCall(structDecFunc, castedThis);
+            
+            auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
+            auto* decReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decWrapperFunc);
+            auto* decContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", decWrapperFunc);
+
+            Builder->SetInsertPoint(decEntryBlock);
+            llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
+            llvm::Value* isNull_dec = Builder->CreateICmpEQ(thisAsI8_dec, llvm::ConstantPointerNull::get(llvm::PointerType::get(Builder->getInt8Ty(), 0)), "is_null");
+            Builder->CreateCondBr(isNull_dec, decReturnEarlyBlock, decContinueBlock);
+
+            Builder->SetInsertPoint(decReturnEarlyBlock);
+            Builder->CreateRetVoid();
+
+            Builder->SetInsertPoint(decContinueBlock);
+            llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
+            Builder->CreateCall(structDecFunc, castedThis_dec);
             Builder->CreateRetVoid();
         }
     }
@@ -840,11 +889,7 @@ namespace yoi {
 
                 llvm::CallInst* call = Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs, "virtcall");
 
-                if (methodDef->returnType->type != IRValueType::valueType::none) {
-                    valueStack.push_back({call, methodDef->returnType});
-                } else {
-                    valueStack.push_back({call, methodDef->returnType});
-                }
+                valueStack.push_back({call, methodDef->returnType});
                 break;
             }
             case IR::Opcode::nop:
@@ -999,12 +1044,14 @@ namespace yoi {
     }
 
     void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease) {
+        // The null check for runtime values is now handled within the generated GC functions themselves.
+        // This 'isa<llvm::ConstantPointerNull>' check only catches compile-time null constants.
         if (llvm::isa<llvm::ConstantPointerNull>(objectPtr)) {
             return;
         }
 
-        // No GC for null pointers or the none object singleton
-        if (yoiType->type == IRValueType::valueType::none || yoiType->type == IRValueType::valueType::null) {
+        // No GC for the none object singleton
+        if (yoiType->type == IRValueType::valueType::none) {
             return;
         }
 
@@ -1019,24 +1066,37 @@ namespace yoi {
                 funcNameBase = "struct_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
                 break;
             case IRValueType::valueType::interfaceObject: {
-                // For interfaces, the GC function is virtual.
                 auto key = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex);
                 auto* interfaceType = structTypeMap.at(key);
                 auto vtableSlotIndex = isIncrease ? 2 : 3;
-                auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceType, objectPtr, vtableSlotIndex, "gc_vslot_ptr");
-                
+
+                // --- runtime null check for interface objects ---
+                llvm::Type* ptrType = llvm::PointerType::get(interfaceType, 0); 
+                llvm::Value* isNull = Builder->CreateICmpEQ(objectPtr, llvm::ConstantPointerNull::get(llvm::cast<llvm::PointerType>(ptrType)), "is_null_interface_obj");
+
+                llvm::BasicBlock* currentBlock = Builder->GetInsertBlock();
+                llvm::BasicBlock* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue_gc_interface", currentFunction);
+                llvm::BasicBlock* endBlock = llvm::BasicBlock::Create(*TheContext, "end_gc_interface", currentFunction);
+
+                Builder->CreateCondBr(isNull, endBlock, continueBlock);
+                Builder->SetInsertPoint(continueBlock);
+
                 auto* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
                 auto* gcFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { i8PtrTy }, false);
                 auto* gcFuncPtrType = llvm::PointerType::get(gcFuncType, 0);
 
+                auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceType, objectPtr, vtableSlotIndex, "gc_vslot_ptr");
                 auto* funcPtr = Builder->CreateLoad(gcFuncPtrType, vtableSlotPtr, "gc_func_ptr");
                 auto* thisPtr = Builder->CreateStructGEP(interfaceType, objectPtr, 1, "this_ptr_field");
                 auto* concreteThis = Builder->CreateLoad(i8PtrTy, thisPtr, "concrete_this");
 
                 Builder->CreateCall(gcFuncType, funcPtr, {concreteThis});
+                Builder->CreateBr(endBlock);
+
+                Builder->SetInsertPoint(endBlock);
                 return;
             }
-            default: return; // No GC needed
+            default: return; // No GC needed for raw types or unknown types
         }
 
         auto funcName = funcNameBase + (isIncrease ? "_gc_refcount_increase" : "_gc_refcount_decrease");

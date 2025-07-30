@@ -40,16 +40,25 @@ int main(int argc, const char **argv) {
 
         std::cout << "--- yoi-lang IR (Unified) ---\n";
         auto str = unifiedModule->to_string();
-        std::cout << yoi::wstring2string(str) << std::endl;
+
+        std::error_code ec;
+        llvm::raw_fd_stream yoi_file("cmake-build-debug/test.yoi", ec);
+        yoi_file << yoi::wstring2string(str);
+        yoi_file.close();
+
+
         std::cout << "--- End yoi-lang IR ---\n\n";
 
         std::cout << "--- LLVM IR ---\n";
         // Pass the unified module to the LLVM codegen.
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);
         llvmCodegen.generate();
-        llvmCodegen.getModule()->print(llvm::outs(), nullptr);
+        // Print the LLVM IR to file
+        llvm::raw_fd_stream ll_file("cmake-build-debug/test.ll", ec);
+        llvmCodegen.getModule()->print(ll_file, nullptr);
+        ll_file.close();
         std::cout << "\n--- End LLVM IR ---\n";
-        llvmCodegen.generateTargetObjectCode(L"test.o");
+        llvmCodegen.generateTargetObjectCode(L"cmake-build-debug/test.o");
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }

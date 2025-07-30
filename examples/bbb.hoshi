@@ -1,0 +1,4 @@
+func main() : int {
+    let a = 22 + 33
+    return a
+}

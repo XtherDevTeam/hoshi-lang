@@ -30,6 +30,7 @@ namespace yoi {
         linkStructsAndInterfaces();
         linkGlobals();
         linkFunctions();
+        linkInterfaceImplementations();
         createEntryFunction();
 
         return objectFile;
@@ -102,10 +103,6 @@ namespace yoi {
                 indexT newIdx = finalModule->interfaceImplementationTable.put_create(newName, implPair.second);
                 finalModule->interfaceImplementationTable[newIdx]->name = newName;
                 interfaceImplRemapping[modId][oldIdx] = newIdx;
-
-                for (auto &virtualMethod : finalModule->interfaceImplementationTable[newIdx]->virtualMethods) {
-                    *virtualMethod = *patchType(virtualMethod);
-                }
             }
         }
     }
@@ -290,5 +287,12 @@ namespace yoi {
             builder.retOp();
         }
         builder.yield();
+    }
+    void IRLinker::linkInterfaceImplementations() {
+        for (auto &implPair : finalModule->interfaceImplementationTable) {
+            for (auto &virtualMethod : implPair.second->virtualMethods) {
+                *virtualMethod = *patchType(virtualMethod);
+            }
+        }
     }
 } // namespace yoi
