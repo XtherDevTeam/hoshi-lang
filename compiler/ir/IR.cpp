@@ -584,7 +584,7 @@ namespace yoi {
         try {
             return nameIndexMap.at(name);
         } catch (std::out_of_range &e) {
-            throw std::length_error("Undefined field: " + yoi::wstring2string(name));
+            throw std::out_of_range("Undefined field: " + yoi::wstring2string(name));
         }
     }
 
@@ -669,4 +669,26 @@ namespace yoi {
     IRExternEntry::externType IRExternEntry::getExternType() const {
         return type;
     }
-} // yoi
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setBuildType(BuildType buildType) {
+      this->buildType = buildType;
+      return *this;
+    }
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setBuildPlatform(const yoi::wstr &buildPlatform) {
+      this->buildPlatform = buildPlatform;
+      return *this;
+    }
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setBuildArch(const yoi::wstr &buildArch) {
+      this->buildArch = buildArch;
+      return *this;
+    }
+    std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
+      return managedPtr(IRBuildConfig{buildType, buildMode, buildPlatform, buildArch});
+    }
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
+        this->buildMode = buildMode;
+        return *this;
+    }
+} // namespace yoi

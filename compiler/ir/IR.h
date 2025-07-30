@@ -8,8 +8,40 @@
 #include "share/def.hpp"
 #include <map>
 #include <compiler/compilerContext.h>
+#include <memory>
 
 namespace yoi {
+    struct IRBuildConfig {
+        enum class BuildType : yoi::indexT {
+            library = 0,
+            executable
+        } buildType;
+        enum class BuildMode : yoi::indexT {
+            debug = 0,
+            release
+        } buildMode;
+        yoi::wstr buildPlatform;
+        yoi::wstr buildArch;
+        
+        struct Builder {
+            BuildType buildType{BuildType::executable};
+            BuildMode buildMode{BuildMode::debug};
+            yoi::wstr buildPlatform;
+            yoi::wstr buildArch;
+
+            Builder() = default;
+
+            Builder &setBuildType(BuildType buildType);
+
+            Builder &setBuildMode(BuildMode buildMode);
+
+            Builder &setBuildPlatform(const yoi::wstr &buildPlatform);
+
+            Builder &setBuildArch(const yoi::wstr &buildArch);
+
+            std::shared_ptr<IRBuildConfig> yield();
+        };
+    };
     class IRValueType {
     public:
         enum class valueType : yoi::indexT {

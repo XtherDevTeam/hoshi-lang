@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(hoshi_lang)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 26)
 
 find_package(LLVM REQUIRED CONFIG)
 
@@ -13,7 +13,19 @@ include_directories(${LLVM_INCLUDE_DIRS})
 
 add_definitions(${LLVM_DEFINITIONS})
 
-llvm_map_components_to_libnames(llvm_libs support core irreader)
+message(STATUS "LLVM_INCLUDE_DIRS: ${LLVM_INCLUDE_DIRS}")
+
+execute_process(COMMAND llvm-config --libs all
+                OUTPUT_VARIABLE llvm_libraries
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+execute_process(COMMAND llvm-config --libdir
+                OUTPUT_VARIABLE llvm_libdir
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# print LLVM components
+message(STATUS "LLVM components: ${llvm_libraries}")
 
 #set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
@@ -28,13 +40,13 @@ file (GLOB HOSHI_LANG_INCLUDE
         compiler/visitor/*.cpp
         compiler/ir/*.cpp
         compiler/llvmCodegen/*.cpp
-        runtime/*.cpp
         share/*.cpp
         pass/*.cpp)
 
 file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/*.cpp
         runtime/memory/*.cpp
+        runtime/debug/*.cpp
 )
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
@@ -43,4 +55,6 @@ add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLU
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
-target_link_libraries(hoshi_lang ${llvm_libs})
+target_link_directories(hoshi_lang PRIVATE ${llvm_libdir})
+
+target_link_libraries(hoshi_lang ${llvm_libraries})

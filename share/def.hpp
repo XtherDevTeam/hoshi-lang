@@ -12,6 +12,33 @@
 #include "magic_enum.h"
 #include <share/utfutils.hpp>
 
+#if defined(__linux__)
+#define YOI_PLATFORM "linux"
+#define YOI_DYLIB_SUFFIX "so"
+#elif defined(__APPLE__)
+#define YOI_PLATFORM "darwin"
+#define YOI_DYLIB_SUFFIX L"dylib"
+#elif defined(_WIN32)
+#pragma comment(lib, "ws2_32.lib")
+#define YOI_PLATFORM "win32"
+#define YOI_DYLIB_SUFFIX "dll"
+#else
+#define YOI_PLATFORM "unknown"
+#define YOI_DYLIB_SUFFIX "so"
+#endif
+
+#if defined(__aarch64__)
+#define YOI_ARCH "arm64"
+#elif defined(__x86_64__)
+#define YOI_ARCH "amd64"
+#elif defined(__i386__)
+#define YOI_ARCH "i386"
+#elif defined(__arm__)
+#define YOI_ARCH "arm"
+#else
+#define YOI_ARCH "unknown"
+#endif
+
 namespace yoi {
     using wstr = std::wstring;
     using wchar = wstr::value_type;
@@ -110,12 +137,12 @@ namespace yoi {
                 values.push_back({a, b});
                 return values.size() - 1;
             } else {
-                throw std::length_error("indexTable: key already exists");
+                throw std::out_of_range("indexTable: key already exists");
             }
         }
         B &operator[](const A &k) {
             if (auto it = indexes.find(k); it == indexes.end()) {
-                throw std::length_error("indexTableRefactored: invalid key");
+                throw std::out_of_range("indexTableRefactored: invalid key");
             } else {
                 return values[it->second].second;
             }
@@ -125,12 +152,12 @@ namespace yoi {
             if (k < indexes.size()) {
                 return values[k].second;
             } else {
-                throw std::length_error("indexTableRefactored: invalid index");
+                throw std::out_of_range("indexTableRefactored: invalid index");
             }
         }
         yoi::indexT getIndex(const A &k) {
             if (auto it = indexes.find(k); it == indexes.end()) {
-                throw std::length_error("indexTableRefactored: invalid key");
+                throw std::out_of_range("indexTableRefactored: invalid key");
             } else {
                 return it->second;
             }

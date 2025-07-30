@@ -19,12 +19,15 @@ namespace yoi {
 
     class IRModule;
 
+    class IRBuildConfig;
+
     class compilerContext : public std::enable_shared_from_this<compilerContext> {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> sharedValueType;
         std::map<yoi::indexT, std::shared_ptr<IRModule>> moduleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
+        std::shared_ptr<IRBuildConfig> buildConfig;
 
         yoi::IRValueType getIntObject();
 
@@ -101,6 +104,10 @@ namespace yoi {
         std::shared_ptr<yoi::IRValueType> getCharObjectType();
 
         std::shared_ptr<yoi::IRValueType> getNoneObjectType();
+
+        std::shared_ptr<IRBuildConfig> getBuildConfig() const;
+
+        void setBuildConfig(const std::shared_ptr<IRBuildConfig> &buildConfig);
     };
 
 } // yoi

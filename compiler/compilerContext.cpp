@@ -43,7 +43,7 @@ namespace yoi {
         auto rFilepath = realpath(filepath);
         try {
             return modules.getIndex(rFilepath);
-        } catch (const std::length_error &e) {
+        } catch (const std::out_of_range &e) {
             auto fp = fopen(wstring2string(rFilepath).c_str(), "r");
             if (!fp)
                 throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
@@ -246,4 +246,11 @@ namespace yoi {
         const std::shared_ptr<IRObjectFile> &irObjectFile) {
       this->irObjectFile = irObjectFile;
     }
-    } // namespace yoi
+    std::shared_ptr<IRBuildConfig> compilerContext::getBuildConfig() const {
+      return buildConfig;
+    }
+    void compilerContext::setBuildConfig(
+        const std::shared_ptr<IRBuildConfig> &buildConfig) {
+      this->buildConfig = buildConfig;
+    }
+} // namespace yoi

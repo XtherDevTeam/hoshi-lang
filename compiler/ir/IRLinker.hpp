@@ -38,9 +38,10 @@ namespace yoi {
         std::map<indexT, std::map<indexT, indexT>> globalRemapping;
         std::map<indexT, std::map<indexT, indexT>> functionRemapping;
         std::map<indexT, std::map<indexT, indexT>> stringRemapping;
+        yoi::vec<yoi::indexT> globInitializerIndexes;
 
         /**
-        * @brief Mangles a symbol name with its module ID, unless it's the entry module.
+        * @brief Mangles a symbol name with its module ID, unless it's the main function in the entry module.
         */
         wstr mangleName(indexT moduleId, const wstr& originalName);
 
@@ -48,6 +49,7 @@ namespace yoi {
         void linkStructsAndInterfaces();
         void linkGlobals();
         void linkFunctions();
+        void createEntryFunction();
 
         std::shared_ptr<IRValueType> patchType(const std::shared_ptr<IRValueType> &oldType);
         IR patchInstruction(const IR& instr, indexT currentModuleId);

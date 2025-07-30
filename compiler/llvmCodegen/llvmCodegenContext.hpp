@@ -5,103 +5,117 @@
 #ifndef HOSHI_LANG_LLVMCODEGENCONTEXT_HPP
 #define HOSHI_LANG_LLVMCODEGENCONTEXT_HPP
 
-#include <llvm/IR/LLVMContext.h>
-#include <llvm/IR/Module.h>
-#include <llvm/IR/IRBuilder.h>
-#include <llvm/IR/Value.h>
-#include <llvm/IR/Type.h>
+#include <llvm/IR/BasicBlock.h>
+#include <llvm/IR/DerivedTypes.h> // Added for PointerType and StructType
 #include <llvm/IR/Function.h>
 #include <llvm/IR/GlobalVariable.h>
-#include <llvm/IR/BasicBlock.h>
+#include <llvm/IR/IRBuilder.h>
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IR/Type.h>
+#include <llvm/IR/Value.h>
 #include <llvm/IR/Verifier.h>
-#include <llvm/IR/DerivedTypes.h> // Added for PointerType and StructType
 
 #include "compiler/ir/IR.h"
 
 #include <map>
-#include <vector>
 #include <memory>
 #include <stack>
+#include <vector>
 
 namespace yoi {
 
-class LLVMCodegen {
-public:
-    LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, std::shared_ptr<IRModule> yoiModule);
+    class LLVMCodegen {
+      public:
+        LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx,
+                    std::shared_ptr<IRModule> yoiModule);
 
-    // Generate the LLVM Module from the yoi::IRModule.
-    void generate();
+        // Generate the LLVM Module from the yoi::IRModule.
+        void generate();
 
-    // Get the generated module.
-    llvm::Module* getModule();
+        // Get the generated module.
+        llvm::Module *getModule();
 
-private:
-    // Core LLVM components
-    std::unique_ptr<llvm::LLVMContext> TheContext;
-    std::unique_ptr<llvm::Module> TheModule;
-    std::unique_ptr<llvm::IRBuilder<>> Builder;
+        void generateTargetObjectCode(const yoi::wstr &pathToOutput);
 
-    // Runtime functions
-    llvm::Function* runtimeObjectAllocFunc = nullptr;
-    llvm::Function* runtimeFinalizeObjectFunc = nullptr;
+      private:
+        // Core LLVM components
+        std::unique_ptr<llvm::LLVMContext> TheContext;
+        std::unique_ptr<llvm::Module> TheModule;
+        std::unique_ptr<llvm::IRBuilder<>> Builder;
 
-    // Yoi language context
-    std::shared_ptr<compilerContext> compilerCtx;
-    std::shared_ptr<IRModule> yoiModule;
+        // Runtime functions
+        llvm::Function *runtimeObjectAllocFunc = nullptr;
+        llvm::Function *runtimeFinalizeObjectFunc = nullptr;
+        llvm::Function *runtimeDebugReportCurrentFunctionFunc = nullptr;
+        llvm::Function *runtimeDebugPrintFunc = nullptr;
 
-    // Singleton None object
-    llvm::GlobalVariable* noneObjectSingleton = nullptr;
 
-    struct StackValue {
-        llvm::Value* llvmValue;
-        std::shared_ptr<IRValueType> yoiType;
+        // Yoi language context
+        std::shared_ptr<compilerContext> compilerCtx;
+        std::shared_ptr<IRModule> yoiModule;
+
+        // Singleton None object
+        llvm::GlobalVariable *noneObjectSingleton = nullptr;
+
+        struct StackValue {
+            llvm::Value *llvmValue;
+            std::shared_ptr<IRValueType> yoiType;
+        };
+
+        // Codegen state
+        std::vector<StackValue> valueStack;
+        llvm::Function *currentFunction = nullptr;
+        std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
+        std::map<yoi::indexT, llvm::AllocaInst *> namedValues; // Maps local var index to AllocaInst
+        std::map<yoi::indexT, llvm::BasicBlock *> blockMap;    // Maps yoi block index to LLVM block
+
+        // Mappings from yoi IR to LLVM IR
+        std::map<yoi::indexT, llvm::GlobalVariable *>
+            globalValues; // Maps global var index to GlobalVariable
+        std::map<yoi::wstr, llvm::Function *>
+            functionMap; // Maps yoi function names to LLVM functions
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
+                 llvm::StructType *>
+            structTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM struct type
+
+        // Helper methods
+        void declareRuntimeFunctions();
+
+        void generateBasicTypesAndFunctions();
+
+        void generateDeclarations();
+        void generateStructDeclarations();
+        void generateGlobalDeclarations();
+        void generateFunctionDeclarations();
+
+        void generateImplementations();
+        void generateStructImplementations();
+        void generateStructGCFunctions();
+        void generateInterfaceGCWrappers();
+        void generateFunctionImplementations();
+        void generateFunction(IRFunctionDefinition &funcDef);
+        void generateFunctionExitCleanup();
+        void generateCodeBlock(IRCodeBlock &block, yoi::indexT blockIdx);
+        void generateInstruction(const IR &instr);
+        void generateDescription();
+
+        llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type);
+        llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
+        llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
+
+        // Helpers for specific instructions & object model
+        void handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat);
+        void handleComparison(llvm::CmpInst::Predicate pred, bool isFloat);
+        llvm::Value *createBasicObject(const std::shared_ptr<IRValueType> &yoiType,
+                                       llvm::Value *rawValue);
+        llvm::Value *unboxValue(llvm::Value *objectPtr,
+                                const std::shared_ptr<IRValueType> &yoiType);
+        void callGcFunction(llvm::Value *objectPtr,
+                            const std::shared_ptr<IRValueType> &yoiType,
+                            bool isIncrease);
     };
 
-    // Codegen state
-    std::vector<StackValue> valueStack;
-    llvm::Function* currentFunction = nullptr;
-    std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
-    std::map<yoi::indexT, llvm::AllocaInst*> namedValues; // Maps local var index to AllocaInst
-    std::map<yoi::indexT, llvm::BasicBlock*> blockMap; // Maps yoi block index to LLVM block
+} // namespace yoi
 
-    // Mappings from yoi IR to LLVM IR
-    std::map<yoi::indexT, llvm::GlobalVariable*> globalValues; // Maps global var index to GlobalVariable
-    std::map<yoi::wstr, llvm::Function*> functionMap; // Maps yoi function names to LLVM functions
-    std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>, llvm::StructType*> structTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM struct type
-
-    // Helper methods
-    void declareRuntimeFunctions();
-
-    void generateBasicTypesAndFunctions();
-
-    void generateDeclarations();
-    void generateStructDeclarations();
-    void generateGlobalDeclarations();
-    void generateFunctionDeclarations();
-
-    void generateImplementations();
-    void generateStructImplementations();
-    void generateStructGCFunctions();
-    void generateInterfaceGCWrappers();
-    void generateFunctionImplementations();
-    void generateFunction(IRFunctionDefinition& funcDef);
-    void generateFunctionExitCleanup();
-    void generateCodeBlock(IRCodeBlock& block, yoi::indexT blockIdx);
-    void generateInstruction(const IR& instr);
-
-    llvm::Type* yoiTypeToLLVMType(const std::shared_ptr<IRValueType>& type);
-    llvm::FunctionType* getFunctionType(const std::shared_ptr<IRFunctionDefinition>& funcDef);
-    llvm::Constant* getGlobalInitializer(const std::shared_ptr<IRValueType>& type);
-
-    // Helpers for specific instructions & object model
-    void handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat);
-    void handleComparison(llvm::CmpInst::Predicate pred, bool isFloat);
-    llvm::Value* createBasicObject(const std::shared_ptr<IRValueType>& yoiType, llvm::Value* rawValue);
-    llvm::Value* unboxValue(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType);
-    void callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease);
-
-};
-
-} // yoi
-
-#endif //HOSHI_LANG_LLVMCODEGENCONTEXT_HPP
+#endif // HOSHI_LANG_LLVMCODEGENCONTEXT_HPP

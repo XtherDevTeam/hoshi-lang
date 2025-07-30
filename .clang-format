@@ -1,0 +1,44 @@
+# Based on the provided C++ code snippet for clang-format
+# This configuration aims to replicate the observed formatting style as closely as possible.
+# Note on Brace Style: The original code has a slight inconsistency where the constructor
+# and 'visitor::visit()' (no-arg method) have braces on a new line, while most other
+# methods have braces attached. This configuration prioritizes the attached brace style
+# for methods (which is the majority), while ensuring namespaces have new-line braces.
+
+Language: Cpp
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+IndentCaseLabels: true # Indent `case` labels within `switch` statements
+NamespaceIndentation: All # Indent contents within `namespace` blocks
+
+# Brace Style
+BreakBeforeBraces: Attach # Default to attaching braces (e.g., for 'if', 'for', 'switch', and most methods)
+BraceWrapping:
+  AfterNamespace: true # Put braces for namespaces on a new line
+
+# Spaces
+SpaceAfterCStyleCast: No
+SpaceBeforeAssignmentOperators: Yes
+SpacesInParentheses: No
+SpacesInSquareBrackets: No
+
+# Pointer and Reference Alignment
+PointerAlignment: Right # e.g., `Type *var`, `Type &var`
+
+# Line Breaks
+ColumnLimit: 100 # A common and reasonable line length limit
+AllowShortIfStatementsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty # Allows `void func() {}`
+AllowShortLoopsOnASingleLine: false
+
+BreakBeforeBinaryOperators: None # Operator stays with the left operand if a line break occurs
+
+BinPackArguments: false # Arguments in function calls break to new lines when too long
+BinPackParameters: false # Parameters in function declarations break to new lines when too long
+AlwaysBreakAfterReturnType: None # Return type stays on the same line as function name
+
+# Constructor Initializer List
+ConstructorInitializerIndentWidth: 4

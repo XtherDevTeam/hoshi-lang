@@ -89,7 +89,7 @@ namespace yoi {
                 moduleContext->getIRBuilder().loadOp(IR::Opcode::load_global, {IROperand::operandType::globalVar, yoi::indexT{index}}, valType);
             }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-        } catch (std::length_error &e) {
+        } catch (std::out_of_range &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
         }
         // TODO: add support for extern variables
@@ -742,7 +742,7 @@ namespace yoi {
                                 }
                             }
                         }
-                    } catch (std::length_error &e) {
+                    } catch (std::out_of_range &e) {
                         panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
                     }
                 } else if (termType->type == IRValueType::valueType::interfaceObject) {
@@ -780,7 +780,7 @@ namespace yoi {
                                 panic(rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
                             }
                         }
-                    } catch (std::length_error &e) {
+                    } catch (std::out_of_range &e) {
                         panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
                     }
                 }
@@ -839,7 +839,7 @@ namespace yoi {
                 }
                 moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch(std::length_error &e) {
+            } catch(std::out_of_range &e) {
                 // panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function: " + wstring2string(subscriptExpr->id->getId().get().strVal));
                 // pass
             }
@@ -859,7 +859,7 @@ namespace yoi {
                 auto constructor = irModule->functionTable[constructorIndex.index];
                 moduleContext->getIRBuilder().invokeMethodOp(constructorIndex.index, subscriptExpr->args->get().size(), constructor->returnType);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::length_error &e) {
+            } catch (std::out_of_range &e) {
                 // pass
             }
             try {
@@ -879,7 +879,7 @@ namespace yoi {
                 auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
                 moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::length_error &e) {
+            } catch (std::out_of_range &e) {
                 // no related function, struct or interface found, throw an error
                 panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct or interface: " + wstring2string(subscriptExpr->id->getId().get().strVal));
             }
@@ -908,7 +908,7 @@ namespace yoi {
         try {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
-        } catch(std::length_error &e) {
+        } catch(std::out_of_range &e) {
             // let it go
         }
         if (typeName == L"int") {
@@ -1550,7 +1550,7 @@ namespace yoi {
             auto target = moduleContext->getCompilerContext()->getImportedModule(targetModule);
             auto interfaceIndex = target->interfaceTable.getIndex(interfaceName);
             return std::make_pair(std::make_pair(targetModule, interfaceIndex), target->interfaceTable[interfaceIndex]);
-        } catch (std::length_error &) {
+        } catch (std::out_of_range &) {
             panic(structDef->getLine(), structDef->getColumn(), "Undefined interface: " + wstring2string(interfaceName));
         }
 

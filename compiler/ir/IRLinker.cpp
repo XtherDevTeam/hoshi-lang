@@ -30,13 +30,15 @@ namespace yoi {
         linkStructsAndInterfaces();
         linkGlobals();
         linkFunctions();
+        createEntryFunction();
 
         return objectFile;
     }
 
     wstr IRLinker::mangleName(indexT moduleId, const wstr& originalName) {
-        if (moduleId == entryModuleId || originalName == L"main") {
-            return originalName;
+        // only when it's not a main function, we need to mangle the name
+        if (moduleId == entryModuleId && originalName == L"main") {
+            return L"yoi_main";
         }
         std::wstringstream ss;
         ss << std::hex << moduleId;
@@ -145,6 +147,10 @@ namespace yoi {
 
                 indexT newIdx = finalModule->functionTable.put_create(newName, newFuncDef);
                 functionRemapping[modId][oldIdx] = newIdx;
+
+                if (funcPair.first == L"yoimiya_glob_initializer") {
+                    globInitializerIndexes.emplace_back(newIdx);
+                }
             }
         }
 
@@ -261,9 +267,28 @@ namespace yoi {
                 break;
             }
             default: {
+                newType->typeAffiliateModule = -1;
                 break;
             }
         }
         return newType;
+    }
+    void IRLinker::createEntryFunction() {
+        IRFunctionDefinition::Builder entryBuilder;
+        auto entry = entryBuilder.setName(L"yoimiya_entry").setReturnType(compilerCtx->getIntObjectType()).yield();
+        auto entryIndex = this->finalModule->functionTable.put_create(L"yoimiya_entry", entry);
+        IRBuilder builder(compilerCtx, finalModule, entry);
+        builder.switchCodeBlock(builder.createCodeBlock());
+        for (auto &initIdx: globInitializerIndexes) {
+            builder.invokeOp(initIdx, 0, compilerCtx->getIntObjectType());
+        }
+        if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
+            builder.invokeOp(finalModule->functionTable.getIndex(L"yoi_main"), 0, compilerCtx->getIntObjectType());
+            builder.retOp();
+        } else {
+            builder.pushOp(IR::Opcode::push_integer, IROperand{IROperand::operandType::integer, IROperand::operandValue{(int64_t)0}});
+            builder.retOp();
+        }
+        builder.yield();
     }
 } // namespace yoi

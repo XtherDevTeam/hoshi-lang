@@ -1,0 +1,12 @@
+#include "runtime.h"
+#include <cstdio>
+
+int main(int argc, char *argv[]) {
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+    printf("[Elysia/DEBUG] Yoi-lang descriptor: %s, build_type: %llu. Runtime linked, invoking yoimiya_entry()...\n", &yoi_desc, yoi_build_type);
+    #endif
+    YoiIntegerObject *result = yoimiya_entry();
+    int resultVal = static_cast<int>(result->value);
+    basic_int_gc_refcount_decrease(result);
+    return resultVal;
+}
