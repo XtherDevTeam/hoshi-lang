@@ -106,11 +106,11 @@ namespace yoi {
     }
 
     subscript &subscriptExpr::getSubscript() const {
-        return *subscript;
+        return *subscriptVal;
     }
 
     bool subscriptExpr::isSubscript() const {
-        return subscript;
+        return subscriptVal;
     }
 
     bool subscriptExpr::isIdentifier() const {
@@ -582,7 +582,7 @@ namespace yoi {
         if (ptr->isInvocation())
             finalizeAST(ptr->args);
         else if (ptr->isSubscript())
-            finalizeAST(ptr->subscript);
+            finalizeAST(ptr->subscriptVal);
         delete ptr;
     }
 
@@ -782,19 +782,19 @@ namespace yoi {
     void finalizeAST(globalStmt *ptr) {
         switch (ptr->kind) {
             case globalStmt::vKind::useStmt:
-                finalizeAST(ptr->value.useStmt);
+                finalizeAST(ptr->value.useStmtVal);
                 break;
             case globalStmt::vKind::interfaceDefStmt:
-                finalizeAST(ptr->value.interfaceDefStmt);
+                finalizeAST(ptr->value.interfaceDefStmtVal);
                 break;
             case globalStmt::vKind::structDefStmt:
-                finalizeAST(ptr->value.structDefStmt);
+                finalizeAST(ptr->value.structDefStmtVal);
                 break;
             case globalStmt::vKind::implStmt:
-                finalizeAST(ptr->value.implStmt);
+                finalizeAST(ptr->value.implStmtVal);
                 break;
             case globalStmt::vKind::letStmt:
-                finalizeAST(ptr->value.letStmt);
+                finalizeAST(ptr->value.letStmtVal);
                 break;
         }
         delete ptr;
@@ -850,31 +850,31 @@ namespace yoi {
     void finalizeAST(inCodeBlockStmt *ptr) {
         switch (ptr->kind) {
             case inCodeBlockStmt::vKind::ifStmt:
-                finalizeAST(ptr->value.ifStmt);
+                finalizeAST(ptr->value.ifStmtVal);
                 break;
             case inCodeBlockStmt::vKind::whileStmt:
-                finalizeAST(ptr->value.whileStmt);
+                finalizeAST(ptr->value.whileStmtVal);
                 break;
             case inCodeBlockStmt::vKind::forEachStmt:
-                finalizeAST(ptr->value.whileStmt);
+                finalizeAST(ptr->value.forStmtVal);
                 break;
             case inCodeBlockStmt::vKind::returnStmt:
-                finalizeAST(ptr->value.returnStmt);
+                finalizeAST(ptr->value.returnStmtVal);
                 break;
             case inCodeBlockStmt::vKind::continueStmt:
-                finalizeAST(ptr->value.continueStmt);
+                finalizeAST(ptr->value.continueStmtVal);
                 break;
             case inCodeBlockStmt::vKind::breakStmt:
-                finalizeAST(ptr->value.breakStmt);
+                finalizeAST(ptr->value.breakStmtVal);
                 break;
             case inCodeBlockStmt::vKind::letStmt:
-                finalizeAST(ptr->value.letStmt);
+                finalizeAST(ptr->value.letStmtVal);
                 break;
             case inCodeBlockStmt::vKind::codeBlock:
-                finalizeAST(ptr->value.codeBlock);
+                finalizeAST(ptr->value.codeBlockVal);
                 break;
             case inCodeBlockStmt::vKind::rExpr:
-                finalizeAST(ptr->value.rExpr);
+                finalizeAST(ptr->value.rExprVal);
                 break;
         }
         delete ptr;

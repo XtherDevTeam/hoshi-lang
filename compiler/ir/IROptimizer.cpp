@@ -7,6 +7,7 @@
 #include "share/def.hpp"
 
 #include <iostream>
+#include <cmath>
 
 namespace yoi {
     IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,

@@ -273,7 +273,7 @@ namespace yoi {
     public:
         identifierWithTemplateArg *id;
         invocationArguments *args;
-        subscript *subscript;
+        subscript *subscriptVal;
 
         bool isInvocation() const;
 
@@ -621,12 +621,12 @@ namespace yoi {
         } kind;
 
         union vValue {
-            useStmt *useStmt;
-            interfaceDefStmt *interfaceDefStmt;
-            structDefStmt *structDefStmt;
-            implStmt *implStmt;
-            letStmt *letStmt;
-            funcDefStmt *funcDefStmt;
+            useStmt *useStmtVal;
+            interfaceDefStmt *interfaceDefStmtVal;
+            structDefStmt *structDefStmtVal;
+            implStmt *implStmtVal;
+            letStmt *letStmtVal;
+            funcDefStmt *funcDefStmtVal;
             void *ptr;
 
             template<typename T>
@@ -732,16 +732,16 @@ namespace yoi {
         } kind;
 
         union vValue {
-            ifStmt *ifStmt;
-            whileStmt *whileStmt;
-            forEachStmt *forEachStmt;
-            returnStmt *returnStmt;
-            continueStmt *continueStmt;
-            breakStmt *breakStmt;
-            letStmt *letStmt;
-            codeBlock *codeBlock;
-            rExpr *rExpr;
-            forStmt *forStmt;
+            ifStmt *ifStmtVal;
+            whileStmt *whileStmtVal;
+            forEachStmt *forEachStmtVal;
+            returnStmt *returnStmtVal;
+            continueStmt *continueStmtVal;
+            breakStmt *breakStmtVal;
+            letStmt *letStmtVal;
+            codeBlock *codeBlockVal;
+            rExpr *rExprVal;
+            forStmt *forStmtVal;
             void *ptr;
 
             template<typename T>

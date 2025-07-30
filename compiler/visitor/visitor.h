@@ -5,7 +5,7 @@
 #ifndef HOSHI_LANG_VISITOR_H
 #define HOSHI_LANG_VISITOR_H
 
-#include "compiler/ir/IR.h"
+#include <compiler/ir/IR.h>
 #include <compiler/moduleContext.h>
 #include <memory>
 
@@ -13,7 +13,7 @@ namespace yoi {
 
     class visitor {
     public:
-        std::shared_ptr<moduleContext> moduleContext;
+        std::shared_ptr<yoi::moduleContext> moduleContext;
         std::shared_ptr<yoi::IRModule> irModule;
         yoi::indexT currentModuleIndex;
 

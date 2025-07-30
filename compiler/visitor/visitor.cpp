@@ -21,7 +21,7 @@ namespace yoi {
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&moduleContext->getModuleAST());
-        moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue(0ull)});
+        moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue(static_cast<yoi::indexT>(0ull))});
         moduleContext->getIRBuilder().retOp();
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
@@ -792,34 +792,34 @@ namespace yoi {
     void visitor::visit(yoi::inCodeBlockStmt *inCodeBlockStmt) {
         switch (inCodeBlockStmt->getKind()) {
             case inCodeBlockStmt::vKind::ifStmt:
-                visit(inCodeBlockStmt->getValue().ifStmt);
+                visit(inCodeBlockStmt->getValue().ifStmtVal);
                 break;
             case inCodeBlockStmt::vKind::whileStmt:
-                visit(inCodeBlockStmt->getValue().whileStmt);
+                visit(inCodeBlockStmt->getValue().whileStmtVal);
                 break;
             case inCodeBlockStmt::vKind::forStmt:
-                visit(inCodeBlockStmt->getValue().forStmt);
+                visit(inCodeBlockStmt->getValue().forStmtVal);
                 break;
             case inCodeBlockStmt::vKind::forEachStmt:
-                visit(inCodeBlockStmt->getValue().forEachStmt);
+                visit(inCodeBlockStmt->getValue().forEachStmtVal);
                 break;
             case inCodeBlockStmt::vKind::returnStmt:
-                visit(inCodeBlockStmt->getValue().returnStmt);
+                visit(inCodeBlockStmt->getValue().returnStmtVal);
                 break;
             case inCodeBlockStmt::vKind::continueStmt:
-                visit(inCodeBlockStmt->getValue().continueStmt);
+                visit(inCodeBlockStmt->getValue().continueStmtVal);
                 break;
             case inCodeBlockStmt::vKind::breakStmt:
-                visit(inCodeBlockStmt->getValue().breakStmt);
+                visit(inCodeBlockStmt->getValue().breakStmtVal);
                 break;
             case inCodeBlockStmt::vKind::letStmt:
-                visit(inCodeBlockStmt->getValue().letStmt);
+                visit(inCodeBlockStmt->getValue().letStmtVal);
                 break;
             case inCodeBlockStmt::vKind::codeBlock:
-                visit(inCodeBlockStmt->getValue().codeBlock);
+                visit(inCodeBlockStmt->getValue().codeBlockVal);
                 break;
             case inCodeBlockStmt::vKind::rExpr:
-                visit(inCodeBlockStmt->getValue().rExpr);
+                visit(inCodeBlockStmt->getValue().rExprVal);
                 // balance the stack
                 moduleContext->getIRBuilder().popFromTempVarStack();
                 break;
@@ -1257,27 +1257,27 @@ namespace yoi {
     void visitor::visit(yoi::globalStmt *globalStmt) {
         switch (globalStmt->kind) {
             case globalStmt::vKind::useStmt: {
-                visit(globalStmt->value.useStmt);
+                visit(globalStmt->value.useStmtVal);
                 break;
             }
             case globalStmt::vKind::implStmt: {
-                visit(globalStmt->value.implStmt);
+                visit(globalStmt->value.implStmtVal);
                 break;
             }
             case globalStmt::vKind::letStmt: {
-                visit(globalStmt->value.letStmt);
+                visit(globalStmt->value.letStmtVal);
                 break;
             }
             case globalStmt::vKind::funcDefStmt: {
-                visit(globalStmt->value.funcDefStmt);
+                visit(globalStmt->value.funcDefStmtVal);
                 break;
             }
             case globalStmt::vKind::structDefStmt: {
-                visit(globalStmt->value.structDefStmt);
+                visit(globalStmt->value.structDefStmtVal);
                 break;
             }
             case globalStmt::vKind::interfaceDefStmt: {
-                visit(globalStmt->value.interfaceDefStmt);
+                visit(globalStmt->value.interfaceDefStmtVal);
                 break;
             }
             default: {

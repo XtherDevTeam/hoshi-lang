@@ -349,7 +349,7 @@ namespace yoi {
         }
         parse(c, lex);
         if (c) {
-            expr->subscript = c;
+            expr->subscriptVal = c;
             o = expr;
             return;
         }
@@ -1353,57 +1353,57 @@ namespace yoi {
 
     void parse(inCodeBlockStmt *&o, lexer &lex) {
         o = new inCodeBlockStmt{lex.curToken, inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
-        parse(o->value.letStmt, lex);
+        parse(o->value.letStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::letStmt;
             return;
         }
-        parse(o->value.ifStmt, lex);
+        parse(o->value.ifStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::ifStmt;
             return;
         }
-        parse(o->value.breakStmt, lex);
+        parse(o->value.breakStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::breakStmt;
             return;
         }
-        parse(o->value.continueStmt, lex);
+        parse(o->value.continueStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::continueStmt;
             return;
         }
-        parse(o->value.returnStmt, lex);
+        parse(o->value.returnStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::returnStmt;
             return;
         }
-        parse(o->value.forEachStmt, lex);
+        parse(o->value.forEachStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::forEachStmt;
             return;
         }
-        parse(o->value.whileStmt, lex);
+        parse(o->value.whileStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::whileStmt;
             return;
         }
-        parse(o->value.forStmt, lex);
+        parse(o->value.forStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::forStmt;
             return;
         }
-        parse(o->value.forEachStmt, lex);
+        parse(o->value.forEachStmtVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::forEachStmt;
             return;
         }
-        parse(o->value.codeBlock, lex);
+        parse(o->value.codeBlockVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::codeBlock;
             return;
         }
-        parse(o->value.rExpr, lex);
+        parse(o->value.rExprVal, lex);
         if (o->value.ptr) {
             o->kind = inCodeBlockStmt::vKind::rExpr;
             return;
