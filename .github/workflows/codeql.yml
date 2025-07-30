@@ -88,7 +88,7 @@ jobs:
           'your code, for example:'
         echo '  make bootstrap'
         echo '  make release'
-        sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        # sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
         mkdir -p cmake-build-debug
         cd cmake-build-debug && cmake .. && make hoshi_lang && make elysia_runtime
         exit 1

@@ -6,7 +6,6 @@
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
 
-#include <iostream>
 #include <cmath>
 
 namespace yoi {
@@ -109,6 +108,8 @@ namespace yoi {
 
     yoi::indexT IROptimizer::reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions,
         yoi::indexT currentIndex) {
+
+        // std::cout << "IROptimizer::reduce() called" << std::endl;s
         if (not contributedInstructions.optimizable) {
             return currentIndex;
         }
@@ -639,6 +640,7 @@ namespace yoi {
     IROptimizer &IROptimizer::reduceRedundantConstantExpr() {
         for (yoi::indexT insIndex = 0; insIndex < targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().size();++insIndex) {
             auto &ins = targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray()[insIndex];
+            // std::cout << "ins " << insIndex << " " << wstring2string(ins.to_string()) << std::endl;
             // std::cout << currentCodeBlockIndex << " " << insIndex << " " <<  wstring2string(ins.to_string()) << std::endl;
             switch (ins.opcode) {
                 case IR::Opcode::push_boolean: {
@@ -681,8 +683,7 @@ namespace yoi {
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getBoolObjectType(),
-                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                             value.possibleValue);
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -709,14 +710,14 @@ namespace yoi {
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getIntObjectType(),
-                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                             value.possibleValue);
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
                 case IR::Opcode::basic_cast_deci: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
+                    // std::cout << "simulate basic_cast_deci " << value.hasPossibleValue << std::endl;
                     if (value.hasPossibleValue) {
                         switch (value.type->type) {
                             case IRValueType::valueType::integerObject:
@@ -737,8 +738,7 @@ namespace yoi {
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getDeciObjectType(),
-                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}},
-                                             value.possibleValue);
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -749,6 +749,7 @@ namespace yoi {
                     simulationStack.pop();
                     // simulate
                     auto result = add(left, right);
+                    // std::cout << "simulate add " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
@@ -767,6 +768,7 @@ namespace yoi {
                     simulationStack.pop();
                     // simulate
                     auto result = sub(left, right);
+                    // std::cout << "simulate sub " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
@@ -785,6 +787,7 @@ namespace yoi {
                     simulationStack.pop();
                     // simulate
                     auto result = mul(left, right);
+                    // std::cout << "simulate mul " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
@@ -803,6 +806,7 @@ namespace yoi {
                     simulationStack.pop();
                     // simulate
                     auto result = div(left, right);
+                    // std::cout << "simulate div " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
@@ -1421,6 +1425,8 @@ namespace yoi {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             currentCodeBlockIndex = i;
             this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();
+            // clear the information we gathered as when jump back happens, the information is no longer valid
+            // variablesExtraInfo.clear();
         }
         this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization().reduceEmptyCodeBlock();
         return *this;

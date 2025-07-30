@@ -1,3 +1,4 @@
+#include <iostream>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-qualification"
 #pragma ide diagnostic ignored "misc-no-recursion"
@@ -472,14 +473,13 @@ namespace yoi {
     void parse(mulExpr *&o, lexer &lex) {
         vec<leftExpr *> vecA;
         vec<lexer::token> vecB;
-        lexer::token b;
         leftExpr *a;
         parse(a, lex);
         if (a) {
             vecA.push_back(a);
-            while (b.kind == lexer::token::tokenKind::asterisk || b.kind == lexer::token::tokenKind::slash
-                   || b.kind == lexer::token::tokenKind::percentSign) {
-                vecB.push_back(b);
+            while (lex.curToken.kind == lexer::token::tokenKind::asterisk || lex.curToken.kind == lexer::token::tokenKind::slash
+                   || lex.curToken.kind == lexer::token::tokenKind::percentSign) {
+                vecB.push_back(lex.curToken);
                 lex.scan();
                 parse(a, lex);
                 if (!a) {

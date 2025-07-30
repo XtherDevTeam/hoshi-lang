@@ -563,6 +563,74 @@ namespace yoi {
                 break;
             }
 
+            // Basic Type Casting
+            case IR::Opcode::basic_cast_int: {
+                auto val = valueStack.back(); valueStack.pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isDoubleTy()) {
+                    castedVal = Builder->CreateFPToSI(rawVal, Builder->getInt64Ty(), "deci_to_int_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "bool_to_int_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char
+                    castedVal = Builder->CreateSExt(rawVal, Builder->getInt64Ty(), "char_to_int_cast");
+                } else if (rawVal->getType()->isIntegerTy(64)) { // int (no-op)
+                    castedVal = rawVal;
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_int");
+                }
+                
+                auto* resultObj = createBasicObject(compilerCtx->getIntObjectType(), castedVal);
+                valueStack.push_back({resultObj, compilerCtx->getIntObjectType()});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
+            case IR::Opcode::basic_cast_deci: {
+                auto val = valueStack.back(); valueStack.pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isIntegerTy(64)) { // int
+                    castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "int_to_deci_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool
+                    castedVal = Builder->CreateUIToFP(rawVal, Builder->getDoubleTy(), "bool_to_deci_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char
+                    castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "char_to_deci_cast");
+                } else if (rawVal->getType()->isDoubleTy()) { // deci (no-op)
+                    castedVal = rawVal;
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_deci");
+                }
+                
+                auto* resultObj = createBasicObject(compilerCtx->getDeciObjectType(), castedVal);
+                valueStack.push_back({resultObj, compilerCtx->getDeciObjectType()});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
+            case IR::Opcode::basic_cast_bool: {
+                auto val = valueStack.back(); valueStack.pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isIntegerTy(64)) { // int
+                    castedVal = Builder->CreateICmpNE(rawVal, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "int_to_bool_cast");
+                } else if (rawVal->getType()->isDoubleTy()) { // deci
+                    castedVal = Builder->CreateFCmpONE(rawVal, llvm::ConstantFP::get(Builder->getDoubleTy(), 0.0), "deci_to_bool_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char
+                    castedVal = Builder->CreateICmpNE(rawVal, llvm::ConstantInt::get(Builder->getInt8Ty(), 0), "char_to_bool_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool (no-op)
+                    castedVal = rawVal;
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_bool");
+                }
+                
+                auto* resultObj = createBasicObject(compilerCtx->getBoolObjectType(), castedVal);
+                valueStack.push_back({resultObj, compilerCtx->getBoolObjectType()});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
+
             // Arithmetic
             case IR::Opcode::add: handleBinaryOp(llvm::Instruction::Add, false); break;
             case IR::Opcode::sub: handleBinaryOp(llvm::Instruction::Sub, false); break;
@@ -892,7 +960,7 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::nop:
-                break; // Do nothing
+                break;
                 
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled yoi::IR opcode: " + std::string(magic_enum::enum_name(instr.opcode)));
