@@ -42,7 +42,7 @@ jobs:
       matrix:
         include:
         - language: c-cpp
-          build-mode: manual
+          build-mode: autobuild
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -89,6 +89,7 @@ jobs:
         echo '  make bootstrap'
         echo '  make release'
         # sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+        alias llvm-config=llvm-config-18
         mkdir -p cmake-build-debug
         cd cmake-build-debug && cmake .. && make hoshi_lang && make elysia_runtime
         exit 1
