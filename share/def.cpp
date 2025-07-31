@@ -104,4 +104,15 @@ namespace yoi {
         else
             return string2wstring(res.string());
     }
-}
+    std::wstring whereIsHoshiLang() {
+        std::string path;
+        int length, dirnameLength;
+
+        length = wai_getExecutablePath(nullptr, 0, &dirnameLength);
+        path.resize(length + 1);
+        wai_getExecutablePath(path.data(), length, &dirnameLength);
+        path[length] = '\0';
+        return yoi::string2wstring(
+            path.substr(0, path.rfind(std::filesystem::path::preferred_separator)));
+    }
+} // namespace yoi

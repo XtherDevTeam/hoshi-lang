@@ -685,10 +685,20 @@ namespace yoi {
       return *this;
     }
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
-      return managedPtr(IRBuildConfig{buildType, buildMode, buildPlatform, buildArch});
+      return managedPtr(IRBuildConfig{buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles});
     }
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
         this->buildMode = buildMode;
+        return *this;
+    }
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setUseObjectLinker(UseObjectLinker useObjectLinker) {
+        this->useObjectLinker = useObjectLinker;
+        return *this;
+    }
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setPreserveIntermediateFiles(bool preserveIntermediateFiles) {
+        this->preserveIntermediateFiles = preserveIntermediateFiles;
         return *this;
     }
 } // namespace yoi

@@ -40,6 +40,7 @@ file (GLOB HOSHI_LANG_INCLUDE
         compiler/visitor/*.cpp
         compiler/ir/*.cpp
         compiler/llvmCodegen/*.cpp
+        compiler/objectLinker/*.cpp
         share/*.cpp
         pass/*.cpp)
 
@@ -52,6 +53,10 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
 
 add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLUDE})
+
+# add -fno-builtin to avoid linking with system libraries for elysia_runtime
+set_target_properties(elysia_runtime PROPERTIES COMPILE_FLAGS "-fno-builtin -static-libstdc++ -static")
+# set( "-fno-builtin -static-libstdc++ -static")
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 

@@ -11,6 +11,8 @@
 #include <memory>
 #include "magic_enum.h"
 #include <share/utfutils.hpp>
+#include <share/whereami.h>
+#include <filesystem>
 
 #if defined(__linux__)
 #define YOI_PLATFORM "linux"
@@ -58,6 +60,8 @@ namespace yoi {
     std::wstring string2wstring(const std::string &v);
 
     std::string wstring2string(const std::wstring &v);
+
+    std::wstring whereIsHoshiLang();
 
     template<typename A, typename B>
     class indexTableDeprecated {

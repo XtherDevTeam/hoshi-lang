@@ -20,14 +20,22 @@ namespace yoi {
             debug = 0,
             release
         } buildMode;
+        enum class UseObjectLinker : yoi::indexT {
+            cc = 0,
+            cl,
+            none
+        } useObjectLinker;
         yoi::wstr buildPlatform;
         yoi::wstr buildArch;
+        bool preserveIntermediateFiles;
         
         struct Builder {
             BuildType buildType{BuildType::executable};
             BuildMode buildMode{BuildMode::debug};
+            UseObjectLinker useObjectLinker{UseObjectLinker::cc};
             yoi::wstr buildPlatform;
             yoi::wstr buildArch;
+            bool preserveIntermediateFiles{false};
 
             Builder() = default;
 
@@ -35,9 +43,13 @@ namespace yoi {
 
             Builder &setBuildMode(BuildMode buildMode);
 
+            Builder &setUseObjectLinker(UseObjectLinker useObjectLinker);
+
             Builder &setBuildPlatform(const yoi::wstr &buildPlatform);
 
             Builder &setBuildArch(const yoi::wstr &buildArch);
+
+            Builder &setPreserveIntermediateFiles(bool preserveIntermediateFiles);
 
             std::shared_ptr<IRBuildConfig> yield();
         };

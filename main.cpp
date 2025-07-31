@@ -4,63 +4,292 @@
 #include <compiler/ir/IR.h>
 #include <compiler/ir/IRLinker.hpp>
 #include <compiler/llvmCodegen/llvmCodegenContext.hpp>
+#include <compiler/objectLinker/ccObjectLinker.h>
+#include <compiler/objectLinker/clObjectLinker.h>
+#include <compiler/objectLinker/objectLinker.h>
 #include <iostream>
 #include <llvm/Support/raw_ostream.h>
 #include <share/def.hpp>
-#include <sstream>
 #include <stdexcept>
+#include <string>
+#include <vector>
+#include <filesystem> 
+
+
+namespace fs = std::filesystem;
+
+
+std::string getOutputExtension(yoi::IRBuildConfig::BuildType type,
+                               std::wstring platform) {
+    if (type == yoi::IRBuildConfig::BuildType::executable) {
+        if (platform == L"windows") return ".exe";
+        return ""; 
+    } else if (type == yoi::IRBuildConfig::BuildType::library) {
+        if (platform == L"windows") return ".lib";
+        return ".a"; 
+    }
+    return ""; 
+}
+
+
+void printUsage(const char* programName) {
+    std::cerr << "Usage: " << programName << " [options] <input_file>\n"
+              << "Options:\n"
+              << "  -o <path>, --output <path>    Set output file path (e.g., build/my_app).\n"
+              << "                                If <path> is a directory (ends with / or \\), input filename is used.\n"
+              << "                                If not specified, derived from input_file in the current directory.\n"
+              << "  --build-type <type>           Specify build type (executable, static-lib, shared-lib). Default: executable\n"
+              << "  --linker <linker>             Specify object linker (cc, cl, none). Default: cc\n"
+              << "                                'none' will generate .o file but skip final linking.\n"
+              << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
+              << "                                Default: do not preserve intermediate files.\n"
+              << "  --preserve-intermediate       Explicitly preserve intermediate files. (This is the default behavior if --clean is not used).\n"
+              << "  -h, --help                    Display this help message.\n";
+}
 
 int main(int argc, const char **argv) {
+    
+    
+    std::string inputFile;
+    std::string outputPathStr; 
+    yoi::IRBuildConfig::BuildType buildType = yoi::IRBuildConfig::BuildType::executable;
+    std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
+    std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
+    yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
+    bool preserveIntermediateFiles = false; 
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+
+        if (arg == "-o" || arg == "--output") {
+            if (i + 1 < argc) {
+                outputPathStr = argv[++i];
+            } else {
+                std::cerr << "Error: " << arg << " requires a path argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "--build-type") {
+            if (i + 1 < argc) {
+                std::string typeStr = argv[++i];
+                if (typeStr == "executable") buildType = yoi::IRBuildConfig::BuildType::executable;
+                else if (typeStr == "library") buildType = yoi::IRBuildConfig::BuildType::library;
+                else {
+                    std::cerr << "Error: Invalid build type '" << typeStr << "'. Valid types: executable, library.\n";
+                    printUsage(argv[0]);
+                    return 1;
+                }
+            } else {
+                std::cerr << "Error: " << arg << " requires a type argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "--linker") {
+            if (i + 1 < argc) {
+                std::string linkerStr = argv[++i];
+                if (linkerStr == "cc") useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
+                else if (linkerStr == "cl") useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cl;
+                else if (linkerStr == "none") useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::none;
+                else {
+                    std::cerr << "Error: Invalid linker type '" << linkerStr << "'. Valid types: cc, cl, none.\n";
+                    printUsage(argv[0]);
+                    return 1;
+                }
+            } else {
+                std::cerr << "Error: " << arg << " requires a linker argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "--clean" || arg == "--remove-intermediate") {
+            preserveIntermediateFiles = false;
+        } else if (arg == "--preserve-intermediate") {
+            preserveIntermediateFiles = true;
+        } else if (arg == "--help" || arg == "-h") {
+            printUsage(argv[0]);
+            return 0; 
+        } else if (inputFile.empty()) { 
+            inputFile = arg;
+        } else {
+            std::cerr << "Error: Unknown argument or multiple input files specified: " << arg << "\n";
+            printUsage(argv[0]);
+            return 1;
+        }
+    }
+
+    
+    if (inputFile.empty()) {
+        std::cerr << "Error: No input file provided.\n";
+        printUsage(argv[0]);
+        return 1;
+    }
+    if (!fs::exists(inputFile)) {
+        std::cerr << "Error: Input file '" << inputFile << "' does not exist.\n";
+        return 1;
+    }
+    if (!fs::is_regular_file(inputFile)) {
+        std::cerr << "Error: Input file '" << inputFile << "' is not a regular file.\n";
+        return 1;
+    }
+
+    
+    fs::path inputFilePath(inputFile);
+    fs::path outputDir;
+    fs::path outputBaseName;
+    
+    if (outputPathStr.empty()) {
+        
+        outputDir = fs::current_path();
+        outputBaseName = inputFilePath.stem(); 
+    } else {
+        fs::path specifiedOutputPath(outputPathStr);
+        if (specifiedOutputPath.has_filename()) {
+            
+            outputDir = specifiedOutputPath.parent_path();
+            outputBaseName = specifiedOutputPath.stem();
+        } else { 
+            outputDir = specifiedOutputPath;
+            outputBaseName = inputFilePath.stem(); 
+        }
+    }
+
+    
+    try {
+        if (!outputDir.empty() && !fs::exists(outputDir)) {
+            fs::create_directories(outputDir);
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Error: Could not create output directory '" << outputDir.string() << "': " << e.what() << "\n";
+        return 1;
+    }
+
+    
+    fs::path yoiIRFile = outputDir / (outputBaseName.string() + ".yoi");
+    fs::path llvmIRFile = outputDir / (outputBaseName.string() + ".ll");
+    fs::path objectFile = outputDir / (outputBaseName.string() + ".o");
+    fs::path finalOutput = outputDir / (outputBaseName.string() + getOutputExtension(buildType, targetPlatform));
+
+    
+    std::vector<fs::path> intermediateFilesToClean;
+    if (!preserveIntermediateFiles) {
+        intermediateFilesToClean.push_back(yoiIRFile);
+        intermediateFilesToClean.push_back(llvmIRFile);
+        intermediateFilesToClean.push_back(objectFile);
+    }
+
+    int exitCode = 0; 
+
+    
     try {
         std::shared_ptr<yoi::compilerContext> compilerCtx =
             std::make_shared<yoi::compilerContext>();
         compilerCtx->initializeSharedObjects();
 
+        
         compilerCtx->setBuildConfig(yoi::IRBuildConfig::Builder()
-                                        .setBuildType(yoi::IRBuildConfig::BuildType::executable)
+                                        .setBuildType(buildType)
                                         .setBuildPlatform(yoi::string2wstring(YOI_PLATFORM))
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
+                                        .setUseObjectLinker(useObjectLinker)
+                                        .setPreserveIntermediateFiles(preserveIntermediateFiles) 
                                         .yield());
 
-        if (argc != 2) {
-            std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
-            return 1;
-        }
-        std::string in = argv[1];
-        yoi::wstr input = yoi::string2wstring(in);
+        yoi::wstr input = yoi::string2wstring(inputFile);
 
-        // Compile the entry module and all its dependencies.
+        std::cout << "Compiling '" << inputFile << "'...\n";
         auto entryModuleId = compilerCtx->compileModule(input);
 
-        // Link all compiled modules into a single object file.
+        std::cout << "Linking Yoi IR modules...\n";
         yoi::IRLinker linker;
-        auto objectFile = linker.link(compilerCtx, entryModuleId);
-        compilerCtx->setIRObjectFile(objectFile);
-        auto unifiedModule = objectFile->compiledModule;
+        auto objectIRFile = linker.link(compilerCtx, entryModuleId);
+        compilerCtx->setIRObjectFile(objectIRFile);
+        auto unifiedModule = objectIRFile->compiledModule;
 
+        
         std::cout << "--- yoi-lang IR (Unified) ---\n";
-        auto str = unifiedModule->to_string();
-
-        std::error_code ec;
-        llvm::raw_fd_stream yoi_file("cmake-build-debug/test.yoi", ec);
-        yoi_file << yoi::wstring2string(str);
+        auto yoiIRStr = unifiedModule->to_string();
+        std::error_code ec_yoi;
+        llvm::raw_fd_stream yoi_file(yoiIRFile.string(), ec_yoi);
+        if (ec_yoi) {
+            throw std::runtime_error("Could not open YOI IR output file '" + yoiIRFile.string() + "': " + ec_yoi.message());
+        }
+        yoi_file << yoi::wstring2string(yoiIRStr);
         yoi_file.close();
-
-
+        std::cout << "Yoi IR written to: " << yoiIRFile << "\n";
         std::cout << "--- End yoi-lang IR ---\n\n";
 
+        
         std::cout << "--- LLVM IR ---\n";
-        // Pass the unified module to the LLVM codegen.
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);
         llvmCodegen.generate();
-        // Print the LLVM IR to file
-        llvm::raw_fd_stream ll_file("cmake-build-debug/test.ll", ec);
+        std::error_code ec_ll;
+        llvm::raw_fd_stream ll_file(llvmIRFile.string(), ec_ll);
+        if (ec_ll) {
+            throw std::runtime_error("Could not open LLVM IR output file '" + llvmIRFile.string() + "': " + ec_ll.message());
+        }
         llvmCodegen.getModule()->print(ll_file, nullptr);
         ll_file.close();
+        std::cout << "LLVM IR written to: " << llvmIRFile << "\n";
         std::cout << "\n--- End LLVM IR ---\n";
-        llvmCodegen.generateTargetObjectCode(L"cmake-build-debug/test.o");
+
+        
+        std::cout << "Generating target object code...\n";
+        llvmCodegen.generateTargetObjectCode(yoi::string2wstring(objectFile.string()));
+        std::cout << "Object file generated: " << objectFile << "\n";
+
+        
+        if (useObjectLinker != yoi::IRBuildConfig::UseObjectLinker::none) {
+            yoi::ObjectLinker *objectLinker = nullptr;
+            switch (useObjectLinker) {
+                case yoi::IRBuildConfig::UseObjectLinker::cc: {
+                    objectLinker = new yoi::ccObjectLinker(yoi::string2wstring(objectFile.string()));
+                    break;
+                }
+                case yoi::IRBuildConfig::UseObjectLinker::cl: {
+                    objectLinker = new yoi::clObjectLinker(yoi::string2wstring(objectFile.string()));
+                    break;
+                }
+                default:
+                    
+                    break;
+            }
+
+            if (objectLinker) {
+                std::cout << "Linking final " << yoi::wstring2string(targetPlatform) << " "
+                          << (buildType == yoi::IRBuildConfig::BuildType::executable ? "executable" : "library")
+                          << "...\n";
+                objectLinker->searchAndSetupLinker();
+                objectLinker->setElysiaRuntimePath(yoi::whereIsHoshiLang()); 
+                objectLinker->link(yoi::string2wstring(finalOutput.string()));
+                std::cout << "Final output: " << finalOutput << "\n";
+                delete objectLinker;
+            }
+        } else {
+            std::cout << "Object linking skipped (--linker none).\n";
+        }
+        std::cout << "Compilation successful!\n";
+
     } catch (const std::runtime_error &e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
+        exitCode = 1; 
+    } catch (const std::exception& e) {
+        std::cerr << "An unexpected error occurred: " << e.what() << std::endl;
+        exitCode = 1; 
     }
-    return 0;
+
+    
+    
+    if (!preserveIntermediateFiles && exitCode == 0) {
+        std::cout << "Removing intermediate files...\n";
+        for (const auto& file : intermediateFilesToClean) {
+            std::error_code ec_remove;
+            fs::remove(file, ec_remove);
+            if (ec_remove) {
+                std::cerr << "Warning: Could not remove intermediate file '" << file.string() << "': " << ec_remove.message() << "\n";
+            }
+        }
+    } else if (preserveIntermediateFiles) {
+        std::cout << "Intermediate files preserved.\n";
+    }
+
+    return exitCode;
 }

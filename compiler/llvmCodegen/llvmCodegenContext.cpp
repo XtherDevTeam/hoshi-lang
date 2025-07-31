@@ -18,6 +18,12 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/Error.h>
 #include <llvm/Support/CodeGen.h>
+#include <llvm/ExecutionEngine/ExecutionEngine.h>
+#include <llvm/ExecutionEngine/JITSymbol.h>
+#include <llvm/ExecutionEngine/Orc/Core.h>
+#include <llvm/ExecutionEngine/Orc/LLJIT.h>
+#include <llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h>
+#include <llvm/ExecutionEngine/SectionMemoryManager.h>
 #include <string>
 #include <tuple>
 
