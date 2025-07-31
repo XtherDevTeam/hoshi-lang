@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-extern "C" void *runtime_object_alloc(long size_in_bytes) { 
+extern "C" void *runtime_object_alloc(unsigned long size_in_bytes) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Allocating %ld bytes of memory.\n", size_in_bytes);
     #endif

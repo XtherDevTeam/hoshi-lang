@@ -5,6 +5,8 @@
 #ifndef HOSHI_LANG_COMPILERCONTEXT_H
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
+#define HOSHI_COMPILER_CTX_GLOB_ID_CONST 0xe1751aff
+
 #include "share/def.hpp"
 #include <map>
 

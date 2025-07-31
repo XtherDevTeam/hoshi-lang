@@ -202,7 +202,7 @@ namespace yoi {
     yoi::IRValueType compilerContext::getIntObject() {
         return {
             IRValueType::valueType::integerObject,
-            static_cast<yoi::indexT>(-1),
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {sharedObjectDefinition.getIndex(L"int")}
         };
     }
@@ -210,7 +210,7 @@ namespace yoi {
     yoi::IRValueType compilerContext::getBoolObject() {
         return {
             IRValueType::valueType::booleanObject,
-            static_cast<yoi::indexT>(-1),
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {sharedObjectDefinition.getIndex(L"bool")}
         };
     }
@@ -218,7 +218,7 @@ namespace yoi {
     yoi::IRValueType compilerContext::getDeciObject() {
         return {
             IRValueType::valueType::decimalObject,
-            static_cast<yoi::indexT>(-1),
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {sharedObjectDefinition.getIndex(L"deci")}
         };
     }
@@ -226,19 +226,19 @@ namespace yoi {
     yoi::IRValueType compilerContext::getStrObject() {
         return {
             IRValueType::valueType::stringObject,
-            static_cast<yoi::indexT>(-1),
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {sharedObjectDefinition.getIndex(L"string")}
         };
     }
 
     yoi::IRValueType compilerContext::getNoneObject() {
-        return {IRValueType::valueType::none, static_cast<yoi::indexT>(-1), {}};
+        return {IRValueType::valueType::none, static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST), {}};
     }
 
     yoi::IRValueType compilerContext::getCharObject() {
         return {
             IRValueType::valueType::characterObject,
-            static_cast<yoi::indexT>(-1),
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {sharedObjectDefinition.getIndex(L"char")}
         };
     }

@@ -6,7 +6,7 @@
 #define HOSHI_LANG_LLVMCODEGENCONTEXT_HPP
 
 #include <llvm/IR/BasicBlock.h>
-#include <llvm/IR/DerivedTypes.h> // Added for PointerType and StructType
+#include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/GlobalVariable.h>
 #include <llvm/IR/IRBuilder.h>

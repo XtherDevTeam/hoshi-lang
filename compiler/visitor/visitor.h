@@ -55,7 +55,7 @@ namespace yoi {
 
         yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
 
-        yoi::wstr getFuncUniqueNameStr(const std::shared_ptr<IRFunctionDefinition> &func);
+        yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes, bool whetherIgnoreFirstParam = false);
 
         /**
          * Visitor methods

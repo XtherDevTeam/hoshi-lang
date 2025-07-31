@@ -6,8 +6,10 @@
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <memory>
 #include <stdexcept>
 #include <utility>
+#include <vector>
 
 namespace yoi {
     visitor::visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
@@ -16,13 +18,12 @@ namespace yoi {
     }
 
     std::shared_ptr<yoi::IRModule> visitor::visit() {
-        auto globInitializer = managedPtr(IRFunctionDefinition{L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getIntObjectType()});
+        auto globInitializer = managedPtr(IRFunctionDefinition{L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType()});
         irModule->functionTable.put(L"yoimiya_glob_initializer", globInitializer);
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&moduleContext->getModuleAST());
-        moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue(static_cast<yoi::indexT>(0ull))});
-        moduleContext->getIRBuilder().retOp();
+        moduleContext->getIRBuilder().retOp(true);
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
         return irModule;
@@ -719,7 +720,14 @@ namespace yoi {
                     // also, we need to inquiry the function index from nameInfo to invoke it.
                     auto memberName = rhsIt->id;
                     try {
-                        auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(memberName->getId().get().strVal);
+                        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                        for (auto &arg : rhsIt->args->get()) {
+                            visit(arg);
+                            argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                        }
+                        auto actualName = memberName->getId().get().strVal + getFuncUniqueNameStr(argTypes);
+
+                        auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(actualName);
                         switch (nameInfo.type) {
                             case IRStructDefinition::nameInfo::nameType::field: {
                                 // crazy
@@ -729,9 +737,7 @@ namespace yoi {
                             case IRStructDefinition::nameInfo::nameType::method: {
                                 auto funcIndex = nameInfo.index;
                                 auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
-                                for (auto &arg : rhsIt->args->get()) {
-                                    visit(arg);
-                                }
+                                
                                 if (termType->typeAffiliateModule == currentModuleIndex) {
                                     moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
                                 } else {
@@ -743,17 +749,20 @@ namespace yoi {
                             }
                         }
                     } catch (std::out_of_range &e) {
-                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
+                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function overload: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
                     }
                 } else if (termType->type == IRValueType::valueType::interfaceObject) {
-                    auto methodName = rhsIt->id;
-                    auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap.getIndex(methodName->getId().get().strVal);
-                    auto method = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap[methodIdx];
-                    yoi_assert(method->argumentTypes.size() == rhsIt->args->get().size(), rhsIt->getLine(), rhsIt->getColumn(), "Argument count does not match"); // this
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     // this pointer has been passed as the first argument
                     for (auto &arg : rhsIt->args->get()) {
                         visit(arg);
+                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                     }
+
+                    auto methodName = rhsIt->id->getId().get().strVal + getFuncUniqueNameStr(argTypes);
+                    auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap.getIndex(methodName);
+                    auto method = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap[methodIdx];
+                    yoi_assert(method->argumentTypes.size() == rhsIt->args->get().size(), rhsIt->getLine(), rhsIt->getColumn(), "Argument count does not match"); // this
                     moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, rhsIt->args->get().size(), method->returnType);
                 }
             } else if (rhsIt->isSubscript()) {
@@ -832,11 +841,16 @@ namespace yoi {
             return {};
         } else if (subscriptExpr->isInvocation()) {
             try {
-                auto funcIndex = irModule->functionTable.getIndex(subscriptExpr->id->getId().get().strVal);
-                auto func = irModule->functionTable[funcIndex];
+                auto funcName = subscriptExpr->id->getId().get().strVal;
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+
                 for (auto &arg : subscriptExpr->args->get()) {
                     visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                 }
+
+                auto funcIndex = irModule->functionTable.getIndex(funcName + getFuncUniqueNameStr(argTypes));
+                auto func = irModule->functionTable[funcIndex];
                 moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             } catch(std::out_of_range &e) {
@@ -846,15 +860,15 @@ namespace yoi {
             try {
                 auto structIndex = irModule->structTable.getIndex(subscriptExpr->id->getId().get().strVal);
                 auto structType = irModule->structTable[structIndex];
-                // for (auto &arg : subscriptExpr->args->get()) {
-                //     visit(arg);
-                // }
                 moduleContext->getIRBuilder().newStructOp(structIndex);
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                 for (auto &arg : subscriptExpr->args->get()) {
                     visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                 }
+
                 // get constructor
-                auto constructorIndex = structType->lookupName(L"constructor");
+                auto constructorIndex = structType->lookupName(L"constructor" + getFuncUniqueNameStr(argTypes));
                 yoi_assert(constructorIndex.type == IRStructDefinition::nameInfo::nameType::method, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Constructor is a field (expect a method)");
                 auto constructor = irModule->functionTable[constructorIndex.index];
                 moduleContext->getIRBuilder().invokeMethodOp(constructorIndex.index, subscriptExpr->args->get().size(), constructor->returnType);
@@ -935,16 +949,21 @@ namespace yoi {
         } else {
             auto funcType = parseTypeSpec(&funcDefStmt->getResultType());
             IRFunctionDefinition::Builder builder;
-            builder.setName(funcName.getId().node.strVal);
+
             builder.setReturnType(managedPtr(funcType));
+            std::vector<std::shared_ptr<IRValueType>> argTypes;
             for (auto &i : funcDefStmt->getArgs().get()) {
                 auto argName = i->getId().node.strVal;
                 auto argType = managedPtr(parseTypeSpec(i->spec));
+                argTypes.push_back(argType);
                 builder.addArgument(argName, argType);
             }
+
+            builder.setName(funcName.getId().node.strVal + getFuncUniqueNameStr(argTypes));
+
             auto func = builder.yield();
 
-            irModule->functionTable.put(funcName.getId().node.strVal, func);
+            irModule->functionTable.put(builder.name, func);
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
             moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
@@ -960,27 +979,7 @@ namespace yoi {
             // TODO: interface template
         }
         auto &interfaceName = interfaceDefStmt->id->getId().get().strVal;
-        // auto structName = L"interface#" + interfaceName;
-        // // occupy a slot in the interface table
-        // auto interfaceIndex = irModule->structTable.put(structName, {});
-        // IRStructDefinition::Builder builder;
-        // builder.setName(structName);
-        // for (auto &i : interfaceDefStmt->getInner().getInner()) {
-        //     yoi_assert(i->isMethod(), i->getLine(), i->getColumn(), "Interface member must be a method");
-        //     auto methodName = L"interface#" + interfaceName + L"#" + i->getMethod().getName().get().strVal;
-        //     auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
-        //     IRFunctionDefinition::Builder methodBuilder;
-        //     methodBuilder.setName(methodName).setReturnType(methodType);
-        //     for (auto &arg : i->getMethod().getArgs().get()) {
-        //         auto argName = arg->getId().get().strVal;
-        //         auto argType = managedPtr(parseTypeSpec(arg->spec));
-        //         methodBuilder.addArgument(argName, argType);
-        //     }
-        //     auto func = methodBuilder.yield();
-        //     builder.addMethod(i->getMethod().getName().get().strVal, irModule->functionTable.put(methodName, func));
-        // }
-        // irModule->structTable[interfaceIndex] = builder.yield();
-        // return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+
         IRInterfaceInstanceDefinition::Builder builder;
         builder.setName(interfaceName);
         for (auto &i : interfaceDefStmt->getInner().getInner()) {
@@ -988,15 +987,21 @@ namespace yoi {
 
             auto methodName = i->getMethod().getName().get().strVal;
             auto methodResultType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
             IRFunctionDefinition::Builder methodBuilder;
-            methodBuilder.setName(methodName).setReturnType(methodResultType);
+            methodBuilder.setReturnType(methodResultType);
             for (auto &arg : i->getMethod().getArgs().get()) {
                 auto argName = arg->getId().get().strVal;
                 auto argType = managedPtr(parseTypeSpec(arg->spec));
                 methodBuilder.addArgument(argName, argType);
+                argTypes.push_back(argType);
             }
+            auto methodFuncName = L"interface#" + interfaceName + L"#" + methodName;
+            auto uniq = getFuncUniqueNameStr(argTypes);
+            methodBuilder.setName(methodFuncName + uniq);
+
             auto func = methodBuilder.yield();
-            builder.addMethod(methodName, func);
+            builder.addMethod(methodName + uniq, func);
         }
         auto interfaceType = builder.yield();
         irModule->interfaceTable.put(interfaceName, interfaceType);
@@ -1025,8 +1030,10 @@ namespace yoi {
                 case 1: {
                     // constructor
                     IRFunctionDefinition::Builder constructorBuilder;
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+
                     auto funcName = L"struct#" + structName + L"#" + L"constructor";
-                    constructorBuilder.setName(funcName).setReturnType(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex}));
+                    constructorBuilder.setReturnType(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex}));
                     // add this pointer as the first argument
                     constructorBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
 
@@ -1034,9 +1041,13 @@ namespace yoi {
                         auto argName = arg->getId().get().strVal;
                         auto argType = managedPtr(parseTypeSpec(arg->spec));
                         constructorBuilder.addArgument(argName, argType);
+                        argTypes.push_back(argType);
                     }
+                    auto uniq = getFuncUniqueNameStr(argTypes, true);
+                    constructorBuilder.setName(funcName + uniq);
+
                     auto func = constructorBuilder.yield();
-                    builder.addMethod(L"constructor", irModule->functionTable.put(funcName, func));
+                    builder.addMethod(L"constructor" + uniq, irModule->functionTable.put(funcName  + uniq, func));
                     break;
                 }
                 case 2: {
@@ -1044,8 +1055,9 @@ namespace yoi {
                     auto methodName = L"struct#" + structName + L"#" + i->getMethod().getName().get().strVal;
                     auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
                     IRFunctionDefinition::Builder methodBuilder;
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
-                    methodBuilder.setName(methodName).setReturnType(methodType);
+                    methodBuilder.setReturnType(methodType);
 
                     // add this pointer as the first argument
                     methodBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
@@ -1054,9 +1066,13 @@ namespace yoi {
                         auto argName = arg->getId().get().strVal;
                         auto argType = managedPtr(parseTypeSpec(arg->spec));
                         methodBuilder.addArgument(argName, argType);
+                        argTypes.push_back(argType);
                     }
+
+                    auto uniq = getFuncUniqueNameStr(argTypes, true);
+                    methodBuilder.setName(methodName + uniq);
                     auto func = methodBuilder.yield();
-                    builder.addMethod(i->getMethod().getName().get().strVal, irModule->functionTable.put(methodName, func));
+                    builder.addMethod(i->getMethod().getName().get().strVal + uniq, irModule->functionTable.put(methodName + uniq, func));
                     break;
                 }
             }
@@ -1171,17 +1187,21 @@ namespace yoi {
                 auto methodName = interfaceImplName + L"#" + i->getMethod().getName().get().strVal;
                 auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
                 IRFunctionDefinition::Builder methodBuilder;
-                methodBuilder.setName(methodName).setReturnType(methodType);
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                methodBuilder.setReturnType(methodType);
                 // add this pointer as the first argument
                 methodBuilder.addArgument(L"this", managedPtr(IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), structIndex}));
                 for (auto &arg : i->getMethod().getArgs().get()) {
                     auto argName = arg->getId().get().strVal;
                     auto argType = managedPtr(parseTypeSpec(arg->spec));
                     methodBuilder.addArgument(argName, argType);
+                    argTypes.push_back(argType);
                 }
+                auto uniq = getFuncUniqueNameStr(argTypes, true);
+                methodBuilder.setName(methodName + uniq);
                 auto func = methodBuilder.yield();
-                auto funcIndex = irModule->functionTable.put(methodName, func);
-                builder.addVirtualMethod(i->getMethod().getName().get().strVal, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, static_cast<yoi::indexT>(currentModuleIndex), funcIndex}));
+                auto funcIndex = irModule->functionTable.put(methodName + uniq, func);
+                builder.addVirtualMethod(i->getMethod().getName().get().strVal + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, static_cast<yoi::indexT>(currentModuleIndex), funcIndex}));
 
                 // compile code block
                 moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
@@ -1207,30 +1227,47 @@ namespace yoi {
 
             auto &structType = irModule->structTable[structName];
             for (auto &i : implStmt->getInner().getInner()) {
-                if (i->isConstructor()) {
-                    // fetch constructor func decl from irModule
-                    auto funcName = L"struct#" + structName + L"#" + L"constructor";
-                    auto funcIndex = irModule->functionTable.getIndex(funcName);
-                    auto func = irModule->functionTable[funcIndex];
-                    // push a new irFuncBuilder for the constructor
-                    moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
-                    // build code blocks
-                    moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-                    visit(i->getConstructor().block, true);
-                    moduleContext->getIRBuilder().yield();
-                    moduleContext->popIRBuilder();
-                } else {
-                    // fetch method decl from irModule
-                    auto methodName = L"struct#" + structName + L"#" + i->getMethod().getName().get().strVal;
-                    auto methodIndex = irModule->functionTable.getIndex(methodName);
-                    auto method = irModule->functionTable[methodIndex];
-                    // push a new irFuncBuilder for the method
-                    moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, method});
-                    // build code blocks
-                    moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-                    visit(i->getMethod().block, true);
-                    moduleContext->getIRBuilder().yield();
-                    moduleContext->popIRBuilder();
+                try {
+                    if (i->isConstructor()) {
+                        // get return type of constructor
+                        auto returnType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
+                        // get argument types of constructor
+                        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                        for (auto &arg : i->getConstructor().getArgs().get()) {
+                            argTypes.push_back(managedPtr(parseTypeSpec(arg->spec)));
+                        }
+                        auto mangledName = L"struct#" + structName + L"#" + L"constructor" + getFuncUniqueNameStr(argTypes);
+                        // fetch constructor func decl from irModule
+                        auto funcIndex = irModule->functionTable.getIndex(mangledName);
+                        auto func = irModule->functionTable[funcIndex];
+                        // push a new irFuncBuilder for the constructor
+                        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+                        // build code blocks
+                        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                        visit(i->getConstructor().block, true);
+                        moduleContext->getIRBuilder().yield();
+                        moduleContext->popIRBuilder();
+                    } else {
+                        // same as aforementioned
+                        auto returnType = managedPtr(parseTypeSpec(i->getMethod().resultType));
+                        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                        for (auto &arg : i->getMethod().getArgs().get()) {
+                            argTypes.push_back(managedPtr(parseTypeSpec(arg->spec)));
+                        }
+                        auto mangledName = L"struct#" + structName + L"#" + i->getMethod().getName().get().strVal + getFuncUniqueNameStr(argTypes, true);
+                        // fetch method decl from irModule
+                        auto methodIndex = irModule->functionTable.getIndex(mangledName);
+                        auto method = irModule->functionTable[methodIndex];
+                        // push a new irFuncBuilder for the method
+                        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, method});
+                        // build code blocks
+                        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                        visit(i->getMethod().block, true);
+                        moduleContext->getIRBuilder().yield();
+                        moduleContext->popIRBuilder();
+                    }
+                } catch (std::out_of_range &e) {
+                    panic(i->getLine(), i->getColumn(), "No matched constructor or method overload found for: " + wstring2string(i->getMethod().getName().get().strVal));
                 }
             }
         }
@@ -1668,16 +1705,17 @@ namespace yoi {
         return res;
     }
 
-    yoi::wstr visitor::getFuncUniqueNameStr(const std::shared_ptr<IRFunctionDefinition> &func) {
-        auto funcName = func->name;
-        auto funcType = func->returnType;
-        yoi::wstr res = L"func#" + funcName + L"#" + getTypeSpecUniqueNameStr(funcType) + L"#";
-        for (auto &arg : func->argumentTypes) {
-            res += getTypeSpecUniqueNameStr(arg) + L"#";
+    yoi::wstr visitor::getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes, bool whetherIgnoreFirstParam) {
+        yoi::wstr res = L"#";
+        bool first = false;
+        for (auto &arg : argumentTypes) {
+            if (whetherIgnoreFirstParam && !first || !whetherIgnoreFirstParam) res += getTypeSpecUniqueNameStr(arg) + L"#";
+            else first = false;
         }
-        if (!func->argumentTypes.empty()) {
+        if (!argumentTypes.empty()) {
             res.pop_back();
         }
+        res.shrink_to_fit();
         return res;
     }
 

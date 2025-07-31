@@ -38,7 +38,7 @@ namespace yoi {
 
     wstr IRLinker::mangleName(indexT moduleId, const wstr& originalName) {
         // only when it's not a main function, we need to mangle the name
-        if (moduleId == entryModuleId && originalName == L"main") {
+        if (moduleId == entryModuleId && originalName == L"main#") {
             return L"yoi_main";
         }
         std::wstringstream ss;
@@ -264,7 +264,7 @@ namespace yoi {
                 break;
             }
             default: {
-                newType->typeAffiliateModule = -1;
+                // Other types don't need patching
                 break;
             }
         }

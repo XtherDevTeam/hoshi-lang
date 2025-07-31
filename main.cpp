@@ -195,7 +195,6 @@ int main(int argc, const char **argv) {
 
         yoi::wstr input = yoi::string2wstring(inputFile);
 
-        std::cout << "Compiling '" << inputFile << "'...\n";
         auto entryModuleId = compilerCtx->compileModule(input);
 
         std::cout << "Linking Yoi IR modules...\n";
@@ -204,8 +203,6 @@ int main(int argc, const char **argv) {
         compilerCtx->setIRObjectFile(objectIRFile);
         auto unifiedModule = objectIRFile->compiledModule;
 
-        
-        std::cout << "--- yoi-lang IR (Unified) ---\n";
         auto yoiIRStr = unifiedModule->to_string();
         std::error_code ec_yoi;
         llvm::raw_fd_stream yoi_file(yoiIRFile.string(), ec_yoi);
@@ -214,11 +211,7 @@ int main(int argc, const char **argv) {
         }
         yoi_file << yoi::wstring2string(yoiIRStr);
         yoi_file.close();
-        std::cout << "Yoi IR written to: " << yoiIRFile << "\n";
-        std::cout << "--- End yoi-lang IR ---\n\n";
 
-        
-        std::cout << "--- LLVM IR ---\n";
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);
         llvmCodegen.generate();
         std::error_code ec_ll;
@@ -228,13 +221,10 @@ int main(int argc, const char **argv) {
         }
         llvmCodegen.getModule()->print(ll_file, nullptr);
         ll_file.close();
-        std::cout << "LLVM IR written to: " << llvmIRFile << "\n";
-        std::cout << "\n--- End LLVM IR ---\n";
 
         
         std::cout << "Generating target object code...\n";
         llvmCodegen.generateTargetObjectCode(yoi::string2wstring(objectFile.string()));
-        std::cout << "Object file generated: " << objectFile << "\n";
 
         
         if (useObjectLinker != yoi::IRBuildConfig::UseObjectLinker::none) {
@@ -260,7 +250,6 @@ int main(int argc, const char **argv) {
                 objectLinker->searchAndSetupLinker();
                 objectLinker->setElysiaRuntimePath(yoi::whereIsHoshiLang()); 
                 objectLinker->link(yoi::string2wstring(finalOutput.string()));
-                std::cout << "Final output: " << finalOutput << "\n";
                 delete objectLinker;
             }
         } else {
@@ -279,7 +268,6 @@ int main(int argc, const char **argv) {
     
     
     if (!preserveIntermediateFiles && exitCode == 0) {
-        std::cout << "Removing intermediate files...\n";
         for (const auto& file : intermediateFilesToClean) {
             std::error_code ec_remove;
             fs::remove(file, ec_remove);

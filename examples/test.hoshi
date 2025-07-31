@@ -62,3 +62,7 @@ func test3() : int {
     let y = Test(x)
     return y.yield() + y.yield()
 }
+
+func main() : int {
+    return test3()
+}

@@ -166,7 +166,7 @@ namespace yoi {
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
             store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
             new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
-            invoke_virtual, invoke_virtual_extern,
+            invoke_virtual, invoke_virtual_extern, invoke_bif,
             nop, FINAL,
         } opcode;
 
