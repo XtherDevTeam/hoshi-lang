@@ -1,0 +1,8 @@
+func Test<T>(a: T, b: int) : T {
+    return a + b
+}
+
+func main() : int {
+    let res = Test(1, 2)
+    return res
+}

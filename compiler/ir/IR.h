@@ -73,6 +73,7 @@ namespace yoi {
             interfaceObject,
             none,
             charRaw,
+            incompleteTemplateType,
         } type;
 
         yoi::indexT typeAffiliateModule;
@@ -224,9 +225,8 @@ namespace yoi {
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
-        // Getters for LLVMCodegen
-        const yoi::vec<std::shared_ptr<IRValueType>>& getVariables() const { return variables; }
-        const std::map<yoi::indexT, yoi::wstr>& getReversedVariableNameMap() const { return reversedVariableNameMap; }
+        yoi::vec<std::shared_ptr<IRValueType>> &getVariables();
+        const std::map<yoi::indexT, yoi::wstr> &getReversedVariableNameMap() const;
     };
 
     class IRFunctionDefinition {
@@ -257,6 +257,49 @@ namespace yoi {
             Builder &setReturnType(const std::shared_ptr<IRValueType> &returnType);
 
             std::shared_ptr<IRFunctionDefinition> yield();
+        };
+    };
+
+    class IRTemplateBuilder {
+    public:
+        struct Argument {
+            std::shared_ptr<IRValueType> templateType;
+            std::pair<yoi::indexT, yoi::indexT> interfaceType;
+
+            Argument(const std::shared_ptr<IRValueType> &templateType,
+                     const std::pair<yoi::indexT, yoi::indexT> &interfaceType);
+
+            Argument(const std::shared_ptr<IRValueType> &templateType);
+        };
+
+        yoi::indexTable<yoi::wstr, Argument> templateArguments;
+
+        IRTemplateBuilder() = default;
+
+        IRTemplateBuilder &
+        addTemplateArgument(const yoi::wstr &templateName,
+                            const std::shared_ptr<IRValueType> &templateType,
+                            const std::pair<yoi::indexT, yoi::indexT> &interfaceType = {0, 0});
+    };
+
+    class IRFunctionTemplate {
+    public:
+        
+        std::shared_ptr<IRFunctionDefinition> templateDefinition;
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
+
+        IRFunctionTemplate(const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
+                           const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+                           
+        class Builder : public IRTemplateBuilder {
+        public:
+            std::shared_ptr<IRFunctionDefinition> templateDefinition;
+
+            Builder() = default;
+
+            Builder & setTemplateDefinition(const std::shared_ptr<IRFunctionDefinition> &templateDefinition);
+
+            std::shared_ptr<IRFunctionTemplate> yield();
         };
     };
 
@@ -294,6 +337,34 @@ namespace yoi {
             Builder &addMethod(const yoi::wstr &methodName, yoi::indexT index);
 
             std::shared_ptr<IRStructDefinition> yield();
+        };
+    };
+
+    class IRStructTemplate {
+    public:
+        std::shared_ptr<IRStructDefinition> templateDefinition;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> templateMethods;
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
+
+        IRStructTemplate(
+            const std::shared_ptr<IRStructDefinition> &templateDefinition,
+            const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
+            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+
+        class Builder : public IRTemplateBuilder {
+        public:
+            std::shared_ptr<IRStructDefinition> templateDefinition;
+            yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> templateMethods;
+
+            Builder() = default;
+
+            Builder &
+            setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition);
+
+            Builder &setTemplateMethod(const yoi::wstr &methodName,
+                                       const std::shared_ptr<IRFunctionTemplate> &methodTemplate);
+
+            std::shared_ptr<IRStructTemplate> yield();
         };
     };
 
@@ -394,6 +465,8 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceDefinition>> interfaceTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
         IRStringLiteralPool stringLiteralPool;
 
         yoi::wstr to_string(yoi::indexT indent = 0);

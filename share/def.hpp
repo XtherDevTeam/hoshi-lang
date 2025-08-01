@@ -166,6 +166,13 @@ namespace yoi {
                 return it->second;
             }
         }
+        const A& getKey(yoi::indexT i) const {
+            if (i < indexes.size()) {
+                return values[i].first;
+            } else {
+                throw std::out_of_range("indexTableRefactored: invalid index");
+            }
+        }
         yoi::indexT size() {
             return values.size();
         }

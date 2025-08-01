@@ -173,11 +173,11 @@ namespace yoi {
     class defTemplateArgSpec : public AST {
     public:
         identifier *id;
-        identifier *impl;
+        externModuleAccessExpression *impl;
 
         identifier &getId() const;
 
-        identifier &getImpl() const;
+        externModuleAccessExpression &getImpl() const;
     };
 
     class defTemplateArg : public AST {

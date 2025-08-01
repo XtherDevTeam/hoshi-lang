@@ -59,21 +59,24 @@ namespace yoi {
 
     void parse(defTemplateArgSpec *&o, lexer &lex) {
         identifier *id;
-        identifier *impl;
+        externModuleAccessExpression *impl;
         parse(id, lex);
         if (!id) {
             o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::kImpl) {
-            impl = id;
-            parse(id, lex);
-            if (!id) {
-                panic(lex.line, lex.col, "expected identifier after `impl` in defTemplateArgSpec");
+            lex.scan();
+            parse(impl, lex);
+            if (!impl) {
+                panic(lex.line, lex.col, "expected externModuleAccessExpression after `impl` in defTemplateArgSpec");
                 return;
             }
             o = new defTemplateArgSpec{lex.curToken, id, impl};
+        } else {
+            o = new defTemplateArgSpec{lex.curToken, id, nullptr};
         }
+
     }
 
     void parse(defTemplateArg *&o, lexer &lex) {
@@ -89,6 +92,7 @@ namespace yoi {
         defTemplateArgSpec *t;
         parse(t, lex);
         while (t) {
+            specs.push_back(t);
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
             else
@@ -126,6 +130,7 @@ namespace yoi {
         templateArgSpec *t;
         parse(t, lex);
         while (t) {
+            specs.push_back(t);
             if (lex.curToken.kind == lexer::token::tokenKind::comma)
                 lex.scan();
             else
@@ -288,7 +293,8 @@ namespace yoi {
             o = node;
             return;
         }
-        o->arg = arg;
+        node->arg = arg;
+        o = node;
     }
 
     void parse(identifierWithDefTemplateArg *&o, lexer &lex) {
@@ -306,7 +312,8 @@ namespace yoi {
             o = node;
             return;
         }
-        o->arg = arg;
+        node->arg = arg;
+        o = node;
     }
 
     void parse(externModuleAccessExpression *&o, lexer &lex) {

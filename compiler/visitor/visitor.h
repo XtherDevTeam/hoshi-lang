@@ -5,13 +5,21 @@
 #ifndef HOSHI_LANG_VISITOR_H
 #define HOSHI_LANG_VISITOR_H
 
+#include "compiler/frontend/parser.hpp"
+#include "share/def.hpp"
 #include <compiler/ir/IR.h>
 #include <compiler/moduleContext.h>
 #include <memory>
+#include <ranges>
+#include <stdexcept>
 
 namespace yoi {
 
     class visitor {
+        std::map<yoi::wstr, yoi::funcDefStmt*> funcTemplateAsts;
+        std::map<yoi::wstr, yoi::structDefStmt*> structTemplateAsts;
+        std::map<yoi::wstr, yoi::implStmt*> templateImplAsts; // Maps struct template name to its impl block
+
     public:
         std::shared_ptr<yoi::moduleContext> moduleContext;
         std::shared_ptr<yoi::IRModule> irModule;
@@ -56,6 +64,34 @@ namespace yoi {
         yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
 
         yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes, bool whetherIgnoreFirstParam = false);
+
+        std::shared_ptr<IRValueType> getIncompleteType(const yoi::wstr &typeName) const;
+
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> getTemplateArgs(const yoi::defTemplateArg &templateArgs);
+
+        yoi::vec<std::shared_ptr<IRValueType>>
+        parseTemplateArgs(const yoi::templateArg &templateArgs);
+
+        yoi::indexT
+        specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
+                                   yoi::funcDefStmt* astNode,
+                                   const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
+
+        yoi::indexT
+        specializeStructTemplate(const yoi::wstr& templateName,
+                                 const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs);
+
+        void specializeStructMethod(
+            const std::shared_ptr<IRStructTemplate>& structTemplate,
+            const std::shared_ptr<IRStructDefinition>& specializedStruct,
+            yoi::implInnerPair* methodAstNode,
+            const yoi::wstr& specializedStructName,
+            const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs);
+
+
+        yoi::wstr getMangledTemplateName(
+            const yoi::wstr& baseName,
+            const yoi::vec<std::shared_ptr<IRValueType>>& templateArgs);
 
         /**
          * Visitor methods

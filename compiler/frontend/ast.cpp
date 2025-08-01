@@ -25,7 +25,7 @@ namespace yoi {
         return *id;
     }
 
-    identifier &defTemplateArgSpec::getImpl() const {
+    externModuleAccessExpression &defTemplateArgSpec::getImpl() const {
         return *impl;
     }
 

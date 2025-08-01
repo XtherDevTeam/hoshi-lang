@@ -9,6 +9,7 @@
 
 #include <compiler/frontend/ast.hpp>
 #include <stdexcept>
+#include <string>
 
 namespace yoi {
     IROperand::operandValue::operandValue() : stringLiteralIndex(0) {}
@@ -105,7 +106,13 @@ namespace yoi {
             r += function.second->to_string(indent + 4);
         }
         for (auto &structType : structTable) {
-             r += structType.second->to_string(indent + 4);
+            r += structType.second->to_string(indent + 4);
+        }
+        for (auto &interfaceType : interfaceTable) {
+            r += interfaceType.second->to_string(indent + 4);
+        }
+        for (auto &interfaceImpl : interfaceImplementationTable) {
+            r += interfaceImpl.second->to_string(indent + 4);
         }
         r += yoi::wstr(indent, L' ') + L"}\n";
         return r;
@@ -542,7 +549,7 @@ namespace yoi {
             case valueType::stringLiteral:
                 return L"string";
             case valueType::structObject:
-                return L"struct#" + std::to_wstring(typeIndex);
+                return L"struct#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
             case valueType::null:
                 return L"null";
             case valueType::integerObject:
@@ -555,6 +562,12 @@ namespace yoi {
                 return L"string";
             case valueType::none:
                 return L"none";
+            case valueType::interfaceObject:
+                return L"interface#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+            case valueType::pointerObject:
+                return L"pointer";
+            case valueType::virtualMethod:
+                return L"virtual_method#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
             default:
                 return L"unknown";
         }
@@ -701,4 +714,71 @@ namespace yoi {
         this->preserveIntermediateFiles = preserveIntermediateFiles;
         return *this;
     }
+    yoi::wstr IRInterfaceInstanceDefinition::to_string(yoi::indexT indent) {
+        yoi::wstr r;
+        r += yoi::wstr(indent, L' ') + L"interface " + name + L" {\n";
+        for (auto &i : methodMap) {
+            r += i.second->to_string(indent + 4) + L"\n";
+        }
+        r += yoi::wstr(indent, L' ') + L"}\n";
+        return r;
+    }
+    yoi::wstr IRInterfaceImplementationDefinition::to_string(yoi::indexT indent) {
+        yoi::wstr r;
+        r += yoi::wstr(indent, L' ') + L"impl " + name + L" for struct#" + std::to_wstring(implStructIndex) + L" {\n";
+        for (auto &i : virtualMethods) {
+            r += yoi::wstr(indent + 4, L' ') + L"virtual " + i->to_string() + L"\n";
+        }
+        r += yoi::wstr(indent, L' ') + L"}\n";
+        return r;
+    }
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType,
+                                           const std::pair<yoi::indexT, yoi::indexT> &interfaceType)
+        : templateType(templateType), interfaceType(interfaceType) {}
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType)
+        : templateType(templateType), interfaceType({0, 0}) {}
+    IRFunctionTemplate::IRFunctionTemplate(
+        const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
+        const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+        : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
+    IRFunctionTemplate::Builder &IRFunctionTemplate::Builder::setTemplateDefinition(
+        const std::shared_ptr<IRFunctionDefinition> &templateDefinition) {
+        this->templateDefinition = templateDefinition;
+        return *this;
+    }
+    std::shared_ptr<IRFunctionTemplate> IRFunctionTemplate::Builder::yield() {
+        return std::make_shared<IRFunctionTemplate>(templateDefinition, templateArguments);
+    }
+    IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateDefinition(
+        const std::shared_ptr<IRStructDefinition> &templateDefinition) {
+        this->templateDefinition = templateDefinition;
+        return *this;
+    }
+    std::shared_ptr<IRStructTemplate> IRStructTemplate::Builder::yield() {
+        return std::make_shared<IRStructTemplate>(IRStructTemplate{templateDefinition, templateMethods, templateArguments});
+    }
+    IRTemplateBuilder &IRTemplateBuilder::addTemplateArgument(
+        const yoi::wstr &templateName,
+        const std::shared_ptr<IRValueType> &templateType,
+        const std::pair<yoi::indexT, yoi::indexT> &interfaceType) {
+        templateArguments.put_create(templateName, {templateType, interfaceType});
+        return *this;
+    }
+    IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateMethod(
+        const yoi::wstr &methodName, const std::shared_ptr<IRFunctionTemplate> &methodTemplate) {
+        templateMethods[methodName] = methodTemplate;
+        return *this;
+    }
+    yoi::vec<std::shared_ptr<IRValueType>> &IRVariableTable::getVariables() {
+        return variables;
+    }
+    const std::map<yoi::indexT, yoi::wstr> &IRVariableTable::getReversedVariableNameMap() const {
+        return reversedVariableNameMap;
+    }
+    IRStructTemplate::IRStructTemplate(
+        const std::shared_ptr<IRStructDefinition> &templateDefinition,
+        const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
+        const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+        : templateDefinition(templateDefinition), templateMethods(templateMethods),
+          templateArguments(templateArguments) {}
 } // namespace yoi
