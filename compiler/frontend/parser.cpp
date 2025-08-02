@@ -1006,7 +1006,7 @@ namespace yoi {
         lex.saveState();
 
         externModuleAccessExpression *first{};
-        identifierWithDefTemplateArg *second{};
+        identifierWithTemplateArg *second{};
         implInner *inner;
 
         parse(second, lex);

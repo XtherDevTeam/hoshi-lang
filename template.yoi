@@ -1,0 +1,122 @@
+Module#3782547968 {
+    func 0_yoimiya_glob_initializer() : none {
+        Variables {
+        }
+        block#0:
+            ret_none 
+    }
+    func 0_Test#int#int#int(int, int, int) : int {
+        Variables {
+            #0 a(scope#0) : int
+            #1 b(scope#0) : int
+            #2 c(scope#0) : int
+        }
+        block#0:
+            load_local localVar#0 
+            load_local localVar#1 
+            add 
+            load_local localVar#2 
+            add 
+            ret 
+    }
+    func 0_TestStruct<int,int>::add#(struct#3782547968#0) : int {
+        Variables {
+            #0 this(scope#0) : struct#3782547968#0
+        }
+        block#0:
+            load_local localVar#0 
+            load_member index(0) 
+            load_local localVar#0 
+            load_member index(1) 
+            add 
+            ret 
+    }
+    func 0_TestStruct<int,int>::constructor#int#int(struct#3782547968#0, int, int) : struct#3782547968#0 {
+        Variables {
+            #0 this(scope#0) : struct#3782547968#0
+            #1 a(scope#0) : int
+            #2 b(scope#0) : int
+        }
+        block#0:
+            load_local localVar#1 
+            load_local localVar#0 
+            store_member index(0) 
+            load_local localVar#2 
+            load_local localVar#0 
+            store_member index(1) 
+            load_local localVar#0 
+            ret 
+    }
+    func yoi_main() : int {
+        Variables {
+            #0 res(scope#1) : struct#3782547968#0
+            #1 res2(scope#1) : struct#3782547968#0
+            #2 x(scope#1) : int
+            #3 y(scope#1) : int
+        }
+        block#0:
+            new_struct index(0) 
+            push_integer int(1) 
+            push_integer int(2) 
+            invoke index(3) index(3) 
+            store_local localVar#0 
+            new_struct index(1) 
+            push_integer int(3) 
+            push_decimal double(4.500000) 
+            invoke index(6) index(3) 
+            store_local localVar#1 
+            load_local localVar#0 
+            invoke index(2) index(1) 
+            store_local localVar#2 
+            load_local localVar#1 
+            invoke index(5) index(1) 
+            store_local localVar#3 
+            load_local localVar#3 
+            ret 
+    }
+    func 0_TestStruct<int,deci>::add#(struct#3782547968#0) : int {
+        Variables {
+            #0 this(scope#0) : struct#3782547968#0
+        }
+        block#0:
+            load_local localVar#0 
+            load_member index(0) 
+            basic_cast_deci 
+            load_local localVar#0 
+            load_member index(1) 
+            add 
+            ret 
+    }
+    func 0_TestStruct<int,deci>::constructor#int#deci(struct#3782547968#0, int, decimal) : struct#3782547968#0 {
+        Variables {
+            #0 this(scope#0) : struct#3782547968#0
+            #1 a(scope#0) : int
+            #2 b(scope#0) : decimal
+        }
+        block#0:
+            load_local localVar#1 
+            load_local localVar#0 
+            store_member index(0) 
+            load_local localVar#2 
+            load_local localVar#0 
+            store_member index(1) 
+            load_local localVar#0 
+            ret 
+    }
+    func yoimiya_entry() : int {
+        Variables {
+        }
+        block#0:
+            invoke index(0) index(0) 
+            invoke index(4) index(0) 
+            ret 
+    }
+    struct 0_TestStruct<int,int> {
+        a int
+        b int
+    }
+    struct 0_TestStruct<int,deci> {
+        a int
+        b decimal
+    }
+}

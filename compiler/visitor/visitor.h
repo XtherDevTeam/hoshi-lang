@@ -59,6 +59,8 @@ namespace yoi {
 
         void emitBasicCastInBasicArithOpByLhsAndRhs(yoi::indexT lhs, yoi::indexT rhs);
 
+        void emitBasicCastTo(const std::shared_ptr<IRValueType> &toType);
+
         yoi::wstr getInterfaceNameStr(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc);
 
         yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
@@ -79,7 +81,8 @@ namespace yoi {
 
         yoi::indexT
         specializeStructTemplate(const yoi::wstr& templateName,
-                                 const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs);
+                                 const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs,
+                                 yoi::implStmt *pureTemplateImplAst);
 
         void specializeStructMethod(
             const std::shared_ptr<IRStructTemplate>& structTemplate,
@@ -88,6 +91,10 @@ namespace yoi {
             const yoi::wstr& specializedStructName,
             const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs);
 
+        yoi::wstr getSpecializedMangledMethodName(
+            yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
+            const yoi::wstr &baseMethodName,
+            const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes);
 
         yoi::wstr getMangledTemplateName(
             const yoi::wstr& baseName,

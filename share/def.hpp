@@ -268,5 +268,15 @@ namespace yoi {
             return static_cast<type>(TSize);
         }
     };
+
+    template <typename string_t> void replace_all(string_t &str, const string_t &from, const string_t &to) {
+        if (from.empty())
+            return;
+        size_t start_pos = 0;
+        while ((start_pos = str.find(from, start_pos))!= string_t::npos) {
+            str.replace(start_pos, from.length(), to);
+            start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+        }
+    }
 }
 #endif

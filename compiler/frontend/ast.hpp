@@ -580,12 +580,12 @@ namespace yoi {
     class implStmt : public AST {
     public:
         externModuleAccessExpression *interfaceName;
-        identifierWithDefTemplateArg *structName;
+        identifierWithTemplateArg *structName;
         implInner *inner;
 
         externModuleAccessExpression &getInterfaceId();
 
-        identifierWithDefTemplateArg &getStructId();
+        identifierWithTemplateArg &getStructId();
 
         implInner &getInner();
 

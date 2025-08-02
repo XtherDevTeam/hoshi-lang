@@ -524,7 +524,7 @@ namespace yoi {
 
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0) {
+    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0) {
 
     }
 
@@ -568,6 +568,8 @@ namespace yoi {
                 return L"pointer";
             case valueType::virtualMethod:
                 return L"virtual_method#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+            case valueType::incompleteTemplateType:
+                return L"incomplete_template_type#" + std::to_wstring(typeIndex);
             default:
                 return L"unknown";
         }
@@ -766,7 +768,8 @@ namespace yoi {
     }
     IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateMethod(
         const yoi::wstr &methodName, const std::shared_ptr<IRFunctionTemplate> &methodTemplate) {
-        templateMethods[methodName] = methodTemplate;
+        // templateMethods[methodName] = methodTemplate;
+        templateMethods.put_create(methodName, methodTemplate);
         return *this;
     }
     yoi::vec<std::shared_ptr<IRValueType>> &IRVariableTable::getVariables() {

@@ -2,7 +2,44 @@ func Test<T>(a: T, b: int) : T {
     return a + b
 }
 
+func Test(a: int, b: int, c: int) : int {
+    return a + b + c
+}
+
+struct TestStruct<T, U> {
+    a: T,
+    b: U,
+    add(): T,
+    constructor(a: T, b: U)
+}
+
+impl TestStruct<int, int> {
+    add(): int {
+        return this.a + this.b
+    },
+    constructor(a: int, b: int) {
+        this.a = a
+        this.b = b
+        return this
+    }
+}
+
+impl TestStruct<> {
+    add(): T {
+        return this.a + this.b
+    },
+    constructor(a: T, b: U) {
+        this.a = a
+        this.b = b
+        return this
+    }
+}
+
 func main() : int {
-    let res = Test(1, 2)
-    return res
+    let res = TestStruct<int, int>(1, 2)
+    let res2 = TestStruct<int, deci>(3, 4.5)
+    let x = res.add()
+    let y = res2.add()
+
+    return x + y
 }

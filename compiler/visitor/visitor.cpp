@@ -5,7 +5,10 @@
 #include "visitor.h"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
+#include "compiler/moduleContext.h"
 #include "share/def.hpp"
+#include <algorithm>
+#include <cstdio>
 #include <memory>
 #include <stdexcept>
 #include <utility>
@@ -864,23 +867,29 @@ namespace yoi {
 
                 // Try as struct template constructor
                 if (irModule->structTemplateTable.contains(baseName)) {
-                    auto specializedStructIndex = specializeStructTemplate(baseName, concreteTemplateArgs);
-                    auto specializedStruct = irModule->structTable[specializedStructIndex];
+                    if (templateImplAsts.count(baseName)) {
+                        auto pureTemplateAst = templateImplAsts.at(baseName);
 
-                    moduleContext->getIRBuilder().newStructOp(specializedStructIndex);
+                        auto specializedStructIndex = specializeStructTemplate(baseName, concreteTemplateArgs, pureTemplateAst);
+                        auto specializedStruct = irModule->structTable[specializedStructIndex];
 
-                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                    for (auto& arg : subscriptExpr->args->get()) {
-                        visit(arg);
-                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                        moduleContext->getIRBuilder().newStructOp(specializedStructIndex);
+
+                        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                        for (auto& arg : subscriptExpr->args->get()) {
+                            visit(arg);
+                            argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                        }
+
+                        auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
+                        yoi_assert(specializedStruct->nameIndexMap.count(ctorName), subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching constructor for specialized struct " + wstring2string(specializedStruct->name));
+
+                        auto ctorInfo = specializedStruct->lookupName(ctorName);
+                        auto ctorFunc = irModule->functionTable[ctorInfo.index];
+                        moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, subscriptExpr->args->get().size(), ctorFunc->returnType);
+                    } else {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No implementation found for template: " + wstring2string(baseName));
                     }
-
-                    auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
-                    yoi_assert(specializedStruct->nameIndexMap.count(ctorName), subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching constructor for specialized struct " + wstring2string(specializedStruct->name));
-
-                    auto ctorInfo = specializedStruct->lookupName(ctorName);
-                    auto ctorFunc = irModule->functionTable[ctorInfo.index];
-                    moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, subscriptExpr->args->get().size(), ctorFunc->returnType);
                     return moduleContext->getIRBuilder().getCurrentInsertionPoint();
                 }
                 
@@ -1214,6 +1223,70 @@ namespace yoi {
                     auto memberName = field->getVar().getId().get().strVal;
                     auto memberType = managedPtr(parseTypeSpec(field->getVar().spec));
                     builder.addField(memberName, memberType);
+                } else if (field->kind == 1) { // Constructor
+                    IRFunctionTemplate::Builder constructorBuilder;
+                    IRFunctionDefinition::Builder constructorDefBuilder;
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+
+                    moduleContext->pushTemplateBuilder(constructorBuilder);
+                    
+                    constructorBuilder.templateArguments = templateBuilder.templateArguments;
+                    auto STRUCT_INCOMPLETE_TYPE = constructorBuilder.templateArguments.put_create(L"STRUCT", {{}, {-1, -1}});
+                    constructorBuilder.templateArguments[STRUCT_INCOMPLETE_TYPE].templateType = managedPtr(IRValueType{IRValueType::valueType::incompleteTemplateType, currentModuleIndex, STRUCT_INCOMPLETE_TYPE});
+
+                    constructorDefBuilder.setReturnType(constructorBuilder.templateArguments[STRUCT_INCOMPLETE_TYPE].templateType);
+
+                    for (auto &arg : field->getConstructor().getArgs().get()) {
+                        auto argName = arg->getId().get().strVal;
+                        auto argType = managedPtr(parseTypeSpec(arg->spec));
+                        constructorDefBuilder.addArgument(argName, argType);
+                        argTypes.push_back(argType);
+                    }
+
+                    auto uniq = getFuncUniqueNameStr(argTypes);
+                    auto mangledName = L"constructor" + uniq;
+                    constructorDefBuilder.setName(structName + L"::" + mangledName);
+
+                    auto func = constructorDefBuilder.yield();
+                    constructorBuilder.setTemplateDefinition(func);
+
+                    templateBuilder.setTemplateMethod(mangledName, constructorBuilder.yield());
+
+                    moduleContext->popTemplateBuilder();
+                } else if (field->kind == 2) { // Method
+                    auto methodName = field->getMethod().getName().get().strVal;
+                    IRFunctionTemplate::Builder methodBuilder;
+                    IRFunctionDefinition::Builder methodDefBuilder;
+
+                    moduleContext->pushTemplateBuilder(methodBuilder);
+
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+
+                    methodBuilder.templateArguments = templateBuilder.templateArguments;
+                    auto STRUCT_INCOMPLETE_TYPE = methodBuilder.templateArguments.put_create(L"STRUCT", {{}, {-1, -1}});
+                    methodBuilder.templateArguments[STRUCT_INCOMPLETE_TYPE].templateType = managedPtr(IRValueType{IRValueType::valueType::incompleteTemplateType, currentModuleIndex, STRUCT_INCOMPLETE_TYPE});
+
+                    auto methodType = managedPtr(parseTypeSpec(field->getMethod().resultType));
+
+                    methodDefBuilder.setReturnType(methodType);
+
+                    for (auto &arg : field->getMethod().getArgs().get()) {
+                        auto argName = arg->getId().get().strVal;
+                        auto argType = managedPtr(parseTypeSpec(arg->spec));
+                        methodDefBuilder.addArgument(argName, argType);
+                        argTypes.push_back(argType);
+                    }
+
+                    auto uniq = getFuncUniqueNameStr(argTypes);
+                    auto mangledName = methodName + uniq;
+                    methodDefBuilder.setName(structName + L"::" + mangledName);
+
+                    auto func = methodDefBuilder.yield();
+                    methodBuilder.setTemplateDefinition(func);
+
+                    templateBuilder.setTemplateMethod(mangledName, methodBuilder.yield());
+
+                    moduleContext->popTemplateBuilder();
                 }
             }
             templateBuilder.setTemplateDefinition(builder.yield());
@@ -1291,12 +1364,20 @@ namespace yoi {
         auto& structIdNode = implStmt->getStructId();
         auto structBaseName = structIdNode.getId().get().strVal;
 
-        if (structIdNode.hasDefTemplateArg()) { // Impl for a template struct
+        if (structIdNode.hasTemplateArg()) { // Impl for a template struct
             yoi_assert(irModule->structTemplateTable.contains(structBaseName),
                 implStmt->getLine(), implStmt->getColumn(), "Impl for undefined struct template: " + wstring2string(structBaseName));
             
-            // Just store the AST for later specialization.
-            templateImplAsts[structBaseName] = implStmt;
+            yoi::vec<std::shared_ptr<IRValueType>> concreteTemplateArgs = parseTemplateArgs(structIdNode.getArg());
+            
+            if (concreteTemplateArgs.empty()) {
+                // pure template struct, store them and specialize when used
+                templateImplAsts[structBaseName] = implStmt;
+            } else {
+                // specialize template struct
+                auto structTemplateAst = structTemplateAsts[structBaseName];
+                specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt);
+            }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
 
@@ -1561,6 +1642,9 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::returnStmt *returnStmt) {
         if (returnStmt->hasValue()) {
             visit(returnStmt->value);
+            // validate type
+            auto returnType = moduleContext->getIRBuilder().irFuncDefinition()->returnType;
+            emitBasicCastTo(returnType);
             moduleContext->getIRBuilder().retOp();
         } else {
             // TODO: return void
@@ -1586,9 +1670,15 @@ namespace yoi {
                 identifierWithTemplateArg->getLine(), identifierWithTemplateArg->getColumn(), "Unknown struct template: " + wstring2string(baseName));
             
             auto concreteTypes = parseTemplateArgs(identifierWithTemplateArg->getArg());
-            auto specializedIndex = specializeStructTemplate(baseName, concreteTypes);
-            
-            return {IRValueType::valueType::structObject, currentModuleIndex, specializedIndex};
+            try {
+                auto pureTemplateAst = templateImplAsts.at(baseName);
+
+                auto specializedIndex = specializeStructTemplate(baseName, concreteTypes, pureTemplateAst);
+                
+                return {IRValueType::valueType::structObject, currentModuleIndex, specializedIndex};
+            } catch (std::out_of_range &e) {
+                panic(identifierWithTemplateArg->getLine(), identifierWithTemplateArg->getColumn(), "No matched struct template found for: " + wstring2string(baseName));
+            }
 
         } else {
             return parseTypeSpec(identifierWithTemplateArg->id);
@@ -1776,19 +1866,29 @@ namespace yoi {
 
         // if bool and char with other, upcast to other
         if (lhsType->is1ByteType() && !rhsType->is1ByteType()) {
-            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs - 1, true);
         }
         else if (!lhsType->is1ByteType() && rhsType->is1ByteType()) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
         // if int with deci, upcast to deci
         else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs - 1, true);
         }
         else if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
 
+    }
+
+    void visitor::emitBasicCastTo(const std::shared_ptr<IRValueType> &toType) {
+        auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        
+        if (rhs->type == toType->type) {
+            return;
+        } else { 
+            moduleContext->getIRBuilder().basicCast(toType, moduleContext->getIRBuilder().getCurrentInsertionPoint());
+        }
     }
 
     yoi::wstr visitor::getInterfaceNameStr(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc) {
@@ -1817,10 +1917,10 @@ namespace yoi {
             res = L"null";
             break;
         case IRValueType::valueType::virtualMethod:
-            res = L"virtualMethod#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
+            res = L"virtual_method#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
             break;
         case IRValueType::valueType::incompleteTemplateType:
-            res = L"incompleteTemplateType#" + std::to_wstring(type->typeIndex);
+            res = L"incomplete_template_type#" + std::to_wstring(type->typeIndex);
             break;
         default:
             panic(0, 0, "Invalid type");
@@ -1964,7 +2064,9 @@ namespace yoi {
     }
     yoi::indexT visitor::specializeStructTemplate(
         const yoi::wstr& templateName,
-        const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs) {
+        const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs,
+        yoi::implStmt *pureTemplateImplAst
+    ) {
 
         yoi::wstr specializedName = getMangledTemplateName(templateName, concreteTemplateArgs);
 
@@ -1977,7 +2079,8 @@ namespace yoi {
         auto structAst = structTemplateAsts.at(templateName);
 
         IRTemplateBuilder specializationContext;
-        yoi_assert(concreteTemplateArgs.size() == structTemplate->templateArguments.size() - 1,
+        printf("specializing struct template %s with args: %lu %llu\n", wstring2string(templateName).c_str(), concreteTemplateArgs.size(), structTemplate->templateArguments.size());
+        yoi_assert(concreteTemplateArgs.size() == structTemplate->templateArguments.size(),
                 0, 0, "Template argument count mismatch for struct " + wstring2string(templateName));
         
         for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
@@ -1989,7 +2092,7 @@ namespace yoi {
         auto selfType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex});
 
         specializationContext.addTemplateArgument(L"STRUCT", selfType);
-        
+
         moduleContext->pushTemplateBuilder(specializationContext);
 
         IRStructDefinition::Builder builder;
@@ -2006,11 +2109,8 @@ namespace yoi {
         auto specializedStruct = builder.yield();
         irModule->structTable[specializedStructIndex] = specializedStruct;
 
-        if (templateImplAsts.count(templateName)) {
-            auto implAst = templateImplAsts.at(templateName);
-            for (auto& methodAst : implAst->getInner().getInner()) {
-                specializeStructMethod(structTemplate, specializedStruct, methodAst, specializedName, concreteTemplateArgs);
-            }
+        for (auto& methodAst : pureTemplateImplAst->getInner().getInner()) {
+            specializeStructMethod(structTemplate, specializedStruct, methodAst, specializedName, concreteTemplateArgs);
         }
 
         moduleContext->popTemplateBuilder();
@@ -2029,6 +2129,7 @@ namespace yoi {
         // Push the template's own context to resolve generic types like 'T' to their placeholder 'incompleteTemplateType'.
         IRTemplateBuilder genericContext;
         genericContext.templateArguments = structTemplate->templateArguments;
+        genericContext.addTemplateArgument(L"STRUCT", managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, irModule->structTable.getIndex(specializedStructName)}));
         moduleContext->pushTemplateBuilder(genericContext);
 
         yoi::wstr baseMethodName;
@@ -2051,9 +2152,21 @@ namespace yoi {
 
         moduleContext->popTemplateBuilder(); // Done with generic context
         
-        yoi_assert(structTemplate->templateMethods.contains(genericMethodKey), 0, 0, "Method implementation does not match any template method definition: " + wstring2string(genericMethodKey));
-        auto methodTemplate = structTemplate->templateMethods[genericMethodKey];
+        std::shared_ptr<IRFunctionTemplate> methodTemplate;
+        // yoi_assert(, 0, 0, "Method implementation does not match any template method definition: " + wstring2string(genericMethodKey));
+        for (auto &methodPair : structTemplate->templateMethods) {
+            if (methodPair.first == genericMethodKey) {
+                methodTemplate = methodPair.second;
+            } else {
+                if (getSpecializedMangledMethodName(genericContext.templateArguments, methodPair.first, concreteTemplateArgs) == genericMethodKey) {
+                    methodTemplate = methodPair.second;
+                }
+            }
+        }
 
+        if (!methodTemplate) {
+            throw std::runtime_error("Method implementation does not match any template method definition: " + wstring2string(genericMethodKey));
+        }
         
         IRTemplateBuilder specializationContext;
         for(size_t i = 0; i < concreteTemplateArgs.size(); ++i) {
@@ -2101,4 +2214,19 @@ namespace yoi {
 
         moduleContext->popTemplateBuilder(); 
     }
+    yoi::wstr visitor::getSpecializedMangledMethodName(
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
+        const yoi::wstr &baseMethodName,
+        const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes) {
+        auto res = baseMethodName;
+        for (yoi::indexT i = 0; i < specializedArgTypes.size(); ++i) {
+            auto &arg = templateArgs[i];
+            auto strRepl1 = templateArgs[i].templateType->to_string();
+            auto strRepl2 = specializedArgTypes[i]->to_string();
+            printf("replacing %s with %s in %s\n", wstring2string(strRepl1).c_str(), wstring2string(strRepl2).c_str(), wstring2string(res).c_str());
+            replace_all(res, strRepl1, strRepl2);
+        }
+        return res;
+    }
+    
 } // namespace yoi

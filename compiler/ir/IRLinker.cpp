@@ -243,6 +243,9 @@ namespace yoi {
 
     std::shared_ptr<IRValueType> IRLinker::patchType(const std::shared_ptr<IRValueType> &oldType) {
         // map the old type to the new type
+        if (oldType->typeAffiliateModule == ENTRY_MODULE_ID_CONST) {
+            return oldType;
+        }
         std::shared_ptr<IRValueType> newType = managedPtr(*oldType);
         switch (oldType->type) {
             case IRValueType::valueType::structObject: {

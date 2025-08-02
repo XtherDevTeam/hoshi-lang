@@ -377,7 +377,7 @@ namespace yoi {
         return *interfaceName;
     }
 
-    identifierWithDefTemplateArg &implStmt::getStructId() {
+    identifierWithTemplateArg &implStmt::getStructId() {
         return *structName;
     }
 
@@ -526,7 +526,7 @@ namespace yoi {
 
     void finalizeAST(defTemplateArgSpec *ptr) {
         finalizeAST(ptr->id);
-        finalizeAST(ptr->impl);
+        if(ptr->impl) finalizeAST(ptr->impl);
         delete ptr;
     }
 
