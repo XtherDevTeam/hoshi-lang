@@ -886,17 +886,16 @@ namespace yoi {
                 
                 panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching function or struct template for explicit instantiation of: " + wstring2string(baseName));
             }
-
-            // --- 2. Regular Function, Struct, Interface calls (and implicit template instantiation) ---
-            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-            for (auto &arg : subscriptExpr->args->get()) {
-                visit(arg);
-                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-            }
-            auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
             
             // Try regular function
             try {
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
+                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
+
                 auto funcIndex = irModule->functionTable.getIndex(mangledFuncName);
                 auto func = irModule->functionTable[funcIndex];
                 moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
@@ -905,12 +904,32 @@ namespace yoi {
 
             // Try implicit function template instantiation
             try {
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
+                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
                 if (irModule->functionTemplateTable.contains(baseName)) {
                     auto funcTemplate = irModule->functionTemplateTable[baseName];
                     auto astNode = funcTemplateAsts.at(baseName);
                     
                     // Deduce template arguments
-                    yoi_assert(argTypes.size() == funcTemplate->templateArguments.size(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: argument count mismatch.");
+                    // yoi_assert(argTypes.size() == funcTemplate->templateArguments.size(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: argument count mismatch.");
+                    yoi::vec<std::shared_ptr<IRValueType>> deducedArgs(funcTemplate->templateArguments.size());
+                    for (yoi::indexT i = 0; i < argTypes.size(); i++) {
+                        if (funcTemplate->templateDefinition->argumentTypes[i]->type == IRValueType::valueType::incompleteTemplateType) {
+                            auto &srcTypeToPlace = argTypes[i];
+                            if(deducedArgs[i]) {
+                                yoi_assert(*deducedArgs[i] == *srcTypeToPlace, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Same template argument type cannot be interpreted as different types.");
+                            }
+                            deducedArgs[i] = srcTypeToPlace;
+                        }
+                    }
+                    // check if all deduced arguments are complete
+                    for (yoi::indexT i = 0; i < deducedArgs.size(); i++) {
+                        yoi_assert(deducedArgs[i] != nullptr, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: incomplete type: " + yoi::wstring2string(funcTemplate->templateArguments.getKey(i)));
+                    }
                     
                     auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, argTypes);
                     auto specializedFunc = irModule->functionTable[specializedFuncIndex];
@@ -928,6 +947,13 @@ namespace yoi {
                 auto structIndex = irModule->structTable.getIndex(baseName);
                 auto structType = irModule->structTable[structIndex];
                 moduleContext->getIRBuilder().newStructOp(structIndex);
+
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
+                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
                 
                 auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
                 auto ctorInfo = structType->lookupName(ctorName);
@@ -939,13 +965,18 @@ namespace yoi {
             // Try interface constructor
             try {
                 auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
+                moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
+
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
+                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
+
                 yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument (the struct instance).");
                 
                 auto structValue = argTypes[0];
-                moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
-                
-                // Re-push the struct argument
-                visit(subscriptExpr->args->get().front());
                 
                 auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, {structValue->typeAffiliateModule, structValue->typeIndex});
                 auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);

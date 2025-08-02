@@ -9,4 +9,6 @@ extern "C" void runtime_debug_report_current_function(const char *function_name)
 
 extern "C" void runtime_debug_print(const char *message);
 
+extern "C" void runtime_debug_print_address(void *address);
+
 #endif //HOSHI_LANG_RUNTIME_DEBUG_H

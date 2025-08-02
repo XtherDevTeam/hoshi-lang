@@ -49,6 +49,7 @@ namespace yoi {
         llvm::Function *runtimeFinalizeObjectFunc = nullptr;
         llvm::Function *runtimeDebugReportCurrentFunctionFunc = nullptr;
         llvm::Function *runtimeDebugPrintFunc = nullptr;
+        llvm::Function *runtimeDebugPrintAddressFunc = nullptr;
 
 
         // Yoi language context

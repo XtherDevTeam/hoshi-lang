@@ -4,12 +4,15 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
+#include <runtime/build_config.h>
 
 extern "C" void *runtime_object_alloc(unsigned long size_in_bytes) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Allocating %ld bytes of memory.\n", size_in_bytes);
     #endif
-    return malloc(size_in_bytes);
+    void * ptr = calloc(size_in_bytes, 1);
+    return ptr;
 }
 extern "C" void runtime_finalize_object(void *object) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)

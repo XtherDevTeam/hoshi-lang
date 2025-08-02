@@ -574,7 +574,7 @@ namespace yoi {
     }
 
     bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
-        return type == rhs.type && typeIndex == rhs.typeIndex;
+        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule;
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo>& nameInfoMap, const vec <std::shared_ptr<IRValueType>> &fieldTypes) : name(name), nameIndexMap(nameInfoMap), fieldTypes(fieldTypes) {

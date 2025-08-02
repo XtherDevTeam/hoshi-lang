@@ -56,9 +56,14 @@ namespace yoi {
 
 
         // void runtime_debug_print(const char *message);
-       llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
+        llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
         runtimeDebugPrintFunc = llvm::Function::Create(debugPrintType, llvm::Function::ExternalLinkage, "runtime_debug_print", TheModule.get());
         runtimeDebugPrintFunc->setCallingConv(llvm::CallingConv::C);
+
+        // void runtime_debug_print_address(void *address);
+        llvm::FunctionType* debugPrintAddressType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
+        runtimeDebugPrintAddressFunc = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
+        runtimeDebugPrintAddressFunc->setCallingConv(llvm::CallingConv::C);
     }
 
     void LLVMCodegen::generate() {
@@ -148,14 +153,19 @@ namespace yoi {
 
             auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
             Builder->SetInsertPoint(incBlock);
+            llvm::Value* thisPtr = incFunction->arg_begin();
+
             if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
                 std::string debugStr = "Increasing refcount of " + typeName + " object";
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
                 auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
                 auto* debugStrPtr = Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(Builder->getInt8Ty(), 0));
                 Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
+                // address
+                auto* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
+                Builder->CreateCall(runtimeDebugPrintAddressFunc, castedPtr);
             }
-            llvm::Value* thisPtr = incFunction->arg_begin();
+
             llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
             llvm::Value* incNewRefCount = Builder->CreateAdd(incOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
@@ -189,6 +199,9 @@ namespace yoi {
                 auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
                 auto* debugStrPtr = Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(Builder->getInt8Ty(), 0));
                 Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
+                // address
+                auto* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
+                Builder->CreateCall(runtimeDebugPrintAddressFunc, castedPtr);
             }
             llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");

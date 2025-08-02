@@ -22,9 +22,13 @@ impl Point : Addable {
     }
 }
 
+func add_inv<T impl Addable>(a: T) : int {
+    let addable = Addable(a)
+    return addable.add()
+}
+
 func main() : int {
     let p1 = Point(1, 2)
-    let interface_obj = Addable(p1)
-    let result = interface_obj.add()
+    let result = add_inv(p1)
     return result
 }
