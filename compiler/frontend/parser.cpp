@@ -1,4 +1,5 @@
-#include <iostream>
+#include "compiler/frontend/lexer.hpp"
+#include "share/def.hpp"
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-qualification"
 #pragma ide diagnostic ignored "misc-no-recursion"
@@ -1083,12 +1084,14 @@ namespace yoi {
     }
 
     void parse(globalStmt *&o, lexer &lex) {
-        useStmt *a;
-        interfaceDefStmt *b;
-        structDefStmt *c;
-        implStmt *d;
-        letStmt *e;
-        funcDefStmt *f;
+        useStmt *a{};
+        interfaceDefStmt *b{};
+        structDefStmt *c{};
+        implStmt *d{};
+        letStmt *e{};
+        funcDefStmt *f{};
+        exportDecl *g{};
+        importDecl *h{};
 
         parse(a, lex);
         if (a) {
@@ -1126,6 +1129,17 @@ namespace yoi {
             return;
         }
 
+        parse(g, lex);
+        if (g) {
+            o = new globalStmt{lex.curToken, globalStmt::vKind::exportDecl, g};
+            return;
+        }
+
+        parse(h, lex);
+        if (h) {
+            o = new globalStmt{lex.curToken, globalStmt::vKind::importDecl, h};
+            return;
+        }
         o = nullptr;
     }
 
@@ -1560,6 +1574,68 @@ namespace yoi {
         }
         o = new hoshiModule{lex.curToken, vecA};
     }
-}
+
+    void parse(importInner *&o, lexer &lex) {
+        innerMethodDecl *a;
+        parse(a, lex);
+        if (a) {
+            o = new importInner{lex.curToken, a};
+            return;
+        }
+        structDefStmt *b;
+        parse(b, lex);
+        if (b) {
+            o = new importInner{lex.curToken, nullptr, b};
+            return;
+        }
+    }
+
+    void parse(importDecl *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kImport) {
+            lex.scan();
+        } else {
+            return;
+        }
+        importInner *a;
+        parse(a, lex);
+        if (a) {
+            o = new importDecl{lex.curToken, a};
+        } else {
+            panic(lex.line, lex.col, "expected importInner after `import`");
+        }
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::kFrom, lex.line, lex.col, "expected `from` after importDecl");
+        lex.scan();
+        if (lex.curToken.kind == lexer::token::tokenKind::string) {
+            o->from_path = lex.curToken;
+            lex.scan();
+        }
+    }
+
+    void parse(exportDecl *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kExport) {
+            lex.scan();
+        } else {
+            return;
+        }
+        typeSpec *a;
+        parse(a, lex);
+        if (a) {
+            o = new exportDecl{lex.curToken, a, nullptr};
+        } else {
+            panic(lex.line, lex.col, "expected externModuleAccessExpression after `export`");
+        }
+
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::kAs, lex.line, lex.col, "expected `as` after exportDecl");
+        lex.scan();
+
+        identifier *b;
+        parse(b, lex);
+        if (b) {
+            o->as = b;
+        } else {
+            panic(lex.line, lex.col, "expected identifier after exportDecl");
+        }
+    }
+} // namespace yoi
 
 #pragma clang diagnostic pop

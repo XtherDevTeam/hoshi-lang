@@ -146,6 +146,12 @@ namespace yoi {
 
     class externModuleAccessExpression;
 
+    class exportDecl;
+
+    class importDecl;
+
+    class importInner;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -618,6 +624,8 @@ namespace yoi {
             structDefStmt,
             implStmt,
             letStmt,
+            importDecl,
+            exportDecl,
         } kind;
 
         union vValue {
@@ -627,6 +635,8 @@ namespace yoi {
             implStmt *implStmtVal;
             letStmt *letStmtVal;
             funcDefStmt *funcDefStmtVal;
+            importDecl *importDeclVal;
+            exportDecl *exportDeclVal;
             void *ptr;
 
             template<typename T>
@@ -821,6 +831,30 @@ namespace yoi {
 
             bool isIdentifier() const;
     };
+
+    class exportDecl : public AST {
+        public:
+            typeSpec *from;
+            identifier *as;
+    };
+
+    class importInner : public AST {
+        public:
+            innerMethodDecl *method;
+            structDefStmt *structDef;
+    };
+
+    class importDecl : public AST {
+        public:
+            importInner *inner;
+            lexer::token from_path;
+    };
+
+    void finalizeAST(exportDecl *ptr);
+
+    void finalizeAST(importInner *ptr);
+
+    void finalizeAST(importDecl *ptr);
 
     void finalizeAST(externModuleAccessExpression *ptr);
 

@@ -141,6 +141,14 @@ namespace yoi {
             tok.kind = token::tokenKind::kImpl;
         } else if (tempStr == L"null") {
             tok.kind = token::tokenKind::kNull;
+        } else if (tempStr == L"import") {
+            tok.kind = token::tokenKind::kImport;
+        } else if (tempStr == L"export") {
+            tok.kind = token::tokenKind::kExport;
+        } else if (tempStr == L"as") {
+            tok.kind = token::tokenKind::kAs;
+        } else if (tempStr == L"from") {
+            tok.kind = token::tokenKind::kFrom;
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";

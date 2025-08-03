@@ -995,4 +995,31 @@ namespace yoi {
     yoi::indexT AST::getLine() {
         return token.line;
     }
-} // hoshi
+
+    void finalizeAST(exportDecl *ptr) {
+        if (ptr->from) {
+            finalizeAST(ptr->from);
+        }
+        if (ptr->as) {
+            finalizeAST(ptr->as);
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(importInner *ptr) {
+        if (ptr->method) {
+            finalizeAST(ptr->method);
+        }
+        if (ptr->structDef) {
+            finalizeAST(ptr->structDef);
+        }
+        delete ptr;
+    }
+    
+    void finalizeAST(importDecl *ptr) {
+        if (ptr->inner) {
+            finalizeAST(ptr->inner);
+        }
+        delete ptr;
+    }
+} // namespace yoi

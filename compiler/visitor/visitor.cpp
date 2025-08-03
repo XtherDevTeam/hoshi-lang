@@ -1512,6 +1512,14 @@ namespace yoi {
                 visit(globalStmt->value.interfaceDefStmtVal);
                 break;
             }
+            case globalStmt::vKind::importDecl: {
+                visit(globalStmt->value.importDeclVal);
+                break;
+            }
+            case globalStmt::vKind::exportDecl: {
+                visit(globalStmt->value.exportDeclVal);
+                break;
+            }
             default: {
                 panic(globalStmt->getLine(), globalStmt->getColumn(), "Unsupported global statement type");
             }
@@ -2228,5 +2236,52 @@ namespace yoi {
         }
         return res;
     }
-    
+
+    yoi::indexT visitor::visit(yoi::exportDecl *exportDecl) {
+        auto exportIdentifier = exportDecl->as->node.strVal;
+        auto parsedType = managedPtr(parseTypeSpec(exportDecl->from));
+
+        moduleContext->getCompilerContext()->getIRFFITable()->addExportedType(exportIdentifier, parsedType);
+
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::visit(yoi::importDecl *importDecl) {
+        auto from = importDecl->from_path.strVal;
+
+        if (importDecl->inner->method) {
+            // import method implementation
+            // parse method signature and add to import table
+            auto funcName = importDecl->inner->method->name->get().strVal;
+            IRFunctionDefinition::Builder builder;
+            builder.setReturnType(managedPtr(parseTypeSpec(importDecl->inner->method->resultType)));
+            for (auto &arg : importDecl->inner->method->args->get()) {
+                auto argType = managedPtr(parseTypeSpec(&arg->getSpec()));
+                builder.addArgument(arg->getId().get().strVal, argType);
+            }
+            builder.setName(funcName);
+            auto importedFunc = builder.yield();
+            moduleContext->getCompilerContext()->getIRFFITable()->addImportedFunction(from, funcName, importedFunc);
+        } else if (importDecl->inner->structDef) {
+            // import struct definition
+            auto structName = importDecl->inner->structDef->id->getId().get().strVal;
+            IRStructDefinition::Builder builder;
+
+            for (auto &field : importDecl->inner->structDef->getInner().getInner()) {
+                if (field->kind == 0) { // is a variable/field
+                    auto memberName = field->getVar().getId().get().strVal;
+                    auto memberType = managedPtr(parseTypeSpec(field->getVar().spec));
+                    builder.addField(memberName, memberType);
+
+                } else {
+                    panic(field->getLine(), field->getColumn(), "Invalid import struct definition, only variable/field is allowed");
+                }
+            }
+
+            builder.setName(structName);
+            auto importedStruct = builder.yield();
+            moduleContext->getCompilerContext()->getIRFFITable()->addImportedStruct(from, structName, importedStruct);
+        }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
 } // namespace yoi

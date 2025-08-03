@@ -187,6 +187,10 @@ namespace yoi {
 
         yoi::indexT visit(yoi::letStmt *letStmt);
 
+        yoi::indexT visit(yoi::exportDecl *exportDecl);
+
+        yoi::indexT visit(yoi::importDecl *importDecl);
+
         void visit(yoi::globalStmt *globalStmt);
 
         yoi::indexT visit(yoi::ifStmt *ifStmt);

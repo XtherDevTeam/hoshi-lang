@@ -261,4 +261,8 @@ continueStmt ::= "continue"
 breakStmt ::= "break"
 inCodeBlockStmt ::= ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt | breakStmt | letStmt | codeBlock | rExpr
 codeBlock ::= "{" { inCodeBlockStmt } "}"
+exportDecl ::= "export" externModuleAccessExpression "as" identifier
+importInner ::= innerMethodDecl
+              | structDefStmt
+importDecl ::= "import" importInner "from" TOK_string
 ```

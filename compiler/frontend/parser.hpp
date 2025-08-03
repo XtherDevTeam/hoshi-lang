@@ -128,6 +128,12 @@ namespace yoi {
     void parse(constructorDef *&o, lexer &lex);
 
     void parse(hoshiModule *&o, lexer &lex);
+
+    void parse(importInner *&o, lexer &lex);
+
+    void parse(importDecl *&o, lexer &lex);
+
+    void parse(exportDecl *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

@@ -1,0 +1,12 @@
+import fopen(path: string, flags: string) : int from "builtin"
+
+struct TestExport {
+    a: int,
+    b: int
+}
+
+export TestExport as TestExport
+
+func main() : int {
+    return 0
+}

@@ -5,6 +5,7 @@
 #ifndef HOSHI_LANG_COMPILERCONTEXT_H
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
+#include <memory>
 #define HOSHI_COMPILER_CTX_GLOB_ID_CONST 0xe1751aff
 
 #include "share/def.hpp"
@@ -23,6 +24,8 @@ namespace yoi {
 
     class IRBuildConfig;
 
+    class IRFFITable;
+
     class compilerContext : public std::enable_shared_from_this<compilerContext> {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
@@ -30,6 +33,7 @@ namespace yoi {
         std::map<yoi::indexT, std::shared_ptr<IRModule>> moduleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
         std::shared_ptr<IRBuildConfig> buildConfig;
+        std::shared_ptr<IRFFITable> irFFITable;
 
         yoi::IRValueType getIntObject();
 
@@ -110,6 +114,8 @@ namespace yoi {
         std::shared_ptr<IRBuildConfig> getBuildConfig() const;
 
         void setBuildConfig(const std::shared_ptr<IRBuildConfig> &buildConfig);
+
+        std::shared_ptr<IRFFITable> getIRFFITable();
     };
 
 } // yoi

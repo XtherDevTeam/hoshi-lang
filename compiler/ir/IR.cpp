@@ -784,4 +784,30 @@ namespace yoi {
         const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
         : templateDefinition(templateDefinition), templateMethods(templateMethods),
           templateArguments(templateArguments) {}
+    IRFFITable::ImportLibrary::ImportLibrary(const yoi::wstr &libraryPath)
+        : libraryPath(libraryPath) {}
+    void IRFFITable::addImportedFunction(
+        const yoi::wstr &libraryName,
+        const yoi::wstr &functionName,
+        const std::shared_ptr<IRFunctionDefinition> &functionDefinition) {
+        if (!importedLibraries.contains(libraryName)) {
+            importedLibraries.put_create(libraryName, {libraryName});
+        }
+
+        importedLibraries[libraryName].importedFunctionTable.put(functionName, functionDefinition);
+    }
+    void
+    IRFFITable::addImportedStruct(const yoi::wstr &libraryName,
+                                  const yoi::wstr &structName,
+                                  const std::shared_ptr<IRStructDefinition> &structDefinition) {
+        if (!importedLibraries.contains(libraryName)) {
+            importedLibraries.put_create(libraryName, {libraryName});
+        }
+
+        importedLibraries[libraryName].importedStructTable.put(structName, structDefinition);
+    }
+    void IRFFITable::addExportedType(const yoi::wstr &typeName,
+                                     const std::shared_ptr<IRValueType> &type) {
+        exportedTypeTable.put(typeName, type);
+    }
 } // namespace yoi

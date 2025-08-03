@@ -173,6 +173,8 @@ namespace yoi {
         sharedValueType.put(L"string", managedPtr(getStrObject()));
         sharedValueType.put(L"char", managedPtr(getCharObject()));
         sharedValueType.put(L"none", managedPtr(getNoneObject()));
+
+        irFFITable = std::make_shared<IRFFITable>();
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType() {
@@ -252,5 +254,8 @@ namespace yoi {
     void compilerContext::setBuildConfig(
         const std::shared_ptr<IRBuildConfig> &buildConfig) {
       this->buildConfig = buildConfig;
+    }
+    std::shared_ptr<IRFFITable> compilerContext::getIRFFITable() {
+        return irFFITable;
     }
 } // namespace yoi

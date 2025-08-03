@@ -467,6 +467,8 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
+
+
         IRStringLiteralPool stringLiteralPool;
 
         yoi::wstr to_string(yoi::indexT indent = 0);
@@ -566,6 +568,33 @@ namespace yoi {
         std::shared_ptr<IRModule> compiledModule;
 
         yoi::indexT entryModule;
+    };
+
+    class IRFFITable {
+    public:
+        class ImportLibrary {
+        public:
+            yoi::wstr libraryPath;
+
+            yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> importedFunctionTable;
+            yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> importedStructTable;
+
+            ImportLibrary(const yoi::wstr &libraryPath);
+        };
+
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> exportedTypeTable;
+
+        yoi::indexTable<yoi::wstr, ImportLibrary> importedLibraries;
+
+        void addImportedFunction(const yoi::wstr &libraryName,
+                                 const yoi::wstr &functionName,
+                                 const std::shared_ptr<IRFunctionDefinition> &functionDefinition);
+
+        void addImportedStruct(const yoi::wstr &libraryName,
+                               const yoi::wstr &structName,
+                               const std::shared_ptr<IRStructDefinition> &structDefinition);
+
+        void addExportedType(const yoi::wstr &typeName, const std::shared_ptr<IRValueType> &type);
     };
 } // yoi
 

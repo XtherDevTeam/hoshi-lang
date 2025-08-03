@@ -85,6 +85,10 @@ namespace yoi {
                 kBreak,
                 kCast,
                 kNull,
+                kImport,
+                kExport,
+                kAs,
+                kFrom,
                 eof,
             } kind;
 
