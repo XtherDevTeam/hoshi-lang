@@ -2,10 +2,10 @@ func test1(a: int, b: deci) : int {
     return a + b
 }
 
-func test2(b: deci) : int {
-    return (1 + b + 3.5) / b
+func test2(i: int, x: deci) : deci {
+    return (i + i + 2 * i + 1 - 0.379) / x
 }
 
 func main() : int {
-    return test1(2, 3.5) + test2(2.5)
+    return test1(2, 3.5) + test2(2, 3.5)
 }

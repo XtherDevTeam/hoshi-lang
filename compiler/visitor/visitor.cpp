@@ -281,7 +281,7 @@ namespace yoi {
                     panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
             }
-            lhsPos = rhsPos;
+            lhsPos = moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -321,7 +321,7 @@ namespace yoi {
                     panic(op->line, op->col, "Unexpected addition expression operator");
                 }
             }
-            lhsPos = rhsPos;
+            lhsPos = moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
