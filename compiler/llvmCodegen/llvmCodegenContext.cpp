@@ -1223,7 +1223,7 @@ namespace yoi {
         auto Features = "";
         llvm::TargetOptions Opt;
         auto RM = std::optional<llvm::Reloc::Model>(llvm::Reloc::PIC_);
-        llvm::CodeGenOptLevel OptLevel = llvm::CodeGenOptLevel::Default;
+        llvm::CodeGenOptLevel OptLevel = compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release ? llvm::CodeGenOptLevel::Aggressive : llvm::CodeGenOptLevel::Default;
 
         std::unique_ptr<llvm::TargetMachine> TM(
         Target->createTargetMachine(TargetTriple, CPU, Features, Opt, RM, std::optional<llvm::CodeModel::Model>(), OptLevel));

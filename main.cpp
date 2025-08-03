@@ -39,6 +39,7 @@ void printUsage(const char* programName) {
               << "                                If <path> is a directory (ends with / or \\), input filename is used.\n"
               << "                                If not specified, derived from input_file in the current directory.\n"
               << "  --build-type <type>           Specify build type (executable, static-lib, shared-lib). Default: executable\n"
+              << "  --build-mode <mode>           Specify build mode (debug, release). Default: debug\n"
               << "  --linker <linker>             Specify object linker (cc, cl, none). Default: cc\n"
               << "                                'none' will generate .o file but skip final linking.\n"
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
@@ -53,6 +54,7 @@ int main(int argc, const char **argv) {
     std::string inputFile;
     std::string outputPathStr; 
     yoi::IRBuildConfig::BuildType buildType = yoi::IRBuildConfig::BuildType::executable;
+    yoi::IRBuildConfig::BuildMode buildMode = yoi::IRBuildConfig::BuildMode::debug;
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
@@ -81,6 +83,21 @@ int main(int argc, const char **argv) {
                 }
             } else {
                 std::cerr << "Error: " << arg << " requires a type argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "--build-mode") {
+            if (i + 1 < argc) {
+                std::string modeStr = argv[++i];
+                if (modeStr == "debug") buildMode = yoi::IRBuildConfig::BuildMode::debug;
+                else if (modeStr == "release") buildMode = yoi::IRBuildConfig::BuildMode::release;
+                else {
+                    std::cerr << "Error: Invalid build mode '" << modeStr << "'. Valid modes: debug, release.\n";
+                    printUsage(argv[0]);
+                    return 1;
+                }
+            } else {
+                std::cerr << "Error: " << arg << " requires a mode argument.\n";
                 printUsage(argv[0]);
                 return 1;
             }
@@ -188,6 +205,7 @@ int main(int argc, const char **argv) {
         compilerCtx->setBuildConfig(yoi::IRBuildConfig::Builder()
                                         .setBuildType(buildType)
                                         .setBuildPlatform(yoi::string2wstring(YOI_PLATFORM))
+                                        .setBuildMode(buildMode)
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 

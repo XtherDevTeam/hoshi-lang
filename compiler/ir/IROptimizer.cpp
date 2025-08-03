@@ -7,6 +7,7 @@
 #include "share/def.hpp"
 
 #include <cmath>
+#include <iostream>
 
 namespace yoi {
     IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
@@ -1422,6 +1423,7 @@ namespace yoi {
     }
 
     IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
+        std::cout << yoi::wstring2string(targetFunction->to_string()) << std::endl;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             currentCodeBlockIndex = i;
             this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();

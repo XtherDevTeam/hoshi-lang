@@ -151,9 +151,9 @@ namespace yoi {
             getCurrentCodeBlock().getIRArray().push_back(ir);
         } else {
             auto insPoint = getCurrentCodeBlock().getIRArray().begin() + insertionPoint;
-            if (insPoint != getCurrentCodeBlock().getIRArray().end()) {
-                insPoint++;
-            }
+            // if (insPoint != getCurrentCodeBlock().getIRArray().end()) {
+            //     insPoint++;
+            // }
             getCurrentCodeBlock().getIRArray().insert(insPoint, ir);
         }
     }

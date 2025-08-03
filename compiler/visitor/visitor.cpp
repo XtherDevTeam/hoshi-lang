@@ -1866,14 +1866,14 @@ namespace yoi {
 
         // if bool and char with other, upcast to other
         if (lhsType->is1ByteType() && !rhsType->is1ByteType()) {
-            moduleContext->getIRBuilder().basicCast(rhsType, lhs - 1, true);
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
         }
         else if (!lhsType->is1ByteType() && rhsType->is1ByteType()) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
         // if int with deci, upcast to deci
         else if (lhsType->type == IRValueType::valueType::integerObject && rhsType->type == IRValueType::valueType::decimalObject) {
-            moduleContext->getIRBuilder().basicCast(rhsType, lhs - 1, true);
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
         }
         else if (lhsType->type == IRValueType::valueType::decimalObject && rhsType->type == IRValueType::valueType::integerObject) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);

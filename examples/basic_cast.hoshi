@@ -1,0 +1,11 @@
+func test1(a: int, b: deci) : int {
+    return a + b
+}
+
+func test2(b: deci) : int {
+    return (1 + b + 3.5) / b
+}
+
+func main() : int {
+    return test1(2, 3.5) + test2(2.5)
+}
