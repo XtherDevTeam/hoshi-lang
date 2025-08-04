@@ -93,7 +93,9 @@ namespace yoi {
         void generateImplementations();
         void generateStructImplementations();
         void generateStructGCFunctions();
-        void generateInterfaceGCWrappers();
+        void generateInterfaceImplementationGCFunctions();
+        void generateInterfaceObjectGCFunctions();
+
         void generateFunctionImplementations();
         void generateFunction(IRFunctionDefinition &funcDef);
         void generateFunctionExitCleanup();

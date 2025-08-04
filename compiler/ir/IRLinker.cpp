@@ -298,4 +298,9 @@ namespace yoi {
             }
         }
     }
+    void IRLinker::patchIRFFITable() {
+        for (auto &typePair : compilerCtx->getIRFFITable()->exportedFunctionTable) {
+            typePair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(typePair.second.first).at(typePair.second.second)};
+        }
+    }
 } // namespace yoi

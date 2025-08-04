@@ -271,7 +271,8 @@ namespace yoi {
     void LLVMCodegen::generateImplementations() {
         generateStructImplementations();
         generateStructGCFunctions();
-        generateInterfaceGCWrappers();
+        generateInterfaceImplementationGCFunctions(); // Generates wrappers for specific interface implementations
+        generateInterfaceObjectGCFunctions();       // NEW: Generates top-level wrappers for interface objects
         generateFunctionImplementations();
     }
 
@@ -298,18 +299,13 @@ namespace yoi {
             auto* llvmInterfaceType = structTypeMap.at(key);
 
             std::vector<llvm::Type*> memberTypes;
-            // Layout as per README.md
-            // 0. gc_refcount
             memberTypes.push_back(Builder->getInt64Ty());
-            // 1. this pointer (to concrete struct)
             memberTypes.push_back(llvm::PointerType::get(Builder->getInt8Ty(), 0));
-            // 2. & 3. GC function pointers
             auto* gcFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
             auto* gcFuncPtrType = llvm::PointerType::get(gcFuncType, 0);
             memberTypes.push_back(gcFuncPtrType); // gc_refcount_increase vptr
             memberTypes.push_back(gcFuncPtrType); // gc_refcount_decrease vptr
 
-            // 4... Method pointers
             for (const auto& methodPair : interfaceDef->methodMap) {
                 auto funcType = getFunctionType(methodPair.second);
                 std::vector<llvm::Type*> virtualArgTypes;
@@ -382,6 +378,15 @@ namespace yoi {
 
             Builder->SetInsertPoint(finalizeBlock);
             llvm::Value* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
+            // call dec for inner object (if any)
+            for (yoi::indexT innerIdx = 0; innerIdx < structDef->fieldTypes.size(); ++innerIdx) {
+                // create gep
+                auto fieldPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, innerIdx + 1, "field_ptr"); // skip refcount at index 0
+                auto fieldType = structDef->fieldTypes[innerIdx];
+                // Load the field value before calling its GC function
+                llvm::Value* loadedField = Builder->CreateLoad(yoiTypeToLLVMType(fieldType), fieldPtr, "loaded_field_for_gc");
+                callGcFunction(loadedField, fieldType, false); // Decrease refcount of member
+            }
             Builder->CreateCall(runtimeFinalizeObjectFunc, castedPtr);
             Builder->CreateBr(continueBlock);
 
@@ -390,10 +395,13 @@ namespace yoi {
         }
     }
 
-    void LLVMCodegen::generateInterfaceGCWrappers() {
+    void LLVMCodegen::generateInterfaceImplementationGCFunctions() {
+        // These are the "interfaceImpl" wrappers, taking an i8* (the concrete object)
+        // and calling the concrete struct's actual GC function.
+        // These are placed into the interface object's GC function slots (indices 2 and 3).
         for (const auto& implPair : yoiModule->interfaceImplementationTable) {
             const auto& implDef = implPair.second;
-            
+
             auto structModuleId = yoiModule->identifier;
             auto structKey = std::make_tuple(IRValueType::valueType::structObject, structModuleId, implDef->implStructIndex);
             auto* structType = structTypeMap.at(structKey);
@@ -404,33 +412,22 @@ namespace yoi {
             auto structDecName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_decrease";
             auto* structDecFunc = functionMap.at(string2wstring(structDecName));
 
+            // Using implDef->name as part of the wrapper name for uniqueness
             auto wrapperBaseName = wstring2string(implDef->name);
 
             // --- Generate Increase Wrapper ---
             auto incWrapperName = wrapperBaseName + "_gc_refcount_increase";
+            // Takes i8* as the concrete object pointer
             auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
             auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
             functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
             
             auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
-            // No specific null check needed here as increase on null is generally a no-op,
-            // and a concrete increase function (struct_X_gc_refcount_increase) will be called,
-            // which now also has null checks in the basic type definitions, or it's implicitly handled
-            // if the underlying struct_X_gc_refcount_increase is guaranteed to not be called with null.
-            // However, for consistency and robustness, it's safer to add it here.
-            auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incWrapperFunc);
-            auto* incContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", incWrapperFunc);
-
             Builder->SetInsertPoint(incEntryBlock);
             llvm::Value* thisAsI8_inc = incWrapperFunc->arg_begin();
-            llvm::Value* isNull_inc = Builder->CreateICmpEQ(thisAsI8_inc, llvm::ConstantPointerNull::get(llvm::PointerType::get(Builder->getInt8Ty(), 0)), "is_null");
-            Builder->CreateCondBr(isNull_inc, incReturnEarlyBlock, incContinueBlock);
-
-            Builder->SetInsertPoint(incReturnEarlyBlock);
-            Builder->CreateRetVoid();
-
-            Builder->SetInsertPoint(incContinueBlock);
+            // Cast i8* to the specific struct pointer type
             llvm::Value* castedThis_inc = Builder->CreateBitCast(thisAsI8_inc, structPtrType, "casted_this");
+            // Call the concrete struct's increase function
             Builder->CreateCall(structIncFunc, castedThis_inc);
             Builder->CreateRetVoid();
 
@@ -441,20 +438,109 @@ namespace yoi {
             functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
             
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
-            auto* decReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decWrapperFunc);
-            auto* decContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", decWrapperFunc);
-
             Builder->SetInsertPoint(decEntryBlock);
             llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
-            llvm::Value* isNull_dec = Builder->CreateICmpEQ(thisAsI8_dec, llvm::ConstantPointerNull::get(llvm::PointerType::get(Builder->getInt8Ty(), 0)), "is_null");
-            Builder->CreateCondBr(isNull_dec, decReturnEarlyBlock, decContinueBlock);
+            // Cast i8* to the specific struct pointer type
+            llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
+            // Call the concrete struct's decrease function
+            // (The struct's decrease function already handles null checks and finalization logic)
+            Builder->CreateCall(structDecFunc, castedThis_dec);
+            Builder->CreateRetVoid();
+        }
+    }
+
+    void LLVMCodegen::generateInterfaceObjectGCFunctions() {
+        // These are the top-level GC wrappers for the interface objects themselves.
+        // They manage the interface object's own refcount and dispatch to the interfaceImpl wrappers.
+        for (const auto& interfaceDefPair : yoiModule->interfaceTable) {
+            auto interfaceDef = interfaceDefPair.second;
+            auto interfaceIdx = yoiModule->interfaceTable.getIndex(interfaceDef->name);
+            auto moduleID = yoiModule->identifier;
+            auto key = std::make_tuple(IRValueType::valueType::interfaceObject, moduleID, interfaceIdx);
+            auto* llvmInterfaceType = structTypeMap.at(key);
+            auto* llvmInterfacePtrType = llvm::PointerType::get(llvmInterfaceType, 0);
+            auto* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
+            auto* gcFuncTypeForDispatch = llvm::FunctionType::get(Builder->getVoidTy(), { i8PtrTy }, false);
+            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(gcFuncTypeForDispatch, 0);
+
+
+            // --- Generate interface_X_gc_refcount_increase ---
+            auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
+            auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            functionMap[string2wstring(incFuncName)] = incFunction;
+
+            auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
+            auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incFunction);
+            auto* incContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", incFunction);
+
+            Builder->SetInsertPoint(incEntryBlock);
+            llvm::Value* thisPtr = incFunction->arg_begin();
+            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmInterfacePtrType), "is_null");
+            Builder->CreateCondBr(isNull, incReturnEarlyBlock, incContinueBlock);
+
+            Builder->SetInsertPoint(incReturnEarlyBlock);
+            Builder->CreateRetVoid();
+
+            Builder->SetInsertPoint(incContinueBlock);
+            
+            llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
+            llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
+            llvm::Value* incNewRefCount = Builder->CreateAdd(incOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
+            Builder->CreateStore(incNewRefCount, incRefCountPtr);
+
+            llvm::Value* concreteThisPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 1, "this_ptr_field");
+            llvm::Value* loadedConcreteThis = Builder->CreateLoad(i8PtrTy, concreteThisPtr, "concrete_this");
+
+            llvm::Value* gcIncSlotPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 2, "gc_inc_slot");
+            llvm::Value* gcIncFuncPtr = Builder->CreateLoad(gcFuncPtrTypeForDispatch, gcIncSlotPtr, "gc_func_ptr");
+            Builder->CreateCall(gcFuncTypeForDispatch, gcIncFuncPtr, {loadedConcreteThis});
+            Builder->CreateRetVoid();
+
+
+            auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
+            auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            functionMap[string2wstring(decFuncName)] = decFunction;
+
+            auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
+            auto* decReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction);
+            auto* decContinueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction);
+            auto* decFinalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
+            auto* decContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
+
+            Builder->SetInsertPoint(decEntryBlock);
+            thisPtr = decFunction->arg_begin();
+            isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmInterfacePtrType), "is_null");
+            Builder->CreateCondBr(isNull, decReturnEarlyBlock, decContinueDecrementBlock);
 
             Builder->SetInsertPoint(decReturnEarlyBlock);
             Builder->CreateRetVoid();
 
+            Builder->SetInsertPoint(decContinueDecrementBlock);
+            
+            llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
+            llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
+            llvm::Value* decNewRefCount = Builder->CreateSub(decOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
+            Builder->CreateStore(decNewRefCount, decRefCountPtr);
+
+            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(decNewRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
+            Builder->CreateCondBr(shouldFinalize, decFinalizeBlock, decContinueBlock);
+
+            Builder->SetInsertPoint(decFinalizeBlock);
+
+            concreteThisPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 1, "this_ptr_field");
+            loadedConcreteThis = Builder->CreateLoad(i8PtrTy, concreteThisPtr, "concrete_this");
+
+            llvm::Value* gcDecSlotPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 3, "gc_dec_slot");
+            llvm::Value* gcDecFuncPtr = Builder->CreateLoad(gcFuncPtrTypeForDispatch, gcDecSlotPtr, "gc_func_ptr");
+            Builder->CreateCall(gcFuncTypeForDispatch, gcDecFuncPtr, {loadedConcreteThis});
+
+            llvm::Value* castedInterfacePtr = Builder->CreateBitCast(thisPtr, i8PtrTy);
+            Builder->CreateCall(runtimeFinalizeObjectFunc, castedInterfacePtr);
+            Builder->CreateBr(decContinueBlock);
+
             Builder->SetInsertPoint(decContinueBlock);
-            llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
-            Builder->CreateCall(structDecFunc, castedThis_dec);
             Builder->CreateRetVoid();
         }
     }
@@ -576,7 +662,9 @@ namespace yoi {
             }
             case IR::Opcode::push_string: {
                 auto& str = yoiModule->stringLiteralPool.getStringLiteral(instr.operands[0].value.stringLiteralIndex);
-                auto* globalStr = Builder->CreateGlobalStringPtr(wstring2string(str));
+                // Create a global string literal for this string
+                auto *literal = llvm::ConstantDataArray::getString(*TheContext, yoi::wstring2string(str), true);
+                auto* globalStr = Builder->CreateGlobalString(wstring2string(str), "global_string_literal");
                 auto objPtr = createBasicObject(compilerCtx->getStrObjectType(), globalStr);
                 valueStack.push_back({objPtr, compilerCtx->getStrObjectType()});
                 break;
@@ -896,11 +984,9 @@ namespace yoi {
                 auto* castedStructPtr = Builder->CreateBitCast(structInstanceVal.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
                 Builder->CreateStore(castedStructPtr, thisPtrField);
                 // The interface now holds a reference to the struct.
-                callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true);
-                // We are done with the struct reference on the stack.
-                callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, false);
+                // callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true); // This reference is handled by the interface object's own GC logic
 
-                // Populate GC function pointers at indices 2 and 3
+                // Populate GC function pointers at indices 2 and 3 with pointers to the interfaceImpl wrappers
                 auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
                 auto decWrapperName = wstring2string(implDef->name) + "_gc_refcount_decrease";
                 auto* incWrapperFunc = functionMap.at(string2wstring(incWrapperName));
@@ -924,6 +1010,7 @@ namespace yoi {
                 }
                 
                 valueStack.push_back(interfaceShellVal); // Put the constructed interface back
+                callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, false);
                 break;
             }
             case IR::Opcode::invoke_virtual: {
@@ -969,9 +1056,9 @@ namespace yoi {
                 finalArgs.push_back(concreteThisPtrRaw);
                 for(const auto& arg : userArgs) {
                     finalArgs.push_back(arg.llvmValue);
-                    // callGcFunction(arg.llvmValue, arg.yoiType, false);
+                    // callGcFunction(arg.llvmValue, arg.yoiType, false); // Arguments are consumed by the call
                 }
-                // callGcFunction(interfaceShellVal.llvmValue, interfaceShellVal.yoiType, false);
+                callGcFunction(interfaceShellVal.llvmValue, interfaceShellVal.yoiType, false); // Interface object is consumed by the call
 
                 llvm::CallInst* call = Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs, "virtcall");
 
@@ -1130,12 +1217,6 @@ namespace yoi {
     }
 
     void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease) {
-        // The null check for runtime values is now handled within the generated GC functions themselves.
-        // This 'isa<llvm::ConstantPointerNull>' check only catches compile-time null constants.
-        if (llvm::isa<llvm::ConstantPointerNull>(objectPtr)) {
-            return;
-        }
-
         // No GC for the none object singleton
         if (yoiType->type == IRValueType::valueType::none) {
             return;
@@ -1151,38 +1232,10 @@ namespace yoi {
             case IRValueType::valueType::structObject:
                 funcNameBase = "struct_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
                 break;
-            case IRValueType::valueType::interfaceObject: {
-                auto key = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex);
-                auto* interfaceType = structTypeMap.at(key);
-                auto vtableSlotIndex = isIncrease ? 2 : 3;
-
-                // --- runtime null check for interface objects ---
-                llvm::Type* ptrType = llvm::PointerType::get(interfaceType, 0); 
-                llvm::Value* isNull = Builder->CreateICmpEQ(objectPtr, llvm::ConstantPointerNull::get(llvm::cast<llvm::PointerType>(ptrType)), "is_null_interface_obj");
-
-                llvm::BasicBlock* currentBlock = Builder->GetInsertBlock();
-                llvm::BasicBlock* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue_gc_interface", currentFunction);
-                llvm::BasicBlock* endBlock = llvm::BasicBlock::Create(*TheContext, "end_gc_interface", currentFunction);
-
-                Builder->CreateCondBr(isNull, endBlock, continueBlock);
-                Builder->SetInsertPoint(continueBlock);
-
-                auto* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
-                auto* gcFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { i8PtrTy }, false);
-                auto* gcFuncPtrType = llvm::PointerType::get(gcFuncType, 0);
-
-                auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceType, objectPtr, vtableSlotIndex, "gc_vslot_ptr");
-                auto* funcPtr = Builder->CreateLoad(gcFuncPtrType, vtableSlotPtr, "gc_func_ptr");
-                auto* thisPtr = Builder->CreateStructGEP(interfaceType, objectPtr, 1, "this_ptr_field");
-                auto* concreteThis = Builder->CreateLoad(i8PtrTy, thisPtr, "concrete_this");
-
-                Builder->CreateCall(gcFuncType, funcPtr, {concreteThis});
-                Builder->CreateBr(endBlock);
-
-                Builder->SetInsertPoint(endBlock);
-                return;
-            }
-            default: return; // No GC needed for raw types or unknown types
+            case IRValueType::valueType::interfaceObject:
+                funcNameBase = "interface_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
+                break;
+            default: return; // No GC needed for raw types or unhandled types
         }
 
         auto funcName = funcNameBase + (isIncrease ? "_gc_refcount_increase" : "_gc_refcount_decrease");

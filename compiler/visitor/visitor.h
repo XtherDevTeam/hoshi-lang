@@ -16,9 +16,6 @@
 namespace yoi {
 
     class visitor {
-        std::map<yoi::wstr, yoi::funcDefStmt*> funcTemplateAsts;
-        std::map<yoi::wstr, yoi::structDefStmt*> structTemplateAsts;
-        std::map<yoi::wstr, yoi::implStmt*> templateImplAsts; // Maps struct template name to its impl block
 
     public:
         std::shared_ptr<yoi::moduleContext> moduleContext;

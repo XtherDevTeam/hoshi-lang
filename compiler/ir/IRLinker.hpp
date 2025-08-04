@@ -8,7 +8,6 @@
 #include "compiler/ir/IR.h"
 #include "compiler/compilerContext.h"
 #include <map>
-#include <vector>
 
 #define ENTRY_MODULE_ID_CONST 0xe1751a00
 
@@ -51,6 +50,7 @@ namespace yoi {
         void linkGlobals();
         void linkFunctions();
         void createEntryFunction();
+        void patchIRFFITable();
 
         std::shared_ptr<IRValueType> patchType(const std::shared_ptr<IRValueType> &oldType);
         IR patchInstruction(const IR& instr, indexT currentModuleId);

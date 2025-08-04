@@ -838,15 +838,9 @@ namespace yoi {
             identifier *as;
     };
 
-    class importInner : public AST {
-        public:
-            innerMethodDecl *method;
-            structDefStmt *structDef;
-    };
-
     class importDecl : public AST {
         public:
-            importInner *inner;
+            innerMethodDecl *inner;
             lexer::token from_path;
     };
 

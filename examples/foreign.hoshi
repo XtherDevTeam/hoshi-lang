@@ -10,3 +10,9 @@ export TestExport as TestExport
 func main() : int {
     return 0
 }
+
+func test(a: int, b: int) : int {
+    return a + b
+}
+
+export test as test

@@ -111,6 +111,11 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getNoneObjectType();
 
+        // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type or export type. they are just wrapper types.
+        // as for import function wrapper and export function wrapper, ofc we need to treat it differently
+        // or in another word, the differentiation of import and export struct type should not even exist.
+        // cuz you can declare a struct object and export it as foreign type which can be used in import function wrapper too.
+
         std::shared_ptr<IRBuildConfig> getBuildConfig() const;
 
         void setBuildConfig(const std::shared_ptr<IRBuildConfig> &buildConfig);

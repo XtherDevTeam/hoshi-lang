@@ -1575,28 +1575,13 @@ namespace yoi {
         o = new hoshiModule{lex.curToken, vecA};
     }
 
-    void parse(importInner *&o, lexer &lex) {
-        innerMethodDecl *a;
-        parse(a, lex);
-        if (a) {
-            o = new importInner{lex.curToken, a};
-            return;
-        }
-        structDefStmt *b;
-        parse(b, lex);
-        if (b) {
-            o = new importInner{lex.curToken, nullptr, b};
-            return;
-        }
-    }
-
     void parse(importDecl *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kImport) {
             lex.scan();
         } else {
             return;
         }
-        importInner *a;
+        innerMethodDecl *a;
         parse(a, lex);
         if (a) {
             o = new importDecl{lex.curToken, a};

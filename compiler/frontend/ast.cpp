@@ -1006,16 +1006,6 @@ namespace yoi {
         delete ptr;
     }
 
-    void finalizeAST(importInner *ptr) {
-        if (ptr->method) {
-            finalizeAST(ptr->method);
-        }
-        if (ptr->structDef) {
-            finalizeAST(ptr->structDef);
-        }
-        delete ptr;
-    }
-    
     void finalizeAST(importDecl *ptr) {
         if (ptr->inner) {
             finalizeAST(ptr->inner);

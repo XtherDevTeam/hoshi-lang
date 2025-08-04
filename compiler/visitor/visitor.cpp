@@ -9,6 +9,7 @@
 #include "share/def.hpp"
 #include <algorithm>
 #include <cstdio>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <utility>
@@ -854,7 +855,7 @@ namespace yoi {
                 // Try as function template
                 if (irModule->functionTemplateTable.contains(baseName)) {
                     auto funcTemplate = irModule->functionTemplateTable[baseName];
-                    auto astNode = funcTemplateAsts.at(baseName);
+                    auto astNode = irModule->funcTemplateAsts.at(baseName);
                     auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, concreteTemplateArgs);
                     auto specializedFunc = irModule->functionTable[specializedFuncIndex];
 
@@ -867,8 +868,8 @@ namespace yoi {
 
                 // Try as struct template constructor
                 if (irModule->structTemplateTable.contains(baseName)) {
-                    if (templateImplAsts.count(baseName)) {
-                        auto pureTemplateAst = templateImplAsts.at(baseName);
+                    if (irModule->templateImplAsts.count(baseName)) {
+                        auto pureTemplateAst = irModule->templateImplAsts.at(baseName);
 
                         auto specializedStructIndex = specializeStructTemplate(baseName, concreteTemplateArgs, pureTemplateAst);
                         auto specializedStruct = irModule->structTable[specializedStructIndex];
@@ -921,7 +922,7 @@ namespace yoi {
                 auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
                 if (irModule->functionTemplateTable.contains(baseName)) {
                     auto funcTemplate = irModule->functionTemplateTable[baseName];
-                    auto astNode = funcTemplateAsts.at(baseName);
+                    auto astNode = irModule->funcTemplateAsts.at(baseName);
                     
                     // Deduce template arguments
                     // yoi_assert(argTypes.size() == funcTemplate->templateArguments.size(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: argument count mismatch.");
@@ -1141,7 +1142,7 @@ namespace yoi {
 
             auto funcTemplate = templateBuilder.yield();
             irModule->functionTemplateTable.put_create(actualName, funcTemplate);
-            funcTemplateAsts[actualName] = funcDefStmt;
+            irModule->funcTemplateAsts[actualName] = funcDefStmt;
 
             // Compilation of the body is deferred until specialization.
             moduleContext->popTemplateBuilder();
@@ -1291,7 +1292,7 @@ namespace yoi {
             }
             templateBuilder.setTemplateDefinition(builder.yield());
             irModule->structTemplateTable.put_create(structName, templateBuilder.yield());
-            structTemplateAsts[structName] = structDefStmt;
+            irModule->structTemplateAsts[structName] = structDefStmt;
 
             moduleContext->popTemplateBuilder();
         } else {
@@ -1372,10 +1373,10 @@ namespace yoi {
             
             if (concreteTemplateArgs.empty()) {
                 // pure template struct, store them and specialize when used
-                templateImplAsts[structBaseName] = implStmt;
+                irModule->templateImplAsts[structBaseName] = implStmt;
             } else {
                 // specialize template struct
-                auto structTemplateAst = structTemplateAsts[structBaseName];
+                auto structTemplateAst = irModule->structTemplateAsts[structBaseName];
                 specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt);
             }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -1679,7 +1680,7 @@ namespace yoi {
             
             auto concreteTypes = parseTemplateArgs(identifierWithTemplateArg->getArg());
             try {
-                auto pureTemplateAst = templateImplAsts.at(baseName);
+                auto pureTemplateAst = irModule->templateImplAsts.at(baseName);
 
                 auto specializedIndex = specializeStructTemplate(baseName, concreteTypes, pureTemplateAst);
                 
@@ -2084,7 +2085,7 @@ namespace yoi {
 
         yoi_assert(irModule->structTemplateTable.contains(templateName), 0, 0, "Unknown struct template: " + wstring2string(templateName));
         auto structTemplate = irModule->structTemplateTable[templateName];
-        auto structAst = structTemplateAsts.at(templateName);
+        auto structAst = irModule->structTemplateAsts.at(templateName);
 
         IRTemplateBuilder specializationContext;
         printf("specializing struct template %s with args: %lu %llu\n", wstring2string(templateName).c_str(), concreteTemplateArgs.size(), structTemplate->templateArguments.size());
@@ -2231,7 +2232,6 @@ namespace yoi {
             auto &arg = templateArgs[i];
             auto strRepl1 = templateArgs[i].templateType->to_string();
             auto strRepl2 = specializedArgTypes[i]->to_string();
-            printf("replacing %s with %s in %s\n", wstring2string(strRepl1).c_str(), wstring2string(strRepl2).c_str(), wstring2string(res).c_str());
             replace_all(res, strRepl1, strRepl2);
         }
         return res;
@@ -2239,49 +2239,74 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::exportDecl *exportDecl) {
         auto exportIdentifier = exportDecl->as->node.strVal;
-        auto parsedType = managedPtr(parseTypeSpec(exportDecl->from));
+        try {
+            auto parsedType = managedPtr(parseTypeSpec(exportDecl->from));
 
-        moduleContext->getCompilerContext()->getIRFFITable()->addExportedType(exportIdentifier, parsedType);
+            moduleContext->getCompilerContext()->getIRFFITable()->addForeignType(exportIdentifier, parsedType);
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        } catch (std::runtime_error &e) {
+            // failed as type, try function
+        }
 
-        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        try {
+            auto it = exportDecl->from->member->getTerms().begin();
+            yoi::indexT targetModule = -1;
+            while (it + 1 != exportDecl->from->member->getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != -1) {
+                it++;
+            }
+            yoi_assert(it + 1 == exportDecl->from->member->getTerms().end(), exportDecl->getLine(), exportDecl->getColumn(), "Expected a identifier after modules but this is not the final term of expression.");
+            targetModule = targetModule == -1 ? currentModuleIndex : targetModule;
+            
+
+            yoi::indexT funcIndex = -1;
+
+            for (auto funcIt = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(); funcIt != moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.end(); funcIt++) {
+                if (funcIt->first.starts_with((*it)->id->get().strVal + L"#")) {
+                    // an mangled name of target function
+                    funcIndex = std::distance(moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(), funcIt);
+                }
+            }
+
+            if (funcIndex != -1) {
+                moduleContext->getCompilerContext()->getIRFFITable()->addExportedFunction(exportIdentifier, targetModule, funcIndex);
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            } else {
+                // try template
+                auto templateName = (*it)->id->get().strVal;
+                auto templateIndex = moduleContext->getCompilerContext()->getImportedModule(targetModule)->structTemplateTable.getIndex(templateName);
+                yoi_assert((*it)->hasTemplateArg(), exportDecl->getLine(), exportDecl->getColumn(), "Expected template arguments for template: " + wstring2string(templateName));
+
+                auto templateArgs = parseTemplateArgs((*it)->getArg());
+                
+                auto funcIndex = specializeFunctionTemplate(
+                    moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTemplateTable[templateName], 
+                    moduleContext->getCompilerContext()->getImportedModule(targetModule)->funcTemplateAsts[templateName], 
+                    templateArgs);
+
+                moduleContext->getCompilerContext()->getIRFFITable()->addExportedFunction(exportIdentifier, targetModule, funcIndex);
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            }
+        } catch (std::out_of_range &e) {
+            panic(exportDecl->getLine(), exportDecl->getColumn(), "None of the existing types and functions match the name: " + wstring2string(exportDecl->as->node.strVal));
+        }
     }
 
     yoi::indexT visitor::visit(yoi::importDecl *importDecl) {
         auto from = importDecl->from_path.strVal;
 
-        if (importDecl->inner->method) {
-            // import method implementation
-            // parse method signature and add to import table
-            auto funcName = importDecl->inner->method->name->get().strVal;
-            IRFunctionDefinition::Builder builder;
-            builder.setReturnType(managedPtr(parseTypeSpec(importDecl->inner->method->resultType)));
-            for (auto &arg : importDecl->inner->method->args->get()) {
-                auto argType = managedPtr(parseTypeSpec(&arg->getSpec()));
-                builder.addArgument(arg->getId().get().strVal, argType);
-            }
-            builder.setName(funcName);
-            auto importedFunc = builder.yield();
-            moduleContext->getCompilerContext()->getIRFFITable()->addImportedFunction(from, funcName, importedFunc);
-        } else if (importDecl->inner->structDef) {
-            // import struct definition
-            auto structName = importDecl->inner->structDef->id->getId().get().strVal;
-            IRStructDefinition::Builder builder;
-
-            for (auto &field : importDecl->inner->structDef->getInner().getInner()) {
-                if (field->kind == 0) { // is a variable/field
-                    auto memberName = field->getVar().getId().get().strVal;
-                    auto memberType = managedPtr(parseTypeSpec(field->getVar().spec));
-                    builder.addField(memberName, memberType);
-
-                } else {
-                    panic(field->getLine(), field->getColumn(), "Invalid import struct definition, only variable/field is allowed");
-                }
-            }
-
-            builder.setName(structName);
-            auto importedStruct = builder.yield();
-            moduleContext->getCompilerContext()->getIRFFITable()->addImportedStruct(from, structName, importedStruct);
+        // import method implementation
+        // parse method signature and add to import table
+        auto funcName = importDecl->inner->name->get().strVal;
+        IRFunctionDefinition::Builder builder;
+        builder.setReturnType(managedPtr(parseTypeSpec(importDecl->inner->resultType)));
+        for (auto &arg : importDecl->inner->args->get()) {
+            auto argType = managedPtr(parseTypeSpec(&arg->getSpec()));
+            builder.addArgument(arg->getId().get().strVal, argType);
         }
+        builder.setName(funcName);
+        auto importedFunc = builder.yield();
+        moduleContext->getCompilerContext()->getIRFFITable()->addImportedFunction(from, funcName, importedFunc);
+
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 } // namespace yoi

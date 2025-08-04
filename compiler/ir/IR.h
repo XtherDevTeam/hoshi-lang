@@ -6,6 +6,7 @@
 #define HOSHI_LANG_IR_H
 
 #include "share/def.hpp"
+#include <compiler/frontend/ast.hpp>
 #include <map>
 #include <compiler/compilerContext.h>
 #include <memory>
@@ -74,14 +75,22 @@ namespace yoi {
             none,
             charRaw,
             incompleteTemplateType,
+            foreignType
         } type;
 
         yoi::indexT typeAffiliateModule;
         yoi::indexT typeIndex;
 
+        std::shared_ptr<yoi::wstr> additionalInfo;
+
         IRValueType(valueType type);
 
-        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex);
+        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const yoi::wstr &additionalInfo);
+
+        IRValueType(valueType type,
+                    yoi::indexT typeAffiliateModule,
+                    yoi::indexT objectPrototypeIndex,
+                    const std::shared_ptr<yoi::wstr> &additionalInfo = nullptr);
 
         bool isBasicType() const;
 
@@ -468,6 +477,10 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
 
+        std::map<yoi::wstr, yoi::funcDefStmt*> funcTemplateAsts;
+        std::map<yoi::wstr, yoi::structDefStmt*> structTemplateAsts;
+        std::map<yoi::wstr, yoi::implStmt*> templateImplAsts; // Maps struct template name to its impl block
+
 
         IRStringLiteralPool stringLiteralPool;
 
@@ -577,12 +590,13 @@ namespace yoi {
             yoi::wstr libraryPath;
 
             yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> importedFunctionTable;
-            yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> importedStructTable;
 
             ImportLibrary(const yoi::wstr &libraryPath);
         };
 
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> exportedTypeTable;
+        yoi::indexTable<yoi::wstr, std::pair<yoi::indexT, yoi::indexT>> exportedFunctionTable;
+
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> foreignTypeTable;
 
         yoi::indexTable<yoi::wstr, ImportLibrary> importedLibraries;
 
@@ -590,11 +604,20 @@ namespace yoi {
                                  const yoi::wstr &functionName,
                                  const std::shared_ptr<IRFunctionDefinition> &functionDefinition);
 
-        void addImportedStruct(const yoi::wstr &libraryName,
-                               const yoi::wstr &structName,
-                               const std::shared_ptr<IRStructDefinition> &structDefinition);
+        void addForeignType(const yoi::wstr &foreignTypeName,
+                            const std::shared_ptr<IRValueType> &structType);
 
-        void addExportedType(const yoi::wstr &typeName, const std::shared_ptr<IRValueType> &type);
+        /**
+         * @brief Add an exported function to the FFI table.
+         * 
+         * @param exportName The name of the exported function.
+         * @param moduleIndex Module index of the function.
+         * @param functionIndex Function index of the function.
+         * @throws std::out_of_range If the export name already exists in the FFI table.
+         */
+        void addExportedFunction(const yoi::wstr &exportName,
+                                 yoi::indexT moduleIndex,
+                                 yoi::indexT functionIndex);
     };
 } // yoi
 

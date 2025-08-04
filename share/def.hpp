@@ -2,6 +2,7 @@
 #define HOSHI_DEF_HPP
 
 #include <cstdint>
+#include <iterator>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -179,16 +180,66 @@ namespace yoi {
         // iterate over all values
         class iterator {
             typename std::vector<std::pair<A, B>>::iterator it;
+
         public:
-            iterator(typename std::vector<std::pair<A, B>>::iterator it) : it(it) {}
-            bool operator!=(const iterator &other) const { return it!= other.it; }
-            iterator &operator++() { ++it; return *this; }
-            std::pair<A, B> &operator*() { return *it; }
-            iterator operator+(yoi::indexT i) const {
-                return iterator(it + i);
+            using value_type        = std::pair<A, B>;
+            using difference_type   = std::ptrdiff_t;
+            using pointer           = value_type*;
+            using reference         = value_type&;
+            using iterator_category = std::random_access_iterator_tag;
+
+            iterator(typename std::vector<std::pair<A, B>>::iterator underlying_it) : it(underlying_it) {}
+
+            bool operator!=(const iterator &other) const { return it != other.it; }
+            bool operator==(const iterator &other) const { return it == other.it; }
+
+            reference operator*() const { return *it; }
+            pointer operator->() const { return &(*it); }
+
+            iterator &operator++() {
+                ++it;
+                return *this;
             }
-            std::pair<A, B> *operator->() {
-                return &(*it);
+            iterator operator++(int) {
+                iterator temp = *this;
+                ++(*this);
+                return temp;
+            }
+            iterator &operator--() {
+                --it;
+                return *this;
+            }
+            iterator operator--(int) {
+                iterator temp = *this;
+                --(*this);
+                return temp;
+            }
+
+            iterator operator+(difference_type n) const {
+                return iterator(it + n);
+            }
+            iterator operator-(difference_type n) const {
+                return iterator(it - n);
+            }
+            difference_type operator-(const iterator &other) const {
+                return it - other.it;
+            }
+            iterator &operator+=(difference_type n) {
+                it += n;
+                return *this;
+            }
+            iterator &operator-=(difference_type n) {
+                it -= n;
+                return *this;
+            }
+
+            bool operator<(const iterator &other) const { return it < other.it; }
+            bool operator<=(const iterator &other) const { return it <= other.it; }
+            bool operator>(const iterator &other) const { return it > other.it; }
+            bool operator>=(const iterator &other) const { return it >= other.it; }
+
+            friend iterator operator+(difference_type n, const iterator &iter) {
+                return iter + n;
             }
         };
 

@@ -520,11 +520,11 @@ namespace yoi {
         return variableTable;
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex) : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex) {
+    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const yoi::wstr &additionalInfo) : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), additionalInfo(managedPtr(additionalInfo)) {
 
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0) {
+    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0), additionalInfo(nullptr) {
 
     }
 
@@ -684,38 +684,46 @@ namespace yoi {
     IRExternEntry::externType IRExternEntry::getExternType() const {
         return type;
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setBuildType(BuildType buildType) {
       this->buildType = buildType;
       return *this;
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setBuildPlatform(const yoi::wstr &buildPlatform) {
       this->buildPlatform = buildPlatform;
       return *this;
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setBuildArch(const yoi::wstr &buildArch) {
       this->buildArch = buildArch;
       return *this;
     }
+
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
       return managedPtr(IRBuildConfig{buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles});
     }
+
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
         this->buildMode = buildMode;
         return *this;
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setUseObjectLinker(UseObjectLinker useObjectLinker) {
         this->useObjectLinker = useObjectLinker;
         return *this;
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setPreserveIntermediateFiles(bool preserveIntermediateFiles) {
         this->preserveIntermediateFiles = preserveIntermediateFiles;
         return *this;
     }
+
     yoi::wstr IRInterfaceInstanceDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
         r += yoi::wstr(indent, L' ') + L"interface " + name + L" {\n";
@@ -725,6 +733,7 @@ namespace yoi {
         r += yoi::wstr(indent, L' ') + L"}\n";
         return r;
     }
+
     yoi::wstr IRInterfaceImplementationDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
         r += yoi::wstr(indent, L' ') + L"impl " + name + L" for struct#" + std::to_wstring(implStructIndex) + L" {\n";
@@ -734,31 +743,39 @@ namespace yoi {
         r += yoi::wstr(indent, L' ') + L"}\n";
         return r;
     }
+
     IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType,
                                            const std::pair<yoi::indexT, yoi::indexT> &interfaceType)
         : templateType(templateType), interfaceType(interfaceType) {}
+
     IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType)
         : templateType(templateType), interfaceType({0, 0}) {}
+
     IRFunctionTemplate::IRFunctionTemplate(
         const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
         const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
         : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
+
     IRFunctionTemplate::Builder &IRFunctionTemplate::Builder::setTemplateDefinition(
         const std::shared_ptr<IRFunctionDefinition> &templateDefinition) {
         this->templateDefinition = templateDefinition;
         return *this;
     }
+
     std::shared_ptr<IRFunctionTemplate> IRFunctionTemplate::Builder::yield() {
         return std::make_shared<IRFunctionTemplate>(templateDefinition, templateArguments);
     }
+
     IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateDefinition(
         const std::shared_ptr<IRStructDefinition> &templateDefinition) {
         this->templateDefinition = templateDefinition;
         return *this;
     }
+
     std::shared_ptr<IRStructTemplate> IRStructTemplate::Builder::yield() {
         return std::make_shared<IRStructTemplate>(IRStructTemplate{templateDefinition, templateMethods, templateArguments});
     }
+
     IRTemplateBuilder &IRTemplateBuilder::addTemplateArgument(
         const yoi::wstr &templateName,
         const std::shared_ptr<IRValueType> &templateType,
@@ -766,26 +783,32 @@ namespace yoi {
         templateArguments.put_create(templateName, {templateType, interfaceType});
         return *this;
     }
+
     IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateMethod(
         const yoi::wstr &methodName, const std::shared_ptr<IRFunctionTemplate> &methodTemplate) {
         // templateMethods[methodName] = methodTemplate;
         templateMethods.put_create(methodName, methodTemplate);
         return *this;
     }
+
     yoi::vec<std::shared_ptr<IRValueType>> &IRVariableTable::getVariables() {
         return variables;
     }
+
     const std::map<yoi::indexT, yoi::wstr> &IRVariableTable::getReversedVariableNameMap() const {
         return reversedVariableNameMap;
     }
+
     IRStructTemplate::IRStructTemplate(
         const std::shared_ptr<IRStructDefinition> &templateDefinition,
         const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
         const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
         : templateDefinition(templateDefinition), templateMethods(templateMethods),
           templateArguments(templateArguments) {}
+
     IRFFITable::ImportLibrary::ImportLibrary(const yoi::wstr &libraryPath)
         : libraryPath(libraryPath) {}
+
     void IRFFITable::addImportedFunction(
         const yoi::wstr &libraryName,
         const yoi::wstr &functionName,
@@ -796,18 +819,21 @@ namespace yoi {
 
         importedLibraries[libraryName].importedFunctionTable.put(functionName, functionDefinition);
     }
-    void
-    IRFFITable::addImportedStruct(const yoi::wstr &libraryName,
-                                  const yoi::wstr &structName,
-                                  const std::shared_ptr<IRStructDefinition> &structDefinition) {
-        if (!importedLibraries.contains(libraryName)) {
-            importedLibraries.put_create(libraryName, {libraryName});
-        }
 
-        importedLibraries[libraryName].importedStructTable.put(structName, structDefinition);
+    void IRFFITable::addExportedFunction(const yoi::wstr &exportName,
+                                         yoi::indexT moduleIndex,
+                                         yoi::indexT functionIndex) {
+        exportedFunctionTable.put_create(exportName, std::make_pair(moduleIndex, functionIndex));
     }
-    void IRFFITable::addExportedType(const yoi::wstr &typeName,
-                                     const std::shared_ptr<IRValueType> &type) {
-        exportedTypeTable.put(typeName, type);
+
+    void IRFFITable::addForeignType(const yoi::wstr &foreignTypeName,
+                                    const std::shared_ptr<IRValueType> &structType) {
+        foreignTypeTable.put_create(foreignTypeName, structType);
     }
+    IRValueType::IRValueType(valueType type,
+                             yoi::indexT typeAffiliateModule,
+                             yoi::indexT objectPrototypeIndex,
+                             const std::shared_ptr<yoi::wstr> &additionalInfo)
+        : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex),
+          additionalInfo(additionalInfo) {}
 } // namespace yoi

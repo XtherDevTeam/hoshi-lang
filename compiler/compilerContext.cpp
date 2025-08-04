@@ -244,17 +244,21 @@ namespace yoi {
             {sharedObjectDefinition.getIndex(L"char")}
         };
     }
+
     void compilerContext::setIRObjectFile(
         const std::shared_ptr<IRObjectFile> &irObjectFile) {
       this->irObjectFile = irObjectFile;
     }
+
     std::shared_ptr<IRBuildConfig> compilerContext::getBuildConfig() const {
       return buildConfig;
     }
+
     void compilerContext::setBuildConfig(
         const std::shared_ptr<IRBuildConfig> &buildConfig) {
       this->buildConfig = buildConfig;
     }
+
     std::shared_ptr<IRFFITable> compilerContext::getIRFFITable() {
         return irFFITable;
     }

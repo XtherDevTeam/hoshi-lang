@@ -52,7 +52,9 @@ namespace yoi {
 
 
     ObjectLinker &ccObjectLinker::searchAndSetupLinker() {
-        if (commandExists("cc")) {
+        if (commandExists("c++")) {
+            setLinkerPath(L"c++");
+        } else if (commandExists("cc")) {
             setLinkerPath(L"cc");
         } else if (commandExists("gcc")) {
             setLinkerPath(L"gcc");
