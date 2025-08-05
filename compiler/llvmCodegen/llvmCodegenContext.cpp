@@ -123,6 +123,7 @@ namespace yoi {
             auto incFuncName = "basic_none_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
+            incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
             auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
             Builder->SetInsertPoint(incBlock);
@@ -131,6 +132,7 @@ namespace yoi {
             auto decFuncName = "basic_none_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
+            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
             auto* decBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
             Builder->SetInsertPoint(decBlock);
@@ -149,6 +151,7 @@ namespace yoi {
             auto incFuncName = "basic_" + typeName + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
@@ -176,6 +179,7 @@ namespace yoi {
             auto decFuncName = "basic_" + typeName + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
             
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
@@ -336,6 +340,7 @@ namespace yoi {
             auto incFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
+            incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
@@ -351,6 +356,7 @@ namespace yoi {
             auto decFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
+            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
@@ -420,6 +426,7 @@ namespace yoi {
             // Takes i8* as the concrete object pointer
             auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
             auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
+            // incWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline); // no line for implementation functions
             functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
             
             auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
@@ -435,6 +442,7 @@ namespace yoi {
             // --- Generate Decrease Wrapper ---
             auto decWrapperName = wrapperBaseName + "_gc_refcount_decrease";
             auto* decWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, decWrapperName, TheModule.get());
+            // decWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
             
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
@@ -468,7 +476,9 @@ namespace yoi {
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
+            
 
             auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
             auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incFunction);
@@ -501,6 +511,7 @@ namespace yoi {
             auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
