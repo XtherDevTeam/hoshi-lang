@@ -5,6 +5,8 @@
 #ifndef OBJECTLINKER_H
 #define OBJECTLINKER_H
 
+#include "compiler/ir/IR.h"
+#include <memory>
 #include <share/def.hpp>
 
 namespace yoi {
@@ -12,8 +14,9 @@ namespace yoi {
         yoi::wstr linkerPath;
         yoi::wstr objectPath;
         yoi::wstr elysiaRuntimePath;
+        std::shared_ptr<IRBuildConfig> config;
     public:
-        ObjectLinker(const yoi::wstr &objectPath);
+        ObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config);
 
         yoi::wstr getLinkerPath() const;
 
@@ -26,6 +29,10 @@ namespace yoi {
         yoi::wstr getElysiaRuntimePath() const;
 
         ObjectLinker &setElysiaRuntimePath(const yoi::wstr &elysiaRuntimePath);
+
+        std::shared_ptr<IRBuildConfig> getConfig() const;
+
+        ObjectLinker &setConfig(const std::shared_ptr<IRBuildConfig> &config);
 
         virtual ObjectLinker &searchAndSetupLinker() = 0;
 

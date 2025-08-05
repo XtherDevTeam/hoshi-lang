@@ -5,6 +5,8 @@
 #include "llvmCodegenContext.hpp"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <llvm/Passes/PassBuilder.h>
+#include <llvm/Passes/OptimizationLevel.h>
 #include <llvm/MC/TargetRegistry.h>
 #include <llvm/TargetParser/Host.h>
 #include <llvm/Support/FileSystem.h>
@@ -64,6 +66,16 @@ namespace yoi {
         llvm::FunctionType* debugPrintAddressType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
         runtimeDebugPrintAddressFunc = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
         runtimeDebugPrintAddressFunc->setCallingConv(llvm::CallingConv::C);
+
+        // void runtime_debug_print_int(int value);
+        llvm::FunctionType* debugPrintIntType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getInt64Ty()}, false);
+        runtimeDebugPrintIntFunc = llvm::Function::Create(debugPrintIntType, llvm::Function::ExternalLinkage, "runtime_debug_print_int", TheModule.get());
+        runtimeDebugPrintIntFunc->setCallingConv(llvm::CallingConv::C); 
+
+        // void runtime_debug_print_deci(double value);
+        llvm::FunctionType* debugPrintDeciType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getDoubleTy()}, false);
+        runtimeDebugPrintDeciFunc = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
+        runtimeDebugPrintDeciFunc->setCallingConv(llvm::CallingConv::C);
     }
 
     void LLVMCodegen::generate() {
@@ -72,6 +84,9 @@ namespace yoi {
         generateDeclarations();
         generateImplementations();
         generateDescription();
+        generateForeignStructTypes();
+        generateExportFunctionDecls();
+        generateMainFunction();
     }
 
     llvm::Module* LLVMCodegen::getModule() {
@@ -95,6 +110,8 @@ namespace yoi {
             auto name = "yoi.basic." + wstring2string(yoiType->to_string());
             auto* structType = llvm::StructType::create(*TheContext, {Builder->getInt64Ty(), rawType}, name);
             structTypeMap[key] = structType;
+
+            foreignTypeMap[key] = rawType;
         }
 
         // --- Handle 'none' type as a special singleton object ---
@@ -150,7 +167,7 @@ namespace yoi {
             // --- Generate gc_refcount_increase ---
             auto incFuncName = "basic_" + typeName + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
 
@@ -178,7 +195,7 @@ namespace yoi {
             // --- Generate gc_refcount_decrease ---
             auto decFuncName = "basic_" + typeName + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
             
@@ -475,7 +492,7 @@ namespace yoi {
             // --- Generate interface_X_gc_refcount_increase ---
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
             
@@ -510,7 +527,7 @@ namespace yoi {
 
             auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
 
@@ -1084,13 +1101,21 @@ namespace yoi {
         }
     }
 
-    llvm::Type* LLVMCodegen::yoiTypeToLLVMType(const std::shared_ptr<IRValueType>& type) {
-        // Per README, all objects are pointers on the stack.
-        auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
-        if (structTypeMap.count(key)) {
-            return llvm::PointerType::get(structTypeMap.at(key), 0);
+    llvm::Type* LLVMCodegen::yoiTypeToLLVMType(const std::shared_ptr<IRValueType>& type, bool enforceForeignType) {
+        if (enforceForeignType) {
+            auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
+            if (foreignTypeMap.count(key)) {
+                return foreignTypeMap.at(key);
+            }
+
+            panic(0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
+        } else {
+            auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
+            if (structTypeMap.count(key)) {
+                return llvm::PointerType::get(structTypeMap.at(key), 0);
+            }
         }
-        
+
         // Fallback for non-object types or errors
         switch (type->type) {
             case IRValueType::valueType::integerRaw:
@@ -1107,6 +1132,7 @@ namespace yoi {
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
         }
+        
     }
 
     llvm::FunctionType* LLVMCodegen::getFunctionType(const std::shared_ptr<IRFunctionDefinition>& funcDef) {
@@ -1288,6 +1314,7 @@ namespace yoi {
         llvm::TargetOptions Opt;
         auto RM = std::optional<llvm::Reloc::Model>(llvm::Reloc::PIC_);
         llvm::CodeGenOptLevel OptLevel = compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release ? llvm::CodeGenOptLevel::Aggressive : llvm::CodeGenOptLevel::Default;
+        llvm::OptimizationLevel OptLevelPB = compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release ? llvm::OptimizationLevel::O3 : llvm::OptimizationLevel::O0;
 
         std::unique_ptr<llvm::TargetMachine> TM(
         Target->createTargetMachine(TargetTriple, CPU, Features, Opt, RM, std::optional<llvm::CodeModel::Model>(), OptLevel));
@@ -1304,14 +1331,187 @@ namespace yoi {
             panic(0, 0, "Could not open file for writing: " + yoi::wstring2string(pathToOutput) + " (" + EC.message() + ")");
         }
 
-        llvm::legacy::PassManager Pass;
+        llvm::PassBuilder PB;
+        llvm::LoopAnalysisManager LAM;
+        llvm::FunctionAnalysisManager FAM;
+        llvm::CGSCCAnalysisManager CGAM;
+        llvm::ModuleAnalysisManager MAM;
+
+        // Register all the analysis passes with the managers.
+        PB.registerModuleAnalyses(MAM);
+        PB.registerCGSCCAnalyses(CGAM);
+        PB.registerFunctionAnalyses(FAM);
+        PB.registerLoopAnalyses(LAM);
+        PB.crossRegisterProxies(LAM, FAM, CGAM, MAM);
+
+        // Create the optimization pipeline for the module
+        llvm::ModulePassManager MPM = PB.buildPerModuleDefaultPipeline(OptLevelPB);
+
+        // Optional: Add a verifier pass to check IR correctness after optimizations
+        // This is good for debugging but can be removed for release builds.
+        MPM.addPass(llvm::VerifierPass());
+
+        // Run the optimization pipeline on the module
+        MPM.run(*TheModule, MAM);
+
+        llvm::legacy::PassManager CodeGenPasses;
         llvm::CodeGenFileType FileType = llvm::CodeGenFileType::ObjectFile; // To emit a .o file
 
-        if (TM->addPassesToEmitFile(Pass, Dest, nullptr, FileType)) {
+        if (TM->addPassesToEmitFile(CodeGenPasses, Dest, nullptr, FileType)) {
             panic(0, 0, "TargetMachine can't emit a file of this type");
         }
 
-        Pass.run(*TheModule);
+        CodeGenPasses.run(*TheModule);
         Dest.flush();
+    }
+
+    void LLVMCodegen::generateForeignStructTypes() {
+        for (auto &foreignTypePair : compilerCtx->getIRFFITable()->foreignTypeTable) {
+            auto &typeName = foreignTypePair.first;
+            auto typeId = std::make_tuple(IRValueType::valueType::structObject, foreignTypePair.second->typeAffiliateModule, foreignTypePair.second->typeIndex);
+            auto structType = yoiModule->structTable[foreignTypePair.second->typeIndex];
+            yoi::vec<std::string> fieldNames;
+            yoi::vec<llvm::Type*> fieldTypes;
+            for (auto &name : structType->nameIndexMap) {
+                if (name.second.type != IRStructDefinition::nameInfo::nameType::field) continue;
+
+                auto fieldType = yoiTypeToLLVMType(structType->fieldTypes[name.second.index], true);
+                fieldNames.push_back(yoi::wstring2string(name.first));
+            }
+            auto llvmStructType = llvm::StructType::create(*TheContext, fieldTypes);
+            // add to foreign type map
+            foreignTypeMap[typeId] = llvmStructType;
+        }
+    }
+
+    void LLVMCodegen::generateExportFunctionDecls() {
+        for (auto &exportedFunction : compilerCtx->getIRFFITable()->exportedFunctionTable) {
+            auto &funcName = exportedFunction.first;
+            auto &mangledName = yoiModule->functionTable.getKey(exportedFunction.second.second);
+            auto &funcDecl = yoiModule->functionTable[exportedFunction.second.second];
+            llvm::Type *returnType = yoiTypeToLLVMType(funcDecl->returnType, true);
+            yoi::vec<llvm::Type*> argTypes;
+            for (auto &argType : funcDecl->argumentTypes) {
+                argTypes.push_back(yoiTypeToLLVMType(argType, true)); // make sure all types converted
+            }
+            llvm::FunctionType *funcType = llvm::FunctionType::get(returnType, argTypes, false);
+            llvm::Function *func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, yoi::wstring2string(funcName), TheModule.get());
+            functionMap[funcName] = func;
+
+            // add basic block
+            llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", func);
+            Builder->SetInsertPoint(BB);
+
+            // load arguments
+            yoi::vec<llvm::Value*> args;
+            auto it = func->arg_begin();
+            for (auto &arg : funcDecl->argumentTypes) {
+                if (arg->isBasicType()) {
+                    auto *argVal = createBasicObject(arg, it);
+                    callGcFunction(argVal, arg, true);
+                    args.push_back(argVal);
+                } else {
+                    auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, false); // convert to yoi type
+                    callGcFunction(handledLLVMType, arg, true);
+                    args.push_back(handledLLVMType);
+                }
+                it ++;
+            }
+            // call function
+            auto *mangledFunction = functionMap.at(mangledName);
+            auto *result = Builder->CreateCall(mangledFunction, args, "result");
+            llvm::Value *actualResultVal = nullptr;
+            // convert result to foreign type
+            if (funcDecl->returnType->isBasicType()) {
+                actualResultVal = unboxValue(result, funcDecl->returnType);
+            } else {
+                actualResultVal = handleForeignTypeConv(result, funcDecl->returnType->typeIndex, true); // convert back to foreign type
+            }
+            // resource releasing
+            callGcFunction(result, funcDecl->returnType, false);
+            for (auto &arg : funcDecl->argumentTypes) {
+                callGcFunction(args.back(), arg, false);
+                args.pop_back();
+            }
+
+            // return with actual result
+            Builder->CreateRet(actualResultVal);
+        }
+    }
+
+    llvm::Value *LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign) {
+        // get the foreign type
+        auto &foreignType = compilerCtx->getIRFFITable()->foreignTypeTable[foreignTypeIndex];
+        auto &originalType = yoiModule->structTable[foreignType->typeIndex];
+        // get the llvm type
+        auto llvmType = foreignTypeMap.at(std::make_tuple(IRValueType::valueType::structObject, foreignType->typeAffiliateModule, foreignType->typeIndex));
+        auto objectLLVMType = structTypeMap.at(std::make_tuple(IRValueType::valueType::structObject, foreignType->typeAffiliateModule, foreignType->typeIndex));
+
+        if (convertToForeign) {
+            llvm::Value *rawMemory = Builder->CreateAlloca(llvmType, nullptr, "yoi_to_foreign_alloca");
+            // convert yoi type to foreign type
+            for (yoi::indexT i = 0; i < originalType->fieldTypes.size(); i++) {
+                // get the field value
+                auto *fieldPtr = Builder->CreateStructGEP(llvmType, val, i + 1, "field_ptr");
+                auto &fieldType = originalType->fieldTypes[i];
+                llvm::Value *fieldVal = nullptr;
+                if (fieldType->isBasicType()) {
+                    fieldVal = unboxValue(fieldPtr, fieldType);
+                } else {
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, true);
+                }
+                // count field size
+                auto size = TheModule->getDataLayout().getTypeAllocSize(yoiTypeToLLVMType(fieldType, true));
+                // populate memory
+                Builder->CreateMemCpy(fieldPtr, llvm::MaybeAlign(8), fieldVal, llvm::MaybeAlign(8), size);
+            }
+            return rawMemory;
+        } else {
+            llvm::Value *rawMemory = Builder->CreateAlloca(objectLLVMType, nullptr, "foreign_to_yoi_alloca");
+            // convert foreign type to yoi type
+            for (yoi::indexT i = 0; i < originalType->fieldTypes.size(); i++) {
+                // get the field value
+                auto *fieldPtr = Builder->CreateStructGEP(llvmType, rawMemory, i + 1, "field_ptr");
+                auto &fieldType = originalType->fieldTypes[i];
+                llvm::Value *fieldVal = nullptr;
+                if (fieldType->isBasicType()) {
+                    auto *loadedFieldValue = Builder->CreateLoad(yoiTypeToLLVMType(fieldType, true), fieldPtr, "loaded_field_val");
+                    fieldVal = createBasicObject(fieldType, fieldPtr);
+                } else {
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, false);
+                }
+                // populate memory using store
+                Builder->CreateStore(fieldVal, fieldPtr);
+                callGcFunction(fieldVal, fieldType, true);
+            }
+            return rawMemory;
+        }
+    }
+
+    void LLVMCodegen::generateMainFunction() {
+        if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
+            yoi::vec<llvm::Type*> argTypes = {
+                llvm::Type::getInt32Ty(*TheContext),
+                llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0)
+            };
+            llvm::FunctionType *funcType = llvm::FunctionType::get(llvm::Type::getInt32Ty(*TheContext), argTypes, false);
+            llvm::Function *elysiaMain = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "elysia_main", TheModule.get());
+            llvm::Function *mainFunc = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", TheModule.get());
+            functionMap[L"main"] = mainFunc;
+
+            // add basic block
+            llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", mainFunc);
+            Builder->SetInsertPoint(BB);
+
+            auto it = mainFunc->arg_begin();
+            auto argc = it++;
+            auto argv = it++;
+
+            // invoke elysia_main
+            auto res = Builder->CreateCall(elysiaMain, {argc, argv}, "result");
+
+            // return with result
+            Builder->CreateRet(res);
+        }
     }
 } // namespace yoi

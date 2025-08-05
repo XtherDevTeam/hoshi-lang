@@ -3,13 +3,14 @@
 //
 
 #include "ccObjectLinker.h"
+#include "compiler/ir/IR.h"
 #include <sstream>
 #include <filesystem>
 
 namespace yoi {
 
-    ccObjectLinker::ccObjectLinker(const yoi::wstr &objectPath)
-        : ObjectLinker(objectPath) {
+    ccObjectLinker::ccObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config)
+        : ObjectLinker(objectPath, config) {
         this->setLinkerPath(L"");
     }
 
@@ -52,9 +53,7 @@ namespace yoi {
 
 
     ObjectLinker &ccObjectLinker::searchAndSetupLinker() {
-        if (commandExists("c++")) {
-            setLinkerPath(L"c++");
-        } else if (commandExists("cc")) {
+        if (commandExists("cc")) {
             setLinkerPath(L"cc");
         } else if (commandExists("gcc")) {
             setLinkerPath(L"gcc");
@@ -95,6 +94,11 @@ namespace yoi {
             command += yoi::wstring2string(this->getElysiaRuntimePath());
             command += " -lelysia_runtime";
         }
+
+        if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
+            command += " -shared"; // Build a shared library
+        }
+
         int result = std::system(command.c_str());
         if (result != 0) {
             std::string error_msg = "ccObjectLinker: Linker command failed with exit code " + std::to_string(result) + ". Command: " + command;

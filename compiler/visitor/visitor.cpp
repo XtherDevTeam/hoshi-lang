@@ -2260,10 +2260,12 @@ namespace yoi {
 
             yoi::indexT funcIndex = -1;
 
-            for (auto funcIt = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(); funcIt != moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.end(); funcIt++) {
-                if (funcIt->first.starts_with((*it)->id->get().strVal + L"#")) {
-                    // an mangled name of target function
-                    funcIndex = std::distance(moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(), funcIt);
+            if (!(*it)->hasTemplateArg()) {
+                for (auto funcIt = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(); funcIt != moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.end(); funcIt++) {
+                    if (funcIt->first.starts_with((*it)->id->get().strVal + L"#")) {
+                        // an mangled name of target function
+                        funcIndex = std::distance(moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTable.begin(), funcIt);
+                    }
                 }
             }
 
@@ -2273,7 +2275,7 @@ namespace yoi {
             } else {
                 // try template
                 auto templateName = (*it)->id->get().strVal;
-                auto templateIndex = moduleContext->getCompilerContext()->getImportedModule(targetModule)->structTemplateTable.getIndex(templateName);
+                auto templateIndex = moduleContext->getCompilerContext()->getImportedModule(targetModule)->functionTemplateTable.getIndex(templateName);
                 yoi_assert((*it)->hasTemplateArg(), exportDecl->getLine(), exportDecl->getColumn(), "Expected template arguments for template: " + wstring2string(templateName));
 
                 auto templateArgs = parseTemplateArgs((*it)->getArg());

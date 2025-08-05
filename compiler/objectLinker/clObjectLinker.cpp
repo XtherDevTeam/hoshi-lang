@@ -10,8 +10,8 @@
 
 namespace yoi {
 
-    clObjectLinker::clObjectLinker(const yoi::wstr &objectPath)
-        : ObjectLinker(objectPath) {
+    clObjectLinker::clObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config)
+        : ObjectLinker(objectPath, config) {
         // Constructor simply calls the base class constructor.
     }
 
@@ -126,6 +126,10 @@ namespace yoi {
             command += L" elysia_runtime.lib";
         } else {
             warning(0, 0, "Elysia runtime library not specified. Linking may fail if Elysia functions are used.");
+        }
+
+        if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
+            command += L" /LD"; // Build a shared library
         }
 
         int result = system(yoi::wstring2string(command).c_str());

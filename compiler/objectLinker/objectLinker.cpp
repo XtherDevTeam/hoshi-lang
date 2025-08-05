@@ -5,7 +5,7 @@
 #include "objectLinker.h"
 
 namespace yoi {
-    ObjectLinker::ObjectLinker(const yoi::wstr &objectPath) : objectPath(objectPath) {
+    ObjectLinker::ObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config) : objectPath(objectPath), config(config) {
 
     }
     yoi::wstr ObjectLinker::getLinkerPath() const {
@@ -27,6 +27,13 @@ namespace yoi {
     }
     ObjectLinker &ObjectLinker::setElysiaRuntimePath(const yoi::wstr &elysiaRuntimePath) {
         this->elysiaRuntimePath = elysiaRuntimePath;
+        return *this;
+    }
+    std::shared_ptr<IRBuildConfig> ObjectLinker::getConfig() const {
+        return config;
+    }
+    ObjectLinker &ObjectLinker::setConfig(const std::shared_ptr<IRBuildConfig> &config) {
+        this->config = config;
         return *this;
     }
 } // namespace yoi

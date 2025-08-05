@@ -299,8 +299,11 @@ namespace yoi {
         }
     }
     void IRLinker::patchIRFFITable() {
-        for (auto &typePair : compilerCtx->getIRFFITable()->exportedFunctionTable) {
-            typePair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(typePair.second.first).at(typePair.second.second)};
+        for (auto &funcPair : compilerCtx->getIRFFITable()->exportedFunctionTable) {
+            funcPair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(funcPair.second.first).at(funcPair.second.second)};
+        }
+        for (auto &foreignTypePair : compilerCtx->getIRFFITable()->foreignTypeTable) {
+            foreignTypePair.second = patchType(foreignTypePair.second);
         }
     }
 } // namespace yoi

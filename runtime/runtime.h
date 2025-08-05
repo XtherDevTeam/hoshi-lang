@@ -15,6 +15,6 @@ extern "C" const unsigned long long yoi_build_type;
 
 extern "C" YoiIntegerObject* yoimiya_entry();
 
-extern "C" int main(int argc, char *argv[]);
+extern "C" int elysia_main(int argc, char *argv[]);
 
 #endif // HOSHI_LANG_RUNTIME_RUNTIME_H

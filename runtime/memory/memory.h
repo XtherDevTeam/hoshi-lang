@@ -34,24 +34,30 @@ extern "C" void *runtime_object_alloc(unsigned long size_in_bytes);
 
 extern "C" void runtime_finalize_object(void *object);
 
-extern "C" void basic_int_gc_refcount_increase(YoiIntegerObject *obj);
+#define GC_WRAPPER_DECL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj);      \
+                                                                                            \
+extern "C" void basic_##X##_gc_refcount_decrease(U* obj);                                   \
 
-extern "C" void basic_int_gc_refcount_decrease(YoiIntegerObject *obj);
+#define GC_WRAPPER_IMPL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj) {     \
+    obj->gc_refcount++;                                                                     \
+}                                                                                           \
+                                                                                            \
+extern "C" void basic_##X##_gc_refcount_decrease(U* obj) {                                  \
+    obj->gc_refcount--;                                                                     \
+    if (obj->gc_refcount <= 0) {                                                            \
+        runtime_finalize_object((void*)obj);                                                 \
+    }                                                                                       \
+}
 
-extern "C" void basic_decimal_gc_refcount_increase(YoiDecimalObject *obj);
 
-extern "C" void basic_decimal_gc_refcount_decrease(YoiDecimalObject *obj);
+GC_WRAPPER_DECL(int, YoiIntegerObject);
 
-extern "C" void basic_bool_gc_refcount_increase(YoiBooleanObject *obj);
+GC_WRAPPER_DECL(decimal, YoiDecimalObject);
 
-extern "C" void basic_bool_gc_refcount_decrease(YoiBooleanObject *obj);
+GC_WRAPPER_DECL(bool, YoiBooleanObject);
 
-extern "C" void basic_char_gc_refcount_increase(YoiCharObject *obj);
+GC_WRAPPER_DECL(char, YoiCharObject);
 
-extern "C" void basic_char_gc_refcount_decrease(YoiCharObject *obj);
-
-extern "C" void basic_string_gc_refcount_increase(YoiStringObject *obj);
-
-extern "C" void basic_string_gc_refcount_decrease(YoiStringObject *obj);
+GC_WRAPPER_DECL(string, YoiStringObject);
 
 #endif //HOSHI_LANG_MEMORY_H

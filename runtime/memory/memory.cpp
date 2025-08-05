@@ -23,3 +23,13 @@ extern "C" void runtime_finalize_object(void *object) {
     #endif
     free(object);
 }
+
+GC_WRAPPER_IMPL(int, YoiIntegerObject);
+
+GC_WRAPPER_IMPL(decimal, YoiDecimalObject);
+
+GC_WRAPPER_IMPL(bool, YoiBooleanObject);
+
+GC_WRAPPER_IMPL(char, YoiCharObject);
+
+GC_WRAPPER_IMPL(string, YoiStringObject);

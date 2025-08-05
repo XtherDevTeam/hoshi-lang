@@ -17,6 +17,7 @@
 #include <llvm/IR/Verifier.h>
 
 #include "compiler/ir/IR.h"
+#include "share/def.hpp"
 
 #include <map>
 #include <memory>
@@ -50,6 +51,8 @@ namespace yoi {
         llvm::Function *runtimeDebugReportCurrentFunctionFunc = nullptr;
         llvm::Function *runtimeDebugPrintFunc = nullptr;
         llvm::Function *runtimeDebugPrintAddressFunc = nullptr;
+        llvm::Function *runtimeDebugPrintIntFunc = nullptr;
+        llvm::Function *runtimeDebugPrintDeciFunc = nullptr;
 
 
         // Yoi language context
@@ -79,6 +82,9 @@ namespace yoi {
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
                  llvm::StructType *>
             structTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM struct type
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
+                 llvm::Type *>
+            foreignTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM type
 
         // Helper methods
         void declareRuntimeFunctions();
@@ -95,6 +101,9 @@ namespace yoi {
         void generateStructGCFunctions();
         void generateInterfaceImplementationGCFunctions();
         void generateInterfaceObjectGCFunctions();
+        void generateForeignStructTypes();
+        void generateExportFunctionDecls();
+        void generateMainFunction();
 
         void generateFunctionImplementations();
         void generateFunction(IRFunctionDefinition &funcDef);
@@ -103,7 +112,7 @@ namespace yoi {
         void generateInstruction(const IR &instr);
         void generateDescription();
 
-        llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type);
+        llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
 
@@ -117,6 +126,7 @@ namespace yoi {
         void callGcFunction(llvm::Value *objectPtr,
                             const std::shared_ptr<IRValueType> &yoiType,
                             bool isIncrease);
+        llvm::Value *handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign = false);
     };
 
 } // namespace yoi

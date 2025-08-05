@@ -35,11 +35,15 @@ impl TestStruct<> {
     }
 }
 
-func main() : int {
-    let res = TestStruct<int, int>(1, 2)
-    let res2 = TestStruct<int, deci>(3, 4.5)
+func test1(a: int, b: int, c: int, d: deci) : deci {
+    let res = TestStruct<int, int>(a, b)
+    let res2 = TestStruct<int, deci>(c, d)
     let x = res.add()
     let y = res2.add()
 
     return x + y
 }
+
+export test1 as test1
+
+export Test<int, int> as TestIntInt

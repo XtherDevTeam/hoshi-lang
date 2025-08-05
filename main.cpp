@@ -25,27 +25,30 @@ std::string getOutputExtension(yoi::IRBuildConfig::BuildType type,
         if (platform == L"windows") return ".exe";
         return ""; 
     } else if (type == yoi::IRBuildConfig::BuildType::library) {
-        if (platform == L"windows") return ".lib";
-        return ".a"; 
+        if (platform == L"windows") return ".dll";
+        if (platform == L"darwin") return ".dylib";
+        return ".so"; 
     }
     return ""; 
 }
 
 
 void printUsage(const char* programName) {
+    std::cerr << "yoi-lang compiler\n";
+    std::cout << "Made with love by Jerry Chou (This project is licensed under the MIT license.)\n";
     std::cerr << "Usage: " << programName << " [options] <input_file>\n"
               << "Options:\n"
-              << "  -o <path>, --output <path>    Set output file path (e.g., build/my_app).\n"
-              << "                                If <path> is a directory (ends with / or \\), input filename is used.\n"
-              << "                                If not specified, derived from input_file in the current directory.\n"
-              << "  --build-type <type>           Specify build type (executable, static-lib, shared-lib). Default: executable\n"
-              << "  --build-mode <mode>           Specify build mode (debug, release). Default: debug\n"
-              << "  --linker <linker>             Specify object linker (cc, cl, none). Default: cc\n"
-              << "                                'none' will generate .o file but skip final linking.\n"
+              << "  -o <path>, --output <path>      Set output file path (e.g., build/my_app).\n"
+              << "                                  If <path> is a directory (ends with / or \\), input filename is used.\n"
+              << "                                  If not specified, derived from input_file in the current directory.\n"
+              << "  --build-type <type>             Specify build type (executable, static-lib, shared-lib). Default: executable\n"
+              << "  --build-mode <mode>             Specify build mode (debug, release). Default: debug\n"
+              << "  --linker <linker>               Specify object linker (cc, cl, none). Default: cc\n"
+              << "                                  'none' will generate .o file but skip final linking.\n"
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
-              << "                                Default: do not preserve intermediate files.\n"
-              << "  --preserve-intermediate       Explicitly preserve intermediate files. (This is the default behavior if --clean is not used).\n"
-              << "  -h, --help                    Display this help message.\n";
+              << "                                  Default: do not preserve intermediate files.\n"
+              << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
+              << "  -h, --help                      Display this help message.\n";
 }
 
 int main(int argc, const char **argv) {
@@ -227,7 +230,6 @@ int main(int argc, const char **argv) {
         if (ec_yoi) {
             throw std::runtime_error("Could not open YOI IR output file '" + yoiIRFile.string() + "': " + ec_yoi.message());
         }
-        yoi_file << yoi::wstring2string(yoiIRStr);
         yoi_file.close();
 
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);
@@ -249,15 +251,14 @@ int main(int argc, const char **argv) {
             yoi::ObjectLinker *objectLinker = nullptr;
             switch (useObjectLinker) {
                 case yoi::IRBuildConfig::UseObjectLinker::cc: {
-                    objectLinker = new yoi::ccObjectLinker(yoi::string2wstring(objectFile.string()));
+                    objectLinker = new yoi::ccObjectLinker(yoi::string2wstring(objectFile.string()), compilerCtx->getBuildConfig());
                     break;
                 }
                 case yoi::IRBuildConfig::UseObjectLinker::cl: {
-                    objectLinker = new yoi::clObjectLinker(yoi::string2wstring(objectFile.string()));
+                    objectLinker = new yoi::clObjectLinker(yoi::string2wstring(objectFile.string()), compilerCtx->getBuildConfig());
                     break;
                 }
                 default:
-                    
                     break;
             }
 
