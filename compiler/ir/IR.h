@@ -29,6 +29,8 @@ namespace yoi {
         yoi::wstr buildPlatform;
         yoi::wstr buildArch;
         bool preserveIntermediateFiles;
+        yoi::vec<yoi::wstr> searchPaths;
+        yoi::vec<yoi::wstr> additionalLinkingFiles;
         
         struct Builder {
             BuildType buildType{BuildType::executable};
@@ -37,6 +39,8 @@ namespace yoi {
             yoi::wstr buildPlatform;
             yoi::wstr buildArch;
             bool preserveIntermediateFiles{false};
+            yoi::vec<yoi::wstr> searchPaths{L""};
+            yoi::vec<yoi::wstr> additionalLinkingFiles;
 
             Builder() = default;
 
@@ -51,6 +55,10 @@ namespace yoi {
             Builder &setBuildArch(const yoi::wstr &buildArch);
 
             Builder &setPreserveIntermediateFiles(bool preserveIntermediateFiles);
+
+            Builder &addSearchPath(const yoi::wstr &searchPath);
+
+            Builder &setSearchPaths(const yoi::vec<yoi::wstr> &searchPaths);
 
             std::shared_ptr<IRBuildConfig> yield();
         };
@@ -75,7 +83,8 @@ namespace yoi {
             none,
             charRaw,
             incompleteTemplateType,
-            foreignType
+            foreignInt32Type,
+            foreignFloatType,
         } type;
 
         yoi::indexT typeAffiliateModule;
@@ -93,6 +102,8 @@ namespace yoi {
                     const std::shared_ptr<yoi::wstr> &additionalInfo = nullptr);
 
         bool isBasicType() const;
+
+        bool isForeignBasicType() const;
 
         bool is1ByteType() const;
 
@@ -176,7 +187,7 @@ namespace yoi {
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
             store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
             new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
-            invoke_virtual, invoke_virtual_extern, invoke_bif,
+            invoke_virtual, invoke_virtual_extern, invoke_imported,
             nop, FINAL,
         } opcode;
 
@@ -450,6 +461,7 @@ namespace yoi {
             structType,
             interfaceType,
             interfaceImplType,
+            importedFunction,
         } type;
 
         yoi::wstr name;
@@ -562,6 +574,11 @@ namespace yoi {
 
         void invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
 
+        void invokeImported(yoi::indexT libIndex,
+                            yoi::indexT funcIndex,
+                            yoi::indexT funcArgsCount,
+                            const std::shared_ptr<IRValueType> &returnType);
+
         void retOp(bool returnWithNone = false);
 
         void newStructOp(yoi::indexT structIndex, bool isExternal = false);
@@ -600,9 +617,9 @@ namespace yoi {
 
         yoi::indexTable<yoi::wstr, ImportLibrary> importedLibraries;
 
-        void addImportedFunction(const yoi::wstr &libraryName,
-                                 const yoi::wstr &functionName,
-                                 const std::shared_ptr<IRFunctionDefinition> &functionDefinition);
+        yoi::indexT addImportedFunction(const yoi::wstr &libraryName,
+                                        const yoi::wstr &functionName,
+                                        const std::shared_ptr<IRFunctionDefinition> &functionDefinition);
 
         void addForeignType(const yoi::wstr &foreignTypeName,
                             const std::shared_ptr<IRValueType> &structType);

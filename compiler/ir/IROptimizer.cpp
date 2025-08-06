@@ -7,7 +7,6 @@
 #include "share/def.hpp"
 
 #include <cmath>
-#include <iostream>
 
 namespace yoi {
     IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
@@ -1208,6 +1207,17 @@ namespace yoi {
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case IR::Opcode::invoke_imported: {
+                    auto function = compilerCtx->getIRFFITable()->importedLibraries[ins.operands[0].value.symbolIndex].importedFunctionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = function->returnType;
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 case IR::Opcode::invoke_virtual: {
                     auto argCount = ins.operands[1].value.symbolIndex;
                     for (int i = 0; i < argCount - 1; i++) {
@@ -1423,7 +1433,6 @@ namespace yoi {
     }
 
     IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
-        std::cout << yoi::wstring2string(targetFunction->to_string()) << std::endl;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             currentCodeBlockIndex = i;
             this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();

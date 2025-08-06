@@ -47,7 +47,11 @@ namespace yoi {
 
         yoi::IRValueType getCharObject();
 
-    public:
+        yoi::IRValueType getForeignInt32Object();
+
+        yoi::IRValueType getForeignFloatObject();
+
+      public:
         compilerContext() = default;
 
         compilerContext(const compilerContext& context) = default;
@@ -110,6 +114,10 @@ namespace yoi {
         std::shared_ptr<yoi::IRValueType> getCharObjectType();
 
         std::shared_ptr<yoi::IRValueType> getNoneObjectType();
+
+        std::shared_ptr<yoi::IRValueType> getForeignInt32ObjectType();
+
+        std::shared_ptr<yoi::IRValueType> getForeignFloatObjectType();
 
         // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type or export type. they are just wrapper types.
         // as for import function wrapper and export function wrapper, ofc we need to treat it differently

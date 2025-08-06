@@ -1,4 +1,4 @@
-import fopen(path: string, flags: string) : int from "builtin"
+import puts(str : string) from "builtin"
 
 struct TestExport {
     a: int,

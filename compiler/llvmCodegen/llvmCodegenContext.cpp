@@ -3,6 +3,7 @@
 //
 
 #include "llvmCodegenContext.hpp"
+#include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
 #include <llvm/Passes/PassBuilder.h>
@@ -82,9 +83,10 @@ namespace yoi {
         declareRuntimeFunctions();
         generateBasicTypesAndFunctions();
         generateDeclarations();
+        generateForeignStructTypes();
+        generateImportFunctionImplementations();
         generateImplementations();
         generateDescription();
-        generateForeignStructTypes();
         generateExportFunctionDecls();
         generateMainFunction();
     }
@@ -100,7 +102,7 @@ namespace yoi {
             {compilerCtx->getDeciObjectType(), Builder->getDoubleTy()},
             {compilerCtx->getBoolObjectType(), Builder->getInt1Ty()},
             {compilerCtx->getCharObjectType(), Builder->getInt8Ty()},
-            {compilerCtx->getStrObjectType(), llvm::PointerType::get(Builder->getInt8Ty(), 0)} // Assuming string object holds a char*
+            {compilerCtx->getStrObjectType(), llvm::PointerType::get(Builder->getInt8Ty(), 0)}
         };
 
         for (const auto& pair : basicTypes) {
@@ -249,6 +251,7 @@ namespace yoi {
         generateStructDeclarations();
         generateGlobalDeclarations();
         generateFunctionDeclarations();
+        generateImportFunctionDeclarations();
     }
 
     void LLVMCodegen::generateStructDeclarations() {
@@ -961,6 +964,40 @@ namespace yoi {
                 }
                 break;
             }
+            case IR::Opcode::invoke_imported: {
+                auto libIndex = instr.operands[0].value.symbolIndex;
+                auto funcIndex = instr.operands[1].value.symbolIndex;
+                auto argCount = instr.operands[2].value.symbolIndex;
+
+                auto funcDef = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable[funcIndex];
+
+                auto rawFuncName = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable.getKey(funcIndex);
+                auto mangledFuncName = L"imported#" + std::to_wstring(libIndex) + L"#" + rawFuncName + L"#wrapper";
+
+                auto* function = functionMap.at(mangledFuncName);
+
+                std::vector<llvm::Value*> args;
+                for(size_t i = 0; i < argCount; ++i) {
+                    auto arg = valueStack.back();
+                    valueStack.pop_back();
+                    args.push_back(arg.llvmValue);
+                    // Callee will retain, so we release the stack's reference
+                    // callGcFunction(arg.llvmValue, arg.yoiType, false);
+                }
+                std::reverse(args.begin(), args.end());
+
+                if (funcDef->returnType->type == IRValueType::valueType::none) {
+                    auto* call = Builder->CreateCall(function, args, "calltmp");
+                    // The returned value is the singleton, but we still put it on the stack.
+                    // It doesn't need a ref count increase.
+                    valueStack.push_back({call, funcDef->returnType});
+                } else {
+                    auto* call = Builder->CreateCall(function, args, "calltmp");
+                    // The returned value comes with a reference count for us to own.
+                    valueStack.push_back({call, funcDef->returnType});
+                }
+                break;
+            }
             case IR::Opcode::new_struct: {
                 auto structIndex = instr.operands[0].value.symbolIndex;
                 auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex);
@@ -1108,7 +1145,8 @@ namespace yoi {
                 return foreignTypeMap.at(key);
             }
 
-            panic(0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
+            
+            yoi_assert(type->isForeignBasicType(), 0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
         } else {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeMap.count(key)) {
@@ -1128,6 +1166,10 @@ namespace yoi {
                 return Builder->getInt8Ty();
             case IRValueType::valueType::pointerObject: // generic pointer
                 return llvm::PointerType::get(Builder->getInt8Ty(), 0);
+            case yoi::IRValueType::valueType::foreignFloatType:
+                return Builder->getFloatTy();
+            case IRValueType::valueType::foreignInt32Type:
+                return Builder->getInt32Ty();
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
@@ -1408,11 +1450,9 @@ namespace yoi {
             for (auto &arg : funcDecl->argumentTypes) {
                 if (arg->isBasicType()) {
                     auto *argVal = createBasicObject(arg, it);
-                    callGcFunction(argVal, arg, true);
                     args.push_back(argVal);
                 } else {
                     auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, false); // convert to yoi type
-                    callGcFunction(handledLLVMType, arg, true);
                     args.push_back(handledLLVMType);
                 }
                 it ++;
@@ -1457,6 +1497,8 @@ namespace yoi {
                 llvm::Value *fieldVal = nullptr;
                 if (fieldType->isBasicType()) {
                     fieldVal = unboxValue(fieldPtr, fieldType);
+                } else if (fieldType->isForeignBasicType()) {
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType, true);
                 } else {
                     fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, true);
                 }
@@ -1477,12 +1519,13 @@ namespace yoi {
                 if (fieldType->isBasicType()) {
                     auto *loadedFieldValue = Builder->CreateLoad(yoiTypeToLLVMType(fieldType, true), fieldPtr, "loaded_field_val");
                     fieldVal = createBasicObject(fieldType, fieldPtr);
+                } else if (fieldType->isForeignBasicType()) {
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType, false);
                 } else {
                     fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, false);
                 }
                 // populate memory using store
                 Builder->CreateStore(fieldVal, fieldPtr);
-                callGcFunction(fieldVal, fieldType, true);
             }
             return rawMemory;
         }
@@ -1512,6 +1555,161 @@ namespace yoi {
 
             // return with result
             Builder->CreateRet(res);
+        }
+    }
+
+    void LLVMCodegen::generateImportFunctionImplementations() {
+        yoi::indexT moduleIndex = 0;
+        for (auto &libraryPair : compilerCtx->getIRFFITable()->importedLibraries) {
+            auto &libraryName = libraryPair.first;
+            compilerCtx->getBuildConfig()->additionalLinkingFiles.push_back(libraryName);
+            for (auto &functionPair : libraryPair.second.importedFunctionTable) {
+                auto &funcName = functionPair.first;
+                auto wrapperMangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName + L"#wrapper";
+                auto mangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName;
+                auto &funcDef = functionPair.second;
+                auto &wrapperFuncDecl = functionMap[wrapperMangledName];
+                auto &externFuncDecl = functionMap[mangledName];
+
+                // generate wrapper function
+                // create basic block
+                llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", wrapperFuncDecl);
+                Builder->SetInsertPoint(BB);
+
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    // print function name
+                    std::string funcName = wstring2string(funcDef->name);
+                    auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
+                    auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                    auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                    Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                }
+
+                yoi::vec<llvm::Value*> args;
+                auto it = wrapperFuncDecl->arg_begin();
+                for (auto &arg : funcDef->argumentTypes) {
+                    if (arg->isBasicType()) {
+                        auto *argVal = unboxValue(it, arg);
+                        callGcFunction(it, arg, false);
+                        args.push_back(argVal);
+                    } else if (arg->isForeignBasicType()) {
+                        auto *argVal = handleForeignTypeConv(it, arg, true);
+                        callGcFunction(it, arg, false);
+                        args.push_back(argVal);
+                    } else {
+                        auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, true); 
+                        callGcFunction(it, arg, false);
+                        args.push_back(handledLLVMType);
+                    }
+                    it++;
+                }
+
+                auto result = Builder->CreateCall(externFuncDecl, args, "result");
+                llvm::Value *actualResultVal = nullptr;
+                if (funcDef->returnType->isBasicType()) {
+                    actualResultVal = createBasicObject(funcDef->returnType, result);
+                } else if (funcDef->returnType->isForeignBasicType()) {
+                    actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
+                } else {
+                    actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, false); //convert back to yoi type
+                }
+                
+                // return with actual result
+                Builder->CreateRet(actualResultVal);
+            }
+            moduleIndex ++;
+        }
+    }
+    
+    void LLVMCodegen::generateImportFunctionDeclarations() {
+        yoi::indexT moduleIndex = 0;
+        for (auto &libraryPair : compilerCtx->getIRFFITable()->importedLibraries) {
+            auto &libraryName = libraryPair.first;
+            compilerCtx->getBuildConfig()->additionalLinkingFiles.push_back(libraryName);
+            for (auto &functionPair : libraryPair.second.importedFunctionTable) {
+                auto &funcName = functionPair.first;
+                // generate extern function first
+                llvm::Type *returnType = yoiTypeToLLVMType(functionPair.second->returnType, true);
+                yoi::vec<llvm::Type*> argTypes;
+                for (auto &argType : functionPair.second->argumentTypes) {
+                    argTypes.push_back(yoiTypeToLLVMType(argType, true)); // make sure all types converted
+                }
+                llvm::FunctionType *funcType = llvm::FunctionType::get(returnType, argTypes, false);
+                llvm::Function *func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, yoi::wstring2string(funcName), TheModule.get());
+
+                // add to function map
+                auto mangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName;
+                functionMap[mangledName] = func;
+
+                // then generate wrapper function decl
+                llvm::Type *wrapperReturnType = yoiTypeToLLVMType(normalizeForeignType(functionPair.second->returnType), false);
+                yoi::vec<llvm::Type*> wrapperArgTypes;
+                for (auto &argType : functionPair.second->argumentTypes) {
+                    wrapperArgTypes.push_back(yoiTypeToLLVMType(normalizeForeignType(argType), false)); // normalize foreign int32 type to integerObject
+                }
+                llvm::FunctionType *wrapperFuncType = llvm::FunctionType::get(wrapperReturnType, wrapperArgTypes, false);
+                llvm::Function *wrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::ExternalLinkage, yoi::wstring2string(mangledName), TheModule.get());
+
+                // add to function map
+                auto wrapperMangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName + L"#wrapper";
+                functionMap[wrapperMangledName] = wrapperFunc;
+            }
+            moduleIndex ++;
+        }
+    }
+
+    const std::shared_ptr<IRValueType> &
+    LLVMCodegen::normalizeForeignType(const std::shared_ptr<IRValueType> &type) {
+        switch (type->type) {
+            case IRValueType::valueType::foreignFloatType: {
+                return compilerCtx->getDeciObjectType();
+            }
+            case IRValueType::valueType::foreignInt32Type: {
+                return compilerCtx->getIntObjectType();
+            }
+            default: {
+                return type;
+            }
+        }
+    }
+
+    llvm::Value *LLVMCodegen::handleForeignTypeConv(llvm::Value *val,
+                                                    const std::shared_ptr<IRValueType> &foreignType,
+                                                    bool convertToForeign) {
+        yoi_assert(foreignType->isForeignBasicType(), 0, 0, "foreign type must be a basic type");
+        switch (foreignType->type) {
+            case IRValueType::valueType::foreignFloatType: {
+                if (convertToForeign) {
+                    // unbox double type and convert to float type
+                    auto *doubleVal = unboxValue(val, compilerCtx->getDeciObjectType());
+                    auto *floatVal = Builder->CreateFPTrunc(doubleVal, llvm::Type::getFloatTy(*TheContext), "float_val");
+                    return floatVal;
+                } else {
+                    // convert float type to double type
+                    auto *floatVal = Builder->CreateFPExt(val, llvm::Type::getDoubleTy(*TheContext), "float_val");
+                    // create new object
+                    auto *newObj = createBasicObject(compilerCtx->getDeciObjectType(), floatVal);
+                    return newObj;
+                }
+            }
+            case IRValueType::valueType::foreignInt32Type: {
+                if (convertToForeign) {
+                    // unbox integer type and convert to int32 type
+                    auto *intVal = unboxValue(val, compilerCtx->getIntObjectType());
+                    auto *int32Val = Builder->CreateTrunc(intVal, llvm::Type::getInt32Ty(*TheContext), "int32_val");
+                    return int32Val;
+                } else {
+                    // convert int32 type to integer type
+                    auto *int32Val = Builder->CreateSExt(val, llvm::Type::getInt64Ty(*TheContext), "int32_val");
+                    // create new object
+                    auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int32Val);
+                    return newObj;
+                }
+            }
+            default: {
+                yoi_assert(false, 0, 0, "unsupported foreign type");
+                return nullptr;
+            }
         }
     }
 } // namespace yoi

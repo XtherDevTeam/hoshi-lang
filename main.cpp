@@ -47,6 +47,7 @@ void printUsage(const char* programName) {
               << "                                  'none' will generate .o file but skip final linking.\n"
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
               << "                                  Default: do not preserve intermediate files.\n"
+              << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
               << "  -h, --help                      Display this help message.\n";
 }
@@ -61,6 +62,7 @@ int main(int argc, const char **argv) {
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
+    yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / "include").wstring()};
     bool preserveIntermediateFiles = false; 
 
     for (int i = 1; i < argc; ++i) {
@@ -122,6 +124,9 @@ int main(int argc, const char **argv) {
             }
         } else if (arg == "--clean" || arg == "--remove-intermediate") {
             preserveIntermediateFiles = false;
+        } else if (arg == "-I" || arg == "--include") {
+            yoi::wstr includeDir = yoi::string2wstring(argv[++i]);
+            includeDirs.push_back(includeDir);
         } else if (arg == "--preserve-intermediate") {
             preserveIntermediateFiles = true;
         } else if (arg == "--help" || arg == "-h") {
@@ -230,6 +235,7 @@ int main(int argc, const char **argv) {
         if (ec_yoi) {
             throw std::runtime_error("Could not open YOI IR output file '" + yoiIRFile.string() + "': " + ec_yoi.message());
         }
+        yoi_file << yoi::wstring2string(yoiIRStr);
         yoi_file.close();
 
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);

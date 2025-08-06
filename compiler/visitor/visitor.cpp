@@ -994,6 +994,24 @@ namespace yoi {
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             } catch (std::out_of_range &) {}
 
+            // Try imported function
+            try {
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : subscriptExpr->args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
+
+                auto importedFunctionIndex = irModule->externTable.getIndex(baseName);
+                yoi_assert(irModule->externTable[importedFunctionIndex]->type == IRExternEntry::externType::importedFunction, subscriptExpr->getLine(), subscriptExpr->getColumn(), "This is not an imported function: " + yoi::wstring2string(baseName));
+                auto importedFunc = moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries[
+                    irModule->externTable[importedFunctionIndex]->affiliateModule].importedFunctionTable[
+                        irModule->externTable[importedFunctionIndex]->itemIndex];
+
+                moduleContext->getIRBuilder().invokeImported(irModule->externTable[importedFunctionIndex]->affiliateModule, irModule->externTable[importedFunctionIndex]->itemIndex, argTypes.size(), importedFunc->returnType);
+                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            } catch (std::out_of_range &) {}
+
             panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct, interface, or template: " + wstring2string(baseName));
         }
 
@@ -1105,6 +1123,10 @@ namespace yoi {
             return *moduleContext->getCompilerContext()->getNoneObjectType();
         } else if (typeName == L"char") {
             return *moduleContext->getCompilerContext()->getCharObjectType();
+        } else if (typeName == L"int32") {
+            return *moduleContext->getCompilerContext()->getForeignInt32ObjectType();
+        } else if (typeName == L"float") {
+            return *moduleContext->getCompilerContext()->getForeignFloatObjectType();
         } else {
             panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }
@@ -2223,6 +2245,7 @@ namespace yoi {
 
         moduleContext->popTemplateBuilder(); 
     }
+    
     yoi::wstr visitor::getSpecializedMangledMethodName(
         yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
         const yoi::wstr &baseMethodName,
@@ -2294,7 +2317,23 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visit(yoi::importDecl *importDecl) {
-        auto from = importDecl->from_path.strVal;
+        yoi::wstr from{};
+
+        if (importDecl->from_path.strVal == L"builtin") {
+            from = L"builtin";
+        } else {
+            for (auto &prep : moduleContext->getCompilerContext()->getBuildConfig()->searchPaths) {
+                try {
+                    std::filesystem::path final = std::filesystem::path(prep) / importDecl->from_path.strVal;
+                    from = realpath(final.wstring());
+                    break;
+                } catch (std::runtime_error &e) {
+                    continue;
+                }
+            }
+        }
+        yoi_assert(!from.empty(), importDecl->getLine(), importDecl->getColumn(), "Cannot find the file: " + wstring2string(importDecl->from_path.strVal));
+
 
         // import method implementation
         // parse method signature and add to import table
@@ -2307,8 +2346,10 @@ namespace yoi {
         }
         builder.setName(funcName);
         auto importedFunc = builder.yield();
-        moduleContext->getCompilerContext()->getIRFFITable()->addImportedFunction(from, funcName, importedFunc);
+        auto importedIndex = moduleContext->getCompilerContext()->getIRFFITable()->addImportedFunction(from, funcName, importedFunc);
 
+        // add to extern table
+        irModule->externTable.put_create(funcName, managedPtr(IRExternEntry{IRExternEntry::externType::importedFunction, funcName, moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries.getIndex(from), importedIndex}));
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 } // namespace yoi

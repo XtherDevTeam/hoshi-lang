@@ -40,7 +40,16 @@ namespace yoi {
     }
 
     yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
-        auto rFilepath = realpath(filepath);
+        yoi::wstr rFilepath;
+        for (auto &prep : buildConfig->searchPaths) {
+            try {
+                std::filesystem::path final = prep / std::filesystem::path(filepath);
+                rFilepath = realpath(final.wstring());
+                break;
+            } catch (std::runtime_error &e) {
+                continue;
+            }
+        }
         try {
             return modules.getIndex(rFilepath);
         } catch (const std::out_of_range &e) {
@@ -174,6 +183,9 @@ namespace yoi {
         sharedValueType.put(L"char", managedPtr(getCharObject()));
         sharedValueType.put(L"none", managedPtr(getNoneObject()));
 
+        sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
+        sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
+
         irFFITable = std::make_shared<IRFFITable>();
     }
 
@@ -261,5 +273,29 @@ namespace yoi {
 
     std::shared_ptr<IRFFITable> compilerContext::getIRFFITable() {
         return irFFITable;
+    }
+
+    yoi::IRValueType compilerContext::getForeignInt32Object() {
+        return {
+            IRValueType::valueType::foreignInt32Type,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            {}
+        };
+    }
+
+    yoi::IRValueType compilerContext::getForeignFloatObject() {
+        return {
+            IRValueType::valueType::foreignFloatType,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            {}
+        };
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getForeignInt32ObjectType() {
+        return sharedValueType[L"foreignInt32Type"];
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getForeignFloatObjectType() {
+        return sharedValueType[L"foreignFloatType"];
     }
 } // namespace yoi

@@ -529,7 +529,11 @@ namespace yoi {
     }
 
     bool IRValueType::isBasicType() const {
-        return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject;
+        return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject || type == valueType::stringObject;
+    }
+
+    bool IRValueType::isForeignBasicType() const {
+        return type == valueType::foreignFloatType || type == valueType::foreignInt32Type;
     }
 
     bool IRValueType::is1ByteType() const {
@@ -704,7 +708,7 @@ namespace yoi {
     }
 
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
-      return managedPtr(IRBuildConfig{buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles});
+      return managedPtr(IRBuildConfig{buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles, searchPaths, additionalLinkingFiles});
     }
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
@@ -809,7 +813,7 @@ namespace yoi {
     IRFFITable::ImportLibrary::ImportLibrary(const yoi::wstr &libraryPath)
         : libraryPath(libraryPath) {}
 
-    void IRFFITable::addImportedFunction(
+    yoi::indexT IRFFITable::addImportedFunction(
         const yoi::wstr &libraryName,
         const yoi::wstr &functionName,
         const std::shared_ptr<IRFunctionDefinition> &functionDefinition) {
@@ -817,7 +821,7 @@ namespace yoi {
             importedLibraries.put_create(libraryName, {libraryName});
         }
 
-        importedLibraries[libraryName].importedFunctionTable.put(functionName, functionDefinition);
+        return importedLibraries[libraryName].importedFunctionTable.put(functionName, functionDefinition);
     }
 
     void IRFFITable::addExportedFunction(const yoi::wstr &exportName,
@@ -836,4 +840,32 @@ namespace yoi {
                              const std::shared_ptr<yoi::wstr> &additionalInfo)
         : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex),
           additionalInfo(additionalInfo) {}
+
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setSearchPaths(const yoi::vec<yoi::wstr> &searchPaths) {
+        this->searchPaths = searchPaths;
+        return *this;
+    }
+
+    IRBuildConfig::Builder &IRBuildConfig::Builder::addSearchPath(const yoi::wstr &searchPath) {
+        searchPaths.push_back(searchPath);
+        return *this;
+    }
+
+    void IRBuilder::invokeImported(yoi::indexT libIndex,
+                                   yoi::indexT funcIndex,
+                                   yoi::indexT funcArgsCount,
+                                   const std::shared_ptr<IRValueType> &returnType) {
+        for (yoi::indexT i = 0; i < funcArgsCount; ++i) {
+            tempVarStack.pop_back();
+        }
+        tempVarStack.push_back(returnType);
+
+        // insert(IR{IR::Opcode::invoke_imported, {IROperand(IROperand::operandType::index, externIndex), IROperand(IROperand::operandType::index, funcArgsCount)}});
+        insert(IR{IR::Opcode::invoke_imported, {
+            IROperand(IROperand::operandType::index, libIndex),
+            IROperand(IROperand::operandType::index, funcIndex),
+            IROperand(IROperand::operandType::index, funcArgsCount)
+        }});
+    }
 } // namespace yoi

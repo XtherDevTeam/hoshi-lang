@@ -10,10 +10,8 @@
 namespace yoi {
     class clObjectLinker : public ObjectLinker {
     public:
-        // Constructor inherits base class constructor
         explicit clObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config);
 
-        // Override virtual methods from ObjectLinker
         ObjectLinker &searchAndSetupLinker() override;
         ObjectLinker &link(const yoi::wstr &outputPath) override;
     };

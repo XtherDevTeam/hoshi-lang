@@ -95,6 +95,7 @@ namespace yoi {
         void generateStructDeclarations();
         void generateGlobalDeclarations();
         void generateFunctionDeclarations();
+        void generateImportFunctionDeclarations();
 
         void generateImplementations();
         void generateStructImplementations();
@@ -103,6 +104,7 @@ namespace yoi {
         void generateInterfaceObjectGCFunctions();
         void generateForeignStructTypes();
         void generateExportFunctionDecls();
+        void generateImportFunctionImplementations();
         void generateMainFunction();
 
         void generateFunctionImplementations();
@@ -112,6 +114,8 @@ namespace yoi {
         void generateInstruction(const IR &instr);
         void generateDescription();
 
+        const std::shared_ptr<IRValueType> &
+        normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
@@ -127,6 +131,9 @@ namespace yoi {
                             const std::shared_ptr<IRValueType> &yoiType,
                             bool isIncrease);
         llvm::Value *handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign = false);
+        llvm::Value *handleForeignTypeConv(llvm::Value *val,
+                                           const std::shared_ptr<IRValueType> &foreignType,
+                                           bool convertToForeign = false);
     };
 
 } // namespace yoi
