@@ -198,19 +198,20 @@ invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
 definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
 funcTypeSpecArgs ::= "(" [ { typeSpec "," } typeSpec ] ")"
 funcTypeSpec ::= "func" definitionArguments ":" typeSpec
-typeSpec ::= externModuleAccessExpression
+arrayTypeSpecSubscript ::= "[" TOK_integer "]"
+typeSpec ::= externModuleAccessExpression { arrayTypeSpecSubscript }
            | funcTypeSpec
            | "null"
 subscript ::= "[" rExpr "]"
+            | invocationArguments
 identifierWithTemplateArg ::= identifier
                             | identifier TemplateArg
 identifierWithDefTemplateArg ::= identifier
                                | identifier defTemplateArg
 externModuleAccessExpression ::= identifier { "." identifierWithTemplateArg }
-lambdaDefinition ::= "(" [ memberExpression "as" identifier ] ")" "=>" definitionArguments codeBlock  
+lambdaDefinition ::= "lambda" "(" [ memberExpression "as" identifier ] ")" "=>" definitionArguments codeBlock  
 subscriptTypeSpec ::= externModuleAccessExpression { "[" TOK_integer "]" }
 subscriptExpression ::= identifierWithTemplateArg
-                      | identifierWithTemplateArg invocationArguments
                       | identifierWithTemplateArg subscript
 memberExpression ::= subscriptExpression { "." subscriptExpression }
 primary ::= memberExpression | basicLiterals | "(" rExpr ")"

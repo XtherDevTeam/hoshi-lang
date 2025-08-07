@@ -15,11 +15,25 @@ add_definitions(${LLVM_DEFINITIONS})
 
 message(STATUS "LLVM_INCLUDE_DIRS: ${LLVM_INCLUDE_DIRS}")
 
-execute_process(COMMAND llvm-config --libs all
+string(REPLACE "." ";" LLVM_PACKAGE_VERSION_LIST "${LLVM_PACKAGE_VERSION}")
+list(GET LLVM_PACKAGE_VERSION_LIST 0 LLVM_MAJOR_VERSION)
+
+find_program(LLVM_CONFIG_EXECUTABLE
+             NAMES llvm-config llvm-config-${LLVM_MAJOR_VERSION}
+             DOC "Path to the llvm-config executable"
+             REQUIRED # Make this step fail if neither is found
+)
+message(STATUS "Using llvm-config executable: ${LLVM_CONFIG_EXECUTABLE}")
+
+# 4. Execute process using the detected LLVM_CONFIG_EXECUTABLE
+execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libs all
                 OUTPUT_VARIABLE llvm_libraries
                 OUTPUT_STRIP_TRAILING_WHITESPACE
+                RESULT_VARIABLE LLVM_LIBS_RESULT
 )
-execute_process(COMMAND llvm-config --libdir
+
+
+execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libdir
                 OUTPUT_VARIABLE llvm_libdir
                 OUTPUT_STRIP_TRAILING_WHITESPACE
 )

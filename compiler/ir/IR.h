@@ -90,22 +90,26 @@ namespace yoi {
         yoi::indexT typeAffiliateModule;
         yoi::indexT typeIndex;
 
-        std::shared_ptr<yoi::wstr> additionalInfo;
+        yoi::vec<yoi::indexT> dimensions;
 
         IRValueType(valueType type);
 
-        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const yoi::wstr &additionalInfo);
+        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex);
+
+        IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions);
 
         IRValueType(valueType type,
                     yoi::indexT typeAffiliateModule,
                     yoi::indexT objectPrototypeIndex,
-                    const std::shared_ptr<yoi::wstr> &additionalInfo = nullptr);
+                    const yoi::vec<yoi::indexT> &dimensions);
 
         bool isBasicType() const;
 
         bool isForeignBasicType() const;
 
         bool is1ByteType() const;
+
+        bool isArrayType() const;
 
         yoi::wstr to_string() const;
 
@@ -187,7 +191,9 @@ namespace yoi {
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
             store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
             new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
-            invoke_virtual, invoke_virtual_extern, invoke_imported,
+            invoke_virtual, invoke_virtual_extern, invoke_imported, 
+            store_element, load_element, new_array_int, new_array_deci, new_array_bool, new_array_char, new_array_str,
+            new_array_struct, new_array_interface, new_array_struct_extern, new_array_interface_extern,
             nop, FINAL,
         } opcode;
 

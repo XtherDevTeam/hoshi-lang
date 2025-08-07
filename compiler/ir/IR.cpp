@@ -520,11 +520,11 @@ namespace yoi {
         return variableTable;
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const yoi::wstr &additionalInfo) : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), additionalInfo(managedPtr(additionalInfo)) {
+    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex) : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), dimensions() {
 
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0), additionalInfo(nullptr) {
+    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0), dimensions() {
 
     }
 
@@ -834,12 +834,6 @@ namespace yoi {
                                     const std::shared_ptr<IRValueType> &structType) {
         foreignTypeTable.put_create(foreignTypeName, structType);
     }
-    IRValueType::IRValueType(valueType type,
-                             yoi::indexT typeAffiliateModule,
-                             yoi::indexT objectPrototypeIndex,
-                             const std::shared_ptr<yoi::wstr> &additionalInfo)
-        : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex),
-          additionalInfo(additionalInfo) {}
 
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setSearchPaths(const yoi::vec<yoi::wstr> &searchPaths) {
@@ -868,4 +862,18 @@ namespace yoi {
             IROperand(IROperand::operandType::index, funcArgsCount)
         }});
     }
+    
+    bool IRValueType::isArrayType() const {
+        return !dimensions.empty();
+    }
+
+    IRValueType::IRValueType(valueType type,
+                             yoi::indexT typeAffiliateModule,
+                             yoi::indexT objectPrototypeIndex,
+                             const yoi::vec<yoi::indexT> &dimensions)
+        : type(type), dimensions(dimensions), typeAffiliateModule(typeAffiliateModule),
+          typeIndex(objectPrototypeIndex) {}
+          
+    IRValueType::IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions)
+        : type(type), dimensions(dimensions), typeAffiliateModule(0), typeIndex(0) {}
 } // namespace yoi

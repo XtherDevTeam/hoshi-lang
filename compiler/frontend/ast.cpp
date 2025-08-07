@@ -93,26 +93,6 @@ namespace yoi {
         return arg;
     }
 
-    bool subscriptExpr::isInvocation() const {
-        return args;
-    }
-
-    identifierWithTemplateArg &subscriptExpr::getId() const {
-        return *id;
-    }
-
-    invocationArguments &subscriptExpr::getArg() const {
-        return *args;
-    }
-
-    subscript &subscriptExpr::getSubscript() const {
-        return *subscriptVal;
-    }
-
-    bool subscriptExpr::isSubscript() const {
-        return subscriptVal;
-    }
-
     bool subscriptExpr::isIdentifier() const {
         return id;
     }
@@ -558,11 +538,6 @@ namespace yoi {
         delete ptr;
     }
 
-    void finalizeAST(subscript *ptr) {
-        finalizeAST(ptr->expr);
-        delete ptr;
-    }
-
     void finalizeAST(identifierWithDefTemplateArg *ptr) {
         finalizeAST(ptr->id);
         if (ptr->hasDefTemplateArg())
@@ -579,10 +554,8 @@ namespace yoi {
 
     void finalizeAST(subscriptExpr *ptr) {
         finalizeAST(ptr->id);
-        if (ptr->isInvocation())
-            finalizeAST(ptr->args);
-        else if (ptr->isSubscript())
-            finalizeAST(ptr->subscriptVal);
+        for (auto &i: ptr->subscriptVal)
+            finalizeAST(i);
         delete ptr;
     }
 
@@ -1011,5 +984,24 @@ namespace yoi {
             finalizeAST(ptr->inner);
         }
         delete ptr;
+    }
+
+    void finalizeAST(subscript *ptr) {
+        if (ptr->isSubscript()) {
+            finalizeAST(ptr->expr);
+        } else if (ptr->isInvocation()) {
+            finalizeAST(ptr->args);
+        }
+        delete ptr;
+    }
+
+    bool subscript::isSubscript() const {
+        return expr;
+    }
+    bool subscript::isInvocation() const {
+        return args;
+    }
+    vec<subscript *> &subscriptExpr::getSubscript() {
+        return subscriptVal;
     }
 } // namespace yoi

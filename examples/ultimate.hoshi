@@ -1,0 +1,16 @@
+use io "std/io"
+use object "std/object";
+use str "std/str"
+use rtti "std/rtti"
+
+func main() : int {
+    io.print("Hello, world!\n");
+    let s = str.Str("Hello, string object!");
+    if (s impl object.Hashable) {
+        io.print(s.hash() + "\n");
+    }
+    let strTp = rtti.RTTI(s);
+    io.print(strTp.name() + "\n");
+
+    return 0;
+}

@@ -1,3 +1,8 @@
+/**
+ * This is an example of importing a function from a library.
+ * Comment supported!
+ */
+
 import puts(str : string) : int32 from "builtin"
 
 func main() : int {

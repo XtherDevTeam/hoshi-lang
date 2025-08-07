@@ -1,4 +1,4 @@
-import puts(str : string) from "builtin"
+import puts(str : string) : int32 from "builtin"
 
 struct TestExport {
     a: int,

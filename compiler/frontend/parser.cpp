@@ -1,15 +1,25 @@
-#include "compiler/frontend/lexer.hpp"
-#include "share/def.hpp"
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wextra-qualification"
-#pragma ide diagnostic ignored "misc-no-recursion"
 //
 // Created by XIaokang00010 on 2023/2/11.
 //
 
+#include "compiler/frontend/lexer.hpp"
+#include "share/def.hpp" 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextra-qualification"
+#pragma ide diagnostic ignored "misc-no-recursion"
+
 #include "parser.hpp"
 
 namespace yoi {
+    // Helper to finalize children in vectors on error
+    template<typename T>
+    void finalizeAST_vec(yoi::vec<T*>& vec) {
+        for (auto& i : vec) {
+            finalizeAST(i);
+        }
+        vec.clear(); // Clear the pointers from the vector
+    }
+
     void parse(yoi::basicLiterals *&o, yoi::lexer &lex) {
         switch (lex.curToken.kind) {
             case lexer::token::tokenKind::integer:
@@ -38,13 +48,18 @@ namespace yoi {
 
     void parse(identifierWithTypeSpec *&o, lexer &lex) {
         lex.saveState();
-        identifier *id;
-        typeSpec *spec;
+        identifier *id = nullptr;
+        typeSpec *spec = nullptr;
+        
+        lexer::token node_start_token = lex.curToken;
+
         parse(id, lex);
         if (!id) {
+            lex.dropState(); // No identifier parsed, so no state to return. Drop it.
             o = nullptr;
             return;
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::colon) {
             lex.scan();
         } else {
@@ -53,69 +68,94 @@ namespace yoi {
             o = nullptr;
             return;
         }
+
         parse(spec, lex);
+        if (!spec) { // If typeSpec parsing fails
+            finalizeAST(id);
+            lex.returnState(); // Backtrack because we couldn't complete the rule
+            o = nullptr;
+            return;
+        }
+
         lex.dropState();
-        o = new identifierWithTypeSpec{lex.curToken, id, spec};
+        o = new identifierWithTypeSpec{node_start_token, id, spec};
     }
 
     void parse(defTemplateArgSpec *&o, lexer &lex) {
-        identifier *id;
-        externModuleAccessExpression *impl;
+        identifier *id = nullptr;
+        externModuleAccessExpression *impl = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(id, lex);
         if (!id) {
             o = nullptr;
             return;
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::kImpl) {
             lex.scan();
             parse(impl, lex);
             if (!impl) {
+                finalizeAST(id);
                 panic(lex.line, lex.col, "expected externModuleAccessExpression after `impl` in defTemplateArgSpec");
+                o = nullptr; // Ensure o is null on failure
                 return;
             }
-            o = new defTemplateArgSpec{lex.curToken, id, impl};
+            o = new defTemplateArgSpec{node_start_token, id, impl};
         } else {
-            o = new defTemplateArgSpec{lex.curToken, id, nullptr};
+            o = new defTemplateArgSpec{node_start_token, id, nullptr};
         }
-
     }
 
     void parse(defTemplateArg *&o, lexer &lex) {
         lex.saveState();
         if (lex.curToken.kind != lexer::token::tokenKind::lessThan) {
-            lex.returnState();
+            lex.dropState();
             o = nullptr;
             return;
         }
+        lexer::token node_start_token = lex.curToken;
         lex.scan();
 
-        vec<defTemplateArgSpec *> specs;
-        defTemplateArgSpec *t;
+        yoi::vec<defTemplateArgSpec *> specs;
+        defTemplateArgSpec *t = nullptr; // Initialize t
+
         parse(t, lex);
-        while (t) {
+        if (t) { // Parse first argument if present
             specs.push_back(t);
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
+            while (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
-            else
-                break;
-            parse(t, lex);
+                t = nullptr; // Reset for next parse
+                parse(t, lex);
+                if (!t) { // Comma must be followed by an argument
+                    finalizeAST_vec(specs);
+                    lex.returnState();
+                    panic(lex.line, lex.col, "expected defTemplateArgSpec after comma in defTemplateArg");
+                    o = nullptr;
+                    return;
+                }
+                specs.push_back(t);
+            }
         }
+        
         if (lex.curToken.kind == lexer::token::tokenKind::greaterThan) {
             lex.scan();
-            o = new defTemplateArg{lex.curToken, specs};
+            o = new defTemplateArg{node_start_token, specs};
             lex.dropState();
         } else {
-            for (auto &i: specs) finalizeAST(i);
+            finalizeAST_vec(specs);
             lex.returnState();
+            panic(lex.line, lex.col, "expected `>` to close a defTemplateArg node"); // More specific panic message
             o = nullptr;
             return;
         }
     }
 
     void parse(templateArgSpec *&o, lexer &lex) {
-        typeSpec *spec;
+        typeSpec *spec = nullptr;
+        lexer::token node_start_token = lex.curToken;
         parse(spec, lex);
-        o = spec ? new templateArgSpec{lex.curToken, spec} : nullptr;
+        o = spec ? new templateArgSpec{node_start_token, spec} : nullptr;
     }
 
     void parse(templateArg *&o, lexer &lex) {
@@ -125,26 +165,37 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        lexer::token node_start_token = lex.curToken;
         lex.scan();
 
-        vec<templateArgSpec *> specs;
-        templateArgSpec *t;
+        yoi::vec<templateArgSpec *> specs;
+        templateArgSpec *t = nullptr; // Initialize t
+
         parse(t, lex);
-        while (t) {
+        if (t) { // Parse first argument if present
             specs.push_back(t);
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
+            while (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
-            else
-                break;
-            parse(t, lex);
+                t = nullptr; // Reset for next parse
+                parse(t, lex);
+                if (!t) { // Comma must be followed by an argument
+                    finalizeAST_vec(specs);
+                    lex.returnState();
+                    panic(lex.line, lex.col, "expected templateArgSpec after comma in templateArg");
+                    o = nullptr;
+                    return;
+                }
+                specs.push_back(t);
+            }
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::greaterThan) {
             lex.scan();
-            o = new templateArg{lex.curToken, specs};
+            o = new templateArg{node_start_token, specs};
             lex.dropState();
         } else {
             lex.returnState();
-            for (auto &i: specs) finalizeAST(i);
+            finalizeAST_vec(specs);
             o = nullptr;
             return;
         }
@@ -155,25 +206,36 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        lexer::token node_start_token = lex.curToken;
         lex.scan();
 
-        vec<rExpr *> args;
-        rExpr *t;
+        yoi::vec<rExpr *> args;
+        rExpr *t = nullptr; // Initialize t
+
         parse(t, lex);
-        while (t) {
+        if (t) { // Parse first argument if present
             args.emplace_back(t);
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
+            while (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
-            else
-                break;
-            parse(t, lex);
+                t = nullptr; // Reset for next parse
+                parse(t, lex);
+                if (!t) { // Comma must be followed by an argument
+                    finalizeAST_vec(args);
+                    panic(lex.line, lex.col, "expected rightValueExpr after comma in invocationArguments");
+                    o = nullptr;
+                    return;
+                }
+                args.emplace_back(t);
+            }
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
-            o = new invocationArguments{lex.curToken, args};
+            o = new invocationArguments{node_start_token, args};
         } else {
-            for (auto &i: args) finalizeAST(i);
-            panic(lex.line, lex.col, "expected `)` to close an arguments node");
+            finalizeAST_vec(args);
+            panic(lex.line, lex.col, "expected `)` to close an invocationArguments node");
+            o = nullptr;
             return;
         }
     }
@@ -183,75 +245,94 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        lexer::token node_start_token = lex.curToken;
         lex.scan();
 
-        vec<identifierWithTypeSpec *> args;
-        identifierWithTypeSpec *t;
+        yoi::vec<identifierWithTypeSpec *> args;
+        identifierWithTypeSpec *t = nullptr; // Initialize t
+
         parse(t, lex);
-        while (t) {
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
-                lex.scan();
-            else {
-                args.push_back(t);
-                break;
-            }
+        if (t) { // Parse first argument if present
             args.push_back(t);
-            parse(t, lex);
+            while (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                lex.scan();
+                t = nullptr; // Reset for next parse
+                parse(t, lex);
+                if (!t) { // Comma must be followed by an argument
+                    finalizeAST_vec(args);
+                    panic(lex.line, lex.col, "expected identifierWithTypeSpec after comma in definitionArguments");
+                    o = nullptr;
+                    return;
+                }
+                args.push_back(t);
+            }
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
-            o = new definitionArguments{lex.curToken, args};
+            o = new definitionArguments{node_start_token, args};
         } else {
-            for (auto &i: args) finalizeAST(i);
-            panic(lex.line, lex.col, "expected `]` to close an arguments node");
+            finalizeAST_vec(args);
+            panic(lex.line, lex.col, "expected `)` to close a definitionArguments node");
+            o = nullptr;
             return;
         }
     }
 
     void parse(funcTypeSpec *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kFunc)
+        if (lex.curToken.kind == lexer::token::tokenKind::kFunc) {
             lex.scan();
-        else {
+        } else {
             o = nullptr;
             return;
         }
-        definitionArguments *args;
-        typeSpec *spec;
+        lexer::token node_start_token = lex.curToken;
+
+        definitionArguments *args = nullptr;
+        typeSpec *spec = nullptr;
+
         parse(args, lex);
         if (!args) {
             panic(lex.line, lex.col, "expected definitionArguments after `func`");
+            o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::colon)
             lex.scan();
         else {
+            finalizeAST(args);
             panic(lex.line, lex.col, "expected `:` after definitionArguments");
+            o = nullptr;
             return;
         }
         parse(spec, lex);
         if (!spec) {
+            finalizeAST(args);
             panic(lex.line, lex.col, "expected typeSpec after `:`");
+            o = nullptr;
             return;
         }
-        o = new funcTypeSpec{lex.curToken, args, spec};
+        o = new funcTypeSpec{node_start_token, args, spec};
     }
 
     void parse(typeSpec *&o, lexer &lex) {
-        externModuleAccessExpression *expr;
-        funcTypeSpec *spec;
+        externModuleAccessExpression *expr = nullptr;
+        funcTypeSpec *spec = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
             lex.scan();
-            o = new typeSpec{lex.curToken, 2, nullptr, nullptr, true};
+            o = new typeSpec{node_start_token, 2, nullptr, nullptr, true};
             return;
         }
         parse(spec, lex);
         if (spec) {
-            o = new typeSpec{lex.curToken, 1, nullptr, spec, false};
+            o = new typeSpec{node_start_token, 1, nullptr, spec, false};
             return;
         }
         parse(expr, lex);
         if (expr) {
-            o = new typeSpec{lex.curToken, 0, expr, nullptr, false};
+            o = new typeSpec{node_start_token, 0, expr, nullptr, false};
             return;
         }
         o = nullptr;
@@ -259,115 +340,138 @@ namespace yoi {
 
     void parse(subscript *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
+            rExpr *r = nullptr;
+            parse(r, lex);
+            if (!r) {
+                panic(lex.line, lex.col, "expected rightValueExpr in subscript");
+                o = nullptr;
+                return;
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                lex.scan();
+                o = new subscript{node_start_token, r};
+            } else {
+                finalizeAST(r);
+                panic(lex.line, lex.col, "expected `]` to close a subscript");
+                o = nullptr;
+                return;
+            }
+        } else if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
+            lexer::token node_start_token = lex.curToken;
+            invocationArguments *args = nullptr;
+            parse(args, lex);
+            if (!args) {
+                panic(lex.line, lex.col, "expected invocationArguments in subscript");
+                o = nullptr;
+                return;
+            }
+            o = new subscript{node_start_token, nullptr, args};
         } else {
             o = nullptr;
-            return;
-        }
-        rExpr *r;
-        parse(r, lex);
-        if (!r) {
-            panic(lex.line, lex.col, "expected rightValueExpr in subscript");
-            return;
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
-            lex.scan();
-            o = new subscript{lex.curToken, r};
-        } else {
-            panic(lex.line, lex.col, "expected `]` to close a subscript");
-            return;
         }
     }
 
     void parse(identifierWithTemplateArg *&o, lexer &lex) {
-        identifierWithTemplateArg *node;
-        identifier *id;
-        templateArg *arg;
+        identifier *id = nullptr;
+        templateArg *arg = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(id, lex);
         if (!id) {
             o = nullptr;
             return;
         }
-        node = new identifierWithTemplateArg{lex.curToken, id, nullptr};
+        o = new identifierWithTemplateArg{node_start_token, id, nullptr};
+
         parse(arg, lex);
         if (!arg) {
-            o = node;
+            // No template arg, 'o' is already created with 'nullptr' for arg.
             return;
         }
-        node->arg = arg;
-        o = node;
+        o->arg = arg;
     }
 
     void parse(identifierWithDefTemplateArg *&o, lexer &lex) {
-        identifierWithDefTemplateArg *node;
-        identifier *id;
-        defTemplateArg *arg;
+        identifier *id = nullptr;
+        defTemplateArg *arg = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(id, lex);
         if (!id) {
             o = nullptr;
             return;
         }
-        node = new identifierWithDefTemplateArg{lex.curToken, id, nullptr};
+        o = new identifierWithDefTemplateArg{node_start_token, id, nullptr};
+
         parse(arg, lex);
         if (!arg) {
-            o = node;
+            // No def template arg, 'o' is already created with 'nullptr' for arg.
             return;
         }
-        node->arg = arg;
-        o = node;
+        o->arg = arg;
     }
 
     void parse(externModuleAccessExpression *&o, lexer &lex) {
-        vec<identifierWithTemplateArg *> vecA;
-        identifierWithTemplateArg *a;
+        yoi::vec<identifierWithTemplateArg *> vecA;
+        identifierWithTemplateArg *a = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(a, lex);
         if (!a) {
             o = nullptr;
             return;
         }
+
         while (true) {
-            vecA.push_back(a);
+            vecA.push_back(a); // Add current 'a' to vector
             if (lex.curToken.kind != lexer::token::tokenKind::dot) {
-                break;
-            } else if (a->hasTemplateArg()) {
-                panic(lex.line, lex.col, "expected identifier (except the last term) in externModuleAccessExpression");
+                break; // No more dots, end of expression
+            } else if (a->hasTemplateArg()) { // Logic: an identifier with template arg cannot be followed by a dot.
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected identifier (except the last term) in externModuleAccessExpression, found identifier with template arguments followed by '.'");
+                o = nullptr;
+                return;
             } else {
-                lex.scan();
+                lex.scan(); // Consume the dot
             }
+            a = nullptr; // Reset 'a' for the next parse call
             parse(a, lex);
+            if (!a) { // A dot must be followed by another identifier.
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected identifier after `.` in externModuleAccessExpression");
+                o = nullptr;
+                return;
+            }
         }
-        o = new externModuleAccessExpression{lex.curToken, vecA};
+        o = new externModuleAccessExpression{node_start_token, vecA};
     }
 
     void parse(subscriptExpr *&o, lexer &lex) {
-        subscriptExpr *expr;
-        identifierWithTemplateArg *a;
-        invocationArguments *b;
-        subscript *c;
+        identifierWithTemplateArg *a = nullptr;
+        vec<subscript *> b;
+        lexer::token node_start_token = lex.curToken;
+
         parse(a, lex);
         if (!a) {
             o = nullptr;
             return;
         }
-        expr = new subscriptExpr{lex.curToken, a, nullptr, nullptr};
-        parse(b, lex);
-        if (b) {
-            expr->args = b;
-            o = expr;
-            return;
+        
+        subscript *s = nullptr;
+        for (parse(s, lex); s; parse(s, lex)) {
+            b.push_back(s);
         }
-        parse(c, lex);
-        if (c) {
-            expr->subscriptVal = c;
-            o = expr;
-            return;
-        }
-        o = expr;
+
+        o = new subscriptExpr{node_start_token, a, b};
     }
 
     void parse(memberExpr *&o, lexer &lex) {
-        vec<subscriptExpr *> vecA;
-        subscriptExpr *a;
+        yoi::vec<subscriptExpr *> vecA;
+        subscriptExpr *a = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(a, lex);
         if (!a) {
             o = nullptr;
@@ -380,38 +484,51 @@ namespace yoi {
             } else {
                 lex.scan();
             }
+            a = nullptr; // Reset for next parse
             parse(a, lex);
+            if (!a) { // Dot must be followed by another subscriptExpr
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected subscriptExpr after `.` in memberExpr");
+                o = nullptr;
+                return;
+            }
         }
-        o = new memberExpr{lex.curToken, vecA};
+        o = new memberExpr{node_start_token, vecA};
     }
 
     void parse(primary *&o, lexer &lex) {
-        memberExpr *a;
-        basicLiterals *b;
-        rExpr *c;
+        memberExpr *a = nullptr;
+        basicLiterals *b = nullptr;
+        rExpr *c = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(a, lex);
         if (a) {
-            o = new primary{lex.curToken, 0, a, nullptr, nullptr};
+            o = new primary{node_start_token, 0, a, nullptr, nullptr};
             return;
         }
         parse(b, lex);
         if (b) {
-            o = new primary{lex.curToken, 1, nullptr, b, nullptr};
+            o = new primary{node_start_token, 1, nullptr, b, nullptr};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
-            lex.scan();
+            lex.scan(); // Consume '('
             parse(c, lex);
-            if (c) {
-                o = new primary{lex.curToken, 2, nullptr, nullptr, c};
-            } else {
+            if (!c) {
                 panic(lex.line, lex.col, "expected rightValueExpr after `(` while parsing primary");
+                o = nullptr; // Ensure o is null on failure
+                return;
             }
             if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
-                lex.scan();
+                lex.scan(); // Consume ')'
+                o = new primary{node_start_token, 2, nullptr, nullptr, c};
                 return;
             } else {
+                finalizeAST(c);
                 panic(lex.line, lex.col, "expected `)` after rightValueExpr while parsing primary");
+                o = nullptr; // Ensure o is null on failure
+                return;
             }
         }
         o = nullptr;
@@ -426,6 +543,7 @@ namespace yoi {
             case lexer::token::tokenKind::minus:
             case lexer::token::tokenKind::binaryNot: {
                 t = lex.curToken;
+                lex.scan(); // Consume the operator
                 break;
             }
             default: {
@@ -433,21 +551,24 @@ namespace yoi {
                 break;
             }
         }
-        primary *expr;
+        primary *expr = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(expr, lex);
         if (!expr) {
             lex.returnState();
             o = nullptr;
             return;
         }
-        o = new uniqueExpr{lex.curToken, t, expr};
+        o = new uniqueExpr{node_start_token, t, expr};
         lex.dropState();
     }
 
     void parse(leftExpr *&o, lexer &lex) {
-        uniqueExpr *a;
+        uniqueExpr *a = nullptr;
         lexer::token t{};
-        rExpr *expr;
+        rExpr *expr = nullptr;
+        lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
         if (!a) {
@@ -465,714 +586,604 @@ namespace yoi {
                 lex.scan();
                 parse(expr, lex);
                 if (!expr) {
+                    finalizeAST(a);
                     panic(lex.line, lex.col, "expected rightValueExpr after assignment operator");
+                    o = nullptr;
                     return;
                 }
-                o = new leftExpr{lex.curToken, t, a, expr};
+                o = new leftExpr{node_start_token, t, a, expr};
                 break;
             }
             default: {
-                o = new leftExpr{lex.curToken, t, a, nullptr};
+                o = new leftExpr{node_start_token, t, a, nullptr}; // 't' will be an empty token, 'expr' will be nullptr.
                 break;
             }
         }
     }
 
-    void parse(mulExpr *&o, lexer &lex) {
-        vec<leftExpr *> vecA;
-        vec<lexer::token> vecB;
-        leftExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::asterisk || lex.curToken.kind == lexer::token::tokenKind::slash
-                   || lex.curToken.kind == lexer::token::tokenKind::percentSign) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected uniqueExpr after operators while parsing mulExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new mulExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
+    // Common pattern for binary expressions (mulExpr, addExpr, shiftExpr, etc.)
+    // Applied to all binary expression parsers below.
+    #define PARSE_BINARY_EXPR(NODE_TYPE, CHILD_TYPE, OPERATORS, ERROR_MSG) \
+    void parse(NODE_TYPE *&o, lexer &lex) { \
+        yoi::vec<CHILD_TYPE *> vecA; \
+        yoi::vec<lexer::token> vecB; \
+        CHILD_TYPE *a = nullptr; \
+        lexer::token node_start_token = lex.curToken; \
+\
+        parse(a, lex); \
+        if (a) { \
+            vecA.push_back(a); \
+            while OPERATORS { \
+                vecB.push_back(lex.curToken); \
+                lex.scan(); \
+                a = nullptr; \
+                parse(a, lex); \
+                if (!a) { \
+                    finalizeAST_vec(vecA); \
+                    panic(lex.line, lex.col, ERROR_MSG); \
+                    o = nullptr; \
+                    return; \
+                } \
+                vecA.push_back(a); \
+            } \
+            o = new NODE_TYPE{node_start_token, vecA, vecB}; \
+        } else { \
+            o = nullptr; \
+        } \
     }
 
-    void parse(addExpr *&o, lexer &lex) {
-        vec<mulExpr *> vecA;
-        vec<lexer::token> vecB;
-        mulExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::plus || lex.curToken.kind == lexer::token::tokenKind::minus) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected mulExpr after operators while parsing addExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new addExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
+    PARSE_BINARY_EXPR(mulExpr, leftExpr, (lex.curToken.kind == lexer::token::tokenKind::asterisk || lex.curToken.kind == lexer::token::tokenKind::slash || lex.curToken.kind == lexer::token::tokenKind::percentSign), "expected uniqueExpr after operators while parsing mulExpr")
+    PARSE_BINARY_EXPR(addExpr, mulExpr, (lex.curToken.kind == lexer::token::tokenKind::plus || lex.curToken.kind == lexer::token::tokenKind::minus), "expected mulExpr after operators while parsing addExpr")
+    PARSE_BINARY_EXPR(shiftExpr, addExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryShiftLeft || lex.curToken.kind == lexer::token::tokenKind::binaryShiftRight), "expected addExpr after operators while parsing shiftExpr")
+    PARSE_BINARY_EXPR(relationalExpr, shiftExpr, (lex.curToken.kind == lexer::token::tokenKind::lessThan || lex.curToken.kind == lexer::token::tokenKind::greaterThan || lex.curToken.kind == lexer::token::tokenKind::lessEqual || lex.curToken.kind == lexer::token::tokenKind::greaterEqual), "expected shiftExpr after operators while parsing relationalExpr")
+    PARSE_BINARY_EXPR(equalityExpr, relationalExpr, (lex.curToken.kind == lexer::token::tokenKind::equal || lex.curToken.kind == lexer::token::tokenKind::notEqual), "expected relationalExpr after operators while parsing equalityExpr")
+    PARSE_BINARY_EXPR(andExpr, equalityExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryAnd), "expected equalityExpr after operators while parsing andExpr") // Corrected from relationalExpr
+    PARSE_BINARY_EXPR(exclusiveExpr, andExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryXor), "expected andExpr after operators while parsing exclusiveExpr")
+    PARSE_BINARY_EXPR(inclusiveExpr, exclusiveExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryOr), "expected exclusiveExpr after operators while parsing inclusiveExpr")
+    PARSE_BINARY_EXPR(logicalAndExpr, inclusiveExpr, (lex.curToken.kind == lexer::token::tokenKind::logicAnd), "expected inclusiveExpr after operators while parsing logicalAndExpr")
+    PARSE_BINARY_EXPR(logicalOrExpr, logicalAndExpr, (lex.curToken.kind == lexer::token::tokenKind::logicOr), "expected logicalAndExpr after operators while parsing logicalOrExpr")
 
-    void parse(shiftExpr *&o, lexer &lex) {
-        vec<addExpr *> vecA;
-        vec<lexer::token> vecB;
-        addExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::binaryShiftLeft ||
-                    lex.curToken.kind == lexer::token::tokenKind::binaryShiftRight) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected addExpr after operators while parsing shiftExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new shiftExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(relationalExpr *&o, lexer &lex) {
-        vec<shiftExpr *> vecA;
-        vec<lexer::token> vecB;
-        shiftExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::lessThan || lex.curToken.kind == lexer::token::tokenKind::greaterThan ||
-                    lex.curToken.kind == lexer::token::tokenKind::lessEqual || lex.curToken.kind == lexer::token::tokenKind::greaterEqual) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected shiftExpr after operators while parsing relationalExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new relationalExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(equalityExpr *&o, lexer &lex) {
-        vec<relationalExpr *> vecA;
-        vec<lexer::token> vecB;
-        relationalExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::equal || lex.curToken.kind == lexer::token::tokenKind::notEqual) {
-                vecB.push_back( lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected relationalExpr after operators while parsing equalityExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new equalityExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(andExpr *&o, lexer &lex) {
-        vec<equalityExpr *> vecA;
-        vec<lexer::token> vecB;
-        equalityExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::binaryAnd) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected relationalExpr after operators while parsing equalityExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new andExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(exclusiveExpr *&o, lexer &lex) {
-        vec<andExpr *> vecA;
-        vec<lexer::token> vecB;
-        andExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::binaryXor) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected andExpr after operators while parsing exclusiveExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new exclusiveExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(inclusiveExpr *&o, lexer &lex) {
-        vec<exclusiveExpr *> vecA;
-        vec<lexer::token> vecB;
-        exclusiveExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::binaryOr) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected exclusiveExpr after operators while parsing inclusiveExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new inclusiveExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(logicalAndExpr *&o, lexer &lex) {
-        vec<inclusiveExpr *> vecA;
-        vec<lexer::token> vecB;
-        inclusiveExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::logicAnd) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected inclusiveExpr after operators while parsing logicalAndExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new logicalAndExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
-
-    void parse(logicalOrExpr *&o, lexer &lex) {
-        vec<logicalAndExpr *> vecA;
-        vec<lexer::token> vecB;
-        logicalAndExpr *a;
-        parse(a, lex);
-        if (a) {
-            vecA.push_back(a);
-            while (lex.curToken.kind == lexer::token::tokenKind::logicOr) {
-                vecB.push_back(lex.curToken);
-                lex.scan();
-                parse(a, lex);
-                if (!a) {
-                    panic(lex.line, lex.col, "expected logicalAndExpr after operators while parsing logicalOrExpr");
-                    return;
-                }
-                vecA.push_back(a);
-            }
-            o = new logicalOrExpr{lex.curToken, vecA, vecB};
-        } else {
-            o = nullptr;
-        }
-    }
+    #undef PARSE_BINARY_EXPR
 
     void parse(rExpr *&o, lexer &lex) {
-        logicalOrExpr *expr;
+        logicalOrExpr *expr = nullptr;
+        lexer::token node_start_token = lex.curToken;
         parse(expr, lex);
         if (expr) {
-            o = new rExpr{lex.curToken, expr};
-            return;
+            o = new rExpr{node_start_token, expr};
         } else {
             o = nullptr;
-            return;
         }
     }
 
     void parse(codeBlock *&o, lexer &lex) {
-        vec<inCodeBlockStmt *> stmts;
-        inCodeBlockStmt *stmt;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
+            yoi::vec<inCodeBlockStmt *> stmts;
+            inCodeBlockStmt *stmt = nullptr; // Initialize stmt
+
+            while (true) {
+                parse(stmt, lex);
+                if (!stmt)
+                    break;
+                stmts.push_back(stmt);
+                stmt = nullptr; // Reset stmt for the next parse call
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
+                lex.scan();
+                o = new codeBlock{node_start_token, stmts};
+            } else {
+                finalizeAST_vec(stmts);
+                panic(lex.line, lex.col, "expected `}` to close codeBlock");
+                o = nullptr;
+                return;
+            }
         } else {
             o = nullptr;
             return;
         }
-        while (true) {
-            parse(stmt, lex);
-            if (!stmt)
-                break;
-            stmts.push_back(stmt);
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
-            lex.scan();
-        } else {
-            panic(lex.line, lex.col, "expected `}` to close codeBlock");
-            return;
-        }
-        o = new codeBlock{lex.curToken, stmts};
     }
 
     void parse(useStmt *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kUse) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        identifier *id;
-        lexer::token str{};
+        identifier *id = nullptr;
+        lexer::token str_token{}; // Not a pointer, directly stored
+
         parse(id, lex);
         if (!id) {
             panic(lex.line, lex.col, "expected identifier after `use`");
-            return;
-        }
-        if (lex.curToken.kind != lexer::token::tokenKind::string) {
-            panic(lex.line, lex.col, "expected string token after identifier while parsing useStmt");
-            return;
-        }
-        str = lex.curToken;
-        lex.scan();
-        o = new useStmt{lex.curToken, id, str};
-    }
-
-    void parse(funcDefStmt *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kFunc)
-            lex.scan();
-        else {
             o = nullptr;
             return;
         }
-        identifierWithDefTemplateArg *name;
-        definitionArguments *args;
-        typeSpec *spec;
-        codeBlock *block;
+        if (lex.curToken.kind != lexer::token::tokenKind::string) {
+            finalizeAST(id);
+            panic(lex.line, lex.col, "expected string token after identifier while parsing useStmt");
+            o = nullptr;
+            return;
+        }
+        str_token = lex.curToken; // Store the string token by value
+        lex.scan();
+        o = new useStmt{node_start_token, id, str_token};
+    }
+
+    void parse(funcDefStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kFunc) {
+            lex.scan();
+        } else {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+
+        identifierWithDefTemplateArg *name = nullptr;
+        definitionArguments *args = nullptr;
+        typeSpec *spec = nullptr;
+        codeBlock *block = nullptr;
+
         parse(name, lex);
         if (!name) {
             panic(lex.line, lex.col, "expected function name");
+            o = nullptr;
             return;
         }
         parse(args, lex);
         if (!args) {
+            finalizeAST(name);
             panic(lex.line, lex.col, "expected definitionArguments after identifierWithDefTemplateArg");
+            o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::colon)
             lex.scan();
         else {
+            finalizeAST(name);
+            finalizeAST(args);
             panic(lex.line, lex.col, "expected `:` after definitionArguments");
+            o = nullptr;
             return;
         }
         parse(spec, lex);
         if (!spec) {
+            finalizeAST(name);
+            finalizeAST(args);
             panic(lex.line, lex.col, "expected typeSpec after `:`");
+            o = nullptr;
             return;
         }
         parse(block, lex);
         if (!block) {
+            finalizeAST(name);
+            finalizeAST(args);
+            finalizeAST(spec);
             panic(lex.line, lex.col, "expected codeBlock after typeSpec");
+            o = nullptr;
             return;
         }
-        o = new funcDefStmt{lex.curToken, name, args, spec, block};
+        o = new funcDefStmt{node_start_token, name, args, spec, block};
     }
 
     void parse(interfaceDefInnerPair *&o, lexer &lex) {
-        identifierWithTypeSpec *var;
-        innerMethodDecl *method;
+        identifierWithTypeSpec *var = nullptr;
+        innerMethodDecl *method = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(method, lex);
         if (method) {
-            o = new interfaceDefInnerPair{lex.curToken, nullptr, method};
+            o = new interfaceDefInnerPair{node_start_token, nullptr, method};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new interfaceDefInnerPair{lex.curToken, var, nullptr};
+            o = new interfaceDefInnerPair{node_start_token, var, nullptr};
             return;
         }
         o = nullptr;
     }
 
     void parse(structDefInnerPair *&o, lexer &lex) {
-        identifierWithTypeSpec *var;
-        innerMethodDecl *method;
-        constructorDecl *con;
+        identifierWithTypeSpec *var = nullptr;
+        innerMethodDecl *method = nullptr;
+        constructorDecl *con = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(con, lex);
         if (con) {
-            o = new structDefInnerPair{lex.curToken, 1, nullptr, con, nullptr};
+            o = new structDefInnerPair{node_start_token, 1, nullptr, con, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new structDefInnerPair{lex.curToken, 2, nullptr, nullptr, method};
+            o = new structDefInnerPair{node_start_token, 2, nullptr, nullptr, method};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new structDefInnerPair{lex.curToken, 0, var, nullptr, nullptr};
+            o = new structDefInnerPair{node_start_token, 0, var, nullptr, nullptr};
             return;
         }
         o = nullptr;
     }
 
     void parse(implInnerPair *&o, lexer &lex) {
-        innerMethodDef *method;
-        constructorDef *con;
+        innerMethodDef *method = nullptr;
+        constructorDef *con = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(con, lex);
         if (con) {
-            o = new implInnerPair{lex.curToken, con, nullptr};
+            o = new implInnerPair{node_start_token, con, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new implInnerPair{lex.curToken, nullptr, method};
+            o = new implInnerPair{node_start_token, nullptr, method};
             return;
         }
         o = nullptr;
     }
 
     void parse(interfaceDefInner *&o, lexer &lex) {
-        vec<interfaceDefInnerPair *> vecA;
-        interfaceDefInnerPair *a;
         if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
-        } else {
-            o = nullptr;
-            return;
-        }
-        while (true) {
-            parse(a, lex);
-            if (!a)
-                break;
-            vecA.push_back(a);
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
-                lex.scan();
-            else
-                break;
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
-            lex.scan();
-        } else {
-            panic(lex.line, lex.col, "expected `}` to close interfaceDefInner");
-            return;
-        }
-        o = new interfaceDefInner{lex.curToken, vecA};
-    }
+            yoi::vec<interfaceDefInnerPair *> vecA;
+            interfaceDefInnerPair *a = nullptr; // Initialize a
 
-    void parse(structDefInner *&o, lexer &lex) {
-        vec<structDefInnerPair *> vecA;
-        structDefInnerPair *a;
-        if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
-            lex.scan();
-        } else {
-            o = nullptr;
-            return;
-        }
-        while (true) {
-            parse(a, lex);
-            if (!a)
-                break;
-            if (lex.curToken.kind == lexer::token::tokenKind::comma)
-                lex.scan();
-            else {
+            while (true) {
+                parse(a, lex);
+                if (!a) {
+                    break;
+                }
                 vecA.push_back(a);
-                break;
-            }
-            vecA.push_back(a);
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
-            lex.scan();
-        } else {
-            panic(lex.line, lex.col, "expected `}` to close structDefInner");
-            return;
-        }
-        o = new structDefInner{lex.curToken, vecA};
-    }
+                a = nullptr; // Reset 'a' for next parse
 
-    void parse(implInner *&o, lexer &lex) {
-        vec<implInnerPair *> vecA;
-        implInnerPair *a;
-        if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
-            lex.scan();
-        } else {
-            o = nullptr;
-            return;
-        }
-        while (true) {
-            parse(a, lex);
-            if (!a)
-                break;
-            if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                    lex.scan();
+                } else {
+                    break;
+                }
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
                 lex.scan();
-            }
-            else {
-                vecA.push_back(a);
-                break;
-            }
-            vecA.push_back(a);
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
-            lex.scan();
-        } else {
-            panic(lex.line, lex.col, "expected `}` to close implInner");
-            return;
-        }
-        o = new implInner{lex.curToken, vecA};
-    }
-
-    void parse(interfaceDefStmt *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kInterface)
-            lex.scan();
-        else {
-            o = nullptr;
-            return;
-        }
-        identifierWithDefTemplateArg *id;
-        interfaceDefInner *inner;
-        parse(id, lex);
-        if (!id) {
-            panic(lex.line, lex.col, "expected interface name after `interface`");
-            return;
-        }
-        parse(inner, lex);
-        if (!inner) {
-            panic(lex.line, lex.col, "expected interfaceDefInner after identifier");
-            return;
-        }
-        o = new interfaceDefStmt{lex.curToken, id, inner};
-    }
-
-    void parse(structDefStmt *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kStruct)
-            lex.scan();
-        else {
-            o = nullptr;
-            return;
-        }
-        identifierWithDefTemplateArg *id;
-        structDefInner *inner;
-        parse(id, lex);
-        if (!id) {
-            panic(lex.line, lex.col, "expected struct name after `struct`");
-            return;
-        }
-        parse(inner, lex);
-        if (!inner) {
-            panic(lex.line, lex.col, "expected structDefInner after identifier");
-            return;
-        }
-        o = new structDefStmt{lex.curToken, id, inner};
-    }
-
-    void parse(implStmt *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kImpl)
-            lex.scan();
-        else {
-            o = nullptr;
-            return;
-        }
-        lex.saveState();
-
-        externModuleAccessExpression *first{};
-        identifierWithTemplateArg *second{};
-        implInner *inner;
-
-        parse(second, lex);
-
-        if (!second) {
-            panic(lex.line, lex.col, "expected struct name after `impl`");
-            return;
-        }
-        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
-            lex.scan();
-            parse(first, lex);
-
-            if (!first) {
-                panic(lex.line, lex.col, "expected interface name after `:`");
+                o = new interfaceDefInner{node_start_token, vecA};
+            } else {
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected `}` to close interfaceDefInner");
+                o = nullptr;
                 return;
             }
         } else {
-            // nothing happens
-        }
-
-        parse(inner, lex);
-        if (!inner) {
-            panic(lex.line, lex.col, "expected implInner after interface or struct name");
+            o = nullptr;
             return;
-        }
-        if (second) {
-            o = new implStmt{lex.curToken, first, second, inner};
-        } else {
-             o = new implStmt{lex.curToken, {}, second, inner};
         }
     }
 
+    void parse(structDefInner *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
+            lexer::token node_start_token = lex.curToken;
+            lex.scan();
+            yoi::vec<structDefInnerPair *> vecA;
+            structDefInnerPair *a = nullptr; // Initialize a
+
+            while (true) {
+                parse(a, lex);
+                if (!a) {
+                    break;
+                }
+                vecA.push_back(a);
+                a = nullptr; // Reset 'a' for next parse
+
+                if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                    lex.scan();
+                } else {
+                    break;
+                }
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
+                lex.scan();
+                o = new structDefInner{node_start_token, vecA};
+            } else {
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected `}` to close structDefInner");
+                o = nullptr;
+                return;
+            }
+        } else {
+            o = nullptr;
+            return;
+        }
+    }
+
+    void parse(implInner *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::leftBraces) {
+            lexer::token node_start_token = lex.curToken;
+            lex.scan();
+            yoi::vec<implInnerPair *> vecA;
+            implInnerPair *a = nullptr; // Initialize a
+
+            while (true) {
+                parse(a, lex);
+                if (!a) {
+                    break;
+                }
+                vecA.push_back(a);
+                a = nullptr; // Reset 'a' for next parse
+
+                if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                    lex.scan();
+                } else {
+                    break;
+                }
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
+                lex.scan();
+                o = new implInner{node_start_token, vecA};
+            } else {
+                finalizeAST_vec(vecA);
+                panic(lex.line, lex.col, "expected `}` to close implInner");
+                o = nullptr;
+                return;
+            }
+        } else {
+            o = nullptr;
+            return;
+        }
+    }
+
+    void parse(interfaceDefStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kInterface) {
+            lex.scan();
+        } else {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+
+        identifierWithDefTemplateArg *id = nullptr;
+        interfaceDefInner *inner = nullptr;
+
+        parse(id, lex);
+        if (!id) {
+            panic(lex.line, lex.col, "expected interface name after `interface`");
+            o = nullptr;
+            return;
+        }
+        parse(inner, lex);
+        if (!inner) {
+            finalizeAST(id);
+            panic(lex.line, lex.col, "expected interfaceDefInner after identifier");
+            o = nullptr;
+            return;
+        }
+        o = new interfaceDefStmt{node_start_token, id, inner};
+    }
+
+    void parse(structDefStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kStruct) {
+            lex.scan();
+        } else {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+
+        identifierWithDefTemplateArg *id = nullptr;
+        structDefInner *inner = nullptr;
+
+        parse(id, lex);
+        if (!id) {
+            panic(lex.line, lex.col, "expected struct name after `struct`");
+            o = nullptr;
+            return;
+        }
+        parse(inner, lex);
+        if (!inner) {
+            finalizeAST(id);
+            panic(lex.line, lex.col, "expected structDefInner after identifier");
+            o = nullptr;
+            return;
+        }
+        o = new structDefStmt{node_start_token, id, inner};
+    }
+
+    void parse(implStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kImpl) {
+            lex.scan();
+        } else {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+
+        externModuleAccessExpression *first = nullptr; // Represents the interface (optional)
+        identifierWithTemplateArg *second = nullptr;   // Represents the struct
+        implInner *inner = nullptr;
+
+        // Save state for potential backtracking related to the optional ':' interface
+        lex.saveState();
+
+        parse(second, lex); // Try to parse the struct name first
+        if (!second) {
+            lex.dropState(); // Drop the saved state as we failed at the very beginning of the rule
+            panic(lex.line, lex.col, "expected struct name after `impl`");
+            o = nullptr;
+            return;
+        }
+
+        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
+            lex.scan(); // Consume the colon
+            parse(first, lex); // Now try to parse the interface name
+            if (!first) {
+                finalizeAST(second);
+                lex.returnState(); // Backtrack because we tried to parse an interface but failed
+                panic(lex.line, lex.col, "expected interface name after `:`");
+                o = nullptr;
+                return;
+            }
+        } else {
+            // No colon means no interface specified, 'first' remains nullptr.
+            // No returnState() here, as this is a successful path for the "impl struct" variant.
+        }
+
+        // Now parse the inner block
+        parse(inner, lex);
+        if (!inner) {
+           
+            if (first) finalizeAST(first);
+            finalizeAST(second);
+            // Drop the state from the beginning as parsing failed to complete the 'impl' rule
+            lex.dropState();
+            panic(lex.line, lex.col, "expected implInner after interface or struct name");
+            o = nullptr;
+            return;
+        }
+
+        lex.dropState(); // Drop state on success.
+        o = new implStmt{node_start_token, first, second, inner};
+    }
+
     void parse(letAssignmentPair *&o, lexer &lex) {
-        identifier *lhs;
-        rExpr *rhs;
+        identifier *lhs = nullptr;
+        rExpr *rhs = nullptr;
+        lexer::token node_start_token = lex.curToken;
+
         parse(lhs, lex);
         if (!lhs) {
             panic(lex.line, lex.col, "expected left-hand-side in letAssignmentPair");
+            o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::assignSign) {
             lex.scan();
         } else {
+            finalizeAST(lhs);
             panic(lex.line, lex.col, "expected `=` after left-hand-side in letAssignmentPair");
+            o = nullptr;
             return;
         }
         parse(rhs, lex);
         if (!rhs) {
+            finalizeAST(lhs);
             panic(lex.line, lex.col, "expected right-hand-side in letAssignmentPair");
+            o = nullptr;
             return;
         }
-        o = new letAssignmentPair{lex.curToken, lhs, rhs};
+        o = new letAssignmentPair{node_start_token, lhs, rhs};
     }
 
     void parse(letStmt *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kLet) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        vec<letAssignmentPair *> vecA;
-        letAssignmentPair *a;
+        yoi::vec<letAssignmentPair *> vecA;
+        letAssignmentPair *a = nullptr; // Initialize a
+
         while (true) {
             parse(a, lex);
+            if (!a) { // If 'a' could not be parsed
+                if (vecA.empty()) { // If it's the first assignment and it failed
+                    panic(lex.line, lex.col, "expected letAssignmentPair after `let`");
+                } else { // If it's a subsequent assignment after a comma and it failed
+                    panic(lex.line, lex.col, "expected letAssignmentPair after comma in let statement");
+                }
+                finalizeAST_vec(vecA);
+                o = nullptr;
+                return;
+            }
             vecA.push_back(a);
+            a = nullptr; // Reset 'a' for the next parse
+
             if (lex.curToken.kind == lexer::token::tokenKind::comma) {
                 lex.scan();
             } else {
                 break;
             }
         }
-        o = new letStmt{lex.curToken, vecA};
+        o = new letStmt{node_start_token, vecA};
     }
 
     void parse(globalStmt *&o, lexer &lex) {
-        useStmt *a{};
-        interfaceDefStmt *b{};
-        structDefStmt *c{};
-        implStmt *d{};
-        letStmt *e{};
-        funcDefStmt *f{};
-        exportDecl *g{};
-        importDecl *h{};
+        // Initialize all pointers to nullptr to avoid uninitialized checks
+        useStmt *a = nullptr;
+        interfaceDefStmt *b = nullptr;
+        structDefStmt *c = nullptr;
+        implStmt *d = nullptr;
+        letStmt *e = nullptr;
+        funcDefStmt *f = nullptr;
+        exportDecl *g = nullptr;
+        importDecl *h = nullptr;
+        
+        lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
         if (a) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::useStmt, a};
+            o = new globalStmt{node_start_token, globalStmt::vKind::useStmt, {a}};
             return;
         }
 
         parse(b, lex);
         if (b) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::interfaceDefStmt, b};
+            o = new globalStmt{node_start_token, globalStmt::vKind::interfaceDefStmt, {b}};
             return;
         }
 
         parse(c, lex);
         if (c) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::structDefStmt, c};
+            o = new globalStmt{node_start_token, globalStmt::vKind::structDefStmt, {c}};
             return;
         }
 
         parse(d, lex);
         if (d) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::implStmt, d};
+            o = new globalStmt{node_start_token, globalStmt::vKind::implStmt, {d}};
             return;
         }
 
         parse(e, lex);
         if (e) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::letStmt, e};
+            o = new globalStmt{node_start_token, globalStmt::vKind::letStmt, {e}};
             return;
         }
 
         parse(f, lex);
         if (f) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::funcDefStmt, f};
+            o = new globalStmt{node_start_token, globalStmt::vKind::funcDefStmt, {f}};
             return;
         }
 
         parse(g, lex);
         if (g) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::exportDecl, g};
+            o = new globalStmt{node_start_token, globalStmt::vKind::exportDecl, {g}};
             return;
         }
 
         parse(h, lex);
         if (h) {
-            o = new globalStmt{lex.curToken, globalStmt::vKind::importDecl, h};
+            o = new globalStmt{node_start_token, globalStmt::vKind::importDecl, {h}};
             return;
         }
-        o = nullptr;
+        o = nullptr; // No global statement matched
     }
 
-    void parse(ifStmt *&o, lexer &lex) {
-        if (lex.curToken.kind == lexer::token::tokenKind::kIf) {
-            lex.scan();
-        } else {
-            o = nullptr;
-            return;
-        }
-
-        o = new ifStmt{lex.curToken, {}, {}, nullptr};
-        ifStmt::ifBlock i{};
-
-        parse(i, lex);
-        o->ifB = i;
-
-        while (lex.curToken.kind == lexer::token::tokenKind::kElif) {
-            lex.scan();
-            parse(i, lex);
-            o->elifB.push_back(i);
-        }
-
-        if (lex.curToken.kind == lexer::token::tokenKind::kElse) {
-            lex.scan();
-            parse(o->elseB, lex);
-            if (!o->elseB) {
-                panic(lex.line, lex.col, "expected codeBlock after `else`");
-            }
-        }
-    }
-
+    // ifBlock parse for ifStmt
     void parse(ifStmt::ifBlock &o, lexer &lex) {
+        // Initialize members to nullptr to be safe in case of early return
+        o.cond = nullptr;
+        o.block = nullptr;
+
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
@@ -1182,171 +1193,282 @@ namespace yoi {
 
         parse(o.cond, lex);
         if (!o.cond) {
-            panic(lex.line, lex.col, "expected rExpr after `)`");
+            panic(lex.line, lex.col, "expected rExpr after `(`");
             return;
         }
 
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
         } else {
+            finalizeAST(o.cond);
             panic(lex.line, lex.col, "expected `)` after rExpr");
             return;
         }
 
         parse(o.block, lex);
         if (!o.block) {
+            finalizeAST(o.cond);
             panic(lex.line, lex.col, "expected codeBlock after `)`");
             return;
         }
     }
 
+    void parse(ifStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kIf) {
+            lexer::token node_start_token = lex.curToken;
+            lex.scan();
+            o = new ifStmt{node_start_token, {}, {}, nullptr}; // Create ifStmt node early for cleanup
+        } else {
+            o = nullptr;
+            return;
+        }
+
+        // Parse the initial ifBlock
+        ifStmt::ifBlock temp_if_block{}; // Use a stack variable for parsing
+        parse(temp_if_block, lex);
+        if (!temp_if_block.cond || !temp_if_block.block) { // Check if parsing failed (parse(ifBlock) panics and returns)
+            finalizeAST(o);
+            o = nullptr;
+            return;
+        }
+        o->ifB = temp_if_block; // Assign the struct by value (copying the pointers)
+
+        // Parse elif blocks
+        while (lex.curToken.kind == lexer::token::tokenKind::kElif) {
+            lex.scan();
+            temp_if_block = {}; // Reset stack variable for the next elif block
+            parse(temp_if_block, lex);
+            if (!temp_if_block.cond || !temp_if_block.block) { // If elif block parsing failed
+                finalizeAST(o);
+                panic(lex.line, lex.col, "expected ifBlock after `elif`");
+                o = nullptr;
+                return;
+            }
+            o->elifB.push_back(temp_if_block); // Push a *copy* of the struct
+        }
+
+        // Parse else block
+        if (lex.curToken.kind == lexer::token::tokenKind::kElse) {
+            lex.scan();
+            parse(o->elseB, lex);
+            if (!o->elseB) {
+                finalizeAST(o);
+                panic(lex.line, lex.col, "expected codeBlock after `else`");
+                o = nullptr;
+                return;
+            }
+        }
+    }
+
     void parse(whileStmt *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kWhile) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
 
-        rExpr *expr;
-        codeBlock *block;
+        rExpr *expr = nullptr;
+        codeBlock *block = nullptr;
 
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
             panic(lex.line, lex.col, "expected `(` after `while`");
+            o = nullptr;
             return;
         }
 
         parse(expr, lex);
         if (!expr) {
-            panic(lex.line, lex.col, "expected rExpr after `)`");
+            panic(lex.line, lex.col, "expected rExpr after `(`");
+            o = nullptr;
             return;
         }
 
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
         } else {
+            finalizeAST(expr);
             panic(lex.line, lex.col, "expected `)` after rExpr");
+            o = nullptr;
             return;
         }
 
         parse(block, lex);
         if (!block) {
+            finalizeAST(expr);
             panic(lex.line, lex.col, "expected codeBlock after `)`");
+            o = nullptr;
             return;
         }
 
-        o = new whileStmt{lex.curToken, expr, block};
+        o = new whileStmt{node_start_token, expr, block};
     }
 
     void parse(forStmt *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kFor) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        inCodeBlockStmt *initStmt;
-        rExpr *cond;
-        inCodeBlockStmt *afterStmt;
-        codeBlock *block;
+
+        inCodeBlockStmt *initStmt = nullptr;
+        rExpr *cond = nullptr;
+        inCodeBlockStmt *afterStmt = nullptr;
+        codeBlock *block = nullptr;
+
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
             panic(lex.line, lex.col, "expected `(` after `for`");
+            o = nullptr;
             return;
         }
+        
         parse(initStmt, lex);
+        // Original code implies initStmt can be empty. "expected initStmt" panic removed if this is allowed.
+        
+        // Reconciling with original panic: it seems intended to be mandatory.
         if (!initStmt) {
             panic(lex.line, lex.col, "expected initStmt after `(`");
+            o = nullptr;
+            return;
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::semicolon) {
             lex.scan();
         } else {
+            finalizeAST(initStmt);
             panic(lex.line, lex.col, "expected `;` after initStmt");
+            o = nullptr;
             return;
         }
+        
         parse(cond, lex);
+        
         if (!cond) {
+            finalizeAST(initStmt);
             panic(lex.line, lex.col, "expected condition after `;`");
+            o = nullptr;
+            return;
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::semicolon) {
             lex.scan();
         } else {
+            finalizeAST(initStmt);
+            finalizeAST(cond);
             panic(lex.line, lex.col, "expected `;` after condition");
+            o = nullptr;
             return;
         }
+        
         parse(afterStmt, lex);
-        if (!cond) {
+        if (!afterStmt) {
+            finalizeAST(initStmt);
+            finalizeAST(cond);
             panic(lex.line, lex.col, "expected afterStmt after `;`");
+            o = nullptr;
+            return;
         }
+
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
         } else {
+            finalizeAST(initStmt);
+            finalizeAST(cond);
+            finalizeAST(afterStmt);
             panic(lex.line, lex.col, "expected `)` after afterStmt");
+            o = nullptr;
             return;
         }
         parse(block, lex);
         if (!block) {
+            finalizeAST(initStmt);
+            finalizeAST(cond);
+            finalizeAST(afterStmt);
             panic(lex.line, lex.col, "expected codeBlock after `)`");
+            o = nullptr;
+            return;
         }
-        o = new forStmt{lex.curToken, initStmt, cond, afterStmt, block};
+        o = new forStmt{node_start_token, initStmt, cond, afterStmt, block};
     }
 
     void parse(forEachStmt *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kForEach) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        o = new forEachStmt{lex.curToken, nullptr, nullptr, nullptr};
+        // Initialize children to nullptr
+        identifier *var = nullptr;
+        rExpr *container = nullptr;
+        codeBlock *block = nullptr;
+
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan();
         } else {
             panic(lex.line, lex.col, "expected `(` after `forEach`");
+            o = nullptr;
             return;
         }
-        parse(o->var, lex);
-        if (!o->var) {
+        parse(var, lex);
+        if (!var) {
             panic(lex.line, lex.col, "expected variable name after `(`");
+            o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::colon) {
             lex.scan();
         } else {
+            finalizeAST(var);
             panic(lex.line, lex.col, "expected `:` after variable name");
+            o = nullptr;
             return;
         }
-        parse(o->container, lex);
-        if (!o->container) {
+        parse(container, lex);
+        if (!container) {
+            finalizeAST(var);
             panic(lex.line, lex.col, "expected container after `:`");
+            o = nullptr;
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
             lex.scan();
         } else {
+            finalizeAST(var);
+            finalizeAST(container);
             panic(lex.line, lex.col, "expected `)` after container");
+            o = nullptr;
             return;
         }
-        parse(o->block, lex);
-        if (!o->block) {
+        parse(block, lex);
+        if (!block) {
+            finalizeAST(var);
+            finalizeAST(container);
             panic(lex.line, lex.col, "expected codeBlock after `)`");
+            o = nullptr;
             return;
         }
+        o = new forEachStmt{node_start_token, var, container, block};
     }
 
     void parse(returnStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kReturn) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
-            rExpr *expr;
-            parse(expr, lex);
-            if (expr) {
-                o = new returnStmt{lex.curToken, expr};
-            } else {
-                o = new returnStmt{lex.curToken, nullptr};
-            }
+            rExpr *expr = nullptr;
+            parse(expr, lex); // expr is optional
+            o = new returnStmt{node_start_token, expr};
         } else {
             o = nullptr;
         }
@@ -1354,8 +1476,9 @@ namespace yoi {
 
     void parse(continueStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kContinue) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
-            o = new continueStmt{};
+            o = new continueStmt{node_start_token}; // Add token for consistency
         } else {
             o = nullptr;
             return;
@@ -1364,8 +1487,9 @@ namespace yoi {
 
     void parse(breakStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kBreak) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
-            o = new breakStmt{};
+            o = new breakStmt{node_start_token}; // Add token for consistency
         } else {
             o = nullptr;
             return;
@@ -1373,74 +1497,89 @@ namespace yoi {
     }
 
     void parse(inCodeBlockStmt *&o, lexer &lex) {
-        o = new inCodeBlockStmt{lex.curToken, inCodeBlockStmt::vKind::ifStmt, {(void *) nullptr}};
-        parse(o->value.letStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::letStmt;
+        // Initialize all potential children to nullptr before trying to parse
+        letStmt *letStmtVal = nullptr;
+        ifStmt *ifStmtVal = nullptr;
+        breakStmt *breakStmtVal = nullptr;
+        continueStmt *continueStmtVal = nullptr;
+        returnStmt *returnStmtVal = nullptr;
+        forEachStmt *forEachStmtVal = nullptr; 
+        whileStmt *whileStmtVal = nullptr;
+        forStmt *forStmtVal = nullptr;
+        codeBlock *codeBlockVal = nullptr;
+        rExpr *rExprVal = nullptr;
+        
+        lexer::token node_start_token = lex.curToken;
+
+        // Try parsing each type, and if successful, create the inCodeBlockStmt and return.
+        // This avoids creating the inCodeBlockStmt node until a successful child parse.
+
+        parse(letStmtVal, lex);
+        if (letStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::letStmt, {letStmtVal}};
             return;
         }
-        parse(o->value.ifStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::ifStmt;
+        parse(ifStmtVal, lex);
+        if (ifStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::ifStmt, {ifStmtVal}};
             return;
         }
-        parse(o->value.breakStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::breakStmt;
+        parse(breakStmtVal, lex);
+        if (breakStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::breakStmt, {breakStmtVal}};
             return;
         }
-        parse(o->value.continueStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::continueStmt;
+        parse(continueStmtVal, lex);
+        if (continueStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::continueStmt, {continueStmtVal}};
             return;
         }
-        parse(o->value.returnStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::returnStmt;
+        parse(returnStmtVal, lex);
+        if (returnStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::returnStmt, {returnStmtVal}};
             return;
         }
-        parse(o->value.forEachStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::forEachStmt;
+        parse(forEachStmtVal, lex); // Only parse once
+        if (forEachStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forEachStmt, {forEachStmtVal}};
             return;
         }
-        parse(o->value.whileStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::whileStmt;
+        parse(whileStmtVal, lex);
+        if (whileStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::whileStmt, {whileStmtVal}};
             return;
         }
-        parse(o->value.forStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::forStmt;
+        parse(forStmtVal, lex);
+        if (forStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forStmt, {forStmtVal}};
             return;
         }
-        parse(o->value.forEachStmtVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::forEachStmt;
+        
+        parse(codeBlockVal, lex);
+        if (codeBlockVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, {codeBlockVal}};
             return;
         }
-        parse(o->value.codeBlockVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::codeBlock;
-            return;
-        }
-        parse(o->value.rExprVal, lex);
-        if (o->value.ptr) {
-            o->kind = inCodeBlockStmt::vKind::rExpr;
+        // rExpr should typically be last, as it's the most general expression statement.
+        parse(rExprVal, lex);
+        if (rExprVal) { 
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::rExpr, {rExprVal}};
             return;
         }
 
-        delete o;
-        o = nullptr;
+        o = nullptr; // If no statement type matched
     }
 
     void parse(innerMethodDecl *&o, lexer &lex) {
         lex.saveState();
-        o = new innerMethodDecl{lex.curToken, nullptr, nullptr, nullptr};
+        lexer::token node_start_token = lex.curToken;
+
+        o = new innerMethodDecl{node_start_token, nullptr, nullptr, nullptr};
+
         parse(o->name, lex);
         if (!o->name) {
             lex.returnState();
-            delete o;
+            delete o; // Delete the partially constructed node
             o = nullptr;
             return;
         }
@@ -1476,7 +1615,10 @@ namespace yoi {
 
     void parse(innerMethodDef *&o, lexer &lex) {
         lex.saveState();
-        o = new innerMethodDef{lex.curToken, nullptr, nullptr, nullptr, nullptr};
+        lexer::token node_start_token = lex.curToken;
+
+        o = new innerMethodDef{node_start_token, nullptr, nullptr, nullptr, nullptr};
+
         parse(o->name, lex);
         if (!o->name) {
             lex.returnState();
@@ -1525,100 +1667,149 @@ namespace yoi {
     }
 
     void parse(constructorDecl *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kConstructor) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        o = new constructorDecl{lex.curToken, nullptr};
-        parse(o->args, lex);
-        if (!o->args) {
+        definitionArguments *args = nullptr;
+        parse(args, lex);
+        if (!args) {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
+            o = nullptr;
             return;
         }
+        o = new constructorDecl{node_start_token, args};
     }
 
     void parse(constructorDef *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kConstructor) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
             o = nullptr;
             return;
         }
-        o = new constructorDef{lex.curToken, nullptr, nullptr};
-        parse(o->args, lex);
-        if (!o->args) {
+        definitionArguments *args = nullptr;
+        codeBlock *block = nullptr;
+
+        parse(args, lex);
+        if (!args) {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
+            o = nullptr;
             return;
         }
-        parse(o->block, lex);
-        if (!o->block) {
+        parse(block, lex);
+        if (!block) {
+            finalizeAST(args);
             panic(lex.line, lex.col, "expected codeBlock after arguments");
+            o = nullptr;
             return;
         }
+        o = new constructorDef{node_start_token, args, block};
     }
 
     void parse(hoshiModule *&o, lexer &lex) {
-        vec<globalStmt *> vecA;
-        globalStmt *a;
+        yoi::vec<globalStmt *> vecA;
+        globalStmt *a = nullptr; // Initialize a
+        
+        lexer::token node_start_token = lex.curToken;
+
         while (true) {
             if (lex.curToken.kind == lexer::token::tokenKind::eof)
                 break;
             parse(a, lex);
-            if (!a) {
+            if (!a) { // If parsing a global statement fails, it's an error.
+                finalizeAST_vec(vecA);
                 panic(lex.line, lex.col, "expected globalStmt");
+                o = nullptr;
                 return;
             }
             vecA.push_back(a);
+            a = nullptr; // Reset 'a' for the next parse call
         }
-        o = new hoshiModule{lex.curToken, vecA};
+        o = new hoshiModule{node_start_token, vecA};
     }
 
     void parse(importDecl *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kImport) {
+            lexer::token node_start_token = lex.curToken;
             lex.scan();
         } else {
+            o = nullptr; // Consistent with other functions
             return;
         }
-        innerMethodDecl *a;
+
+        innerMethodDecl *a = nullptr; 
         parse(a, lex);
-        if (a) {
-            o = new importDecl{lex.curToken, a};
-        } else {
-            panic(lex.line, lex.col, "expected importInner after `import`");
+        if (!a) {
+            panic(lex.line, lex.col, "expected innerMethodDecl after `import`"); // Corrected panic message
+            o = nullptr;
+            return;
         }
-        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::kFrom, lex.line, lex.col, "expected `from` after importDecl");
-        lex.scan();
-        if (lex.curToken.kind == lexer::token::tokenKind::string) {
-            o->from_path = lex.curToken;
-            lex.scan();
+
+        o = new importDecl{node_start_token, a}; // Create the node here, now that 'a' is successfully parsed
+
+        if (lex.curToken.kind == lexer::token::tokenKind::kFrom) {
+            lex.scan(); // Consume 'from'
+            if (lex.curToken.kind == lexer::token::tokenKind::string) {
+                o->from_path = lex.curToken;
+                lex.scan(); // Consume string
+            } else {
+                finalizeAST(o);
+                panic(lex.line, lex.col, "expected string literal after `from` in import declaration");
+                o = nullptr;
+                return;
+            }
+        } else {
+            finalizeAST(o);
+            panic(lex.line, lex.col, "expected `from` after import declaration");
+            o = nullptr;
+            return;
         }
     }
 
     void parse(exportDecl *&o, lexer &lex) {
+        lexer::token node_start_token;
         if (lex.curToken.kind == lexer::token::tokenKind::kExport) {
+            node_start_token = lex.curToken;
             lex.scan();
         } else {
+            o = nullptr; // Consistent
             return;
         }
-        typeSpec *a;
+
+        typeSpec *a = nullptr; 
         parse(a, lex);
-        if (a) {
-            o = new exportDecl{lex.curToken, a, nullptr};
-        } else {
-            panic(lex.line, lex.col, "expected externModuleAccessExpression after `export`");
+        if (!a) {
+            panic(lex.line, lex.col, "expected typeSpec after `export`"); // Corrected panic message
+            o = nullptr;
+            return;
         }
 
-        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::kAs, lex.line, lex.col, "expected `as` after exportDecl");
-        lex.scan();
+        o = new exportDecl{node_start_token, a, nullptr}; // Create the node here, now that 'a' is parsed.
 
-        identifier *b;
-        parse(b, lex);
-        if (b) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kAs) {
+            lex.scan(); // Consume 'as'
+            identifier *b = nullptr;
+            parse(b, lex);
+            if (!b) {
+                finalizeAST(o);
+                panic(lex.line, lex.col, "expected identifier after `as` in export declaration");
+                o = nullptr;
+                return;
+            }
             o->as = b;
         } else {
-            panic(lex.line, lex.col, "expected identifier after exportDecl");
+            finalizeAST(o);
+            panic(lex.line, lex.col, "expected `as` after export declaration");
+            o = nullptr;
+            return;
         }
     }
 } // namespace yoi

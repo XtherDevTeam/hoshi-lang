@@ -700,8 +700,6 @@ namespace yoi {
         while (it + 1 != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
             it++;
         }
-        // from this point, it try to evaluate and find the lhs of the member expression
-        // however, we must take an specific occasion into account, which is the struct construction and interface construction.
         
         bool whetherLastTerm = it + 1 == memberExpr->getTerms().end();
 
@@ -718,60 +716,59 @@ namespace yoi {
             }
             auto rhsIt = *it;
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (rhsIt->isInvocation()) {
-                if (termType->type == IRValueType::valueType::structObject) {
-                    // what we get so far is the struct object, which can be the `this` pointer,
-                    // also, we need to inquiry the function index from nameInfo to invoke it.
-                    auto memberName = rhsIt->id;
-                    try {
+
+            for (auto& sub : rhsIt->getSubscript()) {
+                if (sub->isInvocation()) {
+                    if (termType->type == IRValueType::valueType::structObject) {
+                        auto memberName = rhsIt->id;
+                        try {
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto &arg : sub->args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                            }
+                            auto actualName = memberName->getId().get().strVal + getFuncUniqueNameStr(argTypes);
+
+                            auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(actualName);
+                            switch (nameInfo.type) {
+                                case IRStructDefinition::nameInfo::nameType::field: {
+                                    panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
+                                    break;
+                                }
+                                case IRStructDefinition::nameInfo::nameType::method: {
+                                    auto funcIndex = nameInfo.index;
+                                    auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
+                                    
+                                    if (termType->typeAffiliateModule == currentModuleIndex) {
+                                        moduleContext->getIRBuilder().invokeMethodOp(funcIndex, sub->args->get().size(), func->returnType);
+                                    } else {
+                                        auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
+                                        moduleContext->getIRBuilder().invokeMethodOp(externEntry, sub->args->get().size(), func->returnType, true);
+                                    }
+                                }
+                            }
+                        } catch (std::out_of_range &e) {
+                            panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function overload: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
+                        }
+                    } else if (termType->type == IRValueType::valueType::interfaceObject) {
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                        for (auto &arg : rhsIt->args->get()) {
+                        for (auto &arg : sub->args->get()) {
                             visit(arg);
                             argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                         }
-                        auto actualName = memberName->getId().get().strVal + getFuncUniqueNameStr(argTypes);
 
-                        auto nameInfo = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->lookupName(actualName);
-                        switch (nameInfo.type) {
-                            case IRStructDefinition::nameInfo::nameType::field: {
-                                // crazy
-                                panic(rhsIt->getLine(), rhsIt->getColumn(), "Field cannot be parsed within an invocation");
-                                break;
-                            }
-                            case IRStructDefinition::nameInfo::nameType::method: {
-                                auto funcIndex = nameInfo.index;
-                                auto func = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->functionTable[funcIndex];
-                                
-                                if (termType->typeAffiliateModule == currentModuleIndex) {
-                                    moduleContext->getIRBuilder().invokeMethodOp(funcIndex, rhsIt->args->get().size(), func->returnType);
-                                } else {
-                                    // extern function invocation
-                                    // add extern entry or use existing one
-                                    auto externEntry = addExternEntryIfNotExists(termType->typeAffiliateModule, func->name);
-                                    moduleContext->getIRBuilder().invokeMethodOp(externEntry, rhsIt->args->get().size(), func->returnType, true);
-                                }
-                            }
-                        }
-                    } catch (std::out_of_range &e) {
-                        panic(rhsIt->getLine(), rhsIt->getColumn(), "Undefined field or function overload: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
+                        auto methodName = rhsIt->id->getId().get().strVal + getFuncUniqueNameStr(argTypes);
+                        auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap.getIndex(methodName);
+                        auto method = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap[methodIdx];
+                        yoi_assert(method->argumentTypes.size() == sub->args->get().size(), rhsIt->getLine(), rhsIt->getColumn(), "Argument count does not match");
+                        moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, sub->args->get().size(), method->returnType);
                     }
-                } else if (termType->type == IRValueType::valueType::interfaceObject) {
-                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                    // this pointer has been passed as the first argument
-                    for (auto &arg : rhsIt->args->get()) {
-                        visit(arg);
-                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                    }
-
-                    auto methodName = rhsIt->id->getId().get().strVal + getFuncUniqueNameStr(argTypes);
-                    auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap.getIndex(methodName);
-                    auto method = moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->interfaceTable[termType->typeIndex]->methodMap[methodIdx];
-                    yoi_assert(method->argumentTypes.size() == rhsIt->args->get().size(), rhsIt->getLine(), rhsIt->getColumn(), "Argument count does not match"); // this
-                    moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, rhsIt->args->get().size(), method->returnType);
+                } else if (sub->isSubscript()) {
+                    panic(rhsIt->getLine(), rhsIt->getColumn(), "TODO: Subscript on member expression not implemented yet.");
                 }
-            } else if (rhsIt->isSubscript()) {
-                // TODO: subscript
-            } else {
+            }
+
+            if (rhsIt->getSubscript().empty()) {
                 yoi_assert(termType->type == IRValueType::valueType::structObject, (**it).getLine(), (**it).getColumn(), "Not struct type");
                 auto memberName = rhsIt->id;
                 if(memberName->hasTemplateArg()) {
@@ -840,247 +837,356 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visit(yoi::subscriptExpr *subscriptExpr, bool isStoreOp) {
-        if (subscriptExpr->isSubscript()) {
-            // TODO: subscript
-            return {};
-        }
+        if (subscriptExpr->getSubscript().empty()) {
+                return visit(subscriptExpr->id, isStoreOp);
+            }
+        
+            auto it = subscriptExpr->getSubscript().begin();
+            auto end = subscriptExpr->getSubscript().end();
+            auto& first_term = *it;
 
-        if (subscriptExpr->isInvocation()) {
-            auto baseName = subscriptExpr->id->getId().get().strVal;
+            // Determine if the base `id` is a type name.
+            bool is_a_type = false;
+            try {
+                parseTypeSpec(subscriptExpr->id);
+                is_a_type = true;
+            } catch (const std::runtime_error&) {
+                is_a_type = false;
+            }
 
-            // --- 1. Explicit Template Instantiation ---
-            if (subscriptExpr->id->hasTemplateArg()) {
-                auto concreteTemplateArgs = parseTemplateArgs(subscriptExpr->id->getArg());
+            bool first_term_handled = false;
 
-                // Try as function template
-                if (irModule->functionTemplateTable.contains(baseName)) {
-                    auto funcTemplate = irModule->functionTemplateTable[baseName];
-                    auto astNode = irModule->funcTemplateAsts.at(baseName);
-                    auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, concreteTemplateArgs);
-                    auto specializedFunc = irModule->functionTable[specializedFuncIndex];
-
-                    for (auto& arg : subscriptExpr->args->get()) {
-                        visit(arg);
-                    }
-                    moduleContext->getIRBuilder().invokeOp(specializedFuncIndex, subscriptExpr->args->get().size(), specializedFunc->returnType);
-                    return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+            // Case 1: Array initializer like `int[2](...)`
+            if (is_a_type && first_term->isSubscript()) {
+                auto dim_it = it;
+                while (dim_it != end && (*dim_it)->isSubscript()) {
+                    visit((*dim_it)->expr);
+                    // TODO: Collect dimension from stack
+                    dim_it++;
                 }
 
-                // Try as struct template constructor
-                if (irModule->structTemplateTable.contains(baseName)) {
-                    if (irModule->templateImplAsts.count(baseName)) {
-                        auto pureTemplateAst = irModule->templateImplAsts.at(baseName);
+                if (dim_it != end && (*dim_it)->isInvocation()) {
+                    for (auto& val : (*dim_it)->args->get()) {
+                        visit(val);
+                        // TODO: Collect initializer value from stack
+                    }
+                    it = ++dim_it;
+                } else {
+                    it = dim_it;
+                }
+                // TODO: Create array and initialize it.
+                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Array initializer is not implemented yet.");
+            }
+            // Case 2: First term is an invocation `id(...)`
+            else if (first_term->isInvocation()) {
+                first_term_handled = true;
+                // This block is adapted from the old visitor's logic for `isInvocation()`.
+                auto baseName = subscriptExpr->id->getId().get().strVal;
+                auto args = first_term->args;
 
-                        auto specializedStructIndex = specializeStructTemplate(baseName, concreteTemplateArgs, pureTemplateAst);
-                        auto specializedStruct = irModule->structTable[specializedStructIndex];
+                // --- 1. Explicit Template Instantiation ---
+                if (subscriptExpr->id->hasTemplateArg()) {
+                    auto concreteTemplateArgs = parseTemplateArgs(subscriptExpr->id->getArg());
 
-                        moduleContext->getIRBuilder().newStructOp(specializedStructIndex);
+                    // Try as function template
+                    if (irModule->functionTemplateTable.contains(baseName)) {
+                        auto funcTemplate = irModule->functionTemplateTable[baseName];
+                        auto astNode = irModule->funcTemplateAsts.at(baseName);
+                        auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, concreteTemplateArgs);
+                        auto specializedFunc = irModule->functionTable[specializedFuncIndex];
 
+                        for (auto& arg : args->get()) {
+                            visit(arg);
+                        }
+                        moduleContext->getIRBuilder().invokeOp(specializedFuncIndex, args->get().size(), specializedFunc->returnType);
+                    }
+                    // Try as struct template constructor
+                    else if (irModule->structTemplateTable.contains(baseName)) {
+                        if (irModule->templateImplAsts.count(baseName)) {
+                            auto pureTemplateAst = irModule->templateImplAsts.at(baseName);
+
+                            auto specializedStructIndex = specializeStructTemplate(baseName, concreteTemplateArgs, pureTemplateAst);
+                            auto specializedStruct = irModule->structTable[specializedStructIndex];
+
+                            moduleContext->getIRBuilder().newStructOp(specializedStructIndex);
+
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto& arg : args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                            }
+
+                            auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
+                            yoi_assert(specializedStruct->nameIndexMap.count(ctorName), subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching constructor for specialized struct " + wstring2string(specializedStruct->name));
+
+                            auto ctorInfo = specializedStruct->lookupName(ctorName);
+                            auto ctorFunc = irModule->functionTable[ctorInfo.index];
+                            moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, args->get().size(), ctorFunc->returnType);
+                        } else {
+                            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No implementation found for template: " + wstring2string(baseName));
+                        }
+                    } else {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching function or struct template for explicit instantiation of: " + wstring2string(baseName));
+                    }
+                } else {
+                    bool resolved = false;
+                    // Try regular function
+                    try {
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                        for (auto& arg : subscriptExpr->args->get()) {
+                        for (auto &arg : args->get()) {
                             visit(arg);
                             argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                         }
+                        auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
 
-                        auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
-                        yoi_assert(specializedStruct->nameIndexMap.count(ctorName), subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching constructor for specialized struct " + wstring2string(specializedStruct->name));
+                        auto funcIndex = irModule->functionTable.getIndex(mangledFuncName);
+                        auto func = irModule->functionTable[funcIndex];
+                        moduleContext->getIRBuilder().invokeOp(funcIndex, args->get().size(), func->returnType);
+                        resolved = true;
+                    } catch (std::out_of_range &) {}
 
-                        auto ctorInfo = specializedStruct->lookupName(ctorName);
-                        auto ctorFunc = irModule->functionTable[ctorInfo.index];
-                        moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, subscriptExpr->args->get().size(), ctorFunc->returnType);
-                    } else {
-                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No implementation found for template: " + wstring2string(baseName));
-                    }
-                    return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-                }
-                
-                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching function or struct template for explicit instantiation of: " + wstring2string(baseName));
-            }
-            
-            // Try regular function
-            try {
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                for (auto &arg : subscriptExpr->args->get()) {
-                    visit(arg);
-                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                }
-                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
-
-                auto funcIndex = irModule->functionTable.getIndex(mangledFuncName);
-                auto func = irModule->functionTable[funcIndex];
-                moduleContext->getIRBuilder().invokeOp(funcIndex, subscriptExpr->args->get().size(), func->returnType);
-                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::out_of_range &) {}
-
-            // Try implicit function template instantiation
-            try {
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                for (auto &arg : subscriptExpr->args->get()) {
-                    visit(arg);
-                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                }
-                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
-                if (irModule->functionTemplateTable.contains(baseName)) {
-                    auto funcTemplate = irModule->functionTemplateTable[baseName];
-                    auto astNode = irModule->funcTemplateAsts.at(baseName);
-                    
-                    // Deduce template arguments
-                    // yoi_assert(argTypes.size() == funcTemplate->templateArguments.size(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: argument count mismatch.");
-                    yoi::vec<std::shared_ptr<IRValueType>> deducedArgs(funcTemplate->templateArguments.size());
-                    for (yoi::indexT i = 0; i < argTypes.size(); i++) {
-                        if (funcTemplate->templateDefinition->argumentTypes[i]->type == IRValueType::valueType::incompleteTemplateType) {
-                            auto &srcTypeToPlace = argTypes[i];
-                            if(deducedArgs[i]) {
-                                yoi_assert(*deducedArgs[i] == *srcTypeToPlace, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Same template argument type cannot be interpreted as different types.");
+                    // Try implicit function template instantiation
+                    if (!resolved) {
+                        try {
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto &arg : args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
                             }
-                            deducedArgs[i] = srcTypeToPlace;
-                        }
+                            if (irModule->functionTemplateTable.contains(baseName)) {
+                                auto funcTemplate = irModule->functionTemplateTable[baseName];
+                                auto astNode = irModule->funcTemplateAsts.at(baseName);
+
+                                yoi::vec<std::shared_ptr<IRValueType>> deducedArgs(funcTemplate->templateArguments.size());
+                                for (yoi::indexT i = 0; i < argTypes.size(); i++) {
+                                    if (i < funcTemplate->templateDefinition->argumentTypes.size() && funcTemplate->templateDefinition->argumentTypes[i]->type == IRValueType::valueType::incompleteTemplateType) {
+                                        auto &srcTypeToPlace = argTypes[i];
+                                        auto incompleteTypeIndex = funcTemplate->templateDefinition->argumentTypes[i]->typeIndex;
+                                        if(deducedArgs[incompleteTypeIndex]) {
+                                            yoi_assert(*deducedArgs[incompleteTypeIndex] == *srcTypeToPlace, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Same template argument type cannot be interpreted as different types.");
+                                        }
+                                        deducedArgs[incompleteTypeIndex] = srcTypeToPlace;
+                                    }
+                                }
+                                for (yoi::indexT i = 0; i < deducedArgs.size(); i++) {
+                                    yoi_assert(deducedArgs[i] != nullptr, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: incomplete type: " + yoi::wstring2string(funcTemplate->templateArguments.getKey(i)));
+                                }
+
+                                auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, deducedArgs);
+                                auto specializedFunc = irModule->functionTable[specializedFuncIndex];
+
+                                moduleContext->getIRBuilder().invokeOp(specializedFuncIndex, args->get().size(), specializedFunc->returnType);
+                                resolved = true;
+                            }
+                        } catch(std::out_of_range &) {}
                     }
-                    // check if all deduced arguments are complete
-                    for (yoi::indexT i = 0; i < deducedArgs.size(); i++) {
-                        yoi_assert(deducedArgs[i] != nullptr, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot deduce template arguments: incomplete type: " + yoi::wstring2string(funcTemplate->templateArguments.getKey(i)));
+
+                    // Try struct constructor
+                    if (!resolved) {
+                        try {
+                            auto structIndex = irModule->structTable.getIndex(baseName);
+                            auto structType = irModule->structTable[structIndex];
+                            moduleContext->getIRBuilder().newStructOp(structIndex);
+
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto &arg : args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                            }
+
+                            auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
+                            auto ctorInfo = structType->lookupName(ctorName);
+                            auto ctorFunc = irModule->functionTable[ctorInfo.index];
+                            moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, argTypes.size(), ctorFunc->returnType);
+                            resolved = true;
+                        } catch (std::out_of_range &) {}
                     }
-                    
-                    auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, argTypes);
-                    auto specializedFunc = irModule->functionTable[specializedFuncIndex];
-                    
-                    // Arguments are already on the stack, just invoke
-                    moduleContext->getIRBuilder().invokeOp(specializedFuncIndex, subscriptExpr->args->get().size(), specializedFunc->returnType);
-                    return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+
+                    // Try interface constructor
+                    if (!resolved) {
+                        try {
+                            auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
+                            moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
+
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto &arg : args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                            }
+
+                            yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument (the struct instance).");
+
+                            auto structValue = argTypes[0];
+
+                            auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, {structValue->typeAffiliateModule, structValue->typeIndex});
+                            auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                            moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
+                            resolved = true;
+                        } catch (std::out_of_range &) {}
+                    }
+
+                    // Try imported function
+                    if (!resolved) {
+                        try {
+                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                            for (auto &arg : args->get()) {
+                                visit(arg);
+                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                            }
+
+                            auto importedFunctionIndex = irModule->externTable.getIndex(baseName);
+                            yoi_assert(irModule->externTable[importedFunctionIndex]->type == IRExternEntry::externType::importedFunction, subscriptExpr->getLine(), subscriptExpr->getColumn(), "This is not an imported function: " + yoi::wstring2string(baseName));
+                            auto importedFunc = moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries[
+                                irModule->externTable[importedFunctionIndex]->affiliateModule].importedFunctionTable[
+                                    irModule->externTable[importedFunctionIndex]->itemIndex];
+
+                            moduleContext->getIRBuilder().invokeImported(irModule->externTable[importedFunctionIndex]->affiliateModule, irModule->externTable[importedFunctionIndex]->itemIndex, argTypes.size(), importedFunc->returnType);
+                            resolved = true;
+                        } catch (std::out_of_range &) {}
+                    }
+
+                    if (!resolved) {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct, interface, or template: " + wstring2string(baseName));
+                    }
                 }
-            } catch(std::out_of_range &e) {
-                // This might fail if template deduction is complex. For now, we continue.
+            }
+            // Case 4: First term is a subscript on a variable `var[...]`
+            else { // first_term->isSubscript()
+                visit(subscriptExpr->id, false); // Load the variable
             }
 
-            // Try struct constructor
-            try {
-                auto structIndex = irModule->structTable.getIndex(baseName);
-                auto structType = irModule->structTable[structIndex];
-                moduleContext->getIRBuilder().newStructOp(structIndex);
+            if (first_term_handled) {
+                it++; // Move past the first term if we handled it.
+            }
 
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                for (auto &arg : subscriptExpr->args->get()) {
-                    visit(arg);
-                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+            // --- Loop for subsequent terms ---
+            while (it != end) {
+                auto current_term = *it;
+                bool isLastTerm = (std::next(it) == end);
+
+                auto object_on_stack_type = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
+                if (current_term->isSubscript()) {
+                    // Case 3: Array access `...[index]`
+                    // TODO: Assert object_on_stack_type is an array type.
+                    visit(current_term->expr); // Pushes index onto stack.
+
+                    if (isStoreOp && isLastTerm) {
+                        moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
+                    } else {
+                        // TODO: Need to know element type to load.
+                        // auto element_type = object_on_stack_type->getElementType();
+                        // moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, element_type);
+                    }
+                    panic(current_term->getLine(), current_term->getColumn(), "TODO: Array access is not fully implemented yet.");
+
+                } else if (current_term->isInvocation()) {
+                    // Case 3: Function call on object `...(...)`
+                    panic(current_term->getLine(), current_term->getColumn(), "TODO: Operator '()' overloading is not implemented yet.");
                 }
-                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
-                
-                auto ctorName = L"constructor" + getFuncUniqueNameStr(argTypes);
-                auto ctorInfo = structType->lookupName(ctorName);
-                auto ctorFunc = irModule->functionTable[ctorInfo.index];
-                moduleContext->getIRBuilder().invokeMethodOp(ctorInfo.index, argTypes.size(), ctorFunc->returnType);
-                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::out_of_range &) {}
+                it++;
+            }
 
-            // Try interface constructor
-            try {
-                auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
-                moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
-
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                for (auto &arg : subscriptExpr->args->get()) {
-                    visit(arg);
-                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                }
-                auto mangledFuncName = baseName + getFuncUniqueNameStr(argTypes);
-
-                yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument (the struct instance).");
-                
-                auto structValue = argTypes[0];
-                
-                auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, {structValue->typeAffiliateModule, structValue->typeIndex});
-                auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
-                moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
-                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::out_of_range &) {}
-
-            // Try imported function
-            try {
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                for (auto &arg : subscriptExpr->args->get()) {
-                    visit(arg);
-                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                }
-
-                auto importedFunctionIndex = irModule->externTable.getIndex(baseName);
-                yoi_assert(irModule->externTable[importedFunctionIndex]->type == IRExternEntry::externType::importedFunction, subscriptExpr->getLine(), subscriptExpr->getColumn(), "This is not an imported function: " + yoi::wstring2string(baseName));
-                auto importedFunc = moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries[
-                    irModule->externTable[importedFunctionIndex]->affiliateModule].importedFunctionTable[
-                        irModule->externTable[importedFunctionIndex]->itemIndex];
-
-                moduleContext->getIRBuilder().invokeImported(irModule->externTable[importedFunctionIndex]->affiliateModule, irModule->externTable[importedFunctionIndex]->itemIndex, argTypes.size(), importedFunc->returnType);
-                return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-            } catch (std::out_of_range &) {}
-
-            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Undefined function, struct, interface, or template: " + wstring2string(baseName));
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
-
-        // This is an identifier, not an invocation or subscript.
-        return visit(subscriptExpr->id, isStoreOp);
-    }
 
     yoi::indexT visitor::visitExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule, bool isStoreOp) {
-        if (!subscriptExpr->isInvocation()) {
+        if (subscriptExpr->getSubscript().empty()) {
             return visitExtern(subscriptExpr->id, targetModule, isStoreOp);
         }
-        
-        auto baseName = subscriptExpr->id->getId().get().strVal;
-        yoi::wstr mangledName = baseName;
 
-        // Evaluate arguments to get their types for mangling
-        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-        for (auto &arg : subscriptExpr->args->get()) {
-            visit(arg);
-            argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-        }
+        auto it = subscriptExpr->getSubscript().begin();
+        auto end = subscriptExpr->getSubscript().end();
+        auto& first_term = *it;
 
-        if (subscriptExpr->id->hasTemplateArg()) {
-            auto concreteTemplateArgs = parseTemplateArgs(subscriptExpr->id->getArg());
-            mangledName = getMangledTemplateName(baseName, concreteTemplateArgs);
-        }
-        
         auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
 
-        // Try finding an extern struct constructor
+        bool is_a_type = false;
         try {
-            // If the mangled name matches a struct in the target module, it's a constructor call.
-            auto structIndex = targetedModule->structTable.getIndex(mangledName);
-            auto externStructIndex = addExternEntryIfNotExists(targetModule, mangledName);
-            moduleContext->getIRBuilder().newStructOp(externStructIndex, true);
+            parseTypeSpecExtern(subscriptExpr->id, targetModule);
+            is_a_type = true;
+        } catch (const std::runtime_error&) {
+            is_a_type = false;
+        }
 
-            // Re-visit args since they were consumed by type analysis
-            for (auto &arg : subscriptExpr->args->get()) {
+        bool first_term_handled = false;
+
+        if (is_a_type && first_term->isSubscript()) {
+            // Extern array initializer
+            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Extern array initializer is not implemented yet.");
+        } else if (first_term->isInvocation()) {
+            first_term_handled = true;
+            auto baseName = subscriptExpr->id->getId().get().strVal;
+            auto args = first_term->args;
+            yoi::wstr mangledName = baseName;
+
+            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+            for (auto &arg : args->get()) {
                 visit(arg);
+                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
             }
-            
-            auto ctorNamePart = L"constructor" + getFuncUniqueNameStr(argTypes);
-            auto ctorFullName = mangledName + L"::" + ctorNamePart;
-            
-            auto externCtorIndex = addExternEntryIfNotExists(targetModule, ctorFullName);
-            auto ctorFunc = targetedModule->functionTable[ctorFullName]; // for return type
-            moduleContext->getIRBuilder().invokeMethodOp(externCtorIndex, argTypes.size(), ctorFunc->returnType, true);
 
-            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-        } catch(std::out_of_range&) {}
-
-        // Try finding an extern function (regular, overloaded, or specialized template)
-        try {
-            auto funcMangledName = mangledName + getFuncUniqueNameStr(argTypes);
-            auto externFuncIndex = addExternEntryIfNotExists(targetModule, funcMangledName);
-            auto func = targetedModule->functionTable[funcMangledName];
-
-            // Re-visit args
-            for (auto &arg : subscriptExpr->args->get()) {
-                visit(arg);
+            if (subscriptExpr->id->hasTemplateArg()) {
+                auto concreteTemplateArgs = parseTemplateArgs(subscriptExpr->id->getArg());
+                mangledName = getMangledTemplateName(baseName, concreteTemplateArgs);
             }
-            
-            moduleContext->getIRBuilder().invokeOp(externFuncIndex, argTypes.size(), func->returnType, true);
-            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-        } catch(std::out_of_range&) {}
 
-        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find extern function or struct constructor: " + wstring2string(mangledName));
-        return {};
-    }
+            bool resolved = false;
+
+            // Try finding an extern struct constructor
+            try {
+                auto structIndex = targetedModule->structTable.getIndex(mangledName);
+                auto externStructIndex = addExternEntryIfNotExists(targetModule, mangledName);
+                moduleContext->getIRBuilder().newStructOp(externStructIndex, true);
+
+                auto ctorNamePart = L"constructor" + getFuncUniqueNameStr(argTypes);
+                auto ctorFullName = mangledName + L"::" + ctorNamePart;
+                
+                auto externCtorIndex = addExternEntryIfNotExists(targetModule, ctorFullName);
+                auto ctorFunc = targetedModule->functionTable[ctorFullName];
+                moduleContext->getIRBuilder().invokeMethodOp(externCtorIndex, argTypes.size(), ctorFunc->returnType, true);
+                resolved = true;
+            } catch(std::out_of_range&) {}
+
+            // Try finding an extern function
+            if (!resolved) {
+                try {
+                    auto funcMangledName = mangledName + getFuncUniqueNameStr(argTypes);
+                    auto externFuncIndex = addExternEntryIfNotExists(targetModule, funcMangledName);
+                    auto func = targetedModule->functionTable[funcMangledName];
+
+                    moduleContext->getIRBuilder().invokeOp(externFuncIndex, argTypes.size(), func->returnType, true);
+                    resolved = true;
+                } catch(std::out_of_range&) {}
+            }
+
+            if (!resolved) {
+                panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find extern function or struct constructor: " + wstring2string(mangledName));
+            }
+        } else { // first_term->isSubscript()
+            visitExtern(subscriptExpr->id, targetModule, false);
+        }
+
+        if (first_term_handled) {
+            it++;
+        }
+
+        while (it != end) {
+            auto current_term = *it;
+            bool is_last_term = (std::next(it) == end);
+
+            auto object_on_stack_type = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
+            if (current_term->isSubscript()) {
+                panic(current_term->getLine(), current_term->getColumn(), "TODO: Extern array access is not fully implemented yet.");
+            } else if (current_term->isInvocation()) {
+                panic(current_term->getLine(), current_term->getColumn(), "TODO: Extern operator '()' overloading is not implemented yet.");
+            }
+            it++;
+        }
+
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        }
 
     yoi::indexT visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
@@ -1717,16 +1823,25 @@ namespace yoi {
     }
 
     IRValueType visitor::parseTypeSpec(yoi::subscriptExpr *subscriptExpr) {
-        if (subscriptExpr->isInvocation()) {
-            // TODO: method call
-            return {IRValueType::valueType::null};
-        } else if (subscriptExpr->isSubscript()) {
-            // TODO: subscript
+        if (!subscriptExpr->getSubscript().empty()) {
+            // This is an array type like `int[10]`
+            auto baseType = parseTypeSpec(subscriptExpr->id);
+            yoi::vec<yoi::indexT> dimensions;
+            for (auto& sub : subscriptExpr->getSubscript()) {
+                yoi_assert(sub->isSubscript(), sub->getLine(), sub->getColumn(), "Expected dimension size for array type.");
+                // For type parsing, we don't evaluate the expression, but we'd need a way
+                // to represent the dimension. For now, let's assume it's a literal.
+                // A full implementation would require constant expression evaluation here.
+                panic(sub->getLine(), sub->getColumn(), "TODO: Array type specifier with non-literal size not implemented yet.");
+            }
+            // TODO: Create and return an array type.
+            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Array type parsing not fully implemented.");
             return {IRValueType::valueType::null};
         } else {
             return parseTypeSpec(subscriptExpr->id);
         }
     }
+
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
         auto mod = moduleContext->getCompilerContext()->getImportedModule(targetModule);
@@ -1747,15 +1862,14 @@ namespace yoi {
     }
 
     IRValueType visitor::parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule) {
-        if (subscriptExpr->isInvocation()) {
-            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier with function invocation");
-        } else if (subscriptExpr->isSubscript()) {
-            // TODO: subscript
-            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Invalid type specifier with subscript");
+        if (!subscriptExpr->getSubscript().empty()) {
+            auto baseType = parseTypeSpecExtern(subscriptExpr->id, targetModule);
+            // TODO: Create and return an extern array type, creating extern entries for dimensions if necessary.
+            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Extern array type parsing not fully implemented.");
+            return {IRValueType::valueType::null};
         } else {
             return parseTypeSpecExtern(subscriptExpr->id, targetModule);
         }
-        return {IRValueType::valueType::null};
     }
 
     IRValueType visitor::parseTypeSpec(yoi::typeSpec *typeSpec) {

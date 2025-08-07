@@ -247,6 +247,11 @@ namespace yoi {
     class subscript : public AST {
     public:
         rExpr *expr;
+        invocationArguments *args;
+
+        bool isInvocation() const;
+
+        bool isSubscript() const;
 
         rExpr &getExpr() const;
     };
@@ -278,20 +283,11 @@ namespace yoi {
     class subscriptExpr : public AST {
     public:
         identifierWithTemplateArg *id;
-        invocationArguments *args;
-        subscript *subscriptVal;
-
-        bool isInvocation() const;
-
-        bool isSubscript() const;
+        vec<subscript *> subscriptVal;
 
         bool isIdentifier() const;
 
-        identifierWithTemplateArg &getId() const;
-
-        invocationArguments &getArg() const;
-
-        yoi::subscript &getSubscript() const;
+        vec<subscript *> &getSubscript();
     };
 
     class memberExpr : public AST {
