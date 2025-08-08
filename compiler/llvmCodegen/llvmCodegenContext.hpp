@@ -85,6 +85,9 @@ namespace yoi {
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
                  llvm::Type *>
             foreignTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM type
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
+                 llvm::StructType *>
+            arrayTypeMap; // Maps (type_enum, module_id, type_idx, size) to LLVM array type
 
         // Helper methods
         void declareRuntimeFunctions();
@@ -117,6 +120,7 @@ namespace yoi {
         const std::shared_ptr<IRValueType> &
         normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
+        llvm::Type *getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
 
@@ -134,6 +138,8 @@ namespace yoi {
         llvm::Value *handleForeignTypeConv(llvm::Value *val,
                                            const std::shared_ptr<IRValueType> &foreignType,
                                            bool convertToForeign = false);
+        llvm::Value *createArrayObject(const std::shared_ptr<IRValueType> &type,
+                                       const yoi::vec<llvm::Value *> &elements);
     };
 
 } // namespace yoi

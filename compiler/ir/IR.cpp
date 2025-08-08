@@ -264,8 +264,11 @@ namespace yoi {
                            const yoi::IROperand &source,
                            const std::shared_ptr<IRValueType> &expectedType,
                            yoi::indexT moduleIndex) {
-        if (op == IR::Opcode::load_element || op == IR::Opcode::load_member || op == IR::Opcode::load_local) {
+        if (op == IR::Opcode::load_member || op == IR::Opcode::load_local) {
             insert({op, {source}});
+        } else if (op == IR::Opcode::load_element) {
+            tempVarStack.pop_back();
+            insert({op, {}});
         } else if (moduleIndex == -1) {
             insert({op, {{IROperand::operandType::index, currentModule->identifier}, source}});
         } else {

@@ -7,6 +7,7 @@
 #include "share/def.hpp"
 
 #include <cmath>
+#include <memory>
 
 namespace yoi {
     IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
@@ -1261,6 +1262,65 @@ namespace yoi {
                 }
                 case IR::Opcode::ret: {
                     // just pop the return value
+                    simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::new_array_int: 
+                case IR::Opcode::new_array_bool:
+                case IR::Opcode::new_array_char:
+                case IR::Opcode::new_array_deci:
+                case IR::Opcode::new_array_str: {
+                    // we can't optimize it
+                    // dims in operands
+                    std::shared_ptr<IRValueType> baseType;
+                    switch (ins.opcode) {
+                        case IR::Opcode::new_array_int:
+                            baseType = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::new_array_bool:
+                            baseType = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::new_array_char:
+                            baseType = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::new_array_deci:
+                            baseType = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::new_array_str:
+                            baseType = compilerCtx->getStrObjectType();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    yoi::indexT size = 1;
+                    yoi::vec<yoi::indexT> dims;
+                    for (auto &dim : ins.operands) {
+                        size *= dim.value.symbolIndex;
+                        dims.push_back(dim.value.symbolIndex);
+                    }
+                    for (yoi::indexT i = 0; i < size; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::load_element: {
+                    // we can't optimize it
+                    auto index = simulationStack.peek(0);
+                    auto array = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(managedPtr(array.type->getElementType()), array.contributedInstructions + index.contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::store_element: {
+                    // we can't optimize it
+                    auto index = simulationStack.peek(0);
+                    auto value = simulationStack.peek(1);
+                    auto array = simulationStack.peek(2);
+                    simulationStack.pop();
+                    simulationStack.pop();
                     simulationStack.pop();
                     break;
                 }

@@ -6,6 +6,7 @@
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <algorithm>
 #include <llvm/Passes/PassBuilder.h>
 #include <llvm/Passes/OptimizationLevel.h>
 #include <llvm/MC/TargetRegistry.h>
@@ -27,6 +28,7 @@
 #include <llvm/ExecutionEngine/Orc/LLJIT.h>
 #include <llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h>
 #include <llvm/ExecutionEngine/SectionMemoryManager.h>
+#include <memory>
 #include <string>
 #include <tuple>
 
@@ -1133,9 +1135,54 @@ namespace yoi {
                 valueStack.push_back({call, methodDef->returnType});
                 break;
             }
+            case IR::Opcode::new_array_int: 
+            case IR::Opcode::new_array_bool:
+            case IR::Opcode::new_array_char:
+            case IR::Opcode::new_array_deci:
+            case IR::Opcode::new_array_str: 
+            case IR::Opcode::new_array_struct: 
+            case IR::Opcode::new_array_interface: {
+                yoi::indexT size = 1;
+                yoi::vec<llvm::Value *> dimensionsVal;
+                yoi::vec<yoi::indexT> dimensions;
+                
+                std::shared_ptr<yoi::IRValueType> elementType;
+                for (auto &i : instr.operands) {
+                    size *= i.value.symbolIndex;
+                    dimensions.push_back(i.value.symbolIndex);
+                }
+                for (yoi::indexT i = 0; i < size; ++i) {
+                    dimensionsVal.push_back(valueStack[valueStack.size() - size + i].llvmValue);
+                }
+                std::reverse(dimensionsVal.begin(), dimensionsVal.end());
+                
+                switch (instr.opcode) {
+                    case IR::Opcode::new_array_int:
+                        elementType = compilerCtx->getIntObjectType();
+                        break;
+                    case IR::Opcode::new_array_bool:
+                        elementType = compilerCtx->getBoolObjectType();
+                        break;
+                    case IR::Opcode::new_array_char:
+                        elementType = compilerCtx->getCharObjectType();
+                        break;
+                    case IR::Opcode::new_array_deci:
+                        elementType = compilerCtx->getDeciObjectType();
+                        break;
+                    case IR::Opcode::new_array_str:
+                        elementType = compilerCtx->getStrObjectType();
+                        break;
+                    default:
+                        break;
+                }
+
+                // Create the array object
+                auto arrayType = managedPtr(elementType->getArrayType(dimensions));
+                auto val = createArrayObject(arrayType, dimensionsVal);
+                valueStack.push_back({val, arrayType});
+            }
             case IR::Opcode::nop:
                 break;
-                
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled yoi::IR opcode: " + std::string(magic_enum::enum_name(instr.opcode)));
         }
@@ -1143,17 +1190,23 @@ namespace yoi {
 
     llvm::Type* LLVMCodegen::yoiTypeToLLVMType(const std::shared_ptr<IRValueType>& type, bool enforceForeignType) {
         if (enforceForeignType) {
+            if (type->isArrayType()) {
+                // TODO
+            }
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (foreignTypeMap.count(key)) {
                 return foreignTypeMap.at(key);
             }
 
-            
             yoi_assert(type->isForeignBasicType(), 0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
         } else {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeMap.count(key)) {
-                return llvm::PointerType::get(structTypeMap.at(key), 0);
+                if (type->isArrayType()) {
+                    return llvm::PointerType::get(getArrayLLVMType(type), 0);
+                } else {
+                    return llvm::PointerType::get(structTypeMap.at(key), 0);
+                }
             }
         }
 
@@ -1714,5 +1767,142 @@ namespace yoi {
                 return nullptr;
             }
         }
+    }
+
+    llvm::Type *LLVMCodegen::getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType) {
+        if (enforceForeignType) {
+            // TODO
+        } else {
+            yoi::indexT size = 1;
+            for (auto &i : type->dimensions) {
+                size *= i;
+            }
+            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> structKey = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
+            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT> arrayKey = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex, size);
+
+            llvm::Type *baseType = nullptr;
+            switch (type->type) {
+                case IRValueType::valueType::integerObject: 
+                    baseType = llvm::Type::getInt64Ty(*TheContext);
+                    break;
+                case IRValueType::valueType::decimalObject:
+                    baseType = llvm::Type::getDoubleTy(*TheContext);
+                    break;
+                case IRValueType::valueType::booleanObject:
+                    baseType = llvm::Type::getInt1Ty(*TheContext);
+                    break;
+                case IRValueType::valueType::characterObject:
+                    baseType = llvm::Type::getInt8Ty(*TheContext);
+                    break;
+                case IRValueType::valueType::stringObject:
+                    baseType = llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0);
+                    break;
+                case IRValueType::valueType::structObject:
+                case IRValueType::valueType::interfaceObject:
+                    baseType = structTypeMap.at(structKey); // only this is a object
+                    break;
+                default:
+                    panic(0, 0, "LLVM Codegen: Unhandled or unmapped array type: " + std::string(magic_enum::enum_name(type->type)));
+                    return nullptr;
+            }
+            auto arrayType = llvm::ArrayType::get(baseType, size);
+            // build struct with ref counter
+            auto structType = llvm::StructType::create(*TheContext, yoi::vec<llvm::Type*>{
+                llvm::Type::getInt64Ty(*TheContext), // ref counter
+                arrayType // array
+            });
+            // create gc function
+            auto fullStructName = "array_" + yoi::wstring2string(type->to_string()) + "_" + std::to_string(size);
+            auto incFuncName = fullStructName + "_gc_refcount_increase";
+            auto decFuncName = fullStructName + "_gc_refcount_decrease";
+
+            auto gcIncFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
+            auto gcIncFunc = llvm::Function::Create(gcIncFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            gcIncFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
+            auto currentInsertPoint = Builder->GetInsertBlock();
+            // add basic block
+            llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", gcIncFunc);
+            Builder->SetInsertPoint(BB);
+            Builder->SetInsertPoint(BB);
+            auto *objPtr = gcIncFunc->arg_begin();
+            auto *refCounter = Builder->CreateStructGEP(llvm::PointerType::get(structType, 0), objPtr, 0, "ref_counter");
+            auto *newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
+            auto *newRefCounterVal = Builder->CreateAdd(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
+            Builder->CreateStore(newRefCounterVal, refCounter);
+            Builder->CreateRetVoid();
+
+            auto gcDecFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
+            auto gcDecFunc = llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            gcDecFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
+            // add basic block
+            BB = llvm::BasicBlock::Create(*TheContext, "entry", gcDecFunc);
+            auto nullFailedBlock = llvm::BasicBlock::Create(*TheContext, "null_failed", gcDecFunc);
+            auto finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", gcDecFunc);
+            auto continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", gcDecFunc);
+
+            Builder->SetInsertPoint(BB);
+            objPtr = gcDecFunc->arg_begin();
+            refCounter = Builder->CreateStructGEP(llvm::PointerType::get(structType, 0), objPtr, 0, "ref_counter");
+            // check whether object is null
+            auto *objVal = Builder->CreateLoad(llvm::PointerType::get(structType, 0), objPtr, "obj_val");
+            auto *isObjNull = Builder->CreateIsNull(objVal, "is_obj_null");
+            Builder->CreateCondBr(isObjNull, nullFailedBlock, continueBlock);
+
+            newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
+            newRefCounterVal = Builder->CreateSub(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
+            Builder->CreateStore(newRefCounterVal, refCounter);
+            
+            auto icmpRes = Builder->CreateICmpEQ(newRefCounterVal, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0, true), "ref_counter_zero");
+            Builder->CreateCondBr(icmpRes, finalizeBlock, continueBlock);
+            // null failed block
+            Builder->SetInsertPoint(nullFailedBlock);
+            Builder->CreateRetVoid();
+            // finalize block
+            Builder->SetInsertPoint(finalizeBlock);
+            // free memory
+            auto *freeCall = Builder->CreateCall(runtimeFinalizeObjectFunc, objVal, "free_obj");
+            Builder->CreateRetVoid();
+            // continue block
+            Builder->SetInsertPoint(continueBlock);
+            Builder->CreateRetVoid();
+            // add gc function to function map
+            functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
+            functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
+            // add struct to struct map
+            arrayTypeMap[arrayKey] = structType;
+            // clean up the mess, reset the insert point
+            Builder->SetInsertPoint(currentInsertPoint);
+            return structType;
+        }
+    }
+
+    llvm::Value *LLVMCodegen::createArrayObject(const std::shared_ptr<IRValueType> &type,
+                                                const yoi::vec<llvm::Value *> &elements) {
+        yoi_assert(type->isArrayType(), 0, 0, "type must be an array type");
+        llvm::Type *llvmType = getArrayLLVMType(type, false);
+        // initialize the llvm struct, allocate memory and store the array
+        auto memSize = TheModule->getDataLayout().getTypeAllocSize(llvmType);
+        auto *memoryPointer = Builder->CreateCall(runtimeObjectAllocFunc, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), memSize, true)});
+
+        // increase the refcount to 1
+        auto *refCounter = Builder->CreateStructGEP(llvm::PointerType::get(llvmType, 0), memoryPointer, 0, "ref_counter");
+        auto *refCounterVal = llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true);
+        Builder->CreateStore(refCounterVal, refCounter);
+
+        // store the array
+        yoi::indexT index = 0;
+        for (auto &i : elements) {
+            auto *arrayPointer = Builder->CreateStructGEP(llvm::PointerType::get(llvmType, 0), memoryPointer, index + 1, "array_ptr");
+            // if basic type, unbox it first
+            if (type->isBasicType()) {
+                auto val = unboxValue(i, managedPtr(type->getElementType()));
+                Builder->CreateStore(val, arrayPointer);
+            } else {
+                // otherwise, store the pointer directly
+                Builder->CreateStore(i, arrayPointer);
+            }
+            index ++;
+        }
+        return memoryPointer;
     }
 } // namespace yoi
