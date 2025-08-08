@@ -936,8 +936,9 @@ namespace yoi {
 
             // Functions
             case IR::Opcode::invoke: {
-                auto funcIndex = instr.operands[0].value.symbolIndex;
-                auto argCount = instr.operands[1].value.symbolIndex;
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto funcIndex = instr.operands[1].value.symbolIndex;
+                auto argCount = instr.operands[2].value.symbolIndex;
 
                 auto funcDef = yoiModule->functionTable[funcIndex];
                 auto* function = functionMap.at(funcDef->name);
@@ -999,7 +1000,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::new_struct: {
-                auto structIndex = instr.operands[0].value.symbolIndex;
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto structIndex = instr.operands[1].value.symbolIndex;
                 auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex);
                 auto* structType = structTypeMap.at(key);
 
@@ -1017,7 +1019,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::new_interface: {
-                auto interfaceIndex = instr.operands[0].value.symbolIndex;
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto interfaceIndex = instr.operands[1].value.symbolIndex;
                 auto key = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, interfaceIndex);
                 auto* interfaceLLVMType = structTypeMap.at(key);
                 
@@ -1038,7 +1041,7 @@ namespace yoi {
                 auto structInstanceVal = valueStack.back(); valueStack.pop_back();
                 auto interfaceShellVal = valueStack.back(); valueStack.pop_back();
                 
-                auto interfaceImplIndex = instr.operands[0].value.symbolIndex;
+                auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
                 auto implDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
 
                 auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject, interfaceShellVal.yoiType->typeAffiliateModule, interfaceShellVal.yoiType->typeIndex);
@@ -1079,8 +1082,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::invoke_virtual: {
-                auto methodVTableIndex = instr.operands[0].value.symbolIndex;
-                auto userArgCount = instr.operands[1].value.symbolIndex;
+                auto methodVTableIndex = instr.operands[1].value.symbolIndex;
+                auto userArgCount = instr.operands[2].value.symbolIndex;
 
                 std::vector<StackValue> userArgs;
                 for (size_t i = 0; i < userArgCount - 1; ++i) { // userArgCount includes 'this'

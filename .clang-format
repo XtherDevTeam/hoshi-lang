@@ -29,7 +29,7 @@ SpacesInSquareBrackets: No
 PointerAlignment: Right # e.g., `Type *var`, `Type &var`
 
 # Line Breaks
-ColumnLimit: 100 # A common and reasonable line length limit
+ColumnLimit: 120 # A common and reasonable line length limit
 AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty # Allows `void func() {}`
 AllowShortLoopsOnASingleLine: false

@@ -180,14 +180,14 @@ namespace yoi {
 
     IR IRLinker::patchInstruction(const IR& instr, indexT currentModuleId) {
         IR newInstr = instr;
-        for (auto& operand : newInstr.operands) {
+        /*for (auto& operand : newInstr.operands) {
             indexT symbolModuleId = currentModuleId;
             indexT symbolIndex = operand.value.symbolIndex;
             bool isExtern = false;
 
             // Resolve externs first
-            if (instr.opcode == IR::Opcode::invoke_extern ||
-                instr.opcode == IR::Opcode::load_extern ||
+            if (instr.opcode == IR::Opcode::invoke ||
+                instr.opcode == IR::Opcode::load ||
                 instr.opcode == IR::Opcode::store_extern ||
                 instr.opcode == IR::Opcode::new_struct_extern ||
                 instr.opcode == IR::Opcode::new_interface_extern ||
@@ -225,17 +225,40 @@ namespace yoi {
                 default:
                     break; // Local vars, literals, etc., don't need patching
             }
-        }
+        }*/
 
-        // Demote extern opcodes to local ones
-        switch (newInstr.opcode) {
-            case IR::Opcode::invoke_extern: newInstr.opcode = IR::Opcode::invoke; break;
-            case IR::Opcode::load_extern: newInstr.opcode = IR::Opcode::load_global; break;
-            case IR::Opcode::store_extern: newInstr.opcode = IR::Opcode::store_global; break;
-            case IR::Opcode::new_struct_extern: newInstr.opcode = IR::Opcode::new_struct; break;
-            case IR::Opcode::new_interface_extern: newInstr.opcode = IR::Opcode::new_interface; break;
-            case IR::Opcode::construct_interface_impl_extern: newInstr.opcode = IR::Opcode::construct_interface_impl; break;
-            default: break;
+        switch (instr.opcode) {
+            case IR::Opcode::invoke:
+            case IR::Opcode::invoke_virtual:
+            case IR::Opcode::load_global:
+            case IR::Opcode::new_struct:
+            case IR::Opcode::new_interface:
+            case IR::Opcode::construct_interface_impl: {
+                auto moduleId = instr.operands[0].value.symbolIndex;
+                auto symbolIndex = instr.operands[1].value.symbolIndex;
+                newInstr.operands[0].value.symbolIndex = ENTRY_MODULE_ID_CONST;
+                switch (instr.opcode) {
+                    case IR::Opcode::invoke:
+                    case IR::Opcode::invoke_virtual:
+                        newInstr.operands[1].value.symbolIndex = functionRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    case IR::Opcode::load_global:
+                        newInstr.operands[1].value.symbolIndex = globalRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    case IR::Opcode::new_struct:
+                        newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    case IR::Opcode::new_interface:
+                        newInstr.operands[1].value.symbolIndex = interfaceRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    case IR::Opcode::construct_interface_impl:
+                        newInstr.operands[1].value.symbolIndex = interfaceImplRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    default: break;
+                }
+            }
+            default:
+                break;
         }
 
         return newInstr;

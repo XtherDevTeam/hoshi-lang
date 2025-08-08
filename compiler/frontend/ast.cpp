@@ -1004,4 +1004,7 @@ namespace yoi {
     vec<subscript *> &subscriptExpr::getSubscript() {
         return subscriptVal;
     }
+    yoi::lexer::token &AST::getToken() {
+        return token;
+    }
 } // namespace yoi

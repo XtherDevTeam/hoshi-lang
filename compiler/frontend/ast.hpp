@@ -23,6 +23,8 @@ namespace yoi {
         yoi::indexT getLine();
 
         yoi::indexT getColumn();
+
+        yoi::lexer::token &getToken();
     };
     class hoshiModule;
 

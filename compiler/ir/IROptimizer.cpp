@@ -1111,40 +1111,20 @@ namespace yoi {
                 }
                 case IR::Opcode::load_global: {
                     // as for global variables, we can't optimize it
-                    auto type = irModule->globalVariables[ins.operands[0].value.symbolIndex];
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto type = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[0].value.symbolIndex];
                     simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});
                     break;
                 }
                 case IR::Opcode::store_global: {
                     // check the definition type and value type here
-                    auto definitionType = irModule->globalVariables[ins.operands[0].value.symbolIndex];
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto definitionType = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
                     auto value = simulationStack.peek(0);
 
                     if(*definitionType != *value.type) {
                         // type mismatch, panic
                         panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_global: type mismatch");
-                    }
-
-                    simulationStack.pop();
-                    break;
-                }
-                // same for load_extern and store_extern
-                case IR::Opcode::load_extern: {
-                    // as for global variables, we can't optimize it
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto definitionType = compilerCtx->getImportedModule(externDef->affiliateModule)->globalVariables[externDef->itemIndex];
-                    simulationStack.push(definitionType, {currentCodeBlockIndex, {insIndex}});
-                    break;
-                }
-                case IR::Opcode::store_extern: {
-                    // check the definition type and value type here
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto definitionType = compilerCtx->getImportedModule(externDef->affiliateModule)->globalVariables[externDef->itemIndex];
-                    auto value = simulationStack.peek(0);
-
-                    if(*definitionType != *value.type) {
-                        // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_extern: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -1182,7 +1162,8 @@ namespace yoi {
                 case IR::Opcode::invoke: {
                     // we can't optimize it
                     // in case of which this got optimized in tempVar reduction, we set optimizable flag to false
-                    auto function = irModule->functionTable[ins.operands[0].value.symbolIndex];
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto function = compilerCtx->getImportedModule(moduleIndex)->functionTable[ins.operands[1].value.symbolIndex];
                     auto returnType = function->returnType;
                     auto argTypes = function->argumentTypes;
                     auto argCount = function->argumentTypes.size();
@@ -1192,19 +1173,6 @@ namespace yoi {
                         simulationStack.pop();
                     }
                     simulationStack.push(returnType, contributedInstructions);
-                    break;
-                }
-                case IR::Opcode::invoke_extern: {
-                    // we can't optimize it
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto function = compilerCtx->getImportedModule(externDef->affiliateModule)->functionTable[externDef->itemIndex];
-                    auto returnType = function->returnType;
-                    auto argTypes = function->argumentTypes;
-                    auto argCount = function->argumentTypes.size();
-                    for (int i = 0; i < argCount; i++) {
-                        simulationStack.pop();
-                    }
-                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::invoke_imported: {
@@ -1219,62 +1187,31 @@ namespace yoi {
                     break;
                 }
                 case IR::Opcode::invoke_virtual: {
-                    auto argCount = ins.operands[1].value.symbolIndex;
+                    auto argCount = ins.operands[2].value.symbolIndex;
                     for (int i = 0; i < argCount - 1; i++) {
                         simulationStack.pop();
                     }
-                    auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[0].value.symbolIndex]->returnType;
+                    auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[1].value.symbolIndex]->returnType;
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::new_struct: {
-                    auto structDef = irModule->structTable[ins.operands[0].value.symbolIndex];
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, irModule->identifier, ins.operands[0].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::new_struct_extern: {
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto structDef = compilerCtx->getImportedModule(externDef->affiliateModule)->structTable[externDef->itemIndex];
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, externDef->affiliateModule, externDef->itemIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto structDef = compilerCtx->getImportedModule(moduleIndex)->structTable[ins.operands[1].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::new_interface: {
-                    auto interfaceDef = irModule->interfaceTable[ins.operands[0].value.symbolIndex];
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, irModule->identifier, ins.operands[0].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::new_interface_extern: {
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto interfaceDef = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceTable[externDef->itemIndex];
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, externDef->affiliateModule, externDef->itemIndex}), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::invoke_virtual_extern: {
-                    auto argCount = ins.operands[1].value.symbolIndex;
-                    for (int i = 0; i < argCount; i++) {
-                        simulationStack.pop();
-                    }
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto function = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceTable[externDef->itemIndex]->methodMap[externDef->itemIndex];
-                    auto returnType = function->returnType;
-                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto interfaceDef = compilerCtx->getImportedModule(moduleIndex)->interfaceTable[ins.operands[1].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::construct_interface_impl: {
-                    auto interfaceImplDef = irModule->interfaceImplementationTable[ins.operands[0].value.symbolIndex];
-                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, irModule->identifier, ins.operands[0].value.symbolIndex});
-                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
-                    for (int i = 0; i < argCount + 1; i++) {
-                        simulationStack.pop();
-                    }
-                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::construct_interface_impl_extern: {
-                    auto externDef = irModule->externTable[ins.operands[0].value.symbolIndex];
-                    auto interfaceImplDef = compilerCtx->getImportedModule(externDef->affiliateModule)->interfaceImplementationTable[externDef->itemIndex];
-                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, externDef->affiliateModule, externDef->itemIndex});
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex});
                     auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
                     for (int i = 0; i < argCount + 1; i++) {
                         simulationStack.pop();

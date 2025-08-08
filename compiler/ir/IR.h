@@ -111,6 +111,10 @@ namespace yoi {
 
         bool isArrayType() const;
 
+        IRValueType getElementType();
+
+        IRValueType getArrayType(const yoi::vec<yoi::indexT> &dimensions);
+
         yoi::wstr to_string() const;
 
         bool operator==(const yoi::IRValueType & rhs) const;
@@ -187,13 +191,13 @@ namespace yoi {
             increment,
             decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, load_extern, dummy_break, dummy_continue, ret, ret_none,
+            load_global, dummy_break, dummy_continue, ret, ret_none,
             push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, store_extern, invoke, invoke_extern, 
-            new_struct, new_interface, new_struct_extern, new_interface_extern, construct_interface_impl, construct_interface_impl_extern,
-            invoke_virtual, invoke_virtual_extern, invoke_imported, 
+            store_global, store_local, store_member, invoke, 
+            new_struct, new_interface, construct_interface_impl,
+            invoke_virtual, invoke_imported, 
             store_element, load_element, new_array_int, new_array_deci, new_array_bool, new_array_char, new_array_str,
-            new_array_struct, new_array_interface, new_array_struct_extern, new_array_interface_extern,
+            new_array_struct, new_array_interface,
             nop, FINAL,
         } opcode;
 
@@ -558,11 +562,11 @@ namespace yoi {
 
         void pushOp(IR::Opcode op, const yoi::IROperand &constV);
 
-        void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType>& expectedType);
+        void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType>& expectedType, yoi::indexT moduleIndex = -1);
 
         void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
 
-        void storeOp(IR::Opcode op, const yoi::IROperand &operand);
+        void storeOp(IR::Opcode op, const yoi::IROperand &operand, yoi::indexT moduleIndex = -1);
 
         void storeMemberOp(const yoi::IROperand &memberIndex);
 
@@ -574,24 +578,26 @@ namespace yoi {
          * @param externalInvocation If true, the function is invoked from an external module.
          */
         void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType, bool
-                      externalInvocation = false);
+                      externalInvocation = false, yoi::indexT moduleIndex = -1);
 
-        void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
+        void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false, yoi::indexT moduleIndex = -1);
 
-        void invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false);
+        void invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false, yoi::indexT moduleIndex = -1);
 
-        void invokeImported(yoi::indexT libIndex,
+        void invokeImportedOp(yoi::indexT libIndex,
                             yoi::indexT funcIndex,
                             yoi::indexT funcArgsCount,
                             const std::shared_ptr<IRValueType> &returnType);
 
         void retOp(bool returnWithNone = false);
 
-        void newStructOp(yoi::indexT structIndex, bool isExternal = false);
+        void newStructOp(yoi::indexT structIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
-        void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false);
+        void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
-        void constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false);
+        void constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+
+        void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
 
         yoi::indexT getCurrentInsertionPoint();
 

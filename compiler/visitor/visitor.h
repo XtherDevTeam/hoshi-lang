@@ -17,12 +17,14 @@ namespace yoi {
 
     class visitor {
 
-    public:
+      public:
         std::shared_ptr<yoi::moduleContext> moduleContext;
         std::shared_ptr<yoi::IRModule> irModule;
         yoi::indexT currentModuleIndex;
 
-        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext, const std::shared_ptr<yoi::IRModule> &irModule, yoi::indexT moduleIndex);
+        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
+                const std::shared_ptr<yoi::IRModule> &irModule,
+                yoi::indexT moduleIndex);
 
         std::shared_ptr<yoi::IRModule> visit();
 
@@ -49,8 +51,9 @@ namespace yoi {
          * @param identifier the identifier of the extern entry
          * @return the index of the extern entry in the module's extern table
          * @throws std::runtime_error if the identifier is not found in the module
+         * @deprecated Extern entries are not used anymore, use getExternEntry to get the direct entry instead.
          */
-        yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
+        [[deprecated("Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
 
         bool isVisitingGlobalScope() const;
 
@@ -62,40 +65,36 @@ namespace yoi {
 
         yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
 
-        yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes, bool whetherIgnoreFirstParam = false);
+        yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes,
+                                       bool whetherIgnoreFirstParam = false);
 
         std::shared_ptr<IRValueType> getIncompleteType(const yoi::wstr &typeName) const;
 
-        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> getTemplateArgs(const yoi::defTemplateArg &templateArgs);
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument>
+        getTemplateArgs(const yoi::defTemplateArg &templateArgs);
 
-        yoi::vec<std::shared_ptr<IRValueType>>
-        parseTemplateArgs(const yoi::templateArg &templateArgs);
+        yoi::vec<std::shared_ptr<IRValueType>> parseTemplateArgs(const yoi::templateArg &templateArgs);
 
-        yoi::indexT
-        specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
-                                   yoi::funcDefStmt* astNode,
-                                   const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
+        yoi::indexT specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
+                                               yoi::funcDefStmt *astNode,
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
 
-        yoi::indexT
-        specializeStructTemplate(const yoi::wstr& templateName,
-                                 const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs,
-                                 yoi::implStmt *pureTemplateImplAst);
+        yoi::indexT specializeStructTemplate(const yoi::wstr &templateName,
+                                             const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                             yoi::implStmt *pureTemplateImplAst);
 
-        void specializeStructMethod(
-            const std::shared_ptr<IRStructTemplate>& structTemplate,
-            const std::shared_ptr<IRStructDefinition>& specializedStruct,
-            yoi::implInnerPair* methodAstNode,
-            const yoi::wstr& specializedStructName,
-            const yoi::vec<std::shared_ptr<IRValueType>>& concreteTemplateArgs);
+        void specializeStructMethod(const std::shared_ptr<IRStructTemplate> &structTemplate,
+                                    const std::shared_ptr<IRStructDefinition> &specializedStruct,
+                                    yoi::implInnerPair *methodAstNode,
+                                    const yoi::wstr &specializedStructName,
+                                    const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs);
 
-        yoi::wstr getSpecializedMangledMethodName(
-            yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
-            const yoi::wstr &baseMethodName,
-            const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes);
+        yoi::wstr getSpecializedMangledMethodName(yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
+                                                  const yoi::wstr &baseMethodName,
+                                                  const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes);
 
-        yoi::wstr getMangledTemplateName(
-            const yoi::wstr& baseName,
-            const yoi::vec<std::shared_ptr<IRValueType>>& templateArgs);
+        yoi::wstr getMangledTemplateName(const yoi::wstr &baseName,
+                                         const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
 
         /**
          * Visitor methods
@@ -113,7 +112,9 @@ namespace yoi {
 
         yoi::indexT visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp = false);
 
-        yoi::indexT visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule, bool isStoreOp = false);
+        yoi::indexT visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
+                                yoi::indexT targetModule,
+                                bool isStoreOp = false);
 
         yoi::indexT visit(yoi::subscriptExpr *subscriptExpr, bool isStoreOp = false);
 
@@ -161,7 +162,8 @@ namespace yoi {
 
         IRValueType parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule);
 
-        IRValueType parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule);
+        IRValueType parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
+                                        yoi::indexT targetModule);
 
         IRValueType parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
@@ -169,10 +171,11 @@ namespace yoi {
 
         yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
-        yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc, const std::pair<yoi::indexT, yoi::indexT> &structSrc);
+        yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc,
+                                       const std::pair<yoi::indexT, yoi::indexT> &structSrc);
 
-        std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>> parseInterfaceName(
-         yoi::externModuleAccessExpression *structDef);
+        std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>>
+        parseInterfaceName(yoi::externModuleAccessExpression *structDef);
 
         yoi::indexT visit(yoi::funcDefStmt *funcDefStmt);
 
@@ -205,9 +208,8 @@ namespace yoi {
         yoi::indexT visit(yoi::breakStmt *breakStmt);
 
         void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
-
     };
 
-} // yoi
+} // namespace yoi
 
-#endif //HOSHI_LANG_VISITOR_H
+#endif // HOSHI_LANG_VISITOR_H
