@@ -28,8 +28,7 @@ namespace yoi {
 
     class LLVMCodegen {
       public:
-        LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx,
-                    std::shared_ptr<IRModule> yoiModule);
+        LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, std::shared_ptr<IRModule> yoiModule);
 
         // Generate the LLVM Module from the yoi::IRModule.
         void generate();
@@ -54,7 +53,6 @@ namespace yoi {
         llvm::Function *runtimeDebugPrintIntFunc = nullptr;
         llvm::Function *runtimeDebugPrintDeciFunc = nullptr;
 
-
         // Yoi language context
         std::shared_ptr<compilerContext> compilerCtx;
         std::shared_ptr<IRModule> yoiModule;
@@ -67,18 +65,24 @@ namespace yoi {
             std::shared_ptr<IRValueType> yoiType;
         };
 
+        struct ControlFlowAnalysis {
+            std::map<yoi::indexT, std::vector<indexT>> G; // graph
+            std::map<yoi::indexT, std::vector<indexT>> reverseG; // record the predecessors of each block
+
+            ControlFlowAnalysis(const std::vector<std::shared_ptr<IRCodeBlock>> &blocks);
+        } controlFlowAnalysis;
+
         // Codegen state
-        std::vector<StackValue> valueStack;
+        std::map<yoi::indexT, std::map<yoi::indexT, yoi::vec<StackValue>>> valueStackMap;
         llvm::Function *currentFunction = nullptr;
         std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
         std::map<yoi::indexT, llvm::AllocaInst *> namedValues; // Maps local var index to AllocaInst
-        std::map<yoi::indexT, llvm::BasicBlock *> blockMap;    // Maps yoi block index to LLVM block
+        std::map<yoi::indexT, std::map<yoi::indexT, llvm::BasicBlock *>> basicBlockMap; // [from_block, to_block] => target basic block
+        std::map<yoi::indexT, std::map<yoi::indexT, bool>> basicBlockVisited;
 
         // Mappings from yoi IR to LLVM IR
-        std::map<yoi::indexT, llvm::GlobalVariable *>
-            globalValues; // Maps global var index to GlobalVariable
-        std::map<yoi::wstr, llvm::Function *>
-            functionMap; // Maps yoi function names to LLVM functions
+        std::map<yoi::indexT, llvm::GlobalVariable *> globalValues; // Maps global var index to GlobalVariable
+        std::map<yoi::wstr, llvm::Function *> functionMap;          // Maps yoi function names to LLVM functions
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
                  llvm::StructType *>
             structTypeMap; // Maps (type_enum, module_id, type_idx) to LLVM struct type
@@ -113,28 +117,26 @@ namespace yoi {
         void generateFunctionImplementations();
         void generateFunction(IRFunctionDefinition &funcDef);
         void generateFunctionExitCleanup();
-        void generateCodeBlock(IRCodeBlock &block, yoi::indexT blockIdx);
-        void generateInstruction(const IR &instr);
+        void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock);
+        void generateInstruction(const IR &instr, yoi::indexT fromBlock, yoi::indexT toBlock);
         void generateDescription();
 
-        const std::shared_ptr<IRValueType> &
-        normalizeForeignType(const std::shared_ptr<IRValueType> &type);
+        const std::shared_ptr<IRValueType> &normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
 
         // Helpers for specific instructions & object model
-        void handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat);
-        void handleComparison(llvm::CmpInst::Predicate pred, bool isFloat);
-        llvm::Value *createBasicObject(const std::shared_ptr<IRValueType> &yoiType,
-                                       llvm::Value *rawValue);
-        llvm::Value *unboxValue(llvm::Value *objectPtr,
-                                const std::shared_ptr<IRValueType> &yoiType);
-        void callGcFunction(llvm::Value *objectPtr,
-                            const std::shared_ptr<IRValueType> &yoiType,
-                            bool isIncrease);
-        llvm::Value *handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign = false);
+        void handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat, yoi::indexT fromBlock, yoi::indexT toBlock);
+        void handleComparison(llvm::CmpInst::Predicate pred, bool isFloat, yoi::indexT fromBlock, yoi::indexT toBlock);
+        llvm::Value *createBasicObject(const std::shared_ptr<IRValueType> &yoiType, llvm::Value *rawValue);
+        llvm::Value *unboxValue(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType);
+        llvm::Value *
+        loadArrayElement(const std::shared_ptr<IRValueType> &type, llvm::Value *arrayPtr, llvm::Value *index);
+        void callGcFunction(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease);
+        llvm::Value *
+        handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign = false);
         llvm::Value *handleForeignTypeConv(llvm::Value *val,
                                            const std::shared_ptr<IRValueType> &foreignType,
                                            bool convertToForeign = false);

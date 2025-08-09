@@ -1,0 +1,29 @@
+/*func test1(cond: bool) : int {
+    let a = 111
+    let b = 1123
+    // cond is uncertain
+    if (b == 1123) {
+        a += 223
+    } else {
+        a = 224
+    }
+    return a
+}*/
+
+
+func test2(cond: bool) : int {
+    let a = 111
+    let b = 1123
+    // cond is uncertain
+    if (b == 1123) {
+        a += 223
+    } else {
+        a = 224
+    }
+    return a
+}
+
+func main() : int {
+    let a = 100
+    return test2(true)
+}

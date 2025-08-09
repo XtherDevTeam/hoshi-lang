@@ -268,6 +268,7 @@ namespace yoi {
             insert({op, {source}});
         } else if (op == IR::Opcode::load_element) {
             tempVarStack.pop_back();
+            tempVarStack.pop_back();
             insert({op, {}});
         } else if (moduleIndex == -1) {
             insert({op, {{IROperand::operandType::index, currentModule->identifier}, source}});
@@ -945,5 +946,22 @@ namespace yoi {
     }
     IRValueType IRValueType::getArrayType(const yoi::vec<yoi::indexT> &dimensions) {
         return {type, typeAffiliateModule, typeIndex, dimensions};
+    }
+    void IRBuilder::saveState() {
+        codeBlockInsertionStates.push_back(codeBlocks[currentCodeBlockIndex]->getIRArray().size());
+    }
+    void IRBuilder::discardState() {
+        codeBlockInsertionStates.pop_back();
+    }
+    void IRBuilder::restoreState() {
+        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(codeBlockInsertionStates.back());
+        codeBlockInsertionStates.pop_back();
+    }
+    void IRBuilder::pushTempVar(const std::shared_ptr<IRValueType> &type) {
+        tempVarStack.push_back(type);
+    }
+    void IRBuilder::popOp() {
+        tempVarStack.pop_back();
+        insert(IR{IR::Opcode::pop, {}});
     }
 } // namespace yoi

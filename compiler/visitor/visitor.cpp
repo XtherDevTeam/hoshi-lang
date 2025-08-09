@@ -9,6 +9,7 @@
 #include "compiler/moduleContext.h"
 #include "share/def.hpp"
 #include <algorithm>
+#include <cstdint>
 #include <cstdio>
 #include <iterator>
 #include <memory>
@@ -661,7 +662,10 @@ namespace yoi {
         auto term = logicalAndExpr->getTerms().begin();
         auto op = logicalAndExpr->getOp().begin();
         auto lhs = visit(*term);
+        // The type of the first term on the left
+        auto lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
+        // Loop through chained operators, e.g., a && b && c
         for (; op != logicalAndExpr->getOp().end(); ++op) {
             auto exitWithTrueBlock = moduleContext->getIRBuilder().createCodeBlock();
             auto exitWithFalseBlock = moduleContext->getIRBuilder().createCodeBlock();
@@ -677,36 +681,39 @@ namespace yoi {
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::push_boolean,
-                         {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
+                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
 
-            auto &lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             switch (op->kind) {
                 case lexer::token::tokenKind::logicAnd: {
+                    // On the first iteration, this is the original LHS.
+                    // On subsequent iterations, it's the boolean result of the previous operation.
                     yoi_assert(lhsType->isBasicType(), op->line, op->col, "Not basic type for logical and");
-                    // if not bool, convert it to bool
                     if (lhsType->type != IRValueType::valueType::booleanObject) {
                         moduleContext->getIRBuilder().basicCast(
                             (moduleContext->getCompilerContext()->getBoolObjectType()), lhs, true);
                     }
 
-                    // FIXED: jump_if_false should receive a parameter from stack
+                    // Short-circuit if the LHS (or intermediate result) is false
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_false, exitWithFalseBlock);
 
+                    // If not short-circuited, evaluate the RHS
                     auto rhs = visit(*++term);
-                    auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    yoi_assert(lhsType->isBasicType(), op->line, op->col, "Not basic type for logical and");
-                    // same as above
+                    auto rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    yoi_assert(rhsType->isBasicType(), op->line, op->col, "Not basic type for logical and");
                     if (rhsType->type != IRValueType::valueType::booleanObject) {
                         moduleContext->getIRBuilder().basicCast(
                             (moduleContext->getCompilerContext()->getBoolObjectType()), rhs);
                     }
 
+                    // The result of the expression is now on the stack
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_false, exitWithFalseBlock);
                     moduleContext->getIRBuilder().jumpOp(exitWithTrueBlock);
                     moduleContext->getIRBuilder().switchCodeBlock(exitBlock);
+
+                    lhsType = moduleContext->getCompilerContext()->getBoolObjectType();
                     break;
                 }
                 default: {
@@ -716,6 +723,11 @@ namespace yoi {
             }
         }
 
+        if (!logicalAndExpr->getOp().empty()) {
+            // not single term, push a boolean result onto the stack
+            moduleContext->getIRBuilder().pushTempVar(lhsType);
+        }
+        
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -723,7 +735,10 @@ namespace yoi {
         auto term = logicalOrExpr->getTerms().begin();
         auto op = logicalOrExpr->getOp().begin();
         auto lhs = visit(*term);
+        // The type of the first term on the left
+        auto lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
+        // Loop through chained operators, e.g., a || b || c
         for (; op != logicalOrExpr->getOp().end(); ++op) {
             auto exitWithTrueBlock = moduleContext->getIRBuilder().createCodeBlock();
             auto exitWithFalseBlock = moduleContext->getIRBuilder().createCodeBlock();
@@ -739,41 +754,49 @@ namespace yoi {
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::push_boolean,
-                         {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
+                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
 
-            auto &lhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
             switch (op->kind) {
                 case lexer::token::tokenKind::logicOr: {
                     yoi_assert(lhsType->isBasicType(), op->line, op->col, "Not basic type for logical or");
-                    // if not bool, convert it to bool
                     if (lhsType->type != IRValueType::valueType::booleanObject) {
                         moduleContext->getIRBuilder().basicCast(
                             (moduleContext->getCompilerContext()->getBoolObjectType()), lhs, true);
                     }
-                    // FIXED: jump_if_false should receive a parameter from stack
+
+                    // Short-circuit if the LHS (or intermediate result) is true
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, exitWithTrueBlock);
 
+                    // If not short-circuited, evaluate the RHS
                     auto rhs = visit(*++term);
-                    auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    yoi_assert(lhsType->isBasicType(), op->line, op->col, "Not basic type for logical or");
-                    // same as above
+                    auto rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    yoi_assert(rhsType->isBasicType(), op->line, op->col, "Not basic type for logical or");
                     if (rhsType->type != IRValueType::valueType::booleanObject) {
                         moduleContext->getIRBuilder().basicCast(
                             (moduleContext->getCompilerContext()->getBoolObjectType()), rhs);
                     }
+
+                    // The result of the expression is now on the stack
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, exitWithTrueBlock);
                     moduleContext->getIRBuilder().jumpOp(exitWithFalseBlock);
                     moduleContext->getIRBuilder().switchCodeBlock(exitBlock);
+
+                    lhsType = moduleContext->getCompilerContext()->getBoolObjectType();
                     break;
                 }
                 default: {
-                    panic(op->line, op->col, "Unexpected logical and expression operator");
+                    panic(op->line, op->col, "Unexpected logical or expression operator");
                     return {};
                 }
             }
+        }
+
+        if (!logicalOrExpr->getOp().empty()) {
+            // not single term, push a boolean result onto the stack
+            moduleContext->getIRBuilder().pushTempVar(lhsType);
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -970,7 +993,7 @@ namespace yoi {
             case inCodeBlockStmt::vKind::rExpr:
                 visit(inCodeBlockStmt->getValue().rExprVal);
                 // balance the stack
-                moduleContext->getIRBuilder().popFromTempVarStack();
+                moduleContext->getIRBuilder().popOp();
                 break;
         }
     }
@@ -1085,6 +1108,7 @@ namespace yoi {
                 }
             } else {
                 bool resolved = false;
+                moduleContext->getIRBuilder().saveState();
                 // Try regular function
                 try {
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
@@ -1098,10 +1122,17 @@ namespace yoi {
                     auto func = irModule->functionTable[funcIndex];
                     moduleContext->getIRBuilder().invokeOp(funcIndex, args->get().size(), func->returnType);
                     resolved = true;
-                } catch (std::out_of_range &) {
+                    moduleContext->getIRBuilder().discardState();
+                } catch (std::out_of_range &e) {
+                    // clean up the stack
+                    for (auto &arg : args->get()) {
+                        moduleContext->getIRBuilder().popFromTempVarStack();
+                    }
+                    moduleContext->getIRBuilder().restoreState();
                 }
 
                 // Try implicit function template instantiation
+                moduleContext->getIRBuilder().saveState();
                 if (!resolved) {
                     try {
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
@@ -1145,8 +1176,19 @@ namespace yoi {
                             moduleContext->getIRBuilder().invokeOp(
                                 specializedFuncIndex, args->get().size(), specializedFunc->returnType);
                             resolved = true;
+                            moduleContext->getIRBuilder().discardState();
+                        } else {
+                            for (auto &arg : args->get()) {
+                                moduleContext->getIRBuilder().popFromTempVarStack();
+                            }
+                            moduleContext->getIRBuilder().restoreState();
                         }
                     } catch (std::out_of_range &) {
+                        // clean up the stack
+                        for (auto &arg : args->get()) {
+                            moduleContext->getIRBuilder().popFromTempVarStack();
+                        }
+                        moduleContext->getIRBuilder().restoreState();
                     }
                 }
 
@@ -1258,15 +1300,52 @@ namespace yoi {
             if (currentTerm->isSubscript()) {
                 // Case 3: Array access `...[index]`
                 yoi_assert(objectOnStackType->isArrayType(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array access is not valid on non-array type.");
-                visit(currentTerm->expr); // Pushes index onto stack.
-
-                if (isStoreOp && isLastTerm) {
-                    moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
-                } else {
-                    auto element_type = managedPtr(objectOnStackType->getElementType());
-                    moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, element_type);
+                const auto& dimensions = objectOnStackType->dimensions;
+                yoi::vec<yoi::indexT> strides(dimensions.size());
+                strides.back() = 1; // Stride of the last dimension is always 1.
+                for (long long i = static_cast<long long>(dimensions.size()) - 2; i >= 0; --i) {
+                    strides[i] = strides[i + 1] * dimensions[i + 1];
                 }
 
+                // 2. Initialize the total flattened offset to 0 on the IR stack.
+                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, static_cast<int64_t>(0)});
+
+                // 3. Loop through the provided subscript indices, calculate partial offset, and add to total.
+                yoi::indexT currentDim = 0;
+                while (it != end && (*it)->isSubscript()) {
+                    yoi_assert(currentDim < dimensions.size(), (*it)->getLine(), (*it)->getColumn(), "Too many indices for array dimension.");
+
+                    visit((*it)->expr);
+                    auto indexType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    yoi_assert(indexType->type == IRValueType::valueType::integerObject, (*it)->getLine(), (*it)->getColumn(), "Array subscript index must be an integer.");
+
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, strides[currentDim]});
+
+                    // Multiply index by stride.
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
+
+                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
+
+                    it++;
+                    currentDim++;
+                }
+
+                yoi_assert(currentDim == dimensions.size() || (isStoreOp && isLastTerm),
+                        currentTerm->getLine(), currentTerm->getColumn(),
+                        "Partial array access is not a loadable value. Not enough indices provided.");
+
+                if (isStoreOp && isLastTerm) {
+                    // For `arr[i] = val`, the stack is [base_ptr, index].
+                    // The IRBuilder should handle popping the value-to-be-stored first.
+                    moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
+                } else {
+                    // For `x = arr[i]`, the stack is [base_ptr, index].
+                    // This op will pop them and push the resulting element's value.
+                    auto elementType = managedPtr(objectOnStackType->getElementType());
+                    moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, elementType);
+                }
+                // The inner while loop advanced 'it'. We must not advance it again in the outer loop.
+                continue; 
             } else if (currentTerm->isInvocation()) {
                 panic(currentTerm->getLine(),
                       currentTerm->getColumn(),

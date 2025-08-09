@@ -1,0 +1,25 @@
+import puts(str: string) : int32 from "builtin"
+
+struct Test {
+    a: bool,
+    constructor(a: bool)
+}
+
+impl Test {
+    constructor(a: bool) {
+        this.a = a
+        return this
+    }
+}
+
+func main() : int {
+    let t = Test(true)
+    let t2 = Test(false)
+    if (t.a == true && t2.a == false) {
+        puts("validation passed")
+        return 0
+    } else {
+        puts("validation failed")
+        return 1
+    }
+}

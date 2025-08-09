@@ -192,7 +192,7 @@ namespace yoi {
             decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, dummy_break, dummy_continue, ret, ret_none,
-            push_integer, push_decimal, push_boolean, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
+            push_integer, push_decimal, push_boolean, pop, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
             store_global, store_local, store_member, invoke, 
             new_struct, new_interface, construct_interface_impl,
             invoke_virtual, invoke_imported, 
@@ -516,10 +516,19 @@ namespace yoi {
         std::vector<std::shared_ptr<IRCodeBlock>> codeBlocks;
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
+        yoi::vec<yoi::indexT> codeBlockInsertionStates;
     public:
         IRBuilder() = delete;
 
         IRBuilder(std::shared_ptr<compilerContext> compilerCtx,std::shared_ptr<IRModule> currentModule, std::shared_ptr<IRFunctionDefinition> currentFunction);
+
+        void saveState();
+
+        void discardState();
+
+        void restoreState();
+
+        void pushTempVar(const std::shared_ptr<IRValueType> &type);
 
         yoi::indexT createCodeBlock();
 
@@ -551,6 +560,8 @@ namespace yoi {
         const std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
 
         void basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint, bool lhs = false);
+
+        void popOp();
 
         void uniqueArithmeticOp(IR::Opcode op);
 

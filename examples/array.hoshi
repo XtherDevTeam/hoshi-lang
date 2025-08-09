@@ -1,4 +1,47 @@
+import puts(str: string) : int32 from "builtin"
+
+struct Test {
+    a: bool,
+    constructor(a: bool)
+}
+
+impl Test {
+    constructor(a: bool) {
+        this.a = a
+        return this
+    }
+}
+
+interface ITest {
+}
+
+impl Test : ITest {
+
+}
+
 func main() : int {
     let arr = int[10](1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    return arr[1] // copy this element and return a new object
+    let sum = 0
+    for (let i = 0;i < 10;i += 1) {
+        sum += arr[i]
+    }
+    if (sum == 55) {
+        puts("Single dimension array validation completed.")
+    }
+    sum = 0
+    let arr2 = int[2][3](1, 2, 3, 4, 5, 6)
+    for (let i = 0;i < 2;i += 1) {
+        for (let j = 0;j < 3;j += 1) {
+            sum += arr2[i][j]
+        }
+    }
+    if (sum == 21) {
+        puts("Multi dimension array validation completed.")
+    }
+    let arr3 = Test[3](Test(true), Test(false), Test(true))
+    if (arr3[0].a == true && arr3[1].a == true) {
+        puts("Array of struct validation completed.")
+    }
+
+    return sum
 }

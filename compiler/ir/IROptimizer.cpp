@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <memory>
+#include <queue>
 
 namespace yoi {
     IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
@@ -1430,22 +1431,798 @@ namespace yoi {
     }
 
     IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
+        std::map<indexT, std::vector<indexT>> successors;
+        std::map<indexT, std::vector<indexT>> predecessors;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
-            currentCodeBlockIndex = i;
-            this->reduceRedundantConstantExpr().reduceRedundantTempVar().reduceRedundantCodeAfterRet();
-            // clear the information we gathered as when jump back happens, the information is no longer valid
-            // variablesExtraInfo.clear();
+            if (successors.find(i) == successors.end()) successors[i] = {};
+            for (auto &ins : targetFunction->codeBlock[i]->getIRArray()) {
+                switch (ins.opcode) {
+                    case IR::Opcode::jump: {
+                        indexT target = ins.operands[0].value.codeBlockIndex;
+                        successors[i].push_back(target);
+                        predecessors[target].push_back(i);
+                        break;
+                    }
+                    case IR::Opcode::jump_if_true:
+                    case IR::Opcode::jump_if_false: {
+                        indexT target = ins.operands[0].value.codeBlockIndex;
+                        successors[i].push_back(target); // Branch target
+                        predecessors[target].push_back(i);
+                        if (i + 1 < targetFunction->codeBlock.size()) {
+                            successors[i].push_back(i + 1); // Fallthrough
+                            predecessors[i + 1].push_back(i);
+                        }
+                        break;
+                    }
+                    case IR::Opcode::ret:
+                    case IR::Opcode::ret_none:
+                        // This block is a graph sink.
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // Add implicit fallthrough for non-terminating blocks
+            if (!targetFunction->codeBlock[i]->getIRArray().empty()) {
+                auto& lastIns = targetFunction->codeBlock[i]->getIRArray().back();
+                bool isTerminator = (lastIns.opcode == IR::Opcode::jump ||
+                                    lastIns.opcode == IR::Opcode::jump_if_false ||
+                                    lastIns.opcode == IR::Opcode::jump_if_true ||
+                                    lastIns.opcode == IR::Opcode::ret ||
+                                    lastIns.opcode == IR::Opcode::ret_none);
+
+                if (!isTerminator && (i + 1 < targetFunction->codeBlock.size())) {
+                    successors[i].push_back(i + 1);
+                    predecessors[i + 1].push_back(i);
+                }
+            }
         }
+
+        // data flow analyse
+        std::map<indexT, AnalysisState> blockInStates;
+        std::map<indexT, AnalysisState> blockOutStates;
+        std::queue<indexT> worklist;
+
+        // start with the entry block.
+        worklist.push(0);
+        blockInStates[0] = AnalysisState{}; // Entry state is empty.
+
+        while (!worklist.empty()) {
+            indexT currentBlockIdx = worklist.front();
+            worklist.pop();
+
+            // merge predecessors' out-states to get the in-state for the current block.
+            AnalysisState inState;
+            if (predecessors.count(currentBlockIdx) > 0) {
+                for (indexT predIdx : predecessors[currentBlockIdx]) {
+                    // Get the last calculated out-state of the predecessor.
+                    inState = mergeStates(inState, blockOutStates[predIdx]);
+                }
+            }
+            blockInStates[currentBlockIdx] = inState;
+
+            // analyze the current block to get its new out-state.
+            AnalysisState newOutState = analyzeBlock(currentBlockIdx, inState);
+
+            // if the out-state has changed, we need to re-process successors.
+            if (blockOutStates.find(currentBlockIdx) == blockOutStates.end() || 
+                blockOutStates[currentBlockIdx] != newOutState) {
+                blockOutStates[currentBlockIdx] = newOutState;
+                if (successors.count(currentBlockIdx) > 0) {
+                    for (indexT succIdx : successors[currentBlockIdx]) {
+                        worklist.push(succIdx);
+                    }
+                }
+            }
+        }
+
+        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
+            if (blockInStates.count(i) > 0) { // Only transform reachable blocks
+                transformBlock(i, blockInStates[i]);
+            } else {
+                // unreachable, clear it.
+                targetFunction->codeBlock[i]->getIRArray().clear();
+            }
+        }
+        
         this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization().reduceEmptyCodeBlock();
         return *this;
     }
+    
     IROptimizer &IROptimizer::reduceEmptyCodeBlock() {
-        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
-            if (targetFunction->codeBlock[i]->getIRArray().empty()) {
-                targetFunction->codeBlock.erase(targetFunction->codeBlock.begin() + i);
-                i--;
+        const auto originalSize = targetFunction->codeBlock.size();
+        if (originalSize == 0) {
+            return *this;
+        }
+
+        // identify which blocks to keep and create an old-to-new index mapping
+        std::map<indexT, indexT> oldToNewMap;
+        std::vector<bool> isBlockKept(originalSize);
+        indexT newIndexCounter = 0;
+        for (indexT oldIndex = 0; oldIndex < originalSize; ++oldIndex) {
+            if (!targetFunction->codeBlock[oldIndex]->getIRArray().empty()) {
+                isBlockKept[oldIndex] = true;
+                oldToNewMap[oldIndex] = newIndexCounter++;
+            } else {
+                isBlockKept[oldIndex] = false;
             }
         }
+
+        // ff no blocks were empty, no remapping is needed.
+        if (newIndexCounter == originalSize) {
+            return *this;
+        }
+
+        // create a fallthrough map for jumps that might target empty blocks
+        // This map redirects an index to the next non-empty block's original index.
+        std::vector<indexT> fallthroughTargetMap(originalSize);
+        const indexT noFallthroughSentinel = originalSize;
+        indexT nextNonEmptyBlockIndex = noFallthroughSentinel;
+
+        // iterate backwards to find the next non-empty block for each position
+        for (indexT oldIndex = originalSize; oldIndex-- > 0;) {
+            if (isBlockKept[oldIndex]) {
+                nextNonEmptyBlockIndex = oldIndex;
+            }
+            fallthroughTargetMap[oldIndex] = nextNonEmptyBlockIndex;
+        }
+
+        std::vector<std::shared_ptr<IRCodeBlock>> newCodeBlocks;
+        newCodeBlocks.reserve(newIndexCounter);
+
+        for (indexT oldIndex = 0; oldIndex < originalSize; ++oldIndex) {
+            if (isBlockKept[oldIndex]) {
+                auto& block = targetFunction->codeBlock[oldIndex];
+                
+                for (auto& ins : block->getIRArray()) {
+                    switch (ins.opcode) {
+                        case IR::Opcode::jump:
+                        case IR::Opcode::jump_if_true:
+                        case IR::Opcode::jump_if_false: {
+                            indexT originalTarget = ins.operands[0].value.codeBlockIndex;
+
+                            if (originalTarget >= originalSize) {
+                                warning(0, 0, "IROptimizer::reduceEmptyCodeBlock(): Invalid jump target " +
+                                        std::to_string(originalTarget) + " in block " + std::to_string(oldIndex) +
+                                        " of function " + wstring2string(targetFunction->name) + ". Replacing with NOP.");
+                                ins.opcode = IR::Opcode::nop;
+                                ins.operands.clear();
+                                continue;
+                            }
+
+                            indexT resolvedOldTarget = fallthroughTargetMap[originalTarget];
+                            
+                            if (resolvedOldTarget == noFallthroughSentinel) {
+                                // This jump targets a region of empty blocks at the end of the function.
+                                // This control flow path becomes undefined after removal.
+                                warning(0, 0, "IROptimizer::reduceEmptyCodeBlock(): Jump in block " +
+                                        std::to_string(oldIndex) + " of function " + wstring2string(targetFunction->name) +
+                                        " targets an empty region at the function's end. This control flow path is being removed.");
+                                ins.opcode = IR::Opcode::nop;
+                                ins.operands.clear();
+                            } else {
+                                // We found a valid non-empty target block. Convert its old index to the new one.
+                                indexT newTarget = oldToNewMap.at(resolvedOldTarget);
+                                ins.operands[0].value.codeBlockIndex = newTarget;
+                            }
+                            break;
+                        }
+                        default:
+                            // not a jump instruction, no action needed.
+                            break;
+                    }
+                }
+                newCodeBlocks.push_back(block);
+            }
+        }
+
+        targetFunction->codeBlock = std::move(newCodeBlocks);
+
         return *this;
+    }
+    
+    bool AnalysisState::operator!=(const AnalysisState &other) const {
+        if (stack.items.size() != other.stack.items.size() || variableStates.size() != other.variableStates.size()) {
+            return true;
+        }
+
+        for (size_t i = 0; i < stack.items.size(); ++i) {
+            const auto &item1 = stack.items[i];
+            const auto &item2 = other.stack.items[i];
+            if (item1.hasPossibleValue != item2.hasPossibleValue)
+                return true;
+            if (item1.hasPossibleValue) {
+                if (item1.possibleValue.intValue != item2.possibleValue.intValue)
+                    return true;
+            }
+        }
+
+        for (const auto &[varIdx, info1] : variableStates) {
+            auto it = other.variableStates.find(varIdx);
+            if (it == other.variableStates.end())
+                return true;
+            const auto &info2 = it->second;
+            if (info1.hasPossibleValue != info2.hasPossibleValue)
+                return true;
+            if (info1.hasPossibleValue) {
+                if (info1.possibleValue.possibleValue.intValue != info2.possibleValue.possibleValue.intValue)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    AnalysisState IROptimizer::analyzeBlock(indexT blockIndex, const AnalysisState &inState) {
+        AnalysisState currentState = inState;
+        simulationStack = currentState.stack;
+        variablesExtraInfo = currentState.variableStates;
+        currentCodeBlockIndex = blockIndex;
+
+        for (yoi::indexT insIndex = 0; insIndex < targetFunction->codeBlock[blockIndex]->getIRArray().size(); insIndex++) {
+            const auto &ins = targetFunction->codeBlock[blockIndex]->getIRArray()[insIndex];
+            switch (ins.opcode) {
+                case IR::Opcode::push_boolean: {
+                    simulationStack.push(compilerCtx->getBoolObjectType(), {currentCodeBlockIndex,{insIndex}}, ins.operands[0].value.boolean);
+                    break;
+                }
+                case IR::Opcode::push_integer: {
+                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.integer);
+                    break;
+                }
+                case IR::Opcode::push_decimal: {
+                    simulationStack.push(compilerCtx->getDeciObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.decimal);
+                    break;
+                }
+                case IR::Opcode::push_string: {
+                    simulationStack.push(compilerCtx->getStrObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.stringLiteralIndex);
+                    break;
+                }
+                case IR::Opcode::basic_cast_bool: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // judge whether this is evaluable
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.boolValue = value.possibleValue.intValue != 0;
+                            break;
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.boolValue = value.possibleValue.deciValue != 0.0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.boolValue = value.possibleValue.charValue != 0;
+                            break;
+                            default:
+                                break;
+                        }
+                        value.type = compilerCtx->getBoolObjectType();
+                        simulationStack.push(value);
+                    } else {
+                        simulationStack.push(compilerCtx->getBoolObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
+                    break;
+                }
+                case IR::Opcode::basic_cast_int: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.deciValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.intValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.charValue);
+                            break;
+                            default:
+                            break;
+                        }
+                        value.type = compilerCtx->getIntObjectType();
+                        simulationStack.push(value);
+                    } else {
+                        simulationStack.push(compilerCtx->getIntObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
+                    break;
+                }
+                case IR::Opcode::basic_cast_deci: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // std::cout << "simulate basic_cast_deci " << value.hasPossibleValue << std::endl;
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.intValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.deciValue = value.possibleValue.boolValue ? 1.0 : 0.0;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.charValue);
+                            break;
+                            default:
+                            break;
+                        }
+                        value.type = compilerCtx->getDeciObjectType();
+                        simulationStack.push(value);
+                    } else {
+                        simulationStack.push(compilerCtx->getDeciObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
+                    break;
+                }
+                case IR::Opcode::add: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = add(left, right);
+                    // std::cout << "simulate add " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::sub: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = sub(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::mul: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = mul(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::div: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = div(left, right);
+                    // std::cout << "simulate div " << right.hasPossibleValue << " " << left.hasPossibleValue << " " << result.hasPossibleValue << std::endl;
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::mod: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = mod(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::negate: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // simulate
+                    auto result = negate(value);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::bitwise_and: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseAnd(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::bitwise_or: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseOr(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::bitwise_xor: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseXor(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::bitwise_not: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseNot(value);
+                    // lost information, push back
+                    simulationStack.push(result.type, value.contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::left_shift: {
+                    auto value = simulationStack.peek(0);
+                    auto shift = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseShiftLeft(value, shift);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::right_shift: {
+                    auto value = simulationStack.peek(0);
+                    auto shift = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = bitwiseShiftRight(value, shift);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::less_than: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = lessThan(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::greater_than: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThan(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::less_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThanOrEqual(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::greater_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThanOrEqual(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = equal(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::not_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = notEqual(left, right);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::load_local: {
+                    auto varIndex = ins.operands[0].value.symbolIndex;
+                    auto varType = targetFunction->getVariableTable().get(varIndex);
+
+                    if (auto it = variablesExtraInfo.find(varIndex); it != variablesExtraInfo.end() && it->second.hasPossibleValue) {
+                        simulationStack.push(it->second.possibleValue);
+                    } else {
+                        simulationStack.push(varType, {currentCodeBlockIndex, {insIndex}});
+                    }
+                    
+                    if (auto it = variablesExtraInfo.find(varIndex); it != variablesExtraInfo.end()) {
+                        it->second.isReadAfterStore = true;
+                    } else {
+                        variablesExtraInfo[varIndex] = {false, true, {}};
+                    }
+                    break;
+                }
+                case IR::Opcode::store_local: {
+                    auto varIndex = ins.operands[0].value.symbolIndex;
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+
+                    variablesExtraInfo[varIndex] = {value.hasPossibleValue, false, value};
+                    break;
+                }
+                case IR::Opcode::load_global: {
+                    // as for global variables, we can't optimize it
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto type = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[0].value.symbolIndex];
+                    simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});
+                    break;
+                }
+                case IR::Opcode::store_global: {
+                    // check the definition type and value type here
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto definitionType = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
+                    auto value = simulationStack.peek(0);
+
+                    if(*definitionType != *value.type) {
+                        // type mismatch, panic
+                        panic(0, 0, "IROptimizer::analyzeBlock(): store_global: type mismatch");
+                    }
+
+                    simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::load_member: {
+                    // we can't optimize it
+                    auto value = simulationStack.peek(0);
+                    auto type = value.type->typeIndex;
+                    auto targetModule = compilerCtx->getImportedModule(value.type->typeAffiliateModule);
+                    auto structDef = targetModule->structTable[type];
+                    auto memberIndex = ins.operands[0].value.symbolIndex;
+                    auto memberDef = structDef->fieldTypes[memberIndex];
+                    simulationStack.pop();
+                    simulationStack.push(memberDef, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
+                    break;
+                }
+                case IR::Opcode::store_member: {
+                    // we can't optimize it
+                    auto value = simulationStack.peek(1);
+                    auto type = simulationStack.peek(0).type->typeIndex;
+                    auto structDef = irModule->structTable[type];
+                    auto memberIndex = ins.operands[0].value.symbolIndex;
+                    auto memberDef = structDef->fieldTypes[memberIndex];
+
+                    if(*memberDef != *value.type) {
+                        // type mismatch, panic
+                        panic(0, 0, "IROptimizer::analyzeBlock(): store_member: type mismatch");
+                    }
+
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::invoke: {
+                    // we can't optimize it
+                    // in case of which this got optimized in tempVar reduction, we set optimizable flag to false
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto function = compilerCtx->getImportedModule(moduleIndex)->functionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = function->returnType;
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}, false};
+                    for (int i = 0; i < argCount; i++) {
+                        contributedInstructions = contributedInstructions + simulationStack.peek(0).contributedInstructions;
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::invoke_imported: {
+                    auto function = compilerCtx->getIRFFITable()->importedLibraries[ins.operands[0].value.symbolIndex].importedFunctionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = function->returnType;
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::invoke_virtual: {
+                    auto argCount = ins.operands[2].value.symbolIndex;
+                    for (int i = 0; i < argCount - 1; i++) {
+                        simulationStack.pop();
+                    }
+                    auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[1].value.symbolIndex]->returnType;
+                    simulationStack.pop();
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_struct: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto structDef = compilerCtx->getImportedModule(moduleIndex)->structTable[ins.operands[1].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_interface: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto interfaceDef = compilerCtx->getImportedModule(moduleIndex)->interfaceTable[ins.operands[1].value.symbolIndex];
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::construct_interface_impl: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex});
+                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
+                    for (int i = 0; i < argCount + 1; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::jump_if_true: 
+                case IR::Opcode::jump_if_false:
+                case IR::Opcode::ret: {
+                    simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::new_array_int: 
+                case IR::Opcode::new_array_bool:
+                case IR::Opcode::new_array_char:
+                case IR::Opcode::new_array_deci:
+                case IR::Opcode::new_array_str: {
+                    std::shared_ptr<IRValueType> baseType;
+                    switch (ins.opcode) {
+                        case IR::Opcode::new_array_int:
+                            baseType = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::new_array_bool:
+                            baseType = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::new_array_char:
+                            baseType = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::new_array_deci:
+                            baseType = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::new_array_str:
+                            baseType = compilerCtx->getStrObjectType();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    yoi::indexT size = 1;
+                    yoi::vec<yoi::indexT> dims;
+                    for (auto &dim : ins.operands) {
+                        size *= dim.value.symbolIndex;
+                        dims.push_back(dim.value.symbolIndex);
+                    }
+                    for (yoi::indexT i = 0; i < size; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::load_element: {
+                    // we can't optimize it
+                    auto index = simulationStack.peek(0);
+                    auto array = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(managedPtr(array.type->getElementType()), array.contributedInstructions + index.contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::store_element: {
+                    // we can't optimize it
+                    auto index = simulationStack.peek(0);
+                    auto value = simulationStack.peek(1);
+                    auto array = simulationStack.peek(2);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::pop: {
+                    simulationStack.pop();
+                    break;
+                }
+                default: {
+                    // pass
+                    break;
+                }
+            }
+        }
+
+        // Return the final state after all instructions are processed.
+        return {simulationStack, variablesExtraInfo};
+    }
+
+    AnalysisState mergeStates(const AnalysisState &s1, const AnalysisState &s2) {
+        if (s1.stack.items.empty() && s1.variableStates.empty())
+            return s2;
+        if (s2.stack.items.empty() && s2.variableStates.empty())
+            return s1;
+
+        // It's an error if stack sizes don't match at a merge point.
+        // The IR is likely invalid.
+        if (s1.stack.items.size() != s2.stack.items.size()) {
+            panic(0, 0, "IROptimizer: Incompatible stack depths at merge point.");
+        }
+
+        AnalysisState mergedState;
+
+        // Merge Stacks
+        for (size_t i = 0; i < s1.stack.items.size(); ++i) {
+            const auto &item1 = s1.stack.items[i];
+            const auto &item2 = s2.stack.items[i];
+
+            auto mergedItem = IROptimizer::SimulationStack::Item{
+                item1.type, false, {}, item1.contributedInstructions + item2.contributedInstructions};
+
+            if (item1.hasPossibleValue && item2.hasPossibleValue) {
+                if (item1.type->type == item2.type->type &&
+                    item1.type->isBasicType() &&
+                    item1.possibleValue.intValue == item2.possibleValue.intValue) {
+                    mergedItem.hasPossibleValue = true;
+                    mergedItem.possibleValue = item1.possibleValue;
+                }
+            }
+            mergedState.stack.push(mergedItem);
+        }
+
+        // Merge Variables
+        // Create a set of all variable keys from both maps
+        std::set<indexT> allVarKeys;
+        for (const auto &[key, val] : s1.variableStates)
+            allVarKeys.insert(key);
+        for (const auto &[key, val] : s2.variableStates)
+            allVarKeys.insert(key);
+
+        for (const auto &key : allVarKeys) {
+            auto it1 = s1.variableStates.find(key);
+            auto it2 = s2.variableStates.find(key);
+
+            if (it1 != s1.variableStates.end() && it2 != s2.variableStates.end()) {
+                // Variable exists in both paths
+                const auto &v1 = it1->second;
+                const auto &v2 = it2->second;
+
+                // Default to an unknown value
+                auto mergedInfo = IROptimizer::VariablesExtraInfo{false, true, {}};
+
+                if (v1.hasPossibleValue && v2.hasPossibleValue) {
+                    // If known and identical, preserve value
+                    if (v1.possibleValue.possibleValue.intValue == v2.possibleValue.possibleValue.intValue) {
+                        mergedInfo.hasPossibleValue = true;
+                        mergedInfo.possibleValue = v1.possibleValue;
+                    }
+                }
+                mergedState.variableStates[key] = mergedInfo;
+
+            } else {
+                mergedState.variableStates[key] = {false, true, {}};
+            }
+        }
+
+        return mergedState;
+    }
+
+    void IROptimizer::transformBlock(indexT blockIndex, const AnalysisState &inState) {
+        simulationStack = inState.stack;
+        variablesExtraInfo = inState.variableStates;
+        currentCodeBlockIndex = blockIndex;
+
+        reduceRedundantConstantExpr();
+        reduceRedundantCodeAfterRet();
     }
 } // namespace yoi

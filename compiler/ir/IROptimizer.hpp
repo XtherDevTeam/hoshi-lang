@@ -13,6 +13,10 @@
 
 namespace yoi {
 
+    class IROptimizer;
+
+    class AnalysisState;
+
     class IROptimizer {
         std::shared_ptr<compilerContext> compilerCtx;
         std::shared_ptr<IRModule> irModule;
@@ -184,7 +188,21 @@ namespace yoi {
         IROptimizer &doOptimizationForCurrentFunction();
 
         IROptimizer &reduceEmptyCodeBlock();
+
+        AnalysisState analyzeBlock(indexT blockIndex, const AnalysisState &inState);
+
+        void transformBlock(indexT blockIndex, const AnalysisState &inState);        
     };
+
+    struct AnalysisState {
+        IROptimizer::SimulationStack stack;
+        std::map<indexT, IROptimizer::VariablesExtraInfo> variableStates;
+
+        // A simple comparison for the worklist algorithm to detect changes.
+        bool operator!=(const AnalysisState &other) const;
+    };
+
+    AnalysisState mergeStates(const AnalysisState &s1, const AnalysisState &s2);
 
 } // yoi
 
