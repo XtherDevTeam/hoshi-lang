@@ -81,6 +81,12 @@ namespace yoi {
         llvm::FunctionType* debugPrintDeciType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getDoubleTy()}, false);
         runtimeDebugPrintDeciFunc = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
         runtimeDebugPrintDeciFunc->setCallingConv(llvm::CallingConv::C);
+
+        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            llvm::FunctionType *debugPrintCurrentAllocatedMemoryType = llvm::FunctionType::get(Builder->getVoidTy(), {}, false);
+            runtimeDebugPrintCurrentAllocatedMemoryFunc = llvm::Function::Create(debugPrintCurrentAllocatedMemoryType, llvm::Function::ExternalLinkage, "runtime_debug_print_current_allocated_memory", TheModule.get());
+            runtimeDebugPrintCurrentAllocatedMemoryFunc->setCallingConv(llvm::CallingConv::C);
+        }
     }
 
     void LLVMCodegen::generate() {
@@ -472,10 +478,8 @@ namespace yoi {
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
             Builder->SetInsertPoint(decEntryBlock);
             llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
-            // Cast i8* to the specific struct pointer type
+            
             llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
-            // Call the concrete struct's decrease function
-            // (The struct's decrease function already handles null checks and finalization logic)
             Builder->CreateCall(structDecFunc, castedThis_dec);
             Builder->CreateRetVoid();
         }
@@ -529,6 +533,7 @@ namespace yoi {
             llvm::Value* gcIncSlotPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 2, "gc_inc_slot");
             llvm::Value* gcIncFuncPtr = Builder->CreateLoad(gcFuncPtrTypeForDispatch, gcIncSlotPtr, "gc_func_ptr");
             Builder->CreateCall(gcFuncTypeForDispatch, gcIncFuncPtr, {loadedConcreteThis});
+
             Builder->CreateRetVoid();
 
 
@@ -1059,8 +1064,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::construct_interface_impl: {
-                auto structInstanceVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 auto interfaceShellVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                auto structInstanceVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 
                 auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
                 auto implDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
@@ -1099,7 +1104,6 @@ namespace yoi {
                 }
                 
                 valueStackMap[fromBlock][toBlock].push_back(interfaceShellVal); // Put the constructed interface back
-                callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, false);
                 break;
             }
             case IR::Opcode::invoke_virtual: {
@@ -1122,6 +1126,7 @@ namespace yoi {
                 // Load the concrete `this` pointer from index 1
                 auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 1, "this_ptr_field");
                 auto* concreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtrField, "concrete_this_raw");
+                
 
                 // Load the function pointer to call from the v-table. User methods start at index 4.
                 auto vtableSlotIndex = methodVTableIndex + 4;
@@ -1239,10 +1244,16 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({result, managedPtr(arrayType->getElementType())});
                 // resource releasing
                 callGcFunction(indexVal.llvmValue, indexVal.yoiType, false);
+                callGcFunction(arrayVal.llvmValue, arrayVal.yoiType, false);
                 break;
             }
             case IR::Opcode::pop: {
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    auto globalStrConst = llvm::ConstantDataArray::getString(*TheContext, "Popped value: " + val.llvmValue->getName().str(), true);
+                    auto globalStr = new llvm::GlobalVariable(*TheModule, globalStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, globalStrConst, "popped_value_str");
+                    Builder->CreateCall(runtimeDebugPrintFunc, {globalStr});
+                }
                 callGcFunction(val.llvmValue, val.yoiType, false);
                 break;
             }
@@ -1432,7 +1443,9 @@ namespace yoi {
             funcNameBase = "array_" + yoi::wstring2string(yoiType->to_string()) + "_" + std::to_string(size);
         } else {
             switch(yoiType->type) {
+                case IRValueType::valueType::foreignInt32Type:
                 case IRValueType::valueType::integerObject: funcNameBase = "basic_int"; break;
+                case IRValueType::valueType::foreignFloatType:
                 case IRValueType::valueType::decimalObject: funcNameBase = "basic_decimal"; break;
                 case IRValueType::valueType::booleanObject: funcNameBase = "basic_bool"; break;
                 case IRValueType::valueType::stringObject: funcNameBase = "basic_string"; break;
@@ -1962,7 +1975,8 @@ namespace yoi {
                 auto arrayPointer = Builder->CreateStructGEP(structType, objPtr, 1, "array_ptr");
                 for (yoi::indexT i = 0; i < size; i++) {
                     auto elementPointer = Builder->CreateGEP(arrayType, arrayPointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0), llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), i)}, "element_ptr");
-                    callGcFunction(elementPointer, managedPtr(type->getElementType()), false);
+                    auto elementPointerVal = Builder->CreateLoad(llvm::PointerType::get(llvm::Type::getInt64Ty(*TheContext), 0), elementPointer, "element_ptr_val"); // just too lazy, so I use int64*
+                    callGcFunction(elementPointerVal, managedPtr(type->getElementType()), false);
                 }
             }
             Builder->CreateCall(runtimeFinalizeObjectFunc, objPtr);
@@ -2044,6 +2058,7 @@ namespace yoi {
                 auto elementLLVMType = yoiTypeToLLVMType(elementType);
                 auto pointerToElement = Builder->CreateGEP(elementLLVMType, arrayPointer, index, "element_ptr");
                 auto *loadedVal = Builder->CreateLoad(yoiTypeToLLVMType(elementType), pointerToElement, "loaded_val");
+                callGcFunction(loadedVal, elementType, true); // increase ref count
                 return loadedVal;
             }
             default: {

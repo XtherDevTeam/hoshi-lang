@@ -1213,11 +1213,9 @@ namespace yoi {
                 case IR::Opcode::construct_interface_impl: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
-                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex});
-                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
-                    for (int i = 0; i < argCount + 1; i++) {
-                        simulationStack.pop();
-                    }
+                    auto returnType = simulationStack.peek(0).type;
+                    simulationStack.pop();
+                    simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
@@ -2061,11 +2059,9 @@ namespace yoi {
                 case IR::Opcode::construct_interface_impl: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
-                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex});
-                    auto argCount = interfaceImplDef->virtualMethodIndexMap.size();
-                    for (int i = 0; i < argCount + 1; i++) {
-                        simulationStack.pop();
-                    }
+                    auto returnType = simulationStack.peek(0).type;
+                    simulationStack.pop();
+                    simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }

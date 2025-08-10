@@ -5,6 +5,14 @@
 #ifndef HOSHI_LANG_MEMORY_H
 #define HOSHI_LANG_MEMORY_H
 
+#include <cstdint>
+#include <cstdio>
+#include <runtime/build_config.h>
+
+struct YoiObject {
+    unsigned long long gc_refcount;
+};
+
 struct YoiIntegerObject {
     unsigned long long gc_refcount;
     long long value;
@@ -29,6 +37,21 @@ struct YoiCharObject {
     unsigned long long gc_refcount;
     wchar_t value;
 };
+
+struct AllocatedMemoryList {
+    AllocatedMemoryList *prev;
+    AllocatedMemoryList *next;
+    void *memory;
+    unsigned long size;
+};
+
+#ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
+extern "C" AllocatedMemoryList *allocated_memory_list;
+
+extern "C" void runtime_debug_print_current_allocated_memory();
+#endif
+
+extern "C" int64_t runtime_object_allocated;
 
 extern "C" void *runtime_object_alloc(unsigned long size_in_bytes);
 

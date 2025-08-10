@@ -13,9 +13,8 @@ impl Test {
 }
 
 func main() : int {
-    let t = Test(true)
-    let t2 = Test(false)
-    if (t.a == true && t2.a == false) {
+    let a = 1, b = 2, c = 3
+    if (a == 1 && b == 2 && c == 3) {
         puts("validation passed")
         return 0
     } else {

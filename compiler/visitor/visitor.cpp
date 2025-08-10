@@ -714,6 +714,8 @@ namespace yoi {
                     moduleContext->getIRBuilder().switchCodeBlock(exitBlock);
 
                     lhsType = moduleContext->getCompilerContext()->getBoolObjectType();
+                    // because before the rhs became lhs taken into evaluation, jumpIf inst has consumed the rhs on the stack so we must push it back
+                    moduleContext->getIRBuilder().pushTempVar(lhsType);
                     break;
                 }
                 default: {
@@ -785,6 +787,8 @@ namespace yoi {
                     moduleContext->getIRBuilder().switchCodeBlock(exitBlock);
 
                     lhsType = moduleContext->getCompilerContext()->getBoolObjectType();
+                    // same as before
+                    moduleContext->getIRBuilder().pushTempVar(lhsType);
                     break;
                 }
                 default: {
@@ -1034,6 +1038,7 @@ namespace yoi {
             if (dim_it != end && (*dim_it)->isInvocation()) {
                 for (auto &val : (*dim_it)->args->get()) {
                     visit(val);
+                    tryCastTo(baseType);
                     actualSize++;
                 }
                 it = ++dim_it;
@@ -1219,8 +1224,7 @@ namespace yoi {
                 if (!resolved) {
                     try {
                         auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
-                        moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
-
+                        
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                         for (auto &arg : args->get()) {
                             visit(arg);
@@ -1233,6 +1237,8 @@ namespace yoi {
                                    "Interface constructor expects exactly one argument (the struct instance).");
 
                         auto structValue = argTypes[0];
+
+                        moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
 
                         auto interfaceImplName =
                             getInterfaceImplName({currentModuleIndex, interfaceIndex},
@@ -1506,6 +1512,13 @@ namespace yoi {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{
                 IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
+        } catch (std::out_of_range &e) {
+            // let it go
+        }
+        try {
+            auto typeIndex = irModule->interfaceTable.getIndex(typeName);
+            return IRValueType{
+                IRValueType::valueType::interfaceObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
         } catch (std::out_of_range &e) {
             // let it go
         }
@@ -2117,7 +2130,7 @@ namespace yoi {
             visit(returnStmt->value);
             // validate type
             auto returnType = moduleContext->getIRBuilder().irFuncDefinition()->returnType;
-            emitBasicCastTo(returnType);
+            tryCastTo(returnType);
             moduleContext->getIRBuilder().retOp();
         } else {
             // TODO: return void
@@ -2156,7 +2169,6 @@ namespace yoi {
                       identifierWithTemplateArg->getColumn(),
                       "No matched struct template found for: " + wstring2string(baseName));
             }
-
         } else {
             return parseTypeSpec(identifierWithTemplateArg->id);
         }
@@ -2169,19 +2181,10 @@ namespace yoi {
             yoi::vec<yoi::indexT> dimensions;
             for (auto &sub : subscriptExpr->getSubscript()) {
                 yoi_assert(
-                    sub->isSubscript(), sub->getLine(), sub->getColumn(), "Expected dimension size for array type.");
-                // For type parsing, we don't evaluate the expression, but we'd need a way
-                // to represent the dimension. For now, let's assume it's a literal.
-                // A full implementation would require constant expression evaluation here.
-                panic(sub->getLine(),
-                      sub->getColumn(),
-                      "TODO: Array type specifier with non-literal size not implemented yet.");
+                    sub->isSubscript() && sub->expr->getToken().kind == lexer::token::tokenKind::integer, sub->getLine(), sub->getColumn(), "Expected dimension size for array type.");
+                dimensions.push_back(sub->expr->getToken().basicVal.vInt);
             }
-            // TODO: Create and return an array type.
-            panic(subscriptExpr->getLine(),
-                  subscriptExpr->getColumn(),
-                  "TODO: Array type parsing not fully implemented.");
-            return {IRValueType::valueType::null};
+            return baseType.getArrayType(dimensions);
         } else {
             return parseTypeSpec(subscriptExpr->id);
         }
@@ -2190,11 +2193,12 @@ namespace yoi {
     IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
         auto mod = moduleContext->getCompilerContext()->getImportedModule(targetModule);
         auto ex = getExternEntry(targetModule, identifier->node.strVal);
-        yoi_assert(ex.type == IRExternEntry::externType::structType,
-                   identifier->getLine(),
-                   identifier->getColumn(),
-                   "Invalid type specifier, expected struct type");
-        return {IRValueType::valueType::structObject, ex.affiliateModule, ex.itemIndex};
+        if (ex.type == IRExternEntry::externType::structType)
+            return {IRValueType::valueType::structObject, ex.affiliateModule, ex.itemIndex};
+        else if (ex.type == IRExternEntry::externType::interfaceType)
+            return {IRValueType::valueType::interfaceObject, ex.affiliateModule, ex.itemIndex};
+        else
+            panic(identifier->getLine(), identifier->getColumn(), "Unsupported extern type: " + wstring2string(identifier->node.strVal));
     }
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
@@ -2902,5 +2906,35 @@ namespace yoi {
                               moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries.getIndex(from),
                               importedIndex}));
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    void visitor::tryCastTo(const std::shared_ptr<IRValueType> &toType) {
+        auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        if (*rhs == *toType) {
+            return;
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
+            emitBasicCastTo(toType);
+        } else if (toType->type == IRValueType::valueType::interfaceObject) {
+            yoi_assert(rhs->type == IRValueType::valueType::structObject, 0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface");
+            // check implemented interfaces
+            try {
+                auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, {rhs->typeAffiliateModule, rhs->typeIndex});
+                auto implIndex = irModule->interfaceImplementationTable.getIndex(implName);
+                // construct interface object
+                moduleContext->getIRBuilder().newInterfaceOp(toType->typeIndex, toType->typeAffiliateModule != currentModuleIndex, toType->typeAffiliateModule);
+                moduleContext->getIRBuilder().constructInterfaceImplOp(implIndex);
+            } catch (std::out_of_range &e) {
+                panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
+            }
+        } else if (toType->type == IRValueType::valueType::structObject) {
+            // check whether owns the constructor
+            auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
+            auto constructorName = L"constructor" + getFuncUniqueNameStr({rhs});
+            if (structType->nameIndexMap.contains(constructorName)) {
+                panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
+            }
+        } else {
+            panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
+        }
     }
 } // namespace yoi

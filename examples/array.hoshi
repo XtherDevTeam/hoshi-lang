@@ -13,10 +13,13 @@ impl Test {
 }
 
 interface ITest {
+    fetch() : bool
 }
 
 impl Test : ITest {
-
+    fetch() : bool {
+        return this.a
+    }
 }
 
 func main() : int {
@@ -39,9 +42,12 @@ func main() : int {
         puts("Multi dimension array validation completed.")
     }
     let arr3 = Test[3](Test(true), Test(false), Test(true))
-    if (arr3[0].a == true && arr3[1].a == true) {
+    if (arr3[0].a == true && arr3[1].a == false && arr3[2].a == true) {
         puts("Array of struct validation completed.")
     }
-
+    let arr4 = ITest[3](Test(true), Test(false), Test(true))
+    if (arr4[0].fetch() == true && arr4[1].fetch() == false && arr4[2].fetch() == true) {
+        puts("Array of interface validation completed.")
+    }
     return sum
 }

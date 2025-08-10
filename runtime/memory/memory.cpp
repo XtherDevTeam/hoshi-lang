@@ -9,17 +9,66 @@
 #include <runtime/build_config.h>
 #include "memory.h"
 
+#if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+extern "C" AllocatedMemoryList *allocated_memory_list = nullptr;
+
+void runtime_debug_print_current_allocated_memory() {
+    for (AllocatedMemoryList *node = allocated_memory_list; node; node = node->next) {
+        printf("[Elysia/DEBUG] Current allocated memory at %p, size: %ld bytes. target refcount: %lld.\n",
+               node->memory,
+               node->size,
+               ((YoiObject *)node->memory)->gc_refcount);
+    }
+}
+#endif
+
+extern "C" int64_t runtime_object_allocated = 0;
 
 extern "C" void *runtime_object_alloc(unsigned long size_in_bytes) { 
+    void * ptr = calloc(1, size_in_bytes);
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
-    printf("[Elysia/DEBUG] Allocating %ld bytes of memory.\n", size_in_bytes);
+    printf("[Elysia/DEBUG] Allocating %ld bytes of memory at %p. Current object count: %lld.\n", size_in_bytes, ptr, runtime_object_allocated);
     #endif
-    void * ptr = calloc(size_in_bytes, 1);
+    runtime_object_allocated ++;
+    #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
+    if (allocated_memory_list == nullptr) {
+        allocated_memory_list = static_cast<AllocatedMemoryList *>(malloc(sizeof(AllocatedMemoryList)));
+        allocated_memory_list->memory = ptr;
+        allocated_memory_list->size = size_in_bytes;
+        allocated_memory_list->prev = nullptr;
+        allocated_memory_list->next = nullptr;
+    } else {
+        auto *new_node = static_cast<AllocatedMemoryList *>(malloc(sizeof(AllocatedMemoryList)));
+        new_node->memory = ptr;
+        new_node->size = size_in_bytes;
+        new_node->prev = nullptr;
+        new_node->next = allocated_memory_list;
+        allocated_memory_list->prev = new_node;
+        allocated_memory_list = new_node;
+    }
+    #endif
     return ptr;
 }
 extern "C" void runtime_finalize_object(void *object) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
-    printf("[Elysia/DEBUG] Finalizing object at %p.\n", object);
+    printf("[Elysia/DEBUG] Finalizing object at %p. Current object count: %lld.\n", object, runtime_object_allocated);
+    #endif
+    runtime_object_allocated --;
+    #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
+    for (AllocatedMemoryList *node = allocated_memory_list; node!= nullptr; node = node->next) {
+        if (node->memory == object) {
+            if (node->prev != nullptr) {
+                node->prev->next = node->next;
+            } else {
+                allocated_memory_list = node->next;
+            }
+            if (node->next != nullptr) {
+                node->next->prev = node->prev;
+            }
+            free(node);
+        }
+    }
+    runtime_debug_print_current_allocated_memory();
     #endif
     free(object);
 }

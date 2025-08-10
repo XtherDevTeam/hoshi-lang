@@ -1,0 +1,28 @@
+import puts(str: string) : int32 from "builtin"
+
+struct Test {
+    a: bool,
+    constructor(a: bool)
+}
+
+impl Test {
+    constructor(a: bool) {
+        this.a = a
+        return this
+    }
+}
+
+interface ITest {
+    fetch() : bool
+}
+
+impl Test : ITest {
+    fetch() : bool {
+        return this.a
+    }
+}
+
+func main() : int {
+    let arr = ITest[2](Test(true), Test(false))
+    return 0
+}

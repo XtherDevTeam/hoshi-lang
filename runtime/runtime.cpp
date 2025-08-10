@@ -1,4 +1,5 @@
 #include "runtime.h"
+#include "runtime/memory/memory.h"
 #include <cstdio>
 
 int elysia_main(int argc, char *argv[]) {
@@ -10,6 +11,12 @@ int elysia_main(int argc, char *argv[]) {
     basic_int_gc_refcount_decrease(result);
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) || defined(ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION)
     printf("[Elysia/DEBUG] Yoi-lang runtime finished, result: %d.\n", resultVal);
+    #endif
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+    if (runtime_object_allocated > 0) {
+        printf("[Elysia/WARNING] Yoi-lang runtime finished with %lld objects allocated, memory leaks detected!\n", runtime_object_allocated);
+        runtime_debug_print_current_allocated_memory();
+    }
     #endif
     return resultVal;
 }

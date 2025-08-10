@@ -149,8 +149,6 @@ namespace yoi {
         }
     }
 
-    IRValueType IRBuilder::getLocalVar(yoi::indexT index) {}
-
     const std::shared_ptr<IRValueType> &IRBuilder::getLhsFromTempVarStack() {
         yoi_assert(tempVarStack.size() > 1, 0, 0, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 2];
@@ -389,7 +387,10 @@ namespace yoi {
     }
 
     void IRBuilder::constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal, yoi::indexT moduleIndex) {
+        auto rhs = tempVarStack.back();
+        this->tempVarStack.pop_back(); // remove interfaceObject from tempVarStack
         this->tempVarStack.pop_back(); // remove structObject from tempVarStack
+        tempVarStack.push_back(rhs);
         insert(IR{IR::Opcode::construct_interface_impl,
                   {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
                    IROperand(IROperand::operandType::index, interfaceImplIndex)}});

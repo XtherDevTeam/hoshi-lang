@@ -53,7 +53,9 @@ namespace yoi {
          * @throws std::runtime_error if the identifier is not found in the module
          * @deprecated Extern entries are not used anymore, use getExternEntry to get the direct entry instead.
          */
-        [[deprecated("Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
+        [[deprecated(
+            "Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT
+        addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
 
         bool isVisitingGlobalScope() const;
 
@@ -95,6 +97,8 @@ namespace yoi {
 
         yoi::wstr getMangledTemplateName(const yoi::wstr &baseName,
                                          const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
+
+        void tryCastTo(const std::shared_ptr<IRValueType> &toType);
 
         /**
          * Visitor methods

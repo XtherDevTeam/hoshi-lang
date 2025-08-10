@@ -1,0 +1,92 @@
+[Elysia/DEBUG] Yoi-lang descriptor: yoi-lang-darwin-arm64, build_type: 1. Runtime linked, invoking yoimiya_entry()...
+[Elysia/DEBUG] Entering function yoimiya_entry
+[Elysia/DEBUG] Performing: invoke index(3782547968) index(0) index(0) 
+[Elysia/DEBUG] Entering function 0_yoimiya_glob_initializer
+[Elysia/DEBUG] Performing: ret_none 
+[Elysia/DEBUG] Performing: invoke index(3782547968) index(3) index(0) 
+[Elysia/DEBUG] Entering function yoi_main
+[Elysia/DEBUG] Performing: new_struct index(3782547968) index(0) 
+[Elysia/DEBUG] Allocating 16 bytes of memory at 0x100104e50.
+[Elysia/DEBUG] Performing: push_boolean bool(true) 
+[Elysia/DEBUG] Allocating 12 bytes of memory at 0x1001067b0.
+[Elysia/DEBUG] Performing: invoke index(3782547968) index(1) index(2) 
+[Elysia/DEBUG] Entering function 0_Test::constructor#bool
+[Elysia/DEBUG] Performing: load_local localVar#1 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: store_member index(0) 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: load_member index(0) 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: pop 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: ret 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: new_interface index(3782547968) index(0) 
+[Elysia/DEBUG] Allocating 40 bytes of memory at 0x100106830.
+[Elysia/DEBUG] Performing: construct_interface_impl index(3782547968) index(0) 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Finalizing object at 0x1001067b0.
+[Elysia/DEBUG] Finalizing object at 0x100104e50.
+[Elysia/DEBUG] Performing: new_struct index(3782547968) index(0) 
+[Elysia/DEBUG] Allocating 16 bytes of memory at 0x100104e50.
+[Elysia/DEBUG] Performing: push_boolean bool(false) 
+[Elysia/DEBUG] Allocating 12 bytes of memory at 0x1001067b0.
+[Elysia/DEBUG] Performing: invoke index(3782547968) index(1) index(2) 
+[Elysia/DEBUG] Entering function 0_Test::constructor#bool
+[Elysia/DEBUG] Performing: load_local localVar#1 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: store_member index(0) 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: load_member index(0) 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: pop 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: ret 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Performing: new_interface index(3782547968) index(0) 
+[Elysia/DEBUG] Allocating 40 bytes of memory at 0x100106860.
+[Elysia/DEBUG] Performing: construct_interface_impl index(3782547968) index(0) 
+[Elysia/DEBUG] Decreasing refcount of bool object
+[Elysia/DEBUG] Address: 0x1001067b0
+[Elysia/DEBUG] Finalizing object at 0x1001067b0.
+[Elysia/DEBUG] Finalizing object at 0x100104e50.
+[Elysia/DEBUG] Performing: new_array_interface index(0) index(0) index(2) 
+[Elysia/DEBUG] Allocating 24 bytes of memory at 0x1001067b0.
+[Elysia/DEBUG] Performing: store_local localVar#0 
+[Elysia/DEBUG] Entering function array_interface#3782547968#0_2_gc_refcount_increase
+[Elysia/DEBUG] Entering function array_interface#3782547968#0_2_gc_refcount_decrease
+[Elysia/DEBUG] Entering function array_interface#3782547968#0_2_gc_refcount_decrease
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Entering function array_interface#3782547968#0_2_gc_refcount_increase
+[Elysia/DEBUG] Performing: push_integer int(0) 
+[Elysia/DEBUG] Allocating 16 bytes of memory at 0x100104e50.
+[Elysia/DEBUG] Performing: load_element 
+[Elysia/DEBUG] Decreasing refcount of int object
+[Elysia/DEBUG] Address: 0x100104e50
+[Elysia/DEBUG] Performing: invoke_virtual index(3782547968) index(0) index(1) 
+[Elysia/DEBUG] Entering function 0_Test::fetch#
+[Elysia/DEBUG] Performing: load_local localVar#0 
+[Elysia/DEBUG] Performing: load_member index(0) 
+[Elysia/DEBUG] Increasing refcount of bool object
+[Elysia/DEBUG] Address: 0x0
