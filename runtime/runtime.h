@@ -9,7 +9,7 @@
 #include <runtime/build_config.h>
 #include <runtime/debug/debug.h>
 
-extern "C" const char *yoi_desc;
+extern "C" char yoi_desc;
 
 extern "C" const unsigned long long yoi_build_type;
 
