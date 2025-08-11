@@ -25,7 +25,7 @@ jobs:
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: 'macos-latest'
+    runs-on: 'ubuntu-latest'
     permissions:
       # required for all workflows
       security-events: write
@@ -62,7 +62,12 @@ jobs:
     #   uses: actions/setup-example@v1
   
     # Initializes the CodeQL tools for scanning.
-        
+    - name: Set up Clang
+      uses: egor-tensin/setup-clang@v1
+      with:
+        version: latest
+        platform: x64
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
@@ -89,6 +94,8 @@ jobs:
           'your code, for example:'
         echo '  make bootstrap'
         echo '  make release'
+        # sudo apt-get install lsb-release
+        # sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
         mkdir -p cmake-build-debug
         cd cmake-build-debug && cmake .. && make -j48
         exit 1
