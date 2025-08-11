@@ -1224,7 +1224,7 @@ namespace yoi {
                 if (!resolved) {
                     try {
                         auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
-                        
+
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                         for (auto &arg : args->get()) {
                             visit(arg);
@@ -1314,7 +1314,7 @@ namespace yoi {
                 }
 
                 // 2. Initialize the total flattened offset to 0 on the IR stack.
-                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, static_cast<int64_t>(0)});
+                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue{static_cast<int64_t>(0)}}); // make g++ happy
 
                 // 3. Loop through the provided subscript indices, calculate partial offset, and add to total.
                 yoi::indexT currentDim = 0;
