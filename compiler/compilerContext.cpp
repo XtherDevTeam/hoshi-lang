@@ -74,6 +74,7 @@ namespace yoi {
             yoi::parse(mod, l);
             std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), rFilepath, mod);
             std::shared_ptr<IRModule> irMod = std::make_shared<IRModule>();
+            irMod->modulePath = rFilepath;
             auto idx = modules.put(rFilepath, modCtx);
             irMod->identifier = idx;
             moduleImported[idx] = irMod;

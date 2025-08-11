@@ -42,6 +42,8 @@ namespace yoi {
         yoiModule(std::move(yoiModule)), 
         controlFlowAnalysis({}) {
         TheModule = std::make_unique<llvm::Module>("yoi.module", *TheContext);
+        TheModule->addModuleFlag(llvm::Module::Warning, "Debug Info Version", llvm::DEBUG_METADATA_VERSION);
+        DBuilder = std::make_unique<llvm::DIBuilder>(*TheModule);
     }
 
     void LLVMCodegen::declareRuntimeFunctions() {
@@ -630,6 +632,36 @@ namespace yoi {
         currentFunction = functionMap.at(funcDef.name);
         if (funcDef.codeBlock.empty()) return;
 
+        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            if (auto it = compileUnits.find(funcDef.debugInfo.sourceFile); it == compileUnits.end()) {
+                std::filesystem::path sourceFile = std::filesystem::path(funcDef.debugInfo.sourceFile);
+
+                compileUnits[funcDef.debugInfo.sourceFile] = DBuilder->createCompileUnit(
+                    llvm::dwarf::getLanguage("hoshi-lang"),
+                    DBuilder->createFile(sourceFile.filename().string(), sourceFile.parent_path().string()),
+                    "hoshi-lang",
+                    compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release,
+                    "",
+                    0
+                );
+            }
+            auto diFile = compileUnits[funcDef.debugInfo.sourceFile];
+            auto *subroutineType = DBuilder->createSubroutineType(DBuilder->getOrCreateTypeArray(std::nullopt));
+            auto *sp = DBuilder->createFunction(
+                compileUnits[funcDef.debugInfo.sourceFile],
+                yoi::wstring2string(funcDef.name),
+                "",
+                DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
+                funcDef.debugInfo.line + 1,
+                subroutineType,
+                funcDef.debugInfo.line + 1,
+                llvm::DINode::FlagPrototyped,
+                llvm::DISubprogram::SPFlagDefinition
+            );
+            currentFunction->setSubprogram(sp);
+            printf("Current sp addr: %p\n", sp);
+        }
+
         controlFlowAnalysis = ControlFlowAnalysis{funcDef.codeBlock};
         valueStackMap.clear();
         basicBlockMap.clear();
@@ -641,6 +673,7 @@ namespace yoi {
 
         // invoke runtime_debug_report_current_function
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug){
+            Builder->SetCurrentDebugLocation({llvm::DILocation::get(*TheContext, funcDef.debugInfo.line + 1, funcDef.debugInfo.column + 1, currentFunction->getSubprogram())});
             std::string funcName = wstring2string(funcDef.name);
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
             auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
@@ -722,6 +755,9 @@ namespace yoi {
 
     void LLVMCodegen::generateInstruction(const IR& instr, yoi::indexT fromBlock, yoi::indexT toBlock) {
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            auto scope = currentFunction->getSubprogram();
+            printf("Current instr sp: %p\n", scope);
+            Builder->SetCurrentDebugLocation(llvm::DILocation::get(*TheContext, instr.debugInfo.line + 1, instr.debugInfo.column + 1, scope));
             // insert call to runtime_debug_print extern func
             std::string debugStr = "Performing: " + yoi::wstring2string(instr.to_string());
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
@@ -1295,15 +1331,46 @@ namespace yoi {
                 auto lhsType = lhs.yoiType;
                 auto rhsType = rhs.yoiType;
                 auto lhsLLVMType = structTypeMap.at(std::make_tuple(lhsType->type, lhsType->typeAffiliateModule, lhsType->typeIndex));
+                auto rhsLLVMType = structTypeMap.at(std::make_tuple(rhsType->type, rhsType->typeAffiliateModule, rhsType->typeIndex));
+
+                if (lhsType->type == IRValueType::valueType::structObject) {
+                    // reduce refcount of object inside the lhs
+                    yoi::indexT fieldIndex = 0;
+                    for (const auto& field : yoiModule->structTable[lhsType->typeIndex]->fieldTypes) {
+                        auto fieldPtr = Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, fieldIndex, "field_ptr");
+                        callGcFunction(fieldPtr, field, false);
+                        fieldIndex++;
+                    }
+                    fieldIndex = 0;
+                    for (const auto& field : yoiModule->structTable[rhsType->typeIndex]->fieldTypes) {
+                        auto fieldPtr = Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, fieldIndex, "field_ptr");
+                        callGcFunction(fieldPtr, field, true);
+                        fieldIndex++;
+                    }
+                } else if (lhsType->type == IRValueType::valueType::interfaceObject) {
+                    // reduce refcount of object inside the lhs
+                    // this time, we use implementation-specific vtable slots to reduce refcount
+                    auto thisPtr = Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, 1, "this_ptr_field");
+                    auto* concreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtr, "concrete_this_raw");
+                    auto* implGcDecSlot = Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, 3, "impl_gc_dec_slot");
+                    auto* implGcDecFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvm::PointerType::get(Builder->getInt8Ty(), 0)}, false);
+                    Builder->CreateCall(implGcDecFuncType, implGcDecSlot, {concreteThisPtrRaw});
+                    auto rhsThisPtr = Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, 1, "this_ptr_field");
+                    auto* rhsConcreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), rhsThisPtr, "rhs_concrete_this_raw");
+                    auto* implGcIncSlot = Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, 2, "impl_gc_inc_slot");
+                    auto* implGcIncFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvm::PointerType::get(Builder->getInt8Ty(), 0)}, false);
+                    Builder->CreateCall(implGcIncFuncType, implGcIncSlot, {rhsConcreteThisPtrRaw});
+                }
+
                 auto structTypeSize = TheModule->getDataLayout().getTypeAllocSize(lhsLLVMType);
-                printf("struct type size: %llu\n", structTypeSize);
                 // offset from 8 bytes to skip the refcount, and memcpy the rhs value to lhs
                 auto* lhsPtr = Builder->CreateBitCast(lhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "lhs_ptr");
                 auto* rhsPtr = Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "rhs_ptr");
                 auto* offsettedLhsPtr = Builder->CreateGEP(llvm::Type::getInt8Ty(*TheContext), lhsPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 8, true)});
                 auto* offsettedRhsPtr = Builder->CreateGEP(llvm::Type::getInt8Ty(*TheContext), rhsPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 8, true)});
                 Builder->CreateMemCpy(offsettedLhsPtr, llvm::MaybeAlign(8), offsettedRhsPtr, llvm::MaybeAlign(8), structTypeSize - 8);
-                callGcFunction(lhs.llvmValue, lhs.yoiType, false);
+                callGcFunction(rhs.llvmValue, rhs.yoiType, false);
+                break;
             }
             case IR::Opcode::nop:
                 break;

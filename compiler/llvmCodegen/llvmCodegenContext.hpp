@@ -15,6 +15,7 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Value.h>
 #include <llvm/IR/Verifier.h>
+#include <llvm/IR/DIBuilder.h>
 
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
@@ -43,6 +44,11 @@ namespace yoi {
         std::unique_ptr<llvm::LLVMContext> TheContext;
         std::unique_ptr<llvm::Module> TheModule;
         std::unique_ptr<llvm::IRBuilder<>> Builder;
+
+        // Debug Info related
+        std::unique_ptr<llvm::DIBuilder> DBuilder;
+        std::map<yoi::wstr, llvm::DICompileUnit*> compileUnits;
+
 
         // Runtime functions
         llvm::Function *runtimeMalloc = nullptr;
@@ -119,6 +125,7 @@ namespace yoi {
         void generateMainFunction();
 
         void generateFunctionImplementations();
+        void generateFunctionDebugInfo(IRFunctionDefinition &funcDef);
         void generateFunction(IRFunctionDefinition &funcDef);
         void generateFunctionExitCleanup();
         void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock);

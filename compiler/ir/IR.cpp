@@ -62,7 +62,7 @@ namespace yoi {
         }
     }
 
-    IR::IR(IR::Opcode opcode, const vec<IROperand> &operands) : opcode(opcode), operands(operands) {}
+    IR::IR(IR::Opcode opcode, const vec<IROperand> &operands, IRDebugInfo debugInfo) : opcode(opcode), operands(operands), debugInfo(debugInfo) {}
 
     yoi::wstr IR::to_string() const {
         yoi::wstr r;
@@ -111,7 +111,7 @@ namespace yoi {
                          std::shared_ptr<IRModule> currentModule,
                          std::shared_ptr<IRFunctionDefinition> currentFunction)
         : compilerCtx(compilerCtx), currentModule(currentModule), currentFunction(currentFunction),
-          currentCodeBlockIndex(0) {}
+          currentCodeBlockIndex(0), currentDebugInfo() {}
 
     yoi::indexT IRBuilder::createCodeBlock() {
         codeBlocks.emplace_back(std::make_shared<IRCodeBlock>(IRCodeBlock{}));
@@ -162,17 +162,17 @@ namespace yoi {
     void IRBuilder::basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint, bool lhs) {
         switch (valType->type) {
             case IRValueType::valueType::integerObject:
-                insert({IR::Opcode::basic_cast_int, {}}, insertionPoint);
+                insert({IR::Opcode::basic_cast_int, {}, currentDebugInfo}, insertionPoint);
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     compilerCtx->getIntObjectType();
                 break;
             case IRValueType::valueType::decimalObject:
-                insert({IR::Opcode::basic_cast_deci, {}}, insertionPoint);
+                insert({IR::Opcode::basic_cast_deci, {}, currentDebugInfo}, insertionPoint);
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     compilerCtx->getDeciObjectType();
                 break;
             case IRValueType::valueType::booleanObject:
-                insert({IR::Opcode::basic_cast_bool, {}}, insertionPoint);
+                insert({IR::Opcode::basic_cast_bool, {}, currentDebugInfo}, insertionPoint);
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     compilerCtx->getBoolObjectType();
                 break;
@@ -189,7 +189,7 @@ namespace yoi {
         tempVarStack.pop_back();
         // push result to tempVarStack
         tempVarStack.emplace_back(left);
-        insert({op, {}});
+        insert({op, {}, currentDebugInfo});
     }
 
     void IRBuilder::arithmeticOp(IR::Opcode op) {
@@ -225,11 +225,11 @@ namespace yoi {
                 break;
             }
         }
-        insert({op, {}});
+        insert({op, {}, currentDebugInfo});
     }
 
     void IRBuilder::jumpOp(yoi::indexT target) {
-        insert(IR(IR::Opcode::jump, {IROperand(IROperand::operandType::codeBlock, target)}));
+        insert(IR(IR::Opcode::jump, {IROperand(IROperand::operandType::codeBlock, target)}, currentDebugInfo));
     }
 
     void IRBuilder::jumpIfOp(IR::Opcode op, yoi::indexT target) {
@@ -239,7 +239,7 @@ namespace yoi {
         yoi_assert(
             condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
         // insert jumpIf operation
-        insert(IR(op, {IROperand(IROperand::operandType::codeBlock, target)}));
+        insert(IR(op, {IROperand(IROperand::operandType::codeBlock, target)}, currentDebugInfo));
     }
 
     void IRBuilder::pushOp(IR::Opcode op, const yoi::IROperand &constV) {
@@ -255,7 +255,7 @@ namespace yoi {
         } else {
             panic(0, 0, "Unsupported constant type for pushOp");
         }
-        insert({op, {constV}});
+        insert({op, {constV}, currentDebugInfo});
     }
 
     void IRBuilder::loadOp(IR::Opcode op,
@@ -263,15 +263,15 @@ namespace yoi {
                            const std::shared_ptr<IRValueType> &expectedType,
                            yoi::indexT moduleIndex) {
         if (op == IR::Opcode::load_member || op == IR::Opcode::load_local) {
-            insert({op, {source}});
+            insert({op, {source}, currentDebugInfo});
         } else if (op == IR::Opcode::load_element) {
             tempVarStack.pop_back();
             tempVarStack.pop_back();
-            insert({op, {}});
+            insert({op, {}, currentDebugInfo});
         } else if (moduleIndex == -1) {
-            insert({op, {{IROperand::operandType::index, currentModule->identifier}, source}});
+            insert({op, {{IROperand::operandType::index, currentModule->identifier}, source}, currentDebugInfo});
         } else {
-            insert({op, {{IROperand::operandType::index, moduleIndex}, source}});
+            insert({op, {{IROperand::operandType::index, moduleIndex}, source}, currentDebugInfo});
         }
         tempVarStack.emplace_back(expectedType);
     }
@@ -279,7 +279,7 @@ namespace yoi {
     void IRBuilder::loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType) {
         tempVarStack.pop_back();
         tempVarStack.emplace_back(memberType);
-        insert({IR::Opcode::load_member, {memberIndex}});
+        insert({IR::Opcode::load_member, {memberIndex}, currentDebugInfo});
     }
 
     void IRBuilder::storeOp(IR::Opcode op, const yoi::IROperand &operand, yoi::indexT moduleIndex) {
@@ -289,13 +289,13 @@ namespace yoi {
             case IR::Opcode::store_member: {
                 // fetch rhs from tempVarStack
                 tempVarStack.pop_back();
-                insert({op, {operand}});
+                insert({op, {operand}, currentDebugInfo});
                 break;
             }
             case IR::Opcode::store_global: {
                 // fetch rhs from tempVarStack
                 tempVarStack.pop_back();
-                insert({op, {{IROperand::operandType::index, moduleIndex}, operand}});
+                insert({op, {{IROperand::operandType::index, moduleIndex}, operand}, currentDebugInfo});
                 break;
             }
             default: {
@@ -309,7 +309,7 @@ namespace yoi {
         // pop rhs and lhs from tempVarStack
         tempVarStack.pop_back();
         tempVarStack.pop_back();
-        insert({IR::Opcode::store_member, {memberIndex}});
+        insert({IR::Opcode::store_member, {memberIndex}, currentDebugInfo});
     }
 
     void IRBuilder::invokeOp(yoi::indexT funcIndex,
@@ -324,7 +324,7 @@ namespace yoi {
         insert(IR(IR::Opcode::invoke,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, funcArgsCount}}));
+                   {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo));
     }
 
     void IRBuilder::invokeMethodOp(yoi::indexT funcIndex,
@@ -340,7 +340,7 @@ namespace yoi {
         insert(IR(IR::Opcode::invoke,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, methodArgsCount + 1}}));
+                   {IROperand::operandType::index, methodArgsCount + 1}}, currentDebugInfo));
     }
 
     void IRBuilder::invokeVirtualOp(yoi::indexT funcIndex,
@@ -355,24 +355,24 @@ namespace yoi {
         insert(IR(IR::Opcode::invoke_virtual,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, methodArgsCount + 1}}));
+                   {IROperand::operandType::index, methodArgsCount + 1}}, currentDebugInfo));
     }
 
     void IRBuilder::retOp(bool returnWithNone) {
         // fetch return value from tempVarStack
         if (returnWithNone) {
-            insert(IR(IR::Opcode::ret_none, {}));
+            insert(IR(IR::Opcode::ret_none, {}, currentDebugInfo));
             return;
         }
         auto retValue = tempVarStack.back();
         tempVarStack.pop_back();
-        insert(IR(IR::Opcode::ret, {}));
+        insert(IR(IR::Opcode::ret, {}, currentDebugInfo));
     }
 
     void IRBuilder::newStructOp(yoi::indexT structIndex, bool isExternal, yoi::indexT moduleIndex) {
         insert(IR{IR::Opcode::new_struct,
                   {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
-                   IROperand(IROperand::operandType::index, structIndex)}});
+                   IROperand(IROperand::operandType::index, structIndex)}, currentDebugInfo});
         tempVarStack.emplace_back(managedPtr(IRValueType{
             IRValueType::valueType::structObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
     }
@@ -380,7 +380,7 @@ namespace yoi {
     void IRBuilder::newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal, yoi::indexT moduleIndex) {
         insert(IR{IR::Opcode::new_interface,
                   {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
-                   IROperand(IROperand::operandType::index, interfaceIndex)}});
+                   IROperand(IROperand::operandType::index, interfaceIndex)}, currentDebugInfo});
         tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::interfaceObject,
                                                          isExternal ? moduleIndex : this->currentModule->identifier,
                                                          interfaceIndex}));
@@ -393,7 +393,7 @@ namespace yoi {
         tempVarStack.push_back(rhs);
         insert(IR{IR::Opcode::construct_interface_impl,
                   {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
-                   IROperand(IROperand::operandType::index, interfaceImplIndex)}});
+                   IROperand(IROperand::operandType::index, interfaceImplIndex)}, currentDebugInfo});
     }
 
     yoi::indexT IRBuilder::getCurrentInsertionPoint() {
@@ -524,14 +524,14 @@ namespace yoi {
     }
 
     std::shared_ptr<IRFunctionDefinition> IRFunctionDefinition::Builder::yield() {
-        return std::make_shared<IRFunctionDefinition>(std::move(name), std::move(argumentTypes), std::move(returnType));
+        return managedPtr(IRFunctionDefinition{name, argumentTypes, returnType, {}, debugInfo});
     }
 
     IRFunctionDefinition::IRFunctionDefinition(
         const yoi::wstr &name,
         const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
-        const std::shared_ptr<IRValueType> &returnType)
-        : name(name), returnType(returnType), variableTable(), codeBlock() {
+        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const IRDebugInfo &debugInfo)
+        : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo) {
         variableTable.createScope();
         for (auto &i : argumentTypes) {
             variableTable.put(i.first, i.second);
@@ -887,7 +887,7 @@ namespace yoi {
         insert(IR{IR::Opcode::invoke_imported,
                   {IROperand(IROperand::operandType::index, libIndex),
                    IROperand(IROperand::operandType::index, funcIndex),
-                   IROperand(IROperand::operandType::index, funcArgsCount)}});
+                   IROperand(IROperand::operandType::index, funcArgsCount)}, currentDebugInfo});
     }
 
     bool IRValueType::isArrayType() const {
@@ -945,7 +945,7 @@ namespace yoi {
         for (yoi::indexT i = 0; i < size; ++i) {
             tempVarStack.pop_back();
         }
-        insert(IR{op, operands});
+        insert(IR{op, operands, currentDebugInfo});
         tempVarStack.push_back(managedPtr(elementType->getArrayType(dimensions)));
     }
     IRValueType IRValueType::getArrayType(const yoi::vec<yoi::indexT> &dimensions) {
@@ -966,6 +966,16 @@ namespace yoi {
     }
     void IRBuilder::popOp() {
         tempVarStack.pop_back();
-        insert(IR{IR::Opcode::pop, {}});
+        insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
+    }
+    void IRBuilder::setDebugInfo(const IRDebugInfo &debugInfo) {
+        this->currentDebugInfo = debugInfo;
+    }
+    const IRDebugInfo &IRBuilder::getCurrentDebugInfo() {
+        return currentDebugInfo;
+    }
+    IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::setDebugInfo(const IRDebugInfo &debugInfo) {
+        this->debugInfo = debugInfo;
+        return *this;
     }
 } // namespace yoi

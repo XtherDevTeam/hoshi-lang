@@ -1,0 +1,13 @@
+import puts(str: string) : int32 from "builtin"
+import sum(arr: int[], size: int) : int from "c_lib"
+
+func main() : int {
+    let arr = int[5](1, 2, 3, 4, 5)
+    let result = sum(arr, 5)
+    if (result == 15) {
+        puts("FFI array test passed!")
+    } else {
+        puts("FFI array test failed!")
+    }
+    return 0
+}

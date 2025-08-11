@@ -116,7 +116,7 @@ namespace yoi {
             return currentIndex;
         }
         for (auto i : contributedInstructions) {
-            targetFunction->codeBlock[contributedInstructions.codeBlockIndex]->getIRArray()[i] = {IR::Opcode::nop, {}};
+            targetFunction->codeBlock[contributedInstructions.codeBlockIndex]->getIRArray()[i] = {IR::Opcode::nop, {}, targetFunction->codeBlock[contributedInstructions.codeBlockIndex]->getIRArray()[i].debugInfo};
             // If the current code block index is greater than the index of the instruction being processed,
             // decrement it to account for the removal of the instruction.
             /*
@@ -455,19 +455,19 @@ namespace yoi {
         switch (item.type->type) {
             case IRValueType::valueType::integerObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_integer, {IROperand{IROperand::operandType::integer, {item.possibleValue.intValue}}}});
+                                 IR::Opcode::push_integer, {IROperand{IROperand::operandType::integer, {item.possibleValue.intValue}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::decimalObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_decimal, {IROperand{IROperand::operandType::decimal, {item.possibleValue.deciValue}}}});
+                                 IR::Opcode::push_decimal, {IROperand{IROperand::operandType::decimal, {item.possibleValue.deciValue}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::booleanObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_boolean, {{IROperand::operandType::boolean, IROperand::operandValue{item.possibleValue.boolValue}}}});
+                                 IR::Opcode::push_boolean, {{IROperand::operandType::boolean, IROperand::operandValue{item.possibleValue.boolValue}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::stringObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_string, {{IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}});
+                                 IR::Opcode::push_string, {{IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::characterObject:
                 // TODO: Implement push_character
@@ -685,7 +685,7 @@ namespace yoi {
                         }
                         value.type = compilerCtx->getBoolObjectType();
                         insIndex = reduce(value.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getBoolObjectType(),
@@ -712,7 +712,7 @@ namespace yoi {
                         }
                         value.type = compilerCtx->getIntObjectType();
                         insIndex = reduce(value.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getIntObjectType(),
@@ -740,7 +740,7 @@ namespace yoi {
                         }
                         value.type = compilerCtx->getDeciObjectType();
                         insIndex = reduce(value.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getDeciObjectType(),
@@ -759,7 +759,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -778,7 +778,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -797,7 +797,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -816,7 +816,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -834,7 +834,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -849,7 +849,7 @@ namespace yoi {
                     auto result = negate(value);
                     if (result.hasPossibleValue) {
                         insIndex = reduce(value.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -867,7 +867,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -885,7 +885,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -903,7 +903,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -935,7 +935,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(value.contributedInstructions, insIndex);
                         insIndex = reduce(shift.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -953,7 +953,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(value.contributedInstructions, insIndex);
                         insIndex = reduce(shift.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -971,7 +971,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -989,7 +989,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -1007,7 +1007,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -1025,7 +1025,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -1043,7 +1043,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -1061,7 +1061,7 @@ namespace yoi {
                     if (result.hasPossibleValue) {
                         insIndex = reduce(left.contributedInstructions, insIndex);
                         insIndex = reduce(right.contributedInstructions, insIndex);
-                        ins = IR{IR::Opcode::nop, {}};
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
@@ -1073,7 +1073,7 @@ namespace yoi {
                     if (auto it = variablesExtraInfo.find(ins.operands[0].value.symbolIndex); it != variablesExtraInfo.end()) {
                         // if exists, use the extra information
                         if (it->second.hasPossibleValue && it->second.possibleValue.contributedInstructions.codeBlockIndex == currentCodeBlockIndex) {
-                            ins = IR{IR::Opcode::nop, {}};
+                            ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
                             insIndex = generatePushOp(it->second.possibleValue, insIndex);
                         } else {
                             // if we can't guess the value, we can't optimize it
@@ -1354,6 +1354,14 @@ namespace yoi {
                     simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
                     break;
                 }
+                case IR::Opcode::pop:{
+                    auto rhs = simulationStack.peek(0);
+                    if (rhs.hasPossibleValue) {
+                        insIndex = reduce(rhs.contributedInstructions, insIndex);
+                    }
+                    simulationStack.pop();
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -1449,7 +1457,7 @@ namespace yoi {
                 if (targetBlock->getIRArray().back().opcode != IR::Opcode::ret && targetBlock->getIRArray().back().opcode != IR::Opcode::ret_none) {
                     // there's no return instruction, add a ret instruction at the end of the block if it returns none
                     if (targetFunction->returnType->type == IRValueType::valueType::none) {
-                        targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}});
+                        targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetBlock->getIRArray().back().debugInfo});
                     } else {
                         warning(0, 0, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
                     }

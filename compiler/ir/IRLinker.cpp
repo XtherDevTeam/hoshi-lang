@@ -298,7 +298,7 @@ namespace yoi {
     }
     void IRLinker::createEntryFunction() {
         IRFunctionDefinition::Builder entryBuilder;
-        auto entry = entryBuilder.setName(L"yoimiya_entry").setReturnType(compilerCtx->getIntObjectType()).yield();
+        auto entry = entryBuilder.setName(L"yoimiya_entry").setReturnType(compilerCtx->getIntObjectType()).setDebugInfo({L"<entry>", 0, 0}).yield();
         auto entryIndex = this->finalModule->functionTable.put_create(L"yoimiya_entry", entry);
         IRBuilder builder(compilerCtx, finalModule, entry);
         builder.switchCodeBlock(builder.createCodeBlock());

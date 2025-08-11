@@ -63,6 +63,13 @@ namespace yoi {
             std::shared_ptr<IRBuildConfig> yield();
         };
     };
+    
+    struct IRDebugInfo {
+        yoi::wstr sourceFile;
+        yoi::indexT line;
+        yoi::indexT column;
+    };
+
     class IRValueType {
     public:
         enum class valueType : yoi::indexT {
@@ -205,9 +212,11 @@ namespace yoi {
 
         yoi::vec<IROperand> operands;
 
+        IRDebugInfo debugInfo;
+
         IR() = default;
 
-        IR(Opcode opcode, const yoi::vec<IROperand> &operands);
+        IR(Opcode opcode, const yoi::vec<IROperand> &operands, IRDebugInfo debugInfo);
 
         yoi::wstr to_string() const;
     };
@@ -266,9 +275,9 @@ namespace yoi {
         std::shared_ptr<IRValueType> returnType;
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
+        IRDebugInfo debugInfo;
 
-        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType);
-
+        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const IRDebugInfo &debugInfo);
         IRVariableTable &getVariableTable();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
@@ -277,6 +286,7 @@ namespace yoi {
             yoi::wstr name;
             yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
             std::shared_ptr<IRValueType> returnType;
+            IRDebugInfo debugInfo;
 
             Builder() = default;
 
@@ -285,6 +295,8 @@ namespace yoi {
             Builder &addArgument(const yoi::wstr &argumentName, const std::shared_ptr<IRValueType> &argumentType);
 
             Builder &setReturnType(const std::shared_ptr<IRValueType> &returnType);
+
+            Builder &setDebugInfo(const IRDebugInfo &debugInfo);
 
             std::shared_ptr<IRFunctionDefinition> yield();
         };
@@ -489,6 +501,7 @@ namespace yoi {
     public:
         yoi::indexT identifier;
         bool compiled;
+        yoi::wstr modulePath;
         std::map<yoi::wstr, yoi::indexT> moduleImports;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> functionTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
@@ -517,10 +530,15 @@ namespace yoi {
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
         yoi::vec<yoi::indexT> codeBlockInsertionStates;
+        IRDebugInfo currentDebugInfo;
     public:
         IRBuilder() = delete;
 
         IRBuilder(std::shared_ptr<compilerContext> compilerCtx,std::shared_ptr<IRModule> currentModule, std::shared_ptr<IRFunctionDefinition> currentFunction);
+
+        void setDebugInfo(const IRDebugInfo &debugInfo);
+
+        const IRDebugInfo &getCurrentDebugInfo();
 
         void saveState();
 

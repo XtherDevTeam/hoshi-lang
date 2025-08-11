@@ -25,10 +25,12 @@ namespace yoi {
         : moduleContext(moduleContext), irModule(irModule), currentModuleIndex(moduleIndex) {}
 
     std::shared_ptr<yoi::IRModule> visitor::visit() {
+        IRDebugInfo debugInfo{irModule->modulePath, 0, 0};
         auto globInitializer = managedPtr(IRFunctionDefinition{
-            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType()});
+            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType(), {}, debugInfo});
         irModule->functionTable.put(L"yoimiya_glob_initializer", globInitializer);
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, 0, 0});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&moduleContext->getModuleAST());
         moduleContext->getIRBuilder().retOp(true);
@@ -189,7 +191,7 @@ namespace yoi {
                     auto rhsPos = visit(leftExpr->rhs);
                     auto lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     tryCastTo(lhs);
-                    moduleContext->getIRBuilder().insert({IR::Opcode::direct_assign, {}});
+                    moduleContext->getIRBuilder().insert({IR::Opcode::direct_assign, {}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
                     moduleContext->getIRBuilder().popFromTempVarStack();
                     moduleContext->getIRBuilder().popFromTempVarStack();
                     moduleContext->getIRBuilder().pushTempVar(lhs);
@@ -684,18 +686,18 @@ namespace yoi {
 
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithTrueBlock)
-                .insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, true}}});
+                .insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, true}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithTrueBlock)
-                .insert({IR::Opcode::jump, {IROperand{IROperand::operandType::codeBlock, exitBlock}}});
+                .insert({IR::Opcode::jump, {IROperand{IROperand::operandType::codeBlock, exitBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
 
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::push_boolean,
-                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
+                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
-                .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
+                .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
 
             switch (op->kind) {
                 case lexer::token::tokenKind::logicAnd: {
@@ -759,18 +761,18 @@ namespace yoi {
 
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithTrueBlock)
-                .insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, true}}});
+                .insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, true}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithTrueBlock)
-                .insert({IR::Opcode::jump, {IROperand{IROperand::operandType::codeBlock, exitBlock}}});
+                .insert({IR::Opcode::jump, {IROperand{IROperand::operandType::codeBlock, exitBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
 
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
                 .insert({IR::Opcode::push_boolean,
-                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}});
+                        {IROperand{IROperand::operandType::boolean, IROperand::operandValue{false}}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
             moduleContext->getIRBuilder()
                 .getCodeBlock(exitWithFalseBlock)
-                .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}});
+                .insert({IR::Opcode::jump, {{IROperand::operandType::codeBlock, exitBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
 
             switch (op->kind) {
                 case lexer::token::tokenKind::logicOr: {
@@ -977,6 +979,7 @@ namespace yoi {
     }
 
     void visitor::visit(yoi::inCodeBlockStmt *inCodeBlockStmt) {
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, inCodeBlockStmt->getLine(), inCodeBlockStmt->getColumn()});
         switch (inCodeBlockStmt->getKind()) {
             case inCodeBlockStmt::vKind::ifStmt:
                 visit(inCodeBlockStmt->getValue().ifStmtVal);
@@ -1567,6 +1570,8 @@ namespace yoi {
             IRFunctionTemplate::Builder templateBuilder;
             IRFunctionDefinition::Builder builder;
 
+            builder.setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
+
             templateBuilder.templateArguments = getTemplateArgs(funcName.getArg());
 
             moduleContext->pushTemplateBuilder(templateBuilder);
@@ -1600,6 +1605,8 @@ namespace yoi {
             auto funcType = parseTypeSpec(&funcDefStmt->getResultType());
             IRFunctionDefinition::Builder builder;
 
+            builder.setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
+
             builder.setReturnType(managedPtr(funcType));
             std::vector<std::shared_ptr<IRValueType>> argTypes;
             for (auto &i : funcDefStmt->getArgs().get()) {
@@ -1616,6 +1623,7 @@ namespace yoi {
             irModule->functionTable.put(builder.name, func);
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+            moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
             moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
             visit(funcDefStmt->block, true);
             moduleContext->getIRBuilder().yield();
@@ -1639,6 +1647,9 @@ namespace yoi {
             auto methodResultType = managedPtr(parseTypeSpec(i->getMethod().resultType));
             yoi::vec<std::shared_ptr<IRValueType>> argTypes;
             IRFunctionDefinition::Builder methodBuilder;
+
+            methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+
             methodBuilder.setReturnType(methodResultType);
             for (auto &arg : i->getMethod().getArgs().get()) {
                 auto argName = arg->getId().get().strVal;
@@ -1677,6 +1688,9 @@ namespace yoi {
                 } else if (field->kind == 1) { // Constructor
                     IRFunctionTemplate::Builder constructorBuilder;
                     IRFunctionDefinition::Builder constructorDefBuilder;
+
+                    constructorDefBuilder.setDebugInfo({irModule->modulePath, field->getLine(), field->getColumn()});
+
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
                     moduleContext->pushTemplateBuilder(constructorBuilder);
@@ -1711,6 +1725,8 @@ namespace yoi {
                     auto methodName = field->getMethod().getName().get().strVal;
                     IRFunctionTemplate::Builder methodBuilder;
                     IRFunctionDefinition::Builder methodDefBuilder;
+
+                    methodDefBuilder.setDebugInfo({irModule->modulePath, field->getLine(), field->getColumn()});
 
                     moduleContext->pushTemplateBuilder(methodBuilder);
 
@@ -1764,6 +1780,9 @@ namespace yoi {
                     }
                     case 1: {
                         IRFunctionDefinition::Builder constructorBuilder;
+
+                        constructorBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                         auto thisType = managedPtr(
                             IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
@@ -1788,6 +1807,9 @@ namespace yoi {
                         auto methodName = i->getMethod().getName().get().strVal;
                         auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
                         IRFunctionDefinition::Builder methodBuilder;
+
+                        methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
                         methodBuilder.setReturnType(methodType);
@@ -1867,6 +1889,9 @@ namespace yoi {
 
                 auto methodName = i->getMethod().getName().get().strVal;
                 IRFunctionDefinition::Builder methodBuilder;
+
+                methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+
                 yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
                 auto thisType =
@@ -1890,6 +1915,7 @@ namespace yoi {
                     managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex}));
 
                 moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
+                moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                 moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
                 visit(i->getMethod().block, true);
                 moduleContext->getIRBuilder().yield();
@@ -1926,6 +1952,7 @@ namespace yoi {
                     auto funcIndex = irModule->functionTable.getIndex(mangledName);
                     auto func = irModule->functionTable[funcIndex];
                     moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+                    moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                     moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
                     visit(i->isConstructor() ? i->getConstructor().block : i->getMethod().block, true);
                     moduleContext->getIRBuilder().yield();
@@ -2071,9 +2098,9 @@ namespace yoi {
         // replace dummy_break and dummy_continue with jump to the cond block
         for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
             if (i.opcode == IR::Opcode::dummy_break) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}};
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
             } else if (i.opcode == IR::Opcode::dummy_continue) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, condBlock}}};
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, condBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
             }
         }
 
@@ -2113,9 +2140,9 @@ namespace yoi {
         // replace dummy_break and dummy_continue with jump to the cond block
         for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
             if (i.opcode == IR::Opcode::dummy_break) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}};
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
             } else if (i.opcode == IR::Opcode::dummy_continue) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, codeBlock}}};
+                i = {IR::Opcode::jump, {{IROperand::operandType::index, codeBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
             }
         }
 
@@ -2151,12 +2178,12 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visit(yoi::continueStmt *continueStmt) {
-        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_continue, {}});
+        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_continue, {}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::indexT visitor::visit(yoi::breakStmt *breakStmt) {
-        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_break, {}});
+        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_break, {}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -2562,6 +2589,8 @@ namespace yoi {
 
         // Create a new function definition by specializing the template
         IRFunctionDefinition::Builder builder;
+
+        builder.setDebugInfo({irModule->modulePath, astNode->getLine(), astNode->getColumn()});
         builder.setName(specializedName);
 
         // Create specialization context
@@ -2585,6 +2614,7 @@ namespace yoi {
 
         // Visit the body to generate IR
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, specializedFunc});
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, astNode->getLine(), astNode->getColumn()});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&astNode->getBlock(), true);
         moduleContext->getIRBuilder().yield();
@@ -2739,6 +2769,9 @@ namespace yoi {
         moduleContext->pushTemplateBuilder(specializationContext);
 
         IRFunctionDefinition::Builder funcBuilder;
+
+        funcBuilder.setDebugInfo({irModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
+
         yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
 
         funcBuilder.addArgument(L"this", selfType); // Specialized 'this'
@@ -2771,6 +2804,7 @@ namespace yoi {
             IRStructDefinition::nameInfo::nameType::method, funcIndex};
 
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, specializedFunc});
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(methodAstNode->isConstructor() ? &methodAstNode->getConstructor().getBlock()
                                              : &methodAstNode->getMethod().getBlock(),
@@ -2898,6 +2932,9 @@ namespace yoi {
         // parse method signature and add to import table
         auto funcName = importDecl->inner->name->get().strVal;
         IRFunctionDefinition::Builder builder;
+
+        builder.setDebugInfo({irModule->modulePath, importDecl->inner->getLine(), importDecl->inner->getColumn()});
+
         builder.setReturnType(managedPtr(parseTypeSpec(importDecl->inner->resultType)));
         for (auto &arg : importDecl->inner->args->get()) {
             auto argType = managedPtr(parseTypeSpec(&arg->getSpec()));
