@@ -1358,6 +1358,7 @@ namespace yoi {
                     auto rhs = simulationStack.peek(0);
                     if (rhs.hasPossibleValue) {
                         insIndex = reduce(rhs.contributedInstructions, insIndex);
+                        ins = {IR::Opcode::nop, {}, ins.debugInfo};
                     }
                     simulationStack.pop();
                     break;

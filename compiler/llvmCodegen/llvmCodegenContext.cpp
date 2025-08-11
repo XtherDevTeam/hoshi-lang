@@ -2241,8 +2241,10 @@ namespace yoi {
 
         if (type->isArrayType()) {
             yoi::indexT size = 1;
+            llvm::SmallVector<llvm::Metadata*, 8> dimensions;
             for (auto &i : type->dimensions) {
                 size *= i;
+                dimensions.push_back(DBuilder->getOrCreateSubrange(0, i));
             }
             auto arrayKey = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex, size);
             if (arrayTypeDIMap.count(arrayKey)) {
@@ -2275,23 +2277,25 @@ namespace yoi {
                 elementDIType = getDIType(managedPtr(type->getElementType()));
             }
             
-            auto* diArray = DBuilder->createArrayType(size, 32, elementDIType, nullptr);
+            auto arraySizeInBits = size * TheModule->getDataLayout().getTypeSizeInBits(yoiTypeToLLVMType(managedPtr(type->getElementType())));
+            auto* diArray = DBuilder->createArrayType(arraySizeInBits, 64, elementDIType, {DBuilder->getOrCreateArray(dimensions)});
             auto *diArrayStruct = DBuilder->createStructType(
-                compileUnits[L"<default>"], // Scope
+                compileUnits[L"<default>"],
                 "array_" + wstring2string(type->to_string()),
-                compileUnits[L"<default>"]->getFile(), // File
-                1, // Line number (can be 0)
-                64, // Size in bits
-                64, // Alignment in bits
+                compileUnits[L"<default>"]->getFile(),
+                1,
+                64 + arraySizeInBits,
+                64,
                 llvm::DINode::FlagZero,
-                nullptr, // Derived from
+                nullptr,
                 DBuilder->getOrCreateArray({
                     DBuilder->createMemberType(compileUnits[L"<default>"], "refcount", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, di_i64),
-                    DBuilder->createMemberType(compileUnits[L"<default>"], "array", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, diArray)
+                    DBuilder->createMemberType(compileUnits[L"<default>"], "array", nullptr, 0, arraySizeInBits, 64, 64, llvm::DINode::FlagZero, diArray)
                 })
             );
-            arrayTypeDIMap[arrayKey] = diArrayStruct;
-            return diArrayStruct;
+            auto *resultDIType = DBuilder->createPointerType(diArrayStruct, 64);
+            arrayTypeDIMap[arrayKey] = resultDIType;
+            return resultDIType;
         } else {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeDIMap.count(key)) {
