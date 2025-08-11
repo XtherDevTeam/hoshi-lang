@@ -6,6 +6,7 @@
 #define HOSHI_LANG_LLVMCODEGENCONTEXT_HPP
 
 #include <llvm/IR/BasicBlock.h>
+#include <llvm/IR/DIBuilder.h>
 #include <llvm/IR/DerivedTypes.h>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/GlobalVariable.h>
@@ -15,7 +16,6 @@
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Value.h>
 #include <llvm/IR/Verifier.h>
-#include <llvm/IR/DIBuilder.h>
 
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
@@ -47,8 +47,7 @@ namespace yoi {
 
         // Debug Info related
         std::unique_ptr<llvm::DIBuilder> DBuilder;
-        std::map<yoi::wstr, llvm::DICompileUnit*> compileUnits;
-
+        std::map<yoi::wstr, llvm::DICompileUnit *> compileUnits;
 
         // Runtime functions
         llvm::Function *runtimeMalloc = nullptr;
@@ -76,7 +75,7 @@ namespace yoi {
         };
 
         struct ControlFlowAnalysis {
-            std::map<yoi::indexT, std::vector<indexT>> G; // graph
+            std::map<yoi::indexT, std::vector<indexT>> G;        // graph
             std::map<yoi::indexT, std::vector<indexT>> reverseG; // record the predecessors of each block
 
             ControlFlowAnalysis(const std::vector<std::shared_ptr<IRCodeBlock>> &blocks);
@@ -87,7 +86,8 @@ namespace yoi {
         llvm::Function *currentFunction = nullptr;
         std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
         std::map<yoi::indexT, llvm::AllocaInst *> namedValues; // Maps local var index to AllocaInst
-        std::map<yoi::indexT, std::map<yoi::indexT, llvm::BasicBlock *>> basicBlockMap; // [from_block, to_block] => target basic block
+        std::map<yoi::indexT, std::map<yoi::indexT, llvm::BasicBlock *>>
+            basicBlockMap; // [from_block, to_block] => target basic block
         std::map<yoi::indexT, std::map<yoi::indexT, bool>> basicBlockVisited;
 
         // Mappings from yoi IR to LLVM IR
@@ -102,6 +102,12 @@ namespace yoi {
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                  llvm::StructType *>
             arrayTypeMap; // Maps (type_enum, module_id, type_idx, size) to LLVM array type
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
+                 llvm::DIType *>
+            structTypeDIMap; // Maps (type_enum, module_id, type_idx) to LLVM DI type
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
+                 llvm::DIType *>
+            arrayTypeDIMap; // Maps (type_enum, module_id, type_idx, size) to LLVM DI type
 
         // Helper methods
         void declareRuntimeFunctions();
@@ -153,6 +159,7 @@ namespace yoi {
                                            bool convertToForeign = false);
         llvm::Value *createArrayObject(const std::shared_ptr<IRValueType> &type,
                                        const yoi::vec<llvm::Value *> &elements);
+        llvm::DIType *getDIType(const std::shared_ptr<IRValueType> &type);
     };
 
 } // namespace yoi

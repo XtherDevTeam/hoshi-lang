@@ -2656,10 +2656,6 @@ namespace yoi {
         auto structAst = irModule->structTemplateAsts.at(templateName);
 
         IRTemplateBuilder specializationContext;
-        printf("specializing struct template %s with args: %lu %llu\n",
-               wstring2string(templateName).c_str(),
-               concreteTemplateArgs.size(),
-               structTemplate->templateArguments.size());
         yoi_assert(concreteTemplateArgs.size() == structTemplate->templateArguments.size(),
                    0,
                    0,

@@ -44,6 +44,16 @@ namespace yoi {
         TheModule = std::make_unique<llvm::Module>("yoi.module", *TheContext);
         TheModule->addModuleFlag(llvm::Module::Warning, "Debug Info Version", llvm::DEBUG_METADATA_VERSION);
         DBuilder = std::make_unique<llvm::DIBuilder>(*TheModule);
+
+        // generate default CU
+        compileUnits[L"<default>"] = DBuilder->createCompileUnit(
+            llvm::dwarf::getLanguage("hoshi-lang"),
+            DBuilder->createFile("<default>", ""),
+            "hoshi-lang",
+            false,
+            "",
+            0
+        );
     }
 
     void LLVMCodegen::declareRuntimeFunctions() {
@@ -659,7 +669,6 @@ namespace yoi {
                 llvm::DISubprogram::SPFlagDefinition
             );
             currentFunction->setSubprogram(sp);
-            printf("Current sp addr: %p\n", sp);
         }
 
         controlFlowAnalysis = ControlFlowAnalysis{funcDef.codeBlock};
@@ -693,6 +702,22 @@ namespace yoi {
             auto* alloca = Builder->CreateAlloca(llvmType, nullptr, wstring2string(names.at(i)));
             Builder->CreateStore(llvm::Constant::getNullValue(llvmType), alloca);
             namedValues[i] = alloca;
+
+            auto* DILocalVar = DBuilder->createAutoVariable(
+                currentFunction->getSubprogram(),
+                wstring2string(names.at(i)),
+                DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
+                funcDef.debugInfo.line + 1,
+                getDIType(vars[i])
+            );
+
+            DBuilder->insertDeclare(
+                alloca,      // The memory location of the variable
+                DILocalVar,  // The debug info for the variable
+                DBuilder->createExpression(), // An empty expression
+                llvm::DILocation::get(*TheContext, funcDef.debugInfo.line, 1, currentFunction->getSubprogram()),
+                Builder->GetInsertBlock()
+            );
         }
 
         // Store incoming arguments into their allocas, handling reference counts
@@ -756,7 +781,6 @@ namespace yoi {
     void LLVMCodegen::generateInstruction(const IR& instr, yoi::indexT fromBlock, yoi::indexT toBlock) {
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             auto scope = currentFunction->getSubprogram();
-            printf("Current instr sp: %p\n", scope);
             Builder->SetCurrentDebugLocation(llvm::DILocation::get(*TheContext, instr.debugInfo.line + 1, instr.debugInfo.column + 1, scope));
             // insert call to runtime_debug_print extern func
             std::string debugStr = "Performing: " + yoi::wstring2string(instr.to_string());
@@ -2204,6 +2228,171 @@ namespace yoi {
                     }
                 }
             }
+        }
+    }
+
+    llvm::DIType *LLVMCodegen::getDIType(const std::shared_ptr<IRValueType> &type) {
+        auto* di_i64 = DBuilder->createBasicType("long long", 64, llvm::dwarf::DW_ATE_signed);
+        auto* di_double = DBuilder->createBasicType("double", 64, llvm::dwarf::DW_ATE_float);
+        auto* di_i1 = DBuilder->createBasicType("bool", 8, llvm::dwarf::DW_ATE_boolean); // Represent bool as 8 bits
+        auto* di_i8 = DBuilder->createBasicType("char", 8, llvm::dwarf::DW_ATE_signed_char);
+        auto* di_i8_ptr = DBuilder->createPointerType(di_i8, 64);
+        auto* di_void_ptr = DBuilder->createPointerType(DBuilder->createUnspecifiedType("<unknown struct>"), 64);
+
+        if (type->isArrayType()) {
+            yoi::indexT size = 1;
+            for (auto &i : type->dimensions) {
+                size *= i;
+            }
+            auto arrayKey = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex, size);
+            if (arrayTypeDIMap.count(arrayKey)) {
+                return arrayTypeDIMap[arrayKey];
+            }
+
+            llvm::DIType *elementDIType = nullptr;
+            if (type->isBasicType()) {
+                switch (type->type) {
+                    case IRValueType::valueType::integerObject:
+                        elementDIType = di_i64;
+                        break;
+                    case IRValueType::valueType::decimalObject:
+                        elementDIType = di_double;
+                        break;
+                    case IRValueType::valueType::booleanObject:
+                        elementDIType = di_i1;
+                        break;
+                    case IRValueType::valueType::characterObject:
+                        elementDIType = di_i8;
+                        break;
+                    case IRValueType::valueType::stringObject:
+                        elementDIType = di_i8_ptr;
+                        break;
+                    default:
+                        panic(0, 0, "LLVM Codegen: Unhandled or unmapped array element type: " + std::string(magic_enum::enum_name(type->type)));
+                        break;
+                }
+            } else {
+                elementDIType = getDIType(managedPtr(type->getElementType()));
+            }
+            
+            auto* diArray = DBuilder->createArrayType(size, 32, elementDIType, nullptr);
+            auto *diArrayStruct = DBuilder->createStructType(
+                compileUnits[L"<default>"], // Scope
+                "array_" + wstring2string(type->to_string()),
+                compileUnits[L"<default>"]->getFile(), // File
+                1, // Line number (can be 0)
+                64, // Size in bits
+                64, // Alignment in bits
+                llvm::DINode::FlagZero,
+                nullptr, // Derived from
+                DBuilder->getOrCreateArray({
+                    DBuilder->createMemberType(compileUnits[L"<default>"], "refcount", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, di_i64),
+                    DBuilder->createMemberType(compileUnits[L"<default>"], "array", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, diArray)
+                })
+            );
+            arrayTypeDIMap[arrayKey] = diArrayStruct;
+            return diArrayStruct;
+        } else {
+            auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
+            if (structTypeDIMap.count(key)) {
+                return structTypeDIMap[key];
+            }
+            llvm::DIType* resultDIType = nullptr;
+
+            // Helper DITypes for basic C++ types. These form the building blocks of our objects.
+
+            std::string typeName = "yoi." + wstring2string(type->to_string());
+    
+            // An array to hold the DITypes of the struct members.
+            llvm::SmallVector<llvm::Metadata*, 8> MemberTypes;
+
+            // All our objects start with a refcount.
+            MemberTypes.push_back(DBuilder->createMemberType(
+                compileUnits[L"<default>"], 
+                "refcount", 
+                nullptr, 
+                0,
+                64, 
+                64, 
+                0,
+                llvm::DINode::FlagZero, 
+                di_i64
+            ));
+            uint64_t currentSize = 64; // Keep track of struct size
+
+            // 2. Generate the body of the type based on the Yoi type.
+            switch (type->type) {
+                case IRValueType::valueType::integerObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_i64));
+                    currentSize += 64;
+                    break;
+                }
+                case IRValueType::valueType::stringObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_i8_ptr));
+                    currentSize += 64;
+                    break;
+                }
+                case IRValueType::valueType::decimalObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_double));
+                    currentSize += 64;
+                    break;
+                }
+                case IRValueType::valueType::booleanObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 8, 8, currentSize, llvm::DINode::FlagZero, di_i1));
+                    currentSize += 8;
+                    break;
+                }
+                case IRValueType::valueType::structObject: {
+                    auto structDef = yoiModule->structTable[type->typeIndex];
+                    for (auto it = structDef->nameIndexMap.begin(); it!= structDef->nameIndexMap.end(); ++it) {
+                        if (it->second.type == IRStructDefinition::nameInfo::nameType::method)
+                            continue;
+                        auto fieldYoiType = structDef->fieldTypes[it->second.index];
+                        // Recursively get the DIType for the field.
+                        auto* fieldDIType = getDIType(fieldYoiType); 
+                        auto fieldName = wstring2string(it->first);
+                        
+                        uint64_t fieldSize = TheModule->getDataLayout().getTypeSizeInBits(yoiTypeToLLVMType(fieldYoiType));
+
+                        MemberTypes.push_back(DBuilder->createMemberType(
+                            compileUnits[L"<default>"], fieldName, nullptr, 0,
+                            fieldSize, fieldSize, currentSize,
+                            llvm::DINode::FlagZero, fieldDIType
+                        ));
+                        currentSize += fieldSize;
+                    }
+                    break;
+                }
+                case IRValueType::valueType::interfaceObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_void_ptr));
+                    currentSize += 64;
+                    break;
+                }
+                case IRValueType::valueType::none: {
+                    // 'none' object only has a refcount.
+                    break;
+                }
+            }
+
+            // 3. Create the DIStructType for the object itself.
+            auto* diStruct = DBuilder->createStructType(
+                compileUnits[L"<default>"], // Scope
+                typeName,
+                compileUnits[L"<default>"]->getFile(), // File
+                1, // Line number (can be 0)
+                currentSize, // Size in bits
+                64, // Alignment in bits
+                llvm::DINode::FlagZero,
+                nullptr, // Derived from
+                DBuilder->getOrCreateArray(MemberTypes)
+            );
+
+            // 4. Since all our variables are POINTERS to these objects, wrap the struct DIType in a pointer.
+            resultDIType = DBuilder->createPointerType(diStruct, 64);
+
+            // 5. Cache and return the result.
+            structTypeDIMap[key] = resultDIType;
+            return resultDIType;
         }
     }
 } // namespace yoi

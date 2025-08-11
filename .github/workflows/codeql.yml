@@ -13,9 +13,9 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ "llvm" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "llvm" ]
+    branches: [ "master" ]
 
 jobs:
   analyze:

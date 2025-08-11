@@ -12,6 +12,10 @@ impl Point {
     }
 }
 
+func test() : int {
+    return 233
+}
+
 func main() : int {
     let a = Point(1, 2)
     let b = Point(3, 4)
