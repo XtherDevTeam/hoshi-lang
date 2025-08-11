@@ -48,12 +48,42 @@ namespace yoi {
         // void* runtime_object_alloc(unsigned long long sizeOfObject) -> i8* (i64)
         llvm::Type* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
         llvm::Type* sizeTy = Builder->getInt64Ty();
-        llvm::FunctionType* allocType = llvm::FunctionType::get(i8PtrTy, {sizeTy}, false);
-        runtimeObjectAllocFunc = llvm::Function::Create(allocType, llvm::Function::ExternalLinkage, "runtime_object_alloc", TheModule.get());
+
+        llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(Builder->getInt8Ty(), 0), {sizeTy}, false);
+        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "malloc", TheModule.get());
+        runtimeMalloc->setCallingConv(llvm::CallingConv::C);
+
+
+        llvm::FunctionType* allocType = llvm::FunctionType::get(i8PtrTy, {sizeTy, i8PtrTy}, false);
+        llvm::FunctionType* funcType = llvm::FunctionType::get(i8PtrTy, {sizeTy}, false);
+        runtimeObjectAllocReportFunc = llvm::Function::Create(allocType, llvm::Function::ExternalLinkage, "runtime_object_alloc_report", TheModule.get());
+        runtimeObjectAllocFunc = llvm::Function::Create(funcType, llvm::Function::InternalLinkage, "object_alloc", TheModule.get());
+        runtimeObjectAllocFunc->addFnAttr(llvm::Attribute::AlwaysInline);
+
+        llvm::BasicBlock *entryOA = llvm::BasicBlock::Create(*TheContext, "entry", runtimeObjectAllocFunc);
+        Builder->SetInsertPoint(entryOA);
+        llvm::Value* sizeOfObject = runtimeObjectAllocFunc->arg_begin();
+        llvm::Value *mem = Builder->CreateCall(runtimeMalloc, {sizeOfObject});
+        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            Builder->CreateCall(runtimeObjectAllocReportFunc, {sizeOfObject, mem});
+        }
+        Builder->CreateRet(mem);
 
         // void runtime_finalize_object(void* objectPtr) -> void (i8*)
         llvm::FunctionType* finalizeType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
-        runtimeFinalizeObjectFunc = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "runtime_finalize_object", TheModule.get());
+        runtimeFinalizeObjectReportFunc = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "runtime_finalize_object_report", TheModule.get());
+        runtimeFinalizeObjectFunc = llvm::Function::Create(finalizeType, llvm::Function::InternalLinkage, "finalize_object", TheModule.get());
+
+        runtimeFinalizeObjectFunc->addFnAttr(llvm::Attribute::AlwaysInline);
+
+        llvm::BasicBlock *entryFO = llvm::BasicBlock::Create(*TheContext, "entry", runtimeFinalizeObjectFunc);
+        Builder->SetInsertPoint(entryFO);
+        llvm::Value* objectPtr = runtimeFinalizeObjectFunc->arg_begin();
+        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            Builder->CreateCall(runtimeFinalizeObjectReportFunc, {objectPtr});
+        }
+        Builder->CreateFree(objectPtr);
+        Builder->CreateRetVoid();
 
         // void runtime_debug_report_current_function(const char *function_name);
         llvm::Type* constCharPtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);

@@ -1304,6 +1304,25 @@ namespace yoi {
                     simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case yoi::IR::Opcode::new_array_struct:
+                case yoi::IR::Opcode::new_array_interface: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto typeIndex = ins.operands[1].value.symbolIndex;
+                    yoi::indexT size = 1;
+                    yoi::vec<yoi::indexT> dims;
+
+                    auto baseType = managedPtr(IRValueType{ins.opcode == yoi::IR::Opcode::new_array_struct ? IRValueType::valueType::structObject : IRValueType::valueType::interfaceObject, moduleIndex, typeIndex});
+
+                    for (yoi::indexT i = 2; i < ins.operands.size(); i++) {
+                        size *= ins.operands[i].value.symbolIndex;
+                        dims.push_back(ins.operands[i].value.symbolIndex);
+                    }
+                    for (yoi::indexT i = 0; i < size; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 case IR::Opcode::load_element: {
                     // we can't optimize it
                     auto index = simulationStack.peek(0);
@@ -2102,6 +2121,25 @@ namespace yoi {
                     for (auto &dim : ins.operands) {
                         size *= dim.value.symbolIndex;
                         dims.push_back(dim.value.symbolIndex);
+                    }
+                    for (yoi::indexT i = 0; i < size; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case yoi::IR::Opcode::new_array_struct:
+                case yoi::IR::Opcode::new_array_interface: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto typeIndex = ins.operands[1].value.symbolIndex;
+                    yoi::indexT size = 1;
+                    yoi::vec<yoi::indexT> dims;
+
+                    auto baseType = managedPtr(IRValueType{ins.opcode == yoi::IR::Opcode::new_array_struct ? IRValueType::valueType::structObject : IRValueType::valueType::interfaceObject, moduleIndex, typeIndex});
+
+                    for (yoi::indexT i = 2; i < ins.operands.size(); i++) {
+                        size *= ins.operands[i].value.symbolIndex;
+                        dims.push_back(ins.operands[i].value.symbolIndex);
                     }
                     for (yoi::indexT i = 0; i < size; i++) {
                         simulationStack.pop();

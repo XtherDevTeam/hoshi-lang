@@ -6,7 +6,7 @@
 #define HOSHI_LANG_MEMORY_H
 
 #include <cstdint>
-#include <cstdio>
+#include <cstdlib>
 #include <runtime/build_config.h>
 
 struct YoiObject {
@@ -53,9 +53,13 @@ extern "C" void runtime_debug_print_current_allocated_memory();
 
 extern "C" int64_t runtime_object_allocated;
 
-extern "C" void *runtime_object_alloc(unsigned long size_in_bytes);
+extern "C" void *runtime_object_alloc_report(size_t size, void *object);
+
+extern "C" void runtime_finalize_object_report(void *object);
 
 extern "C" void runtime_finalize_object(void *object);
+
+extern "C" void *runtime_object_alloc(unsigned long size);
 
 #define GC_WRAPPER_DECL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj);      \
                                                                                             \

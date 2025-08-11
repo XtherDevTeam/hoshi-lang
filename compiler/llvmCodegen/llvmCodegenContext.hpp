@@ -45,7 +45,10 @@ namespace yoi {
         std::unique_ptr<llvm::IRBuilder<>> Builder;
 
         // Runtime functions
+        llvm::Function *runtimeMalloc = nullptr;
+        llvm::Function *runtimeObjectAllocReportFunc = nullptr;
         llvm::Function *runtimeObjectAllocFunc = nullptr;
+        llvm::Function *runtimeFinalizeObjectReportFunc = nullptr;
         llvm::Function *runtimeFinalizeObjectFunc = nullptr;
         llvm::Function *runtimeDebugReportCurrentFunctionFunc = nullptr;
         llvm::Function *runtimeDebugPrintFunc = nullptr;

@@ -24,32 +24,31 @@ void runtime_debug_print_current_allocated_memory() {
 
 extern "C" int64_t runtime_object_allocated = 0;
 
-extern "C" void *runtime_object_alloc(unsigned long size_in_bytes) { 
-    void * ptr = calloc(1, size_in_bytes);
+extern "C" void *runtime_object_alloc_report(size_t size, void *object) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
-    printf("[Elysia/DEBUG] Allocating %ld bytes of memory at %p. Current object count: %lld.\n", size_in_bytes, ptr, runtime_object_allocated);
+    printf("[Elysia/DEBUG] Allocating %lld bytes memory at %p. Current object count: %lld.\n", size, object, runtime_object_allocated);
     #endif
     runtime_object_allocated ++;
     #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
     if (allocated_memory_list == nullptr) {
         allocated_memory_list = static_cast<AllocatedMemoryList *>(malloc(sizeof(AllocatedMemoryList)));
-        allocated_memory_list->memory = ptr;
-        allocated_memory_list->size = size_in_bytes;
+        allocated_memory_list->memory = object;
+        allocated_memory_list->size = size;
         allocated_memory_list->prev = nullptr;
         allocated_memory_list->next = nullptr;
     } else {
         auto *new_node = static_cast<AllocatedMemoryList *>(malloc(sizeof(AllocatedMemoryList)));
-        new_node->memory = ptr;
-        new_node->size = size_in_bytes;
+        new_node->memory = object;
+        new_node->size = size;
         new_node->prev = nullptr;
         new_node->next = allocated_memory_list;
         allocated_memory_list->prev = new_node;
         allocated_memory_list = new_node;
     }
     #endif
-    return ptr;
+    return object;
 }
-extern "C" void runtime_finalize_object(void *object) { 
+extern "C" void runtime_finalize_object_report(void *object) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Finalizing object at %p. Current object count: %lld.\n", object, runtime_object_allocated);
     #endif
@@ -70,7 +69,6 @@ extern "C" void runtime_finalize_object(void *object) {
     }
     runtime_debug_print_current_allocated_memory();
     #endif
-    free(object);
 }
 
 GC_WRAPPER_IMPL(int, YoiIntegerObject);
@@ -82,3 +80,15 @@ GC_WRAPPER_IMPL(bool, YoiBooleanObject);
 GC_WRAPPER_IMPL(char, YoiCharObject);
 
 GC_WRAPPER_IMPL(string, YoiStringObject);
+
+void runtime_finalize_object(void *object) {
+    void *ptr = object;
+    free(ptr);
+    runtime_finalize_object_report(object);
+}
+
+void *runtime_object_alloc(unsigned long size) {
+    void *ptr = malloc(size);
+    runtime_object_alloc_report(size, ptr);
+    return ptr;
+}

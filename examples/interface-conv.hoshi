@@ -23,6 +23,8 @@ impl Test : ITest {
 }
 
 func main() : int {
-    let arr = ITest[2](Test(true), Test(false))
+    for (let i = 0; i < 233; i += 1) {
+        let arr = ITest[2](Test(true), Test(false))
+    }
     return 0
 }
