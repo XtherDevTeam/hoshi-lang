@@ -703,21 +703,23 @@ namespace yoi {
             Builder->CreateStore(llvm::Constant::getNullValue(llvmType), alloca);
             namedValues[i] = alloca;
 
-            auto* DILocalVar = DBuilder->createAutoVariable(
-                currentFunction->getSubprogram(),
-                wstring2string(names.at(i)),
-                DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
-                funcDef.debugInfo.line + 1,
-                getDIType(vars[i])
-            );
+            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                auto* DILocalVar = DBuilder->createAutoVariable(
+                    currentFunction->getSubprogram(),
+                    wstring2string(names.at(i)),
+                    DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
+                    funcDef.debugInfo.line + 1,
+                    getDIType(vars[i])
+                );
 
-            DBuilder->insertDeclare(
-                alloca,      // The memory location of the variable
-                DILocalVar,  // The debug info for the variable
-                DBuilder->createExpression(), // An empty expression
-                llvm::DILocation::get(*TheContext, funcDef.debugInfo.line, 1, currentFunction->getSubprogram()),
-                Builder->GetInsertBlock()
-            );
+                DBuilder->insertDeclare(
+                    alloca,      // The memory location of the variable
+                    DILocalVar,  // The debug info for the variable
+                    DBuilder->createExpression(), // An empty expression
+                    llvm::DILocation::get(*TheContext, funcDef.debugInfo.line, 1, currentFunction->getSubprogram()),
+                    Builder->GetInsertBlock()
+                );
+            }
         }
 
         // Store incoming arguments into their allocas, handling reference counts
