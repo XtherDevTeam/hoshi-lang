@@ -1,0 +1,23 @@
+/*import calloc(size: int) : int from "builtin"
+import runtime_debug_print_int(x: int) : none from "builtin"
+import strcpy(dest: int, src: string) : int from "builtin"
+import puts(s: string) : int from "builtin"
+
+func main() : int {
+    let ptr = calloc(100)
+    runtime_debug_print_int(ptr)
+    let str = "Hello, world!"
+    strcpy(ptr, str)
+    puts(ptr)
+    return 0
+}*/
+
+func str(s: string) : string {
+    return s
+}
+
+func main() : int {
+    let s = "Hello, world!"
+    str(s)
+    return 0
+}

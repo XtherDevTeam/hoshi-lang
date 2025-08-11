@@ -55,6 +55,7 @@ namespace yoi {
                 logicAnd,
                 logicOr,
                 assignSign,
+                directAssignSign, // :=
                 leftParentheses,
                 rightParentheses,
                 leftBracket,

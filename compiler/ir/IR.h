@@ -189,7 +189,7 @@ namespace yoi {
             mod,
             div,
             increment,
-            decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal,
+            decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal, direct_assign,
             not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
             load_global, dummy_break, dummy_continue, ret, ret_none,
             push_integer, push_decimal, push_boolean, pop, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,

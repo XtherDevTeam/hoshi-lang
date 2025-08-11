@@ -581,7 +581,8 @@ namespace yoi {
             case lexer::token::tokenKind::additionAssignment:
             case lexer::token::tokenKind::subtractionAssignment:
             case lexer::token::tokenKind::multiplicationAssignment:
-            case lexer::token::tokenKind::divisionAssignment: {
+            case lexer::token::tokenKind::divisionAssignment: 
+            case lexer::token::tokenKind::directAssignSign: {
                 t = lex.curToken;
                 lex.scan();
                 parse(expr, lex);

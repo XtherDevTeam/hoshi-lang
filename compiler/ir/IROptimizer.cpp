@@ -465,6 +465,10 @@ namespace yoi {
                 IRArr.insert(IRArr.begin() + index + 1, IR{
                                  IR::Opcode::push_boolean, {{IROperand::operandType::boolean, IROperand::operandValue{item.possibleValue.boolValue}}}});
                 break;
+            case IRValueType::valueType::stringObject:
+                IRArr.insert(IRArr.begin() + index + 1, IR{
+                                 IR::Opcode::push_string, {{IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}});
+                break;
             case IRValueType::valueType::characterObject:
                 // TODO: Implement push_character
                 break;

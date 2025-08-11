@@ -85,34 +85,34 @@ namespace yoi {
         Builder->CreateFree(objectPtr);
         Builder->CreateRetVoid();
 
-        // void runtime_debug_report_current_function(const char *function_name);
-        llvm::Type* constCharPtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
-        llvm::FunctionType* debugReportType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
-        runtimeDebugReportCurrentFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", TheModule.get());
-        runtimeDebugReportCurrentFunctionFunc->setCallingConv(llvm::CallingConv::C);
-
-
-        // void runtime_debug_print(const char *message);
-        llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
-        runtimeDebugPrintFunc = llvm::Function::Create(debugPrintType, llvm::Function::ExternalLinkage, "runtime_debug_print", TheModule.get());
-        runtimeDebugPrintFunc->setCallingConv(llvm::CallingConv::C);
-
-        // void runtime_debug_print_address(void *address);
-        llvm::FunctionType* debugPrintAddressType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
-        runtimeDebugPrintAddressFunc = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
-        runtimeDebugPrintAddressFunc->setCallingConv(llvm::CallingConv::C);
-
-        // void runtime_debug_print_int(int value);
-        llvm::FunctionType* debugPrintIntType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getInt64Ty()}, false);
-        runtimeDebugPrintIntFunc = llvm::Function::Create(debugPrintIntType, llvm::Function::ExternalLinkage, "runtime_debug_print_int", TheModule.get());
-        runtimeDebugPrintIntFunc->setCallingConv(llvm::CallingConv::C); 
-
-        // void runtime_debug_print_deci(double value);
-        llvm::FunctionType* debugPrintDeciType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getDoubleTy()}, false);
-        runtimeDebugPrintDeciFunc = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
-        runtimeDebugPrintDeciFunc->setCallingConv(llvm::CallingConv::C);
-
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            // void runtime_debug_report_current_function(const char *function_name);
+            llvm::Type* constCharPtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
+            llvm::FunctionType* debugReportType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
+            runtimeDebugReportCurrentFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", TheModule.get());
+            runtimeDebugReportCurrentFunctionFunc->setCallingConv(llvm::CallingConv::C);
+
+
+            // void runtime_debug_print(const char *message);
+            llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
+            runtimeDebugPrintFunc = llvm::Function::Create(debugPrintType, llvm::Function::ExternalLinkage, "runtime_debug_print", TheModule.get());
+            runtimeDebugPrintFunc->setCallingConv(llvm::CallingConv::C);
+
+            // void runtime_debug_print_address(void *address);
+            llvm::FunctionType* debugPrintAddressType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
+            runtimeDebugPrintAddressFunc = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
+            runtimeDebugPrintAddressFunc->setCallingConv(llvm::CallingConv::C);
+
+            // void runtime_debug_print_int(int value);
+            llvm::FunctionType* debugPrintIntType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getInt64Ty()}, false);
+            runtimeDebugPrintIntFunc = llvm::Function::Create(debugPrintIntType, llvm::Function::ExternalLinkage, "runtime_debug_print_int", TheModule.get());
+            runtimeDebugPrintIntFunc->setCallingConv(llvm::CallingConv::C); 
+
+            // void runtime_debug_print_deci(double value);
+            llvm::FunctionType* debugPrintDeciType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getDoubleTy()}, false);
+            runtimeDebugPrintDeciFunc = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
+            runtimeDebugPrintDeciFunc->setCallingConv(llvm::CallingConv::C);
+
             llvm::FunctionType *debugPrintCurrentAllocatedMemoryType = llvm::FunctionType::get(Builder->getVoidTy(), {}, false);
             runtimeDebugPrintCurrentAllocatedMemoryFunc = llvm::Function::Create(debugPrintCurrentAllocatedMemoryType, llvm::Function::ExternalLinkage, "runtime_debug_print_current_allocated_memory", TheModule.get());
             runtimeDebugPrintCurrentAllocatedMemoryFunc->setCallingConv(llvm::CallingConv::C);
@@ -161,6 +161,7 @@ namespace yoi {
         auto noneKey = std::make_tuple(noneYoiType->type, noneYoiType->typeAffiliateModule, noneYoiType->typeIndex);
         auto* noneStructType = llvm::StructType::create(*TheContext, {Builder->getInt64Ty()}, "yoi.basic.none");
         structTypeMap[noneKey] = noneStructType;
+        foreignTypeMap[noneKey] = llvm::Type::getVoidTy(*TheContext);
         
         // Create the global singleton instance for noneObject
         auto* noneInitializer = llvm::ConstantStruct::get(noneStructType, {
@@ -751,7 +752,7 @@ namespace yoi {
                 auto& str = yoiModule->stringLiteralPool.getStringLiteral(instr.operands[0].value.stringLiteralIndex);
                 // Create a global string literal for this string
                 auto *literal = llvm::ConstantDataArray::getString(*TheContext, yoi::wstring2string(str), true);
-                auto* globalStr = Builder->CreateGlobalString(wstring2string(str), "global_string_literal");
+                auto *globalStr = Builder->CreateGlobalString(wstring2string(str), "global_string_literal");
                 auto objPtr = createBasicObject(compilerCtx->getStrObjectType(), globalStr);
                 valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getStrObjectType()});
                 break;
@@ -1777,18 +1778,23 @@ namespace yoi {
                     it++;
                 }
 
-                auto result = Builder->CreateCall(externFuncDecl, args, "result");
-                llvm::Value *actualResultVal = nullptr;
-                if (funcDef->returnType->isBasicType()) {
-                    actualResultVal = createBasicObject(funcDef->returnType, result);
-                } else if (funcDef->returnType->isForeignBasicType()) {
-                    actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
+                if (funcDef->returnType->type == IRValueType::valueType::none) {
+                    Builder->CreateCall(externFuncDecl, args);
+                    Builder->CreateRet(noneObjectSingleton);
                 } else {
-                    actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, false); //convert back to yoi type
+                    auto result = Builder->CreateCall(externFuncDecl, args, "result");
+                    llvm::Value *actualResultVal = nullptr;
+                    if (funcDef->returnType->isBasicType()) {
+                        actualResultVal = createBasicObject(funcDef->returnType, result);
+                    } else if (funcDef->returnType->isForeignBasicType()) {
+                        actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
+                    } else {
+                        actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, false); //convert back to yoi type
+                    }
+                    
+                    // return with actual result
+                    Builder->CreateRet(actualResultVal);
                 }
-                
-                // return with actual result
-                Builder->CreateRet(actualResultVal);
             }
             moduleIndex ++;
         }

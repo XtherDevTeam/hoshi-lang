@@ -337,6 +337,10 @@ namespace yoi {
     lexer::token lexer::colonStart() {
         lexer::token tok{line, col, token::tokenKind::colon};
         getCh();
+        if (curCh == '=') {
+            tok.kind = token::tokenKind::directAssignSign;
+            getCh();
+        }
         return tok;
     }
 
