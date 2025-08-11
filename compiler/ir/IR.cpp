@@ -933,6 +933,9 @@ namespace yoi {
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
                 operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
                 break;
+            default: 
+                panic(0, 0, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
+                break;
         }
         auto size = 1;
         for (auto &dim : dimensions) {

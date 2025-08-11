@@ -184,6 +184,17 @@ namespace yoi {
                     visit(leftExpr->lhs, true);
                     break;
                 }
+                case lexer::token::tokenKind::directAssignSign: {
+                    auto lhsPos = visit(leftExpr->lhs);
+                    auto rhsPos = visit(leftExpr->rhs);
+                    auto lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+                    tryCastTo(lhs);
+                    moduleContext->getIRBuilder().insert({IR::Opcode::direct_assign, {}});
+                    moduleContext->getIRBuilder().popFromTempVarStack();
+                    moduleContext->getIRBuilder().popFromTempVarStack();
+                    moduleContext->getIRBuilder().pushTempVar(lhs);
+                    break;
+                }
                 case lexer::token::tokenKind::additionAssignment: {
                     auto lhsPos = visit(leftExpr->lhs);
                     auto rhsPos = visit(leftExpr->rhs);

@@ -1346,6 +1346,14 @@ namespace yoi {
                     simulationStack.pop();
                     break;
                 }
+                case IR::Opcode::direct_assign: {
+                    auto rhs = simulationStack.peek(0);
+                    auto lhs = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -2172,6 +2180,15 @@ namespace yoi {
                 }
                 case IR::Opcode::pop: {
                     simulationStack.pop();
+                    break;
+                }
+                case IR::Opcode::direct_assign: {
+                    auto rhs = simulationStack.peek(0);
+                    auto lhs = simulationStack.peek(1);
+                    yoi_assert(*lhs.type == *rhs.type, 0, 0, "IROptimizer::analyzeBlock(): direct_assign: type mismatch");
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
                     break;
                 }
                 default: {

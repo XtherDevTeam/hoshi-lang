@@ -1288,6 +1288,23 @@ namespace yoi {
                 callGcFunction(val.llvmValue, val.yoiType, false);
                 break;
             }
+            case IR::Opcode::direct_assign: {
+                auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                auto lhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+
+                auto lhsType = lhs.yoiType;
+                auto rhsType = rhs.yoiType;
+                auto lhsLLVMType = structTypeMap.at(std::make_tuple(lhsType->type, lhsType->typeAffiliateModule, lhsType->typeIndex));
+                auto structTypeSize = TheModule->getDataLayout().getTypeAllocSize(lhsLLVMType);
+                printf("struct type size: %llu\n", structTypeSize);
+                // offset from 8 bytes to skip the refcount, and memcpy the rhs value to lhs
+                auto* lhsPtr = Builder->CreateBitCast(lhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "lhs_ptr");
+                auto* rhsPtr = Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "rhs_ptr");
+                auto* offsettedLhsPtr = Builder->CreateGEP(llvm::Type::getInt8Ty(*TheContext), lhsPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 8, true)});
+                auto* offsettedRhsPtr = Builder->CreateGEP(llvm::Type::getInt8Ty(*TheContext), rhsPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 8, true)});
+                Builder->CreateMemCpy(offsettedLhsPtr, llvm::MaybeAlign(8), offsettedRhsPtr, llvm::MaybeAlign(8), structTypeSize - 8);
+                callGcFunction(lhs.llvmValue, lhs.yoiType, false);
+            }
             case IR::Opcode::nop:
                 break;
             default:

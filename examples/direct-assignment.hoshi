@@ -1,0 +1,21 @@
+struct Point {
+    x : int,
+    y : int,
+    constructor(x : int, y : int)
+}
+
+impl Point {
+    constructor(x : int, y : int) {
+        this.x = x
+        this.y = y
+        return this
+    }
+}
+
+func main() : int {
+    let a = Point(1, 2)
+    let b = Point(3, 4)
+    b := a
+    b.y := 5
+    return a.x + a.y + b.x + b.y
+}
