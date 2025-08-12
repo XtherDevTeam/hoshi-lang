@@ -3,16 +3,7 @@ project(hoshi_lang)
 
 set(CMAKE_CXX_STANDARD 23)
 
-find_package(LLVM REQUIRED CONFIG COMPONENTS
-    core
-    support
-    irreader
-    bitreader
-    mc
-    codegen
-    asmparser
-    all-targets
-)
+find_package(LLVM REQUIRED CONFIG)
 
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 
@@ -36,11 +27,12 @@ message(STATUS "Using llvm-config executable: ${LLVM_CONFIG_EXECUTABLE}")
 
 # 4. Execute process using the detected LLVM_CONFIG_EXECUTABLE
 execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libs all
-                OUTPUT_VARIABLE llvm_libraries
+                OUTPUT_VARIABLE llvm_components
                 OUTPUT_STRIP_TRAILING_WHITESPACE
                 RESULT_VARIABLE LLVM_LIBS_RESULT
 )
 
+string(REPLACE " " ";" llvm_components_list "${llvm_components}")
 
 execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libdir
                 OUTPUT_VARIABLE llvm_libdir
@@ -48,7 +40,8 @@ execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libdir
 )
 
 # print LLVM components
-message(STATUS "LLVM components: ${llvm_libraries}")
+message(STATUS "LLVM libdir: ${llvm_libdir}")
+message(STATUS "LLVM components: ${llvm_components}")
 
 #set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
@@ -85,4 +78,13 @@ set_target_properties(elysia_runtime PROPERTIES COMPILE_FLAGS "-fno-builtin -sta
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
-target_link_libraries(hoshi_lang PRIVATE LLVM)
+target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
+
+target_link_directories(hoshi_lang PRIVATE ${llvm_libdir})
+
+if (WIN32)
+    set(WINDOWS_SYSTEM_LIBS ntdll.lib shell32.lib user32.lib advapi32.lib)
+    target_link_libraries(hoshi_lang PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components_list})
+else()
+    target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
+endif()
