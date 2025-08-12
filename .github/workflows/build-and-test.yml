@@ -88,5 +88,5 @@ jobs:
         with:
           name: hoshi-lang-${{ matrix.os }}
           path: |
-            cmake-build-release/hoshi_lang*
-            cmake-build-release/libelysia_runtime*
+            cmake-build-release/*hoshi_lang*
+            cmake-build-release/*elysia_runtime*
