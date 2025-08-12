@@ -29,22 +29,15 @@ namespace yoi {
         const std::string executable_extension = ".exe";
 #else
         const char path_delimiter = ':';
-        const std::string executable_extension; // Linux/macOS executables typically have no extension
+        const std::string executable_extension;
 #endif
 
-        // Iterate through each segment in PATH
+        // iterate through each segment in PATH
         while (std::getline(iss, path_segment, path_delimiter)) {
             std::filesystem::path full_path = std::filesystem::path(path_segment) / (commandName + executable_extension);
 
-            // Check if the file exists and is a regular file (i.e., not a directory)
+            // check if the file exists and is a regular file (i.e., not a directory)
             if (std::filesystem::exists(full_path) && std::filesystem::is_regular_file(full_path)) {
-                // On non-Windows, also check for executable permissions
-#ifndef _WIN32
-                // This part requires <unistd.h> which std::filesystem doesn't directly provide for execute bit.
-                // However, if std::filesystem::status() reports it as a regular file and `std::system` later finds it,
-                // it's usually executable. For a stricter check, one might still use access(full_path.c_str(), X_OK).
-                // For this context, assuming if it exists and is a file, it's usable by system().
-#endif
                 return true;
             }
         }
@@ -74,15 +67,15 @@ namespace yoi {
             throw std::runtime_error("ccObjectLinker: Object file path not set.");
         }
 
-        std::string command = yoi::wstring2string(this->getLinkerPath());
-        command += " ";
-        command += yoi::wstring2string(this->getObjectPath());
-        command += " -o ";
-        command += yoi::wstring2string(outputPath);
+        std::string command = "\"" + yoi::wstring2string(this->getLinkerPath()) + "\"";
+        command += " \"";
+        command += yoi::wstring2string(this->getObjectPath()) + "\"";
+        command += " -o \"";
+        command += yoi::wstring2string(outputPath) + "\"";
 
-        // Add Elysia runtime path and library
+        // add Elysia runtime path and library
         if (!this->getElysiaRuntimePath().empty()) {
-            // Ensure the elysiaRuntimePath exists as a directory
+            // ensure the elysiaRuntimePath exists as a directory
             std::filesystem::path elysia_path_fs(this->getElysiaRuntimePath());
             if (!std::filesystem::exists(elysia_path_fs) || !std::filesystem::is_directory(elysia_path_fs)) {
                 std::string error_msg = "ccObjectLinker: Elysia runtime path does not exist or is not a directory: " +
@@ -90,14 +83,18 @@ namespace yoi {
                 throw std::runtime_error(error_msg);
             }
 
-            command += " -L"; // Add library search path
-            command += yoi::wstring2string(this->getElysiaRuntimePath());
+            command += " -L\""; // add library search path
+            command += yoi::wstring2string(this->getElysiaRuntimePath()) + "\"";
             command += " -lelysia_runtime";
         }
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
-            command += " -shared"; // Build a shared library
+            command += " -shared"; // build a shared library
         }
+
+#ifdef _WIN32
+        command = "& " + command; // fuck win32 command line
+#endif
 
         int result = std::system(command.c_str());
         if (result != 0) {

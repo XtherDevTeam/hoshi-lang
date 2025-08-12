@@ -90,3 +90,13 @@ jobs:
           path: |
             cmake-build-release/*hoshi_lang*
             cmake-build-release/*elysia_runtime*
+
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: DenverCoder1/doxygen-github-pages-action@v1.2.0
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: gh-pages
+          folder: doxygen/html
+          config_file: Doxyfile
