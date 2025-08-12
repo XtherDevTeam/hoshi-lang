@@ -38,15 +38,21 @@ jobs:
           tar -xf llvm.tar.xz
           dir $PWD
           dir $PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc
-          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
+        shell: bash
 
       - name: Setup PATH
         if: runner.os != 'Windows'
         run: echo "$LLVM_PATH/bin" >> $GITHUB_PATH
 
-      - name: Setup PATH (Windows)
+      - name: Setup PATH Step 1 (Windows)
         if: runner.os == 'Windows'
-        run: echo "$LLVM_PATH/bin" >> $env:GITHUB_PATH
+        run: 
+          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
+      
+      - name: Setup PATH Step 2 (Windows)
+        if: runner.os == 'Windows'
+        run:
+          echo "$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc/bin" >> $env:GITHUB_PATH
 
       - name: Verify Clang Path
         run: |
