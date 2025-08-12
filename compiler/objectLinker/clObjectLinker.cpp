@@ -115,7 +115,7 @@ namespace yoi {
         std::filesystem::path object_fs_path(getObjectPath());
         std::filesystem::path elysia_runtime_fs_path(getElysiaRuntimePath());
 
-        std::wstring command = L"& \"" + getLinkerPath() + L"\"";
+        std::wstring command = L"powershell.exe -Command \"" + getLinkerPath() + L"\"";
         command += L" \"" + object_fs_path.wstring() + L"\"";
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
