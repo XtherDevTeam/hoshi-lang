@@ -43,6 +43,7 @@ message(STATUS "LLVM components: ${llvm_libraries}")
 
 #set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
+set(CMAKE_CXX_FLAGS_DEBUG    "-g -O0")
 
 #include_directories(/Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk/usr/include/c++/v1/)
 

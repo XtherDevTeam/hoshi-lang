@@ -48,7 +48,7 @@ namespace yoi {
 
         // generate default CU
         compileUnits[L"<default>"] = DBuilder->createCompileUnit(
-            llvm::dwarf::getLanguage("hoshi-lang"),
+            llvm::dwarf::DW_LANG_C,
             DBuilder->createFile("<default>", ""),
             "hoshi-lang",
             false,
@@ -62,8 +62,8 @@ namespace yoi {
         llvm::Type* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
         llvm::Type* sizeTy = Builder->getInt64Ty();
 
-        llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(Builder->getInt8Ty(), 0), {sizeTy}, false);
-        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "malloc", TheModule.get());
+        llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(Builder->getInt8Ty(), 0), {sizeTy, sizeTy}, false);
+        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "calloc", TheModule.get());
         runtimeMalloc->setCallingConv(llvm::CallingConv::C);
 
 
@@ -76,7 +76,7 @@ namespace yoi {
         llvm::BasicBlock *entryOA = llvm::BasicBlock::Create(*TheContext, "entry", runtimeObjectAllocFunc);
         Builder->SetInsertPoint(entryOA);
         llvm::Value* sizeOfObject = runtimeObjectAllocFunc->arg_begin();
-        llvm::Value *mem = Builder->CreateCall(runtimeMalloc, {sizeOfObject});
+        llvm::Value *mem = Builder->CreateCall(runtimeMalloc, {llvm::ConstantInt::get(sizeTy, 1), sizeOfObject});
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             Builder->CreateCall(runtimeObjectAllocReportFunc, {sizeOfObject, mem});
         }
@@ -143,6 +143,9 @@ namespace yoi {
         generateExportFunctionDecls();
         generateMainFunction();
         generateRTTIImplmentation();
+        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            DBuilder->finalize();
+        }
     }
 
     llvm::Module* LLVMCodegen::getModule() {
@@ -655,7 +658,7 @@ namespace yoi {
                 std::filesystem::path sourceFile = std::filesystem::path(funcDef.debugInfo.sourceFile);
 
                 compileUnits[funcDef.debugInfo.sourceFile] = DBuilder->createCompileUnit(
-                    llvm::dwarf::getLanguage("hoshi-lang"),
+                    llvm::dwarf::DW_LANG_C,
                     DBuilder->createFile(sourceFile.filename().string(), sourceFile.parent_path().string()),
                     "hoshi-lang",
                     compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release,
@@ -663,7 +666,7 @@ namespace yoi {
                     0
                 );
             }
-            auto diFile = compileUnits[funcDef.debugInfo.sourceFile];
+            auto diFile = compileUnits[funcDef.debugInfo.sourceFile == L"<entry>" ? L"<default>" : funcDef.debugInfo.sourceFile];
 
             llvm::SmallVector<llvm::Metadata *, 8> argsDIInfo;
             argsDIInfo.push_back(getDIType(funcDef.returnType));
@@ -672,11 +675,12 @@ namespace yoi {
             }
 
             auto *subroutineType = DBuilder->createSubroutineType(DBuilder->getOrCreateTypeArray(argsDIInfo));
+            
             auto *sp = DBuilder->createFunction(
-                compileUnits[funcDef.debugInfo.sourceFile == L"<entry>" ? L"<default>" : funcDef.debugInfo.sourceFile],
+                (llvm::DIScope*) diFile->getFile(),
                 yoi::wstring2string(funcDef.name),
                 "",
-                DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
+                diFile->getFile(),
                 funcDef.debugInfo.line + 1,
                 subroutineType,
                 funcDef.debugInfo.line + 1,
