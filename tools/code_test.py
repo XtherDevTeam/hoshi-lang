@@ -73,7 +73,7 @@ def compile_project():
         print("ERR: CMake configuration failed")
         os.chdir("..")
         return False
-    if subprocess.run(["make", "-j16"]).returncode != 0:
+    if subprocess.run(["cmake", "--build", ".", "--config", "Debug"]).returncode != 0:
         print("ERR: Make build failed")
         os.chdir("..")
         return False
