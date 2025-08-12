@@ -25,6 +25,68 @@
 var NAVTREE =
 [
   [ "hoshi-lang", "index.html", [
+    [ "The design of yoi-lang programming language", "index.html", "index" ],
+    [ "Array in yoi-lang", "md_docs_2Array.html", null ],
+    [ "直接赋值 (Direct assignment)", "md_docs_2Direct_01Assignment.html", null ],
+    [ "接口设计", "md_docs_2Interface.html", [
+      [ "new 语句设计", "md_docs_2Interface.html#autotoc_md3", null ]
+    ] ],
+    [ "The Yoi-lang Intermediate Representation (IR) Handbook", "md_docs_2IR.html", [
+      [ "1. Introduction", "md_docs_2IR.html#autotoc_md5", [
+        [ "1.1. Purpose", "md_docs_2IR.html#autotoc_md6", null ],
+        [ "1.2. Execution Model", "md_docs_2IR.html#autotoc_md7", null ]
+      ] ],
+      [ "2. Core Concepts", "md_docs_2IR.html#autotoc_md8", [
+        [ "2.1. <tt>IRModule</tt>", "md_docs_2IR.html#autotoc_md9", null ],
+        [ "2.2. <tt>IRFunctionDefinition</tt>", "md_docs_2IR.html#autotoc_md10", null ],
+        [ "2.3. <tt>IRCodeBlock</tt>", "md_docs_2IR.html#autotoc_md11", null ],
+        [ "2.4. <tt>IRValueType</tt>", "md_docs_2IR.html#autotoc_md12", null ],
+        [ "2.5. <tt>IROperand</tt>", "md_docs_2IR.html#autotoc_md13", null ]
+      ] ],
+      [ "3. Instruction Set Reference", "md_docs_2IR.html#autotoc_md15", [
+        [ "3.1. Stack and Memory Operations", "md_docs_2IR.html#autotoc_md16", null ],
+        [ "3.2. Arithmetic and Logical Operations", "md_docs_2IR.html#autotoc_md17", null ],
+        [ "3.3. Control Flow", "md_docs_2IR.html#autotoc_md18", null ],
+        [ "3.4. Object Lifecycle", "md_docs_2IR.html#autotoc_md19", null ],
+        [ "3.5. Function and Method Calls", "md_docs_2IR.html#autotoc_md20", null ]
+      ] ],
+      [ "4. Full Example", "md_docs_2IR.html#autotoc_md22", null ]
+    ] ],
+    [ "Hoshi Language Specification", "md_docs_2Spec.html", [
+      [ "1. Introduction", "md_docs_2Spec.html#autotoc_md24", null ],
+      [ "2. Lexical Structure", "md_docs_2Spec.html#autotoc_md25", [
+        [ "2.1. Comments", "md_docs_2Spec.html#autotoc_md26", null ],
+        [ "2.2. Keywords", "md_docs_2Spec.html#autotoc_md27", null ],
+        [ "2.3. Identifiers", "md_docs_2Spec.html#autotoc_md28", null ],
+        [ "2.4. Literals", "md_docs_2Spec.html#autotoc_md29", null ]
+      ] ],
+      [ "3. Types and Data Structures", "md_docs_2Spec.html#autotoc_md30", [
+        [ "3.1. Primitive Types", "md_docs_2Spec.html#autotoc_md31", null ],
+        [ "3.2. Structs", "md_docs_2Spec.html#autotoc_md32", null ],
+        [ "3.3. Interfaces", "md_docs_2Spec.html#autotoc_md33", null ],
+        [ "3.4. Implementations (<tt>impl</tt>)", "md_docs_2Spec.html#autotoc_md34", null ],
+        [ "3.5. Arrays", "md_docs_2Spec.html#autotoc_md35", null ],
+        [ "3.6. Generic Programming (Templates)", "md_docs_2Spec.html#autotoc_md36", null ]
+      ] ],
+      [ "4. Object Model and Lifecycle", "md_docs_2Spec.html#autotoc_md37", [
+        [ "4.1. Everything is an Object", "md_docs_2Spec.html#autotoc_md38", null ],
+        [ "4.2. Memory Management: Reference Counting", "md_docs_2Spec.html#autotoc_md39", null ],
+        [ "4.3. Object Creation", "md_docs_2Spec.html#autotoc_md40", null ]
+      ] ],
+      [ "5. Yoi Intermediate Representation (IR)", "md_docs_2Spec.html#autotoc_md41", [
+        [ "5.1. Key Components", "md_docs_2Spec.html#autotoc_md42", null ],
+        [ "5.2. Execution Model", "md_docs_2Spec.html#autotoc_md43", null ],
+        [ "5.3. Instruction Set Highlights", "md_docs_2Spec.html#autotoc_md44", null ]
+      ] ],
+      [ "6. Compilation and Linking", "md_docs_2Spec.html#autotoc_md45", null ],
+      [ "7. Modules and Foreign Function Interface (FFI)", "md_docs_2Spec.html#autotoc_md46", [
+        [ "7.1. Modules", "md_docs_2Spec.html#autotoc_md47", null ],
+        [ "7.2. Foreign Function Interface (FFI)", "md_docs_2Spec.html#autotoc_md48", null ]
+      ] ]
+    ] ],
+    [ "模板隐式特化的实现思路", "md_docs_2Template.html", null ],
+    [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
+    [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -73,12 +135,12 @@ var NAVTREEINDEX =
 "classyoi_1_1indexTable_1_1iterator.html#aca80b8646cbeb4083e0bd414731104f2",
 "classyoi_1_1moduleContext.html#affc03367afdb2b7984d698b1af375424",
 "classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1",
-"functions_~.html",
-"namespacemembers_d.html",
-"parser_8hpp.html#a698f891dd6facb039bfe661f10f678af",
-"structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a652d5123d4129cc33bb999df65c05dae",
-"whereami_8h.html#af4a5433582844c6d1f4e5f48e911fe02"
+"functions_y.html",
+"namespacemagic__enum_1_1bitwise__operators.html#a89899059bec2c1b9d1379a0c25bbd4c9",
+"parser_8cpp.html#a663f86a9dc99fc46e30e341464412354",
+"structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8",
+"structyoi_1_1lexer_1_1lexerState.html#a3c5b49a9b525e2fbc1f1f37bb2574150",
+"unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
