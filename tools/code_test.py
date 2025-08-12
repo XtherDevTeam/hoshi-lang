@@ -64,20 +64,12 @@ def get_test_files(examples: pathlib.Path = pathlib.Path("examples")):
 def compile_project():
     if not os.path.exists("cmake-build-debug"):
         os.makedirs("cmake-build-debug")
-    os.chdir("cmake-build-debug")
-    cmake_additional_args = []
-    if '--use-lld' in sys.argv:
-        cmake_additional_args.append("-DCMAKE_LINKER=lld")
-        cmake_additional_args.append("-DCMAKE_LINKER_TYPE=LLD")
-    if subprocess.run(["cmake", ".."] + cmake_additional_args).returncode != 0:
+    if subprocess.run(["make", "cmake_debug"]).returncode != 0:
         print("ERR: CMake configuration failed")
-        os.chdir("..")
         return False
-    if subprocess.run(["cmake", "--build", ".", "--config", "Debug"]).returncode != 0:
+    if subprocess.run(["make", "build_debug"]).returncode != 0:
         print("ERR: Make build failed")
-        os.chdir("..")
         return False
-    os.chdir("..")
     return True
 
 

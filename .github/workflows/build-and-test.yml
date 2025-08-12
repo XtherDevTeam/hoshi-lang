@@ -74,14 +74,14 @@ jobs:
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
 
         run: 
-          cmake -B cmake-build-release -DCMAKE_BUILD_TYPE=Release .
+          make cmake_production
 
       - name: Build
         env: # use the LLVM_PATH environment variable to set up LLVM_DIR
           CC: clang
           CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-        run: cmake --build cmake-build-release --config Release
+        run: make build_production
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
