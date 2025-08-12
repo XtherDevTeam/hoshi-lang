@@ -664,9 +664,16 @@ namespace yoi {
                 );
             }
             auto diFile = compileUnits[funcDef.debugInfo.sourceFile];
-            auto *subroutineType = DBuilder->createSubroutineType(DBuilder->getOrCreateTypeArray(std::nullopt));
+
+            llvm::SmallVector<llvm::Metadata *, 8> argsDIInfo;
+            argsDIInfo.push_back(getDIType(funcDef.returnType));
+            for (const auto& argType : funcDef.argumentTypes) {
+                argsDIInfo.push_back(getDIType(argType));
+            }
+
+            auto *subroutineType = DBuilder->createSubroutineType(DBuilder->getOrCreateTypeArray(argsDIInfo));
             auto *sp = DBuilder->createFunction(
-                compileUnits[funcDef.debugInfo.sourceFile],
+                compileUnits[funcDef.debugInfo.sourceFile == L"<entry>" ? L"<default>" : funcDef.debugInfo.sourceFile],
                 yoi::wstring2string(funcDef.name),
                 "",
                 DBuilder->createFile(yoi::wstring2string(funcDef.debugInfo.sourceFile), ""),
