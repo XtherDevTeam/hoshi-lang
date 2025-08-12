@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['identifier_0',['identifier',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af393f3f5e496869a15bc72cbfd56f541',1,'yoi::lexer::token']]],
+  ['ifstmt_1',['ifStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea91aa50363ade61a0b8b7968513783c65',1,'yoi::inCodeBlockStmt']]],
+  ['implstmt_2',['implStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200',1,'yoi::globalStmt']]],
+  ['importdecl_3',['importDecl',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5',1,'yoi::globalStmt']]],
+  ['importedfunction_4',['importedFunction',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ae1ba02628d51e174be444553adcd7293',1,'yoi::IRExternEntry']]],
+  ['incompletetemplatetype_5',['incompleteTemplateType',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37c4a7c49cb62ac501ade9d30774d6f8',1,'yoi::IRValueType']]],
+  ['increment_6',['increment',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8c36426826ccf38cedc202042ef32a38',1,'yoi::IR']]],
+  ['incrementsign_7',['incrementSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a13ee0eb09df761a766580fc5e2b7efe2',1,'yoi::lexer::token']]],
+  ['index_8',['index',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86',1,'yoi::IROperand']]],
+  ['integer_9',['integer',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a157db7df530023575515d366c9b672e8',1,'yoi::lexer::token::integer'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a157db7df530023575515d366c9b672e8',1,'yoi::IROperand::integer']]],
+  ['integerobject_10',['integerObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9',1,'yoi::IRValueType']]],
+  ['integerraw_11',['integerRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d',1,'yoi::IRValueType']]],
+  ['interface_12',['Interface',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a3c1aac82863ed9e5a9aca8ce687f711d',1,'yoi::symbol']]],
+  ['interfacedefstmt_13',['interfaceDefStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea68398d9b72fed7f20446726901c874e5',1,'yoi::globalStmt']]],
+  ['interfaceimpltype_14',['interfaceImplType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a809f0d53d1c38ccf8fc891eebe7e2d94',1,'yoi::IRExternEntry']]],
+  ['interfaceobject_15',['interfaceObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5',1,'yoi::IRValueType']]],
+  ['interfacetype_16',['interfaceType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a0c5d7016abfdbaccbdf367f28a4ee66a',1,'yoi::IRExternEntry']]],
+  ['invalid_5ftag_17',['invalid_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebeda159cb53c185dae9e51fb5e4d14cf37a3',1,'magic_enum::customize::detail']]],
+  ['invoke_18',['invoke',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536',1,'yoi::IR']]],
+  ['invoke_5fimported_19',['invoke_imported',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1',1,'yoi::IR']]],
+  ['invoke_5fvirtual_20',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]]
+];

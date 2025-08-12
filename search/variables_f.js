@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['referencedmodules_0',['referencedModules',['../classyoi_1_1moduleContext.html#ac3dcfffc52780a8d2bdb5f244c868b43',1,'yoi::moduleContext']]],
+  ['resulttype_1',['resulttype',['../classyoi_1_1funcTypeSpec.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::funcTypeSpec::resultType'],['../classyoi_1_1funcDefStmt.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::funcDefStmt::resultType'],['../classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::innerMethodDecl::resultType'],['../classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::innerMethodDef::resultType']]],
+  ['returnstmtval_2',['returnStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4c2ef546adead0ff4686bcac2590e7c1',1,'yoi::inCodeBlockStmt::vValue']]],
+  ['returntype_3',['returntype',['../classyoi_1_1IRFunctionDefinition.html#a11ea29649c52a300ccc326831b8bf9b2',1,'yoi::IRFunctionDefinition::returnType'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a11ea29649c52a300ccc326831b8bf9b2',1,'yoi::IRFunctionDefinition::Builder::returnType']]],
+  ['reversedvariablenamemap_4',['reversedVariableNameMap',['../classyoi_1_1IRVariableTable.html#a8b40e91a9b995575f40178a1ff629075',1,'yoi::IRVariableTable']]],
+  ['reverseg_5',['reverseG',['../structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html#a67f659ed95598ac4ee5eeb3b87037262',1,'yoi::LLVMCodegen::ControlFlowAnalysis']]],
+  ['rexprval_6',['rExprVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2dfcfa8f7a03e306419b7a727e14bdaa',1,'yoi::inCodeBlockStmt::vValue']]],
+  ['rhs_7',['rhs',['../classyoi_1_1leftExpr.html#a5302972f187401d035de1b8f17e96f78',1,'yoi::leftExpr::rhs'],['../classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78',1,'yoi::letAssignmentPair::rhs']]],
+  ['rttientrytype_8',['RTTIEntryType',['../classyoi_1_1LLVMCodegen.html#adcb214162c77b78cc3e8fa0e6f1e6437',1,'yoi::LLVMCodegen']]],
+  ['rttitable_9',['RTTITable',['../classyoi_1_1LLVMCodegen.html#a126d62560bdd512068d093b6e352654b',1,'yoi::LLVMCodegen']]],
+  ['runtime_5fobject_5fallocated_10',['runtime_object_allocated',['../memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a',1,'runtime_object_allocated:&#160;memory.cpp'],['../memory_8h.html#a5b5bd71a6d8da67fd5e902e06915524a',1,'runtime_object_allocated:&#160;memory.h']]],
+  ['runtimedebugprintaddressfunc_11',['runtimeDebugPrintAddressFunc',['../classyoi_1_1LLVMCodegen.html#a226d8a78832f9807bb60bcb8b94a8a4c',1,'yoi::LLVMCodegen']]],
+  ['runtimedebugprintcurrentallocatedmemoryfunc_12',['runtimeDebugPrintCurrentAllocatedMemoryFunc',['../classyoi_1_1LLVMCodegen.html#a2e61cae680796ff5a75ae45d70fd4b9f',1,'yoi::LLVMCodegen']]],
+  ['runtimedebugprintdecifunc_13',['runtimeDebugPrintDeciFunc',['../classyoi_1_1LLVMCodegen.html#a7b0c79c543056eb9381aa7ec2355b3d0',1,'yoi::LLVMCodegen']]],
+  ['runtimedebugprintfunc_14',['runtimeDebugPrintFunc',['../classyoi_1_1LLVMCodegen.html#af809c35db88dfe07161e4a19d0bd25d4',1,'yoi::LLVMCodegen']]],
+  ['runtimedebugprintintfunc_15',['runtimeDebugPrintIntFunc',['../classyoi_1_1LLVMCodegen.html#a75ef9e0ec1855063f349acec6e22888b',1,'yoi::LLVMCodegen']]],
+  ['runtimedebugreportcurrentfunctionfunc_16',['runtimeDebugReportCurrentFunctionFunc',['../classyoi_1_1LLVMCodegen.html#a9f98eda3b2d79eb35579bbc3acc5d67d',1,'yoi::LLVMCodegen']]],
+  ['runtimefinalizeobjectfunc_17',['runtimeFinalizeObjectFunc',['../classyoi_1_1LLVMCodegen.html#a25aeec90a9dbe38e450493a79b775f47',1,'yoi::LLVMCodegen']]],
+  ['runtimefinalizeobjectreportfunc_18',['runtimeFinalizeObjectReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b007239250d025b4584f0c517c7ea71',1,'yoi::LLVMCodegen']]],
+  ['runtimemalloc_19',['runtimeMalloc',['../classyoi_1_1LLVMCodegen.html#aeefdc361e2dd1481ee3c876660b57446',1,'yoi::LLVMCodegen']]],
+  ['runtimeobjectallocfunc_20',['runtimeObjectAllocFunc',['../classyoi_1_1LLVMCodegen.html#a79099951318d29c502a54c9da2c4bf98',1,'yoi::LLVMCodegen']]],
+  ['runtimeobjectallocreportfunc_21',['runtimeObjectAllocReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b63e7159dcfc8f1f232ced9e40769d7',1,'yoi::LLVMCodegen']]]
+];

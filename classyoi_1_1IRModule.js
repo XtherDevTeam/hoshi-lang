@@ -1,0 +1,20 @@
+var classyoi_1_1IRModule =
+[
+    [ "to_string", "classyoi_1_1IRModule.html#a61fa8c172e7397d729af1135ec6076a6", null ],
+    [ "compiled", "classyoi_1_1IRModule.html#aea0f7db75b1a951e55a41705d88c694e", null ],
+    [ "externTable", "classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d", null ],
+    [ "funcTemplateAsts", "classyoi_1_1IRModule.html#a1c780c82a2beee1bc60b927957bdbfa7", null ],
+    [ "functionTable", "classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f", null ],
+    [ "functionTemplateTable", "classyoi_1_1IRModule.html#a21d443768b5e9d183339dfc259b7faf2", null ],
+    [ "globalVariables", "classyoi_1_1IRModule.html#a5ff575527eac5139bb55573da0f2869b", null ],
+    [ "identifier", "classyoi_1_1IRModule.html#aafeee226f22bbc24a207d3378738842b", null ],
+    [ "interfaceImplementationTable", "classyoi_1_1IRModule.html#abe18d7fea7289566959dd9e38d829f99", null ],
+    [ "interfaceTable", "classyoi_1_1IRModule.html#a4578dd3eb81caf8442c5f064df1064af", null ],
+    [ "moduleImports", "classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5", null ],
+    [ "modulePath", "classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882", null ],
+    [ "stringLiteralPool", "classyoi_1_1IRModule.html#a8f003beb2b59c1bce258d693e7d00aae", null ],
+    [ "structTable", "classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4", null ],
+    [ "structTemplateAsts", "classyoi_1_1IRModule.html#a9961eb474535ae821a87afcabacdf12f", null ],
+    [ "structTemplateTable", "classyoi_1_1IRModule.html#a7fa93a12df7c809694549d71f55a5d04", null ],
+    [ "templateImplAsts", "classyoi_1_1IRModule.html#a35ae47af3ef0771350636aa60d405558", null ]
+];

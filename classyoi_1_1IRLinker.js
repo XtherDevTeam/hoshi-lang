@@ -1,0 +1,25 @@
+var classyoi_1_1IRLinker =
+[
+    [ "IRLinker", "classyoi_1_1IRLinker.html#a0169ffaae1eaa129dd7e1814b661f890", null ],
+    [ "createEntryFunction", "classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331", null ],
+    [ "link", "classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055", null ],
+    [ "linkFunctions", "classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb", null ],
+    [ "linkGlobals", "classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef", null ],
+    [ "linkInterfaceImplementations", "classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96", null ],
+    [ "linkStringLiterals", "classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e", null ],
+    [ "linkStructsAndInterfaces", "classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752", null ],
+    [ "mangleName", "classyoi_1_1IRLinker.html#a55ae202968e470ba3dbcf58c9ea91fba", null ],
+    [ "patchInstruction", "classyoi_1_1IRLinker.html#ada00d8f91f78c8cb66320ff58edbf52f", null ],
+    [ "patchIRFFITable", "classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54", null ],
+    [ "patchType", "classyoi_1_1IRLinker.html#aef9b05044c6e22777734038241214575", null ],
+    [ "compilerCtx", "classyoi_1_1IRLinker.html#ada29ba25420ceac96b59dbb9944a1ea2", null ],
+    [ "entryModuleId", "classyoi_1_1IRLinker.html#a20223d6c01f045c7e8c38e81cd1eed2e", null ],
+    [ "finalModule", "classyoi_1_1IRLinker.html#acfa5851de2021841fcd285376b015f5a", null ],
+    [ "functionRemapping", "classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74", null ],
+    [ "globalRemapping", "classyoi_1_1IRLinker.html#a6b31edc166caa161fd3ecb2c5bf082cb", null ],
+    [ "globInitializerIndexes", "classyoi_1_1IRLinker.html#a0f539b27db852aa50133fec44dacac51", null ],
+    [ "interfaceImplRemapping", "classyoi_1_1IRLinker.html#a9d81056652f50942f8a5ea589adc4ded", null ],
+    [ "interfaceRemapping", "classyoi_1_1IRLinker.html#aa05dffcf7a3d8cdd8a5290d8f44664a6", null ],
+    [ "stringRemapping", "classyoi_1_1IRLinker.html#af7d2845248772148f23ce8405725aca5", null ],
+    [ "structRemapping", "classyoi_1_1IRLinker.html#a566158d839283baec4c406e16a8c43b1", null ]
+];
