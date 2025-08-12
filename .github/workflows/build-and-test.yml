@@ -1,0 +1,47 @@
+
+name: Build and Test
+
+on:
+  push:
+    branches: [ llvm ]
+  pull_request:
+    branches: [ llvm ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "20.1.0"
+
+      - name: Run tests
+        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: python3 tools/code_test.py --build_dir build --build_type Debug
+
+      - name: Configure CMake
+        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: 
+          cmake -B cmake-build-release -DCMAKE_BUILD_TYPE=Release .
+
+      - name: Build
+        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: cmake --build cmake-build-release --config Release
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hoshi-lang-${{ matrix.os }}
+          path: |
+            cmake-build-release/hoshi_lang*
+            cmake-build-release/libelysia_runtime*
