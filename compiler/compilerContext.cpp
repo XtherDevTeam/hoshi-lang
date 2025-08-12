@@ -12,7 +12,6 @@
 #include "ir/IROptimizer.hpp"
 #include "share/def.hpp"
 #include "visitor/visitor.h"
-#include <iostream>
 #include <stdexcept>
 
 namespace yoi {
@@ -81,7 +80,6 @@ namespace yoi {
             std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
             vis->visit();
             for (auto &i : irMod->functionTable) {
-                std::cout << wstring2string(i.second->to_string()) << std::endl;
                 IROptimizer optimizer{shared_from_this(), irMod};
                 optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
             }

@@ -11,30 +11,36 @@
 
 struct YoiObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
 };
 
 struct YoiIntegerObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
     long long value;
 };
 
 struct YoiStringObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
     wchar_t *value;
 };
 
 struct YoiBooleanObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
     bool value;
 };
 
 struct YoiDecimalObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
     double value;
 };
 
 struct YoiCharObject {
     unsigned long long gc_refcount;
+    unsigned long long type_id;
     wchar_t value;
 };
 

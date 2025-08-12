@@ -68,6 +68,8 @@ namespace yoi {
 
         // Singleton None object
         llvm::GlobalVariable *noneObjectSingleton = nullptr;
+        llvm::GlobalVariable *RTTITable = nullptr;
+        llvm::StructType *RTTIEntryType = nullptr;
 
         struct StackValue {
             llvm::Value *llvmValue;
@@ -108,6 +110,10 @@ namespace yoi {
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                  llvm::DIType *>
             arrayTypeDIMap; // Maps (type_enum, module_id, type_idx, size) to LLVM DI type
+        std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
+                 yoi::indexT>
+            typeIDMap; // Maps (type_enum, module_id, type_idx, size) to type ID (if no array, size = 0)
+        yoi::indexT nextTypeId;
 
         // Helper methods
         void declareRuntimeFunctions();
@@ -137,6 +143,8 @@ namespace yoi {
         void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock);
         void generateInstruction(const IR &instr, yoi::indexT fromBlock, yoi::indexT toBlock);
         void generateDescription();
+        void generateRTTIDeclaration();
+        void generateRTTIImplmentation();
 
         const std::shared_ptr<IRValueType> &normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);

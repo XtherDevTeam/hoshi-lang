@@ -233,6 +233,8 @@ namespace yoi {
             case IR::Opcode::load_global:
             case IR::Opcode::new_struct:
             case IR::Opcode::new_interface:
+            case IR::Opcode::new_array_struct:
+            case IR::Opcode::new_array_interface:
             case IR::Opcode::construct_interface_impl: {
                 auto moduleId = instr.operands[0].value.symbolIndex;
                 auto symbolIndex = instr.operands[1].value.symbolIndex;
@@ -246,9 +248,11 @@ namespace yoi {
                         newInstr.operands[1].value.symbolIndex = globalRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::new_struct:
+                    case IR::Opcode::new_array_struct:
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::new_interface:
+                    case IR::Opcode::new_array_interface:
                         newInstr.operands[1].value.symbolIndex = interfaceRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::construct_interface_impl:
@@ -306,8 +310,13 @@ namespace yoi {
             builder.invokeOp(initIdx, 0, compilerCtx->getIntObjectType());
         }
         if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
-            builder.invokeOp(finalModule->functionTable.getIndex(L"yoi_main"), 0, compilerCtx->getIntObjectType());
-            builder.retOp();
+            try {
+                builder.invokeOp(finalModule->functionTable.getIndex(L"yoi_main"), 0, compilerCtx->getIntObjectType());
+                builder.retOp();
+            } catch (const std::out_of_range&) {
+                panic(0, 0, "Entry function not found for executable build!");
+                return;
+            }
         } else {
             builder.pushOp(IR::Opcode::push_integer, IROperand{IROperand::operandType::integer, IROperand::operandValue{(int64_t)0}});
             builder.retOp();

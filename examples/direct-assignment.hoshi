@@ -12,14 +12,11 @@ impl Point {
     }
 }
 
-func test() : int {
-    return 233
-}
-
 func main() : int {
     let a = Point(1, 2)
     let b = Point(3, 4)
     b := a
     b.y := 5
-    return a.x + a.y + b.x + b.y
+    let res = a.x + a.y + b.x + b.y
+    return res
 }
