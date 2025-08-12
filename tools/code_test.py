@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import pathlib
 
@@ -64,7 +65,11 @@ def compile_project():
     if not os.path.exists("cmake-build-debug"):
         os.makedirs("cmake-build-debug")
     os.chdir("cmake-build-debug")
-    if subprocess.run(["cmake", ".."]).returncode != 0:
+    cmake_additional_args = []
+    if '--use-lld' in sys.argv:
+        cmake_additional_args.append("-DCMAKE_LINKER=lld")
+        cmake_additional_args.append("-DCMAKE_LINKER_TYPE=LLD")
+    if subprocess.run(["cmake", ".."] + cmake_additional_args).returncode != 0:
         print("ERR: CMake configuration failed")
         os.chdir("..")
         return False

@@ -17,24 +17,63 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install LLVM and Clang
-        uses: KyleMayes/install-llvm-action@v2
-        with:
-          version: "20.1.0"
+      - name: Install LLVM and Clang (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 20 all
+          echo "LLVM_PATH=$(llvm-config-20 --prefix)" >> $GITHUB_ENV
+
+      - name: Install LLVM and Clang (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install llvm@20
+          echo "LLVM_PATH=$(brew --prefix llvm@20)" >> $GITHUB_ENV
+
+      - name: Install LLVM and Clang (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          curl -L -o llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/clang+llvm-20.1.8-x86_64-pc-windows-msvc.tar.xz
+          tar -xf llvm.tar.xz
+          dir $PWD
+          dir $PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc
+          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
+
+      - name: Setup PATH
+        if: runner.os != 'Windows'
+        run: echo "$LLVM_PATH/bin" >> $GITHUB_PATH
+
+      - name: Setup PATH (Windows)
+        if: runner.os == 'Windows'
+        run: echo "$LLVM_PATH/bin" >> $env:GITHUB_PATH
+
+      - name: Verify Clang Path
+        run: |
+          which clang
+          clang --version
 
       - name: Run tests
+        if: runner.os
         env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          CC: clang
+          CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-        run: python3 tools/code_test.py --build_dir build --build_type Debug
+        run: python3 tools/code_test.py
 
       - name: Configure CMake
         env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          CC: clang
+          CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+
         run: 
           cmake -B cmake-build-release -DCMAKE_BUILD_TYPE=Release .
 
       - name: Build
         env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+          CC: clang
+          CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
         run: cmake --build cmake-build-release --config Release
 
