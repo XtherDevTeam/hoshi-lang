@@ -1,9 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
 project(hoshi_lang)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
-find_package(LLVM REQUIRED CONFIG)
+find_package(LLVM REQUIRED CONFIG COMPONENTS
+    core
+    support
+    irreader
+    bitreader
+    mc
+    codegen
+    asmparser
+    all-targets
+)
 
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 
@@ -76,6 +85,4 @@ set_target_properties(elysia_runtime PROPERTIES COMPILE_FLAGS "-fno-builtin -sta
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
-target_link_directories(hoshi_lang PRIVATE ${llvm_libdir})
-
-target_link_libraries(hoshi_lang ${llvm_libraries})
+target_link_libraries(hoshi_lang PRIVATE LLVM)
