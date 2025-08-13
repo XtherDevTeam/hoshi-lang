@@ -125,6 +125,14 @@ namespace yoi {
             case 2:
                 visit(primary->expr);
                 break;
+            case 3: {
+                visit(primary->typeId);
+                break;
+            }
+            case 4: {
+                visit(primary->dynCast);
+                break;
+            }
             default: {
                 panic(primary->getLine(), primary->getColumn(), "Unexpected primary type");
             }
@@ -2980,5 +2988,29 @@ namespace yoi {
         } else {
             panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
         }
+    }
+
+    yoi::indexT visitor::visit(yoi::typeIdExpression *typeIdExpression) {
+        if (typeIdExpression->type) {
+            auto parsedType = managedPtr(parseTypeSpec(typeIdExpression->type));
+            moduleContext->getIRBuilder().typeIdOp(parsedType);
+        } else {
+            moduleContext->getIRBuilder().saveState();
+            visit(typeIdExpression->expr);
+            auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            moduleContext->getIRBuilder().restoreState();
+            moduleContext->getIRBuilder().typeIdOp(rhs);
+        }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::visit(yoi::dynCastExpression *dynCastExpression) {
+        visit(dynCastExpression->expr);
+        auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        auto toType = managedPtr(parseTypeSpec(dynCastExpression->type));
+
+        yoi_assert(rhs->type == IRValueType::valueType::interfaceObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects.");
+        moduleContext->getIRBuilder().dynCastOp(toType);
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 } // namespace yoi

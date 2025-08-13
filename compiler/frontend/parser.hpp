@@ -134,6 +134,16 @@ namespace yoi {
     void parse(importDecl *&o, lexer &lex);
 
     void parse(exportDecl *&o, lexer &lex);
+
+    void parse(tryCatchStmt *&o, lexer &lex);
+
+    void parse(throwStmt *&o, lexer &lex);
+
+    void parse(catchParam *&o, lexer &lex);
+
+    void parse(typeIdExpression *&o, lexer &lex);
+
+    void parse(dynCastExpression *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

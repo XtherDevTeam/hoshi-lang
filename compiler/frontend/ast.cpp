@@ -995,16 +995,61 @@ namespace yoi {
         delete ptr;
     }
 
+
     bool subscript::isSubscript() const {
         return expr;
     }
+
     bool subscript::isInvocation() const {
         return args;
     }
+
     vec<subscript *> &subscriptExpr::getSubscript() {
         return subscriptVal;
     }
+
     yoi::lexer::token &AST::getToken() {
         return token;
+    }
+
+    void finalizeAST(tryCatchStmt *ptr) {
+        if (ptr->tryBlock) {
+            finalizeAST(ptr->tryBlock);
+        }
+        for (auto catchParam : ptr->catchParams) {
+            if (catchParam)
+                finalizeAST(catchParam);
+        }
+        if (ptr->finallyBlock) {
+            finalizeAST(ptr->finallyBlock);
+        }
+    }
+
+    void finalizeAST(catchParam *ptr) {
+        if (ptr->type) {
+            finalizeAST(ptr->type);
+        }
+        if (ptr->name) {
+            finalizeAST(ptr->name);
+        }
+        if (ptr->block) {
+            finalizeAST(ptr->block);
+        }
+    }
+
+    void finalizeAST(throwStmt *ptr) {
+        finalizeAST(ptr->expr);
+    }
+    
+    void finalizeAST(dynCastExpression *ptr) {
+        finalizeAST(ptr->expr);
+        finalizeAST(ptr->type);
+    }
+
+    void finalizeAST(typeIdExpression *ptr) {
+        if (ptr->expr)
+            finalizeAST(ptr->expr);
+        if (ptr->type)
+            finalizeAST(ptr->type);
     }
 } // namespace yoi

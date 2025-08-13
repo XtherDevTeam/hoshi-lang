@@ -115,7 +115,7 @@ namespace yoi {
         std::filesystem::path object_fs_path(getObjectPath());
         std::filesystem::path elysia_runtime_fs_path(getElysiaRuntimePath());
 
-        std::wstring command = L"cmd.exe /c \"" + getLinkerPath() + L"\"";
+        std::wstring command = L"\"" + getLinkerPath() + L"\"";
         command += L" \"" + object_fs_path.wstring() + L"\"";
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
@@ -131,6 +131,11 @@ namespace yoi {
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
             command += L" /LD"; // Build a shared library
         }
+
+#if defined(_WIN32)
+        replace_all(command, std::wstring(L"\""), std::wstring(L"\\\""));
+        command = L"powershell.exe -Command \"& " + command + L"\""; // fuck win32 command line
+#endif
 
         int result = system(yoi::wstring2string(command).c_str());
 

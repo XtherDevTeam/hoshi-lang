@@ -235,7 +235,10 @@ namespace yoi {
             case IR::Opcode::new_interface:
             case IR::Opcode::new_array_struct:
             case IR::Opcode::new_array_interface:
-            case IR::Opcode::construct_interface_impl: {
+            case IR::Opcode::construct_interface_impl: 
+            case IR::Opcode::typeid_struct:
+            case IR::Opcode::typeid_interface:
+            case IR::Opcode::dyn_cast_struct: {
                 auto moduleId = instr.operands[0].value.symbolIndex;
                 auto symbolIndex = instr.operands[1].value.symbolIndex;
                 newInstr.operands[0].value.symbolIndex = ENTRY_MODULE_ID_CONST;

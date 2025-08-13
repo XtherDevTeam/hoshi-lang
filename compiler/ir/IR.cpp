@@ -903,9 +903,11 @@ namespace yoi {
 
     IRValueType::IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions)
         : type(type), dimensions(dimensions), typeAffiliateModule(0), typeIndex(0) {}
+
     IRValueType IRValueType::getElementType() {
         return {this->type, this->typeAffiliateModule, this->typeIndex, {}};
     }
+
     void IRBuilder::newArrayOp(const std::shared_ptr<IRValueType> &elementType,
                                const yoi::vec<yoi::indexT> &dimensions) {
         IR::Opcode op = IR::Opcode::nop;
@@ -948,34 +950,114 @@ namespace yoi {
         insert(IR{op, operands, currentDebugInfo});
         tempVarStack.push_back(managedPtr(elementType->getArrayType(dimensions)));
     }
+
     IRValueType IRValueType::getArrayType(const yoi::vec<yoi::indexT> &dimensions) {
         return {type, typeAffiliateModule, typeIndex, dimensions};
     }
+
     void IRBuilder::saveState() {
         codeBlockInsertionStates.push_back(codeBlocks[currentCodeBlockIndex]->getIRArray().size());
     }
+
     void IRBuilder::discardState() {
         codeBlockInsertionStates.pop_back();
     }
+
     void IRBuilder::restoreState() {
         codeBlocks[currentCodeBlockIndex]->getIRArray().resize(codeBlockInsertionStates.back());
         codeBlockInsertionStates.pop_back();
     }
+
     void IRBuilder::pushTempVar(const std::shared_ptr<IRValueType> &type) {
         tempVarStack.push_back(type);
     }
+
     void IRBuilder::popOp() {
         tempVarStack.pop_back();
         insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
     }
+
     void IRBuilder::setDebugInfo(const IRDebugInfo &debugInfo) {
         this->currentDebugInfo = debugInfo;
     }
+
     const IRDebugInfo &IRBuilder::getCurrentDebugInfo() {
         return currentDebugInfo;
     }
+
     IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::setDebugInfo(const IRDebugInfo &debugInfo) {
         this->debugInfo = debugInfo;
         return *this;
+    }
+
+    void IRBuilder::typeIdOp() {
+        auto rhs = tempVarStack.back();
+        tempVarStack.pop_back();
+        typeIdOp(rhs);
+    }
+
+    void IRBuilder::typeIdOp(const std::shared_ptr<IRValueType> &type) {
+        IR::Opcode op;
+        vec<IROperand> operand;
+        switch (type->type) {
+            case IRValueType::valueType::integerObject:
+                op = IR::Opcode::typeid_int;
+                break;
+            case IRValueType::valueType::booleanObject:
+                op = IR::Opcode::typeid_bool;
+                break;
+            case IRValueType::valueType::decimalObject:
+                op = IR::Opcode::typeid_deci;
+                break;
+            case IRValueType::valueType::characterObject:
+                op = IR::Opcode::typeid_char;
+                break;
+            case IRValueType::valueType::stringObject:
+                op = IR::Opcode::typeid_str;
+                break;
+            case IRValueType::valueType::structObject:
+                op = IR::Opcode::typeid_struct;
+                break;
+            case IRValueType::valueType::interfaceObject:
+                op = IR::Opcode::typeid_interface;
+                break;
+            default:
+                /* TODO: add more typeid opcodes */
+                break;
+        }
+        operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
+        operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+        insert(IR(op, operand, currentDebugInfo));
+        tempVarStack.push_back(managedPtr(IRValueType(IRValueType::valueType::integerObject)));
+    }
+
+    void IRBuilder::dynCastOp(const std::shared_ptr<IRValueType> &type) {
+        IR::Opcode op;
+        vec<IROperand> operand;
+        switch (type->type) {
+            case IRValueType::valueType::integerObject:
+                op = IR::Opcode::dyn_cast_int;
+                break;
+            case IRValueType::valueType::booleanObject:
+                op = IR::Opcode::dyn_cast_bool;
+                break;
+            case IRValueType::valueType::decimalObject:
+                op = IR::Opcode::dyn_cast_deci;
+                break;
+            case IRValueType::valueType::stringObject:
+                op = IR::Opcode::dyn_cast_str;
+                break;
+            case IRValueType::valueType::structObject:
+                op = IR::Opcode::dyn_cast_struct;
+                break;
+            default:
+                /* TODO: add more dynamic cast opcodes */
+                break;
+        }
+        operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
+        operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+        insert(IR(op, operand, currentDebugInfo));
+        tempVarStack.pop_back();
+        tempVarStack.push_back(type);
     }
 } // namespace yoi

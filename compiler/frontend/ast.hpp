@@ -154,6 +154,16 @@ namespace yoi {
 
     class importInner;
 
+    class throwStmt;
+
+    class catchParam;
+
+    class tryCatchStmt;
+
+    class dynCastExpression;
+
+    class typeIdExpression;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -301,10 +311,12 @@ namespace yoi {
 
     class primary : public AST {
     public:
-        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr
+        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
+        typeIdExpression *typeId;
+        dynCastExpression *dynCast;
 
         memberExpr &getMemberExpr() const;
 
@@ -736,6 +748,8 @@ namespace yoi {
             breakStmt,
             letStmt,
             codeBlock,
+            tryCatchStmt,
+            throwStmt,
             rExpr,
         } kind;
 
@@ -840,6 +854,37 @@ namespace yoi {
         public:
             innerMethodDecl *inner;
             lexer::token from_path;
+    };
+
+    class throwStmt : public AST {
+        public:
+            rExpr *expr;
+    };
+
+    class catchParam : public AST {
+        public:
+            typeSpec *type;
+            identifier *name;
+            codeBlock *block;
+    };   
+
+    class tryCatchStmt : public AST {
+        public:
+            codeBlock *tryBlock;
+            vec<catchParam *> catchParams;
+            codeBlock *finallyBlock;
+    };
+
+    class typeIdExpression : public AST {
+        public:
+            typeSpec *type;
+            rExpr *expr;
+    };
+
+    class dynCastExpression : public AST {
+        public:
+            typeSpec *type;
+            rExpr *expr;
     };
 
     void finalizeAST(exportDecl *ptr);
@@ -965,6 +1010,16 @@ namespace yoi {
     void finalizeAST(constructorDecl *ptr);
 
     void finalizeAST(constructorDef *ptr);
+
+    void finalizeAST(tryCatchStmt *ptr);
+
+    void finalizeAST(catchParam *ptr);
+
+    void finalizeAST(throwStmt *ptr);
+
+    void finalizeAST(dynCastExpression *ptr);
+
+    void finalizeAST(typeIdExpression *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

@@ -154,6 +154,10 @@ namespace yoi {
 
         yoi::indexT visit(yoi::rExpr *rExpr);
 
+        yoi::indexT visit(yoi::typeIdExpression *typeIdExpression);
+
+        yoi::indexT visit(yoi::dynCastExpression *dynCastExpression);
+
         void visit(yoi::codeBlock *codeBlock, bool notEmitNewBlockInstruction = false);
 
         yoi::indexT visit(yoi::useStmt *useStmt);

@@ -90,6 +90,12 @@ namespace yoi {
                 kExport,
                 kAs,
                 kFrom,
+                kTry,
+                kCatch,
+                kFinally,
+                kThrow,
+                kTypeId,
+                kDynCast,
                 eof,
             } kind;
 

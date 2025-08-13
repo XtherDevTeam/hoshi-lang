@@ -4,8 +4,10 @@
 
 #include "ccObjectLinker.h"
 #include "compiler/ir/IR.h"
+#include "share/def.hpp"
 #include <sstream>
 #include <filesystem>
+#include <string>
 
 namespace yoi {
 
@@ -91,9 +93,9 @@ namespace yoi {
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
             command += " -shared"; // build a shared library
         }
-
 #ifdef _WIN32
-        command = "cmd.exe /c " + command; // fuck win32 command line
+        replace_all(command, std::string("\""), std::string("\\\""));
+        command = "powershell.exe -Command \"&" + command + "\""; // fuck win32 command line
 #endif
 
         int result = std::system(command.c_str());

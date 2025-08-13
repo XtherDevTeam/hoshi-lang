@@ -149,6 +149,18 @@ namespace yoi {
             tok.kind = token::tokenKind::kAs;
         } else if (tempStr == L"from") {
             tok.kind = token::tokenKind::kFrom;
+        } else if (tempStr == L"type_id") {
+            tok.kind = token::tokenKind::kTypeId;
+        } else if (tempStr == L"dyn_cast") {
+            tok.kind = token::tokenKind::kDynCast;
+        } else if (tempStr == L"try") {
+            tok.kind = token::tokenKind::kTry;
+        } else if (tempStr == L"catch") {
+            tok.kind = token::tokenKind::kCatch;
+        } else if (tempStr == L"finally") {
+            tok.kind = token::tokenKind::kFinally;
+        } else if (tempStr == L"throw") {
+            tok.kind = token::tokenKind::kThrow;
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";

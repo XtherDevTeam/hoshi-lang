@@ -1363,6 +1363,16 @@ namespace yoi {
                     simulationStack.pop();
                     break;
                 }
+                case IR::Opcode::typeid_int:
+                case IR::Opcode::typeid_bool:
+                case IR::Opcode::typeid_char:
+                case IR::Opcode::typeid_deci:
+                case IR::Opcode::typeid_str:
+                case IR::Opcode::typeid_struct:
+                case IR::Opcode::typeid_interface: {
+                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -2198,6 +2208,16 @@ namespace yoi {
                     simulationStack.pop();
                     simulationStack.pop();
                     simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::typeid_int:
+                case IR::Opcode::typeid_bool:
+                case IR::Opcode::typeid_char:
+                case IR::Opcode::typeid_deci:
+                case IR::Opcode::typeid_str:
+                case IR::Opcode::typeid_struct:
+                case IR::Opcode::typeid_interface: {
+                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 default: {

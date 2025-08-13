@@ -3,6 +3,7 @@
 //
 
 #include "compiler/frontend/lexer.hpp"
+#include "compiler/ir/IR.h"
 #include "share/def.hpp" 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-qualification"
@@ -499,7 +500,10 @@ namespace yoi {
     void parse(primary *&o, lexer &lex) {
         memberExpr *a = nullptr;
         basicLiterals *b = nullptr;
+        typeIdExpression *d = nullptr;
+        dynCastExpression *e = nullptr;
         rExpr *c = nullptr;
+
         lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
@@ -510,6 +514,16 @@ namespace yoi {
         parse(b, lex);
         if (b) {
             o = new primary{node_start_token, 1, nullptr, b, nullptr};
+            return;
+        }
+        parse(d, lex);
+        if (d) {
+            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d};
+            return;
+        }
+        parse(e, lex);
+        if (e) {
+            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
@@ -1508,6 +1522,8 @@ namespace yoi {
         whileStmt *whileStmtVal = nullptr;
         forStmt *forStmtVal = nullptr;
         codeBlock *codeBlockVal = nullptr;
+        tryCatchStmt *tryCatchStmtVal = nullptr;
+        throwStmt *throwStmtVal = nullptr;
         rExpr *rExprVal = nullptr;
         
         lexer::token node_start_token = lex.curToken;
@@ -1550,9 +1566,22 @@ namespace yoi {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::whileStmt, {whileStmtVal}};
             return;
         }
+
         parse(forStmtVal, lex);
         if (forStmtVal) {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forStmt, {forStmtVal}};
+            return;
+        }
+
+        parse(tryCatchStmtVal, lex);
+        if (tryCatchStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::tryCatchStmt, {tryCatchStmtVal}};
+            return;
+        }
+
+        parse(throwStmtVal, lex);
+        if (throwStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::throwStmt, {throwStmtVal}};
             return;
         }
         
@@ -1561,6 +1590,7 @@ namespace yoi {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, {codeBlockVal}};
             return;
         }
+
         // rExpr should typically be last, as it's the most general expression statement.
         parse(rExprVal, lex);
         if (rExprVal) { 
@@ -1812,6 +1842,193 @@ namespace yoi {
             o = nullptr;
             return;
         }
+    }
+
+    void parse(tryCatchStmt *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kTry) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        codeBlock *tryBlock = nullptr;
+        parse(tryBlock, lex);
+        yoi_assert(tryBlock, lex.line, lex.col, "expected codeBlock after `try`");
+        yoi::vec<catchParam *> catchParams;
+        while (lex.curToken.kind == lexer::token::tokenKind::kCatch) {
+            catchParam *param;
+            parse(param, lex);
+            if (!param) {
+                finalizeAST(tryBlock);
+                o = nullptr;
+                panic(lex.line, lex.col, "expected catchParam after `catch`");
+            }
+            catchParams.push_back(param);
+        }
+        codeBlock *finallyBlock = nullptr;
+        parse(finallyBlock, lex);
+        if (!finallyBlock) {
+            finalizeAST(tryBlock);
+            for (auto p : catchParams) finalizeAST(p);
+            o = nullptr;
+            panic(lex.line, lex.col, "expected codeBlock after `catch`");
+        }
+        o = new tryCatchStmt{node_start_token, tryBlock, catchParams, finallyBlock};
+    }
+
+    void parse(throwStmt *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kThrow) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        rExpr *expr = nullptr;
+        parse(expr, lex);
+        if (!expr) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected expression after `throw`");
+        }
+        o = new throwStmt{node_start_token, expr};
+    }
+
+    void parse(catchParam *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kCatch) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `(` after `catch`");
+        }
+        lex.scan();
+        identifier *name = nullptr;
+        parse(name, lex);
+        if (!name) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected identifier after typeSpec in catchParam");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::colon) {
+            o = nullptr;
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected `)` after identifier in catchParam");
+        }
+        lex.scan();
+        typeSpec *type = nullptr;
+        parse(type, lex);
+        if (!type) {
+            o = nullptr;
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected typeSpec after `(` in catchParam");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            finalizeAST(name);
+            finalizeAST(type);
+            panic(lex.line, lex.col, "expected `)` after typeSpec in catchParam");
+        }
+        lex.scan();
+        codeBlock *block = nullptr;
+        parse(block, lex);
+        if (!block) {
+            o = nullptr;
+            finalizeAST(type);
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected codeBlock after identifier in catchParam");
+        }
+        o = new catchParam{node_start_token, type, name, block};
+    }
+
+    void parse(typeIdExpression *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kTypeId) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
+            lex.scan();
+            rExpr *expr = nullptr;
+            parse(expr, lex);
+            if (!expr) {
+                o = nullptr;
+                panic(lex.line, lex.col, "expected expression after `(` in `type_id` expression");
+            }
+            if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+                o = nullptr;
+                finalizeAST(expr);
+                panic(lex.line, lex.col, "expected `)` after expression in `type_id` expression");
+            }
+            lex.scan();
+            o = new typeIdExpression{node_start_token, nullptr, expr};
+        } else if (lex.curToken.kind == lexer::token::tokenKind::lessThan) {
+            lex.scan();
+            typeSpec *type = nullptr;
+            parse(type, lex);
+            if (!type) {
+                o = nullptr;
+                panic(lex.line, lex.col, "expected typeSpec after `<` in `type_id` expression");
+            }
+            if (lex.curToken.kind != lexer::token::tokenKind::greaterThan) {
+                o = nullptr;
+                finalizeAST(type);
+                panic(lex.line, lex.col, "expected `>` after typeSpec in `type_id` expression");
+            }
+            lex.scan();
+            o = new typeIdExpression{node_start_token, type, nullptr};
+        } else {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `(` or `<` after `type_id` in `type_id` expression");
+        }
+    }
+
+    void parse(dynCastExpression *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kDynCast) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::lessThan) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `<` after `dyn_cast`");
+        }
+        lex.scan();
+        typeSpec *type = nullptr;
+        parse(type, lex);
+        if (!type) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected typeSpec after `<` in `dyn_cast` expression");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::greaterThan) {
+            o = nullptr;
+            finalizeAST(type);
+            panic(lex.line, lex.col, "expected `>` after typeSpec in `dyn_cast` expression");
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            finalizeAST(type);
+            panic(lex.line, lex.col, "expected `(` after `>` in `dyn_cast` expression");
+        }
+        lex.scan();
+        rExpr *expr = nullptr;
+        parse(expr, lex);
+        if (!expr) {
+            o = nullptr;
+            finalizeAST(type);
+            panic(lex.line, lex.col, "expected expression after `(` in `dyn_cast` expression");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            finalizeAST(type);
+            finalizeAST(expr);
+            panic(lex.line, lex.col, "expected `)` after expression in `dyn_cast` expression");
+        }
+        lex.scan();
+        o = new dynCastExpression{node_start_token, type, expr};
     }
 } // namespace yoi
 

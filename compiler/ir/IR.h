@@ -6,32 +6,22 @@
 #define HOSHI_LANG_IR_H
 
 #include "share/def.hpp"
+#include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
 #include <map>
-#include <compiler/compilerContext.h>
 #include <memory>
 
 namespace yoi {
     struct IRBuildConfig {
-        enum class BuildType : yoi::indexT {
-            library = 0,
-            executable
-        } buildType;
-        enum class BuildMode : yoi::indexT {
-            debug = 0,
-            release
-        } buildMode;
-        enum class UseObjectLinker : yoi::indexT {
-            cc = 0,
-            cl,
-            none
-        } useObjectLinker;
+        enum class BuildType : yoi::indexT { library = 0, executable } buildType;
+        enum class BuildMode : yoi::indexT { debug = 0, release } buildMode;
+        enum class UseObjectLinker : yoi::indexT { cc = 0, cl, none } useObjectLinker;
         yoi::wstr buildPlatform;
         yoi::wstr buildArch;
         bool preserveIntermediateFiles;
         yoi::vec<yoi::wstr> searchPaths;
         yoi::vec<yoi::wstr> additionalLinkingFiles;
-        
+
         struct Builder {
             BuildType buildType{BuildType::executable};
             BuildMode buildMode{BuildMode::debug};
@@ -63,7 +53,7 @@ namespace yoi {
             std::shared_ptr<IRBuildConfig> yield();
         };
     };
-    
+
     struct IRDebugInfo {
         yoi::wstr sourceFile;
         yoi::indexT line;
@@ -71,7 +61,7 @@ namespace yoi {
     };
 
     class IRValueType {
-    public:
+      public:
         enum class valueType : yoi::indexT {
             integerRaw = 0,
             decimalRaw,
@@ -124,11 +114,11 @@ namespace yoi {
 
         yoi::wstr to_string() const;
 
-        bool operator==(const yoi::IRValueType & rhs) const;
+        bool operator==(const yoi::IRValueType &rhs) const;
     };
 
     class IROperand {
-    public:
+      public:
         enum class operandType {
             unknown = 0,
             integer,
@@ -138,7 +128,8 @@ namespace yoi {
             stringLiteral,
             codeBlock,
             index,
-            /* a local var operand can only be used in a load_local instruction for loading a local variable, not available for other instructions */
+            /* a local var operand can only be used in a load_local instruction for loading a local variable, not
+               available for other instructions */
             localVar,
             /* same for global var */
             globalVar,
@@ -185,8 +176,7 @@ namespace yoi {
     };
 
     class IR {
-    public:
-
+      public:
         enum class Opcode {
             unknown = 0,
             load_local,
@@ -196,16 +186,76 @@ namespace yoi {
             mod,
             div,
             increment,
-            decrement,add, sub, right_shift, less_than, less_equal, greater_than, greater_equal, equal, direct_assign,
-            not_equal, left_shift, bitwise_and, bitwise_xor, bitwise_or, jump, jump_if_true, jump_if_false, load_member,
-            load_global, dummy_break, dummy_continue, ret, ret_none,
-            push_integer, push_decimal, push_boolean, pop, basic_cast_int, basic_cast_deci, basic_cast_bool, push_string,
-            store_global, store_local, store_member, invoke, 
-            new_struct, new_interface, construct_interface_impl,
-            invoke_virtual, invoke_imported, 
-            store_element, load_element, new_array_int, new_array_deci, new_array_bool, new_array_char, new_array_str,
-            new_array_struct, new_array_interface,
-            nop, FINAL,
+            decrement,
+            add,
+            sub,
+            right_shift,
+            less_than,
+            less_equal,
+            greater_than,
+            greater_equal,
+            equal,
+            direct_assign,
+            not_equal,
+            left_shift,
+            bitwise_and,
+            bitwise_xor,
+            bitwise_or,
+            jump,
+            jump_if_true,
+            jump_if_false,
+            load_member,
+            load_global,
+            dummy_break,
+            dummy_continue,
+            ret,
+            ret_none,
+            push_integer,
+            push_decimal,
+            push_boolean,
+            pop,
+            basic_cast_int,
+            basic_cast_deci,
+            basic_cast_bool,
+            push_string,
+            store_global,
+            store_local,
+            store_member,
+            invoke,
+            new_struct,
+            new_interface,
+            construct_interface_impl,
+            invoke_virtual,
+            invoke_imported,
+            store_element,
+            load_element,
+            new_array_int,
+            new_array_deci,
+            new_array_bool,
+            new_array_char,
+            new_array_str,
+            new_array_struct,
+            new_array_interface,
+            throws,
+            push_exception_handler,
+            pop_exception_handler,
+            typeid_int,
+            typeid_deci,
+            typeid_bool,
+            typeid_char,
+            typeid_str,
+            typeid_struct,
+            typeid_interface,
+            typeid_object,
+            typeid_interface_impl,
+            dyn_cast_int,
+            dyn_cast_deci,
+            dyn_cast_bool,
+            dyn_cast_char,
+            dyn_cast_str,
+            dyn_cast_struct,
+            nop,
+            FINAL,
         } opcode;
 
         static enum_range<Opcode> IROpCodeEnumRange;
@@ -224,7 +274,7 @@ namespace yoi {
     class IRCodeBlock {
         yoi::vec<IR> codeBlock;
 
-    public:
+      public:
         IRCodeBlock() = default;
 
         void insert(const IR &ir);
@@ -240,7 +290,7 @@ namespace yoi {
         std::map<yoi::indexT, yoi::indexT> variableScopeMap;
         std::map<yoi::indexT, yoi::wstr> reversedVariableNameMap;
 
-    public:
+      public:
         IRVariableTable() = default;
 
         yoi::indexT createScope();
@@ -269,7 +319,7 @@ namespace yoi {
     };
 
     class IRFunctionDefinition {
-    public:
+      public:
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> argumentTypes;
         std::shared_ptr<IRValueType> returnType;
@@ -277,14 +327,18 @@ namespace yoi {
         IRVariableTable variableTable;
         IRDebugInfo debugInfo;
 
-        IRFunctionDefinition(const yoi::wstr &name, const yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes, const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const IRDebugInfo &debugInfo);
+        IRFunctionDefinition(const yoi::wstr &name,
+                             const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
+                             const std::shared_ptr<IRValueType> &returnType,
+                             const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock,
+                             const IRDebugInfo &debugInfo);
         IRVariableTable &getVariableTable();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
         struct Builder {
             yoi::wstr name;
-            yoi::vec <std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
+            yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
             std::shared_ptr<IRValueType> returnType;
             IRDebugInfo debugInfo;
 
@@ -303,7 +357,7 @@ namespace yoi {
     };
 
     class IRTemplateBuilder {
-    public:
+      public:
         struct Argument {
             std::shared_ptr<IRValueType> templateType;
             std::pair<yoi::indexT, yoi::indexT> interfaceType;
@@ -318,48 +372,45 @@ namespace yoi {
 
         IRTemplateBuilder() = default;
 
-        IRTemplateBuilder &
-        addTemplateArgument(const yoi::wstr &templateName,
-                            const std::shared_ptr<IRValueType> &templateType,
-                            const std::pair<yoi::indexT, yoi::indexT> &interfaceType = {0, 0});
+        IRTemplateBuilder &addTemplateArgument(const yoi::wstr &templateName,
+                                               const std::shared_ptr<IRValueType> &templateType,
+                                               const std::pair<yoi::indexT, yoi::indexT> &interfaceType = {0, 0});
     };
 
     class IRFunctionTemplate {
-    public:
-        
+      public:
         std::shared_ptr<IRFunctionDefinition> templateDefinition;
         yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
 
         IRFunctionTemplate(const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
                            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
-                           
+
         class Builder : public IRTemplateBuilder {
-        public:
+          public:
             std::shared_ptr<IRFunctionDefinition> templateDefinition;
 
             Builder() = default;
 
-            Builder & setTemplateDefinition(const std::shared_ptr<IRFunctionDefinition> &templateDefinition);
+            Builder &setTemplateDefinition(const std::shared_ptr<IRFunctionDefinition> &templateDefinition);
 
             std::shared_ptr<IRFunctionTemplate> yield();
         };
     };
 
     class IRStructDefinition {
-    public:
+      public:
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> fieldTypes;
 
         struct nameInfo {
-            enum class nameType {
-                field,
-                method
-            } type;
+            enum class nameType { field, method } type;
             yoi::indexT index;
         };
         std::map<yoi::wstr, nameInfo> nameIndexMap;
 
-        IRStructDefinition(const yoi::wstr &name, const std::map<yoi::wstr, nameInfo> &nameIndexMap, const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes);
+        IRStructDefinition(const yoi::wstr &name,
+                           const std::map<yoi::wstr, nameInfo> &nameIndexMap,
+                           const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes);
 
         const nameInfo &lookupName(const yoi::wstr &name);
 
@@ -383,25 +434,23 @@ namespace yoi {
     };
 
     class IRStructTemplate {
-    public:
+      public:
         std::shared_ptr<IRStructDefinition> templateDefinition;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> templateMethods;
         yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
 
-        IRStructTemplate(
-            const std::shared_ptr<IRStructDefinition> &templateDefinition,
-            const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
-            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+        IRStructTemplate(const std::shared_ptr<IRStructDefinition> &templateDefinition,
+                         const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
+                         const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
 
         class Builder : public IRTemplateBuilder {
-        public:
+          public:
             std::shared_ptr<IRStructDefinition> templateDefinition;
             yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> templateMethods;
 
             Builder() = default;
 
-            Builder &
-            setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition);
+            Builder &setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition);
 
             Builder &setTemplateMethod(const yoi::wstr &methodName,
                                        const std::shared_ptr<IRFunctionTemplate> &methodTemplate);
@@ -411,14 +460,18 @@ namespace yoi {
     };
 
     class IRInterfaceImplementationDefinition {
-    public:
+      public:
         yoi::wstr name;
         yoi::indexT implStructIndex;
         yoi::indexT implInterfaceIndex;
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
-        IRInterfaceImplementationDefinition(const yoi::wstr &name, yoi::indexT implStructIndex, yoi::indexT implInterfaceIndex, const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods, const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
+        IRInterfaceImplementationDefinition(const yoi::wstr &name,
+                                            yoi::indexT implStructIndex,
+                                            yoi::indexT implInterfaceIndex,
+                                            const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
+                                            const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -444,11 +497,12 @@ namespace yoi {
     };
 
     class IRInterfaceInstanceDefinition {
-    public:
+      public:
         yoi::wstr name;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
 
-        IRInterfaceInstanceDefinition(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
+        IRInterfaceInstanceDefinition(
+            const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -460,14 +514,15 @@ namespace yoi {
 
             Builder &setName(const yoi::wstr &name);
 
-            Builder &addMethod(const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature);
+            Builder &addMethod(const yoi::wstr &methodName,
+                               const std::shared_ptr<IRFunctionDefinition> &methodSignature);
 
             std::shared_ptr<IRInterfaceInstanceDefinition> yield();
         };
     };
 
     class IRStringLiteralPool {
-    public:
+      public:
         yoi::indexPool<yoi::wstr> pool;
 
         yoi::indexT addStringLiteral(const yoi::wstr &str);
@@ -476,7 +531,7 @@ namespace yoi {
     };
 
     class IRExternEntry {
-    public:
+      public:
         enum class externType {
             globalVar,
             function,
@@ -498,7 +553,7 @@ namespace yoi {
     };
 
     class IRModule : std::enable_shared_from_this<IRModule> {
-    public:
+      public:
         yoi::indexT identifier;
         bool compiled;
         yoi::wstr modulePath;
@@ -512,10 +567,9 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
 
-        std::map<yoi::wstr, yoi::funcDefStmt*> funcTemplateAsts;
-        std::map<yoi::wstr, yoi::structDefStmt*> structTemplateAsts;
-        std::map<yoi::wstr, yoi::implStmt*> templateImplAsts; // Maps struct template name to its impl block
-
+        std::map<yoi::wstr, yoi::funcDefStmt *> funcTemplateAsts;
+        std::map<yoi::wstr, yoi::structDefStmt *> structTemplateAsts;
+        std::map<yoi::wstr, yoi::implStmt *> templateImplAsts; // Maps struct template name to its impl block
 
         IRStringLiteralPool stringLiteralPool;
 
@@ -531,10 +585,13 @@ namespace yoi {
         yoi::indexT currentCodeBlockIndex;
         yoi::vec<yoi::indexT> codeBlockInsertionStates;
         IRDebugInfo currentDebugInfo;
-    public:
+
+      public:
         IRBuilder() = delete;
 
-        IRBuilder(std::shared_ptr<compilerContext> compilerCtx,std::shared_ptr<IRModule> currentModule, std::shared_ptr<IRFunctionDefinition> currentFunction);
+        IRBuilder(std::shared_ptr<compilerContext> compilerCtx,
+                  std::shared_ptr<IRModule> currentModule,
+                  std::shared_ptr<IRFunctionDefinition> currentFunction);
 
         void setDebugInfo(const IRDebugInfo &debugInfo);
 
@@ -591,7 +648,10 @@ namespace yoi {
 
         void pushOp(IR::Opcode op, const yoi::IROperand &constV);
 
-        void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType>& expectedType, yoi::indexT moduleIndex = -1);
+        void loadOp(IR::Opcode op,
+                    const yoi::IROperand &source,
+                    const std::shared_ptr<IRValueType> &expectedType,
+                    yoi::indexT moduleIndex = -1);
 
         void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
 
@@ -606,17 +666,28 @@ namespace yoi {
          * @param returnType The return type of the function. Need for push the return value type to tempVarStack.
          * @param externalInvocation If true, the function is invoked from an external module.
          */
-        void invokeOp(yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType, bool
-                      externalInvocation = false, yoi::indexT moduleIndex = -1);
+        void invokeOp(yoi::indexT funcIndex,
+                      yoi::indexT funcArgsCount,
+                      const std::shared_ptr<IRValueType> &returnType,
+                      bool externalInvocation = false,
+                      yoi::indexT moduleIndex = -1);
 
-        void invokeMethodOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false, yoi::indexT moduleIndex = -1);
+        void invokeMethodOp(yoi::indexT funcIndex,
+                            yoi::indexT methodArgsCount,
+                            const std::shared_ptr<IRValueType> &returnType,
+                            bool externalInvocation = false,
+                            yoi::indexT moduleIndex = -1);
 
-        void invokeVirtualOp(yoi::indexT funcIndex, yoi::indexT methodArgsCount, const std::shared_ptr<IRValueType> &returnType, bool externalInvocation = false, yoi::indexT moduleIndex = -1);
+        void invokeVirtualOp(yoi::indexT funcIndex,
+                             yoi::indexT methodArgsCount,
+                             const std::shared_ptr<IRValueType> &returnType,
+                             bool externalInvocation = false,
+                             yoi::indexT moduleIndex = -1);
 
         void invokeImportedOp(yoi::indexT libIndex,
-                            yoi::indexT funcIndex,
-                            yoi::indexT funcArgsCount,
-                            const std::shared_ptr<IRValueType> &returnType);
+                              yoi::indexT funcIndex,
+                              yoi::indexT funcArgsCount,
+                              const std::shared_ptr<IRValueType> &returnType);
 
         void retOp(bool returnWithNone = false);
 
@@ -624,9 +695,16 @@ namespace yoi {
 
         void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
-        void constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+        void
+        constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
         void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
+
+        void typeIdOp(const std::shared_ptr<IRValueType> &type);
+
+        void typeIdOp();
+
+        void dynCastOp(const std::shared_ptr<IRValueType> &type);
 
         yoi::indexT getCurrentInsertionPoint();
 
@@ -634,7 +712,7 @@ namespace yoi {
     };
 
     class IRObjectFile {
-    public:
+      public:
         /* one module that has renamed all functions and variables to their final names */
         std::shared_ptr<IRModule> compiledModule;
 
@@ -642,9 +720,9 @@ namespace yoi {
     };
 
     class IRFFITable {
-    public:
+      public:
         class ImportLibrary {
-        public:
+          public:
             yoi::wstr libraryPath;
 
             yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> importedFunctionTable;
@@ -662,21 +740,18 @@ namespace yoi {
                                         const yoi::wstr &functionName,
                                         const std::shared_ptr<IRFunctionDefinition> &functionDefinition);
 
-        void addForeignType(const yoi::wstr &foreignTypeName,
-                            const std::shared_ptr<IRValueType> &structType);
+        void addForeignType(const yoi::wstr &foreignTypeName, const std::shared_ptr<IRValueType> &structType);
 
         /**
          * @brief Add an exported function to the FFI table.
-         * 
+         *
          * @param exportName The name of the exported function.
          * @param moduleIndex Module index of the function.
          * @param functionIndex Function index of the function.
          * @throws std::out_of_range If the export name already exists in the FFI table.
          */
-        void addExportedFunction(const yoi::wstr &exportName,
-                                 yoi::indexT moduleIndex,
-                                 yoi::indexT functionIndex);
+        void addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex);
     };
-} // yoi
+} // namespace yoi
 
-#endif //HOSHI_LANG_IR_H
+#endif // HOSHI_LANG_IR_H

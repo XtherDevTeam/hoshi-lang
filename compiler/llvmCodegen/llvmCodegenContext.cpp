@@ -1428,6 +1428,48 @@ namespace yoi {
                 callGcFunction(lhs.llvmValue, lhs.yoiType, false);
                 break;
             }
+            case IR::Opcode::typeid_int:
+            case IR::Opcode::typeid_bool:
+            case IR::Opcode::typeid_char:
+            case IR::Opcode::typeid_deci:
+            case IR::Opcode::typeid_str:
+            case IR::Opcode::typeid_interface:
+            case IR::Opcode::typeid_struct: {
+                IRValueType::valueType type;
+                switch (instr.opcode) {
+                    case IR::Opcode::typeid_int:
+                        type = IRValueType::valueType::integerObject;
+                        break;
+                    case IR::Opcode::typeid_bool:
+                        type = IRValueType::valueType::booleanObject;
+                        break;
+                    case IR::Opcode::typeid_deci:
+                        type = IRValueType::valueType::decimalObject;
+                        break;
+                    case IR::Opcode::typeid_char:
+                        type = IRValueType::valueType::characterObject;
+                        break;
+                    case IR::Opcode::typeid_str:
+                        type = yoi::IRValueType::valueType::stringObject;
+                        break;
+                    case IR::Opcode::typeid_interface:
+                        type = IRValueType::valueType::interfaceObject;
+                        break;
+                    case IR::Opcode::typeid_struct:
+                        type = IRValueType::valueType::structObject;
+                        break;
+                    default:
+                        panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IROpcode: " + std::string(magic_enum::enum_name(instr.opcode)));
+                }
+
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto structTypeIndex = instr.operands[1].value.symbolIndex;
+                auto typeIdKey = std::make_tuple(type, moduleIndex, structTypeIndex, 0);
+                auto typeId = typeIDMap.at(typeIdKey);                
+                auto typeIdObj = createBasicObject(compilerCtx->getIntObjectType(), llvm::ConstantInt::get(Builder->getInt64Ty(), typeId, true));
+                valueStackMap[fromBlock][toBlock].push_back({typeIdObj, compilerCtx->getIntObjectType()});
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:

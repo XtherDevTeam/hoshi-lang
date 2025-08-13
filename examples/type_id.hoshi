@@ -1,0 +1,73 @@
+import puts(str: string) : int32 from "builtin"
+import runtime_debug_print_int(v: int) : none from "builtin"
+
+struct Test {
+    x: deci,
+    y: deci,
+    constructor(x: deci, y: deci)
+}
+
+impl Test {
+    constructor(x: deci, y: deci) {
+        this.x = x
+        this.y = y
+        return this
+    }
+}
+
+interface Addable {
+    add() : deci
+}
+
+impl Test : Addable {
+    add() : deci {
+        return this.x + this.y
+    }
+}
+
+
+func main() : int {
+    let a = 10
+    let b = true
+    let c = Test(1.0, 2.3)
+    let d = Addable(c)
+    let e = d.add()
+    let arr = int[5](type_id(a), type_id(b), type_id(c), type_id(d), type_id(e))
+    let arr2 = int[5](type_id<int>, type_id<string>, type_id<bool>, type_id<deci>, type_id<char>)
+
+    for (let i = 0; i < 5; i = i + 1) {
+        runtime_debug_print_int(arr2[i])
+    }
+
+    if (type_id(a) == type_id<int>) {
+        puts("int typeid validation passed")
+    } else {
+        puts("int typeid validation failed")
+        return 1
+    }
+    if (type_id(b) == type_id<bool>) {
+        puts("bool typeid validation passed")
+    } else {
+        puts("bool typeid validation failed")
+        return 1
+    }
+    if (type_id(c) == type_id<Test>) {
+        puts("Test typeid validation passed")
+    } else {
+        puts("Test typeid validation failed")
+        return 1
+    }
+    if (type_id(d) == type_id<Addable>) {
+        puts("Addable typeid validation passed")
+    } else {
+        puts("Addable typeid validation failed")
+        return 1
+    }
+    if (type_id(e) == type_id<deci>) {
+        puts("deci typeid validation passed")
+    } else {
+        puts("deci typeid validation failed")
+        return 1
+    }
+    return 0
+}

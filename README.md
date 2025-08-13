@@ -214,7 +214,10 @@ subscriptTypeSpec ::= externModuleAccessExpression { "[" TOK_integer "]" }
 subscriptExpression ::= identifierWithTemplateArg
                       | identifierWithTemplateArg subscript
 memberExpression ::= subscriptExpression { "." subscriptExpression }
-primary ::= memberExpression | basicLiterals | "(" rExpr ")"
+typeIdExpression ::= "type_id" "<" typeSpec ">"
+                 ::= "type_id" "(" rExpr ")"
+dynCastExpression ::= "dyn_cast" "<" typeSpec ">" "(" rExpr ")"
+primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression
 uniqueExpr ::= ( "++" | "--" | "!" | "~" | "-" | "&" ) primary
              | primary
 leftExpr ::= uniqueExpr { ( "=" | "+=" | "-=" | "*=" | "/=" | "%=" ) uniqueExpr }
@@ -264,4 +267,7 @@ inCodeBlockStmt ::= ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt
 codeBlock ::= "{" { inCodeBlockStmt } "}"
 exportDecl ::= "export" externModuleAccessExpression "as" identifier
 importDecl ::= "import" innerMethodDecl "from" TOK_string
+catchParam ::= "(" typeSpec identifier ")"
+tryCatchStmt ::= "try" codeBlock "catch" catchParam { "catch" catchParam } ( "finally" codeBlock )
+throwStmt ::= "throw" rExpr
 ```
