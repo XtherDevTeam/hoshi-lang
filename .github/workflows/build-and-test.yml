@@ -8,11 +8,11 @@ on:
     branches: [ llvm ]
 
 jobs:
-  build:
+  build-unix:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, macos-latest ]
 
     steps:
       - uses: actions/checkout@v3
@@ -31,28 +31,8 @@ jobs:
           brew install llvm@20
           echo "LLVM_PATH=$(brew --prefix llvm@20)" >> $GITHUB_ENV
 
-      - name: Install LLVM and Clang (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          curl -L -o llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/clang+llvm-20.1.8-x86_64-pc-windows-msvc.tar.xz
-          tar -xf llvm.tar.xz
-          dir $PWD
-          dir $PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc
-        shell: bash
-
       - name: Setup PATH
-        if: runner.os != 'Windows'
         run: echo "$LLVM_PATH/bin" >> $GITHUB_PATH
-
-      - name: Setup PATH Step 1 (Windows)
-        if: runner.os == 'Windows'
-        run: 
-          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
-      
-      - name: Setup PATH Step 2 (Windows)
-        if: runner.os == 'Windows'
-        run:
-          echo "$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc/bin" >> $env:GITHUB_PATH
 
       - name: Verify Clang Path
         run: |
@@ -60,24 +40,21 @@ jobs:
           clang --version
 
       - name: Run tests
-        if: runner.os
-        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+        env:
           CC: clang
           CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
         run: python3 tools/code_test.py
 
       - name: Configure CMake
-        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+        env:
           CC: clang
           CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-
-        run: 
-          make cmake_production
+        run: make cmake_production
 
       - name: Build
-        env: # use the LLVM_PATH environment variable to set up LLVM_DIR
+        env:
           CC: clang
           CXX: clang++
           LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
@@ -87,6 +64,66 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hoshi-lang-${{ matrix.os }}
+          path: |
+            cmake-build-release/*hoshi_lang*
+            cmake-build-release/*elysia_runtime*
+
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        toolchain: [ 'mingw', 'clang' ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install LLVM and Clang (Windows)
+        run: |
+          curl -L -o llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/clang+llvm-20.1.8-x86_64-pc-windows-msvc.tar.xz
+          tar -xf llvm.tar.xz
+        shell: bash
+
+      - name: Setup PATH Step 1
+        run: |
+          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
+      
+      - name: Setup PATH Step 2
+        run: |
+          echo "$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc/bin" >> $env:GITHUB_PATH
+
+      - name: Verify Clang Path
+        run: |
+          where clang
+          clang --version
+
+      - name: Set Compilers
+        run: |
+          if ("${{ matrix.toolchain }}" -eq "mingw") {
+            echo "CC=gcc" >> $env:GITHUB_ENV
+            echo "CXX=g++" >> $env:GITHUB_ENV
+          } else {
+            echo "CC=clang" >> $env:GITHUB_ENV
+            echo "CXX=clang++" >> $env:GITHUB_ENV
+          }
+
+      - name: Run tests
+        env:
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: python3 tools/code_test.py
+
+      - name: Configure CMake
+        env:
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: make cmake_production
+
+      - name: Build
+        env:
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: make build_production
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hoshi-lang-windows-${{ matrix.toolchain }}
           path: |
             cmake-build-release/*hoshi_lang*
             cmake-build-release/*elysia_runtime*

@@ -93,7 +93,7 @@ namespace yoi {
         }
 
 #ifdef _WIN32
-        command = "powershell.exe -Command " + command; // fuck win32 command line
+        command = "cmd.exe /c " + command; // fuck win32 command line
 #endif
 
         int result = std::system(command.c_str());

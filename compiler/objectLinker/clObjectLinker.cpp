@@ -115,7 +115,7 @@ namespace yoi {
         std::filesystem::path object_fs_path(getObjectPath());
         std::filesystem::path elysia_runtime_fs_path(getElysiaRuntimePath());
 
-        std::wstring command = L"powershell.exe -Command \"" + getLinkerPath() + L"\"";
+        std::wstring command = L"cmd.exe /c \"" + getLinkerPath() + L"\"";
         command += L" \"" + object_fs_path.wstring() + L"\"";
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
@@ -125,7 +125,7 @@ namespace yoi {
             command += L" /LIBPATH:\"" + elysia_runtime_fs_path.wstring() + L"\"";
             command += L" elysia_runtime.lib";
         } else {
-            warning(0, 0, "Elysia runtime library not specified. Linking may fail if Elysia functions are used.");
+            warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.");
         }
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
