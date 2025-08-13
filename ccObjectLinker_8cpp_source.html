@@ -200,7 +200,7 @@ $(document).ready(function(){initNavTree('ccObjectLinker_8cpp_source.html',''); 
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        }</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        command = <span class="stringliteral">&quot;powershell.exe -Command &quot;</span> + command; <span class="comment">// fuck win32 command line</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        command = <span class="stringliteral">&quot;cmd.exe /c &quot;</span> + command; <span class="comment">// fuck win32 command line</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
