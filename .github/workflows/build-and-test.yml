@@ -95,7 +95,29 @@ jobs:
           where clang
           clang --version
 
-      - name: Set Compilers
+      - name: Run tests
+        env:
+          CC: clang
+          CXX: clang++
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: python3 tools/code_test.py
+
+      - name: Configure CMake
+        env:
+          CC: clang
+          CXX: clang++
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: make cmake_production
+
+      - name: Build
+        env:
+          CC: clang
+          CXX: clang++
+          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
+        run: make build_production
+
+      - name: Build elysia_runtime with mingw
+        if: matrix.toolchain == 'mingw'
         run: |
           if ("${{ matrix.toolchain }}" -eq "mingw") {
             echo "CC=gcc" >> $env:GITHUB_ENV
@@ -104,21 +126,10 @@ jobs:
             echo "CC=clang" >> $env:GITHUB_ENV
             echo "CXX=clang++" >> $env:GITHUB_ENV
           }
-
-      - name: Run tests
-        env:
-          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-        run: python3 tools/code_test.py
-
-      - name: Configure CMake
-        env:
-          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-        run: make cmake_production
-
-      - name: Build
-        env:
-          LLVM_DIR: ${{ env.LLVM_PATH }}/lib/cmake/llvm
-        run: make build_production
+          mv cmake-build-release cmake-build-release-clang
+          make cmake_production
+          cd cmake-build-release && make elysia_runtime -j16 && cd ..
+          mv cmake-build-release-clang\*hoshi_lang* cmake-build-release\
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
