@@ -202,7 +202,7 @@ $(document).ready(function(){initNavTree('ccObjectLinker_8cpp_source.html',''); 
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        }</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <a class="code hl_function" href="namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7">replace_all</a>(command, std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>), std::string(<span class="stringliteral">&quot;\\\&quot;&quot;</span>));</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        command = <span class="stringliteral">&quot;powershell.exe -Command &quot;</span> + command; <span class="comment">// fuck win32 command line</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        command = <span class="stringliteral">&quot;powershell.exe -Command \&quot;&amp;&quot;</span> + command + <span class="stringliteral">&quot;\&quot;&quot;</span>; <span class="comment">// fuck win32 command line</span></div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
