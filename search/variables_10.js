@@ -21,7 +21,7 @@ var searchData=
   ['structname_18',['structName',['../classyoi_1_1implStmt.html#a65fd97878ef64b5bee036108d27d8fa7',1,'yoi::implStmt']]],
   ['structremapping_19',['structRemapping',['../classyoi_1_1IRLinker.html#a566158d839283baec4c406e16a8c43b1',1,'yoi::IRLinker']]],
   ['structtable_20',['structTable',['../classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4',1,'yoi::IRModule']]],
-  ['structtemplateasts_21',['structTemplateAsts',['../classyoi_1_1IRModule.html#a9961eb474535ae821a87afcabacdf12f',1,'yoi::IRModule']]],
+  ['structtemplateasts_21',['structTemplateAsts',['../classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659',1,'yoi::IRModule']]],
   ['structtemplatetable_22',['structTemplateTable',['../classyoi_1_1IRModule.html#a7fa93a12df7c809694549d71f55a5d04',1,'yoi::IRModule']]],
   ['structtypedimap_23',['structTypeDIMap',['../classyoi_1_1LLVMCodegen.html#a6ee04a05f7c4f71de8e59d88ef57ac61',1,'yoi::LLVMCodegen']]],
   ['structtypemap_24',['structTypeMap',['../classyoi_1_1LLVMCodegen.html#aa15e9eaf48c0cc50240d989e40325858',1,'yoi::LLVMCodegen']]],

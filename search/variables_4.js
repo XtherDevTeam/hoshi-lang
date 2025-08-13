@@ -9,6 +9,6 @@ var searchData=
   ['enum_5fname_5fv_6',['enum_name_v',['../namespacemagic__enum_1_1detail.html#ac81bf63e9714ebae6454cdf3a3926495',1,'magic_enum::detail']]],
   ['exportdeclval_7',['exportDeclVal',['../unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870',1,'yoi::globalStmt::vValue']]],
   ['exportedfunctiontable_8',['exportedFunctionTable',['../classyoi_1_1IRFFITable.html#a2e2ebe62c27f8dd6f394e960bc9e8017',1,'yoi::IRFFITable']]],
-  ['expr_9',['expr',['../classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::subscript::expr'],['../classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::primary::expr'],['../classyoi_1_1rExpr.html#a2ab242b67d815840a79da4b9974b6d32',1,'yoi::rExpr::expr']]],
+  ['expr_9',['expr',['../classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::subscript::expr'],['../classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::primary::expr'],['../classyoi_1_1rExpr.html#a2ab242b67d815840a79da4b9974b6d32',1,'yoi::rExpr::expr'],['../classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::throwStmt::expr'],['../classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::typeIdExpression::expr'],['../classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::dynCastExpression::expr']]],
   ['externtable_10',['externTable',['../classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d',1,'yoi::IRModule']]]
 ];

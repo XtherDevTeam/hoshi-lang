@@ -5,5 +5,6 @@ var searchData=
   ['decimal_2',['decimal',['../unionyoi_1_1IROperand_1_1operandValue.html#a160d6366514b7fe5ec086f528835c5ce',1,'yoi::IROperand::operandValue']]],
   ['decivalue_3',['deciValue',['../unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#aed6968ad55daa7546c8e358e813fb55f',1,'yoi::IROptimizer::SimulationStack::Item::PossibleValue']]],
   ['default_5ftag_4',['default_tag',['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize']]],
-  ['dimensions_5',['dimensions',['../classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73',1,'yoi::IRValueType']]]
+  ['dimensions_5',['dimensions',['../classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73',1,'yoi::IRValueType']]],
+  ['dyncast_6',['dynCast',['../classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3',1,'yoi::primary']]]
 ];

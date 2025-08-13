@@ -11,6 +11,8 @@ var classyoi_1_1inCodeBlockStmt =
       [ "breakStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea32e8984ffa1fe352558fe04cefd9e1ee", null ],
       [ "letStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99", null ],
       [ "codeBlock", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaff6bdb31a97ea58712d35004a9ec0fea", null ],
+      [ "tryCatchStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea9c7f1419b92e397caf445a6c53793eb9", null ],
+      [ "throwStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7", null ],
       [ "rExpr", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea10ebdc819dc33de0b62a6e2f74d5870c", null ]
     ] ],
     [ "getKind", "classyoi_1_1inCodeBlockStmt.html#a4cd86c482e3b1e5d5242551d7c334f9d", null ],

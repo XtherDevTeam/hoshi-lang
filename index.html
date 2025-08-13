@@ -256,7 +256,10 @@ Syntax definition</h1>
 <div class="line">subscriptExpression ::= identifierWithTemplateArg</div>
 <div class="line">                      | identifierWithTemplateArg subscript</div>
 <div class="line">memberExpression ::= subscriptExpression { <span class="stringliteral">&quot;.&quot;</span> subscriptExpression }</div>
-<div class="line">primary ::= memberExpression | basicLiterals | <span class="stringliteral">&quot;(&quot;</span> rExpr <span class="stringliteral">&quot;)&quot;</span></div>
+<div class="line">typeIdExpression ::= <span class="stringliteral">&quot;type_id&quot;</span> <span class="stringliteral">&quot;&lt;&quot;</span> typeSpec <span class="stringliteral">&quot;&gt;&quot;</span></div>
+<div class="line">                 ::= <span class="stringliteral">&quot;type_id&quot;</span> <span class="stringliteral">&quot;(&quot;</span> rExpr <span class="stringliteral">&quot;)&quot;</span></div>
+<div class="line">dynCastExpression ::= <span class="stringliteral">&quot;dyn_cast&quot;</span> <span class="stringliteral">&quot;&lt;&quot;</span> typeSpec <span class="stringliteral">&quot;&gt;&quot;</span> <span class="stringliteral">&quot;(&quot;</span> rExpr <span class="stringliteral">&quot;)&quot;</span></div>
+<div class="line">primary ::= memberExpression | basicLiterals | <span class="stringliteral">&quot;(&quot;</span> rExpr <span class="stringliteral">&quot;)&quot;</span> | typeIdExpression | dynCastExpression</div>
 <div class="line">uniqueExpr ::= ( <span class="stringliteral">&quot;++&quot;</span> | <span class="stringliteral">&quot;--&quot;</span> | <span class="stringliteral">&quot;!&quot;</span> | <span class="stringliteral">&quot;~&quot;</span> | <span class="stringliteral">&quot;-&quot;</span> | <span class="stringliteral">&quot;&amp;&quot;</span> ) primary</div>
 <div class="line">             | primary</div>
 <div class="line">leftExpr ::= uniqueExpr { ( <span class="stringliteral">&quot;=&quot;</span> | <span class="stringliteral">&quot;+=&quot;</span> | <span class="stringliteral">&quot;-=&quot;</span> | <span class="stringliteral">&quot;*=&quot;</span> | <span class="stringliteral">&quot;/=&quot;</span> | <span class="stringliteral">&quot;%=&quot;</span> ) uniqueExpr }</div>
@@ -306,6 +309,9 @@ Syntax definition</h1>
 <div class="line">codeBlock ::= <span class="stringliteral">&quot;{&quot;</span> { inCodeBlockStmt } <span class="stringliteral">&quot;}&quot;</span></div>
 <div class="line">exportDecl ::= <span class="stringliteral">&quot;export&quot;</span> externModuleAccessExpression <span class="stringliteral">&quot;as&quot;</span> identifier</div>
 <div class="line">importDecl ::= <span class="stringliteral">&quot;import&quot;</span> innerMethodDecl <span class="stringliteral">&quot;from&quot;</span> TOK_string</div>
+<div class="line">catchParam ::= <span class="stringliteral">&quot;(&quot;</span> typeSpec identifier <span class="stringliteral">&quot;)&quot;</span></div>
+<div class="line">tryCatchStmt ::= <span class="stringliteral">&quot;try&quot;</span> codeBlock <span class="stringliteral">&quot;catch&quot;</span> catchParam { <span class="stringliteral">&quot;catch&quot;</span> catchParam } ( <span class="stringliteral">&quot;finally&quot;</span> codeBlock )</div>
+<div class="line">throwStmt ::= <span class="stringliteral">&quot;throw&quot;</span> rExpr</div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

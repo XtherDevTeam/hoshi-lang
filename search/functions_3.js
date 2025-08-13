@@ -7,5 +7,6 @@ var searchData=
   ['div_4',['div',['../classyoi_1_1IROptimizer.html#aad91c000ae2dab252bae5054a04352a6',1,'yoi::IROptimizer']]],
   ['dooptimizationforcurrentfunction_5',['doOptimizationForCurrentFunction',['../classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6',1,'yoi::IROptimizer']]],
   ['dotstart_6',['dotStart',['../classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6',1,'yoi::lexer']]],
-  ['dropstate_7',['dropState',['../classyoi_1_1lexer.html#afdc95fadf606bf742c2b0b549c09b1df',1,'yoi::lexer']]]
+  ['dropstate_7',['dropState',['../classyoi_1_1lexer.html#afdc95fadf606bf742c2b0b549c09b1df',1,'yoi::lexer']]],
+  ['dyncastop_8',['dynCastOp',['../classyoi_1_1IRBuilder.html#afa0d0eb43d3a88922310cd94abc22567',1,'yoi::IRBuilder']]]
 ];

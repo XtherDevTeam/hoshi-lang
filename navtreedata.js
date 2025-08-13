@@ -87,6 +87,7 @@ var NAVTREE =
     [ "模板隐式特化的实现思路", "md_docs_2Template.html", null ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
+    [ "TODO", "md_TODO.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -126,21 +127,21 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253",
-"classyoi_1_1IRExternEntry.html#aa5c657c5b0363384d4bd4f9fb8dcd107",
-"classyoi_1_1IROptimizer.html#a512608de83fba05570b36c255340f6ec",
-"classyoi_1_1LLVMCodegen.html#a31fecbe7a01dbfa60f245b1dfbc64276",
-"classyoi_1_1compilerContext.html#a77767dd0f2c2939c1ca6ffe930aa2be4",
-"classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981",
-"classyoi_1_1indexTable_1_1iterator.html#aca80b8646cbeb4083e0bd414731104f2",
-"classyoi_1_1moduleContext.html#affc03367afdb2b7984d698b1af375424",
-"classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1",
-"functions_y.html",
-"namespacemagic__enum_1_1bitwise__operators.html#a89899059bec2c1b9d1379a0c25bbd4c9",
-"parser_8cpp.html#a663f86a9dc99fc46e30e341464412354",
-"structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8",
-"structyoi_1_1lexer_1_1lexerState.html#a3c5b49a9b525e2fbc1f1f37bb2574150",
-"unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba"
+"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de",
+"classyoi_1_1IRBuilder.html#ae5f54c0f3d96bf3470645b215d9ce83a",
+"classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f",
+"classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149",
+"classyoi_1_1ccObjectLinker.html",
+"classyoi_1_1forStmt.html#a8342ddcd6ca0160da8328bbdf6d696f1",
+"classyoi_1_1indexTableDeprecated.html",
+"classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24",
+"classyoi_1_1tryCatchStmt.html#a5dab6b819df9349edbd4090d2ed8059d",
+"def_8hpp.html#a4f8b4bf5f8be4bc3b3b336238b9812e3",
+"md_docs_2IR.html#autotoc_md9",
+"namespaceyoi.html#a66f39c0f53ae734cb74ca78c7a1561cd",
+"structYoiCharObject.html",
+"structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item.html#a67eac8247659a8219b5be87d48df55f7",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab45cffe084dd3d20d928bee85e7b0f21"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

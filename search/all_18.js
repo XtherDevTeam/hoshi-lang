@@ -84,7 +84,7 @@ var searchData=
   ['structremapping_81',['structRemapping',['../classyoi_1_1IRLinker.html#a566158d839283baec4c406e16a8c43b1',1,'yoi::IRLinker']]],
   ['structs_82',['3.2. Structs',['../md_docs_2Spec.html#autotoc_md32',1,'']]],
   ['structtable_83',['structTable',['../classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4',1,'yoi::IRModule']]],
-  ['structtemplateasts_84',['structTemplateAsts',['../classyoi_1_1IRModule.html#a9961eb474535ae821a87afcabacdf12f',1,'yoi::IRModule']]],
+  ['structtemplateasts_84',['structTemplateAsts',['../classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659',1,'yoi::IRModule']]],
   ['structtemplatetable_85',['structTemplateTable',['../classyoi_1_1IRModule.html#a7fa93a12df7c809694549d71f55a5d04',1,'yoi::IRModule']]],
   ['structtype_86',['structType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7af3dfe2dc33df285b284ccbbb4f65d086',1,'yoi::IRExternEntry']]],
   ['structtypedimap_87',['structTypeDIMap',['../classyoi_1_1LLVMCodegen.html#a6ee04a05f7c4f71de8e59d88ef57ac61',1,'yoi::LLVMCodegen']]],

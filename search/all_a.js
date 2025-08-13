@@ -6,8 +6,8 @@ var searchData=
   ['debug_3',['debug',['../structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d',1,'yoi::IRBuildConfig']]],
   ['debug_2ecpp_4',['debug.cpp',['../debug_8cpp.html',1,'']]],
   ['debug_2eh_5',['debug.h',['../debug_8h.html',1,'']]],
-  ['debuginfo_6',['debuginfo',['../classyoi_1_1IR.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IR::debugInfo'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::Builder::debugInfo'],['../classyoi_1_1IRFunctionDefinition.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::debugInfo']]],
-  ['decimal_7',['decimal',['../unionyoi_1_1IROperand_1_1operandValue.html#a160d6366514b7fe5ec086f528835c5ce',1,'yoi::IROperand::operandValue::decimal'],['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32abdaa3c20a3e3851599514f7c6be5f62f',1,'yoi::lexer::token::decimal'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f',1,'yoi::IROperand::decimal']]],
+  ['debuginfo_6',['debuginfo',['../classyoi_1_1IR.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IR::debugInfo'],['../classyoi_1_1IRFunctionDefinition.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::debugInfo'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::Builder::debugInfo']]],
+  ['decimal_7',['decimal',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f',1,'yoi::IROperand::decimal'],['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32abdaa3c20a3e3851599514f7c6be5f62f',1,'yoi::lexer::token::decimal'],['../unionyoi_1_1IROperand_1_1operandValue.html#a160d6366514b7fe5ec086f528835c5ce',1,'yoi::IROperand::operandValue::decimal']]],
   ['decimalobject_8',['decimalObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860',1,'yoi::IRValueType']]],
   ['decimalraw_9',['decimalRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0',1,'yoi::IRValueType']]],
   ['decivalue_10',['deciValue',['../unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#aed6968ad55daa7546c8e358e813fb55f',1,'yoi::IROptimizer::SimulationStack::Item::PossibleValue']]],
@@ -38,5 +38,14 @@ var searchData=
   ['dotstart_35',['dotStart',['../classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6',1,'yoi::lexer']]],
   ['dropstate_36',['dropState',['../classyoi_1_1lexer.html#afdc95fadf606bf742c2b0b549c09b1df',1,'yoi::lexer']]],
   ['dummy_5fbreak_37',['dummy_break',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af1d60dfb506a7016f93ce3bd20a4eff5',1,'yoi::IR']]],
-  ['dummy_5fcontinue_38',['dummy_continue',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae993ca208002c12466593a3adf1c6b8f',1,'yoi::IR']]]
+  ['dummy_5fcontinue_38',['dummy_continue',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae993ca208002c12466593a3adf1c6b8f',1,'yoi::IR']]],
+  ['dyn_5fcast_5fbool_39',['dyn_cast_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5',1,'yoi::IR']]],
+  ['dyn_5fcast_5fchar_40',['dyn_cast_char',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1',1,'yoi::IR']]],
+  ['dyn_5fcast_5fdeci_41',['dyn_cast_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de',1,'yoi::IR']]],
+  ['dyn_5fcast_5fint_42',['dyn_cast_int',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae',1,'yoi::IR']]],
+  ['dyn_5fcast_5fstr_43',['dyn_cast_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02',1,'yoi::IR']]],
+  ['dyn_5fcast_5fstruct_44',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]],
+  ['dyncast_45',['dynCast',['../classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3',1,'yoi::primary']]],
+  ['dyncastexpression_46',['dynCastExpression',['../classyoi_1_1dynCastExpression.html',1,'yoi']]],
+  ['dyncastop_47',['dynCastOp',['../classyoi_1_1IRBuilder.html#afa0d0eb43d3a88922310cd94abc22567',1,'yoi::IRBuilder']]]
 ];

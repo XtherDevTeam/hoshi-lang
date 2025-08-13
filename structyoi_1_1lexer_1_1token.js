@@ -73,6 +73,12 @@ var structyoi_1_1lexer_1_1token =
       [ "kExport", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aef24aff7e49ecd076ee150143f2819de", null ],
       [ "kAs", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a50717965df8b733aa1bf2d0471db2301", null ],
       [ "kFrom", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad510520db4c563ee0dd8eed753c684db", null ],
+      [ "kTry", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a96067ed75b570c414df5f392c0f00dbd", null ],
+      [ "kCatch", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80523f0b981433cf7cac6f9122d39c21", null ],
+      [ "kFinally", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a4adf4299c9c9c249e885fefa686b474d", null ],
+      [ "kThrow", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a35130bbee286ecb2905a1eacbddb309d", null ],
+      [ "kTypeId", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a801ae6277601f775ca52dc2d47c0ab23", null ],
+      [ "kDynCast", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2cf89fd1b72127b3eaf5008b6b46b5d8", null ],
       [ "eof", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b", null ]
     ] ],
     [ "token", "structyoi_1_1lexer_1_1token.html#ad854e194dde5dc5422ee0f3221e48ba5", null ],
