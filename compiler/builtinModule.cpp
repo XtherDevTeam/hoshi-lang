@@ -85,7 +85,7 @@ namespace yoi {
     BuiltinModuleBuilder::BuiltinModuleBuilder(std::shared_ptr<IRModule> module) : module(std::move(module)) {}
 
     void BuiltinModuleBuilder::build() {
-        module->modulePath = L"<builtin>";
+        module->modulePath = L"builtin";
         module->identifier = HOSHI_COMPILER_CTX_GLOB_ID_CONST;
 
         initializeSharedObjectDefinitions();

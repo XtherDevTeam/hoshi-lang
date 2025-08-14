@@ -42,7 +42,7 @@ namespace yoi {
 
     yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
         yoi::wstr rFilepath;
-        if (filepath != L"<builtin>") {
+        if (filepath != L"builtin") {
             for (auto &prep : buildConfig->searchPaths) {
                 try {
                     std::filesystem::path final = prep / std::filesystem::path(filepath);

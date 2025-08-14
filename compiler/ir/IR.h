@@ -500,6 +500,7 @@ namespace yoi {
       public:
         yoi::wstr name;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
+        yoi::vec<std::pair<yoi::indexT, yoi::indexT>> implementations;
 
         IRInterfaceInstanceDefinition(
             const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);

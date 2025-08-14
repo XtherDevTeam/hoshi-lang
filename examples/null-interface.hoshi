@@ -1,4 +1,4 @@
-use lang "<builtin>"
+use lang "builtin"
 
 import puts(str: string) : int32 from "builtin"
 
@@ -19,6 +19,7 @@ impl Point {
 func main() : int {
     let p = Point(1, 2)
     let obj = lang.NullInterface(p)
+    let down_casted = dyn_cast<Point>(obj)
     puts("Null interface validation complete.")
     return 0
 }

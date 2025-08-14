@@ -1001,32 +1001,39 @@ namespace yoi {
         vec<IROperand> operand;
         switch (type->type) {
             case IRValueType::valueType::integerObject:
-                op = IR::Opcode::typeid_int;
+                op = IR::Opcode::push_integer;
+                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
                 break;
             case IRValueType::valueType::booleanObject:
-                op = IR::Opcode::typeid_bool;
+                op = IR::Opcode::push_integer;
+                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(2));
                 break;
             case IRValueType::valueType::decimalObject:
-                op = IR::Opcode::typeid_deci;
+                op = IR::Opcode::push_integer;
+                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(1));
                 break;
             case IRValueType::valueType::characterObject:
-                op = IR::Opcode::typeid_char;
+                op = IR::Opcode::push_integer;
+                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(3));
                 break;
             case IRValueType::valueType::stringObject:
-                op = IR::Opcode::typeid_str;
+                op = IR::Opcode::push_integer;
+                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(4));
                 break;
             case IRValueType::valueType::structObject:
                 op = IR::Opcode::typeid_struct;
+                operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
+                operand.emplace_back(IROperand::operandType::index, type->typeIndex);
                 break;
             case IRValueType::valueType::interfaceObject:
                 op = IR::Opcode::typeid_interface;
+                operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
+                operand.emplace_back(IROperand::operandType::index, type->typeIndex);
                 break;
             default:
                 /* TODO: add more typeid opcodes */
                 break;
         }
-        operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
-        operand.emplace_back(IROperand::operandType::index, type->typeIndex);
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.push_back(managedPtr(IRValueType(IRValueType::valueType::integerObject)));
     }

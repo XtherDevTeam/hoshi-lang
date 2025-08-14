@@ -60,7 +60,8 @@ func test2(cond: bool) : int {
 func test3() : int {
     let x = aaa(1, 2)
     let y = Test(x)
-    return y.yield() + y.yield()
+    let res = y.yield() + y.yield()
+    return res
 }
 
 func main() : int {

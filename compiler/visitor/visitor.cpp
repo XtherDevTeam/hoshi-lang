@@ -1925,8 +1925,10 @@ namespace yoi {
                     implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structBaseName));
                 return {};
             }
+            auto structKey = std::make_pair(currentModuleIndex, structIndex);
+            moduleContext->getCompilerContext()->getImportedModule(interfaceName.first.first)->interfaceTable[interfaceName.first.second]->implementations.push_back(structKey);
             auto interfaceImplName =
-                getInterfaceImplName(interfaceName.first, std::make_pair(currentModuleIndex, structIndex));
+                getInterfaceImplName(interfaceName.first, structKey);
 
             auto interfaceImplIndex = irModule->interfaceImplementationTable.put(interfaceImplName, {});
             IRInterfaceImplementationDefinition::Builder builder;
@@ -3055,15 +3057,20 @@ namespace yoi {
         visit(dynCastExpression->expr);
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         auto toType = managedPtr(parseTypeSpec(dynCastExpression->type));
+        yoi_assert(rhs->type == IRValueType::valueType::interfaceObject && toType->type == IRValueType::valueType::structObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects to struct objects.");
+        auto &impls = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceTable[rhs->typeIndex]->implementations;
+        if (auto it = std::find(impls.begin(), impls.end(), std::make_pair(toType->typeAffiliateModule, toType->typeIndex)); it != impls.end())
+            moduleContext->getIRBuilder().dynCastOp(toType);
+        else
+            panic(dynCastExpression->getLine(), dynCastExpression->getColumn(), "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
 
-        yoi_assert(rhs->type == IRValueType::valueType::interfaceObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects.");
-        moduleContext->getIRBuilder().dynCastOp(toType);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::indexT visitor::generateNullInterfaceImplementation(yoi::indexT structIndex) {
         auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
         auto nullImplName = getInterfaceImplName(nullInterface, {currentModuleIndex, structIndex});
+        moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(currentModuleIndex, structIndex);
         try {
             return irModule->interfaceImplementationTable.getIndex(nullImplName);
         } catch (std::out_of_range &e) {

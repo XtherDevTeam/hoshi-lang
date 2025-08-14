@@ -1373,6 +1373,12 @@ namespace yoi {
                     simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case IR::Opcode::dyn_cast_struct: {
+                    auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
+                    simulationStack.pop();
+                    simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -2218,6 +2224,12 @@ namespace yoi {
                 case IR::Opcode::typeid_struct:
                 case IR::Opcode::typeid_interface: {
                     simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::dyn_cast_struct: {
+                    auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
+                    simulationStack.pop();
+                    simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 default: {
