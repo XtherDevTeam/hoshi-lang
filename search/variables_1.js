@@ -12,5 +12,6 @@ var searchData=
   ['builder_9',['Builder',['../classyoi_1_1LLVMCodegen.html#a8a540edd6c6be1f119a8f3bcdf0e2dad',1,'yoi::LLVMCodegen']]],
   ['buildmode_10',['buildmode',['../structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a',1,'yoi::IRBuildConfig::buildMode'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2d2af0daacf38ca61cfda1b702a40bdf',1,'yoi::IRBuildConfig::Builder::buildMode']]],
   ['buildplatform_11',['buildplatform',['../structyoi_1_1IRBuildConfig.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::buildPlatform'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::Builder::buildPlatform']]],
-  ['buildtype_12',['buildtype',['../structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71',1,'yoi::IRBuildConfig::buildType'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1f633ce5c87a96842f9a6886a2310739',1,'yoi::IRBuildConfig::Builder::buildType']]]
+  ['buildtype_12',['buildtype',['../structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71',1,'yoi::IRBuildConfig::buildType'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1f633ce5c87a96842f9a6886a2310739',1,'yoi::IRBuildConfig::Builder::buildType']]],
+  ['builtinmodulebuilder_13',['builtinModuleBuilder',['../classyoi_1_1compilerContext.html#ac28385e81d6cab2c31e6a73b2f3d9580',1,'yoi::compilerContext']]]
 ];

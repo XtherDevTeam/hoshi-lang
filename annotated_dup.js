@@ -39,6 +39,7 @@ var annotated_dup =
       [ "AST", "classyoi_1_1AST.html", "classyoi_1_1AST" ],
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", "classyoi_1_1basicLiterals" ],
       [ "breakStmt", "classyoi_1_1breakStmt.html", null ],
+      [ "BuiltinModuleBuilder", "classyoi_1_1BuiltinModuleBuilder.html", "classyoi_1_1BuiltinModuleBuilder" ],
       [ "catchParam", "classyoi_1_1catchParam.html", "classyoi_1_1catchParam" ],
       [ "ccObjectLinker", "classyoi_1_1ccObjectLinker.html", "classyoi_1_1ccObjectLinker" ],
       [ "clObjectLinker", "classyoi_1_1clObjectLinker.html", "classyoi_1_1clObjectLinker" ],

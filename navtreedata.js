@@ -127,21 +127,21 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de",
-"classyoi_1_1IRBuilder.html#ae5f54c0f3d96bf3470645b215d9ce83a",
-"classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f",
-"classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149",
-"classyoi_1_1ccObjectLinker.html",
-"classyoi_1_1forStmt.html#a8342ddcd6ca0160da8328bbdf6d696f1",
-"classyoi_1_1indexTableDeprecated.html",
-"classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24",
-"classyoi_1_1tryCatchStmt.html#a5dab6b819df9349edbd4090d2ed8059d",
-"def_8hpp.html#a4f8b4bf5f8be4bc3b3b336238b9812e3",
-"md_docs_2IR.html#autotoc_md9",
-"namespaceyoi.html#a66f39c0f53ae734cb74ca78c7a1561cd",
-"structYoiCharObject.html",
-"structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item.html#a67eac8247659a8219b5be87d48df55f7",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab45cffe084dd3d20d928bee85e7b0f21"
+"classyoi_1_1BuiltinModuleBuilder.html#a28c9e3567386a7ce1499749ae4b4091b",
+"classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5",
+"classyoi_1_1IRModule.html#a61fa8c172e7397d729af1135ec6076a6",
+"classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc",
+"classyoi_1_1ObjectLinker.html#adbdd9f654975fb7d020094f275c05cce",
+"classyoi_1_1forEachStmt.html#a16323b378daf734c131de3f444bd0334",
+"classyoi_1_1indexTable.html#a2d7d43c78676d1cdcddca00f4d963dd9",
+"classyoi_1_1lexer.html#aa09f40e2882f2056e06b2f87e52871bc",
+"classyoi_1_1symbolTable.html#a8f2a167d0474516fad3b8dd9d6b203b2",
+"debug_8h_source.html",
+"main_8cpp.html#afab1557244eb6ab3cb446f0e7cad8905",
+"namespaceyoi.html#a4d7b0cdbc3a6d66beed70c4f87b8defd",
+"runtime_8h_source.html",
+"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ac72b0020474e32e02be80c2d5ad22a64",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

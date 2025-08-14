@@ -4,6 +4,7 @@ var classyoi_1_1visitor =
     [ "addExternEntryIfNotExists", "classyoi_1_1visitor.html#a5f284f16d2778edc374e0538cfa904ca", null ],
     [ "emitBasicCastInBasicArithOpByLhsAndRhs", "classyoi_1_1visitor.html#a6641d63668aeb197a61c57a59ecf2aac", null ],
     [ "emitBasicCastTo", "classyoi_1_1visitor.html#a0fc82df99ed253292cb7c369e898d198", null ],
+    [ "generateNullInterfaceImplementation", "classyoi_1_1visitor.html#a404bd219f83af2691edb89b1c861df53", null ],
     [ "getExternEntry", "classyoi_1_1visitor.html#ad9b1bb0013729251e8d7becc36d88abc", null ],
     [ "getFuncUniqueNameStr", "classyoi_1_1visitor.html#a23884ad002c523e22707c030abb11ff2", null ],
     [ "getIncompleteType", "classyoi_1_1visitor.html#a892db4e6eee03786250b214b306e6e55", null ],

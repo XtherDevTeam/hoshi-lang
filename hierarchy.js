@@ -82,6 +82,7 @@ var hierarchy =
     [ "Builder", "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRStructDefinition_1_1Builder.html", null ],
+    [ "BuiltinModuleBuilder", "classyoi_1_1BuiltinModuleBuilder.html", null ],
     [ "case_insensitive< Op >", "classmagic__enum_1_1detail_1_1case__insensitive.html", null ],
     [ "ContributedInstructionSet", "structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html", null ],
     [ "ControlFlowAnalysis", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html", null ],
