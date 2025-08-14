@@ -24,7 +24,7 @@ var searchData=
   ['from_21',['from',['../classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4',1,'yoi::exportDecl']]],
   ['from_5fpath_22',['from_path',['../classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299',1,'yoi::importDecl']]],
   ['full_20example_23',['4. Full Example',['../md_docs_2IR.html#autotoc_md22',1,'']]],
-  ['func_24',['func',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::symbol::Func'],['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func']]],
+  ['func_24',['func',['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func'],['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::symbol::Func']]],
   ['funcdefstmt_25',['funcdefstmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87',1,'yoi::globalStmt::funcDefStmt'],['../classyoi_1_1funcDefStmt.html',1,'funcDefStmt']]],
   ['funcdefstmtval_26',['funcDefStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd',1,'yoi::globalStmt::vValue']]],
   ['functemplateasts_27',['funcTemplateAsts',['../classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899',1,'yoi::IRModule']]],
