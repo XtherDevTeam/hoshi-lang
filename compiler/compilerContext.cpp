@@ -3,8 +3,8 @@
 //
 
 #include "compilerContext.h"
-
 #include "moduleContext.h"
+#include "builtinModule.hpp"
 #include "frontend/ast.hpp"
 #include "frontend/lexer.hpp"
 #include "frontend/parser.hpp"
@@ -42,15 +42,20 @@ namespace yoi {
 
     yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
         yoi::wstr rFilepath;
-        for (auto &prep : buildConfig->searchPaths) {
-            try {
-                std::filesystem::path final = prep / std::filesystem::path(filepath);
-                rFilepath = realpath(final.wstring());
-                break;
-            } catch (std::runtime_error &e) {
-                continue;
+        if (filepath != L"<builtin>") {
+            for (auto &prep : buildConfig->searchPaths) {
+                try {
+                    std::filesystem::path final = prep / std::filesystem::path(filepath);
+                    rFilepath = realpath(final.wstring());
+                    break;
+                } catch (std::runtime_error &e) {
+                    continue;
+                }
             }
+        } else {
+            return HOSHI_COMPILER_CTX_GLOB_ID_CONST;
         }
+        
         try {
             return modules.getIndex(rFilepath);
         } catch (const std::out_of_range &e) {
@@ -92,171 +97,38 @@ namespace yoi {
         return irObjectFile;
     }
 
-    yoi::IRStructDefinition compilerContext::getIntObjectDefinition() {
-        IRValueType valType{
-            IRValueType::valueType::integerRaw,
-        };
-        IRStructDefinition::nameInfo info{
-            IRStructDefinition::nameInfo::nameType::field,
-
-        };
-        yoi::IRStructDefinition def{
-            L"int",
-            {{L"ptr", info}},
-            {managedPtr(valType)}
-        };
-        return def;
-    }
-
-    yoi::IRStructDefinition compilerContext::getBooleanObjectDefinition() {
-        IRValueType valType{
-            IRValueType::valueType::booleanRaw,
-        };
-        IRStructDefinition::nameInfo info{
-            IRStructDefinition::nameInfo::nameType::field,
-
-        };
-        yoi::IRStructDefinition def{
-            L"bool",
-            {{L"ptr", info}},
-            {managedPtr(valType)}
-        };
-        return def;
-    }
-
-    yoi::IRStructDefinition compilerContext::getDecimalObjectDefinition() {
-        IRValueType valType{
-            IRValueType::valueType::decimalRaw,
-        };
-        IRStructDefinition::nameInfo info{
-            IRStructDefinition::nameInfo::nameType::field,
-
-        };
-        yoi::IRStructDefinition def{
-            L"deci",
-            {{L"ptr", info}},
-            {managedPtr(valType)}
-        };
-        return def;
-    }
-
-    yoi::IRStructDefinition compilerContext::getStringObjectDefinition() {
-        IRValueType valType{
-            IRValueType::valueType::stringLiteral,
-        };
-        IRStructDefinition::nameInfo info{
-            IRStructDefinition::nameInfo::nameType::field,
-
-        };
-        yoi::IRStructDefinition def{
-            L"string",
-            {{L"ptr", info}},
-            {managedPtr(valType)}
-        };
-        return def;
-    }
-
-    yoi::IRStructDefinition compilerContext::getCharObjectDefinition() {
-        IRValueType valType{
-            IRValueType::valueType::charRaw,
-        };
-        IRStructDefinition::nameInfo info{
-            IRStructDefinition::nameInfo::nameType::field,
-        };
-        yoi::IRStructDefinition def{
-            L"char",
-            {{L"ptr", info}},
-            {managedPtr(valType)}
-        };
-        return def;
-    }
-
     void compilerContext::initializeSharedObjects() {
-        sharedObjectDefinition.put(L"int", managedPtr(getIntObjectDefinition()));
-        sharedObjectDefinition.put(L"bool", managedPtr(getBooleanObjectDefinition()));
-        sharedObjectDefinition.put(L"deci", managedPtr(getDecimalObjectDefinition()));
-        sharedObjectDefinition.put(L"string", managedPtr(getStringObjectDefinition()));
-        sharedObjectDefinition.put(L"char", managedPtr(getCharObjectDefinition()));
+        auto builtinModule = std::make_shared<IRModule>();
+        
+        moduleImported[HOSHI_COMPILER_CTX_GLOB_ID_CONST] = builtinModule;
 
-        sharedValueType.put(L"int", managedPtr(getIntObject()));
-        sharedValueType.put(L"bool", managedPtr(getBoolObject()));
-        sharedValueType.put(L"deci", managedPtr(getDeciObject()));
-        sharedValueType.put(L"string", managedPtr(getStrObject()));
-        sharedValueType.put(L"char", managedPtr(getCharObject()));
-        sharedValueType.put(L"none", managedPtr(getNoneObject()));
-
-        sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
-        sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
-
+        builtinModuleBuilder = std::make_shared<BuiltinModuleBuilder>(builtinModule);
+        builtinModuleBuilder->build();
         irFFITable = std::make_shared<IRFFITable>();
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType() {
-        return sharedValueType[L"int"];
+        return builtinModuleBuilder->sharedValueType[L"int"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getBoolObjectType() {
-        return sharedValueType[L"bool"];
+        return builtinModuleBuilder->sharedValueType[L"bool"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getDeciObjectType() {
-        return sharedValueType[L"deci"];
+        return builtinModuleBuilder->sharedValueType[L"deci"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getStrObjectType() {
-        return sharedValueType[L"string"];
+        return builtinModuleBuilder->sharedValueType[L"string"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getCharObjectType() {
-        return sharedValueType[L"char"];
+        return builtinModuleBuilder->sharedValueType[L"char"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getNoneObjectType() {
-        return sharedValueType[L"none"];
-    }
-
-    yoi::IRValueType compilerContext::getIntObject() {
-        return {
-            IRValueType::valueType::integerObject,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {sharedObjectDefinition.getIndex(L"int")}
-        };
-    }
-
-    yoi::IRValueType compilerContext::getBoolObject() {
-        return {
-            IRValueType::valueType::booleanObject,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {sharedObjectDefinition.getIndex(L"bool")}
-        };
-    }
-
-    yoi::IRValueType compilerContext::getDeciObject() {
-        return {
-            IRValueType::valueType::decimalObject,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {sharedObjectDefinition.getIndex(L"deci")}
-        };
-    }
-
-    yoi::IRValueType compilerContext::getStrObject() {
-        return {
-            IRValueType::valueType::stringObject,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {sharedObjectDefinition.getIndex(L"string")}
-        };
-    }
-
-    yoi::IRValueType compilerContext::getNoneObject() {
-        return {IRValueType::valueType::none, static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST), {}};
-    }
-
-    yoi::IRValueType compilerContext::getCharObject() {
-        return {
-            IRValueType::valueType::characterObject,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {sharedObjectDefinition.getIndex(L"char")}
-        };
+        return builtinModuleBuilder->sharedValueType[L"none"];
     }
 
     void compilerContext::setIRObjectFile(
@@ -277,27 +149,11 @@ namespace yoi {
         return irFFITable;
     }
 
-    yoi::IRValueType compilerContext::getForeignInt32Object() {
-        return {
-            IRValueType::valueType::foreignInt32Type,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {}
-        };
-    }
-
-    yoi::IRValueType compilerContext::getForeignFloatObject() {
-        return {
-            IRValueType::valueType::foreignFloatType,
-            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
-            {}
-        };
-    }
-
     std::shared_ptr<yoi::IRValueType> compilerContext::getForeignInt32ObjectType() {
-        return sharedValueType[L"foreignInt32Type"];
+        return builtinModuleBuilder->sharedValueType[L"foreignInt32Type"];
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getForeignFloatObjectType() {
-        return sharedValueType[L"foreignFloatType"];
+        return builtinModuleBuilder->sharedValueType[L"foreignFloatType"];
     }
 } // namespace yoi

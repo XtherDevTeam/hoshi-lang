@@ -22,6 +22,7 @@ TEST_CASES = {
     "test": {"type": "executable", "return_code": 6},
     "test1": {"type": "library"},
     "worklist": {"type": "executable", "return_code": 78},
+    "null-interface": {"type": "executable", "return_code": 0},
 }
 
 

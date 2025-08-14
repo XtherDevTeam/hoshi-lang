@@ -1,0 +1,24 @@
+use lang "<builtin>"
+
+import puts(str: string) : int32 from "builtin"
+
+struct Point {
+    x: int,
+    y: int,
+    constructor(x: int, y: int)
+}
+
+impl Point {
+    constructor(x: int, y: int) {
+        this.x = x
+        this.y = y
+        return this
+    }
+}
+
+func main() : int {
+    let p = Point(1, 2)
+    let obj = lang.NullInterface(p)
+    puts("Null interface validation complete.")
+    return 0
+}

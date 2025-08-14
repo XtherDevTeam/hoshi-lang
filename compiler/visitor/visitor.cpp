@@ -3,6 +3,7 @@
 //
 
 #include "visitor.h"
+#include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/frontend/lexer.hpp"
 #include "compiler/ir/IR.h"
@@ -1436,24 +1437,24 @@ namespace yoi {
             auto args = firstTerm->args;
             yoi::wstr mangledName = baseName;
 
-            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-            for (auto &arg : args->get()) {
-                visit(arg);
-                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-            }
-
             if (subscriptExpr->id->hasTemplateArg()) {
                 auto concreteTemplateArgs = parseTemplateArgs(subscriptExpr->id->getArg());
                 mangledName = getMangledTemplateName(baseName, concreteTemplateArgs);
             }
 
             bool resolved = false;
-
             // Try finding an extern struct constructor
             try {
+                moduleContext->getIRBuilder().saveState();
                 auto structIndex = targetedModule->structTable.getIndex(mangledName);
                 auto externStruct = getExternEntry(targetModule, mangledName);
                 moduleContext->getIRBuilder().newStructOp(externStruct.itemIndex, true, externStruct.affiliateModule);
+
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : args->get()) {
+                    visit(arg);
+                    argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                }
 
                 auto ctorNamePart = L"constructor" + getFuncUniqueNameStr(argTypes);
                 auto ctorFullName = mangledName + L"::" + ctorNamePart;
@@ -1463,19 +1464,61 @@ namespace yoi {
                 moduleContext->getIRBuilder().invokeMethodOp(
                     externCtor.itemIndex, argTypes.size(), ctorFunc->returnType, true, externCtor.affiliateModule);
                 resolved = true;
+                moduleContext->getIRBuilder().discardState();
             } catch (std::out_of_range &) {
+                moduleContext->getIRBuilder().restoreState();
             }
 
-            // Try finding an extern function
+            // attempt to find an extern interface constructor
             if (!resolved) {
                 try {
+                    auto interfaceIndex = targetedModule->interfaceTable.getIndex(mangledName);
+
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                    for (auto &arg : args->get()) {
+                        visit(arg);
+                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                    }
+
+                    yoi_assert(argTypes.size() == 1,
+                                subscriptExpr->getLine(),
+                                subscriptExpr->getColumn(),
+                                "Interface constructor expects exactly one argument (the struct instance).");
+
+                    auto structValue = argTypes[0];
+
+                    auto externInterface = getExternEntry(targetModule, mangledName);
+                    moduleContext->getIRBuilder().newInterfaceOp(externInterface.itemIndex, true, externInterface.affiliateModule);
+
+                    auto interfaceImplName =
+                        getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex},
+                                             {currentModuleIndex, interfaceIndex});
+                    auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                    moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
+                    resolved = true;
+                } catch (std::out_of_range &) {
+                }
+            }
+            
+            // Try finding an extern function
+            if (!resolved) {
+                moduleContext->getIRBuilder().saveState();
+                try {
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                    for (auto &arg : args->get()) {
+                        visit(arg);
+                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                    }
+                    
                     auto funcMangledName = mangledName + getFuncUniqueNameStr(argTypes);
                     auto externFunc = getExternEntry(targetModule, funcMangledName);
                     auto func = targetedModule->functionTable[funcMangledName];
 
                     moduleContext->getIRBuilder().invokeOp(externFunc.itemIndex, argTypes.size(), func->returnType, true, externFunc.affiliateModule);
                     resolved = true;
+                    moduleContext->getIRBuilder().discardState();
                 } catch (std::out_of_range &) {
+                    moduleContext->getIRBuilder().restoreState();
                 }
             }
 
@@ -1775,6 +1818,8 @@ namespace yoi {
             moduleContext->popTemplateBuilder();
         } else {
             auto structIndex = irModule->structTable.put(structName, {});
+
+            generateNullInterfaceImplementation(structIndex);
 
             IRStructDefinition::Builder builder;
             builder.setName(structName);
@@ -2375,37 +2420,36 @@ namespace yoi {
                            ->getImportedModule(moduleIndex)
                            ->globalVariables.getIndex(identifier);
             return {IRExternEntry::externType::globalVar, identifier, moduleIndex, res};
-        } catch (std::runtime_error &) {
+        } catch (std::out_of_range &) {
         }
         try {
             auto res =
                 moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->functionTable.getIndex(identifier);
             return {IRExternEntry::externType::function, identifier, moduleIndex, res};
-        } catch (std::runtime_error &) {
+        } catch (std::out_of_range &) {
         }
         try {
             auto res =
                 moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier);
             return {IRExternEntry::externType::structType, identifier, moduleIndex, res};
-        } catch (std::runtime_error &) {
+        } catch (std::out_of_range &) {
         }
         try {
             auto res = moduleContext->getCompilerContext()
                            ->getImportedModule(moduleIndex)
                            ->interfaceTable.getIndex(identifier);
             return {IRExternEntry::externType::interfaceType, identifier, moduleIndex, res};
-        } catch (std::runtime_error &) {
+        } catch (std::out_of_range &) {
         }
         try {
             auto res = moduleContext->getCompilerContext()
                            ->getImportedModule(moduleIndex)
                            ->interfaceImplementationTable.getIndex(identifier);
             return {IRExternEntry::externType::interfaceImplType, identifier, moduleIndex, res};
-        } catch (std::runtime_error &) {
+        } catch (std::out_of_range &) {
         }
 
-        panic(0, 0, "undefined identifier: not known global variable, function, struct or interface type");
-        return {};
+        throw std::out_of_range("undefined identifier: not known global variable, function, struct or interface type: " + yoi::wstring2string(identifier));
     }
 
     yoi::indexT visitor::addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier) {
@@ -2675,6 +2719,9 @@ namespace yoi {
         }
 
         auto specializedStructIndex = irModule->structTable.put_create(specializedName, nullptr);
+
+        generateNullInterfaceImplementation(specializedStructIndex);
+
         auto selfType =
             managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex});
 
@@ -3012,5 +3059,16 @@ namespace yoi {
         yoi_assert(rhs->type == IRValueType::valueType::interfaceObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects.");
         moduleContext->getIRBuilder().dynCastOp(toType);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::generateNullInterfaceImplementation(yoi::indexT structIndex) {
+        auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
+        auto nullImplName = getInterfaceImplName(nullInterface, {currentModuleIndex, structIndex});
+        try {
+            return irModule->interfaceImplementationTable.getIndex(nullImplName);
+        } catch (std::out_of_range &e) {
+            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, structIndex, 0, {}, {}});
+            return irModule->interfaceImplementationTable.put_create(nullImplName, nullImpl);
+        }
     }
 } // namespace yoi

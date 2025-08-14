@@ -6,7 +6,6 @@
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
 #include <memory>
-#define HOSHI_COMPILER_CTX_GLOB_ID_CONST 0xe1751aff
 
 #include "share/def.hpp"
 #include <map>
@@ -26,30 +25,17 @@ namespace yoi {
 
     class IRFFITable;
 
+    class BuiltinModuleBuilder;
+
     class compilerContext : public std::enable_shared_from_this<compilerContext> {
         yoi::indexTable<yoi::wstr, std::shared_ptr<yoi::moduleContext>> modules;
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> sharedObjectDefinition;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> sharedValueType;
+
         std::map<yoi::indexT, std::shared_ptr<IRModule>> moduleImported;
         std::shared_ptr<IRObjectFile> irObjectFile;
         std::shared_ptr<IRBuildConfig> buildConfig;
         std::shared_ptr<IRFFITable> irFFITable;
-
-        yoi::IRValueType getIntObject();
-
-        yoi::IRValueType getBoolObject();
-
-        yoi::IRValueType getDeciObject();
-
-        yoi::IRValueType getStrObject();
-
-        yoi::IRValueType getNoneObject();
-
-        yoi::IRValueType getCharObject();
-
-        yoi::IRValueType getForeignInt32Object();
-
-        yoi::IRValueType getForeignFloatObject();
+        std::shared_ptr<BuiltinModuleBuilder> builtinModuleBuilder;
 
       public:
         compilerContext() = default;
@@ -90,16 +76,6 @@ namespace yoi {
         const std::shared_ptr<IRObjectFile>& getIRObjectFile() const;
 
         void setIRObjectFile(const std::shared_ptr<IRObjectFile> &irObjectFile);
-
-        static yoi::IRStructDefinition getIntObjectDefinition();
-
-        static yoi::IRStructDefinition getBooleanObjectDefinition();
-
-        static yoi::IRStructDefinition getDecimalObjectDefinition();
-
-        static yoi::IRStructDefinition getStringObjectDefinition();
-
-        static yoi::IRStructDefinition getCharObjectDefinition();
 
         void initializeSharedObjects();
 

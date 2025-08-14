@@ -2,4 +2,6 @@
 - [ ] dyn_cast 关键字实现
 - [ ] 支持 基本类型 实现 interface
 - [-] type_id expression `type_id(expr)` `type_id<type>`
-- [ ] 加入 built-in 模组占据 0 号 index，编译器为 TypeInfo 结构体开洞
+- [-] 加入 `lang.NullInterface`
+- [-] 加入 built-in 模组占据 0 号 index
+- [ ] 编译器为 TypeInfo 结构体开洞

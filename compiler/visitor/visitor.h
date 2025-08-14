@@ -100,6 +100,8 @@ namespace yoi {
 
         void tryCastTo(const std::shared_ptr<IRValueType> &toType);
 
+        yoi::indexT generateNullInterfaceImplementation(yoi::indexT structIndex);
+
         /**
          * Visitor methods
          * These methods received a pointer to the corresponding AST node and
