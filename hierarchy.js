@@ -200,5 +200,6 @@ var hierarchy =
     [ "YoiDecimalObject", "structYoiDecimalObject.html", null ],
     [ "YoiIntegerObject", "structYoiIntegerObject.html", null ],
     [ "YoiObject", "structYoiObject.html", null ],
-    [ "YoiStringObject", "structYoiStringObject.html", null ]
+    [ "YoiStringObject", "structYoiStringObject.html", null ],
+    [ "YoiTypeInfo", "structYoiTypeInfo.html", null ]
 ];

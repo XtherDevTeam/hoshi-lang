@@ -101,18 +101,24 @@ $(document).ready(function(){initNavTree('memory_8h.html',''); initResizable(); 
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
 <code>#include &lt;<a class="el" href="build__config_8h_source.html">runtime/build_config.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="rtti_8h_source.html">runtime/rtti/rtti.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for memory.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h__incl.png" border="0" usemap="#aruntime_2memory_2memory_8h" alt=""/></div>
 <map name="aruntime_2memory_2memory_8h" id="aruntime_2memory_2memory_8h">
-<area shape="rect" title=" " alt="" coords="29,5,230,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,72,104"/>
-<area shape="poly" title=" " alt="" coords="116,33,66,72,63,68,113,29"/>
-<area shape="rect" title=" " alt="" coords="97,79,162,104"/>
-<area shape="poly" title=" " alt="" coords="132,31,132,65,127,65,127,31"/>
-<area shape="rect" href="build__config_8h.html" title=" " alt="" coords="186,79,353,104"/>
-<area shape="poly" title=" " alt="" coords="153,28,236,70,233,75,151,33"/>
+<area shape="rect" title=" " alt="" coords="25,5,226,31"/>
+<area shape="rect" title=" " alt="" coords="97,152,164,177"/>
+<area shape="poly" title=" " alt="" coords="85,33,53,45,25,61,10,81,8,91,13,103,27,119,45,133,85,151,83,156,42,137,23,123,8,105,3,92,5,79,22,57,51,41,83,28"/>
+<area shape="rect" title=" " alt="" coords="23,79,89,104"/>
+<area shape="poly" title=" " alt="" coords="116,33,78,71,75,67,112,29"/>
+<area shape="rect" href="build__config_8h.html" title=" " alt="" coords="113,79,279,104"/>
+<area shape="poly" title=" " alt="" coords="139,29,177,67,173,71,135,33"/>
+<area shape="rect" href="rtti_8h.html" title=" " alt="" coords="304,79,435,104"/>
+<area shape="poly" title=" " alt="" coords="165,28,318,72,316,77,164,33"/>
+<area shape="poly" title=" " alt="" coords="332,107,178,152,177,147,330,101"/>
+<area shape="rect" title=" " alt="" coords="334,152,405,177"/>
+<area shape="poly" title=" " alt="" coords="372,104,372,138,367,138,367,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -165,10 +171,10 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ae9e6484dd2ff6cf4355506d3c336b90e" id="r_ae9e6484dd2ff6cf4355506d3c336b90e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#ae9e6484dd2ff6cf4355506d3c336b90e">runtime_object_alloc_report</a> (size_t size, void *object)</td></tr>
 <tr class="separator:ae9e6484dd2ff6cf4355506d3c336b90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd25e14549f3f5c1751beaa77061951d" id="r_abd25e14549f3f5c1751beaa77061951d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#abd25e14549f3f5c1751beaa77061951d">runtime_finalize_object_report</a> (void *object)</td></tr>
-<tr class="separator:abd25e14549f3f5c1751beaa77061951d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d7f9a124d807cc44485c0b22bb2b31a" id="r_a5d7f9a124d807cc44485c0b22bb2b31a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#a5d7f9a124d807cc44485c0b22bb2b31a">runtime_finalize_object</a> (void *object)</td></tr>
-<tr class="separator:a5d7f9a124d807cc44485c0b22bb2b31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a1ef7e1e26adc283a63e6e1d8c957e8" id="r_a9a1ef7e1e26adc283a63e6e1d8c957e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#a9a1ef7e1e26adc283a63e6e1d8c957e8">runtime_finalize_object_report</a> (<a class="el" href="structYoiObject.html">YoiObject</a> *object)</td></tr>
+<tr class="separator:a9a1ef7e1e26adc283a63e6e1d8c957e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd6dcb4d367e405a3c4d02e248c4220" id="r_aadd6dcb4d367e405a3c4d02e248c4220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a> (<a class="el" href="structYoiObject.html">YoiObject</a> *object)</td></tr>
+<tr class="separator:aadd6dcb4d367e405a3c4d02e248c4220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77e252460b25bfcbcb0745e81860a2ec" id="r_a77e252460b25bfcbcb0745e81860a2ec"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a> (unsigned long size)</td></tr>
 <tr class="separator:a77e252460b25bfcbcb0745e81860a2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a364b6d9480e4902345a530e652cd7635" id="r_a364b6d9480e4902345a530e652cd7635"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="memory_8h.html#a364b6d9480e4902345a530e652cd7635">GC_WRAPPER_DECL</a> (int, <a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a>)</td></tr>
@@ -217,7 +223,7 @@ Variables</h2></td></tr>
 <div class="line">                                                                                            \</div>
 <div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> basic_##X##_gc_refcount_decrease(U* obj);                                   \</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00070">70</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00071">71</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -253,11 +259,12 @@ Variables</h2></td></tr>
 <div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> basic_##X##_gc_refcount_decrease(U* obj) {                                  \</div>
 <div class="line">    obj-&gt;gc_refcount--;                                                                     \</div>
 <div class="line">    if (obj-&gt;gc_refcount &lt;= 0) {                                                            \</div>
-<div class="line">        runtime_finalize_object((<span class="keywordtype">void</span>*)obj);                                                 \</div>
+<div class="line">        runtime_finalize_object((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a>*)obj);                                            \</div>
 <div class="line">    }                                                                                       \</div>
 <div class="line">}</div>
+<div class="ttc" id="astructYoiObject_html"><div class="ttname"><a href="structYoiObject.html">YoiObject</a></div><div class="ttdef"><b>Definition</b> <a href="memory_8h_source.html#l00013">memory.h:13</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00074">74</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00075">75</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -402,8 +409,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a5d7f9a124d807cc44485c0b22bb2b31a" name="a5d7f9a124d807cc44485c0b22bb2b31a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d7f9a124d807cc44485c0b22bb2b31a">&#9670;&#160;</a></span>runtime_finalize_object()</h2>
+<a id="aadd6dcb4d367e405a3c4d02e248c4220" name="aadd6dcb4d367e405a3c4d02e248c4220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd6dcb4d367e405a3c4d02e248c4220">&#9670;&#160;</a></span>runtime_finalize_object()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,31 +418,31 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void runtime_finalize_object </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype"><a class="el" href="structYoiObject.html">YoiObject</a> *&#160;</td>
           <td class="paramname"><em>object</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00084">84</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00087">87</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00051">runtime_finalize_object_report()</a>.</p>
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00054">runtime_finalize_object_report()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="memory_8h_a5d7f9a124d807cc44485c0b22bb2b31a_cgraph.png" border="0" usemap="#amemory_8h_a5d7f9a124d807cc44485c0b22bb2b31a_cgraph" alt=""/></div>
-<map name="amemory_8h_a5d7f9a124d807cc44485c0b22bb2b31a_cgraph" id="amemory_8h_a5d7f9a124d807cc44485c0b22bb2b31a_cgraph">
+<div class="center"><img src="memory_8h_aadd6dcb4d367e405a3c4d02e248c4220_cgraph.png" border="0" usemap="#amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_cgraph" alt=""/></div>
+<map name="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_cgraph" id="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,180,38"/>
-<area shape="rect" href="memory_8cpp.html#abd25e14549f3f5c1751beaa77061951d" title=" " alt="" coords="228,5,403,45"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="228,5,403,45"/>
 <area shape="poly" title=" " alt="" coords="180,23,214,23,214,28,180,28"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="abd25e14549f3f5c1751beaa77061951d" name="abd25e14549f3f5c1751beaa77061951d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd25e14549f3f5c1751beaa77061951d">&#9670;&#160;</a></span>runtime_finalize_object_report()</h2>
+<a id="a9a1ef7e1e26adc283a63e6e1d8c957e8" name="a9a1ef7e1e26adc283a63e6e1d8c957e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a1ef7e1e26adc283a63e6e1d8c957e8">&#9670;&#160;</a></span>runtime_finalize_object_report()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -443,25 +450,25 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void runtime_finalize_object_report </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype"><a class="el" href="structYoiObject.html">YoiObject</a> *&#160;</td>
           <td class="paramname"><em>object</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00051">51</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00054">54</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00048">AllocatedMemoryList::prev</a>, and <a class="el" href="memory_8cpp_source.html#l00025">runtime_object_allocated</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00050">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::prev</a>, <a class="el" href="rtti_8h_source.html#l00042">rtti_table</a>, <a class="el" href="memory_8cpp_source.html#l00027">runtime_object_allocated</a>, <a class="el" href="memory_8h_source.html#l00015">YoiObject::type_id</a>, and <a class="el" href="rtti_8h_source.html#l00035">YoiTypeInfo::type_name</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00084">runtime_finalize_object()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00087">runtime_finalize_object()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="memory_8h_abd25e14549f3f5c1751beaa77061951d_icgraph.png" border="0" usemap="#amemory_8h_abd25e14549f3f5c1751beaa77061951d_icgraph" alt=""/></div>
-<map name="amemory_8h_abd25e14549f3f5c1751beaa77061951d_icgraph" id="amemory_8h_abd25e14549f3f5c1751beaa77061951d_icgraph">
+<div class="center"><img src="memory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph.png" border="0" usemap="#amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" alt=""/></div>
+<map name="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" id="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph">
 <area shape="rect" title=" " alt="" coords="228,5,403,45"/>
-<area shape="rect" href="memory_8cpp.html#a5d7f9a124d807cc44485c0b22bb2b31a" title=" " alt="" coords="5,13,180,38"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="5,13,180,38"/>
 <area shape="poly" title=" " alt="" coords="214,28,180,28,180,23,214,23"/>
 </map>
 </div>
@@ -484,9 +491,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00090">90</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00093">93</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00027">runtime_object_alloc_report()</a>.</p>
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00029">runtime_object_alloc_report()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="string_8cpp_source.html#l00013">basic_string_add()</a>, <a class="el" href="string_8cpp_source.html#l00023">basic_string_at()</a>, <a class="el" href="string_8cpp_source.html#l00007">basic_string_length()</a>, and <a class="el" href="string_8cpp_source.html#l00030">basic_string_slice()</a>.</p>
 <div class="dynheader">
@@ -544,11 +551,11 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00027">27</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00029">29</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00050">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00048">AllocatedMemoryList::prev</a>, <a class="el" href="memory_8cpp_source.html#l00025">runtime_object_allocated</a>, and <a class="el" href="memory_8h_source.html#l00051">AllocatedMemoryList::size</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00051">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00050">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::prev</a>, <a class="el" href="memory_8cpp_source.html#l00027">runtime_object_allocated</a>, and <a class="el" href="memory_8h_source.html#l00052">AllocatedMemoryList::size</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00090">runtime_object_alloc()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00093">runtime_object_alloc()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -583,7 +590,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00060">60</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00061">61</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>

@@ -1,16 +1,17 @@
 <map id="getGlobalInitializer" name="getGlobalInitializer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,181,152,207"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242" title=" " alt="" coords="200,181,351,207"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,191,186,191,186,197,152,197"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,156,152,181"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242" title=" " alt="" coords="200,156,351,181"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,166,186,166,186,171,152,171"/>
 <area shape="rect" id="Node000003" href="$namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="589,29,784,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="305,179,398,141,633,57,635,62,400,146,307,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,153,630,56,632,61,319,158"/>
 <area shape="rect" id="Node000004" href="$classyoi_1_1LLVMCodegen.html#a7c22d09e16a73bc730a519d4ff15d68a" title=" " alt="" coords="399,156,541,181"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="351,182,385,177,386,182,351,187"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="351,175,385,175,385,180,351,180"/>
 <area shape="rect" id="Node000012" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="644,281,729,307"/>
-<area shape="poly" id="edge16_Node000002_Node000012" title=" " alt="" coords="352,201,444,217,542,244,567,255,590,268,631,280,630,285,588,272,564,260,540,248,442,222,351,206"/>
+<area shape="poly" id="edge17_Node000002_Node000012" title=" " alt="" coords="332,179,431,206,542,244,590,268,631,280,630,285,588,272,540,248,429,211,330,184"/>
 <area shape="rect" id="Node000013" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="411,257,529,283"/>
-<area shape="poly" id="edge17_Node000002_Node000013" title=" " alt="" coords="310,204,425,250,423,255,308,209"/>
+<area shape="poly" id="edge18_Node000002_Node000013" title=" " alt="" coords="299,179,400,236,428,249,426,254,397,240,297,184"/>
 <area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="651,31,644,21,648,11,662,5,687,3,717,6,729,15,725,20,715,11,687,8,664,10,651,15,649,20,655,28"/>
+<area shape="poly" id="edge16_Node000004_Node000002" title=" " alt="" coords="398,163,365,162,365,157,398,157"/>
 <area shape="poly" id="edge11_Node000004_Node000003" title=" " alt="" coords="482,154,527,114,588,72,622,57,624,62,591,76,530,118,486,158"/>
 <area shape="rect" id="Node000005" href="$classyoi_1_1LLVMCodegen.html#a1d5e7628ee3977840e1bf9f3c17fb561" title=" " alt="" coords="628,131,745,156"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="541,158,614,149,615,154,542,163"/>

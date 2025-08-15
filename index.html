@@ -159,7 +159,7 @@ Objects</h1>
 <ol type="1">
 <li>接受有且仅有一个 this 指针参数</li>
 <li>操作位于对象头部的 <code>gc_refcount</code> 递增或递减</li>
-<li>若引用计数小于或等于0，则调用提前声明的 <code><a class="el" href="memory_8cpp.html#a5d7f9a124d807cc44485c0b22bb2b31a">runtime_finalize_object(void* objectPtr)</a></code> 进行销毁</li>
+<li>若引用计数小于或等于0，则调用提前声明的 <code>runtime_finalize_object(void* objectPtr)</code> 进行销毁</li>
 </ol>
 <p>对于 structObject， <code>gc_refcount_increase</code> / <code>gc_refcount_decrease</code> 系列函数应在 llvmCodegen 创建数据类型时一并创建，并实现对应功能，在 llvmCodegen 实现可创建对应 helper function 模块化该过程。</p>
 <h1><a class="anchor" id="autotoc_md60"></a>

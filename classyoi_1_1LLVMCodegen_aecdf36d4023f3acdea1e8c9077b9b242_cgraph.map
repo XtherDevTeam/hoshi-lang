@@ -1,14 +1,15 @@
 <map id="yoiTypeToLLVMType" name="yoiTypeToLLVMType">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,181,156,207"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,156,156,181"/>
 <area shape="rect" id="Node000002" href="$namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="395,29,589,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,179,203,141,439,57,441,62,205,146,112,184"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,153,436,56,437,61,124,158"/>
 <area shape="rect" id="Node000003" href="$classyoi_1_1LLVMCodegen.html#a7c22d09e16a73bc730a519d4ff15d68a" title=" " alt="" coords="204,156,347,181"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="156,182,190,177,191,182,157,187"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="156,175,190,175,190,180,156,180"/>
 <area shape="rect" id="Node000011" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="449,281,535,307"/>
-<area shape="poly" id="edge15_Node000001_Node000011" title=" " alt="" coords="157,201,249,217,348,244,372,255,396,268,436,280,435,285,394,272,370,260,346,248,248,222,156,206"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="137,179,236,206,348,244,396,268,436,280,435,285,394,272,346,248,234,211,135,184"/>
 <area shape="rect" id="Node000012" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="217,257,334,283"/>
-<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="115,204,230,250,228,255,113,209"/>
+<area shape="poly" id="edge17_Node000001_Node000012" title=" " alt="" coords="105,179,205,236,234,249,231,254,203,240,102,184"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="457,31,449,21,453,11,468,5,492,3,522,6,534,15,531,20,520,11,492,8,469,10,457,15,454,20,461,28"/>
+<area shape="poly" id="edge15_Node000003_Node000001" title=" " alt="" coords="204,163,170,162,170,157,204,157"/>
 <area shape="poly" id="edge10_Node000003_Node000002" title=" " alt="" coords="288,154,332,114,393,72,427,57,430,62,396,76,335,118,291,158"/>
 <area shape="rect" id="Node000004" href="$classyoi_1_1LLVMCodegen.html#a1d5e7628ee3977840e1bf9f3c17fb561" title=" " alt="" coords="433,131,551,156"/>
 <area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="346,158,419,149,420,154,347,163"/>

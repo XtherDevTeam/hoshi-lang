@@ -5,8 +5,8 @@ var memory_8cpp =
     [ "GC_WRAPPER_IMPL", "memory_8cpp.html#a3cbb168625fc0fc95ae56661edde1062", null ],
     [ "GC_WRAPPER_IMPL", "memory_8cpp.html#a27844ae61c398d34149d9c5be87dfe45", null ],
     [ "GC_WRAPPER_IMPL", "memory_8cpp.html#ab12f6ec857ca465a633f752d7f25205e", null ],
-    [ "runtime_finalize_object", "memory_8cpp.html#a5d7f9a124d807cc44485c0b22bb2b31a", null ],
-    [ "runtime_finalize_object_report", "memory_8cpp.html#abd25e14549f3f5c1751beaa77061951d", null ],
+    [ "runtime_finalize_object", "memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220", null ],
+    [ "runtime_finalize_object_report", "memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8", null ],
     [ "runtime_object_alloc", "memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec", null ],
     [ "runtime_object_alloc_report", "memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e", null ],
     [ "runtime_object_allocated", "memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a", null ]

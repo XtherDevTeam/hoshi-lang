@@ -27,12 +27,12 @@ var searchData=
   ['nexttypeid_24',['nextTypeId',['../classyoi_1_1LLVMCodegen.html#a4bb5ce97f9b3a8dd56defafb829a63b7',1,'yoi::LLVMCodegen']]],
   ['node_25',['node',['../classyoi_1_1identifier.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::identifier::node'],['../classyoi_1_1basicLiterals.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::basicLiterals::node']]],
   ['noffi_26',['NoFFI',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a',1,'yoi::IRFunctionDefinition']]],
-  ['none_27',['none',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none'],['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none']]],
+  ['none_27',['none',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none'],['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;rtti.h']]],
   ['noneobjectsingleton_28',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]],
   ['nop_29',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
   ['normalizeforeigntype_30',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#a85d3b5e48291b30d8391bea2b6d01c46',1,'yoi::LLVMCodegen']]],
   ['not_5fequal_31',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
   ['notequal_32',['notequal',['../classyoi_1_1IROptimizer.html#a906f50f396f65314a3ac97310215a7bd',1,'yoi::IROptimizer::notEqual()'],['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token::notEqual']]],
   ['notstart_33',['notStart',['../classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24',1,'yoi::lexer']]],
-  ['null_34',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType']]]
+  ['null_34',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType::null'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd',1,'null:&#160;rtti.h']]]
 ];
