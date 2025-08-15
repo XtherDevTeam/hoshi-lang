@@ -6,6 +6,7 @@ var classyoi_1_1visitor =
     [ "emitBasicCastTo", "classyoi_1_1visitor.html#a0fc82df99ed253292cb7c369e898d198", null ],
     [ "generateNullInterfaceImplementation", "classyoi_1_1visitor.html#a404bd219f83af2691edb89b1c861df53", null ],
     [ "getExternEntry", "classyoi_1_1visitor.html#ad9b1bb0013729251e8d7becc36d88abc", null ],
+    [ "getFunctionAttributes", "classyoi_1_1visitor.html#ad45813249b615c43795636808d1e3f4b", null ],
     [ "getFuncUniqueNameStr", "classyoi_1_1visitor.html#a23884ad002c523e22707c030abb11ff2", null ],
     [ "getIncompleteType", "classyoi_1_1visitor.html#a892db4e6eee03786250b214b306e6e55", null ],
     [ "getInterfaceImplName", "classyoi_1_1visitor.html#ad4dcc561822a3c3e645cba643499fc71", null ],

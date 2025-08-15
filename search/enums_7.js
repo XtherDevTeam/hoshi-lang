@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['useobjectlinker_0',['UseObjectLinker',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010',1,'yoi::IRBuildConfig']]]
+  ['tokenkind_0',['tokenKind',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32',1,'yoi::lexer::token']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nametype_0',['nameType',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0',1,'yoi::IRStructDefinition::nameInfo']]]
+  ['functionattrs_0',['FunctionAttrs',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445',1,'yoi::IRFunctionDefinition']]]
 ];

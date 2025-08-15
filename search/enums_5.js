@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['symboltype_0',['symbolType',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171',1,'yoi::symbol']]]
+  ['opcode_0',['Opcode',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7',1,'yoi::IR']]],
+  ['operandtype_1',['operandType',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206',1,'yoi::IROperand']]]
 ];

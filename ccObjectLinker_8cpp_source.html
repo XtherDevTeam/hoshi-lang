@@ -179,42 +179,48 @@ $(document).ready(function(){initNavTree('ccObjectLinker_8cpp_source.html',''); 
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        std::string command = <span class="stringliteral">&quot;\&quot;&quot;</span> + <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3">getLinkerPath</a>()) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        command += <span class="stringliteral">&quot; \&quot;&quot;</span>;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        command += <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#adbdd9f654975fb7d020094f275c05cce">getObjectPath</a>()) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        command += <span class="stringliteral">&quot; -o \&quot;&quot;</span>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        command += <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(outputPath) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">// add Elysia runtime path and library</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">if</span> (!this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>().empty()) {</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="comment">// ensure the elysiaRuntimePath exists as a directory</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            std::filesystem::path elysia_path_fs(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>());</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="keywordflow">if</span> (!std::filesystem::exists(elysia_path_fs) || !std::filesystem::is_directory(elysia_path_fs)) {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Elysia runtime path does not exist or is not a directory: &quot;</span> +</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                                        <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>());</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            command += <span class="stringliteral">&quot; -L\&quot;&quot;</span>; <span class="comment">// add library search path</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            command += <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>()) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            command += <span class="stringliteral">&quot; -lelysia_runtime&quot;</span>;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">if</span> (this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a3e14062b6b07ca74399b0a7a7a40c88a">getConfig</a>()-&gt;buildType == <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85ad521f765a49c72507257a2620612ee96">IRBuildConfig::BuildType::library</a>) {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            command += <span class="stringliteral">&quot; -shared&quot;</span>; <span class="comment">// build a shared library</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        }</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <a class="code hl_function" href="namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7">replace_all</a>(command, std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>), std::string(<span class="stringliteral">&quot;\\\&quot;&quot;</span>));</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        command = <span class="stringliteral">&quot;powershell.exe -Command \&quot;&amp;&quot;</span> + command + <span class="stringliteral">&quot;\&quot;&quot;</span>; <span class="comment">// fuck win32 command line</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">if</span> (result != 0) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Linker command failed with exit code &quot;</span> + std::to_string(result) + <span class="stringliteral">&quot;. Command: &quot;</span> + command;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        }</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="comment">// add additional linking files</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;file : this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a3e14062b6b07ca74399b0a7a7a40c88a">getConfig</a>()-&gt;additionalLinkingFiles) {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            command += <span class="stringliteral">&quot; \&quot;&quot;</span> + <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(file) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        command += <span class="stringliteral">&quot; -o \&quot;&quot;</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        command += <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(outputPath) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="comment">// add Elysia runtime path and library</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">if</span> (!this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>().empty()) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="comment">// ensure the elysiaRuntimePath exists as a directory</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            std::filesystem::path elysia_path_fs(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>());</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keywordflow">if</span> (!std::filesystem::exists(elysia_path_fs) || !std::filesystem::is_directory(elysia_path_fs)) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Elysia runtime path does not exist or is not a directory: &quot;</span> +</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                                        <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>());</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            command += <span class="stringliteral">&quot; -L\&quot;&quot;</span>; <span class="comment">// add library search path</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            command += <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089">getElysiaRuntimePath</a>()) + <span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            command += <span class="stringliteral">&quot; -lelysia_runtime&quot;</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">if</span> (this-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a3e14062b6b07ca74399b0a7a7a40c88a">getConfig</a>()-&gt;buildType == <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85ad521f765a49c72507257a2620612ee96">IRBuildConfig::BuildType::library</a>) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            command += <span class="stringliteral">&quot; -shared&quot;</span>; <span class="comment">// build a shared library</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <a class="code hl_function" href="namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7">replace_all</a>(command, std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>), std::string(<span class="stringliteral">&quot;\\\&quot;&quot;</span>));</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        command = <span class="stringliteral">&quot;powershell.exe -Command \&quot;&amp;&quot;</span> + command + <span class="stringliteral">&quot;\&quot;&quot;</span>; <span class="comment">// fuck win32 command line</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> (result != 0) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Linker command failed with exit code &quot;</span> + std::to_string(result) + <span class="stringliteral">&quot;. Command: &quot;</span> + command;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
 </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>} <span class="comment">// namespace yoi</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>} <span class="comment">// namespace yoi</span></div>
 <div class="ttc" id="aIR_8h_html"><div class="ttname"><a href="IR_8h.html">IR.h</a></div></div>
 <div class="ttc" id="accObjectLinker_8h_html"><div class="ttname"><a href="ccObjectLinker_8h.html">ccObjectLinker.h</a></div></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a></div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00013">objectLinker.h:13</a></div></div>

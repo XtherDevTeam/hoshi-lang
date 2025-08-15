@@ -10,9 +10,10 @@ var searchData=
   ['new_5farray_5fstruct_7',['new_array_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706',1,'yoi::IR']]],
   ['new_5finterface_8',['new_interface',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5c93c16d8d510a30e676b17818553423',1,'yoi::IR']]],
   ['new_5fstruct_9',['new_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb',1,'yoi::IR']]],
-  ['none_10',['none',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none']]],
-  ['nop_11',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
-  ['not_5fequal_12',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
-  ['notequal_13',['notEqual',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token']]],
-  ['null_14',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType']]]
+  ['noffi_10',['NoFFI',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a',1,'yoi::IRFunctionDefinition']]],
+  ['none_11',['none',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none']]],
+  ['nop_12',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
+  ['not_5fequal_13',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
+  ['notequal_14',['notEqual',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token']]],
+  ['null_15',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType']]]
 ];
