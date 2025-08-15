@@ -1186,7 +1186,7 @@ namespace yoi {
                 auto* castedStructPtr = Builder->CreateBitCast(structInstanceVal.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
                 Builder->CreateStore(castedStructPtr, thisPtrField);
                 // The interface now holds a reference to the struct.
-                callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true);
+                // callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true);
 
                 // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
                 auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
@@ -1234,6 +1234,11 @@ namespace yoi {
                 // Load the concrete `this` pointer from index 2
                 auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
                 auto* concreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtrField, "concrete_this_raw");
+                auto* bitcastedPointer = Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(Builder->getInt64Ty(), 0), "casted_this");
+                // increase the reference count of this pointer, so that when leaving the function, it won't be collected
+                auto* oldRefcount = Builder->CreateLoad(Builder->getInt64Ty(), bitcastedPointer, "old_refcount");
+                Builder->CreateStore(Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1)), bitcastedPointer);
+                // btw, we have increased the refcount of the interface as well before, so when we finish the invoking, we need to decrease it.
 
                 // Load the function pointer to call from the v-table. User methods start at index 5.
                 auto vtableSlotIndex = methodVTableIndex + 5;
@@ -1261,8 +1266,9 @@ namespace yoi {
                 }
 
                 llvm::CallInst* call = Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs, "virtcall");
-
                 valueStackMap[fromBlock][toBlock].push_back({call, methodDef->returnType});
+
+                callGcFunction(interfaceShellVal.llvmValue, interfaceShellVal.yoiType, false);
                 break;
             }
             case IR::Opcode::new_array_int:
@@ -1683,12 +1689,7 @@ namespace yoi {
 
         std::string funcNameBase;
         if (yoiType->isArrayType()) {
-            yoi::indexT size = 1;
-            for (auto &i : yoiType->dimensions) {
-                size *= i;
-            }
-
-            funcNameBase = "array_" + yoi::wstring2string(yoiType->to_string()) + "_" + std::to_string(size);
+            funcNameBase = "array_" + yoi::wstring2string(yoiType->to_string());
         } else {
             switch(yoiType->type) {
                 case IRValueType::valueType::foreignInt32Type:
@@ -2148,7 +2149,7 @@ namespace yoi {
 
     llvm::Type *LLVMCodegen::getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType) {
         if (enforceForeignType) {
-            // TODO
+            return llvm::PointerType::get(yoiTypeToLLVMType(type, true), 0);
         } else {
             yoi::indexT size = 1;
             for (auto &i : type->dimensions) {
@@ -2199,89 +2200,117 @@ namespace yoi {
             auto structType = llvm::StructType::create(*TheContext, yoi::vec<llvm::Type*>{
                 llvm::Type::getInt64Ty(*TheContext), // ref counter
                 llvm::Type::getInt64Ty(*TheContext), // type id
+                llvm::Type::getInt64Ty(*TheContext), // array length
                 arrayType // array
             });
+
             // create gc function
             auto fullStructName = "array_" + yoi::wstring2string(type->to_string()) + "_" + std::to_string(size);
-            auto incFuncName = fullStructName + "_gc_refcount_increase";
-            auto decFuncName = fullStructName + "_gc_refcount_decrease";
+            auto incFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_increase";
+            auto decFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_decrease";
 
-            auto gcIncFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
-            auto gcIncFunc = llvm::Function::Create(gcIncFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
-            gcIncFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
             auto currentInsertPoint = Builder->GetInsertBlock();
-            // add basic block
-            llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", gcIncFunc);
-            Builder->SetInsertPoint(BB);
-            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-                // print function name
-                auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, incFuncName, true);
-                auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
-                auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+
+            if (auto it = functionMap.find(yoi::string2wstring(incFuncName)) == functionMap.end()) {
+                auto gcIncFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
+                auto gcIncFunc = llvm::Function::Create(gcIncFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+                gcIncFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
+                // add basic block
+                llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", gcIncFunc);
+                Builder->SetInsertPoint(BB);
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    // print function name
+                    auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, incFuncName, true);
+                    auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                    auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                    Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                }
+                auto *objPtr = gcIncFunc->arg_begin();
+                auto *refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");
+                auto *newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
+                auto *newRefCounterVal = Builder->CreateAdd(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
+                Builder->CreateStore(newRefCounterVal, refCounter);
+                Builder->CreateRetVoid();
+                functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
             }
-            auto *objPtr = gcIncFunc->arg_begin();
-            auto *refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");
-            auto *newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
-            auto *newRefCounterVal = Builder->CreateAdd(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
-            Builder->CreateStore(newRefCounterVal, refCounter);
-            Builder->CreateRetVoid();
+            if (auto it = functionMap.find(yoi::string2wstring(decFuncName)) == functionMap.end()) {
+                auto gcDecFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
+                auto gcDecFunc = llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+                gcDecFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
+                // add basic block
+                auto BB = llvm::BasicBlock::Create(*TheContext, "entry", gcDecFunc);
+                auto nullFailedBlock = llvm::BasicBlock::Create(*TheContext, "null_failed", gcDecFunc);
+                auto continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", gcDecFunc);
+                auto finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", gcDecFunc);
+                auto retBlock = llvm::BasicBlock::Create(*TheContext, "ret", gcDecFunc);
 
-            auto gcDecFuncType = llvm::FunctionType::get(llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
-            auto gcDecFunc = llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
-            gcDecFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
-            // add basic block
-            BB = llvm::BasicBlock::Create(*TheContext, "entry", gcDecFunc);
-            auto nullFailedBlock = llvm::BasicBlock::Create(*TheContext, "null_failed", gcDecFunc);
-            auto continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", gcDecFunc);
-            auto finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", gcDecFunc);
-            auto retBlock = llvm::BasicBlock::Create(*TheContext, "ret", gcDecFunc);
+                Builder->SetInsertPoint(BB);
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    // print function name
+                    auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, decFuncName, true);
+                    auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                    auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                    Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                }
 
-            Builder->SetInsertPoint(BB);
-            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-                // print function name
-                auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, decFuncName, true);
-                auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
-                auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
-            }
+                auto objPtr = gcDecFunc->arg_begin();
+                auto refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");
+                // check whether object is null
+                auto *isObjNull = Builder->CreateIsNull(objPtr, "is_obj_null");
+                Builder->CreateCondBr(isObjNull, nullFailedBlock, continueBlock);
 
-            objPtr = gcDecFunc->arg_begin();
-            refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");
-            // check whether object is null
-            auto *isObjNull = Builder->CreateIsNull(objPtr, "is_obj_null");
-            Builder->CreateCondBr(isObjNull, nullFailedBlock, continueBlock);
+                Builder->SetInsertPoint(continueBlock);
+                auto newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
+                auto newRefCounterVal = Builder->CreateSub(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
+                Builder->CreateStore(newRefCounterVal, refCounter);
 
-            Builder->SetInsertPoint(continueBlock);
-            newRefCounter = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), refCounter, "new_ref_counter");
-            newRefCounterVal = Builder->CreateSub(newRefCounter, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "new_ref_counter_val");
-            Builder->CreateStore(newRefCounterVal, refCounter);
+                auto icmpRes = Builder->CreateICmpEQ(newRefCounterVal, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0, true), "ref_counter_zero");
+                Builder->CreateCondBr(icmpRes, finalizeBlock, retBlock);
+                // ret block
+                Builder->SetInsertPoint(retBlock);
+                Builder->CreateRetVoid();
+                // null failed block
+                Builder->SetInsertPoint(nullFailedBlock);
+                Builder->CreateRetVoid();
+                // finalize block
+                Builder->SetInsertPoint(finalizeBlock);
+                // free memory
+                if (type->type == IRValueType::valueType::structObject || type->type == IRValueType::valueType::interfaceObject) {
+                    // decrease the ref count of array elements inside
+                    auto arrayPointer = Builder->CreateStructGEP(structType, objPtr, 3, "array_ptr");
+                    auto arrayLengthPtr = Builder->CreateStructGEP(structType, objPtr, 2, "array_length_ptr");
+                    auto arrayLength = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), arrayLengthPtr, "array_length");
+                    auto currentIndex = Builder->CreateAlloca(llvm::Type::getInt64Ty(*TheContext), nullptr, "current_index");
 
-            auto icmpRes = Builder->CreateICmpEQ(newRefCounterVal, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0, true), "ref_counter_zero");
-            Builder->CreateCondBr(icmpRes, finalizeBlock, retBlock);
-            // ret block
-            Builder->SetInsertPoint(retBlock);
-            Builder->CreateRetVoid();
-            // null failed block
-            Builder->SetInsertPoint(nullFailedBlock);
-            Builder->CreateRetVoid();
-            // finalize block
-            Builder->SetInsertPoint(finalizeBlock);
-            // free memory
-            if (type->type == IRValueType::valueType::structObject || type->type == IRValueType::valueType::interfaceObject) {
-                // decrease the ref count of array elements inside
-                auto arrayPointer = Builder->CreateStructGEP(structType, objPtr, 2, "array_ptr");
-                for (yoi::indexT i = 0; i < size; i++) {
-                    auto elementPointer = Builder->CreateGEP(arrayType, arrayPointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0), llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), i)}, "element_ptr");
+                    Builder->CreateStore(llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0, true), currentIndex);
+                    auto loopBlock = llvm::BasicBlock::Create(*TheContext, "loop", gcDecFunc);
+                    auto exitBlock = llvm::BasicBlock::Create(*TheContext, "exit", gcDecFunc);
+                    auto condBlock = llvm::BasicBlock::Create(*TheContext, "cond", gcDecFunc);
+                    Builder->CreateBr(loopBlock);
+                    Builder->SetInsertPoint(condBlock);
+                    auto *loopCond = Builder->CreateICmpSLT(Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), currentIndex), arrayLength, "loop_cond");
+                    Builder->CreateCondBr(loopCond, loopBlock, exitBlock);
+                    // loop block
+                    Builder->SetInsertPoint(loopBlock);
+                    auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(baseType, 0), arrayPointer, { 
+                        Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), currentIndex)
+                     }, "element_ptr");
                     auto elementPointerVal = Builder->CreateLoad(llvm::PointerType::get(llvm::Type::getInt64Ty(*TheContext), 0), elementPointer, "element_ptr_val"); // just too lazy, so I use int64*
                     callGcFunction(elementPointerVal, managedPtr(type->getElementType()), false);
+                    auto nextIndex = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), currentIndex, "next_index");
+                    auto nextIndexVal = Builder->CreateAdd(nextIndex, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "next_index_val");
+                    Builder->CreateStore(nextIndexVal, currentIndex);
+                    Builder->CreateBr(condBlock);
+                    // exit block
+                    Builder->SetInsertPoint(exitBlock);
                 }
+                Builder->CreateCall(runtimeFinalizeObjectFunc, objPtr);
+                Builder->CreateRetVoid();
+                functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
             }
-            Builder->CreateCall(runtimeFinalizeObjectFunc, objPtr);
-            Builder->CreateRetVoid();
+
+            
             // add gc function to function map
-            functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
-            functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
             // add struct to struct map
             arrayTypeMap[arrayKey] = structType;
             // clean up the mess, reset the insert point
@@ -2312,10 +2341,13 @@ namespace yoi {
         auto *typeIdPtr = Builder->CreateStructGEP(llvmType, memoryPointer, 1, "type_id_ptr");
         Builder->CreateStore(llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), typeId, true), typeIdPtr);
 
+        // store the array length
+        auto arrayLengthPtr = Builder->CreateStructGEP(llvmType, memoryPointer, 2, "array_length_ptr");
+        Builder->CreateStore(llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), size, true), arrayLengthPtr);
 
         // store the array
         yoi::indexT index = 0;
-        auto arrayBasePointer = Builder->CreateStructGEP(llvmType, memoryPointer, 2, "array_ptr");
+        auto arrayBasePointer = Builder->CreateStructGEP(llvmType, memoryPointer, 3, "array_ptr");
         for (auto &i : elements) {
             // if basic type, unbox it first
             if (type->isBasicType()) {
@@ -2338,12 +2370,7 @@ namespace yoi {
         yoi_assert(type->isArrayType(), 0, 0, "type must be an array type");
         llvm::Type *llvmType = getArrayLLVMType(type, false);
 
-        yoi::indexT arraySize = 1;
-        for (auto &i : type->dimensions) {
-            arraySize *= i;
-        }
-
-        auto *arrayPointer = Builder->CreateStructGEP(getArrayLLVMType(type), arrayPtr, 2, "array_ptr");
+        auto *arrayPointer = Builder->CreateStructGEP(getArrayLLVMType(type), arrayPtr, 3, "array_ptr");
         switch (type->type) {
             case IRValueType::valueType::integerObject:
             case IRValueType::valueType::decimalObject:
@@ -2352,8 +2379,7 @@ namespace yoi {
             case IRValueType::valueType::characterObject: {
                 auto elementType = managedPtr(type->getElementType());
                 auto elementLLVMType = yoiTypeToLLVMType(elementType, true);
-                auto pointerToElement = Builder->CreateGEP(llvm::ArrayType::get(elementLLVMType, arraySize), arrayPointer, {
-                    llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 0),
+                auto pointerToElement = Builder->CreateGEP(llvm::PointerType::get(elementLLVMType, 0), arrayPointer, {
                     index
                 }, "element_ptr");
                 auto loadedVal = Builder->CreateLoad(elementLLVMType, pointerToElement, "loaded_val"); // get unboxed value, so ffi type
@@ -2401,7 +2427,21 @@ namespace yoi {
         auto* di_i1 = DBuilder->createBasicType("bool", 8, llvm::dwarf::DW_ATE_boolean); // Represent bool as 8 bits
         auto* di_i8 = DBuilder->createBasicType("char", 8, llvm::dwarf::DW_ATE_signed_char);
         auto* di_i8_ptr = DBuilder->createPointerType(di_i8, 64);
-        auto* di_void_ptr = DBuilder->createPointerType(DBuilder->createUnspecifiedType("<unknown struct>"), 64);
+        auto* unknown_object_struct = DBuilder->createStructType(
+            compileUnits[L"<default>"],
+            "unknown_object",
+            compileUnits[L"<default>"]->getFile(),
+            1,
+            64 + 64,
+            64,
+            llvm::DINode::FlagZero,
+            nullptr,
+            DBuilder->getOrCreateArray({
+                DBuilder->createMemberType(compileUnits[L"<default>"], "refcount", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, di_i64),
+                DBuilder->createMemberType(compileUnits[L"<default>"], "typeid", nullptr, 0, 64, 64, 64, llvm::DINode::FlagZero, di_i64),
+            })
+        );
+        auto* di_unknown_object_ptr = DBuilder->createPointerType(unknown_object_struct, 64);
 
         if (type->isArrayType()) {
             yoi::indexT size = 1;
@@ -2448,14 +2488,15 @@ namespace yoi {
                 "array_" + wstring2string(type->to_string()),
                 compileUnits[L"<default>"]->getFile(),
                 1,
-                64 + 64 + arraySizeInBits,
+                64 + 64 + 64 + arraySizeInBits,
                 64,
                 llvm::DINode::FlagZero,
                 nullptr,
                 DBuilder->getOrCreateArray({
                     DBuilder->createMemberType(compileUnits[L"<default>"], "refcount", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, di_i64),
                     DBuilder->createMemberType(compileUnits[L"<default>"], "typeid", nullptr, 0, 64, 64, 64, llvm::DINode::FlagZero, di_i64),
-                    DBuilder->createMemberType(compileUnits[L"<default>"], "array", nullptr, 0, arraySizeInBits, 64, 128, llvm::DINode::FlagZero, diArray)
+                    DBuilder->createMemberType(compileUnits[L"<default>"], "array_length", nullptr, 0, 64, 64, 128, llvm::DINode::FlagZero, di_i64),
+                    DBuilder->createMemberType(compileUnits[L"<default>"], "array", nullptr, 0, arraySizeInBits, 64, 192, llvm::DINode::FlagZero, diArray)
                 })
             );
             auto *resultDIType = DBuilder->createPointerType(diArrayStruct, 64);
@@ -2467,8 +2508,6 @@ namespace yoi {
                 return structTypeDIMap[key];
             }
             llvm::DIType* resultDIType = nullptr;
-
-            // Helper DITypes for basic C++ types. These form the building blocks of our objects.
 
             std::string typeName = "yoi." + wstring2string(type->to_string());
 
@@ -2549,7 +2588,7 @@ namespace yoi {
                     break;
                 }
                 case IRValueType::valueType::interfaceObject: {
-                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_void_ptr));
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_unknown_object_ptr));
                     currentSize += 64;
                     break;
                 }
@@ -2596,7 +2635,7 @@ namespace yoi {
             } else if (yoiType.type == IRValueType::valueType::interfaceObject) {
                 typenameString = yoi::wstring2string(yoiModule->interfaceTable[std::get<2>(typeIndexPair.first)]->name);
             }
-            typenameString += std::get<3>(typeIndexPair.first) == 0 ? "" : typenameString + "[" + std::to_string(std::get<3>(typeIndexPair.first)) + "]";
+            typenameString += std::get<3>(typeIndexPair.first) == 0 ? "" : "[" + std::to_string(std::get<3>(typeIndexPair.first)) + "]";
 
             std::array<llvm::Constant *, 6> rtti_entry_field{
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), typeId),
@@ -2680,6 +2719,6 @@ namespace yoi {
             llvm::Type::getInt64Ty(*TheContext), // array size if provided, otherwise 0
         });
         auto RTTITableType = llvm::ArrayType::get(RTTIEntryType, typeIDMap.size());
-        RTTITable = new llvm::GlobalVariable(*TheModule, RTTITableType, true, llvm::GlobalValue::LinkageTypes::InternalLinkage, nullptr, "rtti_table");
+        RTTITable = new llvm::GlobalVariable(*TheModule, RTTITableType, true, llvm::GlobalValue::LinkageTypes::ExternalLinkage, nullptr, "rtti_table");
     }
 } // namespace yoi

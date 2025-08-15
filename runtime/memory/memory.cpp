@@ -8,13 +8,15 @@
 
 #include <runtime/build_config.h>
 #include "memory.h"
+#include "runtime/rtti/rtti.h"
 
 #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
 extern "C" AllocatedMemoryList *allocated_memory_list = nullptr;
 
 void runtime_debug_print_current_allocated_memory() {
     for (AllocatedMemoryList *node = allocated_memory_list; node; node = node->next) {
-        printf("[Elysia/DEBUG] Current allocated memory at %p, size: %ld bytes. target refcount: %lld.\n",
+        printf("[Elysia/DEBUG] | Memory of %s at %p, size: %ld bytes. target refcount: %lld.\n",
+               rtti_table[((YoiObject *)node->memory)->type_id].type_name,
                node->memory,
                node->size,
                ((YoiObject *)node->memory)->gc_refcount);
@@ -48,9 +50,10 @@ extern "C" void *runtime_object_alloc_report(size_t size, void *object) {
     #endif
     return object;
 }
-extern "C" void runtime_finalize_object_report(void *object) { 
+
+extern "C" void runtime_finalize_object_report(YoiObject *object) { 
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
-    printf("[Elysia/DEBUG] Finalizing object at %p. Current object count: %lld.\n", object, runtime_object_allocated);
+    printf("[Elysia/DEBUG] Finalizing %s object at %p. Current object count: %lld.\n", rtti_table[object->type_id].type_name, object, runtime_object_allocated);
     #endif
     runtime_object_allocated --;
     #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
@@ -81,10 +84,10 @@ GC_WRAPPER_IMPL(char, YoiCharObject);
 
 GC_WRAPPER_IMPL(string, YoiStringObject);
 
-void runtime_finalize_object(void *object) {
+void runtime_finalize_object(YoiObject *object) {
+    runtime_finalize_object_report(object);
     void *ptr = object;
     free(ptr);
-    runtime_finalize_object_report(object);
 }
 
 void *runtime_object_alloc(unsigned long size) {

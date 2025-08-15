@@ -16,3 +16,8 @@ build_production:
 
 clean_prod:
 	cd cmake-build-release; make clean
+
+
+# for build/{filename}, compile by `./cmake-build-debug/hoshi_lang examples/{filename}.hoshi -o build/{filename} --build-mode debug --preserve-intermediate`
+build/%: examples/%.hoshi build_debug
+	./cmake-build-debug/hoshi_lang $< -o $@ --build-mode release --preserve-intermediate

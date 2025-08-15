@@ -1,3 +1,17 @@
+struct Point {
+    x: int,
+    y: int,
+    constructor(x: int, y: int)
+}
+
+impl Point {
+    constructor(x: int, y: int) {
+        this.x = x
+        this.y = y
+        return this
+    }
+}
+
 func main() : int {
     let x = 1.0
     for (let i = 0 ; i < 99999999 ; i += 1) {

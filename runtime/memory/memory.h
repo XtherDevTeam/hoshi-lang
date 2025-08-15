@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <runtime/build_config.h>
+#include <runtime/rtti/rtti.h>
 
 struct YoiObject {
     unsigned long long gc_refcount;
@@ -61,9 +62,9 @@ extern "C" int64_t runtime_object_allocated;
 
 extern "C" void *runtime_object_alloc_report(size_t size, void *object);
 
-extern "C" void runtime_finalize_object_report(void *object);
+extern "C" void runtime_finalize_object_report(YoiObject *object);
 
-extern "C" void runtime_finalize_object(void *object);
+extern "C" void runtime_finalize_object(YoiObject *object);
 
 extern "C" void *runtime_object_alloc(unsigned long size);
 
@@ -78,7 +79,7 @@ extern "C" void basic_##X##_gc_refcount_decrease(U* obj);                       
 extern "C" void basic_##X##_gc_refcount_decrease(U* obj) {                                  \
     obj->gc_refcount--;                                                                     \
     if (obj->gc_refcount <= 0) {                                                            \
-        runtime_finalize_object((void*)obj);                                                 \
+        runtime_finalize_object((YoiObject*)obj);                                            \
     }                                                                                       \
 }
 
