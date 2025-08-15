@@ -1,12 +1,11 @@
-// clObjectLinker.cpp
 #include "clObjectLinker.h"
 #include "share/def.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <cstdlib>      // For _wsystem (Windows specific)
-#include <filesystem>   // For std::filesystem operations
+#include <cstdlib>
+#include <filesystem>
 
 namespace yoi {
 
@@ -117,6 +116,12 @@ namespace yoi {
 
         std::wstring command = L"\"" + getLinkerPath() + L"\"";
         command += L" \"" + object_fs_path.wstring() + L"\"";
+        
+        // add additional linking files
+        for (const auto &file : this->getConfig()->additionalLinkingFiles) {
+            command += L" \"" + file + L"\"";
+        }
+
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
         command += L" /link";
@@ -148,4 +153,4 @@ namespace yoi {
         return *this;
     }
 
-} // namespace yoi
+} // namespace yoi```

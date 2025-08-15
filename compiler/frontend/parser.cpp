@@ -738,10 +738,16 @@ namespace yoi {
         }
         lexer::token node_start_token = lex.curToken;
 
+        yoi::vec<lexer::token> attrs;
         identifierWithDefTemplateArg *name = nullptr;
         definitionArguments *args = nullptr;
         typeSpec *spec = nullptr;
         codeBlock *block = nullptr;
+
+        while (lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
+            attrs.push_back(lex.curToken);
+            lex.scan();
+        }
 
         parse(name, lex);
         if (!name) {
@@ -782,7 +788,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new funcDefStmt{node_start_token, name, args, spec, block};
+        o = new funcDefStmt{node_start_token, attrs, name, args, spec, block};
     }
 
     void parse(interfaceDefInnerPair *&o, lexer &lex) {
@@ -1605,7 +1611,12 @@ namespace yoi {
         lex.saveState();
         lexer::token node_start_token = lex.curToken;
 
-        o = new innerMethodDecl{node_start_token, nullptr, nullptr, nullptr};
+        o = new innerMethodDecl{node_start_token, {}, nullptr, nullptr, nullptr};
+
+        while (lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
+            o->attrs.push_back(lex.curToken);
+            lex.scan();
+        }
 
         parse(o->name, lex);
         if (!o->name) {
@@ -1815,6 +1826,12 @@ namespace yoi {
             return;
         }
 
+        yoi::vec<lexer::token> attrs;
+        while(lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
+            attrs.push_back(lex.curToken);
+            lex.scan();
+        }
+
         typeSpec *a = nullptr; 
         parse(a, lex);
         if (!a) {
@@ -1823,7 +1840,7 @@ namespace yoi {
             return;
         }
 
-        o = new exportDecl{node_start_token, a, nullptr}; // Create the node here, now that 'a' is parsed.
+        o = new exportDecl{node_start_token, attrs, a, nullptr}; // Create the node here, now that 'a' is parsed.
 
         if (lex.curToken.kind == lexer::token::tokenKind::kAs) {
             lex.scan(); // Consume 'as'

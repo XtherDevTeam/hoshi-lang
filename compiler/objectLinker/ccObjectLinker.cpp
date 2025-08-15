@@ -72,6 +72,12 @@ namespace yoi {
         std::string command = "\"" + yoi::wstring2string(this->getLinkerPath()) + "\"";
         command += " \"";
         command += yoi::wstring2string(this->getObjectPath()) + "\"";
+
+        // add additional linking files
+        for (const auto &file : this->getConfig()->additionalLinkingFiles) {
+            command += " \"" + yoi::wstring2string(file) + "\"";
+        }
+
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
 

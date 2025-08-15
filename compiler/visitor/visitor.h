@@ -5,6 +5,8 @@
 #ifndef HOSHI_LANG_VISITOR_H
 #define HOSHI_LANG_VISITOR_H
 
+#include "compiler/builtinModule.hpp"
+#include "compiler/frontend/lexer.hpp"
 #include "compiler/frontend/parser.hpp"
 #include "share/def.hpp"
 #include <compiler/ir/IR.h>
@@ -99,6 +101,8 @@ namespace yoi {
                                          const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
 
         void tryCastTo(const std::shared_ptr<IRValueType> &toType);
+
+        yoi::vec<IRFunctionDefinition::FunctionAttrs> getFunctionAttributes(const yoi::vec<lexer::token> &attrs);
 
         yoi::indexT generateNullInterfaceImplementation(yoi::indexT structIndex);
 

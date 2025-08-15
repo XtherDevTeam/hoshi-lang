@@ -96,6 +96,8 @@ namespace yoi {
                 kThrow,
                 kTypeId,
                 kDynCast,
+                kNoFFI,
+                kAlwaysInline,
                 eof,
             } kind;
 

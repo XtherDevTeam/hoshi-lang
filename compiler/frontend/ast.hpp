@@ -491,6 +491,7 @@ namespace yoi {
 
     class funcDefStmt : public AST {
     public:
+        yoi::vec<lexer::token> attrs;
         identifierWithDefTemplateArg *id;
         definitionArguments *args;
         typeSpec *resultType;
@@ -777,6 +778,7 @@ namespace yoi {
 
     class innerMethodDecl : public AST {
     public:
+        yoi::vec<lexer::token> attrs;
         identifier *name;
         definitionArguments *args;
         typeSpec *resultType;
@@ -846,6 +848,7 @@ namespace yoi {
 
     class exportDecl : public AST {
         public:
+            yoi::vec<lexer::token> attrs;
             typeSpec *from;
             identifier *as;
     };

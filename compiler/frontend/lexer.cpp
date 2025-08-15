@@ -161,6 +161,10 @@ namespace yoi {
             tok.kind = token::tokenKind::kFinally;
         } else if (tempStr == L"throw") {
             tok.kind = token::tokenKind::kThrow;
+        } else if (tempStr == L"noffi") {
+            tok.kind = token::tokenKind::kNoFFI;
+        } else if (tempStr == L"always_inline") {
+            tok.kind = token::tokenKind::kAlwaysInline;
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";

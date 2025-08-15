@@ -28,7 +28,7 @@ namespace yoi {
     std::shared_ptr<yoi::IRModule> visitor::visit() {
         IRDebugInfo debugInfo{irModule->modulePath, 0, 0};
         auto globInitializer = managedPtr(IRFunctionDefinition{
-            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType(), {}, debugInfo});
+            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType(), {}, {}, debugInfo});
         irModule->functionTable.put(L"yoimiya_glob_initializer", globInitializer);
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
         moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, 0, 0});
@@ -1523,9 +1523,29 @@ namespace yoi {
             }
 
             if (!resolved) {
+                moduleContext->getIRBuilder().saveState();
+                try {
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                    for (auto &arg : args->get()) {
+                        visit(arg);
+                        argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
+                    }
+                    
+                    auto externEntry = moduleContext->getCompilerContext()->getImportedModule(targetModule)->externTable[mangledName];
+                    auto externFunc = moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries[externEntry->affiliateModule].importedFunctionTable[externEntry->itemIndex];
+
+                    moduleContext->getIRBuilder().invokeImportedOp(externEntry->affiliateModule, externEntry->itemIndex, argTypes.size(), externFunc->returnType);
+                    resolved = true;
+                    moduleContext->getIRBuilder().discardState();
+                } catch (std::out_of_range &) {
+                    moduleContext->getIRBuilder().restoreState();
+                }
+            }
+
+            if (!resolved) {
                 panic(subscriptExpr->getLine(),
                       subscriptExpr->getColumn(),
-                      "Could not find extern function or struct constructor: " + wstring2string(mangledName));
+                      "Could not find extern function or struct constructor, interface constructor, or imported function: " + wstring2string(mangledName));
             }
         } else { // first_term->isSubscript()
             visitExtern(subscriptExpr->id, targetModule, false);
@@ -2924,8 +2944,9 @@ namespace yoi {
             }
 
             if (funcIndex != -1) {
+                auto attrs = getFunctionAttributes(exportDecl->attrs);
                 moduleContext->getCompilerContext()->getIRFFITable()->addExportedFunction(
-                    exportIdentifier, targetModule, funcIndex);
+                    exportIdentifier, targetModule, funcIndex, attrs);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             } else {
                 // try template
@@ -2948,8 +2969,10 @@ namespace yoi {
                                                                 ->funcTemplateAsts[templateName],
                                                             templateArgs);
 
+                auto attrs = getFunctionAttributes(exportDecl->attrs);
+
                 moduleContext->getCompilerContext()->getIRFFITable()->addExportedFunction(
-                    exportIdentifier, targetModule, funcIndex);
+                    exportIdentifier, targetModule, funcIndex, attrs);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             }
         } catch (std::out_of_range &e) {
@@ -2986,6 +3009,7 @@ namespace yoi {
         auto funcName = importDecl->inner->name->get().strVal;
         IRFunctionDefinition::Builder builder;
 
+        builder.attrs = getFunctionAttributes(importDecl->inner->attrs);
         builder.setDebugInfo({irModule->modulePath, importDecl->inner->getLine(), importDecl->inner->getColumn()});
 
         builder.setReturnType(managedPtr(parseTypeSpec(importDecl->inner->resultType)));
@@ -3006,6 +3030,7 @@ namespace yoi {
                               funcName,
                               moduleContext->getCompilerContext()->getIRFFITable()->importedLibraries.getIndex(from),
                               importedIndex}));
+
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -3077,5 +3102,22 @@ namespace yoi {
             auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, structIndex, 0, {}, {}});
             return irModule->interfaceImplementationTable.put_create(nullImplName, nullImpl);
         }
+    }
+
+    yoi::vec<IRFunctionDefinition::FunctionAttrs> visitor::getFunctionAttributes(const yoi::vec<lexer::token> &attrs) {
+        yoi::vec<IRFunctionDefinition::FunctionAttrs> res;
+        for (auto &attr : attrs) {
+            switch (attr.kind) {
+                case lexer::token::tokenKind::kAlwaysInline:
+                    res.push_back(IRFunctionDefinition::FunctionAttrs::AlwaysInline);
+                    break;
+                case lexer::token::tokenKind::kNoFFI:
+                    res.push_back(IRFunctionDefinition::FunctionAttrs::NoFFI);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return std::move(res);
     }
 } // namespace yoi

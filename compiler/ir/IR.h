@@ -320,18 +320,26 @@ namespace yoi {
 
     class IRFunctionDefinition {
       public:
+        enum class FunctionAttrs {
+            AlwaysInline,
+            NoFFI,
+        };
+
         yoi::wstr name;
         yoi::vec<std::shared_ptr<IRValueType>> argumentTypes;
         std::shared_ptr<IRValueType> returnType;
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
+        yoi::vec<FunctionAttrs> attrs;
         IRDebugInfo debugInfo;
 
         IRFunctionDefinition(const yoi::wstr &name,
                              const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
                              const std::shared_ptr<IRValueType> &returnType,
                              const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock,
+                             const yoi::vec<FunctionAttrs> &attrs,
                              const IRDebugInfo &debugInfo);
+
         IRVariableTable &getVariableTable();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
@@ -340,6 +348,7 @@ namespace yoi {
             yoi::wstr name;
             yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
             std::shared_ptr<IRValueType> returnType;
+            yoi::vec<FunctionAttrs> attrs;
             IRDebugInfo debugInfo;
 
             Builder() = default;
@@ -351,6 +360,8 @@ namespace yoi {
             Builder &setReturnType(const std::shared_ptr<IRValueType> &returnType);
 
             Builder &setDebugInfo(const IRDebugInfo &debugInfo);
+
+            Builder &addAttr(FunctionAttrs attr);
 
             std::shared_ptr<IRFunctionDefinition> yield();
         };
@@ -731,7 +742,7 @@ namespace yoi {
             ImportLibrary(const yoi::wstr &libraryPath);
         };
 
-        yoi::indexTable<yoi::wstr, std::pair<yoi::indexT, yoi::indexT>> exportedFunctionTable;
+        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>> exportedFunctionTable;
 
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> foreignTypeTable;
 
@@ -749,9 +760,10 @@ namespace yoi {
          * @param exportName The name of the exported function.
          * @param moduleIndex Module index of the function.
          * @param functionIndex Function index of the function.
+         * @param attrs The attributes of the function.
          * @throws std::out_of_range If the export name already exists in the FFI table.
          */
-        void addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex);
+        void addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex, const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs);
     };
 } // namespace yoi
 

@@ -335,7 +335,7 @@ namespace yoi {
     }
     void IRLinker::patchIRFFITable() {
         for (auto &funcPair : compilerCtx->getIRFFITable()->exportedFunctionTable) {
-            funcPair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(funcPair.second.first).at(funcPair.second.second)};
+            funcPair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(std::get<0>(funcPair.second)).at(std::get<1>(funcPair.second)), std::get<2>(funcPair.second)};
         }
         for (auto &foreignTypePair : compilerCtx->getIRFFITable()->foreignTypeTable) {
             foreignTypePair.second = patchType(foreignTypePair.second);

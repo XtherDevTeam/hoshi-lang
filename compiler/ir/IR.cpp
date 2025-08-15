@@ -524,14 +524,14 @@ namespace yoi {
     }
 
     std::shared_ptr<IRFunctionDefinition> IRFunctionDefinition::Builder::yield() {
-        return managedPtr(IRFunctionDefinition{name, argumentTypes, returnType, {}, debugInfo});
+        return managedPtr(IRFunctionDefinition{name, argumentTypes, returnType, {}, attrs, debugInfo});
     }
 
     IRFunctionDefinition::IRFunctionDefinition(
         const yoi::wstr &name,
         const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
-        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const IRDebugInfo &debugInfo)
-        : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo) {
+        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const yoi::vec<FunctionAttrs> &attrs, const IRDebugInfo &debugInfo)
+        : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo), attrs(attrs) {
         variableTable.createScope();
         for (auto &i : argumentTypes) {
             variableTable.put(i.first, i.second);
@@ -855,8 +855,8 @@ namespace yoi {
     }
 
     void
-    IRFFITable::addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex) {
-        exportedFunctionTable.put_create(exportName, std::make_pair(moduleIndex, functionIndex));
+    IRFFITable::addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex, const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs) {
+        exportedFunctionTable.put_create(exportName, std::make_tuple(moduleIndex, functionIndex, attrs));
     }
 
     void IRFFITable::addForeignType(const yoi::wstr &foreignTypeName, const std::shared_ptr<IRValueType> &structType) {
@@ -1066,5 +1066,9 @@ namespace yoi {
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.pop_back();
         tempVarStack.push_back(type);
+    }
+    IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::addAttr(FunctionAttrs attr) {
+        attrs.push_back(attr);
+        return *this;
     }
 } // namespace yoi
