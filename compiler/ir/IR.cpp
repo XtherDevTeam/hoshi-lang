@@ -4,6 +4,7 @@
 
 #include "IR.h"
 #include "share/def.hpp"
+#include "share/magic_enum.h"
 #include <memory>
 #include <ranges>
 
@@ -77,7 +78,7 @@ namespace yoi {
 
     IRInterfaceImplementationDefinition::IRInterfaceImplementationDefinition(
         const yoi::wstr &name,
-        yoi::indexT implStructIndex,
+        std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
         yoi::indexT implInterfaceIndex,
         const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
         const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap)
@@ -465,7 +466,7 @@ namespace yoi {
     }
 
     IRInterfaceImplementationDefinition::Builder &
-    IRInterfaceImplementationDefinition::Builder::setImplStructIndex(yoi::indexT implStructIndex) {
+    IRInterfaceImplementationDefinition::Builder::setImplStructIndex(std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex) {
         this->implStructIndex = implStructIndex;
         return *this;
     }
@@ -770,7 +771,16 @@ namespace yoi {
 
     yoi::wstr IRInterfaceImplementationDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
-        r += yoi::wstr(indent, L' ') + L"impl " + name + L" for struct#" + std::to_wstring(implStructIndex) + L" {\n";
+        r += yoi::wstr(indent, L' ') 
+            + L"impl " 
+            + name 
+            + L" for " 
+            + yoi::string2wstring(std::string{magic_enum::enum_name(std::get<0>(implStructIndex))}) 
+            + L"#" 
+            + std::to_wstring(std::get<1>(implStructIndex)) 
+            + L"#" 
+            + std::to_wstring(std::get<2>(implStructIndex)) + L" {\n";
+            
         for (auto &i : virtualMethods) {
             r += yoi::wstr(indent + 4, L' ') + L"virtual " + i->to_string() + L"\n";
         }
@@ -1053,6 +1063,9 @@ namespace yoi {
                 break;
             case IRValueType::valueType::stringObject:
                 op = IR::Opcode::dyn_cast_str;
+                break;
+            case IRValueType::valueType::characterObject:
+                op = IR::Opcode::dyn_cast_char;
                 break;
             case IRValueType::valueType::structObject:
                 op = IR::Opcode::dyn_cast_struct;

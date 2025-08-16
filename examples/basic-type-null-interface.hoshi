@@ -1,0 +1,17 @@
+use lang "builtin"
+
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    let arr = lang.NullInterface[3](
+        1,
+        2.3,
+        "hello"
+    )
+    let x = dyn_cast<int>(arr[0])
+    let y = dyn_cast<deci>(arr[1])
+    let z = dyn_cast<string>(arr[2])
+    puts(z)
+    puts("Basic type null interface validation passed.")
+    return 0
+}

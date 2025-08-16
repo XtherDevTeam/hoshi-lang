@@ -51,6 +51,8 @@ namespace yoi {
         void linkFunctions();
         void createEntryFunction();
         void patchIRFFITable();
+        std::tuple<IRValueType::valueType, indexT, indexT>
+        patchUniqueKey(const std::tuple<IRValueType::valueType, indexT, indexT> &key);
 
         std::shared_ptr<IRValueType> patchType(const std::shared_ptr<IRValueType> &oldType);
         IR patchInstruction(const IR& instr, indexT currentModuleId);

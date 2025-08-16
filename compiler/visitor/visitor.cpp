@@ -16,6 +16,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -1265,7 +1266,7 @@ namespace yoi {
 
                         auto interfaceImplName =
                             getInterfaceImplName({currentModuleIndex, interfaceIndex},
-                                                 {structValue->typeAffiliateModule, structValue->typeIndex});
+                                                 structValue);
                         auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
                         moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
                         resolved = true;
@@ -1423,6 +1424,7 @@ namespace yoi {
             if (dim_it != end && (*dim_it)->isInvocation()) {
                 for (auto &val : (*dim_it)->args->get()) {
                     visit(val);
+                    tryCastTo(baseType);
                     actualSize++;
                 }
                 it = ++dim_it;
@@ -1492,7 +1494,7 @@ namespace yoi {
 
                     auto interfaceImplName =
                         getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex},
-                                             {currentModuleIndex, interfaceIndex});
+                                             structValue);
                     auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
                     moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
                     resolved = true;
@@ -1839,7 +1841,7 @@ namespace yoi {
         } else {
             auto structIndex = irModule->structTable.put(structName, {});
 
-            generateNullInterfaceImplementation(structIndex);
+            generateNullInterfaceImplementation(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex}));
 
             IRStructDefinition::Builder builder;
             builder.setName(structName);
@@ -1937,23 +1939,24 @@ namespace yoi {
 
         if (implStmt->isImplForStmt()) {
             auto interfaceName = parseInterfaceName(implStmt->interfaceName);
-            indexT structIndex;
+            std::shared_ptr<IRValueType> srcType;
             try {
-                structIndex = irModule->structTable.getIndex(structBaseName);
+                srcType = managedPtr(parseTypeSpec(implStmt->structName));
             } catch (std::runtime_error &e) {
                 panic(
                     implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structBaseName));
                 return {};
             }
-            auto structKey = std::make_pair(currentModuleIndex, structIndex);
-            moduleContext->getCompilerContext()->getImportedModule(interfaceName.first.first)->interfaceTable[interfaceName.first.second]->implementations.push_back(structKey);
+            moduleContext->getCompilerContext()->getImportedModule(interfaceName.first.first)->interfaceTable[interfaceName.first.second]->implementations.emplace_back(
+                srcType->type, srcType->typeAffiliateModule, srcType->typeIndex
+            );
             auto interfaceImplName =
-                getInterfaceImplName(interfaceName.first, structKey);
+                getInterfaceImplName(interfaceName.first, srcType);
 
             auto interfaceImplIndex = irModule->interfaceImplementationTable.put(interfaceImplName, {});
             IRInterfaceImplementationDefinition::Builder builder;
             builder.setName(interfaceImplName);
-            builder.setImplStructIndex(structIndex);
+            builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
             builder.setImplInterfaceIndex(interfaceName.first.second);
 
             for (auto &i : implStmt->getInner().getInner()) {
@@ -1969,8 +1972,7 @@ namespace yoi {
 
                 yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
-                auto thisType =
-                    managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
+                const auto& thisType = srcType;
                 methodBuilder.addArgument(L"this", thisType);
 
                 for (auto &arg : i->getMethod().getArgs().get()) {
@@ -2391,9 +2393,9 @@ namespace yoi {
     }
 
     yoi::wstr visitor::getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc,
-                                            const std::pair<yoi::indexT, yoi::indexT> &structSrc) {
+                                            const std::shared_ptr<IRValueType> &typeSrc) {
         return L"interfaceImpl#" + std::to_wstring(interfaceSrc.first) + L"#" + std::to_wstring(interfaceSrc.second) +
-               L"#" + std::to_wstring(structSrc.first) + L"#" + std::to_wstring(structSrc.second);
+               L"#" + typeSrc->to_string();
     }
 
     std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>>
@@ -2742,7 +2744,7 @@ namespace yoi {
 
         auto specializedStructIndex = irModule->structTable.put_create(specializedName, nullptr);
 
-        generateNullInterfaceImplementation(specializedStructIndex);
+        generateNullInterfaceImplementation(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex}));
 
         auto selfType =
             managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex});
@@ -3041,14 +3043,13 @@ namespace yoi {
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
             emitBasicCastTo(toType);
         } else if (toType->type == IRValueType::valueType::interfaceObject) {
-            yoi_assert(rhs->type == IRValueType::valueType::structObject, 0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface");
             // check implemented interfaces
             try {
-                auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, {rhs->typeAffiliateModule, rhs->typeIndex});
-                auto implIndex = irModule->interfaceImplementationTable.getIndex(implName);
+                auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, rhs);
+                auto implIndex = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceImplementationTable.getIndex(implName);
                 // construct interface object
                 moduleContext->getIRBuilder().newInterfaceOp(toType->typeIndex, toType->typeAffiliateModule != currentModuleIndex, toType->typeAffiliateModule);
-                moduleContext->getIRBuilder().constructInterfaceImplOp(implIndex);
+                moduleContext->getIRBuilder().constructInterfaceImplOp(implIndex, rhs->typeAffiliateModule != currentModuleIndex, rhs->typeAffiliateModule);
             } catch (std::out_of_range &e) {
                 panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
             }
@@ -3082,9 +3083,11 @@ namespace yoi {
         visit(dynCastExpression->expr);
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         auto toType = managedPtr(parseTypeSpec(dynCastExpression->type));
-        yoi_assert(rhs->type == IRValueType::valueType::interfaceObject && toType->type == IRValueType::valueType::structObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects to struct objects.");
+        yoi_assert(rhs->type == IRValueType::valueType::interfaceObject, dynCastExpression->expr->getLine(), dynCastExpression->expr->getColumn(), "dynamic cast can only be applied to interface objects to struct objects.");
+
         auto &impls = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceTable[rhs->typeIndex]->implementations;
-        if (auto it = std::find(impls.begin(), impls.end(), std::make_pair(toType->typeAffiliateModule, toType->typeIndex)); it != impls.end())
+
+        if (auto it = std::find(impls.begin(), impls.end(), std::make_tuple(toType->type, toType->typeAffiliateModule, toType->typeIndex)); it != impls.end())
             moduleContext->getIRBuilder().dynCastOp(toType);
         else
             panic(dynCastExpression->getLine(), dynCastExpression->getColumn(), "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
@@ -3092,14 +3095,15 @@ namespace yoi {
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
-    yoi::indexT visitor::generateNullInterfaceImplementation(yoi::indexT structIndex) {
+    yoi::indexT visitor::generateNullInterfaceImplementation(const std::shared_ptr<IRValueType> &structType) {
         auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
-        auto nullImplName = getInterfaceImplName(nullInterface, {currentModuleIndex, structIndex});
-        moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(currentModuleIndex, structIndex);
+        auto nullImplName = getInterfaceImplName(nullInterface, structType);
+        moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(
+            structType->type, structType->typeAffiliateModule, structType->typeIndex);
         try {
             return irModule->interfaceImplementationTable.getIndex(nullImplName);
         } catch (std::out_of_range &e) {
-            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, structIndex, 0, {}, {}});
+            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, {structType->type, structType->typeAffiliateModule, structType->typeIndex}, 0, {}, {}});
             return irModule->interfaceImplementationTable.put_create(nullImplName, nullImpl);
         }
     }

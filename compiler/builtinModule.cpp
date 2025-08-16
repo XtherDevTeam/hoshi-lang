@@ -76,6 +76,22 @@ namespace yoi {
 
         sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
         sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
+
+        for (auto &sharedValue : sharedValueType) {
+            if (sharedValue.second->isForeignBasicType())
+                continue;
+            auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
+            auto nullImplName = L"interfaceImpl#" + std::to_wstring(HOSHI_COMPILER_CTX_GLOB_ID_CONST) + L"#0#" + sharedValue.second->to_string();
+            module->interfaceTable[0]->implementations.emplace_back(
+                sharedValue.second->type, sharedValue.second->typeAffiliateModule, sharedValue.second->typeIndex);
+            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{
+                nullImplName, 
+                {sharedValue.second->type, sharedValue.second->typeAffiliateModule, sharedValue.second->typeIndex},
+                0,
+                {},
+                {}});
+            module->interfaceImplementationTable.put_create(nullImplName, nullImpl);
+        }
     }
 
     yoi::IRInterfaceInstanceDefinition BuiltinModuleBuilder::getNullInterfaceInstanceDefinition() {

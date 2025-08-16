@@ -473,13 +473,13 @@ namespace yoi {
     class IRInterfaceImplementationDefinition {
       public:
         yoi::wstr name;
-        yoi::indexT implStructIndex;
+        std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex;
         yoi::indexT implInterfaceIndex;
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
         IRInterfaceImplementationDefinition(const yoi::wstr &name,
-                                            yoi::indexT implStructIndex,
+                                            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
                                             yoi::indexT implInterfaceIndex,
                                             const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
                                             const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
@@ -488,7 +488,7 @@ namespace yoi {
 
         struct Builder {
             yoi::wstr name;
-            yoi::indexT implStructIndex;
+            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex;
             yoi::indexT implInterfaceIndex;
             yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
             std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
@@ -497,7 +497,7 @@ namespace yoi {
 
             Builder &setName(const yoi::wstr &name);
 
-            Builder &setImplStructIndex(yoi::indexT implStructIndex);
+            Builder &setImplStructIndex(std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex);
 
             Builder &setImplInterfaceIndex(yoi::indexT implInterfaceIndex);
 
@@ -511,7 +511,7 @@ namespace yoi {
       public:
         yoi::wstr name;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
-        yoi::vec<std::pair<yoi::indexT, yoi::indexT>> implementations;
+        yoi::vec<std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT>> implementations;
 
         IRInterfaceInstanceDefinition(
             const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);

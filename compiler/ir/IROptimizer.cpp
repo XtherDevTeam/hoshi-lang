@@ -1373,6 +1373,35 @@ namespace yoi {
                     simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case IR::Opcode::dyn_cast_int:
+                case IR::Opcode::dyn_cast_bool:
+                case IR::Opcode::dyn_cast_deci:
+                case IR::Opcode::dyn_cast_char:
+                case IR::Opcode::dyn_cast_str: {
+                    std::shared_ptr<IRValueType> value_type;
+                    switch (ins.opcode) {
+                        case IR::Opcode::dyn_cast_int:
+                            value_type = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_bool:
+                            value_type = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_char:
+                            value_type = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_deci:
+                            value_type = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_str:
+                            value_type = compilerCtx->getStrObjectType();
+                            break;
+                        default:
+                            break;
+                    }
+                    simulationStack.pop();
+                    simulationStack.push(value_type, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 case IR::Opcode::dyn_cast_struct: {
                     auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
                     simulationStack.pop();
@@ -2224,6 +2253,35 @@ namespace yoi {
                 case IR::Opcode::typeid_struct:
                 case IR::Opcode::typeid_interface: {
                     simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::dyn_cast_int:
+                case IR::Opcode::dyn_cast_bool:
+                case IR::Opcode::dyn_cast_deci:
+                case IR::Opcode::dyn_cast_char:
+                case IR::Opcode::dyn_cast_str: {
+                    std::shared_ptr<IRValueType> value_type;
+                    switch (ins.opcode) {
+                        case IR::Opcode::dyn_cast_int:
+                            value_type = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_bool:
+                            value_type = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_char:
+                            value_type = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_deci:
+                            value_type = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::dyn_cast_str:
+                            value_type = compilerCtx->getStrObjectType();
+                            break;
+                        default:
+                            break;
+                    }
+                    simulationStack.pop();
+                    simulationStack.push(value_type, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::dyn_cast_struct: {

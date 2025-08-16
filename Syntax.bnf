@@ -1,0 +1,84 @@
+basicLiterals ::= TOK_string | TOK_integer | TOK_decimal | TOK_boolean | TOK_char | "null"
+identifier ::= TOK_identifier
+identifierWithTypeSpec ::= identifier ":" typeSpec
+defTemplateArgSpec ::= identifier
+					 | identifier "impl" externModuleAccessExpression
+defTemplateArg ::= "<" [ { defTemplateArgSpec "," } defTemplateArgSpec ] ">"
+templateArgSpec ::= typeSpec
+templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
+invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
+definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
+funcTypeSpecArgs ::= "(" [ { typeSpec "," } typeSpec ] ")"
+funcTypeSpec ::= "func" definitionArguments ":" typeSpec
+arrayTypeSpecSubscript ::= "[" "]"
+typeSpec ::= externModuleAccessExpression ( arrayTypeSpecSubscript )
+           | funcTypeSpec
+           | "null"
+subscript ::= "[" rExpr "]"
+            | invocationArguments
+identifierWithTemplateArg ::= identifier
+                            | identifier TemplateArg
+identifierWithDefTemplateArg ::= identifier
+                               | identifier defTemplateArg
+externModuleAccessExpression ::= identifier { "." identifierWithTemplateArg }
+lambdaDefinition ::= "lambda" "(" [ memberExpression "as" identifier ] ")" "=>" definitionArguments codeBlock  
+subscriptTypeSpec ::= externModuleAccessExpression { "[" TOK_integer "]" }
+subscriptExpression ::= identifierWithTemplateArg
+                      | identifierWithTemplateArg subscript
+memberExpression ::= subscriptExpression { "." subscriptExpression }
+typeIdExpression ::= "type_id" "<" typeSpec ">"
+                 ::= "type_id" "(" rExpr ")"
+dynCastExpression ::= "dyn_cast" "<" typeSpec ">" "(" rExpr ")"
+primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression
+uniqueExpr ::= ( "++" | "--" | "!" | "~" | "-" | "&" ) primary
+             | primary
+leftExpr ::= uniqueExpr { ( "=" | "+=" | "-=" | "*=" | "/=" | "%=" ) uniqueExpr }
+mulExpr ::= uniqueExpr { ( "*" | "/" | "%" ) uniqueExpr }
+addExpr ::= mulExpr { ( "+" | "-" ) mulExpr }
+shiftExpr ::= addExpr { ( "<<" | ">>" ) addExpr }
+relationalExpr ::= shiftExpr { ( "<" | ">" | "<=" | ">=" ) shiftExpr }
+equalityExpr ::= relationalExpr { ( "==" | "!=" ) relationalExpr }
+andExpr ::= equalityExpr { "&" equalityExpr }
+exclusiveExpr ::= andExpr { "^" andExpr }
+inclusiveExpr ::= exclusiveExpr { "|" exclusiveExpr }
+logicalAndExpr ::= inclusiveExpr { "&&" inclusiveExpr }
+logicalOrExpr ::= logicalAndExpr { "||" logicalAndExpr }
+rExpr ::= logicalOrExpr
+useStmt ::= "use" identifier TOK_string
+funcDefStmt ::= "func" identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+innerMethodDecl ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec
+innerMethodDef ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+constructorDecl ::= "constructor" definitionArguments
+constructorDef ::= "constructor" definitionArguments codeBlock
+interfaceDefInnerPair ::= identifierWithTypeSpec
+                        | innerMethodDecl
+interfaceDefInner ::= "{" [ interfaceDefInnerPair { "," interfaceDefInnerPair } ] "}"
+interfaceDefStmt ::= "interface" identifier interfaceDefInner
+structDefInnerPair ::= identifierWithTypeSpec
+                     | innerMethodDecl
+                     | constructDecl
+structDefInner ::= "{" [ structDefInnerPair { "," structDefInnerPair } ] "}"
+structDefStmt ::= "struct" identifierWithDefTemplateArg structDefInner
+implInnerPair ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec codeBlock
+                | constructorDef
+implInner ::= "{" [ implInnerPair { "," implInnerPair } ] "}"
+implStmt ::= "impl" externModuleAccessExpression implInner
+           | "impl" externModuleAccessExpression ":" identifierWithDefTemplateArg implInner
+letAssignmentPair ::= identifier "=" rExpr
+letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
+globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
+hoshiModule ::= { globalStmt }
+ifStmt ::= "if" "(" rExpr ")" codeBlock [ "elif" codeBlock ] [ "else" codeBlock ]
+whileStmt ::= "while" "(" rExpr ")" codeBlock
+forStmt ::= "for" "(" inCodeBlockStmt ";" rExpr ";" inCodeBlockStmt ")" codeBlock
+forEachStmt ::= "forEach" "(" identifier ":" rExpr ")" codeBlock
+returnStmt ::= "return" rExpr
+continueStmt ::= "continue"
+breakStmt ::= "break"
+inCodeBlockStmt ::= ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt | breakStmt | letStmt | codeBlock | rExpr
+codeBlock ::= "{" { inCodeBlockStmt } "}"
+exportDecl ::= "export" externModuleAccessExpression "as" identifier
+importDecl ::= "import" innerMethodDecl "from" TOK_string
+catchParam ::= "(" typeSpec identifier ")"
+tryCatchStmt ::= "try" codeBlock "catch" catchParam { "catch" catchParam } ( "finally" codeBlock )
+throwStmt ::= "throw" rExpr

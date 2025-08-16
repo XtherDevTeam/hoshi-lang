@@ -3,6 +3,7 @@
 //
 
 #include "llvmCodegenContext.hpp"
+#include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
@@ -493,43 +494,46 @@ namespace yoi {
             const auto& implDef = implPair.second;
 
             auto structModuleId = yoiModule->identifier;
-            auto structKey = std::make_tuple(IRValueType::valueType::structObject, structModuleId, implDef->implStructIndex);
-            auto* structType = structTypeMap.at(structKey);
+            auto* structType = structTypeMap.at(implDef->implStructIndex);
+            auto structYoiType = managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)});
             auto* structPtrType = llvm::PointerType::get(structType, 0);
 
-            auto structIncName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_increase";
+            /*auto structIncName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_increase";
             auto* structIncFunc = functionMap.at(string2wstring(structIncName));
             auto structDecName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_decrease";
-            auto* structDecFunc = functionMap.at(string2wstring(structDecName));
+            auto* structDecFunc = functionMap.at(string2wstring(structDecName));*/
 
             // Using implDef->name as part of the wrapper name for uniqueness
             auto wrapperBaseName = wstring2string(implDef->name);
+            auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
 
             // --- Generate Increase Wrapper ---
             auto incWrapperName = wrapperBaseName + "_gc_refcount_increase";
-            // Takes i8* as the concrete object pointer
-            auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
-            auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
-            // incWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline); // no line for implementation functions
-            functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
+            if (!functionMap.contains(yoi::string2wstring(incWrapperName))) {
+                // Takes i8* as the concrete object pointer
+                auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
+                // incWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline); // no line for implementation functions
+                functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
 
-            auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
-            Builder->SetInsertPoint(incEntryBlock);
-            Builder->CreateRetVoid();
-
-
+                auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
+                Builder->SetInsertPoint(incEntryBlock);
+                Builder->CreateRetVoid();
+            }
+            
             // --- Generate Decrease Wrapper ---
             auto decWrapperName = wrapperBaseName + "_gc_refcount_decrease";
-            auto* decWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, decWrapperName, TheModule.get());
-            // decWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline);
-            functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
+            if (!functionMap.contains(yoi::string2wstring(decWrapperName))) {
+                auto* decWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, decWrapperName, TheModule.get());
+                // decWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline);
+                functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
 
-            auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
-            Builder->SetInsertPoint(decEntryBlock);
-            llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
-            llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
-            Builder->CreateCall(structDecFunc, castedThis_dec);
-            Builder->CreateRetVoid();
+                auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
+                Builder->SetInsertPoint(decEntryBlock);
+                llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
+                llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
+                callGcFunction(castedThis_dec, structYoiType, false);
+                Builder->CreateRetVoid();
+            }
         }
     }
 
@@ -1462,12 +1466,52 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({typeIdObj, compilerCtx->getIntObjectType()});
                 break;
             }
+            case IR::Opcode::dyn_cast_int:
+            case IR::Opcode::dyn_cast_bool:
+            case IR::Opcode::dyn_cast_deci:
+            case IR::Opcode::dyn_cast_str:
+            case IR::Opcode::dyn_cast_char:
             case IR::Opcode::dyn_cast_struct: {
+                std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> structTypeKey;
+                std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT> structTypeIDKey;
+
                 auto interfaceRhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 auto structTypeIndex = instr.operands[1].value.symbolIndex;
-                auto structType = yoiModule->structTable[structTypeIndex];
-                auto structTypeKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex);
-                auto structTypeIDKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex, 0);
+                std::shared_ptr<IRValueType> structYoiType;
+
+                switch (instr.opcode) {
+                    case IR::Opcode::dyn_cast_int:
+                        structTypeKey = std::make_tuple(IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex});
+                        break;
+                    case IR::Opcode::dyn_cast_bool:
+                        structTypeKey = std::make_tuple(IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex});
+                        break;
+                    case IR::Opcode::dyn_cast_deci:
+                        structTypeKey = std::make_tuple(IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex});
+                        break;
+                    case IR::Opcode::dyn_cast_char:
+                        structTypeKey = std::make_tuple(IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex});
+                        break;
+                    case IR::Opcode::dyn_cast_str:
+                        structTypeKey = std::make_tuple(yoi::IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{yoi::IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex});
+                        break;
+                    default:
+                        structTypeKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex);
+                        structTypeIDKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex, 0);
+                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex});
+                        break;
+                }
+
                 auto structTypeId = typeIDMap.at(structTypeIDKey);
                 auto structTypeLLVMType = structTypeMap.at(structTypeKey);
                 
@@ -1494,7 +1538,7 @@ namespace yoi {
                 // success match
                 Builder->SetInsertPoint(successBB);
                 auto* resultObject = loadedStructPtr;
-                callGcFunction(resultObject, managedPtr(IRValueType{IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex}), true);
+                callGcFunction(resultObject, structYoiType, true);
                 Builder->CreateBr(continueBB);
                 // in continue block, decrement the interface refcount
                 Builder->SetInsertPoint(continueBB);
@@ -1503,7 +1547,7 @@ namespace yoi {
                 finalValue->addIncoming(nullValue, failedMatchBB);
                 callGcFunction(interfaceRhs.llvmValue, interfaceRhs.yoiType, false);
 
-                valueStackMap[fromBlock][toBlock].push_back({finalValue, managedPtr(IRValueType{IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex})});
+                valueStackMap[fromBlock][toBlock].push_back({finalValue, structYoiType});
                 break;
             }
             case IR::Opcode::nop:

@@ -328,6 +328,7 @@ namespace yoi {
     }
     void IRLinker::linkInterfaceImplementations() {
         for (auto &implPair : finalModule->interfaceImplementationTable) {
+            implPair.second->implStructIndex = patchUniqueKey(implPair.second->implStructIndex);
             for (auto &virtualMethod : implPair.second->virtualMethods) {
                 *virtualMethod = *patchType(virtualMethod);
             }
@@ -339,6 +340,28 @@ namespace yoi {
         }
         for (auto &foreignTypePair : compilerCtx->getIRFFITable()->foreignTypeTable) {
             foreignTypePair.second = patchType(foreignTypePair.second);
+        }
+    }
+
+    std::tuple<IRValueType::valueType, indexT, indexT>
+    IRLinker::patchUniqueKey(const std::tuple<IRValueType::valueType, indexT, indexT> &key) {
+        switch (std::get<0>(key)) {
+            case IRValueType::valueType::structObject: {
+                auto newIndex = structRemapping[std::get<1>(key)][std::get<2>(key)];
+                return std::make_tuple(IRValueType::valueType::structObject, ENTRY_MODULE_ID_CONST, newIndex);
+            }
+            case IRValueType::valueType::interfaceObject: {
+                auto newIndex = interfaceRemapping[std::get<1>(key)][std::get<2>(key)];
+                return std::make_tuple(IRValueType::valueType::interfaceObject, ENTRY_MODULE_ID_CONST, newIndex);
+            }
+            case IRValueType::valueType::virtualMethod: {
+                auto newIndex = functionRemapping[std::get<1>(key)][std::get<2>(key)];
+                return std::make_tuple(IRValueType::valueType::virtualMethod, ENTRY_MODULE_ID_CONST, newIndex);
+            }
+            default: {
+                // Other types don't need patching
+                return key;
+            }
         }
     }
 } // namespace yoi

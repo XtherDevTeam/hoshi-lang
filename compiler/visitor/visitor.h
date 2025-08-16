@@ -104,7 +104,7 @@ namespace yoi {
 
         yoi::vec<IRFunctionDefinition::FunctionAttrs> getFunctionAttributes(const yoi::vec<lexer::token> &attrs);
 
-        yoi::indexT generateNullInterfaceImplementation(yoi::indexT structIndex);
+        yoi::indexT generateNullInterfaceImplementation(const std::shared_ptr<IRValueType> &structType);
 
         /**
          * Visitor methods
@@ -186,7 +186,7 @@ namespace yoi {
         yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
         yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc,
-                                       const std::pair<yoi::indexT, yoi::indexT> &structSrc);
+                                       const std::shared_ptr<IRValueType> &typeSrc);
 
         std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>>
         parseInterfaceName(yoi::externModuleAccessExpression *structDef);
