@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ffi_0',['ffi',['../md_docs_2Spec.html#autotoc_md46',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md48',1,'7.2. Foreign Function Interface (FFI)']]],
+  ['ffi_0',['ffi',['../md_docs_2Spec.html#autotoc_md48',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md50',1,'7.2. Foreign Function Interface (FFI)']]],
   ['ffi_20的必经之路_1',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]],
   ['field_2',['field',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0a06e3d36fa30cea095545139854ad1fb9',1,'yoi::IRStructDefinition::nameInfo']]],
   ['fieldtypes_3',['fieldtypes',['../classyoi_1_1IRStructDefinition.html#a1c0dad859c2a9feb09ecf53f8280538f',1,'yoi::IRStructDefinition::fieldTypes'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a1c0dad859c2a9feb09ecf53f8280538f',1,'yoi::IRStructDefinition::Builder::fieldTypes']]],
@@ -14,7 +14,7 @@ var searchData=
   ['flow_11',['3.3. Control Flow',['../md_docs_2IR.html#autotoc_md18',1,'']]],
   ['foreachstmt_12',['foreachstmt',['../classyoi_1_1forEachStmt.html',1,'forEachStmt'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ead2532406d9ca1ec1343b89ad5aaa5991',1,'yoi::inCodeBlockStmt::forEachStmt']]],
   ['foreachstmtval_13',['forEachStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a3a3c08b33de97d5a125b6a4f88770448',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['foreign_20function_20interface_20ffi_14',['foreign function interface ffi',['../md_docs_2Spec.html#autotoc_md46',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md48',1,'7.2. Foreign Function Interface (FFI)']]],
+  ['foreign_20function_20interface_20ffi_14',['foreign function interface ffi',['../md_docs_2Spec.html#autotoc_md48',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md50',1,'7.2. Foreign Function Interface (FFI)']]],
   ['foreignfloattype_15',['foreignfloattype',['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aed9ea5b4d20c5145dcfb4ddd34ddd56a',1,'foreignFloatType:&#160;rtti.h'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a',1,'yoi::IRValueType::foreignFloatType']]],
   ['foreignint32type_16',['foreignint32type',['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ad5493486c999a3f1b5898b82dfea19cc',1,'foreignInt32Type:&#160;rtti.h'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc',1,'yoi::IRValueType::foreignInt32Type']]],
   ['foreigntypemap_17',['foreignTypeMap',['../classyoi_1_1LLVMCodegen.html#a2fc0d3dcf33e94609178b838639127e4',1,'yoi::LLVMCodegen']]],
@@ -30,7 +30,7 @@ var searchData=
   ['functemplateasts_27',['funcTemplateAsts',['../classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899',1,'yoi::IRModule']]],
   ['function_28',['function',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ac1c425268e68385d1ab5074c17a94f14',1,'yoi::IRExternEntry']]],
   ['function_20and_20method_20calls_29',['3.5. Function and Method Calls',['../md_docs_2IR.html#autotoc_md20',1,'']]],
-  ['function_20interface_20ffi_30',['function interface ffi',['../md_docs_2Spec.html#autotoc_md46',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md48',1,'7.2. Foreign Function Interface (FFI)']]],
+  ['function_20interface_20ffi_30',['function interface ffi',['../md_docs_2Spec.html#autotoc_md48',1,'7. Modules and Foreign Function Interface (FFI)'],['../md_docs_2Spec.html#autotoc_md50',1,'7.2. Foreign Function Interface (FFI)']]],
   ['functionattrs_31',['FunctionAttrs',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445',1,'yoi::IRFunctionDefinition']]],
   ['functionmap_32',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
   ['functionremapping_33',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],

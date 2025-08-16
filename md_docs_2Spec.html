@@ -93,27 +93,27 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
   <div class="headertitle"><div class="title">Hoshi Language Specification</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md23"></a> </p>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md25"></a> </p>
+<h1><a class="anchor" id="autotoc_md26"></a>
 1. Introduction</h1>
 <p>Hoshi (also referred to as Yoi-lang in documentation) is a statically-typed, strongly-typed programming language. It aims to support modern programming paradigms, including Object-Oriented Programming (OOP) and Generic Programming (GP), while maintaining a clear and efficient compilation process.</p>
 <p>The language compiles to its own high-level intermediate representation (Yoi IR) before being translated to LLVM IR for native code generation. It features a reference-counting-based memory management system for its object model.</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 2. Lexical Structure</h1>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 2.1. Comments</h2>
 <p>Hoshi supports C-style comments:</p><ul>
 <li><b>Single-line comments:</b> Start with <code>//</code> and continue to the end of the line.</li>
 <li><b>Multi-line comments:</b> Start with <code>/*</code> and end with <code>*/</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 2.2. Keywords</h2>
 <p>The following are reserved keywords and cannot be used as identifiers:</p>
 <p><code>use</code>, <code>func</code>, <code>interface</code>, <code>struct</code>, <code>impl</code>, <code>let</code>, <code>in</code>, <code>for</code>, <code>forEach</code>, <code>while</code>, <code>if</code>, <code>elif</code>, <code>else</code>, <code>return</code>, <code>continue</code>, <code>break</code>, <code>cast</code>, <code>null</code>, <code>constructor</code>, <code>import</code>, <code>export</code>, <code>as</code>, <code>from</code>, <code>true</code>, <code>false</code>.</p>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 2.3. Identifiers</h2>
 <p>Identifiers are used for naming variables, functions, types, etc. They must start with a letter or an underscore (<code>_</code>) and can be followed by any number of letters, digits, or underscores.</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 2.4. Literals</h2>
 <ul>
 <li><b>Integer Literals:</b> Sequences of digits representing 64-bit signed integers (e.g., <code>123</code>, <code>1048576</code>).</li>
@@ -123,11 +123,11 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
 - &lt;strong&gt;Character Literals:&lt;/strong&gt; A single character enclosed in single quotes (&amp;lsquo;&amp;rsquo;&lt;tt&gt;).
 - **Null Literal:**&lt;/tt&gt;null`, representing the absence of a value.
 
-@section autotoc_md30 3. Types and Data Structures
+@section autotoc_md32 3. Types and Data Structures
 
 In Hoshi, all data types, including primitives, are treated as objects.
 
-@subsection autotoc_md31 3.1. Primitive Types
+@subsection autotoc_md33 3.1. Primitive Types
 
 - **&lt;tt&gt;int&lt;/tt&gt;**: A 64-bit signed integer.
 - **&lt;tt&gt;deci&lt;/tt&gt;**: A 64-bit floating-point number.
@@ -136,7 +136,7 @@ In Hoshi, all data types, including primitives, are treated as objects.
 - **&lt;tt&gt;string&lt;/tt&gt;**: A sequence of characters.
 - **&lt;tt&gt;none&lt;/tt&gt;**: A type representing no value, similar to &lt;tt&gt;void&lt;/tt&gt;.
 
-@subsection autotoc_md32 3.2. Structs
+@subsection autotoc_md34 3.2. Structs
 
 Structs are user-defined composite data types that group variables and methods. They are defined using the &lt;tt&gt;struct&lt;/tt&gt; keyword.
 
@@ -148,7 +148,7 @@ struct Point {
 }
 @endicode 
 
-@subsection autotoc_md33 3.3. Interfaces
+@subsection autotoc_md35 3.3. Interfaces
 
 Interfaces define a contract of methods that a &lt;tt&gt;struct&lt;/tt&gt; can implement. They are defined with the &lt;tt&gt;interface&lt;/tt&gt; keyword and only contain method declarations.
 
@@ -158,7 +158,7 @@ interface Addable {
 }
 @endicode 
 
-@subsection autotoc_md34 3.4. Implementations (&lt;tt&gt;impl&lt;/tt&gt;)
+@subsection autotoc_md36 3.4. Implementations (&lt;tt&gt;impl&lt;/tt&gt;)
 
 The &lt;tt&gt;impl&lt;/tt&gt; keyword is used to provide implementations for &lt;tt&gt;struct&lt;/tt&gt; methods or to implement an &lt;tt&gt;interface&lt;/tt&gt; for a &lt;tt&gt;struct&lt;/tt&gt;.
 
@@ -181,7 +181,7 @@ The &lt;tt&gt;impl&lt;/tt&gt; keyword is used to provide implementations for &lt
   }
   @endicode 
 
-@subsection autotoc_md35 3.5. Arrays
+@subsection autotoc_md37 3.5. Arrays
 
 Arrays are fixed-size collections of elements of the same type. The size must be known at compile time.
 
@@ -199,7 +199,7 @@ Arrays are fixed-size collections of elements of the same type. The size must be
   let element = arr2[i][j];
   @endicode 
 
-@subsection autotoc_md36 3.6. Generic Programming (Templates)
+@subsection autotoc_md38 3.6. Generic Programming (Templates)
 
 Hoshi supports generic programming through templates, which can be applied to functions and structs. Template parameters are specified using angle brackets &lt;tt&gt;\&lt;\&gt;&lt;/tt&gt;.
 
@@ -217,13 +217,13 @@ struct TestStruct&lt;T, U&gt; {
 }
 @endicode 
 
-@section autotoc_md37 4. Object Model and Lifecycle
+@section autotoc_md39 4. Object Model and Lifecycle
 
-@subsection autotoc_md38 4.1. Everything is an Object
+@subsection autotoc_md40 4.1. Everything is an Object
 
 All data types in Hoshi are objects allocated on the heap. This includes primitive types like &lt;tt&gt;int&lt;/tt&gt; and &lt;tt&gt;bool&lt;/tt&gt;, which are wrapped in corresponding object structures (e.g., &lt;tt&gt;YoiIntegerObject&lt;/tt&gt;).
 
-@subsection autotoc_md39 4.2. Memory Management: Reference Counting
+@subsection autotoc_md41 4.2. Memory Management: Reference Counting
 
 Hoshi uses an automatic reference counting (ARC) system for memory management.
 - Every object has a reference count, stored in its header.
@@ -233,7 +233,7 @@ Hoshi uses an automatic reference counting (ARC) system for memory management.
 
 This process is handled automatically by the compiler and runtime through &lt;tt&gt;gc_refcount_increase&lt;/tt&gt; and &lt;tt&gt;gc_refcount_decrease&lt;/tt&gt; functions generated for each type.
 
-@subsection autotoc_md40 4.3. Object Creation
+@subsection autotoc_md42 4.3. Object Creation
 
 - &lt;strong&gt;Structs:&lt;/strong&gt; Created by calling their constructor, which is defined in an &lt;tt&gt;impl&lt;/tt&gt; block.
   @icode{rust} 
@@ -245,11 +245,11 @@ This process is handled automatically by the compiler and runtime through &lt;tt
   let addable = Addable(p1); // Creates an interface object
   @endicode 
 
-@section autotoc_md41 5. Yoi Intermediate Representation (IR)
+@section autotoc_md43 5. Yoi Intermediate Representation (IR)
 
 The Yoi IR is a high-level, stack-based intermediate representation. It serves as the bridge between the frontend parser and the backend code generator (LLVM).
 
-@subsection autotoc_md42 5.1. Key Components
+@subsection autotoc_md44 5.1. Key Components
 
 - **&lt;tt&gt;IRModule&lt;/tt&gt;**: Represents a single compiled source file, containing tables for functions, structs, interfaces, globals, and string literals.
 - **&lt;tt&gt;IRFunctionDefinition&lt;/tt&gt;**: Defines a function with its name, arguments, return type, local variable table, and code blocks.
@@ -257,11 +257,11 @@ The Yoi IR is a high-level, stack-based intermediate representation. It serves a
 - **&lt;tt&gt;IRValueType&lt;/tt&gt;**: The IR's own type system, representing Hoshi types as objects (e.g., &lt;tt&gt;integerObject&lt;/tt&gt;, &lt;tt&gt;structObject&lt;/tt&gt;).
 - **&lt;tt&gt;IROperand&lt;/tt&gt;**: Arguments for IR instructions, which can be immediate values or indices into various tables.
 
-@subsection autotoc_md43 5.2. Execution Model
+@subsection autotoc_md45 5.2. Execution Model
 
 The IR operates on a temporary value stack for each function. Instructions pop operands from this stack and push results back onto it. All values on the stack are pointers to heap-allocated, reference-counted objects.
 
-@subsection autotoc_md44 5.3. Instruction Set Highlights
+@subsection autotoc_md46 5.3. Instruction Set Highlights
 
 - &lt;strong&gt;Stack/Memory:&lt;/strong&gt; &lt;tt&gt;push_*&lt;/tt&gt;, &lt;tt&gt;load_local&lt;/tt&gt;, &lt;tt&gt;store_local&lt;/tt&gt;, &lt;tt&gt;load_member&lt;/tt&gt;, &lt;tt&gt;store_member&lt;/tt&gt;.
 - &lt;strong&gt;Arithmetic/Logic:&lt;/strong&gt; &lt;tt&gt;add&lt;/tt&gt;, &lt;tt&gt;sub&lt;/tt&gt;, &lt;tt&gt;mul&lt;/tt&gt;, &lt;tt&gt;div&lt;/tt&gt;, &lt;tt&gt;equal&lt;/tt&gt;, &lt;tt&gt;less_than&lt;/tt&gt;, etc.
@@ -269,7 +269,7 @@ The IR operates on a temporary value stack for each function. Instructions pop o
 - &lt;strong&gt;Object Lifecycle:&lt;/strong&gt; &lt;tt&gt;new_struct&lt;/tt&gt;, &lt;tt&gt;new_interface&lt;/tt&gt;, &lt;tt&gt;construct_interface_impl&lt;/tt&gt;.
 - &lt;strong&gt;Function Calls:&lt;/strong&gt; &lt;tt&gt;invoke&lt;/tt&gt; (static dispatch), &lt;tt&gt;invoke_virtual&lt;/tt&gt; (dynamic dispatch via v-table).
 
-@section autotoc_md45 6. Compilation and Linking
+@section autotoc_md47 6. Compilation and Linking
 
 The Hoshi compiler (&lt;tt&gt;hoshi-lang&lt;/tt&gt;) performs the following steps:
 
@@ -280,9 +280,9 @@ The Hoshi compiler (&lt;tt&gt;hoshi-lang&lt;/tt&gt;) performs the following step
 5.  &lt;strong&gt;Object Code Generation:&lt;/strong&gt; The LLVM IR is compiled into a native object file (&lt;tt&gt;.o&lt;/tt&gt; or &lt;tt&gt;.obj&lt;/tt&gt;).
 6.  &lt;strong&gt;Final Linking:&lt;/strong&gt; An external system linker (like &lt;tt&gt;cc&lt;/tt&gt; or &lt;tt&gt;cl.exe&lt;/tt&gt;) is used to link the object file with the Hoshi runtime library (&lt;tt&gt;libelysia_runtime&lt;/tt&gt;) to produce the final executable or library.
 
-@section autotoc_md46 7. Modules and Foreign Function Interface (FFI)
+@section autotoc_md48 7. Modules and Foreign Function Interface (FFI)
 
-@subsection autotoc_md47 7.1. Modules
+@subsection autotoc_md49 7.1. Modules
 
 Hoshi code can be organized into modules. The &lt;tt&gt;use&lt;/tt&gt; keyword imports another Hoshi file, making its public symbols available under a specified alias.
 
@@ -290,7 +290,7 @@ Hoshi code can be organized into modules. The &lt;tt&gt;use&lt;/tt&gt; keyword i
 use test1 "examples/test1.hoshi";
 @endicode 
 
-@subsection autotoc_md48 7.2. Foreign Function Interface (FFI)
+@subsection autotoc_md50 7.2. Foreign Function Interface (FFI)
 
 Hoshi provides an FFI to interoperate with C-compatible libraries.
 

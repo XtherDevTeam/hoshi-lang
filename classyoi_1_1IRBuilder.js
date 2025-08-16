@@ -30,6 +30,7 @@ var classyoi_1_1IRBuilder =
     [ "newArrayOp", "classyoi_1_1IRBuilder.html#aa664e67be6dc36f35d565904e743abb1", null ],
     [ "newInterfaceOp", "classyoi_1_1IRBuilder.html#a78476b4c465330bc3d6b743e7515e0ac", null ],
     [ "newStructOp", "classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5", null ],
+    [ "pointerCastOp", "classyoi_1_1IRBuilder.html#a92707e557062d8cb56359619b8560c51", null ],
     [ "popFromTempVarStack", "classyoi_1_1IRBuilder.html#ae5f54c0f3d96bf3470645b215d9ce83a", null ],
     [ "popOp", "classyoi_1_1IRBuilder.html#a273a2de867a705486918f6f5583f0263", null ],
     [ "pushOp", "classyoi_1_1IRBuilder.html#a2c0487a0411af457d2a23859b8344375", null ],
