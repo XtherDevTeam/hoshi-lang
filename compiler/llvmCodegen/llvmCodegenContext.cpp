@@ -937,7 +937,16 @@ namespace yoi {
                 auto* alloca = namedValues.at(varIndex);
                 auto yoiType = currentFunctionDef->variableTable.get(varIndex);
                 auto loadedPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "loadtmp");
+                // check if the loaded value is null
+                auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
+                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
+                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(loadedPtr, yoiType, true); // Loading creates a new reference
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
                 valueStackMap[fromBlock][toBlock].push_back({loadedPtr, yoiType});
                 break;
             }
@@ -948,7 +957,17 @@ namespace yoi {
                 auto valToStore = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
                 // Retain new value
+                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
+                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
+                // check if the value to store is null
+                auto* isNull = Builder->CreateIsNull(valToStore.llvmValue, "is_null_store");
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(valToStore.llvmValue, valToStore.yoiType, true);
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
+
                 // Release old value
                 auto* oldPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "old_ptr_for_store");
                 callGcFunction(oldPtr, yoiType, false);
@@ -963,7 +982,15 @@ namespace yoi {
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto loadedPtr = Builder->CreateLoad(global->getValueType(), global, "loadglobaltmp");
+                auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
+                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
+                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(loadedPtr, yoiType, true);
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
                 valueStackMap[fromBlock][toBlock].push_back({loadedPtr, yoiType});
                 break;
             }
@@ -973,7 +1000,17 @@ namespace yoi {
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto valToStore = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
+                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
+                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
+                // check if the value to store is null
+                auto* isNull = Builder->CreateIsNull(valToStore.llvmValue, "is_null_store");
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(valToStore.llvmValue, valToStore.yoiType, true);
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
+
                 auto* oldPtr = Builder->CreateLoad(global->getValueType(), global, "old_global_ptr");
                 callGcFunction(oldPtr, yoiType, false);
                 Builder->CreateStore(valToStore.llvmValue, global);
@@ -993,8 +1030,15 @@ namespace yoi {
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
                 llvm::Type* loadedType = yoiTypeToLLVMType(memberYoiType);
                 auto* loadedMember = Builder->CreateLoad(loadedType, gep, "loadmember");
-
+                auto* isNull = Builder->CreateIsNull(loadedMember, "is_null_load");
+                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
+                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(loadedMember, memberYoiType, true); // Create new reference for the loaded member
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
                 valueStackMap[fromBlock][toBlock].push_back({loadedMember, memberYoiType});
 
                 callGcFunction(structVal.llvmValue, structVal.yoiType, false); // Consume the struct reference from the stack
@@ -1014,7 +1058,17 @@ namespace yoi {
                 auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
 
+                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
+                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
+                // check if the value to store is null
+                auto* isNull = Builder->CreateIsNull(valueToStore.llvmValue, "is_null_store");
+                Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                // if not null, increase its reference count
+                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(valueToStore.llvmValue, valueToStore.yoiType, true);
+                Builder->CreateBr(continueBB);
+                Builder->SetInsertPoint(continueBB);
+
                 auto* oldMemberPtr = Builder->CreateLoad(yoiTypeToLLVMType(memberYoiType), gep, "old_member_ptr");
                 callGcFunction(oldMemberPtr, memberYoiType, false);
                 Builder->CreateStore(valueToStore.llvmValue, gep);
@@ -1550,6 +1604,17 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({finalValue, structYoiType});
                 break;
             }
+            case IR::Opcode::push_null: {
+                auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(Builder->getInt8Ty(), 0));
+                valueStackMap[fromBlock][toBlock].push_back({nullValue, managedPtr(IRValueType{IRValueType::valueType::pointerObject})});
+                break;
+            }
+            case IR::Opcode::pointer_cast: {
+                auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                auto value = Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "pointer_cast");
+                valueStackMap[fromBlock][toBlock].push_back({value, managedPtr(IRValueType{IRValueType::valueType::pointerObject})});
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:
@@ -1661,8 +1726,8 @@ namespace yoi {
         auto R = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
         auto L = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
-        llvm::Value* lValRaw = unboxValue(L.llvmValue, L.yoiType);
-        llvm::Value* rValRaw = unboxValue(R.llvmValue, R.yoiType);
+        llvm::Value* lValRaw = L.yoiType->type == IRValueType::valueType::pointerObject ? L.llvmValue : unboxValue(L.llvmValue, L.yoiType);
+        llvm::Value* rValRaw = R.yoiType->type == IRValueType::valueType::pointerObject ? R.llvmValue : unboxValue(R.llvmValue, R.yoiType);
 
         bool typesAreFloats = lValRaw->getType()->isDoubleTy() || rValRaw->getType()->isDoubleTy();
 

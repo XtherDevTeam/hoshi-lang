@@ -1,0 +1,22 @@
+use lang "builtin"
+
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    let sum = 0
+    let arr = lang.NullInterface[3](
+        1,
+        2.3,
+        "hello"
+    )
+    let x = dyn_cast<int>(arr[0])
+    let z = dyn_cast<string>(arr[2])
+    let y = dyn_cast<int>(arr[1])
+    if (y == null) {
+        sum += 1
+    } else {
+        puts("null functionality validation failed")
+        return 1
+    }
+    return 0
+}

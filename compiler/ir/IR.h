@@ -213,10 +213,12 @@ namespace yoi {
             push_integer,
             push_decimal,
             push_boolean,
+            push_null,
             pop,
             basic_cast_int,
             basic_cast_deci,
             basic_cast_bool,
+            pointer_cast,
             push_string,
             store_global,
             store_local,
@@ -717,6 +719,8 @@ namespace yoi {
         void typeIdOp();
 
         void dynCastOp(const std::shared_ptr<IRValueType> &type);
+
+        void pointerCastOp();
 
         yoi::indexT getCurrentInsertionPoint();
 

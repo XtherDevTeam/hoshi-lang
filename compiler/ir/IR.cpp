@@ -177,6 +177,11 @@ namespace yoi {
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     compilerCtx->getBoolObjectType();
                 break;
+            case IRValueType::valueType::pointerObject:
+                insert({IR::Opcode::pointer_cast, {}, currentDebugInfo}, insertionPoint);
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
+                    managedPtr(IRValueType{IRValueType::valueType::pointerObject});
+                break;
             default: {
                 panic(0, 0, "Unsupported type for basicCast");
                 break;
@@ -244,7 +249,9 @@ namespace yoi {
     }
 
     void IRBuilder::pushOp(IR::Opcode op, const yoi::IROperand &constV) {
-        if (constV.type == IROperand::operandType::integer) {
+        if (op == IR::Opcode::push_null) {
+            tempVarStack.emplace_back(managedPtr(IRValueType(IRValueType::valueType::pointerObject)));
+        } else if (constV.type == IROperand::operandType::integer) {
             // tempVarStack.push_back()
             tempVarStack.emplace_back(compilerCtx->getIntObjectType());
         } else if (constV.type == IROperand::operandType::boolean) {
@@ -1080,8 +1087,15 @@ namespace yoi {
         tempVarStack.pop_back();
         tempVarStack.push_back(type);
     }
+
     IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::addAttr(FunctionAttrs attr) {
         attrs.push_back(attr);
         return *this;
+    }
+
+    void IRBuilder::pointerCastOp() {
+        insert(IR{IR::Opcode::pointer_cast, {}, currentDebugInfo});
+        tempVarStack.pop_back();
+        tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::pointerObject}));
     }
 } // namespace yoi

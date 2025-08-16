@@ -1356,7 +1356,7 @@ namespace yoi {
                 }
                 case IR::Opcode::pop:{
                     auto rhs = simulationStack.peek(0);
-                    if (rhs.hasPossibleValue) {
+                    if (rhs.contributedInstructions.optimizable) {
                         insIndex = reduce(rhs.contributedInstructions, insIndex);
                         ins = {IR::Opcode::nop, {}, ins.debugInfo};
                     }
@@ -1406,6 +1406,15 @@ namespace yoi {
                     auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
                     simulationStack.pop();
                     simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::pointer_cast: {
+                    simulationStack.pop();
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::push_null: {
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, true});
                     break;
                 }
                 default: {
@@ -2288,6 +2297,15 @@ namespace yoi {
                     auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
                     simulationStack.pop();
                     simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::pointer_cast: {
+                    simulationStack.pop();
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::push_null: {
+                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, true});
                     break;
                 }
                 default: {

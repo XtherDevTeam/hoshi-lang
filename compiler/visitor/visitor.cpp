@@ -75,6 +75,10 @@ namespace yoi {
                 panic(basicLiterals->node.line, basicLiterals->node.col, "Unsupported character literal");
                 break;
             }
+            case yoi::lexer::token::tokenKind::kNull: {
+                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_null, {});
+                break;
+            }
             default: {
                 panic(basicLiterals->node.line, basicLiterals->node.col, "Unexpected basic literal type");
                 break;
@@ -89,6 +93,7 @@ namespace yoi {
             auto index = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().lookup(id);
             auto valType = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().get(index);
             if (isStoreOp) {
+                tryCastTo(valType);
                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
                                                       {IROperand::operandType::localVar, yoi::indexT{index}});
             } else {
@@ -103,6 +108,7 @@ namespace yoi {
             auto index = irModule->globalVariables.getIndex(id);
             auto valType = irModule->globalVariables[index];
             if (isStoreOp) {
+                tryCastTo(valType);
                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
                                                       {IROperand::operandType::globalVar, yoi::indexT{index}});
             } else {
@@ -113,7 +119,6 @@ namespace yoi {
         } catch (std::out_of_range &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
         }
-        // TODO: add support for extern variables
     }
 
     yoi::indexT visitor::visit(yoi::primary *primary, bool isStoreOp) {
@@ -530,7 +535,7 @@ namespace yoi {
             }
             switch (op->kind) {
                 case lexer::token::tokenKind::equal: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
+                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType() || lhsType->type == IRValueType::valueType::pointerObject || rhsType->type == IRValueType::valueType::pointerObject,
                                op->line,
                                op->col,
                                "Not basic type for equal");
@@ -542,7 +547,8 @@ namespace yoi {
                 }
                 case lexer::token::tokenKind::notEqual: {
                     yoi_assert(
-                        lhsType->isBasicType() && rhsType->isBasicType(), op->line, op->col, "Not basic type for not");
+                        lhsType->isBasicType() && rhsType->isBasicType() || lhsType->type == IRValueType::valueType::pointerObject || rhsType->type == IRValueType::valueType::pointerObject,
+                         op->line, op->col, "Not basic type for not");
 
                     emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
 
@@ -2510,6 +2516,12 @@ namespace yoi {
                    rhsType->type == IRValueType::valueType::integerObject) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
+        // if left or right is pointer, cast the other to pointer
+        else if (lhsType->type == IRValueType::valueType::pointerObject) {
+            moduleContext->getIRBuilder().basicCast(lhsType, rhs);
+        } else if (rhsType->type == IRValueType::valueType::pointerObject) {
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+        }
     }
 
     void visitor::emitBasicCastTo(const std::shared_ptr<IRValueType> &toType) {
@@ -2589,6 +2601,7 @@ namespace yoi {
                                ->getImportedModule(targetModule)
                                ->globalVariables[identifier->node.strVal];
             if (isStoreOp) {
+                tryCastTo(valType);
                 moduleContext->getIRBuilder().storeOp(
                     IR::Opcode::store_global, {IROperand::operandType::externVar, entry.itemIndex}, entry.affiliateModule);
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
