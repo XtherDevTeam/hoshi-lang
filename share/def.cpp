@@ -69,7 +69,7 @@ namespace yoi {
     }
     
     std::wstring get_line_hint_for_error(const std::wstring &file, yoi::indexT line, yoi::indexT col) {
-        std::fstream fileStream(file, std::ios::in);
+        std::fstream fileStream(yoi::wstring2string(file), std::ios::in);
         if (!fileStream.is_open()) {
             return L"";
         }
