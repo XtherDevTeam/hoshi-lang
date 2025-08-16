@@ -1,13 +1,25 @@
 <map id="arithmeticOp" name="arithmeticOp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,112,104"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451" title=" " alt="" coords="189,29,248,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,76,175,52,177,58,101,81"/>
-<area shape="rect" id="Node000005" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="176,79,261,104"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="112,89,162,89,162,94,112,94"/>
-<area shape="rect" id="Node000006" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="160,128,277,153"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="101,101,164,121,163,126,100,107"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,112,112,137"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451" title=" " alt="" coords="189,55,248,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,109,176,80,178,85,96,114"/>
+<area shape="rect" id="Node000005" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="176,112,261,137"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="112,122,162,122,162,127,112,127"/>
+<area shape="rect" id="Node000012" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="160,161,277,187"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="101,135,164,155,163,160,100,140"/>
 <area shape="rect" id="Node000003" href="$classyoi_1_1IRBuilder.html#aa92b31ff8f2eea49abba0edaca962761" title=" " alt="" coords="350,5,510,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,36,336,26,337,31,248,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,58,325,39,360,31,361,36,326,45,249,63"/>
 <area shape="rect" id="Node000004" href="$classyoi_1_1IRCodeBlock.html#a0ce5ce7fd99199287c70c64ae3ae252e" title=" " alt="" coords="325,55,535,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="248,43,312,51,312,56,248,48"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="248,65,311,65,311,70,248,70"/>
+<area shape="rect" id="Node000006" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="363,105,497,145"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="262,122,349,122,349,127,262,127"/>
+<area shape="rect" id="Node000010" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="359,169,501,195"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="261,135,326,154,362,163,360,169,325,159,259,140"/>
+<area shape="rect" id="Node000007" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="613,112,755,137"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="497,122,599,122,599,127,497,127"/>
+<area shape="rect" id="Node000008" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="833,112,1036,137"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="756,122,820,122,820,127,756,127"/>
+<area shape="rect" id="Node000009" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1084,112,1275,137"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1036,122,1070,122,1070,127,1036,127"/>
+<area shape="rect" id="Node000011" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="583,169,785,195"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="501,179,569,179,569,185,501,185"/>
 </map>

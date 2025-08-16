@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['和_20import_0',['复杂类型的 export 和 import',['../md_docs_2Wrapper.html#autotoc_md55',1,'']]]
+  ['_7eobjectlinker_0',['~ObjectLinker',['../classyoi_1_1ObjectLinker.html#aa8bb88fde0d42dca5b036215e4bcabc6',1,'yoi::ObjectLinker']]]
 ];

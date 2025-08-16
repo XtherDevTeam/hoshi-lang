@@ -1,19 +1,14 @@
 var searchData=
 [
-  ['fieldtypes_0',['fieldtypes',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a1c0dad859c2a9feb09ecf53f8280538f',1,'yoi::IRStructDefinition::Builder::fieldTypes'],['../classyoi_1_1IRStructDefinition.html#a1c0dad859c2a9feb09ecf53f8280538f',1,'yoi::IRStructDefinition::fieldTypes']]],
-  ['finallyblock_1',['finallyBlock',['../classyoi_1_1tryCatchStmt.html#a9c29ecfe2b10fe1b89a2fc253f3c1f3e',1,'yoi::tryCatchStmt']]],
-  ['finalmodule_2',['finalModule',['../classyoi_1_1IRLinker.html#acfa5851de2021841fcd285376b015f5a',1,'yoi::IRLinker']]],
-  ['foreachstmtval_3',['forEachStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a3a3c08b33de97d5a125b6a4f88770448',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['foreigntypemap_4',['foreignTypeMap',['../classyoi_1_1LLVMCodegen.html#a2fc0d3dcf33e94609178b838639127e4',1,'yoi::LLVMCodegen']]],
-  ['foreigntypetable_5',['foreignTypeTable',['../classyoi_1_1IRFFITable.html#a8d63d2a6e1a648a133f9594383a83ef5',1,'yoi::IRFFITable']]],
-  ['forstmtval_6',['forStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a34ad018dbaf263f8c11bfac5317aeb8b',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['from_7',['from',['../classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4',1,'yoi::exportDecl']]],
-  ['from_5fpath_8',['from_path',['../classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299',1,'yoi::importDecl']]],
-  ['func_9',['func',['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec']]],
-  ['funcdefstmtval_10',['funcDefStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd',1,'yoi::globalStmt::vValue']]],
-  ['functemplateasts_11',['funcTemplateAsts',['../classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899',1,'yoi::IRModule']]],
-  ['functionmap_12',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
-  ['functionremapping_13',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
-  ['functiontable_14',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]],
-  ['functiontemplatetable_15',['functionTemplateTable',['../classyoi_1_1IRModule.html#a21d443768b5e9d183339dfc259b7faf2',1,'yoi::IRModule']]]
+  ['elifb_0',['elifB',['../classyoi_1_1ifStmt.html#a758f266336d15cc9c50ec3090af4ba92',1,'yoi::ifStmt']]],
+  ['elseb_1',['elseB',['../classyoi_1_1ifStmt.html#aa6d792054122d0e9bd6a3f2b74bceb39',1,'yoi::ifStmt']]],
+  ['elysiaruntimepath_2',['elysiaRuntimePath',['../classyoi_1_1ObjectLinker.html#a16bb6f4ba9ecdd57b4d99326be74e0dd',1,'yoi::ObjectLinker']]],
+  ['entries_5fv_3',['entries_v',['../namespacemagic__enum_1_1detail.html#a46c832521c7023c7d45ab1e4091e3457',1,'magic_enum::detail']]],
+  ['entrymodule_4',['entryModule',['../classyoi_1_1IRObjectFile.html#ac0af42431dbff9739153743ab26874fa',1,'yoi::IRObjectFile']]],
+  ['entrymoduleid_5',['entryModuleId',['../classyoi_1_1IRLinker.html#a20223d6c01f045c7e8c38e81cd1eed2e',1,'yoi::IRLinker']]],
+  ['enum_5fname_5fv_6',['enum_name_v',['../namespacemagic__enum_1_1detail.html#ac81bf63e9714ebae6454cdf3a3926495',1,'magic_enum::detail']]],
+  ['exportdeclval_7',['exportDeclVal',['../unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870',1,'yoi::globalStmt::vValue']]],
+  ['exportedfunctiontable_8',['exportedFunctionTable',['../classyoi_1_1IRFFITable.html#a1cb90e31a0bf85e58ad69f490d957a4a',1,'yoi::IRFFITable']]],
+  ['expr_9',['expr',['../classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::subscript::expr'],['../classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::primary::expr'],['../classyoi_1_1rExpr.html#a2ab242b67d815840a79da4b9974b6d32',1,'yoi::rExpr::expr'],['../classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::throwStmt::expr'],['../classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::typeIdExpression::expr'],['../classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::dynCastExpression::expr']]],
+  ['externtable_10',['externTable',['../classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d',1,'yoi::IRModule']]]
 ];

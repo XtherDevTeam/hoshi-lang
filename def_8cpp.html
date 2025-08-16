@@ -92,11 +92,14 @@ $(document).ready(function(){initNavTree('def_8cpp.html',''); initResizable(); }
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">def.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdio&gt;</code><br />
+<code>#include &lt;filesystem&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;<a class="el" href="def_8hpp_source.html">share/def.hpp</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -104,13 +107,17 @@ Include dependency graph for def.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="def_8cpp__incl.png" border="0" usemap="#ashare_2def_8cpp" alt=""/></div>
 <map name="ashare_2def_8cpp" id="ashare_2def_8cpp">
-<area shape="rect" title=" " alt="" coords="343,5,452,31"/>
+<area shape="rect" title=" " alt="" coords="157,5,267,31"/>
+<area shape="rect" title=" " alt="" coords="39,79,100,104"/>
+<area shape="poly" title=" " alt="" coords="190,33,106,75,104,70,188,28"/>
 <area shape="rect" title=" " alt="" coords="5,152,96,177"/>
-<area shape="poly" title=" " alt="" coords="371,33,91,149,89,144,369,28"/>
-<area shape="rect" title=" " alt="" coords="357,79,437,104"/>
-<area shape="poly" title=" " alt="" coords="400,31,400,65,395,65,395,31"/>
+<area shape="poly" title=" " alt="" coords="201,33,75,145,72,141,197,29"/>
+<area shape="rect" title=" " alt="" coords="175,79,249,104"/>
+<area shape="poly" title=" " alt="" coords="215,31,215,65,209,65,209,31"/>
+<area shape="rect" title=" " alt="" coords="273,79,353,104"/>
+<area shape="poly" title=" " alt="" coords="230,28,287,68,284,73,227,33"/>
 <area shape="rect" href="def_8hpp.html" title=" " alt="" coords="530,79,641,104"/>
-<area shape="poly" title=" " alt="" coords="428,28,543,71,541,76,427,33"/>
+<area shape="poly" title=" " alt="" coords="267,27,517,74,516,80,266,32"/>
 <area shape="poly" title=" " alt="" coords="530,101,347,122,110,154,109,149,347,116,529,96"/>
 <area shape="rect" title=" " alt="" coords="1460,225,1527,251"/>
 <area shape="poly" title=" " alt="" coords="641,91,752,94,902,104,1071,121,1242,149,1359,182,1454,218,1453,223,1357,187,1241,155,1071,126,901,109,752,100,641,96"/>
@@ -172,6 +179,10 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a3e22de04e90e79c45c3e57ed7705df7d" id="r_a3e22de04e90e79c45c3e57ed7705df7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d">parseString</a> (std::wistream &amp;input, <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">wstr</a> &amp;value)</td></tr>
 <tr class="separator:a3e22de04e90e79c45c3e57ed7705df7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa35210b71ccd4b7364bd60156755f2f7" id="r_aa35210b71ccd4b7364bd60156755f2f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7">set_current_file_path</a> (const std::wstring &amp;path)</td></tr>
+<tr class="separator:aa35210b71ccd4b7364bd60156755f2f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1a87fa4d0a59f9b776d685d6873353" id="r_a9b1a87fa4d0a59f9b776d685d6873353"><td class="memItemLeft" align="right" valign="top">std::wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353">get_line_hint_for_error</a> (const std::wstring &amp;file, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> line, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> col)</td></tr>
+<tr class="separator:a9b1a87fa4d0a59f9b776d685d6873353"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1b2d50f7eb8d8e78be001987ad48ab6" id="r_af1b2d50f7eb8d8e78be001987ad48ab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6">panic</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> line, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> col, const std::string &amp;msg)</td></tr>
 <tr class="separator:af1b2d50f7eb8d8e78be001987ad48ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a774ab9590e79332760376ed248af507c" id="r_a774ab9590e79332760376ed248af507c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c">warning</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> line, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> col, const std::string &amp;msg)</td></tr>
@@ -187,6 +198,11 @@ Functions</h2></td></tr>
 <tr class="separator:a4a59d5413d6da04facbe9ac48e2f7fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a075458dd6b09c03a78a7fabbe026aa" id="r_a5a075458dd6b09c03a78a7fabbe026aa"><td class="memItemLeft" align="right" valign="top">std::wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa">whereIsHoshiLang</a> ()</td></tr>
 <tr class="separator:a5a075458dd6b09c03a78a7fabbe026aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a147de820f25f66f42a6fd04341fcfd0a" id="r_a147de820f25f66f42a6fd04341fcfd0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a">__current_file_path</a> = L&quot;&quot;</td></tr>
+<tr class="separator:a147de820f25f66f42a6fd04341fcfd0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

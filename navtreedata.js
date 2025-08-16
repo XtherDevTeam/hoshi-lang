@@ -96,7 +96,7 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", "namespacemembers_dup" ],
-        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ],
         [ "Variables", "namespacemembers_vars.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ],
         [ "Enumerations", "namespacemembers_enum.html", null ]
@@ -141,12 +141,12 @@ var NAVTREEINDEX =
 "classyoi_1_1lexer.html#a4bfe830a28614ff2d3268f21261f4424",
 "classyoi_1_1symbol.html#a2b15e1bb76ff7bbc24a7a7d2ad143906",
 "classyoi_1_1visitor.html#af85bd039ca4512af3722ec9cbbf76555",
-"magic__enum_8h.html#abfa3c1cab6b215be0f993c090492850f",
-"namespaceyoi.html#a1599eecf8781c9dba0e44baefb471abf",
-"parser_8hpp.html#abb81eeeb360b95fd38513a5592dd0f11",
-"structyoi_1_1IRDebugInfo.html#a52f1a713696bc41540d60d59ab9ae177",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b",
-"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba"
+"magic__enum_8h.html#ab68878d3c9e194da158c463b92f6100d",
+"namespacemembers_s.html",
+"parser_8hpp.html#a58c8a2862d35ac14ca1b45b4fac3f26c",
+"structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117",
+"structyoi_1_1lexer_1_1token.html#a5e200169599ba0b005fd6961917d6b24",
+"unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

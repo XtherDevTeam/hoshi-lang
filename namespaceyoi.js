@@ -178,6 +178,7 @@ var namespaceyoi =
     [ "finalizeAST", "namespaceyoi.html#a6810d05945e9ffd02c155c63845bc30f", null ],
     [ "finalizeAST", "namespaceyoi.html#a50a63064721d63461fe152a633004009", null ],
     [ "finalizeAST_vec", "namespaceyoi.html#ae8f13fcf89f8c2aab98a389953ee95f2", null ],
+    [ "get_line_hint_for_error", "namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353", null ],
     [ "managedPtr", "namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd", null ],
     [ "mergeStates", "namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b", null ],
     [ "panic", "namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6", null ],
@@ -252,9 +253,11 @@ var namespaceyoi =
     [ "parseString", "namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d", null ],
     [ "realpath", "namespaceyoi.html#a4a59d5413d6da04facbe9ac48e2f7fff", null ],
     [ "replace_all", "namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7", null ],
+    [ "set_current_file_path", "namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7", null ],
     [ "string2wstring", "namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023", null ],
     [ "warning", "namespaceyoi.html#a774ab9590e79332760376ed248af507c", null ],
     [ "whereIsHoshiLang", "namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
-    [ "yoi_assert", "namespaceyoi.html#a85b420532ed69057ad764f367d13c152", null ]
+    [ "yoi_assert", "namespaceyoi.html#a85b420532ed69057ad764f367d13c152", null ],
+    [ "__current_file_path", "namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a", null ]
 ];

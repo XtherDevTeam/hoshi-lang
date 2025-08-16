@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['的必经之路_0',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]]
+  ['模板隐式特化的实现思路_0',['模板隐式特化的实现思路',['../md_docs_2Template.html',1,'']]]
 ];

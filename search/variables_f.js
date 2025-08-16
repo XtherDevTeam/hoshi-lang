@@ -1,26 +1,10 @@
 var searchData=
 [
-  ['referencedmodules_0',['referencedModules',['../classyoi_1_1moduleContext.html#ac3dcfffc52780a8d2bdb5f244c868b43',1,'yoi::moduleContext']]],
-  ['resulttype_1',['resulttype',['../classyoi_1_1funcTypeSpec.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::funcTypeSpec::resultType'],['../classyoi_1_1funcDefStmt.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::funcDefStmt::resultType'],['../classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::innerMethodDecl::resultType'],['../classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda',1,'yoi::innerMethodDef::resultType']]],
-  ['returnstmtval_2',['returnStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4c2ef546adead0ff4686bcac2590e7c1',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['returntype_3',['returntype',['../classyoi_1_1IRFunctionDefinition.html#a11ea29649c52a300ccc326831b8bf9b2',1,'yoi::IRFunctionDefinition::returnType'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a11ea29649c52a300ccc326831b8bf9b2',1,'yoi::IRFunctionDefinition::Builder::returnType']]],
-  ['reversedvariablenamemap_4',['reversedVariableNameMap',['../classyoi_1_1IRVariableTable.html#a8b40e91a9b995575f40178a1ff629075',1,'yoi::IRVariableTable']]],
-  ['reverseg_5',['reverseG',['../structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html#a67f659ed95598ac4ee5eeb3b87037262',1,'yoi::LLVMCodegen::ControlFlowAnalysis']]],
-  ['rexprval_6',['rExprVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2dfcfa8f7a03e306419b7a727e14bdaa',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['rhs_7',['rhs',['../classyoi_1_1leftExpr.html#a5302972f187401d035de1b8f17e96f78',1,'yoi::leftExpr::rhs'],['../classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78',1,'yoi::letAssignmentPair::rhs']]],
-  ['rtti_5ftable_8',['rtti_table',['../rtti_8h.html#a23a7bb83213753e98435b134a0bd9360',1,'rtti.h']]],
-  ['rttientrytype_9',['RTTIEntryType',['../classyoi_1_1LLVMCodegen.html#adcb214162c77b78cc3e8fa0e6f1e6437',1,'yoi::LLVMCodegen']]],
-  ['rttitable_10',['RTTITable',['../classyoi_1_1LLVMCodegen.html#a126d62560bdd512068d093b6e352654b',1,'yoi::LLVMCodegen']]],
-  ['runtime_5fobject_5fallocated_11',['runtime_object_allocated',['../memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a',1,'runtime_object_allocated:&#160;memory.cpp'],['../memory_8h.html#a5b5bd71a6d8da67fd5e902e06915524a',1,'runtime_object_allocated:&#160;memory.h']]],
-  ['runtimedebugprintaddressfunc_12',['runtimeDebugPrintAddressFunc',['../classyoi_1_1LLVMCodegen.html#a226d8a78832f9807bb60bcb8b94a8a4c',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintcurrentallocatedmemoryfunc_13',['runtimeDebugPrintCurrentAllocatedMemoryFunc',['../classyoi_1_1LLVMCodegen.html#a2e61cae680796ff5a75ae45d70fd4b9f',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintdecifunc_14',['runtimeDebugPrintDeciFunc',['../classyoi_1_1LLVMCodegen.html#a7b0c79c543056eb9381aa7ec2355b3d0',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintfunc_15',['runtimeDebugPrintFunc',['../classyoi_1_1LLVMCodegen.html#af809c35db88dfe07161e4a19d0bd25d4',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintintfunc_16',['runtimeDebugPrintIntFunc',['../classyoi_1_1LLVMCodegen.html#a75ef9e0ec1855063f349acec6e22888b',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugreportcurrentfunctionfunc_17',['runtimeDebugReportCurrentFunctionFunc',['../classyoi_1_1LLVMCodegen.html#a9f98eda3b2d79eb35579bbc3acc5d67d',1,'yoi::LLVMCodegen']]],
-  ['runtimefinalizeobjectfunc_18',['runtimeFinalizeObjectFunc',['../classyoi_1_1LLVMCodegen.html#a25aeec90a9dbe38e450493a79b775f47',1,'yoi::LLVMCodegen']]],
-  ['runtimefinalizeobjectreportfunc_19',['runtimeFinalizeObjectReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b007239250d025b4584f0c517c7ea71',1,'yoi::LLVMCodegen']]],
-  ['runtimemalloc_20',['runtimeMalloc',['../classyoi_1_1LLVMCodegen.html#aeefdc361e2dd1481ee3c876660b57446',1,'yoi::LLVMCodegen']]],
-  ['runtimeobjectallocfunc_21',['runtimeObjectAllocFunc',['../classyoi_1_1LLVMCodegen.html#a79099951318d29c502a54c9da2c4bf98',1,'yoi::LLVMCodegen']]],
-  ['runtimeobjectallocreportfunc_22',['runtimeObjectAllocReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b63e7159dcfc8f1f232ced9e40769d7',1,'yoi::LLVMCodegen']]]
+  ['path_0',['path',['../classyoi_1_1useStmt.html#ad199db881b7439ae4c05faa0c5420865',1,'yoi::useStmt::path'],['../classyoi_1_1moduleContext.html#a1313d222a87486a71c3f1900fe1b9ad1',1,'yoi::moduleContext::path']]],
+  ['pool_1',['pool',['../classyoi_1_1IRStringLiteralPool.html#a933a5c81d517a6a297bb7883e4941adc',1,'yoi::IRStringLiteralPool::pool'],['../classyoi_1_1indexPool.html#ab9096678e21c77ed4b5e90d5fbad5afe',1,'yoi::indexPool::pool']]],
+  ['pos_2',['pos',['../structyoi_1_1lexer_1_1lexerState.html#acd1a7072cf08fc23fc14f9b4cad71bec',1,'yoi::lexer::lexerState']]],
+  ['possiblevalue_3',['possiblevalue',['../structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item.html#a40a7e3d1bd9f113a993507f2ee530da4',1,'yoi::IROptimizer::SimulationStack::Item::possibleValue'],['../structyoi_1_1IROptimizer_1_1VariablesExtraInfo.html#abde5e8778f624735adbeadb5b5320c1b',1,'yoi::IROptimizer::VariablesExtraInfo::possibleValue']]],
+  ['preserveintermediatefiles_4',['preserveintermediatefiles',['../structyoi_1_1IRBuildConfig.html#a1a4a88a36dafa67834472e12d3d32b23',1,'yoi::IRBuildConfig::preserveIntermediateFiles'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1a4a88a36dafa67834472e12d3d32b23',1,'yoi::IRBuildConfig::Builder::preserveIntermediateFiles']]],
+  ['prev_5',['prev',['../structAllocatedMemoryList.html#a3908af69a0a5208d3919d372a813af51',1,'AllocatedMemoryList']]],
+  ['ptr_6',['ptr',['../unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba',1,'yoi::globalStmt::vValue::ptr'],['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba',1,'yoi::inCodeBlockStmt::vValue::ptr']]]
 ];
