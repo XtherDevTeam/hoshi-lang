@@ -128,8 +128,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"classyoi_1_1BuiltinModuleBuilder.html#a2580086e454bee20cf97f2c5acee25d5",
-"classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be",
+"classyoi_1_1BuiltinModuleBuilder.html#a28c9e3567386a7ce1499749ae4b4091b",
+"classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5",
 "classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882",
 "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0",
 "classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3",
@@ -138,9 +138,9 @@ var NAVTREEINDEX =
 "classyoi_1_1lexer.html#a72993309a1242bc81500cc79f61b7e7b",
 "classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a3c1aac82863ed9e5a9aca8ce687f711d",
 "classyoi_1_1whileStmt.html#a4f12d9ae58f8b4d08debfc33b8042adf",
-"magic__enum_8h.html#acb3aed292286cf34a905529025ba4827",
-"namespaceyoi.html#a258c2f25b921c6fed0c5436b8f3c64d1",
-"parser_8hpp.html#add54fcea8dc58f89d04c81c9e671bdfa",
+"magic__enum_8h.html#acb1293f2bd5702962577def366666364",
+"namespaceyoi.html#a24cd3fa3fc75bba60db94fa711e12e38",
+"parser_8hpp.html#ad6bed038de518d556d4d6d26fffe1075",
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac",
 "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a465289687a70db7aa7217cc240c29f0f",
 "unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a22dcd3dcdb72b540bca86cd2fee0f88d"

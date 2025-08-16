@@ -12,6 +12,7 @@ var classyoi_1_1IRLinker =
     [ "patchInstruction", "classyoi_1_1IRLinker.html#ada00d8f91f78c8cb66320ff58edbf52f", null ],
     [ "patchIRFFITable", "classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54", null ],
     [ "patchType", "classyoi_1_1IRLinker.html#aef9b05044c6e22777734038241214575", null ],
+    [ "patchUniqueKey", "classyoi_1_1IRLinker.html#a9f0f76ec5c871cfadc029767e4c2d822", null ],
     [ "compilerCtx", "classyoi_1_1IRLinker.html#ada29ba25420ceac96b59dbb9944a1ea2", null ],
     [ "entryModuleId", "classyoi_1_1IRLinker.html#a20223d6c01f045c7e8c38e81cd1eed2e", null ],
     [ "finalModule", "classyoi_1_1IRLinker.html#acfa5851de2021841fcd285376b015f5a", null ],
