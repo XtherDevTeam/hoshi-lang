@@ -2567,7 +2567,7 @@ namespace yoi {
                 res = L"incomplete_template_type#" + std::to_wstring(type->typeIndex);
                 break;
             default:
-                panic(0, 0, "Invalid type");
+                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Invalid type");
                 break;
         }
         return res;
@@ -3064,17 +3064,17 @@ namespace yoi {
                 moduleContext->getIRBuilder().newInterfaceOp(toType->typeIndex, toType->typeAffiliateModule != currentModuleIndex, toType->typeAffiliateModule);
                 moduleContext->getIRBuilder().constructInterfaceImplOp(implIndex, rhs->typeAffiliateModule != currentModuleIndex, rhs->typeAffiliateModule);
             } catch (std::out_of_range &e) {
-                panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
+                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
             }
         } else if (toType->type == IRValueType::valueType::structObject) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
             auto constructorName = L"constructor" + getFuncUniqueNameStr({rhs});
             if (structType->nameIndexMap.contains(constructorName)) {
-                panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
+                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
             }
         } else {
-            panic(0, 0, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
+            panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
         }
     }
 

@@ -289,8 +289,6 @@ int main(int argc, const char **argv) {
         std::cerr << "An unexpected error occurred: " << e.what() << std::endl;
         exitCode = 1; 
     }
-
-    
     
     if (!preserveIntermediateFiles && exitCode == 0) {
         for (const auto& file : intermediateFilesToClean) {

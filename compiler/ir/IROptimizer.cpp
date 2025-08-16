@@ -1505,7 +1505,7 @@ namespace yoi {
                         // no predecessor, and no successor, and no instructions, it's empty block, do nothing
                     } else {
                         // has predecessor, but no successor, it's the out block but with empty instructions
-                        warning(0, 0, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                        panic(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
                     }
                     continue;
                 }
@@ -1514,7 +1514,7 @@ namespace yoi {
                     if (targetFunction->returnType->type == IRValueType::valueType::none) {
                         targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetBlock->getIRArray().back().debugInfo});
                     } else {
-                        warning(0, 0, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                        panic(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
                     }
                 }
             }

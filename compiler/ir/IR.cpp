@@ -183,7 +183,7 @@ namespace yoi {
                     managedPtr(IRValueType{IRValueType::valueType::pointerObject});
                 break;
             default: {
-                panic(0, 0, "Unsupported type for basicCast");
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast");
                 break;
             }
         }
@@ -227,7 +227,7 @@ namespace yoi {
                 break;
             }
             default: {
-                panic(0, 0, "Unsupported type for arithmetic operation.");
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for arithmetic operation.");
                 break;
             }
         }
@@ -261,7 +261,7 @@ namespace yoi {
         } else if (constV.type == IROperand::operandType::stringLiteral) {
             tempVarStack.emplace_back(compilerCtx->getStrObjectType());
         } else {
-            panic(0, 0, "Unsupported constant type for pushOp");
+            panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported constant type for pushOp");
         }
         insert({op, {constV}, currentDebugInfo});
     }
@@ -307,7 +307,7 @@ namespace yoi {
                 break;
             }
             default: {
-                panic(0, 0, "Unsupported operand type for storeOp");
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported operand type for storeOp");
                 break;
             }
         }
@@ -953,7 +953,7 @@ namespace yoi {
                 operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
                 break;
             default: 
-                panic(0, 0, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
                 break;
         }
         auto size = 1;
@@ -995,6 +995,7 @@ namespace yoi {
     }
 
     void IRBuilder::setDebugInfo(const IRDebugInfo &debugInfo) {
+        set_current_file_path(debugInfo.sourceFile);
         this->currentDebugInfo = debugInfo;
     }
 

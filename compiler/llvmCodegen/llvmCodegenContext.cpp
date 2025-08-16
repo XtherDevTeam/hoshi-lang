@@ -690,6 +690,7 @@ namespace yoi {
 
         // invoke runtime_debug_report_current_function
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug){
+            set_current_file_path(funcDef.debugInfo.sourceFile);
             Builder->SetCurrentDebugLocation({llvm::DILocation::get(*TheContext, funcDef.debugInfo.line + 1, funcDef.debugInfo.column + 1, currentFunction->getSubprogram())});
             std::string funcName = wstring2string(funcDef.name);
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
@@ -791,6 +792,7 @@ namespace yoi {
     void LLVMCodegen::generateInstruction(const IR& instr, yoi::indexT fromBlock, yoi::indexT toBlock) {
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             auto scope = currentFunction->getSubprogram();
+            set_current_file_path(instr.debugInfo.sourceFile);
             Builder->SetCurrentDebugLocation(llvm::DILocation::get(*TheContext, instr.debugInfo.line + 1, instr.debugInfo.column + 1, scope));
             // insert call to runtime_debug_print extern func
             std::string debugStr = "Performing: " + yoi::wstring2string(instr.to_string());

@@ -49,8 +49,13 @@ namespace yoi {
     using indexT = uint64_t;
     template<typename t>
     using vec = std::vector<t>;
+    extern yoi::wstr __current_file_path;
 
     void parseString(std::wistream &input, wstr &value);
+
+    void set_current_file_path(const std::wstring &path);
+
+    std::wstring get_line_hint_for_error(const std::wstring &file, yoi::indexT line, yoi::indexT col);
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 

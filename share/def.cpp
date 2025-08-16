@@ -2,11 +2,15 @@
 // Created by XIaokang00010 on 2023/2/10.
 //
 
+#include <cstdio>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <share/def.hpp>
 
 namespace yoi {
+    yoi::wstr __current_file_path = L"";
+
     void parseString(std::wistream &input, wstr &value) {
         wchar ch = '\0';
         while (input) {
@@ -60,12 +64,41 @@ namespace yoi {
 
     }
 
+    void set_current_file_path(const std::wstring &path) {
+        __current_file_path = path;
+    }
+    
+    std::wstring get_line_hint_for_error(const std::wstring &file, yoi::indexT line, yoi::indexT col) {
+        std::fstream fileStream(file, std::ios::in);
+        if (!fileStream.is_open()) {
+            return L"";
+        }
+        std::string lineStr;
+        for (yoi::indexT i = 0; i < line; i++) {
+            std::getline(fileStream, lineStr);
+        }
+        std::wstring result = yoi::string2wstring(lineStr) + L"\n";
+        result += std::wstring(col - 1, ' ') + L"^";
+        return result;
+    }
+
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg) {
-        throw std::runtime_error("At line " + std::to_string(line) + " col " + std::to_string(col) + ": " + msg);
+        auto message =  msg;
+        if (!__current_file_path.empty()) {
+            message += " near " + yoi::wstring2string(__current_file_path) + ":" + std::to_string(line + 1) + ":" + std::to_string(col + 1);
+            message += "\n" + yoi::wstring2string(get_line_hint_for_error(__current_file_path, line + 1, col + 1));
+        } else {
+            message += " near line " + std::to_string(line) + " col " + std::to_string(col);
+        }
+
+        throw std::runtime_error(message);
     }
 
     void warning(yoi::indexT line, yoi::indexT col, const std::string& msg) {
-        std::cerr << "[Yoi-lang warning] At line " << line << " col " << col << ": " << msg << std::endl;
+        if (!__current_file_path.empty())
+            std::cerr << "[Yoi-lang warning] " << msg << " near " << yoi::wstring2string(__current_file_path) << ":" << line + 1 << ":" << col + 1 << std::endl;
+        else
+            std::cerr << "[Yoi-lang warning] " << msg << " near line " << line << " col " << col << std::endl;
     }
 
     /**

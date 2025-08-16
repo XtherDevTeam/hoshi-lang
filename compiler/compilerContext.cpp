@@ -74,6 +74,8 @@ namespace yoi {
             yoi::lexer l{std::wstringstream(*b)};
             l.scan();
             delete b;
+            auto current_file = __current_file_path;
+            set_current_file_path(rFilepath);
             hoshiModule *mod;
             yoi::parse(mod, l);
             std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), rFilepath, mod);
@@ -89,6 +91,7 @@ namespace yoi {
                 optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
             }
             finalizeAST(mod);
+            set_current_file_path(current_file);
             return idx;
         }
     }
