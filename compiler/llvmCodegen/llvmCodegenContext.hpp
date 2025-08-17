@@ -173,6 +173,10 @@ namespace yoi {
         llvm::Value *createDynamicArrayObject(const std::shared_ptr<IRValueType> &type,
                                               const yoi::vec<llvm::Value *> &elements,
                                               llvm::Value *size);
+        void storeArrayElement(const std::shared_ptr<IRValueType> &type,
+                               llvm::Value *arrayPtr,
+                               llvm::Value *index,
+                               llvm::Value *value);
     };
 
 } // namespace yoi

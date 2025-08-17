@@ -9,10 +9,11 @@ func main() : int {
         puts("new expr validation failed")
         return 1
     }
-    if (x[2] == 0) {
-        puts("zero initialization validation passed")
+    x[2] = 2333
+    if (x[2] == 2333) {
+        puts("store element validation passed")
     } else {
-        puts("zero initialization validation failed")
+        puts("store element validation failed")
         return 1
     }
     return 0

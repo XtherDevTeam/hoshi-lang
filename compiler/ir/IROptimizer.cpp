@@ -1333,7 +1333,9 @@ namespace yoi {
                     auto array = simulationStack.peek(1);
                     simulationStack.pop();
                     simulationStack.pop();
-                    simulationStack.push(managedPtr(array.type->getElementType()), array.contributedInstructions + index.contributedInstructions);
+                    simulationStack.push(
+                        managedPtr(array.type->getElementType()),
+                        array.contributedInstructions + index.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::store_element: {
@@ -2324,7 +2326,9 @@ namespace yoi {
                     auto array = simulationStack.peek(1);
                     simulationStack.pop();
                     simulationStack.pop();
-                    simulationStack.push(managedPtr(array.type->getElementType()), array.contributedInstructions + index.contributedInstructions);
+                    simulationStack.push(
+                        managedPtr(array.type->getElementType()),
+                        array.contributedInstructions + index.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::store_element: {

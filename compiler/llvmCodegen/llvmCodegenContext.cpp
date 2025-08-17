@@ -1703,6 +1703,26 @@ namespace yoi {
                 callGcFunction(rhs.llvmValue, rhs.yoiType, false);
                 break;
             }
+            case IR::Opcode::store_element: {
+                auto index = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                auto lhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+
+                yoi_assert(lhs.yoiType->isArrayType() || lhs.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element on non-array type.");
+                yoi_assert(index.yoiType->type == IRValueType::valueType::integerObject, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
+                yoi_assert(rhs.yoiType->type == lhs.yoiType->type, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with mismatched type.");
+
+                // unbox index
+                auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
+
+                storeArrayElement(lhs.yoiType, lhs.llvmValue, indexValue, rhs.llvmValue);
+
+                // release resource
+                callGcFunction(index.llvmValue, index.yoiType, false);
+                callGcFunction(rhs.llvmValue, rhs.yoiType, false);
+                callGcFunction(lhs.llvmValue, lhs.yoiType, false);
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:
@@ -3055,5 +3075,24 @@ namespace yoi {
             functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
         }
         Builder->SetInsertPoint(currentInsertPoint);
+    }
+
+    void LLVMCodegen::storeArrayElement(const std::shared_ptr<IRValueType> &type,
+                                        llvm::Value *arrayPtr,
+                                        llvm::Value *index,
+                                        llvm::Value *value) {
+        auto arrayLLVMType = getArrayLLVMType(type);
+        if (type->isBasicType()) {
+            auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
+            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
+            auto elementPointer = Builder->CreateGEP(elementLLVMType, basePointer, {index}, "array_element_ptr");
+            auto val = unboxValue(value, managedPtr(type->getElementType()));
+            Builder->CreateStore(val, elementPointer);
+        } else {
+            // otherwise, store the pointer directly
+            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
+            auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
+            Builder->CreateStore(value, elementPointer);
+        }
     }
 } // namespace yoi
