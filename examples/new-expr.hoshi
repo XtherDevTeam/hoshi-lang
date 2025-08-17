@@ -7,6 +7,13 @@ func main() : int {
         puts("new expr validation passed")
     } else {
         puts("new expr validation failed")
+        return 1
+    }
+    if (x[2] == 0) {
+        puts("zero initialization validation passed")
+    } else {
+        puts("zero initialization validation failed")
+        return 1
     }
     return 0
 }

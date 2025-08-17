@@ -108,9 +108,13 @@ namespace yoi {
 
         bool isArrayType() const;
 
+        bool isDynamicArrayType() const;
+
         IRValueType getElementType();
 
         IRValueType getArrayType(const yoi::vec<yoi::indexT> &dimensions);
+
+        IRValueType getDynamicArrayType();
 
         yoi::wstr to_string() const;
 
@@ -238,6 +242,13 @@ namespace yoi {
             new_array_str,
             new_array_struct,
             new_array_interface,
+            new_dynamic_array_int,
+            new_dynamic_array_deci,
+            new_dynamic_array_bool,
+            new_dynamic_array_char,
+            new_dynamic_array_str,
+            new_dynamic_array_struct,
+            new_dynamic_array_interface,
             throws,
             push_exception_handler,
             pop_exception_handler,
@@ -714,6 +725,8 @@ namespace yoi {
         constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
         void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
+
+        void newDynamicArrayOp(const std::shared_ptr<IRValueType> &elementType, yoi::indexT initializerSize = 0);
 
         void typeIdOp(const std::shared_ptr<IRValueType> &type);
 

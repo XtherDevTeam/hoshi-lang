@@ -38,6 +38,8 @@ namespace yoi {
          */
         yoi::indexT isModuleName(identifierWithTemplateArg *it, yoi::indexT currentModule) const;
 
+        yoi::indexT isModuleName(identifier *it, yoi::indexT currentModule) const;
+
         /**
          * @brief search and return extern entry by identifier in target module
          * @param moduleIndex the index of target module
@@ -164,6 +166,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::dynCastExpression *dynCastExpression);
 
+        yoi::indexT visit(yoi::newExpression *newExpression);
+
         void visit(yoi::codeBlock *codeBlock, bool notEmitNewBlockInstruction = false);
 
         yoi::indexT visit(yoi::useStmt *useStmt);
@@ -182,6 +186,8 @@ namespace yoi {
         IRValueType parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
         IRValueType parseTypeSpec(yoi::typeSpec *typeSpec);
+
+        IRValueType parseTypeSpec(yoi::externModuleAccessExpression *emaExpression);
 
         yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 

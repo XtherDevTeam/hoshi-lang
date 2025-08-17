@@ -908,7 +908,7 @@ namespace yoi {
     }
 
     bool IRValueType::isArrayType() const {
-        return !dimensions.empty();
+        return !dimensions.empty() && dimensions.back() != static_cast<yoi::indexT>(-1);
     }
 
     IRValueType::IRValueType(valueType type,
@@ -1098,5 +1098,51 @@ namespace yoi {
         insert(IR{IR::Opcode::pointer_cast, {}, currentDebugInfo});
         tempVarStack.pop_back();
         tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::pointerObject}));
+    }
+
+    void IRBuilder::newDynamicArrayOp(const std::shared_ptr<IRValueType> &elementType, yoi::indexT initializerSize) {
+        IR::Opcode op = IR::Opcode::nop;
+        yoi::vec<IROperand> operands;
+        switch (elementType->type) {
+            case IRValueType::valueType::integerObject:
+                op = IR::Opcode::new_dynamic_array_int;
+                break;
+            case IRValueType::valueType::booleanObject:
+                op = IR::Opcode::new_dynamic_array_bool;
+                break;
+            case IRValueType::valueType::decimalObject:
+                op = IR::Opcode::new_dynamic_array_deci;
+                break;
+            case IRValueType::valueType::stringObject:
+                op = IR::Opcode::new_dynamic_array_str;
+                break;
+            case IRValueType::valueType::structObject:
+                op = IR::Opcode::new_dynamic_array_struct;
+                operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
+                operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
+                break;
+            case IRValueType::valueType::interfaceObject:
+                op = IR::Opcode::new_dynamic_array_interface;
+                operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
+                operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
+                break;
+            default: 
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
+                break;
+        }
+        operands.emplace_back(IROperand::operandType::index, initializerSize);
+        insert(IR{op, operands, currentDebugInfo});
+        for (yoi::indexT i = 0; i <= initializerSize; i++) {
+            tempVarStack.pop_back(); // size and initializer
+        }
+        tempVarStack.push_back(managedPtr(elementType->getDynamicArrayType()));
+    }
+
+    IRValueType IRValueType::getDynamicArrayType() {
+        return {type, typeAffiliateModule, typeIndex, {static_cast<yoi::indexT>(-1)}};
+    }
+
+    bool IRValueType::isDynamicArrayType() const {
+        return dimensions.size() == 1 && dimensions.back() == static_cast<yoi::indexT>(-1);
     }
 } // namespace yoi

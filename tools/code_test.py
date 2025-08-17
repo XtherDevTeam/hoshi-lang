@@ -24,6 +24,7 @@ TEST_CASES = {
     "worklist": {"type": "executable", "return_code": 78},
     "null-interface": {"type": "executable", "return_code": 0},
     "null": {"type": "executable", "return_code": 0},
+    "new-expr": {"type": "executable", "return_code": 0},
 }
 
 

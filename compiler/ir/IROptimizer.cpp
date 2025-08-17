@@ -1417,6 +1417,54 @@ namespace yoi {
                     simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, true});
                     break;
                 }
+                case IR::Opcode::new_dynamic_array_int: 
+                case IR::Opcode::new_dynamic_array_bool:
+                case IR::Opcode::new_dynamic_array_char:
+                case IR::Opcode::new_dynamic_array_deci:
+                case IR::Opcode::new_dynamic_array_str:
+                case IR::Opcode::new_dynamic_array_struct:
+                case IR::Opcode::new_dynamic_array_interface: {
+                    std::shared_ptr<IRValueType> baseType;
+                    switch (ins.opcode) {
+                        case IR::Opcode::new_dynamic_array_int:
+                            baseType = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_bool:
+                            baseType = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_char:
+                            baseType = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_deci:
+                            baseType = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_str:
+                            baseType = compilerCtx->getStrObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_interface:
+                            baseType = managedPtr(IRValueType{
+                                IRValueType::valueType::interfaceObject, 
+                                ins.operands[0].value.symbolIndex,
+                                ins.operands[1].value.symbolIndex
+                            });
+                            break;
+                        case IR::Opcode::new_dynamic_array_struct:
+                            baseType = managedPtr(IRValueType{
+                                IRValueType::valueType::structObject, 
+                                ins.operands[0].value.symbolIndex,
+                                ins.operands[1].value.symbolIndex
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+
+                    for (yoi::indexT i = 0; i < ins.operands.back().value.symbolIndex; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getDynamicArrayType()), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -2220,6 +2268,54 @@ namespace yoi {
                         simulationStack.pop();
                     }
                     simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::new_dynamic_array_int: 
+                case IR::Opcode::new_dynamic_array_bool:
+                case IR::Opcode::new_dynamic_array_char:
+                case IR::Opcode::new_dynamic_array_deci:
+                case IR::Opcode::new_dynamic_array_str:
+                case IR::Opcode::new_dynamic_array_struct:
+                case IR::Opcode::new_dynamic_array_interface: {
+                    std::shared_ptr<IRValueType> baseType;
+                    switch (ins.opcode) {
+                        case IR::Opcode::new_dynamic_array_int:
+                            baseType = compilerCtx->getIntObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_bool:
+                            baseType = compilerCtx->getBoolObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_char:
+                            baseType = compilerCtx->getCharObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_deci:
+                            baseType = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_str:
+                            baseType = compilerCtx->getStrObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_interface:
+                            baseType = managedPtr(IRValueType{
+                                IRValueType::valueType::interfaceObject, 
+                                ins.operands[0].value.symbolIndex,
+                                ins.operands[1].value.symbolIndex
+                            });
+                            break;
+                        case IR::Opcode::new_dynamic_array_struct:
+                            baseType = managedPtr(IRValueType{
+                                IRValueType::valueType::structObject, 
+                                ins.operands[0].value.symbolIndex,
+                                ins.operands[1].value.symbolIndex
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+
+                    for (yoi::indexT i = 0; i < ins.operands.back().value.symbolIndex; i++) {
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(managedPtr(baseType->getDynamicArrayType()), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::load_element: {

@@ -149,6 +149,8 @@ namespace yoi {
         const std::shared_ptr<IRValueType> &normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
+        llvm::Type *getDynamicArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
+        void generateArrayGCFunctions(const std::shared_ptr<IRValueType> &type, llvm::StructType *structType, llvm::Type *baseType);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
 
@@ -168,6 +170,9 @@ namespace yoi {
         llvm::Value *createArrayObject(const std::shared_ptr<IRValueType> &type,
                                        const yoi::vec<llvm::Value *> &elements);
         llvm::DIType *getDIType(const std::shared_ptr<IRValueType> &type);
+        llvm::Value *createDynamicArrayObject(const std::shared_ptr<IRValueType> &type,
+                                              const yoi::vec<llvm::Value *> &elements,
+                                              llvm::Value *size);
     };
 
 } // namespace yoi

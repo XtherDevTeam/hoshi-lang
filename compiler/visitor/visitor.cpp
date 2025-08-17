@@ -140,6 +140,10 @@ namespace yoi {
                 visit(primary->dynCast);
                 break;
             }
+            case 5: {
+                visit(primary->newExpr);
+                break;
+            }
             default: {
                 panic(primary->getLine(), primary->getColumn(), "Unexpected primary type");
             }
@@ -1335,7 +1339,7 @@ namespace yoi {
 
             if (currentTerm->isSubscript()) {
                 // Case 3: Array access `...[index]`
-                yoi_assert(objectOnStackType->isArrayType(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array access is not valid on non-array type.");
+                yoi_assert(objectOnStackType->isArrayType() || objectOnStackType->isDynamicArrayType(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array access is not valid on non-array type.");
                 const auto& dimensions = objectOnStackType->dimensions;
                 yoi::vec<yoi::indexT> strides(dimensions.size());
                 strides.back() = 1; // Stride of the last dimension is always 1.
@@ -2436,13 +2440,7 @@ namespace yoi {
 
     yoi::indexT visitor::isModuleName(identifierWithTemplateArg *it, yoi::indexT currentModule) const {
         if (!it->hasTemplateArg()) {
-            std::shared_ptr<yoi::IRModule> target =
-                currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getImportedModule(currentModule);
-            if (auto x = target->moduleImports.find(it->getId().node.strVal); x != target->moduleImports.end()) {
-                return x->second;
-            } else {
-                return -1;
-            }
+            return isModuleName(it->id, currentModule);
         } else {
             return -1;
         }
@@ -3140,5 +3138,40 @@ namespace yoi {
             }
         }
         return std::move(res);
+    }
+
+    yoi::indexT visitor::visit(yoi::newExpression *newExpression) {
+        auto baseType = parseTypeSpec(newExpression->type);
+        for (auto &i : newExpression->args->get()) {
+            visit(i);
+            tryCastTo(managedPtr(baseType));
+        }
+        visit(newExpression->length->expr);
+        moduleContext->getIRBuilder().newDynamicArrayOp(managedPtr(baseType), newExpression->args->get().size());
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::isModuleName(identifier *it, yoi::indexT currentModule) const {
+        std::shared_ptr<yoi::IRModule> target =
+            currentModule == -1 ? irModule : moduleContext->getCompilerContext()->getImportedModule(currentModule);
+        if (auto x = target->moduleImports.find(it->node.strVal); x != target->moduleImports.end()) {
+            return x->second;
+        } else {
+            return -1;
+        }
+    }
+
+    IRValueType visitor::parseTypeSpec(yoi::externModuleAccessExpression *emaExpression) {
+        auto it = emaExpression->getTerms().begin();
+        yoi::indexT targetModule = -1;
+        while (it + 1 != emaExpression->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
+            it++;
+        }
+
+        bool whetherLastTerm = it + 1 == emaExpression->getTerms().end();
+        if (targetModule == -1 || targetModule == currentModuleIndex)
+            return parseTypeSpec((*it));
+        else
+            return parseTypeSpecExtern((*it), targetModule);
     }
 } // namespace yoi

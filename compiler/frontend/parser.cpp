@@ -563,6 +563,7 @@ namespace yoi {
         parse(f, lex);
         if (f) {
             o = new primary{node_start_token, 5, nullptr, nullptr, nullptr, nullptr, nullptr, f};
+            return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan(); // Consume '('

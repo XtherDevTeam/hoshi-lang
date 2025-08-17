@@ -252,10 +252,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::new_struct:
                     case IR::Opcode::new_array_struct:
+                    case IR::Opcode::new_dynamic_array_struct:
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::new_interface:
                     case IR::Opcode::new_array_interface:
+                    case IR::Opcode::new_dynamic_array_interface:
                         newInstr.operands[1].value.symbolIndex = interfaceRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::construct_interface_impl:
