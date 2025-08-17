@@ -1714,7 +1714,6 @@ namespace yoi {
 
                 // unbox index
                 auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
-
                 storeArrayElement(lhs.yoiType, lhs.llvmValue, indexValue, rhs.llvmValue);
 
                 // release resource

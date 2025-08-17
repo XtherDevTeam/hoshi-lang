@@ -2374,7 +2374,8 @@ namespace yoi {
                            typeSpec->getLine(),
                            typeSpec->getColumn(),
                            "Type specifier is not valid.");
-                return lhs;
+                
+                return typeSpec->hasArrayTypeSpec ? lhs.getDynamicArrayType() : lhs;
             }
             case 1: {
                 // func
@@ -3055,6 +3056,8 @@ namespace yoi {
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         if (*rhs == *toType) {
             return;
+        } else if (rhs->isArrayType() && toType->isDynamicArrayType()) {
+            return; // two type of array is ABI compatible
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
             emitBasicCastTo(toType);
         } else if (toType->type == IRValueType::valueType::interfaceObject) {

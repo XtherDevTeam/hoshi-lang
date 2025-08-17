@@ -13,3 +13,14 @@ func test() : int {
     return arr[1]; // copy this element and return a new object
 }
 ```
+
+# Dynamic array and array
+
+动态数组在 hoshi-lang 原生语法中指运行时确定大小的数组，其大小可以通过 lang.HasLength 接口获取（暂未实现）。其 ABI 与普通数组的 ABI 相同，拥有相同的对象头，但类型 ID 不同。
+
+数组类型在作为参数或返回值离开函数时，其类型将自动转换为动态数组，若存在多个维度，则会展平为一维数组。
+
+详细例子见如下：
+
+- 1. 动态数组类型定义及跨函数传参 `examples/array-type-spec.hoshi`
+- 2. 动态数组的定义和使用 `examples/new-expr.hoshi`

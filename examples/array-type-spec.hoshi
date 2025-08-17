@@ -1,0 +1,17 @@
+import puts(str: string) : int32 from "builtin"
+
+func get_first_element(arr: int[]) : int {
+    return arr[0]
+}
+
+func main() : int {
+    let arr = new int[3](1, 2, 3)
+    let first_element = get_first_element(arr)
+    if (first_element == 1) {
+        puts("array type spec validation passed")
+    } else {
+        puts("array type spec validation failed")
+        return 1
+    }
+    return 0
+}

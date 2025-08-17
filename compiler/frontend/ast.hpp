@@ -252,6 +252,7 @@ namespace yoi {
         externModuleAccessExpression *member;
         funcTypeSpec *func;
         bool isNull;
+        bool hasArrayTypeSpec;
 
         externModuleAccessExpression &getMemberExpr() const;
 

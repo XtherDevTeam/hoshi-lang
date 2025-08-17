@@ -328,11 +328,37 @@ namespace yoi {
         }
         parse(spec, lex);
         if (spec) {
-            o = new typeSpec{node_start_token, 1, nullptr, spec, false};
+            if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+                lex.scan();
+                if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                    lex.scan();
+                    o = new typeSpec{node_start_token, 1, nullptr, spec, false, true};
+                    return;
+                } else {
+                    panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
+                    finalizeAST(spec);
+                    o = nullptr;
+                    return;
+                }
+            }
+            o = new typeSpec{node_start_token, 1, nullptr, spec, false, true};
             return;
         }
         parse(expr, lex);
         if (expr) {
+            if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+                lex.scan();
+                if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                    lex.scan();
+                    o = new typeSpec{node_start_token, 0, expr, nullptr, false, true};
+                    return;
+                } else {
+                    panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
+                    finalizeAST(expr);
+                    o = nullptr;
+                    return;
+                }
+            }
             o = new typeSpec{node_start_token, 0, expr, nullptr, false};
             return;
         }
