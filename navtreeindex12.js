@@ -1,5 +1,7 @@
 var NAVTREEINDEX12 =
 {
+"namespacemagic__enum_1_1detail.html#ac4717faff31a07166b455da5587a53a6":[12,0,0,2,22],
+"namespacemagic__enum_1_1detail.html#ac81bf63e9714ebae6454cdf3a3926495":[12,0,0,2,55],
 "namespacemagic__enum_1_1detail.html#acb1293f2bd5702962577def366666364":[12,0,0,2,39],
 "namespacemagic__enum_1_1detail.html#acb3aed292286cf34a905529025ba4827":[12,0,0,2,50],
 "namespacemagic__enum_1_1detail.html#ad199196ae1c832783469e5976be398a6":[12,0,0,2,51],
@@ -247,7 +249,5 @@ var NAVTREEINDEX12 =
 "parser_8cpp.html#a6fbcc9eb2eac7faf4e7d5d36c100b681":[14,0,0,0,4,45],
 "parser_8cpp.html#a7e6d49c2baf5a9e588bf42ec8626777f":[14,0,0,0,4,33],
 "parser_8cpp.html#a807c90715ad772fafda4bd579c1e959e":[14,0,0,0,4,53],
-"parser_8cpp.html#a8162a293864d33f6df103754942452d7":[14,0,0,0,4,13],
-"parser_8cpp.html#a83dda98187b49736d8c0e3fe0f1c1647":[14,0,0,0,4,31],
-"parser_8cpp.html#a85930150373b5070a43cabf5798095a5":[14,0,0,0,4,5]
+"parser_8cpp.html#a8162a293864d33f6df103754942452d7":[14,0,0,0,4,13]
 };

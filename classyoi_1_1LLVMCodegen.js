@@ -47,6 +47,7 @@ var classyoi_1_1LLVMCodegen =
     [ "handleForeignTypeConv", "classyoi_1_1LLVMCodegen.html#a32544ab07ace15e5dca36a637c45b8f1", null ],
     [ "loadArrayElement", "classyoi_1_1LLVMCodegen.html#a194b0d71e92a857182fa141896bcd171", null ],
     [ "normalizeForeignType", "classyoi_1_1LLVMCodegen.html#a85d3b5e48291b30d8391bea2b6d01c46", null ],
+    [ "storeArrayElement", "classyoi_1_1LLVMCodegen.html#a2e0b929996ec1d432686d584e04cb0d9", null ],
     [ "unboxValue", "classyoi_1_1LLVMCodegen.html#a5e4d8510114ee30df367dfefeb57b165", null ],
     [ "yoiTypeToLLVMType", "classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242", null ],
     [ "arrayTypeDIMap", "classyoi_1_1LLVMCodegen.html#ace32b6d8fae5f03431b356f018c582ac", null ],
