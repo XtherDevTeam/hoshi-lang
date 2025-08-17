@@ -105,7 +105,11 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[ ] 编译器为 TypeInfo 结构体开洞</li>
 <li>[-] 为 <code>import</code> <code>export</code> 增加 <code>noffi</code> 关键字</li>
 <li>[ ] 加入原生动态创建数组</li>
-<li>[ ] 对因为 <code>dyn_cast</code> 造成的额外 <code>null-check</code> 进行优化。 </li>
+<li>[ ] 对因为 <code>dyn_cast</code> 造成的额外 <code>null-check</code> 进行优化。<ul>
+<li>[ ] 在 IRValueType 中加入 <code>attrs</code> 字段用于存放变量属性</li>
+<li>[ ] 在 llvmCodegen 阶段对 IRValueType 加入 <code>Nullable</code> 属性检查，存在的情况下才进行 <code>null-check</code> </li>
+</ul>
+</li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

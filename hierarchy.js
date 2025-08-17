@@ -51,6 +51,7 @@ var hierarchy =
       [ "logicalOrExpr", "classyoi_1_1logicalOrExpr.html", null ],
       [ "memberExpr", "classyoi_1_1memberExpr.html", null ],
       [ "mulExpr", "classyoi_1_1mulExpr.html", null ],
+      [ "newExpression", "classyoi_1_1newExpression.html", null ],
       [ "primary", "classyoi_1_1primary.html", null ],
       [ "rExpr", "classyoi_1_1rExpr.html", null ],
       [ "relationalExpr", "classyoi_1_1relationalExpr.html", null ],

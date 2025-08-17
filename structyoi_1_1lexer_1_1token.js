@@ -81,6 +81,7 @@ var structyoi_1_1lexer_1_1token =
       [ "kDynCast", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2cf89fd1b72127b3eaf5008b6b46b5d8", null ],
       [ "kNoFFI", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb", null ],
       [ "kAlwaysInline", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab5152fa9f8596245f455b7f939f7e9fd", null ],
+      [ "kNew", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aaf1adf7ec3673b4f5765cfbc5d43b7dc", null ],
       [ "eof", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b", null ]
     ] ],
     [ "token", "structyoi_1_1lexer_1_1token.html#ad854e194dde5dc5422ee0f3221e48ba5", null ],

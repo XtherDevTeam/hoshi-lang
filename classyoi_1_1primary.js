@@ -8,5 +8,6 @@ var classyoi_1_1primary =
     [ "kind", "classyoi_1_1primary.html#a1ff48142dcc5361a83f3f3de3439c196", null ],
     [ "literals", "classyoi_1_1primary.html#aac8d6171663a5c7c56b813d33e1aa196", null ],
     [ "member", "classyoi_1_1primary.html#a6d93cd5e69cd6787791e5a53de459937", null ],
+    [ "newExpr", "classyoi_1_1primary.html#ab680483a779de354d82c9a89f71e8991", null ],
     [ "typeId", "classyoi_1_1primary.html#ae2d09c4a95bddb54ffc561db1f18b3d7", null ]
 ];

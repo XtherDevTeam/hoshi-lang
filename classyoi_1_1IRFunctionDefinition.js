@@ -3,6 +3,7 @@ var classyoi_1_1IRFunctionDefinition =
     [ "Builder", "structyoi_1_1IRFunctionDefinition_1_1Builder.html", "structyoi_1_1IRFunctionDefinition_1_1Builder" ],
     [ "FunctionAttrs", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445", [
       [ "AlwaysInline", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7", null ],
+      [ "BuiltinImplementation", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f", null ],
       [ "NoFFI", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a", null ]
     ] ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html#a89c653b9e1bb756b2b4d29b2b97941c2", null ],

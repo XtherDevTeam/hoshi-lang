@@ -22,13 +22,14 @@ var searchData=
   ['kin_19',['kIn',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32adb7843524af7e7869b18c9838fd67675',1,'yoi::lexer::token']]],
   ['kinterface_20',['kInterface',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a14cac91973cdf5d0947c2d40c421c6c6',1,'yoi::lexer::token']]],
   ['klet_21',['kLet',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af8fdca8637b6b0964d5c47c7df466c14',1,'yoi::lexer::token']]],
-  ['knoffi_22',['kNoFFI',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb',1,'yoi::lexer::token']]],
-  ['knull_23',['kNull',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af2655c2dee87cb9b0646f678a630394b',1,'yoi::lexer::token']]],
-  ['kreturn_24',['kReturn',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad7ec42086e89c1b1ffe3a16edfc12ef3',1,'yoi::lexer::token']]],
-  ['kstruct_25',['kStruct',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a37d24e1221658f0e0333a512fdbcd2f0',1,'yoi::lexer::token']]],
-  ['kthrow_26',['kThrow',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a35130bbee286ecb2905a1eacbddb309d',1,'yoi::lexer::token']]],
-  ['ktry_27',['kTry',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a96067ed75b570c414df5f392c0f00dbd',1,'yoi::lexer::token']]],
-  ['ktypeid_28',['kTypeId',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a801ae6277601f775ca52dc2d47c0ab23',1,'yoi::lexer::token']]],
-  ['kuse_29',['kUse',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81',1,'yoi::lexer::token']]],
-  ['kwhile_30',['kWhile',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32acb3bcda1cfaa23e65a3aeca631306cb7',1,'yoi::lexer::token']]]
+  ['knew_22',['kNew',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aaf1adf7ec3673b4f5765cfbc5d43b7dc',1,'yoi::lexer::token']]],
+  ['knoffi_23',['kNoFFI',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb',1,'yoi::lexer::token']]],
+  ['knull_24',['kNull',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af2655c2dee87cb9b0646f678a630394b',1,'yoi::lexer::token']]],
+  ['kreturn_25',['kReturn',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad7ec42086e89c1b1ffe3a16edfc12ef3',1,'yoi::lexer::token']]],
+  ['kstruct_26',['kStruct',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a37d24e1221658f0e0333a512fdbcd2f0',1,'yoi::lexer::token']]],
+  ['kthrow_27',['kThrow',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a35130bbee286ecb2905a1eacbddb309d',1,'yoi::lexer::token']]],
+  ['ktry_28',['kTry',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a96067ed75b570c414df5f392c0f00dbd',1,'yoi::lexer::token']]],
+  ['ktypeid_29',['kTypeId',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a801ae6277601f775ca52dc2d47c0ab23',1,'yoi::lexer::token']]],
+  ['kuse_30',['kUse',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81',1,'yoi::lexer::token']]],
+  ['kwhile_31',['kWhile',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32acb3bcda1cfaa23e65a3aeca631306cb7',1,'yoi::lexer::token']]]
 ];

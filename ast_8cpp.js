@@ -47,6 +47,7 @@ var ast_8cpp =
     [ "finalizeAST", "ast_8cpp.html#ac7db98486b8d2e0073eca9b17b6dcafe", null ],
     [ "finalizeAST", "ast_8cpp.html#a587b86f15e226645c6a5ce3774aaf073", null ],
     [ "finalizeAST", "ast_8cpp.html#a0f18b1f65be512f512f24b847704ba55", null ],
+    [ "finalizeAST", "ast_8cpp.html#ac46a61e8e62be6278c24d761055a296d", null ],
     [ "finalizeAST", "ast_8cpp.html#a212200130fd33613aae46e8c38a53c52", null ],
     [ "finalizeAST", "ast_8cpp.html#a8e64f3cb3f699410f5015730d01bcf52", null ],
     [ "finalizeAST", "ast_8cpp.html#af334e312924220e8ce45898da4017d54", null ],

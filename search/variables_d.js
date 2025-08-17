@@ -4,8 +4,9 @@ var searchData=
   ['namedvalues_1',['namedValues',['../classyoi_1_1LLVMCodegen.html#a1fdc1fa70853fed7583972fb179826a2',1,'yoi::LLVMCodegen']]],
   ['nameindexmap_2',['nameindexmap',['../classyoi_1_1IRStructDefinition.html#ad661f5d7ca3f0d517973fe899e5f402a',1,'yoi::IRStructDefinition::nameIndexMap'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#ad661f5d7ca3f0d517973fe899e5f402a',1,'yoi::IRStructDefinition::Builder::nameIndexMap']]],
   ['names_5fv_3',['names_v',['../namespacemagic__enum_1_1detail.html#a1cca286e38a67a2227eb2d9e620d1a98',1,'magic_enum::detail']]],
-  ['next_4',['next',['../structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1',1,'AllocatedMemoryList']]],
-  ['nexttypeid_5',['nextTypeId',['../classyoi_1_1LLVMCodegen.html#a4bb5ce97f9b3a8dd56defafb829a63b7',1,'yoi::LLVMCodegen']]],
-  ['node_6',['node',['../classyoi_1_1basicLiterals.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::basicLiterals::node'],['../classyoi_1_1identifier.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::identifier::node']]],
-  ['noneobjectsingleton_7',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]]
+  ['newexpr_4',['newExpr',['../classyoi_1_1primary.html#ab680483a779de354d82c9a89f71e8991',1,'yoi::primary']]],
+  ['next_5',['next',['../structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1',1,'AllocatedMemoryList']]],
+  ['nexttypeid_6',['nextTypeId',['../classyoi_1_1LLVMCodegen.html#a4bb5ce97f9b3a8dd56defafb829a63b7',1,'yoi::LLVMCodegen']]],
+  ['node_7',['node',['../classyoi_1_1basicLiterals.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::basicLiterals::node'],['../classyoi_1_1identifier.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::identifier::node']]],
+  ['noneobjectsingleton_8',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]]
 ];

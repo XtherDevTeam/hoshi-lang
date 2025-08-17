@@ -115,6 +115,7 @@ var annotated_dup =
       [ "memberExpr", "classyoi_1_1memberExpr.html", "classyoi_1_1memberExpr" ],
       [ "moduleContext", "classyoi_1_1moduleContext.html", "classyoi_1_1moduleContext" ],
       [ "mulExpr", "classyoi_1_1mulExpr.html", "classyoi_1_1mulExpr" ],
+      [ "newExpression", "classyoi_1_1newExpression.html", "classyoi_1_1newExpression" ],
       [ "ObjectLinker", "classyoi_1_1ObjectLinker.html", "classyoi_1_1ObjectLinker" ],
       [ "primary", "classyoi_1_1primary.html", "classyoi_1_1primary" ],
       [ "relationalExpr", "classyoi_1_1relationalExpr.html", "classyoi_1_1relationalExpr" ],
