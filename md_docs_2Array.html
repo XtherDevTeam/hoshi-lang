@@ -100,7 +100,16 @@ $(document).ready(function(){initNavTree('md_docs_2Array.html',''); initResizabl
 <div class="line">    let arr = int[10](1, 2, 3, 4, 5, 6, 7, 8, 9, 10);</div>
 <div class="line">    return arr[1]; // copy this element and return a new object</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1"></a>
+Dynamic array and array</h1>
+<p>动态数组在 hoshi-lang 原生语法中指运行时确定大小的数组，其大小可以通过 lang.HasLength 接口获取（暂未实现）。其 ABI 与普通数组的 ABI 相同，拥有相同的对象头，但类型 ID 不同。</p>
+<p>数组类型在作为参数或返回值离开函数时，其类型将自动转换为动态数组，若存在多个维度，则会展平为一维数组。</p>
+<p>详细例子见如下：</p>
+<ul>
+<li>1. 动态数组类型定义及跨函数传参 <code>examples/array-type-spec.hoshi</code></li>
+<li>2. 动态数组的定义和使用 <code>examples/new-expr.hoshi</code> </li>
+</ul>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

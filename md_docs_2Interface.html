@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('md_docs_2Interface.html',''); initResi
   <div class="headertitle"><div class="title">接口设计</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a> 接口在中间代码分为 <code>InterfaceImplmentation</code> 和 <code>InterfaceInstance</code></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md3"></a> 接口在中间代码分为 <code>InterfaceImplmentation</code> 和 <code>InterfaceInstance</code></p>
 <p>其中，InterfaceImplmentation 指不同 struct 对 interface 的实现，与类型强相关，而 <code>InterfaceInstance</code> 则是 struct 被实例化的接口，已与 struct 类型无关。</p>
 <p>InterfaceInstance 为一个特殊化的 struct 对象，由一个指向对应 struct 的指针和一族方法指针组成。</p>
 <p>不同 struct 的同一 interface，其实例化后的 instance 仍可通用，其 <code>gc_refcount_increase</code> 和 <code>gc_refcount_decrese</code> 也为函数指针，指向对应实现的处理方法，无需担心未被正常释放。</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 new 语句设计</h1>
 <p>创建的对象不论 object 和 interface 统统分配在堆上，由运行时函数统一开辟空间，对于 new object 的过程大致如下：</p>
 <ol type="1">

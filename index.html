@@ -94,11 +94,11 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<h1><a class="anchor" id="autotoc_md57"></a>
+<h1><a class="anchor" id="autotoc_md58"></a>
 Intro</h1>
 <p>I've made dynamic-typed language for serval years, now I'm trying to make something new. I'm going to make a static-typed, strong-typed programming language which supports modern programming design like <code>Generic Programming</code> <code>Object Oriented Programming</code>.</p>
 <p>**Design Ideas: **Concise, Strong, Fast.</p>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md59"></a>
 Syntax</h1>
 <div class="fragment"><div class="line">use io &quot;std/io&quot;;</div>
 <div class="line"> </div>
@@ -139,16 +139,16 @@ Syntax</h1>
 <div class="line">  return 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Here is an example.</p>
-<h1><a class="anchor" id="autotoc_md59"></a>
+<h1><a class="anchor" id="autotoc_md60"></a>
 OOP</h1>
 <p>我他妈直接快进</p>
 <p>OOP为组合模式，傻逼继承，谁写继承模式谁傻逼。<code>yoi-lang</code> 的 OOP 由三个部分组成，<code>interface</code> 接口、<code>struct</code> 结构体、<code>impl</code> 实现接口。</p>
 <p><code>interface</code> 是抽象接口，包含一组方法和成员，可以被 <code>struct</code> 实现。<code>interface</code> 里只包含方法的声明，不包含实现，实现由 <code>struct</code> 完成。</p>
 <p><code>struct</code> 可以使用 <code>impl :</code> 结构实现接口。语法如 <code>impl [interface] : [struct] { implmentation }</code>。</p>
-<h1><a class="anchor" id="autotoc_md60"></a>
+<h1><a class="anchor" id="autotoc_md61"></a>
 Ref</h1>
 <p>引用可以理解为与原来对象具有相同内存地址的对象。使用 <code>&amp;object</code> 来获取一个对象的引用。函数传递参数时可以使用引用来传递，E.g. <code>func a(arg: s_a&amp;)</code> 这行声明的参数 <code>arg</code> 传递 <code>s_a</code> 的引用，而不会复制构造一个新的对象。</p>
-<h1><a class="anchor" id="autotoc_md61"></a>
+<h1><a class="anchor" id="autotoc_md62"></a>
 Objects</h1>
 <p>在此处，**所有数据类型**均为对象，除了 <code>integerRaw</code> 等原始类型在 push 时被转换为 object，在 <code>integerObject</code> 参与运算时解引用获得 <code>raw</code> 类型之外，在 LLVM IR 生成过程中栈上的**均为指向对应空间的指针类型**。 在 push 系列命令中，所有字面值将全部转换为对应的 integerObject、booleanObject、decimalObject。在 llvmCodegen 中可创建对应的 helper function 用于生成指定字面值的对象，在 llvmCodegen 初始化时完成基础类型对应 object 的 llvm struct 和 gc_x 函数创建工作。</p>
 <p>**所有**对象（基础数据类型如 <code>int</code> <code>deci</code> <code>bool</code> <code>char</code>、接口、结构体）在创建过程中，或作为右值被传递时，均会更新引用计数（减小原对象（若存在）引用计数，增加新对象引用计数）。 同理，在销毁过程中，作为右值参与运算结束，会减小原对象引用计数。 当引用计数变为 0 时，自动销毁。</p>
@@ -162,7 +162,7 @@ Objects</h1>
 <li>若引用计数小于或等于0，则调用提前声明的 <code>runtime_finalize_object(void* objectPtr)</code> 进行销毁</li>
 </ol>
 <p>对于 structObject， <code>gc_refcount_increase</code> / <code>gc_refcount_decrease</code> 系列函数应在 llvmCodegen 创建数据类型时一并创建，并实现对应功能，在 llvmCodegen 实现可创建对应 helper function 模块化该过程。</p>
-<h1><a class="anchor" id="autotoc_md62"></a>
+<h1><a class="anchor" id="autotoc_md63"></a>
 GC</h1>
 <p>GC的实现有点清奇，基本为引用计数模式，当对象创建时，会更新计数，引用被创建时也会更新计数，当对象或引用离开当前作用域时，就会减少计数。当最后一次减少计数操作发生时，便会调用 <code>runtime</code> 提供的函数销毁对象。</p>
 <p>更新计数和减少计数可以通过在对象生成一个名为 <code>gc_refcount_increase</code> 和 <code>gc_refcount_decrease</code> 的方法来完成，更新计数时调用 <code>gc_refcount_increase</code> 来完成，减少计数时调用 <code>gc_refcount_decrease</code> 来完成。这样可以确保更新到对象里面的对象指针。</p>
@@ -184,7 +184,7 @@ GC</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">31 byte ~ ...   </td><td class="markdownTableBodyNone">virtual method pointers to methods defined in <code>interfaceObject</code>   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md63"></a>
+<h1><a class="anchor" id="autotoc_md64"></a>
 Module</h1>
 <p><code>yoi-lang</code> 提供了将项目模块化的功能，使用 <code>use</code> 语句即可导入模块。</p>
 <p>如 <code>use io "std/io"</code> 就是从 <code>hoshiModulesPath</code> 中寻找 <code>std/io</code> 这个模块并使用 <code>io</code> 这个名字导入。</p>
@@ -192,9 +192,9 @@ Module</h1>
 <p>在引入目录形式的模块时会导入目录下的所有 <code>yoi</code> 源文件。</p>
 <p>当检测到重复模块加载时，会使用已经处理完成的 <code>AST</code> 挂载到 <code>use</code> 语句，<code>yoi-lang</code> 编译器内部会维护一个序号 <code>hoshiModuleId</code> 在加载模组时会使用当前序号当作当前导入模组的ID，将其十六进制化后添加到符号名头部。主包不作处理。</p>
 <p><code>use</code> 语句会先使用指定的 <code>prefix</code> 编译指定的模块，然后在符号表加入模块的别名。</p>
-<h1><a class="anchor" id="autotoc_md64"></a>
+<h1><a class="anchor" id="autotoc_md65"></a>
 Generic</h1>
-<h2><a class="anchor" id="autotoc_md65"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 Template arguments</h2>
 <p><code>Generic Programming</code> 将会是 <code>yoi-lang</code> 的一大重要特性，<code>yoi-lang</code> 主要使用 <code>template</code> 来实现 <code>GP</code>，<code>template</code> 即模板，在类或函数声明时的标识符后加上 <code>&lt;&gt;</code> 符号来声明一个模板类或函数的模板参数。</p>
 <p>E.g.</p>
@@ -217,7 +217,7 @@ Template arguments</h2>
 <div class="line">    return;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md66"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md67"></a>
 Variadic arguments</h1>
 <p><code>Variadic arguments (变长参数)</code> 是 <code>GP</code> 的一个附带特性，在模板函数中，<code>vaArgs</code> 是变长参数的模板类型，可放于函数参数尾部接收变长参数。</p>
 <p>E.g.</p>
@@ -226,7 +226,7 @@ Variadic arguments</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>上例是使用变长参数 <code>args</code> 调用函数 <code>f</code> 的例子。</p>
 <p>此外，当使用变长参数去调用只含有单参数的函数时，会自动展开为多次函数调用；当变长参数对象被放置在调用参数尾部进行调用时，会自动添加这些参数到调用参数尾部。</p>
-<h1><a class="anchor" id="autotoc_md67"></a>
+<h1><a class="anchor" id="autotoc_md68"></a>
 Syntax definition</h1>
 <p>Check <a href="/Syntax.bnf">here</a> </p>
 </div></div><!-- PageDoc -->
