@@ -9,3 +9,5 @@
 - [-] 为 `import` `export` 增加 `noffi` 关键字
 - [ ] 加入原生动态创建数组
 - [ ] 对因为 `dyn_cast` 造成的额外 `null-check` 进行优化。
+    - [ ] 在 IRValueType 中加入 `attrs` 字段用于存放变量属性
+    - [ ] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`

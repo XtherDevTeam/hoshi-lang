@@ -1052,4 +1052,10 @@ namespace yoi {
         if (ptr->type)
             finalizeAST(ptr->type);
     }
+    
+    void finalizeAST(newExpression *ptr) {
+        finalizeAST(ptr->type);
+        finalizeAST(ptr->type);
+        finalizeAST(ptr->args);
+    }
 } // namespace yoi

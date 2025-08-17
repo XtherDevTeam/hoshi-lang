@@ -324,6 +324,7 @@ namespace yoi {
       public:
         enum class FunctionAttrs {
             AlwaysInline,
+            BuiltinImplementation,
             NoFFI,
         };
 

@@ -98,6 +98,7 @@ namespace yoi {
                 kDynCast,
                 kNoFFI,
                 kAlwaysInline,
+                kNew,
                 eof,
             } kind;
 

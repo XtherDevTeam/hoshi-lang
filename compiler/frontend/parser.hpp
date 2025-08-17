@@ -144,6 +144,8 @@ namespace yoi {
     void parse(typeIdExpression *&o, lexer &lex);
 
     void parse(dynCastExpression *&o, lexer &lex);
+
+    void parse(newExpression *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

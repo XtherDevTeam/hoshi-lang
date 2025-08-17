@@ -164,6 +164,8 @@ namespace yoi {
 
     class typeIdExpression;
 
+    class newExpression;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -309,14 +311,22 @@ namespace yoi {
         vec<subscriptExpr *> &getTerms();
     };
 
+    class newExpression : public AST {
+    public:
+        externModuleAccessExpression *type;
+        subscript *length;
+        invocationArguments *args;
+    };
+
     class primary : public AST {
     public:
-        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression
+        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
         typeIdExpression *typeId;
         dynCastExpression *dynCast;
+        newExpression *newExpr;
 
         memberExpr &getMemberExpr() const;
 
@@ -1023,6 +1033,8 @@ namespace yoi {
     void finalizeAST(dynCastExpression *ptr);
 
     void finalizeAST(typeIdExpression *ptr);
+
+    void finalizeAST(newExpression *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

@@ -350,6 +350,11 @@ namespace yoi {
             auto funcName = wstring2string(funcDef->name);
             auto* funcType = getFunctionType(funcDef);
             auto* function = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, funcName, TheModule.get());
+
+            if (std::find(funcDef->attrs.begin(), funcDef->attrs.end(), IRFunctionDefinition::FunctionAttrs::AlwaysInline) != funcDef->attrs.end()) {
+                function->addFnAttr(llvm::Attribute::AlwaysInline);
+            }
+            
             functionMap[funcDef->name] = function;
         }
     }

@@ -29,7 +29,8 @@ memberExpression ::= subscriptExpression { "." subscriptExpression }
 typeIdExpression ::= "type_id" "<" typeSpec ">"
                  ::= "type_id" "(" rExpr ")"
 dynCastExpression ::= "dyn_cast" "<" typeSpec ">" "(" rExpr ")"
-primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression
+newExpr ::= "new" externModuleAccessExpression subscript invocationArguments
+primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression | newExpr
 uniqueExpr ::= ( "++" | "--" | "!" | "~" | "-" | "&" ) primary
              | primary
 leftExpr ::= uniqueExpr { ( "=" | "+=" | "-=" | "*=" | "/=" | "%=" ) uniqueExpr }

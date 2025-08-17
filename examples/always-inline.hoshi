@@ -1,0 +1,7 @@
+func always_inline test() : int {
+    return 114 + 514
+}
+
+func main() : int {
+    return test()
+}

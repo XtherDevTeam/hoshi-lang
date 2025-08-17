@@ -497,34 +497,72 @@ namespace yoi {
         o = new memberExpr{node_start_token, vecA};
     }
 
+    void parse(newExpression *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kNew) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+
+        externModuleAccessExpression *expr = nullptr;
+        parse(expr, lex);
+        if (!expr) {
+            panic(lex.line, lex.col, "expected externModuleAccessExpression after `new` in newExpression");
+        }
+
+        o = new newExpression{node_start_token, expr, nullptr, nullptr};
+        parse(o->length, lex);
+        if (!o->length) {
+            panic(lex.line, lex.col, "expected lengthExpr after `new` in newExpression");
+            finalizeAST(o->type);
+            delete o;
+            o = nullptr;
+        }
+
+        parse(o->args, lex);
+        if (!o->args) {
+            panic(lex.line, lex.col, "expected invocationArguments after `new` in newExpression");
+            finalizeAST(o->type);
+            finalizeAST(o->length);
+            delete o;
+            o = nullptr;
+        }
+    }
+
     void parse(primary *&o, lexer &lex) {
         memberExpr *a = nullptr;
         basicLiterals *b = nullptr;
         typeIdExpression *d = nullptr;
         dynCastExpression *e = nullptr;
+        newExpression *f = nullptr;
         rExpr *c = nullptr;
 
         lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
         if (a) {
-            o = new primary{node_start_token, 0, a, nullptr, nullptr};
+            o = new primary{node_start_token, 0, a, nullptr, nullptr, nullptr};
             return;
         }
         parse(b, lex);
         if (b) {
-            o = new primary{node_start_token, 1, nullptr, b, nullptr};
+            o = new primary{node_start_token, 1, nullptr, b, nullptr, nullptr};
             return;
         }
         parse(d, lex);
         if (d) {
-            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d};
+            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d, nullptr};
             return;
         }
         parse(e, lex);
         if (e) {
-            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e};
+            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e, nullptr};
             return;
+        }
+        parse(f, lex);
+        if (f) {
+            o = new primary{node_start_token, 5, nullptr, nullptr, nullptr, nullptr, nullptr, f};
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
             lex.scan(); // Consume '('

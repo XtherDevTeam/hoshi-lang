@@ -1,0 +1,12 @@
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    let size = 10
+    let x = new int[size](114514, 1919810)
+    if (x[0] == 114514 && x[1] == 1919810) {
+        puts("new expr validation passed")
+    } else {
+        puts("new expr validation failed")
+    }
+    return 0
+}

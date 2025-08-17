@@ -1667,6 +1667,8 @@ namespace yoi {
 
             builder.setReturnType(managedPtr(funcType));
 
+            builder.attrs = getFunctionAttributes(funcDefStmt->attrs);
+
             auto actualName = funcName.getId().node.strVal;
             builder.setName(actualName);
 
@@ -1685,6 +1687,8 @@ namespace yoi {
             IRFunctionDefinition::Builder builder;
 
             builder.setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
+
+            builder.attrs = getFunctionAttributes(funcDefStmt->attrs);
 
             builder.setReturnType(managedPtr(funcType));
             std::vector<std::shared_ptr<IRValueType>> argTypes;
