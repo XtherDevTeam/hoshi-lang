@@ -21,8 +21,9 @@ var searchData=
   ['createarrayobject_18',['createArrayObject',['../classyoi_1_1LLVMCodegen.html#a578c818eaa443128c6740766cf25999b',1,'yoi::LLVMCodegen']]],
   ['createbasicobject_19',['createBasicObject',['../classyoi_1_1LLVMCodegen.html#ab1d663f047e687ccfe75f7a1f34da43b',1,'yoi::LLVMCodegen']]],
   ['createcodeblock_20',['createCodeBlock',['../classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9',1,'yoi::IRBuilder']]],
-  ['createentryfunction_21',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
-  ['createlocalvar_22',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
-  ['createscope_23',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
-  ['customize_5ft_24',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
+  ['createdynamicarrayobject_21',['createDynamicArrayObject',['../classyoi_1_1LLVMCodegen.html#a2531074939789c4bff50a98201e2b628',1,'yoi::LLVMCodegen']]],
+  ['createentryfunction_22',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
+  ['createlocalvar_23',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
+  ['createscope_24',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
+  ['customize_5ft_25',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
 ];

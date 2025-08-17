@@ -132,21 +132,21 @@ var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
 "classyoi_1_1BuiltinModuleBuilder.html#a176e180c9bd68c99c1846b7edc10d59a",
-"classyoi_1_1IRBuilder.html#a5c6490327c7e0b69f3b22d5586c7adb1",
-"classyoi_1_1IRLinker.html#ada29ba25420ceac96b59dbb9944a1ea2",
-"classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd",
-"classyoi_1_1ObjectLinker.html#a16bb6f4ba9ecdd57b4d99326be74e0dd",
-"classyoi_1_1exclusiveExpr.html#a67b76affb3b5d35fa419ac234144038b",
-"classyoi_1_1inclusiveExpr.html",
-"classyoi_1_1lexer.html#a3e70362cee7281a81eeda9cf15c431b9",
-"classyoi_1_1subscriptExpr.html#a017162956e7cfdb52aaf1691b1930177",
-"classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1",
-"magic__enum_8h.html#a8a23adb7a0faa76d42abe82a1f1b1af9",
-"namespacemembers_func_s.html",
-"parser_8hpp.html#a06774eb9d7d9f10fb7f30ed9197087a2",
-"structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010ae0323a9039add2978bf5b49550572c7c",
-"structyoi_1_1lexer_1_1lexerState.html#a2523d6aa620784df882eccca379ab6f7",
-"unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#aed6968ad55daa7546c8e358e813fb55f"
+"classyoi_1_1IRBuilder.html#a3acb7b76337708608e9093de0770a418",
+"classyoi_1_1IRLinker.html#a6b31edc166caa161fd3ecb2c5bf082cb",
+"classyoi_1_1IRValueType.html#a14d684bc00d9849aa7bdab09175d1113",
+"classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10",
+"classyoi_1_1enum__range_1_1iterator.html#a822a7d5e62c120a45d5ea08baf496d7d",
+"classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7",
+"classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78",
+"classyoi_1_1structDefInnerPair.html#ae5448fe8d1bf305388ad8ca27d87f5db",
+"classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012",
+"magic__enum_8h.html#a2b1e2194fd5bc90499887460e8318e30",
+"namespacemagic__enum_1_1detail.html#acb1293f2bd5702962577def366666364",
+"parser_8cpp.html#a85a5c3fdeea1b1b7bf09f0f79fa1bf4d",
+"structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a",
+"structyoi_1_1IRTemplateBuilder_1_1Argument.html#a60960128d6c4567b98053924e484bc59",
+"unionyoi_1_1IROperand_1_1operandValue.html#a71db20a3b2d96507e57e2a47fa8b1a1e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

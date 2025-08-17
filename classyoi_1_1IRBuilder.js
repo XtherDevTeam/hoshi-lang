@@ -28,6 +28,7 @@ var classyoi_1_1IRBuilder =
     [ "loadMemberOp", "classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95", null ],
     [ "loadOp", "classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a", null ],
     [ "newArrayOp", "classyoi_1_1IRBuilder.html#aa664e67be6dc36f35d565904e743abb1", null ],
+    [ "newDynamicArrayOp", "classyoi_1_1IRBuilder.html#ad3c80f3275dce944c8129d1d5e67e62a", null ],
     [ "newInterfaceOp", "classyoi_1_1IRBuilder.html#a78476b4c465330bc3d6b743e7515e0ac", null ],
     [ "newStructOp", "classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5", null ],
     [ "pointerCastOp", "classyoi_1_1IRBuilder.html#a92707e557062d8cb56359619b8560c51", null ],

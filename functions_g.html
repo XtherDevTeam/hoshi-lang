@@ -96,6 +96,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>G&#160;:&#160;<a class="el" href="structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html#a8aebc358844171eb33d4e3ca52783655">LLVMCodegen::ControlFlowAnalysis</a></li>
 <li>gc_refcount&#160;:&#160;<a class="el" href="structYoiBooleanObject.html#a1871146973c12628deff2a413c04f3ff">YoiBooleanObject</a>, <a class="el" href="structYoiCharObject.html#a1871146973c12628deff2a413c04f3ff">YoiCharObject</a>, <a class="el" href="structYoiDecimalObject.html#a1871146973c12628deff2a413c04f3ff">YoiDecimalObject</a>, <a class="el" href="structYoiIntegerObject.html#a1871146973c12628deff2a413c04f3ff">YoiIntegerObject</a>, <a class="el" href="structYoiObject.html#a1871146973c12628deff2a413c04f3ff">YoiObject</a>, <a class="el" href="structYoiStringObject.html#a1871146973c12628deff2a413c04f3ff">YoiStringObject</a></li>
 <li>generate()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a3c01631a4116e8810c6c1021d7110ab7">LLVMCodegen</a></li>
+<li>generateArrayGCFunctions()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#ac23a1ef114860295cdcb53f74359a5f8">LLVMCodegen</a></li>
 <li>generateBasicTypesAndFunctions()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a70c509de6fc12c03fa7d90cadc9fb3d7">LLVMCodegen</a></li>
 <li>generateCodeBlock()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#af7993612668db5426947977772b61316">LLVMCodegen</a></li>
 <li>generateDeclarations()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#ac9d21138d644ba265408fca77ccc439e">LLVMCodegen</a></li>
@@ -154,6 +155,8 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getDeciObject()&#160;:&#160;<a class="el" href="classyoi_1_1BuiltinModuleBuilder.html#a170a7036e9359575d23ed4cd95ce7c6b">BuiltinModuleBuilder</a></li>
 <li>getDeciObjectType()&#160;:&#160;<a class="el" href="classyoi_1_1compilerContext.html#aa0a564c84bc1a2533c209f711c001cff">compilerContext</a></li>
 <li>getDIType()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a3c81a8e78b894648b7e1afbc27ee6668">LLVMCodegen</a></li>
+<li>getDynamicArrayLLVMType()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aa97b4a4b0c80eb7b185b157120e74029">LLVMCodegen</a></li>
+<li>getDynamicArrayType()&#160;:&#160;<a class="el" href="classyoi_1_1IRValueType.html#ab2fef6489e0aa5195ba823280d75dfdb">IRValueType</a></li>
 <li>getElementType()&#160;:&#160;<a class="el" href="classyoi_1_1IRValueType.html#a833d2997db83c53a7bb92d301727c5fb">IRValueType</a></li>
 <li>getElifBlock()&#160;:&#160;<a class="el" href="classyoi_1_1ifStmt.html#a8e4d6d424a9d86a6f7793c90bb7619f2">ifStmt</a></li>
 <li>getElseBlock()&#160;:&#160;<a class="el" href="classyoi_1_1ifStmt.html#aa4ebde2b6a7d070ee0d92f10d061c8b5">ifStmt</a></li>
@@ -172,7 +175,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getId()&#160;:&#160;<a class="el" href="classyoi_1_1defTemplateArgSpec.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">defTemplateArgSpec</a>, <a class="el" href="classyoi_1_1funcDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">funcDefStmt</a>, <a class="el" href="classyoi_1_1identifierWithDefTemplateArg.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithDefTemplateArg</a>, <a class="el" href="classyoi_1_1identifierWithTemplateArg.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithTemplateArg</a>, <a class="el" href="classyoi_1_1identifierWithTypeSpec.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithTypeSpec</a>, <a class="el" href="classyoi_1_1interfaceDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">interfaceDefStmt</a>, <a class="el" href="classyoi_1_1structDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">structDefStmt</a></li>
 <li>getIfBlock()&#160;:&#160;<a class="el" href="classyoi_1_1ifStmt.html#aba35d7626e0020f5ef675a3270642261">ifStmt</a></li>
 <li>getImpl()&#160;:&#160;<a class="el" href="classyoi_1_1defTemplateArgSpec.html#a4a345d13e7f61d6eb7c9d3877bd6d3b5">defTemplateArgSpec</a></li>
-<li>getImportedModule()&#160;:&#160;<a class="el" href="classyoi_1_1compilerContext.html#afb23716e427df75cc0185ef4719e817f">compilerContext</a></li>
+<li>getImportedModule()&#160;:&#160;<a class="el" href="classyoi_1_1compilerContext.html#abc4abde21f69a2557320bbcde9fe025d">compilerContext</a></li>
 <li>getIncompleteType()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#a892db4e6eee03786250b214b306e6e55">visitor</a></li>
 <li>getIndex()&#160;:&#160;<a class="el" href="classyoi_1_1indexTable.html#a741ac5ddd3ef961363997aeed13625c4">indexTable&lt; A, B &gt;</a>, <a class="el" href="classyoi_1_1indexTableDeprecated.html#a741ac5ddd3ef961363997aeed13625c4">indexTableDeprecated&lt; A, B &gt;</a></li>
 <li>getInitStmt()&#160;:&#160;<a class="el" href="classyoi_1_1forStmt.html#ad0bfc97e0698a07dabdef7fe09b97876">forStmt</a></li>
