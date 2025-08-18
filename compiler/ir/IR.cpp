@@ -1145,4 +1145,10 @@ namespace yoi {
     bool IRValueType::isDynamicArrayType() const {
         return dimensions.size() == 1 && dimensions.back() == static_cast<yoi::indexT>(-1);
     }
+    
+    void IRBuilder::arrayLengthOp() {
+        tempVarStack.pop_back();
+        tempVarStack.push_back(compilerCtx->getIntObjectType());
+        insert(IR{IR::Opcode::array_length, {}, currentDebugInfo});
+    }
 } // namespace yoi

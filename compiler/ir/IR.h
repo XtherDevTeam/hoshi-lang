@@ -249,6 +249,7 @@ namespace yoi {
             new_dynamic_array_str,
             new_dynamic_array_struct,
             new_dynamic_array_interface,
+            array_length,
             throws,
             push_exception_handler,
             pop_exception_handler,
@@ -727,6 +728,8 @@ namespace yoi {
         void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
 
         void newDynamicArrayOp(const std::shared_ptr<IRValueType> &elementType, yoi::indexT initializerSize = 0);
+
+        void arrayLengthOp();
 
         void typeIdOp(const std::shared_ptr<IRValueType> &type);
 

@@ -1722,6 +1722,18 @@ namespace yoi {
                 callGcFunction(lhs.llvmValue, lhs.yoiType, false);
                 break;
             }
+            case IR::Opcode::array_length: {
+                auto array = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                yoi_assert(array.yoiType->isArrayType() || array.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: array length on non-array type.");
+                auto arrayLLVMType = getArrayLLVMType(array.yoiType);
+                // gep index 2
+                auto *arrayLen = Builder->CreateStructGEP(arrayLLVMType, array.llvmValue, 2, "array_len");
+                auto *loadedArrayLen = Builder->CreateLoad(Builder->getInt64Ty(), arrayLen, "loaded_array_len");
+                auto* resultObj = createBasicObject(compilerCtx->getIntObjectType(), loadedArrayLen);
+                valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getIntObjectType()});
+                callGcFunction(array.llvmValue, array.yoiType, false);
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:

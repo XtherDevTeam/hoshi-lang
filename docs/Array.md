@@ -24,3 +24,9 @@ func test() : int {
 
 - 1. 动态数组类型定义及跨函数传参 `examples/array-type-spec.hoshi`
 - 2. 动态数组的定义和使用 `examples/new-expr.hoshi`
+
+# Array length by `array_length`
+
+数组长度可通过 `arr.length` 获得，这是一种由编译器支持的语法，而不是真正的 `property`。对该语法编译器行为如下，当栈上对象为动态数组时，编译器生成 `array_length` IR，并在运行时从对象头获取数组长度。而对于编译期长度确定的静态数组，则在 `IROptimizer` 阶段 `array_length` IR 被 `reduced` 并生成一个 push_integer 命令。
+
+- 1. 见 `examples/array-length.hoshi`

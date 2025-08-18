@@ -957,43 +957,55 @@ namespace yoi {
             }
 
             if (rhsIt->getSubscript().empty()) {
-                yoi_assert(termType->type == IRValueType::valueType::structObject,
-                           (**it).getLine(),
-                           (**it).getColumn(),
-                           "Not struct type");
-                auto memberName = rhsIt->id;
-                if (memberName->hasTemplateArg()) {
-                    // TODO: what the heck is this
-                } else {
-                    try {
-                        auto nameInfo = moduleContext->getCompilerContext()
-                                            ->getImportedModule(termType->typeAffiliateModule)
-                                            ->structTable[termType->typeIndex]
-                                            ->lookupName(memberName->getId().get().strVal);
-                        switch (nameInfo.type) {
-                            case IRStructDefinition::nameInfo::nameType::field: {
-                                auto tempVarType =
-                                    moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
-                                if (isStoreOp) {
-                                    moduleContext->getIRBuilder().storeMemberOp(
-                                        {IROperand::operandType::index, nameInfo.index});
-                                } else {
-                                    moduleContext->getIRBuilder().loadMemberOp(
-                                        {IROperand::operandType::index, nameInfo.index}, tempVarType);
-                                }
-                                break;
-                            }
-                            case IRStructDefinition::nameInfo::nameType::method: {
-                                panic(
-                                    rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
-                            }
-                        }
-                    } catch (std::out_of_range &e) {
+                if (termType->isArrayType() || termType->isDynamicArrayType()) {
+                    if (rhsIt->id->getId().get().strVal == L"length") {
+                        moduleContext->getIRBuilder().arrayLengthOp();
+                    } else {
                         panic(rhsIt->getLine(),
                               rhsIt->getColumn(),
-                              "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
+                              "expected `length` when member expression applied to array type");
                     }
+                } else if (termType->type == IRValueType::valueType::structObject) {
+                    auto memberName = rhsIt->id;
+                    if (memberName->hasTemplateArg()) {
+                        // TODO: what the heck is this
+                    } else {
+                        try {
+                            auto nameInfo = moduleContext->getCompilerContext()
+                                                ->getImportedModule(termType->typeAffiliateModule)
+                                                ->structTable[termType->typeIndex]
+                                                ->lookupName(memberName->getId().get().strVal);
+                            switch (nameInfo.type) {
+                                case IRStructDefinition::nameInfo::nameType::field: {
+                                    auto tempVarType =
+                                        moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
+                                    if (isStoreOp) {
+                                        moduleContext->getIRBuilder().storeMemberOp(
+                                            {IROperand::operandType::index, nameInfo.index});
+                                    } else {
+                                        moduleContext->getIRBuilder().loadMemberOp(
+                                            {IROperand::operandType::index, nameInfo.index}, tempVarType);
+                                    }
+                                    break;
+                                }
+                                case IRStructDefinition::nameInfo::nameType::method: {
+                                    panic(
+                                        rhsIt->getLine(), rhsIt->getColumn(), "Method cannot be parsed without invocation");
+                                }
+                            }
+                        } catch (std::out_of_range &e) {
+                            panic(rhsIt->getLine(),
+                                rhsIt->getColumn(),
+                                "Undefined field or function: " + yoi::wstring2string(rhsIt->id->getId().get().strVal));
+                        }
+                        
+                    }
+                } else {
+                    panic(rhsIt->getLine(),
+                          rhsIt->getColumn(),
+                          "member expression applied to non-struct, non-array type");
                 }
+                
             }
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();

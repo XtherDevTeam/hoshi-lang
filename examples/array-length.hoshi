@@ -1,0 +1,20 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+
+func main() : int {
+    let arr2 = int[5](type_id<int>, type_id<string>, type_id<bool>, type_id<deci>, type_id<char>)
+    let typeInfoArr = new lang.TypeInfo[5]()
+
+    for (let i = 0; i < 5; i = i + 1) {
+        typeInfoArr[i] = lang.TypeInfo(arr2[i])
+    }
+
+    if (typeInfoArr.length == 5 && arr2.length == 5) {
+        puts("Array length validation passed")
+    } else {
+        puts("Array length validation failed")
+        return 1
+    }
+    return 0
+}

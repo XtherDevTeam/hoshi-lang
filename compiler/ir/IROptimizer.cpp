@@ -7,6 +7,7 @@
 #include "share/def.hpp"
 
 #include <cmath>
+#include <cstdint>
 #include <memory>
 #include <queue>
 
@@ -1356,6 +1357,26 @@ namespace yoi {
                     simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
                     break;
                 }
+                case IR::Opcode::array_length: {
+                    auto array = simulationStack.peek(0);
+                    simulationStack.pop();
+                    if (array.type->isArrayType()) {
+                        yoi::indexT size = 1;
+                        for (auto &dim : array.type->dimensions) {
+                            size *= dim;
+                        }
+                        // reduce 
+                        insIndex = reduce(array.contributedInstructions, insIndex);
+                        // generate push op
+                        ins = {IR::Opcode::nop, {}, ins.debugInfo};
+                        insIndex = generatePushOp({compilerCtx->getIntObjectType(), true, static_cast<int64_t>(size)}, insIndex);
+                        break;
+                    } else if (array.type->isDynamicArrayType()) {
+                        // not even optimizable
+                        simulationStack.push(compilerCtx->getIntObjectType(), array.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
+                        break;
+                    }
+                }
                 case IR::Opcode::pop:{
                     auto rhs = simulationStack.peek(0);
                     if (rhs.contributedInstructions.optimizable) {
@@ -2406,6 +2427,26 @@ namespace yoi {
                 }
                 case IR::Opcode::push_null: {
                     simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, true});
+                    break;
+                }
+                case IR::Opcode::array_length: {
+                    auto array = simulationStack.peek(0);
+                    simulationStack.pop();
+                    if (array.type->isArrayType()) {
+                        yoi::indexT size = 1;
+                        for (auto dim : array.type->dimensions) {
+                            size *= dim;
+                        }
+                        simulationStack.push(
+                            compilerCtx->getIntObjectType(), 
+                            array.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}}, 
+                            static_cast<int64_t>(size));
+                    } else if (array.type->isDynamicArrayType()) {
+                        simulationStack.push(
+                            compilerCtx->getIntObjectType(), 
+                            array.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false}
+                        );
+                    }
                     break;
                 }
                 default: {
