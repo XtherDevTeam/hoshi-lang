@@ -68,6 +68,7 @@ var classyoi_1_1IR =
       [ "new_dynamic_array_str", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4d3cef520c2bea2897f1deb53f2a5bb4", null ],
       [ "new_dynamic_array_struct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a592d3746fb432d2bfc8cb9cbf9afeaf4", null ],
       [ "new_dynamic_array_interface", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a397993da3d34d815b7910f49199f2852", null ],
+      [ "array_length", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a56819a6d5e48912fcb294546e6913182", null ],
       [ "throws", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584", null ],
       [ "push_exception_handler", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7073575d0da91ba9b403a3c01de666e3", null ],
       [ "pop_exception_handler", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0234ee301782476fafbfec28816162d2", null ],

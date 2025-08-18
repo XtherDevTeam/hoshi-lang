@@ -107,7 +107,13 @@ Dynamic array and array</h1>
 <p>详细例子见如下：</p>
 <ul>
 <li>1. 动态数组类型定义及跨函数传参 <code>examples/array-type-spec.hoshi</code></li>
-<li>2. 动态数组的定义和使用 <code>examples/new-expr.hoshi</code> </li>
+<li>2. 动态数组的定义和使用 <code>examples/new-expr.hoshi</code></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Array length by &lt;tt&gt;array_length&lt;/tt&gt;</h1>
+<p>数组长度可通过 <code>arr.length</code> 获得，这是一种由编译器支持的语法，而不是真正的 <code>property</code>。对该语法编译器行为如下，当栈上对象为动态数组时，编译器生成 <code>array_length</code> IR，并在运行时从对象头获取数组长度。而对于编译期长度确定的静态数组，则在 <code>IROptimizer</code> 阶段 <code>array_length</code> IR 被 <code>reduced</code> 并生成一个 push_integer 命令。</p>
+<ul>
+<li>1. 见 <code>examples/array-length.hoshi</code> </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['data_0',['data',['../classmagic__enum_1_1detail_1_1static__str.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str::data()'],['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str&lt; 0 &gt;::data()']]],
-  ['data_20structures_1',['3. Types and Data Structures',['../md_docs_2Spec.html#autotoc_md33',1,'']]],
+  ['data_20structures_1',['3. Types and Data Structures',['../md_docs_2Spec.html#autotoc_md34',1,'']]],
   ['dbuilder_2',['DBuilder',['../classyoi_1_1LLVMCodegen.html#ac412d01f461e3cd9e8f953c7d24699ec',1,'yoi::LLVMCodegen']]],
   ['debug_3',['debug',['../structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d',1,'yoi::IRBuildConfig']]],
   ['debug_2ecpp_4',['debug.cpp',['../debug_8cpp.html',1,'']]],
@@ -17,7 +17,7 @@ var searchData=
   ['def_2ecpp_14',['def.cpp',['../def_8cpp.html',1,'']]],
   ['def_2ehpp_15',['def.hpp',['../def_8hpp.html',1,'']]],
   ['default_5ftag_16',['default_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81',1,'magic_enum::customize::detail::default_tag'],['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize::default_tag']]],
-  ['definition_17',['Syntax definition',['../index.html#autotoc_md68',1,'']]],
+  ['definition_17',['Syntax definition',['../index.html#autotoc_md69',1,'']]],
   ['definitionarguments_18',['definitionArguments',['../classyoi_1_1definitionArguments.html',1,'yoi']]],
   ['deftemplatearg_19',['defTemplateArg',['../classyoi_1_1defTemplateArg.html',1,'yoi']]],
   ['deftemplateargspec_20',['defTemplateArgSpec',['../classyoi_1_1defTemplateArgSpec.html',1,'yoi']]],

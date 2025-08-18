@@ -3,6 +3,7 @@ var classyoi_1_1IRBuilder =
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#ab4093e8cfecbe1cc54ea82886d9fa39b", null ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#a8c8800de44b86dbde01c19a95f81e93c", null ],
     [ "arithmeticOp", "classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377", null ],
+    [ "arrayLengthOp", "classyoi_1_1IRBuilder.html#a9ff21cff0357fc8a642e10b87b01e67e", null ],
     [ "basicCast", "classyoi_1_1IRBuilder.html#a4640ca7c6de1ffc27cba9ceff03eabb1", null ],
     [ "constructInterfaceImplOp", "classyoi_1_1IRBuilder.html#a3ba8d27fa6cbf8ade068f158c74f7d0a", null ],
     [ "createCodeBlock", "classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9", null ],
