@@ -367,10 +367,14 @@ namespace yoi {
     void LLVMCodegen::generateImplementations() {
         generateStructImplementations();
         generateStructGCFunctions();
-        generateInterfaceImplementationGCFunctions(); // Generates wrappers for specific interface implementations
         generateInterfaceObjectGCFunctions();
+        generateInterfaceImplementationGCFunctions(); // Generates wrappers for specific interface implementations
         generateRTTIDeclaration();
         generateFunctionImplementations();
+
+        for (auto &arr : arrayToGenerateImplementations) {
+            generateArrayGCFunctionImplementations(std::get<0>(arr), std::get<1>(arr), std::get<2>(arr));
+        }
     }
 
     void LLVMCodegen::generateStructImplementations() {
@@ -1409,9 +1413,12 @@ namespace yoi {
                 // Create the array object
                 auto arrayType = managedPtr(elementType->getArrayType(dimensions));
                 auto val = createArrayObject(arrayType, dimensionsVal);
+                for (yoi::indexT i = 0; i < size; ++i) {
+                    // pop the values from the stack
+                    valueStackMap[fromBlock][toBlock].pop_back();
+                }
 
                 valueStackMap[fromBlock][toBlock].push_back({val, arrayType});
-
                 break;
             }
             case IR::Opcode::new_dynamic_array_int:
@@ -1486,7 +1493,6 @@ namespace yoi {
                 auto val = createDynamicArrayObject(arrayType, valuesToStore, unboxedSize);
 
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    callGcFunction(valueStackMap[fromBlock][toBlock].back().llvmValue, valueStackMap[fromBlock][toBlock].back().yoiType, false);
                     valueStackMap[fromBlock][toBlock].pop_back();
                 }
 
@@ -1758,7 +1764,7 @@ namespace yoi {
         } else {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeMap.count(key)) {
-                if (type->isArrayType()) {
+                if (type->isArrayType() || type->isDynamicArrayType()) {
                     return llvm::PointerType::get(getArrayLLVMType(type), 0);
                 } else {
                     return llvm::PointerType::get(structTypeMap.at(key), 0);
@@ -2501,7 +2507,8 @@ namespace yoi {
                 arrayType // array
             });
             auto fullStructName = "array_" + yoi::wstring2string(type->to_string()) + "_" + (type->isArrayType() ? std::to_string(size) : "dynamic");
-            generateArrayGCFunctions(type, structType, baseType);
+            generateArrayGCFunctionDeclarations(type, structType, baseType);
+            arrayToGenerateImplementations.emplace_back(type, structType, baseType);
             // add struct to struct map
             arrayTypeMap[arrayKey] = structType;
             // clean up the mess, reset the insert point
@@ -3010,9 +3017,8 @@ namespace yoi {
         return memoryPointer;
     }
 
-    void LLVMCodegen::generateArrayGCFunctions(const std::shared_ptr<IRValueType> &type, llvm::StructType *structType, llvm::Type *baseType) {
+    void LLVMCodegen::generateArrayGCFunctionDeclarations(const std::shared_ptr<IRValueType> &type, llvm::StructType *structType, llvm::Type *baseType) {
         // create gc function
-
         auto incFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_increase";
         auto decFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_decrease";
 
@@ -3023,6 +3029,50 @@ namespace yoi {
                 llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
             auto gcIncFunc =
                 llvm::Function::Create(gcIncFuncType, llvm::Function::ExternalLinkage, incFuncName, TheModule.get());
+            functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
+        }
+        if (auto it = functionMap.find(yoi::string2wstring(decFuncName)) == functionMap.end()) {
+            auto gcDecFuncType = llvm::FunctionType::get(
+                llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
+            auto gcDecFunc =
+                llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+            functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
+        }
+        Builder->SetInsertPoint(currentInsertPoint);
+    }
+
+    void LLVMCodegen::storeArrayElement(const std::shared_ptr<IRValueType> &type,
+                                        llvm::Value *arrayPtr,
+                                        llvm::Value *index,
+                                        llvm::Value *value) {
+        auto arrayLLVMType = getArrayLLVMType(type);
+        if (type->isBasicType()) {
+            auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
+            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
+            auto elementPointer = Builder->CreateGEP(elementLLVMType, basePointer, {index}, "array_element_ptr");
+            auto val = unboxValue(value, managedPtr(type->getElementType()));
+            Builder->CreateStore(val, elementPointer);
+        } else {
+            // otherwise, store the pointer directly
+            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
+            auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
+            Builder->CreateStore(value, elementPointer);
+            // increase the ref count of the object
+            callGcFunction(value, managedPtr(type->getElementType()), true);
+        }
+    }
+
+    void LLVMCodegen::LLVMCodegen::generateArrayGCFunctionImplementations(const std::shared_ptr<IRValueType> &type,
+                                                                          llvm::StructType *structType,
+                                                                          llvm::Type *baseType) {
+        // create gc function
+        auto incFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_increase";
+        auto decFuncName = "array_" + yoi::wstring2string(type->to_string()) + "_gc_refcount_decrease";
+
+        auto currentInsertPoint = Builder->GetInsertBlock();
+
+        {
+            auto gcIncFunc = functionMap[yoi::string2wstring(incFuncName)];
             gcIncFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
             // add basic block
             llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", gcIncFunc);
@@ -3049,13 +3099,9 @@ namespace yoi {
                                    "new_ref_counter_val");
             Builder->CreateStore(newRefCounterVal, refCounter);
             Builder->CreateRetVoid();
-            functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
         }
-        if (auto it = functionMap.find(yoi::string2wstring(decFuncName)) == functionMap.end()) {
-            auto gcDecFuncType = llvm::FunctionType::get(
-                llvm::Type::getVoidTy(*TheContext), {llvm::PointerType::get(structType, 0)}, false);
-            auto gcDecFunc =
-                llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, TheModule.get());
+        {
+            auto gcDecFunc = functionMap[yoi::string2wstring(decFuncName)];
             gcDecFunc->addFnAttr(llvm::Attribute::AttrKind::AlwaysInline);
             // add basic block
             auto BB = llvm::BasicBlock::Create(*TheContext, "entry", gcDecFunc);
@@ -3148,29 +3194,7 @@ namespace yoi {
             }
             Builder->CreateCall(runtimeFinalizeObjectFunc, objPtr);
             Builder->CreateRetVoid();
-            functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
         }
         Builder->SetInsertPoint(currentInsertPoint);
-    }
-
-    void LLVMCodegen::storeArrayElement(const std::shared_ptr<IRValueType> &type,
-                                        llvm::Value *arrayPtr,
-                                        llvm::Value *index,
-                                        llvm::Value *value) {
-        auto arrayLLVMType = getArrayLLVMType(type);
-        if (type->isBasicType()) {
-            auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
-            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
-            auto elementPointer = Builder->CreateGEP(elementLLVMType, basePointer, {index}, "array_element_ptr");
-            auto val = unboxValue(value, managedPtr(type->getElementType()));
-            Builder->CreateStore(val, elementPointer);
-        } else {
-            // otherwise, store the pointer directly
-            auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
-            auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
-            Builder->CreateStore(value, elementPointer);
-            // increase the ref count of the object
-            callGcFunction(value, managedPtr(type->getElementType()), true);
-        }
     }
 } // namespace yoi

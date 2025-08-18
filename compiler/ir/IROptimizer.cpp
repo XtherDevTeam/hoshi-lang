@@ -1074,8 +1074,9 @@ namespace yoi {
                     if (auto it = variablesExtraInfo.find(ins.operands[0].value.symbolIndex); it != variablesExtraInfo.end()) {
                         // if exists, use the extra information
                         if (it->second.hasPossibleValue && it->second.possibleValue.contributedInstructions.codeBlockIndex == currentCodeBlockIndex) {
-                            ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
-                            insIndex = generatePushOp(it->second.possibleValue, insIndex);
+                            // inherit the possible value onto the stack
+                            simulationStack.push(it->second.possibleValue.type, SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
+                            it->second.isReadAfterStore = false;
                         } else {
                             // if we can't guess the value, we can't optimize it
                             // find the local variable definition

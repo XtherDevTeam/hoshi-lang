@@ -13,3 +13,4 @@
     - [ ] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`
 - [ ] 加入可变参数
 - [ ] 加入 array 的导出型 FFI wrapper 支持
+- [-] 加入 `lang.argv`

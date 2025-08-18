@@ -325,6 +325,10 @@ namespace yoi {
             lex.scan();
             o = new typeSpec{node_start_token, 2, nullptr, nullptr, true};
             return;
+        } else if (lex.curToken.kind == lexer::token::tokenKind::kThreeDots) {
+            lex.scan();
+            o = new typeSpec{node_start_token, 3, nullptr, nullptr, false, false};
+            return;
         }
         parse(spec, lex);
         if (spec) {

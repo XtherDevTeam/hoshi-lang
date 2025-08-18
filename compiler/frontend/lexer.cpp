@@ -369,8 +369,13 @@ namespace yoi {
     }
 
     lexer::token lexer::dotStart() {
-        lexer::token tok{line, col, token::tokenKind::dot};
         getCh();
+        if (curCh == '.' && stream.peek() == '.') {
+            getCh(); getCh(); // skip ".."
+            return lexer::token{line, col, token::tokenKind::kThreeDots};
+        }
+
+        lexer::token tok{line, col, token::tokenKind::dot};
         return tok;
     }
 

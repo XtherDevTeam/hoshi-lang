@@ -95,6 +95,14 @@ namespace yoi {
                 {}});
             module->interfaceImplementationTable.put_create(nullImplName, nullImpl);
         }
+
+        // make NullInterface object shared
+        sharedValueType.put(L"NullInterface", managedPtr(IRValueType{
+            IRValueType::valueType::interfaceObject,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            0,
+            {}
+        }));
     }
 
     yoi::IRInterfaceInstanceDefinition BuiltinModuleBuilder::getNullInterfaceInstanceDefinition() {

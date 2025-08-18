@@ -165,6 +165,7 @@ namespace yoi {
                 throw std::out_of_range("indexTableRefactored: invalid index");
             }
         }
+
         yoi::indexT getIndex(const A &k) {
             if (auto it = indexes.find(k); it == indexes.end()) {
                 throw std::out_of_range("indexTableRefactored: invalid key");
@@ -172,6 +173,16 @@ namespace yoi {
                 return it->second;
             }
         }
+
+        yoi::indexT getIndex(const std::function<bool(const A&)> &pred) {
+            for (yoi::indexT i = 0; i < values.size(); i++) {
+                if (pred(values[i].first)) {
+                    return i;
+                }
+            }
+            throw std::out_of_range("indexTableRefactored: no matching key found");
+        }
+
         const A& getKey(yoi::indexT i) const {
             if (i < indexes.size()) {
                 return values[i].first;

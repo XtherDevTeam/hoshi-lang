@@ -338,6 +338,7 @@ namespace yoi {
             AlwaysInline,
             BuiltinImplementation,
             NoFFI,
+            Variadic,
         };
 
         yoi::wstr name;
@@ -610,7 +611,7 @@ namespace yoi {
         std::vector<std::shared_ptr<IRCodeBlock>> codeBlocks;
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
-        yoi::vec<yoi::indexT> codeBlockInsertionStates;
+        yoi::vec<std::pair<yoi::indexT, yoi::indexT>> codeBlockInsertionStates;
         IRDebugInfo currentDebugInfo;
 
       public:

@@ -612,7 +612,7 @@ namespace yoi {
     }
 
     bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
-        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule;
+        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule && dimensions == rhs.dimensions;
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name,
@@ -973,7 +973,7 @@ namespace yoi {
     }
 
     void IRBuilder::saveState() {
-        codeBlockInsertionStates.push_back(codeBlocks[currentCodeBlockIndex]->getIRArray().size());
+        codeBlockInsertionStates.push_back({codeBlocks[currentCodeBlockIndex]->getIRArray().size(), tempVarStack.size()});
     }
 
     void IRBuilder::discardState() {
@@ -981,7 +981,8 @@ namespace yoi {
     }
 
     void IRBuilder::restoreState() {
-        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(codeBlockInsertionStates.back());
+        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(codeBlockInsertionStates.back().first);
+        tempVarStack.resize(codeBlockInsertionStates.back().second);
         codeBlockInsertionStates.pop_back();
     }
 

@@ -113,6 +113,8 @@ namespace yoi {
         std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                  yoi::indexT>
             typeIDMap; // Maps (type_enum, module_id, type_idx, size) to type ID (if no array, size = 0)
+        yoi::vec<std::tuple<std::shared_ptr<IRValueType>, llvm::StructType *, llvm::Type *>>
+            arrayToGenerateImplementations; // Array types to generate GC functions for
         yoi::indexT nextTypeId;
 
         // Helper methods
@@ -149,7 +151,7 @@ namespace yoi {
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getDynamicArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
-        void generateArrayGCFunctions(const std::shared_ptr<IRValueType> &type, llvm::StructType *structType, llvm::Type *baseType);
+        void generateArrayGCFunctionDeclarations(const std::shared_ptr<IRValueType> &type, llvm::StructType *structType, llvm::Type *baseType);
         llvm::FunctionType *getFunctionType(const std::shared_ptr<IRFunctionDefinition> &funcDef);
         llvm::Constant *getGlobalInitializer(const std::shared_ptr<IRValueType> &type);
 
@@ -176,6 +178,10 @@ namespace yoi {
                                llvm::Value *arrayPtr,
                                llvm::Value *index,
                                llvm::Value *value);
+
+        void generateArrayGCFunctionImplementations(const std::shared_ptr<IRValueType> &type,
+                                                    llvm::StructType *structType,
+                                                    llvm::Type *baseType);
     };
 
 } // namespace yoi

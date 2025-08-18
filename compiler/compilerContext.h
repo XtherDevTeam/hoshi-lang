@@ -99,6 +99,8 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getForeignFloatObjectType();
 
+        std::shared_ptr<yoi::IRValueType> getNullInterfaceType();
+
         // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type or export type. they are just wrapper types.
         // as for import function wrapper and export function wrapper, ofc we need to treat it differently
         // or in another word, the differentiation of import and export struct type should not even exist.

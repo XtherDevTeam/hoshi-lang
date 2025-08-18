@@ -1,0 +1,23 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+/* TODO: test struct varidic constructor and methods as well */
+
+func test(str: string, args: ...) : int {
+    puts(str)
+    for (let i = 0; i < args.length; i += 1) {
+        let x = dyn_cast<string>(args[i])
+        if (x != null) {
+            puts(x)
+        }
+    }
+    return dyn_cast<int>(args[1])
+}
+
+func main() : int {
+    let a = "hello"
+    let b = "world"
+    let c = 123
+    let d = "456"
+    return test("hello", "world", 123, "456")
+}

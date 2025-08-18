@@ -99,6 +99,7 @@ namespace yoi {
                 kNoFFI,
                 kAlwaysInline,
                 kNew,
+                kThreeDots,
                 eof,
             } kind;
 
