@@ -148,6 +148,8 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiObject.html">YoiObject</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiObjectArray.html">YoiObjectArray</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiStringObject.html">YoiStringObject</a></td></tr>
@@ -219,7 +221,7 @@ Functions</h2></td></tr>
 <div class="line">                                                                                            \</div>
 <div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> basic_##X##_gc_refcount_decrease(U* obj);                                   \</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00073">73</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00079">79</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -260,7 +262,7 @@ Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="astructYoiObject_html"><div class="ttname"><a href="structYoiObject.html">YoiObject</a></div><div class="ttdef"><b>Definition</b> <a href="memory_8h_source.html#l00013">memory.h:13</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00077">77</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00083">83</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -455,7 +457,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00056">56</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00050">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::prev</a>, <a class="el" href="rtti_8h_source.html#l00056">rtti_table</a>, <a class="el" href="memory_8h_source.html#l00015">YoiObject::type_id</a>, and <a class="el" href="rtti_8h_source.html#l00038">YoiTypeInfo::type_name</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00056">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00055">AllocatedMemoryList::prev</a>, <a class="el" href="rtti_8h_source.html#l00056">rtti_table</a>, <a class="el" href="memory_8h_source.html#l00015">YoiObject::type_id</a>, and <a class="el" href="rtti_8h_source.html#l00038">YoiTypeInfo::type_name</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>.</p>
 <div class="dynheader">
@@ -491,7 +493,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00031">runtime_object_alloc_report()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="string_8cpp_source.html#l00013">basic_string_add()</a>, <a class="el" href="string_8cpp_source.html#l00023">basic_string_at()</a>, <a class="el" href="string_8cpp_source.html#l00007">basic_string_length()</a>, <a class="el" href="string_8cpp_source.html#l00030">basic_string_slice()</a>, and <a class="el" href="rtti_8cpp_source.html#l00005">rtti_object_alloc()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="string_8cpp_source.html#l00013">basic_string_add()</a>, <a class="el" href="string_8cpp_source.html#l00023">basic_string_at()</a>, <a class="el" href="string_8cpp_source.html#l00007">basic_string_length()</a>, <a class="el" href="string_8cpp_source.html#l00030">basic_string_slice()</a>, <a class="el" href="rtti_8cpp_source.html#l00005">rtti_object_alloc()</a>, and <a class="el" href="runtime_8cpp_source.html#l00033">runtime_get_argv()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -507,17 +509,19 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_a77e252460b25bfcbcb0745e81860a2ec_icgraph.png" border="0" usemap="#amemory_8h_a77e252460b25bfcbcb0745e81860a2ec_icgraph" alt=""/></div>
 <map name="amemory_8h_a77e252460b25bfcbcb0745e81860a2ec_icgraph" id="amemory_8h_a77e252460b25bfcbcb0745e81860a2ec_icgraph">
-<area shape="rect" title=" " alt="" coords="201,104,360,129"/>
+<area shape="rect" title=" " alt="" coords="201,129,360,155"/>
 <area shape="rect" href="string_8cpp.html#a6381320bae7a4ab6cb71a26599d246bf" title=" " alt="" coords="14,5,145,31"/>
-<area shape="poly" title=" " alt="" coords="248,99,204,71,152,44,123,33,125,28,154,40,206,67,251,94"/>
+<area shape="poly" title=" " alt="" coords="255,122,209,83,152,44,126,33,128,28,155,40,212,78,258,118"/>
 <area shape="rect" href="string_8cpp.html#a34c34b65f58666f23dde85558da94e7e" title=" " alt="" coords="19,55,139,80"/>
-<area shape="poly" title=" " alt="" coords="214,103,131,83,133,77,216,98"/>
+<area shape="poly" title=" " alt="" coords="236,127,152,94,120,83,122,78,154,89,238,122"/>
 <area shape="rect" href="string_8cpp.html#a48a4cee7ee225e1c13bda3999acde5bd" title=" " alt="" coords="5,104,153,129"/>
-<area shape="poly" title=" " alt="" coords="187,119,153,119,153,114,187,114"/>
+<area shape="poly" title=" " alt="" coords="187,133,153,129,154,123,188,128"/>
 <area shape="rect" href="string_8cpp.html#a4eb5789e68c698dffab48c1a534c1404" title=" " alt="" coords="11,153,148,179"/>
-<area shape="poly" title=" " alt="" coords="216,135,133,156,131,151,214,130"/>
+<area shape="poly" title=" " alt="" coords="188,156,149,160,148,155,187,150"/>
 <area shape="rect" href="rtti_8cpp.html#a3b840338488ae42ae0f06fc9ff7a8cb2" title=" " alt="" coords="16,203,143,228"/>
-<area shape="poly" title=" " alt="" coords="250,139,206,166,154,192,123,205,121,200,152,188,203,161,247,135"/>
+<area shape="poly" title=" " alt="" coords="235,162,154,193,119,205,117,200,152,187,233,157"/>
+<area shape="rect" href="runtime_8cpp.html#aa0417a71c55e8edf37c8f1be6e1be4c5" title=" " alt="" coords="11,252,148,277"/>
+<area shape="poly" title=" " alt="" coords="258,166,212,204,155,242,126,254,124,249,152,237,209,200,254,162"/>
 </map>
 </div>
 
@@ -551,7 +555,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00031">31</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00051">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00050">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00049">AllocatedMemoryList::prev</a>, and <a class="el" href="memory_8h_source.html#l00052">AllocatedMemoryList::size</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00057">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00056">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00055">AllocatedMemoryList::prev</a>, and <a class="el" href="memory_8h_source.html#l00058">AllocatedMemoryList::size</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>.</p>
 <div class="dynheader">
@@ -559,19 +563,21 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_ae9e6484dd2ff6cf4355506d3c336b90e_icgraph.png" border="0" usemap="#amemory_8h_ae9e6484dd2ff6cf4355506d3c336b90e_icgraph" alt=""/></div>
 <map name="amemory_8h_ae9e6484dd2ff6cf4355506d3c336b90e_icgraph" id="amemory_8h_ae9e6484dd2ff6cf4355506d3c336b90e_icgraph">
-<area shape="rect" title=" " alt="" coords="408,97,567,137"/>
-<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="201,104,360,129"/>
-<area shape="poly" title=" " alt="" coords="394,119,360,119,360,114,394,114"/>
+<area shape="rect" title=" " alt="" coords="408,122,567,162"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="201,129,360,155"/>
+<area shape="poly" title=" " alt="" coords="394,145,360,145,360,139,394,139"/>
 <area shape="rect" href="string_8cpp.html#a6381320bae7a4ab6cb71a26599d246bf" title=" " alt="" coords="14,5,145,31"/>
-<area shape="poly" title=" " alt="" coords="248,99,204,71,152,44,123,33,125,28,154,40,206,67,251,94"/>
+<area shape="poly" title=" " alt="" coords="255,122,209,83,152,44,126,33,128,28,155,40,212,78,258,118"/>
 <area shape="rect" href="string_8cpp.html#a34c34b65f58666f23dde85558da94e7e" title=" " alt="" coords="19,55,139,80"/>
-<area shape="poly" title=" " alt="" coords="214,103,131,83,133,77,216,98"/>
+<area shape="poly" title=" " alt="" coords="236,127,152,94,120,83,122,78,154,89,238,122"/>
 <area shape="rect" href="string_8cpp.html#a48a4cee7ee225e1c13bda3999acde5bd" title=" " alt="" coords="5,104,153,129"/>
-<area shape="poly" title=" " alt="" coords="187,119,153,119,153,114,187,114"/>
+<area shape="poly" title=" " alt="" coords="187,133,153,129,154,123,188,128"/>
 <area shape="rect" href="string_8cpp.html#a4eb5789e68c698dffab48c1a534c1404" title=" " alt="" coords="11,153,148,179"/>
-<area shape="poly" title=" " alt="" coords="216,135,133,156,131,151,214,130"/>
+<area shape="poly" title=" " alt="" coords="188,156,149,160,148,155,187,150"/>
 <area shape="rect" href="rtti_8cpp.html#a3b840338488ae42ae0f06fc9ff7a8cb2" title=" " alt="" coords="16,203,143,228"/>
-<area shape="poly" title=" " alt="" coords="250,139,206,166,154,192,123,205,121,200,152,188,203,161,247,135"/>
+<area shape="poly" title=" " alt="" coords="235,162,154,193,119,205,117,200,152,187,233,157"/>
+<area shape="rect" href="runtime_8cpp.html#aa0417a71c55e8edf37c8f1be6e1be4c5" title=" " alt="" coords="11,252,148,277"/>
+<area shape="poly" title=" " alt="" coords="258,166,212,204,155,242,126,254,124,249,152,237,209,200,254,162"/>
 </map>
 </div>
 

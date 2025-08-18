@@ -91,7 +91,8 @@ $(document).ready(function(){initNavTree('runtime_8cpp.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">runtime.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -136,6 +137,15 @@ Include dependency graph for runtime.cpp:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a3302890ca27fb35f72095c2e63cfae7d" id="r_a3302890ca27fb35f72095c2e63cfae7d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8cpp.html#a3302890ca27fb35f72095c2e63cfae7d">elysia_main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a3302890ca27fb35f72095c2e63cfae7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0417a71c55e8edf37c8f1be6e1be4c5" id="r_aa0417a71c55e8edf37c8f1be6e1be4c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiObjectArray.html">YoiObjectArray</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8cpp.html#aa0417a71c55e8edf37c8f1be6e1be4c5">runtime_get_argv</a> ()</td></tr>
+<tr class="separator:aa0417a71c55e8edf37c8f1be6e1be4c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a94feceb3276d8fc7af31fe14a61f230a" id="r_a94feceb3276d8fc7af31fe14a61f230a"><td class="memItemLeft" align="right" valign="top">const char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8cpp.html#a94feceb3276d8fc7af31fe14a61f230a">yoi_argv</a> {}</td></tr>
+<tr class="separator:a94feceb3276d8fc7af31fe14a61f230a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9124faa3d68ed08c39e2d26d1c0b456" id="r_ae9124faa3d68ed08c39e2d26d1c0b456"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8cpp.html#ae9124faa3d68ed08c39e2d26d1c0b456">yoi_argc</a> {}</td></tr>
+<tr class="separator:ae9124faa3d68ed08c39e2d26d1c0b456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a3302890ca27fb35f72095c2e63cfae7d" name="a3302890ca27fb35f72095c2e63cfae7d"></a>
@@ -164,9 +174,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00005">5</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00008">8</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00021">YoiIntegerObject::value</a>, <a class="el" href="runtime_8h_source.html#l00015">yoi_build_type</a>, <a class="el" href="runtime_8h_source.html#l00013">yoi_desc</a>, and <a class="el" href="runtime_8h.html#a4519923e43680d275ec2169d1db1705f">yoimiya_entry()</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::value</a>, <a class="el" href="runtime_8cpp_source.html#l00006">yoi_argc</a>, <a class="el" href="runtime_8cpp_source.html#l00005">yoi_argv</a>, <a class="el" href="runtime_8h_source.html#l00019">yoi_build_type</a>, <a class="el" href="runtime_8h_source.html#l00017">yoi_desc</a>, and <a class="el" href="runtime_8h.html#a4519923e43680d275ec2169d1db1705f">yoimiya_entry()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -177,6 +187,76 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="107,15,141,15,141,21,107,21"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="aa0417a71c55e8edf37c8f1be6e1be4c5" name="aa0417a71c55e8edf37c8f1be6e1be4c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0417a71c55e8edf37c8f1be6e1be4c5">&#9670;&#160;</a></span>runtime_get_argv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structYoiObjectArray.html">YoiObjectArray</a> * runtime_get_argv </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00033">33</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00019">YoiObjectArray::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="runtime_8cpp_source.html#l00006">yoi_argc</a>, and <a class="el" href="runtime_8cpp_source.html#l00005">yoi_argv</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="runtime_8cpp_aa0417a71c55e8edf37c8f1be6e1be4c5_cgraph.png" border="0" usemap="#aruntime_8cpp_aa0417a71c55e8edf37c8f1be6e1be4c5_cgraph" alt=""/></div>
+<map name="aruntime_8cpp_aa0417a71c55e8edf37c8f1be6e1be4c5_cgraph" id="aruntime_8cpp_aa0417a71c55e8edf37c8f1be6e1be4c5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,143,38"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="191,13,349,38"/>
+<area shape="poly" title=" " alt="" coords="143,23,177,23,177,28,143,28"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="397,5,556,45"/>
+<area shape="poly" title=" " alt="" coords="350,23,384,23,384,28,350,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae9124faa3d68ed08c39e2d26d1c0b456" name="ae9124faa3d68ed08c39e2d26d1c0b456"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9124faa3d68ed08c39e2d26d1c0b456">&#9670;&#160;</a></span>yoi_argc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int yoi_argc {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00006">6</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="runtime_8cpp_source.html#l00008">elysia_main()</a>, and <a class="el" href="runtime_8cpp_source.html#l00033">runtime_get_argv()</a>.</p>
+
+</div>
+</div>
+<a id="a94feceb3276d8fc7af31fe14a61f230a" name="a94feceb3276d8fc7af31fe14a61f230a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94feceb3276d8fc7af31fe14a61f230a">&#9670;&#160;</a></span>yoi_argv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char** yoi_argv {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00005">5</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="runtime_8cpp_source.html#l00008">elysia_main()</a>, and <a class="el" href="runtime_8cpp_source.html#l00033">runtime_get_argv()</a>.</p>
 
 </div>
 </div>

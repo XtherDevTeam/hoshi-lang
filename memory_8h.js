@@ -1,6 +1,7 @@
 var memory_8h =
 [
     [ "YoiObject", "structYoiObject.html", "structYoiObject" ],
+    [ "YoiObjectArray", "structYoiObjectArray.html", "structYoiObjectArray" ],
     [ "YoiIntegerObject", "structYoiIntegerObject.html", "structYoiIntegerObject" ],
     [ "YoiStringObject", "structYoiStringObject.html", "structYoiStringObject" ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", "structYoiBooleanObject" ],
