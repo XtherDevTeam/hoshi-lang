@@ -2,7 +2,13 @@
 #include "runtime/memory/memory.h"
 #include <cstdio>
 
+const char ** yoi_argv{};
+int yoi_argc{};
+
 int elysia_main(int argc, char *argv[]) {
+    yoi_argv = (const char **)argv;
+    yoi_argc = argc;
+    
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) || defined(ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION)
     printf("[Elysia/DEBUG] Yoi-lang descriptor: %s, build_type: %llu. Runtime linked, invoking yoimiya_entry()...\n", &yoi_desc, yoi_build_type);
     #endif
@@ -22,4 +28,16 @@ int elysia_main(int argc, char *argv[]) {
     }
 #endif
     return resultVal;
+}
+
+YoiObjectArray *runtime_get_argv() {
+    auto *argv = (YoiObjectArray *)runtime_object_alloc(sizeof(YoiObjectArray) + yoi_argc * sizeof(char *));
+    argv->gc_refcount = 1;
+    argv->type_id = 9;
+    argv->length = yoi_argc;
+    auto **argv_start = (const char **)((char *)argv + sizeof(YoiObjectArray));
+    for (int i = 0; i < yoi_argc; i++) {
+        argv_start[i] = yoi_argv[i];
+    }
+    return argv;
 }

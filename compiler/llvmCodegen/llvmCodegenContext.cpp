@@ -301,6 +301,9 @@ namespace yoi {
 
             Builder->SetInsertPoint(continueBlock);
             Builder->CreateRetVoid();
+
+            // generate basic type dyn array function
+            getArrayLLVMType(managedPtr(pair.first->getDynamicArrayType()));
         }
     }
 

@@ -10,11 +10,17 @@
 #include <runtime/debug/debug.h>
 #include <runtime/rtti/rtti.h>
 
+extern "C" const char ** yoi_argv;
+
+extern "C" int yoi_argc;
+
 extern "C" char yoi_desc;
 
 extern "C" const unsigned long long yoi_build_type;
 
 extern "C" YoiIntegerObject* yoimiya_entry();
+
+extern "C" YoiObjectArray *runtime_get_argv();
 
 extern "C" int elysia_main(int argc, char *argv[]);
 

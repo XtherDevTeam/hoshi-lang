@@ -11,6 +11,8 @@ R"(struct TypeInfo {
 
 import noffi rtti_object_alloc(id: int) : TypeInfo from "builtin"
 
+import noffi runtime_get_argv() : string[] from "builtin"
+
 impl TypeInfo {
     constructor(id: int, name: string, type_enum: int, module: int, index: int, is_array: int) {
         this.id = id
@@ -25,4 +27,8 @@ impl TypeInfo {
         this := rtti_object_alloc(id)
         return this
     }
+}
+
+func argv() : string[] {
+    return runtime_get_argv()
 })"

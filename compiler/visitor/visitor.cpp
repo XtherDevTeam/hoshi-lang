@@ -1426,7 +1426,7 @@ namespace yoi {
         try {
             baseType = managedPtr(parseTypeSpecExtern(subscriptExpr->id, targetModule));
             isType = true;
-        } catch (const std::runtime_error &) {
+        } catch (const std::out_of_range &) {
             isType = false;
         }
 
