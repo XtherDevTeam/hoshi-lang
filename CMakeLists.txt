@@ -100,3 +100,5 @@ if("$ENV{CI}")
     message(STATUS "CI detected, disable memory leak detector")
     add_definitions(-DELYSIA_RUNTIME_DISABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
 endif()
+
+set_target_properties(elysia_runtime PROPERTIES POSITION_INDEPENDENT_CODE ON)

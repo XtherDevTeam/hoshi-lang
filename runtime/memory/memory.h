@@ -58,7 +58,9 @@ extern "C" AllocatedMemoryList *allocated_memory_list;
 extern "C" void runtime_debug_print_current_allocated_memory();
 #endif
 
+#if defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
 extern "C" int64_t runtime_object_allocated;
+#endif
 
 extern "C" void *runtime_object_alloc_report(size_t size, void *object);
 
