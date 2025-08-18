@@ -10,7 +10,7 @@
 #include "memory.h"
 #include "runtime/rtti/rtti.h"
 
-#if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+#if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
 extern "C" AllocatedMemoryList *allocated_memory_list = nullptr;
 
 void runtime_debug_print_current_allocated_memory() {
@@ -31,7 +31,7 @@ extern "C" void *runtime_object_alloc_report(size_t size, void *object) {
     printf("[Elysia/DEBUG] Allocating %lld bytes memory at %p. Current object count: %lld.\n", size, object, runtime_object_allocated);
     #endif
     runtime_object_allocated ++;
-    #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
     if (allocated_memory_list == nullptr) {
         allocated_memory_list = static_cast<AllocatedMemoryList *>(malloc(sizeof(AllocatedMemoryList)));
         allocated_memory_list->memory = object;
@@ -56,7 +56,7 @@ extern "C" void runtime_finalize_object_report(YoiObject *object) {
     printf("[Elysia/DEBUG] Finalizing %s object at %p. Current object count: %lld.\n", rtti_table[object->type_id].type_name, object, runtime_object_allocated);
     #endif
     runtime_object_allocated --;
-    #ifdef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG
+    #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
     for (AllocatedMemoryList *node = allocated_memory_list; node!= nullptr; node = node->next) {
         if (node->memory == object) {
             if (node->prev != nullptr) {
