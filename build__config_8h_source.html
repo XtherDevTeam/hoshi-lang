@@ -106,7 +106,13 @@ $(document).ready(function(){initNavTree('build__config_8h_source.html',''); ini
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="build__config_8h.html#ab4f58084fd89474da73a0463d65a35c1">    6</a></span><span class="preprocessor">#define ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="build__config_8h.html#abea5a5f7dec39b7b9c62d9056fb9bd80">    7</a></span><span class="preprocessor">#define ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#endif </span><span class="comment">// BUILD_CONFIG_H</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#ifdef ELYSIA_RUNTIME_BUILD_TYPE_RELEASE</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#undef ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#undef ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#undef ELYSIA_RUNTIME_BUILD_TYPE_DEBUG</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif </span><span class="comment">// BUILD_CONFIG_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

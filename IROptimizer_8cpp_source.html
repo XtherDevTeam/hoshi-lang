@@ -950,7 +950,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>                    }</div>
 <div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>                }</div>
@@ -969,7 +969,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>                    }</div>
 <div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>                }</div>
@@ -988,7 +988,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                    }</div>
 <div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>                }</div>
@@ -1007,7 +1007,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                    }</div>
 <div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>                }</div>
@@ -1025,7 +1025,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>                    }</div>
 <div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>                }</div>
@@ -1040,7 +1040,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions);</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>                    }</div>
 <div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>                }</div>
@@ -1058,7 +1058,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>                    }</div>
 <div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>                }</div>
@@ -1076,7 +1076,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>                    }</div>
 <div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>                }</div>
@@ -1094,7 +1094,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>                    }</div>
 <div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>                }</div>
@@ -1108,7 +1108,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions);</div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>                    }</div>
 <div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>                }</div>
@@ -1126,7 +1126,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + shift.contributedInstructions);</div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + shift.contributedInstructions  + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>                    }</div>
 <div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>                }</div>
@@ -1144,7 +1144,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + shift.contributedInstructions);</div>
+<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>                        simulationStack.push(result.type, <a class="code hl_function" href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">value</a>.contributedInstructions + shift.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span>                    }</div>
 <div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span>                }</div>
@@ -1162,7 +1162,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>                    }</div>
 <div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>                }</div>
@@ -1180,7 +1180,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>                    }</div>
 <div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>                }</div>
@@ -1198,7 +1198,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>                    }</div>
 <div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>                }</div>
@@ -1216,7 +1216,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>                    }</div>
 <div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>                }</div>
@@ -1234,7 +1234,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>                    }</div>
 <div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span>                }</div>
@@ -1252,7 +1252,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>                        insIndex = generatePushOp(result, insIndex);</div>
 <div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>                        <span class="comment">// lost information, push back</span></div>
-<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);</div>
+<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});</div>
 <div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>                    }</div>
 <div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>                }</div>
@@ -2840,7 +2840,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="ttc" id="aclassyoi_1_1codeBlock_html"><div class="ttname"><a href="classyoi_1_1codeBlock.html">yoi::codeBlock</a></div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00837">ast.hpp:837</a></div></div>
 <div class="ttc" id="adef_8hpp_html"><div class="ttname"><a href="def_8hpp.html">def.hpp</a></div></div>
 <div class="ttc" id="anamespacemagic__enum_1_1detail_html_ac1bac405c85b1f97f65ce384f707fa52"><div class="ttname"><a href="namespacemagic__enum_1_1detail.html#ac1bac405c85b1f97f65ce384f707fa52">magic_enum::detail::value</a></div><div class="ttdeci">constexpr E value(std::size_t i) noexcept</div><div class="ttdef"><b>Definition</b> <a href="magic__enum_8h_source.html#l00668">magic_enum.h:668</a></div></div>
-<div class="ttc" id="anamespaceyoi_html"><div class="ttname"><a href="namespaceyoi.html">yoi</a></div><div class="ttdef"><b>Definition</b> <a href="builtinModule_8cpp_source.html#l00004">builtinModule.cpp:4</a></div></div>
+<div class="ttc" id="anamespaceyoi_html"><div class="ttname"><a href="namespaceyoi.html">yoi</a></div><div class="ttdef"><b>Definition</b> <a href="builtinModule_8cpp_source.html#l00007">builtinModule.cpp:7</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_a013871d7f7daabfe45cda14e4dade8b0"><div class="ttname"><a href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a></div><div class="ttdeci">std::string wstring2string(const std::wstring &amp;v)</div><div class="ttdef"><b>Definition</b> <a href="def_8cpp_source.html#l00124">def.cpp:124</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_a134082ec04392c8d0e1fdf698a3fd3bd"><div class="ttname"><a href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd">yoi::managedPtr</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; managedPtr(const T &amp;v)</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00284">def.hpp:284</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_a467112ed789564244f414efb801bf606"><div class="ttname"><a href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a></div><div class="ttdeci">std::vector&lt; t &gt; vec</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00051">def.hpp:51</a></div></div>

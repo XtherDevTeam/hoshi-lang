@@ -202,5 +202,6 @@ var hierarchy =
     [ "YoiIntegerObject", "structYoiIntegerObject.html", null ],
     [ "YoiObject", "structYoiObject.html", null ],
     [ "YoiStringObject", "structYoiStringObject.html", null ],
-    [ "YoiTypeInfo", "structYoiTypeInfo.html", null ]
+    [ "YoiTypeInfo", "structYoiTypeInfo.html", null ],
+    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", null ]
 ];

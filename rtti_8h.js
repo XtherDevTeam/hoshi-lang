@@ -1,6 +1,7 @@
 var rtti_8h =
 [
     [ "YoiTypeInfo", "structYoiTypeInfo.html", "structYoiTypeInfo" ],
+    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", "structYoiTypeInfoObject" ],
     [ "valueType", "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675", [
       [ "integerRaw", "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ad952693e0948c2bd417f2994f2cfd09d", null ],
       [ "decimalRaw", "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a84f79a71b165bab23e1bfe95d54f91a0", null ],
@@ -22,5 +23,6 @@ var rtti_8h =
       [ "foreignInt32Type", "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ad5493486c999a3f1b5898b82dfea19cc", null ],
       [ "foreignFloatType", "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aed9ea5b4d20c5145dcfb4ddd34ddd56a", null ]
     ] ],
+    [ "rtti_object_alloc", "rtti_8h.html#a3b840338488ae42ae0f06fc9ff7a8cb2", null ],
     [ "rtti_table", "rtti_8h.html#a23a7bb83213753e98435b134a0bd9360", null ]
 ];

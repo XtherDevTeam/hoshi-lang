@@ -90,11 +90,78 @@ $(document).ready(function(){initNavTree('rtti_8cpp.html',''); initResizable(); 
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">rtti.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="rtti_8h_source.html">rtti.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for rtti.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="rtti_8cpp__incl.png" border="0" usemap="#aruntime_2rtti_2rtti_8cpp" alt=""/></div>
+<map name="aruntime_2rtti_2rtti_8cpp" id="aruntime_2rtti_2rtti_8cpp">
+<area shape="rect" title=" " alt="" coords="62,5,209,31"/>
+<area shape="rect" href="rtti_8h.html" title=" " alt="" coords="41,152,94,177"/>
+<area shape="poly" title=" " alt="" coords="127,32,110,54,94,80,82,110,74,139,69,138,77,108,89,77,106,51,123,29"/>
+<area shape="rect" href="memory_8h.html" title=" " alt="" coords="104,79,305,104"/>
+<area shape="poly" title=" " alt="" coords="149,29,186,67,182,71,145,33"/>
+<area shape="rect" title=" " alt="" coords="5,225,76,251"/>
+<area shape="poly" title=" " alt="" coords="65,179,52,214,47,212,60,177"/>
+<area shape="rect" title=" " alt="" coords="101,225,167,251"/>
+<area shape="poly" title=" " alt="" coords="80,176,116,213,112,217,76,179"/>
+<area shape="poly" title=" " alt="" coords="184,106,103,148,101,143,181,102"/>
+<area shape="poly" title=" " alt="" coords="196,106,179,127,163,153,151,183,142,213,137,211,146,182,158,151,175,124,192,102"/>
+<area shape="rect" title=" " alt="" coords="172,152,237,177"/>
+<area shape="poly" title=" " alt="" coords="207,104,207,138,202,138,202,104"/>
+<area shape="rect" href="build__config_8h.html" title=" " alt="" coords="261,152,428,177"/>
+<area shape="poly" title=" " alt="" coords="228,102,311,143,309,148,226,106"/>
+</map>
+</div>
+</div>
 <p><a href="rtti_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3b840338488ae42ae0f06fc9ff7a8cb2" id="r_a3b840338488ae42ae0f06fc9ff7a8cb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiTypeInfoObject.html">YoiTypeInfoObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtti_8cpp.html#a3b840338488ae42ae0f06fc9ff7a8cb2">rtti_object_alloc</a> (<a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *type_id_object)</td></tr>
+<tr class="separator:a3b840338488ae42ae0f06fc9ff7a8cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a3b840338488ae42ae0f06fc9ff7a8cb2" name="a3b840338488ae42ae0f06fc9ff7a8cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b840338488ae42ae0f06fc9ff7a8cb2">&#9670;&#160;</a></span>rtti_object_alloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structYoiTypeInfoObject.html">YoiTypeInfoObject</a> * rtti_object_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td>
+          <td class="paramname"><em>type_id_object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="rtti_8cpp_source.html#l00005">5</a> of file <a class="el" href="rtti_8cpp_source.html">rtti.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00019">YoiIntegerObject::gc_refcount</a>, <a class="el" href="rtti_8h_source.html#l00056">rtti_table</a>, <a class="el" href="memory_8cpp_source.html#l00093">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00021">YoiIntegerObject::value</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="rtti_8cpp_a3b840338488ae42ae0f06fc9ff7a8cb2_cgraph.png" border="0" usemap="#artti_8cpp_a3b840338488ae42ae0f06fc9ff7a8cb2_cgraph" alt=""/></div>
+<map name="artti_8cpp_a3b840338488ae42ae0f06fc9ff7a8cb2_cgraph" id="artti_8cpp_a3b840338488ae42ae0f06fc9ff7a8cb2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,132,38"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="180,13,339,38"/>
+<area shape="poly" title=" " alt="" coords="132,23,166,23,166,28,132,28"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="387,5,545,45"/>
+<area shape="poly" title=" " alt="" coords="339,23,373,23,373,28,339,28"/>
+</map>
+</div>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

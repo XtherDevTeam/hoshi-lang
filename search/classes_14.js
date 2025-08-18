@@ -6,5 +6,6 @@ var searchData=
   ['yoiintegerobject_3',['YoiIntegerObject',['../structYoiIntegerObject.html',1,'']]],
   ['yoiobject_4',['YoiObject',['../structYoiObject.html',1,'']]],
   ['yoistringobject_5',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
-  ['yoitypeinfo_6',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]]
+  ['yoitypeinfo_6',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
+  ['yoitypeinfoobject_7',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]]
 ];
