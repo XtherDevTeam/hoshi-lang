@@ -8,6 +8,7 @@
 #include <runtime/memory/memory.h>
 #include <runtime/build_config.h>
 #include <runtime/debug/debug.h>
+#include <runtime/rtti/rtti.h>
 
 extern "C" char yoi_desc;
 

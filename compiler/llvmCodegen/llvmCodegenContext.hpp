@@ -137,7 +137,6 @@ namespace yoi {
         void generateMainFunction();
 
         void generateFunctionImplementations();
-        void generateFunctionDebugInfo(IRFunctionDefinition &funcDef);
         void generateFunction(IRFunctionDefinition &funcDef);
         void generateFunctionExitCleanup();
         void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock);
@@ -163,7 +162,7 @@ namespace yoi {
         loadArrayElement(const std::shared_ptr<IRValueType> &type, llvm::Value *arrayPtr, llvm::Value *index);
         void callGcFunction(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease);
         llvm::Value *
-        handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign = false);
+        handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign = false);
         llvm::Value *handleForeignTypeConv(llvm::Value *val,
                                            const std::shared_ptr<IRValueType> &foreignType,
                                            bool convertToForeign = false);

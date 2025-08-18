@@ -858,9 +858,10 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::memberExpr *memberExpr, bool isStoreOp) {
         auto it = memberExpr->getTerms().begin();
-        yoi::indexT targetModule = -1;
-        while (it + 1 != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
+        yoi::indexT targetModule = -1, lastModule = -1;
+        while (it + 1 != memberExpr->getTerms().end() && (targetModule = isModuleName((*it)->id, lastModule)) != lastModule) {
             it++;
+            lastModule = targetModule;
         }
 
         bool whetherLastTerm = it + 1 == memberExpr->getTerms().end();
@@ -972,7 +973,7 @@ namespace yoi {
                         switch (nameInfo.type) {
                             case IRStructDefinition::nameInfo::nameType::field: {
                                 auto tempVarType =
-                                    irModule->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
+                                    moduleContext->getCompilerContext()->getImportedModule(termType->typeAffiliateModule)->structTable[termType->typeIndex]->fieldTypes[nameInfo.index];
                                 if (isStoreOp) {
                                     moduleContext->getIRBuilder().storeMemberOp(
                                         {IROperand::operandType::index, nameInfo.index});
@@ -2358,10 +2359,11 @@ namespace yoi {
             case 0: {
                 // member
                 auto it = typeSpec->member->getTerms().begin();
-                yoi::indexT targetModule = -1;
+                yoi::indexT targetModule = -1, lastModule = -1;
                 while (it + 1 != typeSpec->member->getTerms().end() &&
-                       (targetModule = isModuleName(*it, targetModule)) != -1) {
+                       (targetModule = isModuleName(*it, targetModule)) != lastModule) {
                     it++;
+                    lastModule = targetModule;
                 }
 
                 IRValueType lhs{IRValueType::valueType::integerObject};
@@ -2417,9 +2419,10 @@ namespace yoi {
     visitor::parseInterfaceName(yoi::externModuleAccessExpression *structDef) {
         // modules~
         auto it = structDef->getTerms().begin();
-        yoi::indexT targetModule = -1;
-        while (it + 1 != structDef->getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != -1) {
+        yoi::indexT targetModule = -1, lastModule = -1;
+        while (it + 1 != structDef->getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != lastModule) {
             it++;
+            lastModule = targetModule;
         }
         if (targetModule == -1) {
             targetModule = currentModuleIndex;
@@ -2443,7 +2446,7 @@ namespace yoi {
         if (!it->hasTemplateArg()) {
             return isModuleName(it->id, currentModule);
         } else {
-            return -1;
+            return currentModule;
         }
     }
 
@@ -2933,10 +2936,11 @@ namespace yoi {
 
         try {
             auto it = exportDecl->from->member->getTerms().begin();
-            yoi::indexT targetModule = -1;
+            yoi::indexT targetModule = -1, lastModule = -1;
             while (it + 1 != exportDecl->from->member->getTerms().end() &&
-                   (targetModule = isModuleName(*it, targetModule)) != -1) {
+                   (targetModule = isModuleName(*it, targetModule)) != lastModule) {
                 it++;
+                lastModule = targetModule;
             }
             yoi_assert(it + 1 == exportDecl->from->member->getTerms().end(),
                        exportDecl->getLine(),
@@ -3160,15 +3164,16 @@ namespace yoi {
         if (auto x = target->moduleImports.find(it->node.strVal); x != target->moduleImports.end()) {
             return x->second;
         } else {
-            return -1;
+            return currentModule;
         }
     }
 
     IRValueType visitor::parseTypeSpec(yoi::externModuleAccessExpression *emaExpression) {
         auto it = emaExpression->getTerms().begin();
-        yoi::indexT targetModule = -1;
-        while (it + 1 != emaExpression->getTerms().end() && (targetModule = isModuleName((*it)->id, -1)) != -1) {
+        yoi::indexT targetModule = -1, lastModule = -1;
+        while (it + 1 != emaExpression->getTerms().end() && (targetModule = isModuleName((*it)->id, lastModule)) != lastModule) {
             it++;
+            lastModule = targetModule;
         }
 
         bool whetherLastTerm = it + 1 == emaExpression->getTerms().end();

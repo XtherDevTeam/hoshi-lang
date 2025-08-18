@@ -561,7 +561,7 @@ namespace yoi {
 
     bool IRValueType::isBasicType() const {
         return type == valueType::integerObject || type == valueType::decimalObject ||
-               type == valueType::booleanObject || type == valueType::stringObject;
+               type == valueType::booleanObject || type == valueType::stringObject || type == valueType::characterObject;
     }
 
     bool IRValueType::isForeignBasicType() const {

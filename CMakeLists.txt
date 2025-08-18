@@ -43,7 +43,6 @@ execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libdir
 message(STATUS "LLVM libdir: ${llvm_libdir}")
 message(STATUS "LLVM components: ${llvm_components}")
 
-#set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3")
 set(CMAKE_CXX_FLAGS_DEBUG    "-g -O0")
 
@@ -66,6 +65,7 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/memory/*.cpp
         runtime/string/*.cpp
         runtime/debug/*.cpp
+        runtime/rtti/*.cpp
 )
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
@@ -74,7 +74,6 @@ add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLU
 
 # add -fno-builtin to avoid linking with system libraries for elysia_runtime
 set_target_properties(elysia_runtime PROPERTIES COMPILE_FLAGS "-fno-builtin -static-libstdc++ -static")
-# set( "-fno-builtin -static-libstdc++ -static")
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
@@ -87,4 +86,10 @@ if (WIN32)
     target_link_libraries(hoshi_lang PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components_list})
 else()
     target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
+endif()
+
+# if build in release mode, add CXX marco definition ELYSIA_RUNTIME_BUILD_TYPE_RELEASE
+if (CMAKE_BUILD_TYPE STREQUAL "RELEASE" OR CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(STATUS "Build in Release mode")
+    add_definitions(-DELYSIA_RUNTIME_BUILD_TYPE_RELEASE)
 endif()

@@ -1904,7 +1904,7 @@ namespace yoi {
         }
 
         std::string funcNameBase;
-        if (yoiType->isArrayType()) {
+        if (yoiType->isArrayType() || yoiType->isDynamicArrayType()) {
             funcNameBase = "array_" + yoi::wstring2string(yoiType->to_string());
         } else {
             switch(yoiType->type) {
@@ -2083,11 +2083,12 @@ namespace yoi {
                 yoi::vec<llvm::Value*> args;
                 auto it = func->arg_begin();
                 for (auto &arg : funcDecl->argumentTypes) {
+                    yoi_assert(!arg->isArrayType() && !arg->isDynamicArrayType(), funcDecl->debugInfo.line, funcDecl->debugInfo.column, "Array return type not supported for foreign functions");
                     if (arg->isBasicType()) {
                         auto *argVal = createBasicObject(arg, it);
                         args.push_back(argVal);
                     } else {
-                        auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, false); // convert to yoi type
+                        auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, 0, false); // convert to yoi type
                         args.push_back(handledLLVMType);
                     }
                     it ++;
@@ -2097,10 +2098,11 @@ namespace yoi {
                 auto *result = Builder->CreateCall(mangledFunction, args, "result");
                 llvm::Value *actualResultVal = nullptr;
                 // convert result to foreign type
+                yoi_assert(!funcDecl->returnType->isArrayType() && !funcDecl->returnType->isDynamicArrayType(), funcDecl->debugInfo.line, funcDecl->debugInfo.column, "Array return type not supported for foreign functions");
                 if (funcDecl->returnType->isBasicType()) {
                     actualResultVal = unboxValue(result, funcDecl->returnType);
                 } else {
-                    actualResultVal = handleForeignTypeConv(result, funcDecl->returnType->typeIndex, true); // convert back to foreign type
+                    actualResultVal = handleForeignTypeConv(result, funcDecl->returnType->typeIndex, 0, true); // convert back to foreign type
                 }
                 // resource releasing
                 callGcFunction(result, funcDecl->returnType, false);
@@ -2117,7 +2119,7 @@ namespace yoi {
             
     }
 
-    llvm::Value *LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, bool convertToForeign) {
+    llvm::Value *LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign) {
         // get the foreign type
         auto &foreignType = compilerCtx->getIRFFITable()->foreignTypeTable[foreignTypeIndex];
         auto &originalType = yoiModule->structTable[foreignType->typeIndex];
@@ -2125,12 +2127,12 @@ namespace yoi {
         auto llvmType = foreignTypeMap.at(std::make_tuple(IRValueType::valueType::structObject, foreignType->typeAffiliateModule, foreignType->typeIndex));
         auto objectLLVMType = structTypeMap.at(std::make_tuple(IRValueType::valueType::structObject, foreignType->typeAffiliateModule, foreignType->typeIndex));
 
-        if (convertToForeign) {
-            llvm::Value *rawMemory = Builder->CreateAlloca(llvmType, nullptr, "yoi_to_foreign_alloca");
+        auto copyToOne = [&](llvm::Value *src, llvm::Value *dest) {
             // convert yoi type to foreign type
             for (yoi::indexT i = 0; i < originalType->fieldTypes.size(); i++) {
                 // get the field value
-                auto *fieldPtr = Builder->CreateStructGEP(llvmType, val, i + 2, "field_ptr");
+                auto *fieldPtr = Builder->CreateStructGEP(objectLLVMType, val, i + 2, "field_ptr");
+                auto *destFieldPtr = Builder->CreateStructGEP(llvmType, dest, i, "dest_field_ptr");
                 auto &fieldType = originalType->fieldTypes[i];
                 llvm::Value *fieldVal = nullptr;
                 if (fieldType->isBasicType()) {
@@ -2138,14 +2140,49 @@ namespace yoi {
                 } else if (fieldType->isForeignBasicType()) {
                     fieldVal = handleForeignTypeConv(fieldPtr, fieldType, true);
                 } else {
-                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, true);
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, 0, true);
                 }
                 // count field size
                 auto size = TheModule->getDataLayout().getTypeAllocSize(yoiTypeToLLVMType(fieldType, true));
                 // populate memory
-                Builder->CreateMemCpy(fieldPtr, llvm::MaybeAlign(8), fieldVal, llvm::MaybeAlign(8), size);
+                Builder->CreateMemCpy(destFieldPtr, llvm::MaybeAlign(8), fieldVal, llvm::MaybeAlign(8), size);
             }
-            return rawMemory;
+        };
+
+        if (convertToForeign) {
+            llvm::Value *srcObjectToCopy = nullptr;
+            llvm::Value *rawMemory = nullptr;
+
+            if (isArray != 0) {
+                // load value
+                auto arrayLLVMType = arrayTypeMap.at(std::make_tuple(IRValueType::valueType::structObject, foreignType->typeAffiliateModule, foreignType->typeIndex, isArray));
+                auto *loadedVal = Builder->CreateLoad(arrayLLVMType, val, "loaded_val");
+                // offset to 2
+                auto *arrayLength = Builder->CreateLoad(
+                    Builder->getInt64Ty(),
+                    Builder->CreateStructGEP(arrayLLVMType, loadedVal, 2, "array_length"),
+                    "array_length_val"
+                );
+
+                rawMemory = Builder->CreateAlloca(llvmType, arrayLength, "yoi_to_foreign_alloca");
+
+                for (yoi::indexT i = 0; i < isArray; i++) {
+                    // get the array element
+                    auto *element = loadArrayElement(managedPtr(IRValueType{
+                        IRValueType::valueType::structObject,
+                        foreignType->typeAffiliateModule,
+                        foreignType->typeIndex,
+                        {isArray}
+                    }), val, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), i));
+                    // copy to foreign type
+                    auto *dest = Builder->CreateGEP(llvmType, rawMemory, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), i)});
+                    copyToOne(element, dest);
+                }
+            } else {
+                srcObjectToCopy = val;
+                rawMemory = Builder->CreateAlloca(llvmType, nullptr, "yoi_to_foreign_alloca");
+                copyToOne(srcObjectToCopy, rawMemory);
+            }
         } else {
             llvm::Value *rawMemory = Builder->CreateAlloca(objectLLVMType, nullptr, "foreign_to_yoi_alloca");
             // convert foreign type to yoi type
@@ -2160,7 +2197,7 @@ namespace yoi {
                 } else if (fieldType->isForeignBasicType()) {
                     fieldVal = handleForeignTypeConv(fieldPtr, fieldType, false);
                 } else {
-                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, false);
+                    fieldVal = handleForeignTypeConv(fieldPtr, fieldType->typeIndex, 0, false);
                 }
                 // populate memory using store
                 Builder->CreateStore(fieldVal, fieldPtr);
@@ -2224,19 +2261,34 @@ namespace yoi {
                         Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
                     }
 
+                    yoi_assert(!funcDef->returnType->isArrayType() && !funcDef->returnType->isDynamicArrayType(), funcDef->debugInfo.line, funcDef->debugInfo.column, "Array return type not supported for foreign functions");
+
+                    yoi::vec<std::pair<llvm::Value*, std::shared_ptr<IRValueType>>> postCleanArgs;
+
                     yoi::vec<llvm::Value*> args;
                     auto it = wrapperFuncDecl->arg_begin();
                     for (auto &arg : funcDef->argumentTypes) {
                         if (arg->isBasicType()) {
-                            auto *argVal = unboxValue(it, arg);
-                            callGcFunction(it, arg, false);
-                            args.push_back(argVal);
+                            if (arg->isArrayType() || arg->isDynamicArrayType()) {
+                                auto arrayLLVMType = getArrayLLVMType(arg);
+                                auto *object = Builder->CreateLoad(llvm::PointerType::get(arrayLLVMType, 0), it, "loaded_arg");
+                                // struct gep to array data
+                                auto *arrayData = Builder->CreateStructGEP(arrayLLVMType, object, 3, "array_data");
+                                // bitcast to pointer type
+                                auto *arrayDataPtr = Builder->CreateBitCast(arrayData, llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(arg->getElementType())), 0));
+                                args.push_back(arrayDataPtr);
+                                postCleanArgs.emplace_back(arrayDataPtr, arg); // we can't clean this pointer yet since we need to pass it to the function
+                            } else {
+                                auto *argVal = unboxValue(it, arg);
+                                callGcFunction(it, arg, false);
+                                args.push_back(argVal);
+                            }
                         } else if (arg->isForeignBasicType()) {
                             auto *argVal = handleForeignTypeConv(it, arg, true);
                             callGcFunction(it, arg, false);
                             args.push_back(argVal);
                         } else {
-                            auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, true);
+                            auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, 0, true);
                             callGcFunction(it, arg, false);
                             args.push_back(handledLLVMType);
                         }
@@ -2245,16 +2297,26 @@ namespace yoi {
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
                         Builder->CreateCall(externFuncDecl, args);
+
+                        for (auto &arg : postCleanArgs) {
+                            callGcFunction(arg.first, arg.second, false);
+                        }
+
                         Builder->CreateRet(noneObjectSingleton);
                     } else {
                         auto result = Builder->CreateCall(externFuncDecl, args, "result");
+
+                        for (auto &arg : postCleanArgs) {
+                            callGcFunction(arg.first, arg.second, false);
+                        }
+
                         llvm::Value *actualResultVal = nullptr;
                         if (funcDef->returnType->isBasicType()) {
                             actualResultVal = createBasicObject(funcDef->returnType, result);
                         } else if (funcDef->returnType->isForeignBasicType()) {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
                         } else {
-                            actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, false); //convert back to yoi type
+                            actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, 0, false); //convert back to yoi type
                         }
 
                         // return with actual result
@@ -3092,6 +3154,8 @@ namespace yoi {
             auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
             auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
             Builder->CreateStore(value, elementPointer);
+            // increase the ref count of the object
+            callGcFunction(value, managedPtr(type->getElementType()), true);
         }
     }
 } // namespace yoi

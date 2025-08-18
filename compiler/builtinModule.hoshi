@@ -1,0 +1,28 @@
+R"(struct TypeInfo {
+    id: int,
+    name: string,
+    type_enum: int,
+    module: int,
+    index: int,
+    is_array: int,
+    constructor(id: int, name: string, type_enum: int, module: int, index: int, is_array: int),
+    constructor(id: int)
+}
+
+import noffi rtti_object_alloc(id: int) : TypeInfo from "builtin"
+
+impl TypeInfo {
+    constructor(id: int, name: string, type_enum: int, module: int, index: int, is_array: int) {
+        this.id = id
+        this.name = name
+        this.type_enum = type_enum
+        this.module = module
+        this.index = index
+        this.is_array = is_array
+        return this
+    },
+    constructor(id: int) {
+        this := rtti_object_alloc(id)
+        return this
+    }
+})"

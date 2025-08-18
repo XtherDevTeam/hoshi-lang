@@ -1,5 +1,8 @@
 #include "builtinModule.hpp"
+#include "compiler/compilerContext.h"
+#include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <utility>
 
 namespace yoi {
     yoi::IRValueType BuiltinModuleBuilder::getIntObject() {

@@ -24,7 +24,7 @@ struct YoiIntegerObject {
 struct YoiStringObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
-    wchar_t *value;
+    char *value;
 };
 
 struct YoiBooleanObject {

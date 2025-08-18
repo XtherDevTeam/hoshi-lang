@@ -109,6 +109,20 @@ namespace yoi {
         builtinModuleBuilder = std::make_shared<BuiltinModuleBuilder>(builtinModule);
         builtinModuleBuilder->build();
         irFFITable = std::make_shared<IRFFITable>();
+
+        lexer l{std::wstringstream(yoi::string2wstring(__yoi_builtin_module_hoshi))};
+        l.scan();
+        hoshiModule *mod;
+        yoi::parse(mod, l);
+        std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), L"builtin", mod);
+        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
+        vis->visit();
+        for (auto &i : builtinModule->functionTable) {
+            // printf("%s\n", wstring2string(i.second->to_string()).c_str());
+            IROptimizer optimizer{shared_from_this(), builtinModule};
+            optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
+        }
+        finalizeAST(mod);
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType() {

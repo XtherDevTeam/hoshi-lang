@@ -5,6 +5,10 @@
 #ifndef HOSHI_LANG_COMPILERCONTEXT_H
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
+static const char *__yoi_builtin_module_hoshi = 
+  #include <compiler/builtinModule.hoshi>
+;
+
 #include <memory>
 
 #include "share/def.hpp"

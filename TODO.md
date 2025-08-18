@@ -5,9 +5,11 @@
 - [-] type_id expression `type_id(expr)` `type_id<type>`
 - [-] 加入 `lang.NullInterface`
 - [-] 加入 built-in 模组占据 0 号 index
-- [ ] 编译器为 TypeInfo 结构体开洞
+- [-] 编译器为 TypeInfo 结构体开洞
 - [-] 为 `import` `export` 增加 `noffi` 关键字
-- [ ] 加入原生动态创建数组
+- [-] 加入原生动态创建数组
 - [ ] 对因为 `dyn_cast` 造成的额外 `null-check` 进行优化。
     - [ ] 在 IRValueType 中加入 `attrs` 字段用于存放变量属性
     - [ ] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`
+- [ ] 加入可变参数
+- [ ] 加入 array 的导出型 FFI wrapper 支持

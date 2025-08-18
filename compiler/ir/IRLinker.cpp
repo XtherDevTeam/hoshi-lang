@@ -31,6 +31,7 @@ namespace yoi {
         linkGlobals();
         linkFunctions();
         linkInterfaceImplementations();
+        patchIRFFITable();
         createEntryFunction();
 
         return objectFile;
@@ -235,6 +236,8 @@ namespace yoi {
             case IR::Opcode::new_interface:
             case IR::Opcode::new_array_struct:
             case IR::Opcode::new_array_interface:
+            case IR::Opcode::new_dynamic_array_struct:
+            case IR::Opcode::new_dynamic_array_interface:
             case IR::Opcode::construct_interface_impl: 
             case IR::Opcode::typeid_struct:
             case IR::Opcode::typeid_interface:
@@ -339,6 +342,17 @@ namespace yoi {
     void IRLinker::patchIRFFITable() {
         for (auto &funcPair : compilerCtx->getIRFFITable()->exportedFunctionTable) {
             funcPair.second = {ENTRY_MODULE_ID_CONST, functionRemapping.at(std::get<0>(funcPair.second)).at(std::get<1>(funcPair.second)), std::get<2>(funcPair.second)};
+        }
+        for (auto &libPair : compilerCtx->getIRFFITable()->importedLibraries) {
+            for (auto &funcPair : libPair.second.importedFunctionTable) {
+                funcPair.second->returnType = patchType(funcPair.second->returnType);
+                for (auto &param : funcPair.second->argumentTypes) {
+                    *param = *patchType(param);
+                }
+                for (auto &ret : funcPair.second->variableTable.getVariables()) {
+                    *ret = *patchType(ret);
+                }
+            }
         }
         for (auto &foreignTypePair : compilerCtx->getIRFFITable()->foreignTypeTable) {
             foreignTypePair.second = patchType(foreignTypePair.second);

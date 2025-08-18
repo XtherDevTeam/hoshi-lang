@@ -763,7 +763,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -782,7 +782,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -801,7 +801,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -820,7 +820,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -838,7 +838,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -853,7 +853,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, value.contributedInstructions);
+                        simulationStack.push(result.type, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -871,7 +871,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -889,7 +889,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -907,7 +907,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -921,7 +921,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, value.contributedInstructions);
+                        simulationStack.push(result.type, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -939,7 +939,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, value.contributedInstructions + shift.contributedInstructions);
+                        simulationStack.push(result.type, value.contributedInstructions + shift.contributedInstructions  + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -957,7 +957,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, value.contributedInstructions + shift.contributedInstructions);
+                        simulationStack.push(result.type, value.contributedInstructions + shift.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -975,7 +975,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -993,7 +993,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -1011,7 +1011,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -1029,7 +1029,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -1047,7 +1047,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }
@@ -1065,7 +1065,7 @@ namespace yoi {
                         insIndex = generatePushOp(result, insIndex);
                     } else {
                         // lost information, push back
-                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions);
+                        simulationStack.push(result.type, left.contributedInstructions + right.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
                 }

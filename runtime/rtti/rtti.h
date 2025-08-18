@@ -30,6 +30,9 @@ enum class valueType : uint64_t {
     foreignFloatType,
 };
 
+struct YoiIntegerObject;
+struct YoiStringObject;
+
 struct YoiTypeInfo {
     int64_t type_id;
     const char *type_name;
@@ -39,6 +42,19 @@ struct YoiTypeInfo {
     int64_t is_array;
 };
 
+struct YoiTypeInfoObject {
+    int64_t gc_refcount;
+    int64_t type_info_struct_type_id;
+    YoiIntegerObject *type_id_object;
+    YoiStringObject *type_name_object;
+    YoiIntegerObject *type_enum_object;
+    YoiIntegerObject *type_affiliate_module_object;
+    YoiIntegerObject *type_index_object;
+    YoiIntegerObject *is_array_object;
+};
+
 extern "C" YoiTypeInfo rtti_table[];
+
+extern "C" YoiTypeInfoObject *rtti_object_alloc(YoiIntegerObject *type_id_object);
 
 #endif

@@ -25,6 +25,7 @@ TEST_CASES = {
     "null-interface": {"type": "executable", "return_code": 0},
     "null": {"type": "executable", "return_code": 0},
     "new-expr": {"type": "executable", "return_code": 0},
+    "type-info": {"type": "executable", "return_code": 0},
 }
 
 
