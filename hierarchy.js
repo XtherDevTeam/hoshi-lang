@@ -171,6 +171,7 @@ var hierarchy =
       [ "clObjectLinker", "classyoi_1_1clObjectLinker.html", null ]
     ] ],
     [ "operandValue", "unionyoi_1_1IROperand_1_1operandValue.html", null ],
+    [ "OverloadResult", "structyoi_1_1visitor_1_1OverloadResult.html", null ],
     [ "pair", null, [
       [ "customize_t", "classmagic__enum_1_1customize_1_1customize__t.html", null ]
     ] ],

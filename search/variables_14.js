@@ -12,9 +12,10 @@ var searchData=
   ['variablesextrainfo_9',['variablesExtraInfo',['../classyoi_1_1IROptimizer.html#a122657ed875d3c1752af64783eec2078',1,'yoi::IROptimizer']]],
   ['variablestates_10',['variableStates',['../structyoi_1_1AnalysisState.html#a7af85b6861f36f19685a7129ffc028c4',1,'yoi::AnalysisState']]],
   ['variabletable_11',['variableTable',['../classyoi_1_1IRFunctionDefinition.html#a5d2c4ad0d183ce3d05d814b2bc552492',1,'yoi::IRFunctionDefinition']]],
-  ['vbool_12',['vBool',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a22dcd3dcdb72b540bca86cd2fee0f88d',1,'yoi::lexer::token::vBasicValue']]],
-  ['vdeci_13',['vDeci',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a910d6aeb33c20d91e42bd068a0e6cf4b',1,'yoi::lexer::token::vBasicValue']]],
-  ['vint_14',['vInt',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#acf5e9e3964380dd92ca4dd1939a22b9a',1,'yoi::lexer::token::vBasicValue']]],
-  ['virtualmethodindexmap_15',['virtualmethodindexmap',['../classyoi_1_1IRInterfaceImplementationDefinition.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::virtualMethodIndexMap'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethodIndexMap']]],
-  ['virtualmethods_16',['virtualmethods',['../classyoi_1_1IRInterfaceImplementationDefinition.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::virtualMethods'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethods']]]
+  ['variadicelementtype_12',['variadicElementType',['../structyoi_1_1visitor_1_1OverloadResult.html#a2f997e30b336e45617c5ca1cc7c96b7b',1,'yoi::visitor::OverloadResult']]],
+  ['vbool_13',['vBool',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a22dcd3dcdb72b540bca86cd2fee0f88d',1,'yoi::lexer::token::vBasicValue']]],
+  ['vdeci_14',['vDeci',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a910d6aeb33c20d91e42bd068a0e6cf4b',1,'yoi::lexer::token::vBasicValue']]],
+  ['vint_15',['vInt',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#acf5e9e3964380dd92ca4dd1939a22b9a',1,'yoi::lexer::token::vBasicValue']]],
+  ['virtualmethodindexmap_16',['virtualmethodindexmap',['../classyoi_1_1IRInterfaceImplementationDefinition.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::virtualMethodIndexMap'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethodIndexMap']]],
+  ['virtualmethods_17',['virtualmethods',['../classyoi_1_1IRInterfaceImplementationDefinition.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::virtualMethods'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethods']]]
 ];

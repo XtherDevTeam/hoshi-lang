@@ -135,21 +135,21 @@ var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
 "classyoi_1_1BuiltinModuleBuilder.html#a176e180c9bd68c99c1846b7edc10d59a",
-"classyoi_1_1IRBuilder.html#a39cc715a4b505220c9551ceeee18575b",
-"classyoi_1_1IRLinker.html#a55ae202968e470ba3dbcf58c9ea91fba",
-"classyoi_1_1IRValueType.html",
-"classyoi_1_1LLVMCodegen.html#ada29ba25420ceac96b59dbb9944a1ea2",
-"classyoi_1_1enum__range_1_1iterator.html#a321479de9a6419cf4d0141050ae65fa4",
-"classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9e",
-"classyoi_1_1letAssignmentPair.html#a4a20cb1e019ffccb871258534d85d880",
-"classyoi_1_1structDefInnerPair.html#a70185804c622b3cbbf4c15ebe2eba5b0",
-"classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef",
-"magic__enum_8h.html#a1c049493e6b29f8dde778b28878d0160",
-"namespacemagic__enum_1_1detail.html#ab68878d3c9e194da158c463b92f6100d",
-"parser_8cpp.html#a69d393ad12a9fb463a7b45135e90d990",
-"structmagic__enum_1_1detail_1_1supported.html",
-"structyoi_1_1IRStructDefinition_1_1Builder.html#a1c0dad859c2a9feb09ecf53f8280538f",
-"structyoi_1_1lexer_1_1token.html#aa51a1c5ea431ee9ccd3305b3b7b2c1c8"
+"classyoi_1_1IRBuilder.html#a37c226e842e50a94f5beee188cfecc9d",
+"classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752",
+"classyoi_1_1IRTemplateBuilder.html#a9cac6707ec366dca31c9f0f5ce61e389",
+"classyoi_1_1LLVMCodegen.html#ad13e3f9e9d0d63fca585da5553339ec7",
+"classyoi_1_1enum__range.html#ac96fceb7a09e6c9b857b17a891cfef78",
+"classyoi_1_1importDecl.html#a70e95930cc931b4923176f3306ec7cb1",
+"classyoi_1_1leftExpr.html#a938276e038eb894371a14659e8364315",
+"classyoi_1_1structDefInnerPair.html",
+"classyoi_1_1visitor.html#a87b778b9418b7357fbda584bbca711d3",
+"lexer_8hpp_source.html",
+"namespacemagic__enum_1_1detail.html#a1c39f200e074038afe693c2231e0bca3",
+"parser_8cpp.html#a1599eecf8781c9dba0e44baefb471abf",
+"structmagic__enum_1_1detail_1_1is__scoped__enum.html",
+"structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a710b1a5c9f835b20b87a76ce12e4f305",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae1ed6480eefefc22b89d2fbe59a6f086"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

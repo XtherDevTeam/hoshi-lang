@@ -4,7 +4,8 @@ var classyoi_1_1IRFunctionDefinition =
     [ "FunctionAttrs", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445", [
       [ "AlwaysInline", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7", null ],
       [ "BuiltinImplementation", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f", null ],
-      [ "NoFFI", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a", null ]
+      [ "NoFFI", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a", null ],
+      [ "Variadic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b", null ]
     ] ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html#a89c653b9e1bb756b2b4d29b2b97941c2", null ],
     [ "getVariableTable", "classyoi_1_1IRFunctionDefinition.html#aefcf4ac267aede8e9f26f9c643a58538", null ],

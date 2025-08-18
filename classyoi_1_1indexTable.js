@@ -5,6 +5,7 @@ var classyoi_1_1indexTable =
     [ "contains", "classyoi_1_1indexTable.html#aa76a630f26192e5bbc12186472e777fa", null ],
     [ "end", "classyoi_1_1indexTable.html#acad38d52497a975bfb6f2f6acd76631f", null ],
     [ "getIndex", "classyoi_1_1indexTable.html#a741ac5ddd3ef961363997aeed13625c4", null ],
+    [ "getIndex", "classyoi_1_1indexTable.html#a45dd786d9a08d7eb251eb9c6e5218b6b", null ],
     [ "getKey", "classyoi_1_1indexTable.html#afc39e40e2c384316bee5a9d0c06ec426", null ],
     [ "operator[]", "classyoi_1_1indexTable.html#a371fe0d52a0bf0b73b6e2af503554581", null ],
     [ "operator[]", "classyoi_1_1indexTable.html#a2172ac23ccace7bbe941af751ae3cd74", null ],

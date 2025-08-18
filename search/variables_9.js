@@ -43,7 +43,8 @@ var searchData=
   ['is_5funscoped_5fenum_5fv_40',['is_unscoped_enum_v',['../namespacemagic__enum.html#a1b85e069563a6c9c29a65fb5fd110321',1,'magic_enum']]],
   ['isnull_41',['isNull',['../classyoi_1_1typeSpec.html#af2f61ee5e6b7b211ecfd6f7bf0c10f1b',1,'yoi::typeSpec']]],
   ['isreadafterstore_42',['isReadAfterStore',['../structyoi_1_1IROptimizer_1_1VariablesExtraInfo.html#a17c2d15ea42a2cbbe02668e3a3ef2dff',1,'yoi::IROptimizer::VariablesExtraInfo']]],
-  ['it_43',['it',['../structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#aab6954aec43f057be6c217f2193f5083',1,'yoi::IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::it'],['../classyoi_1_1indexTableDeprecated_1_1iterator.html#a96311882f99627701f79e24d52834c64',1,'yoi::indexTableDeprecated::iterator::it'],['../classyoi_1_1indexTable_1_1iterator.html#aca80b8646cbeb4083e0bd414731104f2',1,'yoi::indexTable::iterator::it']]],
-  ['itemindex_44',['itemIndex',['../classyoi_1_1IRExternEntry.html#a04e8270e502a796be3847fb86d0bea22',1,'yoi::IRExternEntry']]],
-  ['items_45',['items',['../structyoi_1_1IROptimizer_1_1SimulationStack.html#a35e360a464709adff5606088ca07c8db',1,'yoi::IROptimizer::SimulationStack']]]
+  ['isvariadic_43',['isVariadic',['../structyoi_1_1visitor_1_1OverloadResult.html#aba1cff042d1a42f96a9903cd4a5ff759',1,'yoi::visitor::OverloadResult']]],
+  ['it_44',['it',['../structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#aab6954aec43f057be6c217f2193f5083',1,'yoi::IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::it'],['../classyoi_1_1indexTableDeprecated_1_1iterator.html#a96311882f99627701f79e24d52834c64',1,'yoi::indexTableDeprecated::iterator::it'],['../classyoi_1_1indexTable_1_1iterator.html#aca80b8646cbeb4083e0bd414731104f2',1,'yoi::indexTable::iterator::it']]],
+  ['itemindex_45',['itemIndex',['../classyoi_1_1IRExternEntry.html#a04e8270e502a796be3847fb86d0bea22',1,'yoi::IRExternEntry']]],
+  ['items_46',['items',['../structyoi_1_1IROptimizer_1_1SimulationStack.html#a35e360a464709adff5606088ca07c8db',1,'yoi::IROptimizer::SimulationStack']]]
 ];
