@@ -8,6 +8,5 @@ var memory_8cpp =
     [ "runtime_finalize_object", "memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220", null ],
     [ "runtime_finalize_object_report", "memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8", null ],
     [ "runtime_object_alloc", "memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec", null ],
-    [ "runtime_object_alloc_report", "memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e", null ],
-    [ "runtime_object_allocated", "memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a", null ]
+    [ "runtime_object_alloc_report", "memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e", null ]
 ];

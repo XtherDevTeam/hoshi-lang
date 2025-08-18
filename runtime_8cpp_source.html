@@ -114,8 +114,8 @@ $(document).ready(function(){initNavTree('runtime_8cpp_source.html',''); initRes
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    printf(<span class="stringliteral">&quot;[Elysia/DEBUG] Yoi-lang runtime finished, result: %d.\n&quot;</span>, resultVal);</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">    #endif</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#if defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a">runtime_object_allocated</a> &gt; 0) {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        printf(<span class="stringliteral">&quot;[Elysia/WARNING] Yoi-lang runtime finished with %lld objects allocated, memory leaks detected!\n&quot;</span>, <a class="code hl_variable" href="memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a">runtime_object_allocated</a>);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">if</span> (runtime_object_allocated &gt; 0) {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        printf(<span class="stringliteral">&quot;[Elysia/WARNING] Yoi-lang runtime finished with %lld objects allocated, memory leaks detected!\n&quot;</span>, runtime_object_allocated);</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        runtime_debug_print_current_allocated_memory();</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#endif</span></div>
@@ -125,7 +125,6 @@ $(document).ready(function(){initNavTree('runtime_8cpp_source.html',''); initRes
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">return</span> resultVal;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
 </div>
-<div class="ttc" id="amemory_8cpp_html_a5b5bd71a6d8da67fd5e902e06915524a"><div class="ttname"><a href="memory_8cpp.html#a5b5bd71a6d8da67fd5e902e06915524a">runtime_object_allocated</a></div><div class="ttdeci">int64_t runtime_object_allocated</div><div class="ttdef"><b>Definition</b> <a href="memory_8cpp_source.html#l00027">memory.cpp:27</a></div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div></div>
 <div class="ttc" id="aruntime_8cpp_html_a3302890ca27fb35f72095c2e63cfae7d"><div class="ttname"><a href="runtime_8cpp.html#a3302890ca27fb35f72095c2e63cfae7d">elysia_main</a></div><div class="ttdeci">int elysia_main(int argc, char *argv[])</div><div class="ttdef"><b>Definition</b> <a href="runtime_8cpp_source.html#l00005">runtime.cpp:5</a></div></div>
 <div class="ttc" id="aruntime_8h_html"><div class="ttname"><a href="runtime_8h.html">runtime.h</a></div></div>
