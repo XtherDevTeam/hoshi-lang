@@ -13,7 +13,7 @@ var searchData=
   ['of_20null_20literal_20in_20hoshi_20lang_10',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]],
   ['of_20yoi_20lang_20programming_20language_11',['The design of yoi-lang programming language',['../index.html',1,'']]],
   ['oop_12',['OOP',['../index.html#autotoc_md61',1,'']]],
-  ['op_13',['op',['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op'],['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op']]],
+  ['op_13',['op',['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op'],['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op'],['../classyoi_1_1abstractExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::abstractExpr::op']]],
   ['opcode_14',['opcode',['../classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d',1,'yoi::IR::opcode'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7',1,'yoi::IR::Opcode']]],
   ['operands_15',['operands',['../classyoi_1_1IR.html#a8ce7a5a8c6787e9812c15e35f5d0ce15',1,'yoi::IR']]],
   ['operandtype_16',['operandType',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206',1,'yoi::IROperand']]],

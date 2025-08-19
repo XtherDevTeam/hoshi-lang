@@ -16,9 +16,10 @@ var searchData=
   ['interfacedefstmt_13',['interfaceDefStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea68398d9b72fed7f20446726901c874e5',1,'yoi::globalStmt']]],
   ['interfaceimpltype_14',['interfaceImplType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a809f0d53d1c38ccf8fc891eebe7e2d94',1,'yoi::IRExternEntry']]],
   ['interfaceobject_15',['interfaceobject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5',1,'yoi::IRValueType::interfaceObject'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a838125064f81b909c03de6bbbbd552a5',1,'interfaceObject:&#160;rtti.h']]],
-  ['interfacetype_16',['interfaceType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a0c5d7016abfdbaccbdf367f28a4ee66a',1,'yoi::IRExternEntry']]],
-  ['invalid_5ftag_17',['invalid_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebeda159cb53c185dae9e51fb5e4d14cf37a3',1,'magic_enum::customize::detail']]],
-  ['invoke_18',['invoke',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536',1,'yoi::IR']]],
-  ['invoke_5fimported_19',['invoke_imported',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1',1,'yoi::IR']]],
-  ['invoke_5fvirtual_20',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]]
+  ['interfaceof_16',['interfaceof',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a33ced12f4457b20ae42e4628e54ea8d0',1,'yoi::IR']]],
+  ['interfacetype_17',['interfaceType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a0c5d7016abfdbaccbdf367f28a4ee66a',1,'yoi::IRExternEntry']]],
+  ['invalid_5ftag_18',['invalid_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebeda159cb53c185dae9e51fb5e4d14cf37a3',1,'magic_enum::customize::detail']]],
+  ['invoke_19',['invoke',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536',1,'yoi::IR']]],
+  ['invoke_5fimported_20',['invoke_imported',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1',1,'yoi::IR']]],
+  ['invoke_5fvirtual_21',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]]
 ];

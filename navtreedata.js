@@ -134,22 +134,22 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"classyoi_1_1BuiltinModuleBuilder.html#a176e180c9bd68c99c1846b7edc10d59a",
-"classyoi_1_1IRBuilder.html#a37c226e842e50a94f5beee188cfecc9d",
-"classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752",
-"classyoi_1_1IRTemplateBuilder.html#a9cac6707ec366dca31c9f0f5ce61e389",
-"classyoi_1_1LLVMCodegen.html#ad13e3f9e9d0d63fca585da5553339ec7",
-"classyoi_1_1enum__range.html#ac96fceb7a09e6c9b857b17a891cfef78",
-"classyoi_1_1importDecl.html#a70e95930cc931b4923176f3306ec7cb1",
-"classyoi_1_1leftExpr.html#a938276e038eb894371a14659e8364315",
-"classyoi_1_1structDefInnerPair.html",
-"classyoi_1_1visitor.html#a87b778b9418b7357fbda584bbca711d3",
-"lexer_8hpp_source.html",
-"namespacemagic__enum_1_1detail.html#a1c39f200e074038afe693c2231e0bca3",
-"parser_8cpp.html#a1599eecf8781c9dba0e44baefb471abf",
-"structmagic__enum_1_1detail_1_1is__scoped__enum.html",
-"structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a710b1a5c9f835b20b87a76ce12e4f305",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae1ed6480eefefc22b89d2fbe59a6f086"
+"classyoi_1_1BuiltinModuleBuilder.html#a170a7036e9359575d23ed4cd95ce7c6b",
+"classyoi_1_1IRBuilder.html#a2c0487a0411af457d2a23859b8344375",
+"classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96",
+"classyoi_1_1IRTemplateBuilder.html",
+"classyoi_1_1LLVMCodegen.html#ac4fcc73d3a56e8637f7b9eafd8dd1a3d",
+"classyoi_1_1definitionArguments.html#a7e0c7cedd41cd3272c7595c25e3596af",
+"classyoi_1_1implStmt.html",
+"classyoi_1_1interfaceDefStmt.html#a7dcc5b0743afd7b8378c58746641d99c",
+"classyoi_1_1returnStmt.html#af236b4f0a7cbfd823979ca197e124adb",
+"classyoi_1_1visitor.html#a68dc190548b1ffcdf16e008690a3aa21",
+"globals.html",
+"namespacemagic__enum_1_1bitwise__operators.html#a3aff5f09f60e4a027ccbacaf137ad64c",
+"namespaceyoi.html#aeb19d81eee9c2ae423680b8600d61c8e",
+"structYoiTypeInfoObject.html#a37f4105747e477d9a55855562509c344",
+"structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a010ddcc410eb8c270049186c685fd1c4",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab5152fa9f8596245f455b7f939f7e9fd"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

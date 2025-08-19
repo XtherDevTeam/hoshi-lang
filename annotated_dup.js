@@ -33,6 +33,7 @@ var annotated_dup =
       [ "underlying_type", "structmagic__enum_1_1underlying__type.html", null ]
     ] ],
     [ "yoi", "namespaceyoi.html", [
+      [ "abstractExpr", "classyoi_1_1abstractExpr.html", "classyoi_1_1abstractExpr" ],
       [ "addExpr", "classyoi_1_1addExpr.html", "classyoi_1_1addExpr" ],
       [ "AnalysisState", "structyoi_1_1AnalysisState.html", "structyoi_1_1AnalysisState" ],
       [ "andExpr", "classyoi_1_1andExpr.html", "classyoi_1_1andExpr" ],

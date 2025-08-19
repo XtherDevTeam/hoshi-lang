@@ -1,5 +1,6 @@
 var namespaceyoi =
 [
+    [ "abstractExpr", "classyoi_1_1abstractExpr.html", "classyoi_1_1abstractExpr" ],
     [ "addExpr", "classyoi_1_1addExpr.html", "classyoi_1_1addExpr" ],
     [ "AnalysisState", "structyoi_1_1AnalysisState.html", "structyoi_1_1AnalysisState" ],
     [ "andExpr", "classyoi_1_1andExpr.html", "classyoi_1_1andExpr" ],
@@ -111,6 +112,7 @@ var namespaceyoi =
     [ "vec", "namespaceyoi.html#a467112ed789564244f414efb801bf606", null ],
     [ "wchar", "namespaceyoi.html#a1a472f9b454d139c84efb5ab01cbf684", null ],
     [ "wstr", "namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4", null ],
+    [ "finalizeAST", "namespaceyoi.html#a30a0b5978f8b8e8c023debb9ac86e21c", null ],
     [ "finalizeAST", "namespaceyoi.html#ab5309c729caab758c7f25ac61cd34d53", null ],
     [ "finalizeAST", "namespaceyoi.html#ac59b996aa6858ed5c3f3fb4416d9031b", null ],
     [ "finalizeAST", "namespaceyoi.html#a5426637233d982037f50afc1d6d5b89e", null ],
@@ -184,6 +186,7 @@ var namespaceyoi =
     [ "managedPtr", "namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd", null ],
     [ "mergeStates", "namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b", null ],
     [ "panic", "namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6", null ],
+    [ "parse", "namespaceyoi.html#a4600689cb595347b843d027c2d1b2087", null ],
     [ "parse", "namespaceyoi.html#a8f1438021133dfad893c8aa756b3a7fd", null ],
     [ "parse", "namespaceyoi.html#a134cef18ba3b99a601622a0b270a6ac0", null ],
     [ "parse", "namespaceyoi.html#a66f39c0f53ae734cb74ca78c7a1561cd", null ],

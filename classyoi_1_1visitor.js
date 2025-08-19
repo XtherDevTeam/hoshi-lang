@@ -40,6 +40,7 @@ var classyoi_1_1visitor =
     [ "specializeStructTemplate", "classyoi_1_1visitor.html#a4b9cce69fabc43ded7762b343a3e0f2d", null ],
     [ "tryCastTo", "classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1", null ],
     [ "visit", "classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8", null ],
+    [ "visit", "classyoi_1_1visitor.html#ac06563a24d76b19b9f21c4dc11a6b050", null ],
     [ "visit", "classyoi_1_1visitor.html#ada790c5cb50fa1990c13f9d1093f596a", null ],
     [ "visit", "classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1", null ],
     [ "visit", "classyoi_1_1visitor.html#a619711d98a61127e0cdb8fbdf529b38f", null ],

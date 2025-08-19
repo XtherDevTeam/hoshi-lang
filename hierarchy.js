@@ -4,6 +4,7 @@ var hierarchy =
     [ "AnalysisState", "structyoi_1_1AnalysisState.html", null ],
     [ "Argument", "structyoi_1_1IRTemplateBuilder_1_1Argument.html", null ],
     [ "AST", "classyoi_1_1AST.html", [
+      [ "abstractExpr", "classyoi_1_1abstractExpr.html", null ],
       [ "addExpr", "classyoi_1_1addExpr.html", null ],
       [ "andExpr", "classyoi_1_1andExpr.html", null ],
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", null ],
