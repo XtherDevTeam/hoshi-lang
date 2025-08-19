@@ -35,7 +35,7 @@ export test as test
 假设我有如下静态库 `libfoobar.so` 中的如下函数签名
 
 ```c
-FILE* fopen(const char* path, const char *flags);
+FILE* fopen(const char* path, const char *flags)
 ```
 
 如何调用这个函数呢？有如下代码：

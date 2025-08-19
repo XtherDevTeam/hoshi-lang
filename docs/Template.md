@@ -4,7 +4,7 @@
 
 ```yoi
 func aaa<T, U>(a: T, b: U) : int {
-    return a + b;
+    return a + b
 }
 ```
 
