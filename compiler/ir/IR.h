@@ -340,6 +340,7 @@ namespace yoi {
             BuiltinImplementation,
             NoFFI,
             Variadic,
+            Static,
         };
 
         yoi::wstr name;
@@ -704,6 +705,7 @@ namespace yoi {
         void invokeMethodOp(yoi::indexT funcIndex,
                             yoi::indexT methodArgsCount,
                             const std::shared_ptr<IRValueType> &returnType,
+                            bool isStatic,
                             bool externalInvocation = false,
                             yoi::indexT moduleIndex = -1);
 

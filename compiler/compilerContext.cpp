@@ -12,6 +12,7 @@
 #include "ir/IROptimizer.hpp"
 #include "share/def.hpp"
 #include "visitor/visitor.h"
+#include <filesystem>
 #include <stdexcept>
 
 namespace yoi {
@@ -55,6 +56,10 @@ namespace yoi {
         } else {
             return HOSHI_COMPILER_CTX_GLOB_ID_CONST;
         }
+
+        if (auto path = std::filesystem::path(rFilepath) / "index.hoshi"; std::filesystem::is_directory(rFilepath) && std::filesystem::exists(path)) {
+            return compileModule(path.wstring());
+        }
         
         try {
             return modules.getIndex(rFilepath);
@@ -62,6 +67,10 @@ namespace yoi {
             auto fp = fopen(wstring2string(rFilepath).c_str(), "r");
             if (!fp)
                 throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
+
+            // temporarily add current directory to search path
+            buildConfig->searchPaths.push_back(std::filesystem::path(filepath).parent_path().wstring());
+
             fseek(fp, 0, SEEK_END);
             auto size = ftell(fp);
             fseek(fp, 0, SEEK_SET);
@@ -93,6 +102,10 @@ namespace yoi {
             }
             finalizeAST(mod);
             set_current_file_path(current_file);
+
+            // pop current directory from search path
+            buildConfig->searchPaths.pop_back();
+            
             return idx;
         }
     }

@@ -818,6 +818,7 @@ namespace yoi {
 
     class innerMethodDef : public AST {
     public:
+        yoi::vec<lexer::token> attrs;
         identifier *name;
         definitionArguments *args;
         typeSpec *resultType;

@@ -908,10 +908,105 @@ namespace yoi {
 
         bool whetherLastTerm = it + 1 == memberExpr->getTerms().end();
 
-        if (targetModule == -1) {
-            visit(*it, isStoreOp && whetherLastTerm);
-        } else {
-            visitExtern(*it, targetModule, isStoreOp && whetherLastTerm);
+        // find the possibility of static method call
+        bool isStaticMethod = false;
+        if (it + 1 != memberExpr->getTerms().end()) {
+            std::shared_ptr<IRValueType> type{};
+            try {
+                type = managedPtr(parseTypeSpec(*it));
+            } catch (std::runtime_error &e) {
+            }
+            if (type != nullptr && type->type == IRValueType::valueType::structObject) {
+                auto memberName = *(++it);
+                yoi_assert(!memberName->id->hasTemplateArg(),
+                           memberName->getLine(),
+                           memberName->getColumn(),
+                           "Unexpected template argument for static method call");
+                yoi_assert(!memberName->getSubscript().empty(),
+                           memberName->getLine(),
+                           memberName->getColumn(),
+                           "Expected subscript for static method call");
+                /*try {
+                    auto structName = (*it)->id;
+                    auto structType = type->typeIndex;
+                    
+                    yoi_assert(!memberName->id->hasTemplateArg(),
+                               memberName->getLine(),
+                               memberName->getColumn(),
+                               "Unexpected template argument for static method call");
+                    yoi_assert(!memberName->getSubscript().empty(),
+                               memberName->getLine(),
+                               memberName->getColumn(),
+                               "Expected subscript for static method call");
+                    for (auto &sub : memberName->getSubscript()) {
+                        yoi_assert(sub->isInvocation(),
+                                   sub->getLine(),
+                                   sub->getColumn(),
+                                   "Expected invocation for static method call");
+                        auto argTypes = evaluateArguments(sub->args);
+                        auto methodName = memberName->id->getId().get().strVal + getFuncUniqueNameStr(argTypes);
+                        auto methodIdx = moduleContext->getCompilerContext()
+                                             ->getImportedModule(type->typeAffiliateModule)
+                                             ->structTable[structType]
+                                             ->nameIndexMap[methodName]
+                                             .index;
+
+                        auto funcDef = moduleContext->getCompilerContext()
+                                           ->getImportedModule(type->typeAffiliateModule)
+                                           ->functionTable[methodIdx];
+                        yoi_assert(funcDef->argumentTypes.size() == sub->args->get().size(),
+                                   sub->getLine(),
+                                   sub->getColumn(),
+                                   "Argument count does not match");
+
+                        moduleContext->getIRBuilder().invokeMethodOp(
+                            methodIdx, argTypes.size() - 1, funcDef->returnType, false, true, type->typeAffiliateModule);
+                        isStaticMethod = true;
+                        break;
+                    }
+                } catch (std::out_of_range &e) {
+                    panic(memberExpr->getLine(),
+                          memberExpr->getColumn(),
+                          "Unresolved static method call: " + yoi::wstring2string(memberExpr->getTerms().front()->id->getId().get().strVal));
+                }*/
+                auto &sub = memberName->getSubscript().front();
+                moduleContext->getIRBuilder().saveState();
+                auto argTypes = evaluateArguments(sub->args);
+                auto overload = resolveOverloadExtern(memberName->id->getId().node.strVal, argTypes, type->typeAffiliateModule, moduleContext->getCompilerContext()
+                                             ->getImportedModule(type->typeAffiliateModule)
+                                             ->structTable[type->typeIndex]);
+
+                yoi_assert(overload.found(), memberExpr->getLine(), memberExpr->getColumn(), "Unresolved static method call");
+                if (overload.isVariadic) {
+                    for (size_t i = 0; i < overload.fixedArgCount; ++i) {
+                        visit(sub->args->get()[i]);
+                    }
+                    auto variadicArgCount = argTypes.size() - overload.fixedArgCount;
+                    if (variadicArgCount > 0) {
+                        for (size_t i = 0; i < variadicArgCount; ++i) {
+                            visit(sub->args->get()[i + overload.fixedArgCount]);
+                            tryCastTo(overload.variadicElementType);
+                        }
+                        moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {static_cast<yoi::indexT>(variadicArgCount)});
+                    } else {
+                        moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {0});
+                    }
+                } else {
+                    moduleContext->getIRBuilder().discardState();
+                }
+                moduleContext->getIRBuilder().invokeMethodOp(
+                            overload.functionIndex, overload.function->argumentTypes.size() - 1, overload.function->returnType, false, true, type->typeAffiliateModule);
+                isStaticMethod = true;
+            } else {
+            }
+        }
+
+        if (!isStaticMethod) {
+            if (targetModule == -1) {
+                visit(*it, isStoreOp && whetherLastTerm);
+            } else {
+                visitExtern(*it, targetModule, isStoreOp && whetherLastTerm);
+            }
         }
 
         for (; it != memberExpr->getTerms().end();) {
@@ -919,6 +1014,7 @@ namespace yoi {
             if (it == memberExpr->getTerms().end()) {
                 break;
             }
+
             auto rhsIt = *it;
             auto termType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
@@ -926,48 +1022,13 @@ namespace yoi {
                 if (sub->isInvocation()) {
                     if (termType->type == IRValueType::valueType::structObject) {
                         auto memberName = rhsIt->id;
-                        try {
-                            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
-                            for (auto &arg : sub->args->get()) {
-                                visit(arg);
-                                argTypes.push_back(moduleContext->getIRBuilder().getRhsFromTempVarStack());
-                            }
-                            auto actualName = memberName->getId().get().strVal + getFuncUniqueNameStr(argTypes);
-
-                            auto nameInfo = moduleContext->getCompilerContext()
-                                                ->getImportedModule(termType->typeAffiliateModule)
-                                                ->structTable[termType->typeIndex]
-                                                ->lookupName(actualName);
-                            switch (nameInfo.type) {
-                                case IRStructDefinition::nameInfo::nameType::field: {
-                                    panic(rhsIt->getLine(),
-                                          rhsIt->getColumn(),
-                                          "Field cannot be parsed within an invocation");
-                                    break;
-                                }
-                                case IRStructDefinition::nameInfo::nameType::method: {
-                                    auto funcIndex = nameInfo.index;
-                                    auto func = moduleContext->getCompilerContext()
-                                                    ->getImportedModule(termType->typeAffiliateModule)
-                                                    ->functionTable[funcIndex];
-
-                                    if (termType->typeAffiliateModule == currentModuleIndex) {
-                                        moduleContext->getIRBuilder().invokeMethodOp(
-                                            funcIndex, sub->args->get().size(), func->returnType);
-                                    } else {
-                                        auto externEntry =
-                                            getExternEntry(termType->typeAffiliateModule, func->name);
-                                        moduleContext->getIRBuilder().invokeMethodOp(
-                                            externEntry.itemIndex, sub->args->get().size(), func->returnType, true, externEntry.affiliateModule);
-                                    }
-                                }
-                            }
-                        } catch (std::out_of_range &e) {
-                            panic(rhsIt->getLine(),
-                                  rhsIt->getColumn(),
-                                  "Undefined field or function overload: " +
-                                      yoi::wstring2string(rhsIt->id->getId().get().strVal));
-                        }
+                        handleInvocationExtern(
+                            memberName->getId().get().strVal, 
+                            sub->args, 
+                            termType->typeAffiliateModule, 
+                            moduleContext->getCompilerContext()
+                                            ->getImportedModule(termType->typeAffiliateModule)
+                                            ->structTable[termType->typeIndex]);
                     } else if (termType->type == IRValueType::valueType::interfaceObject) {
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                         for (auto &arg : sub->args->get()) {
@@ -1823,6 +1884,7 @@ namespace yoi {
                         auto methodType = managedPtr(parseTypeSpec(i->getMethod().resultType));
                         IRFunctionDefinition::Builder methodBuilder;
 
+                        methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
                         methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
 
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
@@ -1830,10 +1892,12 @@ namespace yoi {
                         methodBuilder.setReturnType(methodType);
                         auto thisType = managedPtr(
                             IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
-                        methodBuilder.addArgument(L"this", thisType);
+                        
+                        if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end())
+                            methodBuilder.addArgument(L"this", thisType);
 
                         for (auto &arg : i->getMethod().getArgs().get()) {
-                            if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
                                 isVaridic = true;
                                 methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                                 auto argName = arg->getId().node.strVal;
@@ -1920,11 +1984,13 @@ namespace yoi {
                 IRFunctionDefinition::Builder methodBuilder;
 
                 methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+                methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
 
                 yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
                 const auto& thisType = srcType;
-                methodBuilder.addArgument(L"this", thisType);
+                if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end())
+                    methodBuilder.addArgument(L"this", thisType);
 
                 for (auto &arg : i->getMethod().getArgs().get()) {
                     if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
@@ -1984,6 +2050,7 @@ namespace yoi {
                     }
                     mangledName = structBaseName + L"::constructor" + getFuncUniqueNameStr(argTypes);
                 } else {
+                    // whole bunch of shit doin' here is to get the mangled name of the method, no actual modification of original func def here.
                     bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     for (auto &arg : i->getMethod().getArgs().get()) {
@@ -3118,6 +3185,9 @@ namespace yoi {
                 case lexer::token::tokenKind::kNoFFI:
                     res.push_back(IRFunctionDefinition::FunctionAttrs::NoFFI);
                     break;
+                case lexer::token::tokenKind::kStatic:
+                    res.push_back(IRFunctionDefinition::FunctionAttrs::Static);
+                    break;
                 default:
                     break;
             }
@@ -3205,7 +3275,7 @@ namespace yoi {
             auto func = irModule->functionTable[funcIdx];
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != func->attrs.end()) {
                 const auto& paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam ? 1 : 0);
+                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam && paramTypes.size() > 1 ? 1 : 0);
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
                     for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
@@ -3316,7 +3386,8 @@ namespace yoi {
 
         size_t finalParamCount = overload.function->argumentTypes.size();
         if (structContext) {
-            moduleContext->getIRBuilder().invokeMethodOp(overload.functionIndex, finalParamCount - 1, overload.function->returnType);
+            bool isStatic = std::find(overload.function->attrs.begin(), overload.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != overload.function->attrs.end();
+            moduleContext->getIRBuilder().invokeMethodOp(overload.functionIndex, finalParamCount - !isStatic, overload.function->returnType, isStatic);
         } else {
             moduleContext->getIRBuilder().invokeOp(overload.functionIndex, finalParamCount, overload.function->returnType);
         }
@@ -3355,7 +3426,7 @@ namespace yoi {
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) !=
                 func->attrs.end()) {
                 const auto &paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam ? 1 : 0);
+                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam && paramTypes.size() > 1 ? 1 : 0);
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
                     for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
@@ -3426,9 +3497,11 @@ namespace yoi {
 
         size_t finalParamCount = overload.function->argumentTypes.size();
         if (structContext) {
+            auto isStaticMethod = std::find(overload.function->attrs.begin(), overload.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != overload.function->attrs.end();
             moduleContext->getIRBuilder().invokeMethodOp(externEntry.itemIndex,
-                                                         finalParamCount - 1,
+                                                         finalParamCount - !isStaticMethod,
                                                          overload.function->returnType,
+                                                         isStaticMethod,
                                                          true,
                                                          externEntry.affiliateModule);
         } else {
@@ -3439,5 +3512,52 @@ namespace yoi {
                                                    externEntry.affiliateModule);
         }
         return true;
+    }
+
+    yoi::indexT visitor::handleBinaryOperatorOverload(const yoi::wstr &overloadName) {
+        auto lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+        auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
+        if (lhs->type == IRValueType::valueType::structObject)  {
+            auto resolved = resolveOverloadExtern(overloadName, {lhs, rhs}, lhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->structTable[lhs->typeIndex]);
+            if (resolved.found()) {
+                yoi_assert(resolved.isVariadic == false, 0, 0, "Binary operator overloading with variadic functions is not supported.");
+                yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with non-static functions is not supported.");
+
+                // same as below
+                moduleContext->getIRBuilder().invokeMethodOp(
+                    resolved.functionIndex, 1, resolved.function->returnType, true, true, lhs->typeAffiliateModule);
+            }
+        } else if (rhs->type == IRValueType::valueType::structObject) {
+            auto resolved = resolveOverloadExtern(overloadName, {lhs, rhs}, rhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->structTable[rhs->typeIndex]);
+            if (resolved.found()) {
+                yoi_assert(resolved.isVariadic == false, 0, 0, "Binary operator overloading with variadic functions is not supported.");
+                yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with non-static functions is not supported.");
+
+                // trick here: since when we set isStatic to true, we need 3 elements on the stack, which this ptr should also be present.
+                // however, we only have 2 elements on the stack which is lhs and rhs, so, we set isStatic to false here.
+                // to trick the invoke method op into generating the correct code
+                // this way, this method would take two elements from the stack and push the result to the stack.
+                moduleContext->getIRBuilder().invokeMethodOp(
+                    resolved.functionIndex, 1, resolved.function->returnType, false, true, rhs->typeAffiliateModule);
+            }
+        } else if (lhs->type == IRValueType::valueType::interfaceObject) {
+            const auto& baseName = overloadName;
+            auto mangledName = getFuncUniqueNameStr({rhs});
+
+            auto methodIdx = moduleContext->getCompilerContext()
+                                 ->getImportedModule(lhs->typeAffiliateModule)
+                                 ->interfaceTable[lhs->typeIndex]
+                                 ->methodMap.getIndex(baseName + mangledName);
+            auto method = moduleContext->getCompilerContext()
+                              ->getImportedModule(lhs->typeAffiliateModule)
+                              ->interfaceTable[lhs->typeIndex]
+                              ->methodMap[methodIdx];
+            yoi_assert(method->argumentTypes.size() == 1,
+                       moduleContext->getIRBuilder().getCurrentDebugInfo().line,
+                       moduleContext->getIRBuilder().getCurrentDebugInfo().column,
+                       "Argument count does not match");
+            moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, 1, method->returnType);
+        }
     }
 } // namespace yoi

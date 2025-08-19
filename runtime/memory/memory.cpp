@@ -96,3 +96,12 @@ void *runtime_object_alloc(unsigned long size) {
     runtime_object_alloc_report(size, ptr);
     return ptr;
 }
+
+YoiIntegerObject *runtime_get_array_data_pointer(YoiObjectArray *array) {
+    auto raw = reinterpret_cast<int64_t>((void *)((char *)array + sizeof(YoiObjectArray)));
+    auto *obj = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+    obj->gc_refcount = 1;
+    obj->type_id = 0;
+    obj->value = raw;
+    return obj;
+}

@@ -97,6 +97,7 @@ namespace yoi {
                 kTypeId,
                 kDynCast,
                 kNoFFI,
+                kStatic,
                 kAlwaysInline,
                 kNew,
                 kThreeDots,

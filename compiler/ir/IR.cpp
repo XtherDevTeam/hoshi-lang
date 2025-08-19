@@ -338,17 +338,22 @@ namespace yoi {
     void IRBuilder::invokeMethodOp(yoi::indexT funcIndex,
                                    yoi::indexT methodArgsCount,
                                    const std::shared_ptr<IRValueType> &returnType,
+                                   bool isStatic,
                                    bool externalInvocation,
                                    yoi::indexT moduleIndex) {
         // this pointer is popped from tempVarStack
         for (yoi::indexT i = 0; i < methodArgsCount + 1; i++) {
             tempVarStack.pop_back();
         }
+        // pop this pointer from tempVarStack, the instructions related to `this` pointer should be eradicated during IROptimizer.
+        if (isStatic)
+            insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
+
         tempVarStack.push_back(returnType);
         insert(IR(IR::Opcode::invoke,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, methodArgsCount + 1}}, currentDebugInfo));
+                   {IROperand::operandType::index, methodArgsCount + 1 - isStatic}}, currentDebugInfo));
     }
 
     void IRBuilder::invokeVirtualOp(yoi::indexT funcIndex,

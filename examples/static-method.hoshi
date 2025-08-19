@@ -1,0 +1,31 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+struct Test {
+    a: bool,
+    extra: lang.NullInterface[],
+    constructor(a: bool, extra: lang.NullInterface[]),
+    static test(args: ...) : Test
+}
+
+impl Test {
+    static test(args: ...) : Test {
+        return Test(true, args)
+    },
+    constructor(a: bool, extra: lang.NullInterface[]) {
+        this.a = a
+        this.extra = extra
+        return this
+    }
+}
+
+func main() : int {
+    let t = Test.test(123, 456)
+    if (t.a) {
+        puts("Static method validation passed.")
+    } else {
+        puts("Static method validation failed.")
+        return 1
+    }
+    return 0
+}

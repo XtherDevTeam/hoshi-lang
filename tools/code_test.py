@@ -29,6 +29,7 @@ TEST_CASES = {
     "array-length": {"type": "executable", "return_code": 0},
     "va-args": {"type": "executable", "return_code": 123},
     "interface-of": {"type": "executable", "return_code": 0},
+    "static-method": {"type": "executable", "return_code": 0},
 }
 
 

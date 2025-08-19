@@ -1728,7 +1728,12 @@ namespace yoi {
         lex.saveState();
         lexer::token node_start_token = lex.curToken;
 
-        o = new innerMethodDef{node_start_token, nullptr, nullptr, nullptr, nullptr};
+        o = new innerMethodDef{node_start_token, {}, nullptr, nullptr, nullptr, nullptr};
+
+        while (lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
+            o->attrs.push_back(lex.curToken);
+            lex.scan();
+        }
 
         parse(o->name, lex);
         if (!o->name) {

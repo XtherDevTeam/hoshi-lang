@@ -169,6 +169,8 @@ namespace yoi {
             tok.kind = token::tokenKind::kNew;
         } else if (tempStr == L"interfaceof") {
             tok.kind = token::tokenKind::kInterfaceOf;
+        } else if (tempStr == L"static") {
+            tok.kind = token::tokenKind::kStatic;
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";

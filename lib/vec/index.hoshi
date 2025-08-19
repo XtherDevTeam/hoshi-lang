@@ -1,0 +1,21 @@
+struct VecIter<T> {
+    vec: Vec<T>,
+    index: int,
+    constructor(vec: Vec<T>, index: int) : none
+}
+
+struct Vec<T> {
+    length: int,
+    capacity: int,
+    data: T[],
+    push(x: T) : none,
+    pop() : none,
+    __get_index__(i: int) : T,
+    __set_index__(i: int, x: T) : none,
+    size(): int,
+    clear() : none,
+    iter() : VecIter<T>,
+    constructor(capacity: int) : none,
+    constructor(data: T[]) : none,
+    constructor(data: T[], capacity: int) : none
+}

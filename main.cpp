@@ -62,7 +62,7 @@ int main(int argc, const char **argv) {
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
-    yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / "include").wstring()};
+    yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
     bool preserveIntermediateFiles = false; 
 
     for (int i = 1; i < argc; ++i) {

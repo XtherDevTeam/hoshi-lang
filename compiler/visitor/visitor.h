@@ -289,6 +289,15 @@ namespace yoi {
                                     yoi::invocationArguments *args,
                                     yoi::indexT targetModule,
                                     const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
+
+        /**
+         * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator method.
+         * 
+         * @param overloadName the name of the operator overload method
+         * @return yoi::indexT current insertion point after the invocation
+         * @note Make sure the builder state is saved before calling this helper function.
+         */
+        yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName);
     };
 
 } // namespace yoi
