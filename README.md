@@ -2,9 +2,9 @@
 
 ## Intro
 
-Hoshi-lang is a statically-typed, strong-typed programming language that supports modern programming design patterns like Generic Programming and Object-Oriented Programming.
+> This is one of my practice during Senior High School period. `hoshi` means both $\mathop{desire}\limits^{欲しい}$ and $\mathop{stars}\limits^{星}$ in Japanese, which also represents my silly wishes: I hope some day I would become the stars I once live up to.
 
-**Design Ideas:** Concise, Strong, Fast.
+Hoshi-lang is a statically-typed, strong-typed programming language that supports modern programming design patterns like Generic Programming and Object-Oriented Programming.
 
 ## Syntax
 
