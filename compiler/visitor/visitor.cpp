@@ -1872,6 +1872,8 @@ namespace yoi {
                            i->getColumn(),
                            "Constructor cannot be implemented for interface");
 
+                bool isVaridic = false;
+
                 auto methodName = i->getMethod().getName().get().strVal;
                 IRFunctionDefinition::Builder methodBuilder;
 
@@ -1883,6 +1885,15 @@ namespace yoi {
                 methodBuilder.addArgument(L"this", thisType);
 
                 for (auto &arg : i->getMethod().getArgs().get()) {
+                    if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                        isVaridic = true;
+                        methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
+                        auto argName = arg->getId().node.strVal;
+                        auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                        methodBuilder.addArgument(argName, argType);
+                        argTypes.push_back(argType);
+                        break;
+                    }
                     auto argName = arg->getId().get().strVal;
                     auto argType = managedPtr(parseTypeSpec(arg->spec));
                     methodBuilder.addArgument(argName, argType);
@@ -1918,14 +1929,28 @@ namespace yoi {
             for (auto &i : implStmt->getInner().getInner()) {
                 yoi::wstr mangledName;
                 if (i->isConstructor()) {
+                    bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     for (auto &arg : i->getConstructor().getArgs().get()) {
+                        if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            isVaridic = true;
+                            auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                            argTypes.push_back(argType);
+                            break;
+                        }
                         argTypes.push_back(managedPtr(parseTypeSpec(arg->spec)));
                     }
                     mangledName = structBaseName + L"::constructor" + getFuncUniqueNameStr(argTypes);
                 } else {
+                    bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     for (auto &arg : i->getMethod().getArgs().get()) {
+                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            isVaridic = true;
+                            auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                            argTypes.push_back(argType);
+                            break;
+                        }
                         argTypes.push_back(managedPtr(parseTypeSpec(arg->spec)));
                     }
                     mangledName =
@@ -3134,14 +3159,14 @@ namespace yoi {
         }
 
         // Pass 2: Look for a compatible variadic match (works for free functions and constructors).
-        auto findVariadicMatch = [&](yoi::indexT funcIdx) {
+        auto findVariadicMatch = [&](yoi::indexT funcIdx, bool skipFirstParam = false) {
             auto func = irModule->functionTable[funcIdx];
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != func->attrs.end()) {
                 const auto& paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1;
+                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam ? 1 : 0);
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
-                    for (size_t i = 0; i < fixedParamCount; ++i) {
+                    for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
                         if (*paramTypes[i] != *argTypes[i]) { fixedMatch = false; break; }
                     }
                     if (fixedMatch) {
@@ -3160,7 +3185,7 @@ namespace yoi {
         if (structContext) {
             for (const auto& [name, memberInfo] : structContext->nameIndexMap) {
                 if (memberInfo.type == IRStructDefinition::nameInfo::nameType::method && name.starts_with(baseName)) {
-                    if (findVariadicMatch(memberInfo.index)) return result;
+                    if (findVariadicMatch(memberInfo.index, true)) return result;
                 }
             }
         } else {
@@ -3283,15 +3308,15 @@ namespace yoi {
         }
 
         // Pass 2: Look for a compatible variadic match in the target module.
-        auto findVariadicMatch = [&](const yoi::wstr &funcKey) {
+        auto findVariadicMatch = [&](const yoi::wstr &funcKey, bool skipFirstParam = false) {
             auto func = targetedModule->functionTable[funcKey];
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) !=
                 func->attrs.end()) {
                 const auto &paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1;
+                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam ? 1 : 0);
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
-                    for (size_t i = 0; i < fixedParamCount; ++i) {
+                    for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
                         if (*paramTypes[i] != *argTypes[i]) {
                             fixedMatch = false;
                             break;
@@ -3313,7 +3338,7 @@ namespace yoi {
         yoi::wstr prefix = structContext ? structContext->name + L"::" + baseName : baseName;
         for (const auto &[key, value] : targetedModule->functionTable) {
             if (key.starts_with(prefix)) {
-                if (findVariadicMatch(key))
+                if (findVariadicMatch(key, structContext != nullptr))
                     return result;
             }
         }

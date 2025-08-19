@@ -1,8 +1,6 @@
 use lang "builtin"
 import puts(str: string) : int32 from "builtin"
 
-/* TODO: test struct varidic constructor and methods as well */
-
 func test(str: string, args: ...) : int {
     puts(str)
     for (let i = 0; i < args.length; i += 1) {
@@ -14,10 +12,25 @@ func test(str: string, args: ...) : int {
     return dyn_cast<int>(args[1])
 }
 
+struct Test {
+    a: int,
+    extra: lang.NullInterface[],
+    constructor(a: int, args: ...)
+}
+
+impl Test {
+    constructor(a: int, args: ...) {
+        this.a = a
+        this.extra = args
+        return this
+    }
+}
+
 func main() : int {
     let a = "hello"
     let b = "world"
     let c = 123
     let d = "456"
+    let e = Test(10, "extra1", "extra2")
     return test("hello", "world", 123, "456")
 }
