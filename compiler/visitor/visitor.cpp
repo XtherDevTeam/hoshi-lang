@@ -167,9 +167,9 @@ namespace yoi {
                 moduleContext->getIRBuilder().restoreState();
                 // push the boolean
                 if (moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->interfaceImplementationTable.contains(interfaceImplName)) {
-                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, true});
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, IROperand::operandValue{true}});
                 } else {
-                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, false});
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, IROperand::operandValue{false}});
                 }
             } else if (abstractExpr->op.kind == lexer::token::tokenKind::kInterfaceOf) {
                 yoi_assert(lhs->type == IRValueType::valueType::interfaceObject, abstractExpr->lhs->getLine(), abstractExpr->lhs->getColumn(), "LHS of 'interfaceof' operator must be an interface type");
@@ -184,7 +184,7 @@ namespace yoi {
                 } else {
                     // push the boolean
                     moduleContext->getIRBuilder().restoreState();
-                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, false});
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, IROperand::operandValue{false}});
 
                 }
             }
