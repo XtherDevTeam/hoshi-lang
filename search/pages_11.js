@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['接口设计_0',['接口设计',['../md_docs_2Interface.html',1,'']]]
+  ['模板隐式特化的实现思路_0',['模板隐式特化的实现思路',['../md_docs_2Template.html',1,'']]]
 ];

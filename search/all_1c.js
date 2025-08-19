@@ -18,7 +18,7 @@ var searchData=
   ['variablestates_15',['variableStates',['../structyoi_1_1AnalysisState.html#a7af85b6861f36f19685a7129ffc028c4',1,'yoi::AnalysisState']]],
   ['variabletable_16',['variableTable',['../classyoi_1_1IRFunctionDefinition.html#a5d2c4ad0d183ce3d05d814b2bc552492',1,'yoi::IRFunctionDefinition']]],
   ['variadic_17',['Variadic',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b',1,'yoi::IRFunctionDefinition']]],
-  ['variadic_20arguments_18',['Variadic arguments',['../index.html#autotoc_md68',1,'']]],
+  ['variadic_20arguments_18',['Variadic Arguments',['../index.html#autotoc_md89',1,'']]],
   ['variadicelementtype_19',['variadicElementType',['../structyoi_1_1visitor_1_1OverloadResult.html#a2f997e30b336e45617c5ca1cc7c96b7b',1,'yoi::visitor::OverloadResult']]],
   ['vbasicvalue_20',['vbasicvalue',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a0852c229b61daec30f765a84bb1ad7f7',1,'yoi::lexer::token::vBasicValue::vBasicValue()'],['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html',1,'lexer::token::vBasicValue'],['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a6539334f0e0e556de5c0e010312ea647',1,'yoi::lexer::token::vBasicValue::vBasicValue(int64_t v)'],['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#adddb5c5c544cb46b2b0513da93eee2f5',1,'yoi::lexer::token::vBasicValue::vBasicValue(double v)'],['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a9068fbafa9e2b115ec9312fa4ac93fc5',1,'yoi::lexer::token::vBasicValue::vBasicValue(bool v)']]],
   ['vbool_21',['vBool',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a22dcd3dcdb72b540bca86cd2fee0f88d',1,'yoi::lexer::token::vBasicValue']]],

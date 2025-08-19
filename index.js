@@ -1,15 +1,24 @@
 var index =
 [
-    [ "Intro", "index.html#autotoc_md59", null ],
-    [ "Syntax", "index.html#autotoc_md60", null ],
-    [ "OOP", "index.html#autotoc_md61", null ],
-    [ "Ref", "index.html#autotoc_md62", null ],
-    [ "Objects", "index.html#autotoc_md63", null ],
-    [ "GC", "index.html#autotoc_md64", null ],
-    [ "Module", "index.html#autotoc_md65", null ],
-    [ "Generic", "index.html#autotoc_md66", [
-      [ "Template arguments", "index.html#autotoc_md67", null ]
+    [ "Intro", "index.html#autotoc_md76", null ],
+    [ "Syntax", "index.html#autotoc_md77", null ],
+    [ "Object-Oriented Programming", "index.html#autotoc_md78", null ],
+    [ "Object Model and Memory Management", "index.html#autotoc_md79", [
+      [ "Object Layout", "index.html#autotoc_md80", null ],
+      [ "Interface Object Layout", "index.html#autotoc_md81", null ],
+      [ "Garbage Collection (GC)", "index.html#autotoc_md82", null ]
     ] ],
-    [ "Variadic arguments", "index.html#autotoc_md68", null ],
-    [ "Syntax definition", "index.html#autotoc_md69", null ]
+    [ "New Features", "index.html#autotoc_md83", [
+      [ "Dynamic Arrays", "index.html#autotoc_md84", null ],
+      [ "Type Introspection", "index.html#autotoc_md85", null ],
+      [ "Dynamic Casting", "index.html#autotoc_md86", null ]
+    ] ],
+    [ "Modules", "index.html#autotoc_md87", null ],
+    [ "Generic Programming", "index.html#autotoc_md88", null ],
+    [ "Variadic Arguments", "index.html#autotoc_md89", null ],
+    [ "Build and Run", "index.html#autotoc_md90", [
+      [ "Build Instructions", "index.html#autotoc_md91", null ],
+      [ "Run", "index.html#autotoc_md92", null ]
+    ] ],
+    [ "Further Reading", "index.html#autotoc_md93", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>hoshi-lang: Array in yoi-lang</title>
+<title>hoshi-lang: Hoshi-lang Arrays</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,32 +90,47 @@ $(document).ready(function(){initNavTree('md_docs_2Array.html',''); initResizabl
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Array in yoi-lang</div></div>
+  <div class="headertitle"><div class="title">Hoshi-lang Arrays</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> 数组在 IRValueType 以 <code><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt;<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&gt; dimensions</code> 形式记录，若 dimensions 不为 0，则为数组类型。</p>
-<p>数组类型的长度在编译期确定，不能更改。</p>
-<p>出于效率考虑，对于基础类型，Array 存放的为其 raw value 而不是完整的 object。这也意味着获取元素的行为是复制并创建 object，由此无直接操作可引用一个数组中的元素。 对于非基础类型如 struct，则存放完整的 object，获取元素的行为为直接取得对应位置指针执行引用计数自增操作。</p>
-<div class="fragment"><div class="line">func test() : int {</div>
-<div class="line">    let arr = int[10](1, 2, 3, 4, 5, 6, 7, 8, 9, 10);</div>
-<div class="line">    return arr[1]; // copy this element and return a new object</div>
-<div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1"></a>
-Dynamic array and array</h1>
-<p>动态数组在 hoshi-lang 原生语法中指运行时确定大小的数组，其大小可以通过 lang.HasLength 接口获取（暂未实现）。其 ABI 与普通数组的 ABI 相同，拥有相同的对象头，但类型 ID 不同。</p>
-<p>数组类型在作为参数或返回值离开函数时，其类型将自动转换为动态数组，若存在多个维度，则会展平为一维数组。</p>
-<p>详细例子见如下：</p>
-<ul>
-<li>1. 动态数组类型定义及跨函数传参 <code>examples/array-type-spec.hoshi</code></li>
-<li>2. 动态数组的定义和使用 <code>examples/new-expr.hoshi</code></li>
-</ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Array length by &lt;tt&gt;array_length&lt;/tt&gt;</h1>
-<p>数组长度可通过 <code>arr.length</code> 获得，这是一种由编译器支持的语法，而不是真正的 <code>property</code>。对该语法编译器行为如下，当栈上对象为动态数组时，编译器生成 <code>array_length</code> IR，并在运行时从对象头获取数组长度。而对于编译期长度确定的静态数组，则在 <code>IROptimizer</code> 阶段 <code>array_length</code> IR 被 <code>reduced</code> 并生成一个 push_integer 命令。</p>
-<ul>
-<li>1. 见 <code>examples/array-length.hoshi</code> </li>
-</ul>
-</div></div><!-- contents -->
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> Hoshi-lang provides two types of arrays: fixed-size and dynamic.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+1. Fixed-Size Arrays</h1>
+<p>Fixed-size arrays have a length that is known at compile time. They are declared with the size specified in square brackets.</p>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Declaration and Initialization</h2>
+<div class="fragment"><div class="line">// An array of 5 integers, initialized with values</div>
+<div class="line">let arr1 = int[5](1, 2, 3, 4, 5)</div>
+<div class="line"> </div>
+<div class="line">// A 2x3 multi-dimensional array</div>
+<div class="line">let arr2 = int[2][3](1, 2, 3, 4, 5, 6)</div>
+<div class="line"> </div>
+<div class="line">// An array of 10 integers, initialized with default values (0 for int)</div>
+<div class="line">let arr3 = int[10]()</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+Element Access</h2>
+<p>Elements are accessed using zero-based indexing.</p>
+<div class="fragment"><div class="line">let first = arr1[0] // first will be 1</div>
+<div class="line">arr1[0] = 100      // Modify the first element</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+2. Dynamic Arrays</h1>
+<p>Dynamic arrays is a sort of array which length cannot be predicted in compile-time. They are declared with <code>new</code> expression.</p>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Declaration and Initialization</h2>
+<div class="fragment"><div class="line">// A dynamic array with 3 initial elements</div>
+<div class="line">let dyn_arr1 = new int[3](1, 2, 3)</div>
+<div class="line"> </div>
+<div class="line">// A dynamic array with an initial capacity of 10, all elements default-initialized</div>
+<div class="line">let dyn_arr2 = new int[3](10)</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+3. The &lt;tt&gt;.length&lt;/tt&gt; Property</h1>
+<p>Both fixed-size and dynamic arrays have a read-only <code>.length</code> property that returns the number of elements in the array.</p>
+<div class="fragment"><div class="line">let arr = int[5]()</div>
+<div class="line">let len1 = arr.length // len1 will be 5</div>
+<div class="line"> </div>
+<div class="line">let dyn_arr = int[](1, 2, 3)</div>
+<div class="line">let len2 = dyn_arr.length // len2 will be 3</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

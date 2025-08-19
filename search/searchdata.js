@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "abcdefgijklmnprstuvw",
   9: "o",
   10: "eghmpwy",
-  11: "acdefhilnoprstwy实接模的直"
+  11: "acdefhilnoprstw实接模的直"
 };
 
 var indexSectionNames =
