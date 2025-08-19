@@ -28,6 +28,7 @@ TEST_CASES = {
     "type-info": {"type": "executable", "return_code": 0},
     "array-length": {"type": "executable", "return_code": 0},
     "va-args": {"type": "executable", "return_code": 123},
+    "interface-of": {"type": "executable", "return_code": 0},
 }
 
 

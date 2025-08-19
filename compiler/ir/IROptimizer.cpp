@@ -1489,6 +1489,18 @@ namespace yoi {
                     simulationStack.push(managedPtr(baseType->getDynamicArrayType()), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case IR::Opcode::interfaceof: {
+                    // pop two values and push one boolean value
+                    auto interfaceType = simulationStack.peek(0).type;
+                    auto objectType = simulationStack.peek(1).type;
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(
+                        compilerCtx->getBoolObjectType(),
+                        {currentCodeBlockIndex, {insIndex}, false}
+                    );
+                    break;
+                }
                 default: {
                     // pass
                     break;
@@ -2448,6 +2460,18 @@ namespace yoi {
                             array.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false}
                         );
                     }
+                    break;
+                }
+                case IR::Opcode::interfaceof: {
+                    // pop two values and push one boolean value
+                    auto interfaceType = simulationStack.peek(0).type;
+                    auto objectType = simulationStack.peek(1).type;
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    simulationStack.push(
+                        compilerCtx->getBoolObjectType(),
+                        {currentCodeBlockIndex, {insIndex}, false}
+                    );
                     break;
                 }
                 default: {

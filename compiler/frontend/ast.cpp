@@ -117,7 +117,7 @@ namespace yoi {
         return op;
     }
 
-    primary &uniqueExpr::getLhs() const {
+    abstractExpr &uniqueExpr::getLhs() const {
         return *lhs;
     }
 
@@ -1057,5 +1057,20 @@ namespace yoi {
         finalizeAST(ptr->type);
         finalizeAST(ptr->type);
         finalizeAST(ptr->args);
+    }
+    primary &abstractExpr::getLhs() const {
+        return *lhs;
+    }
+    lexer::token &abstractExpr::getOp() {
+        return op;
+    }
+    externModuleAccessExpression &abstractExpr::getRhs() const {
+        return *rhs;
+    }
+    void finalizeAST(abstractExpr *ptr) {
+        finalizeAST(ptr->lhs);
+        if (ptr->rhs)
+            finalizeAST(ptr->rhs);
+        delete ptr;
     }
 } // namespace yoi

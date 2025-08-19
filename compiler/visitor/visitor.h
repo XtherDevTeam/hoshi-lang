@@ -144,6 +144,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::primary *primary, bool isStoreOp = false);
 
+        yoi::indexT visit(yoi::abstractExpr *abstractExpr, bool isStoreOp = false);
+
         yoi::indexT visit(yoi::uniqueExpr *uniqueExpr, bool isStoreOp = false);
 
         yoi::indexT visit(yoi::leftExpr *leftExpr);

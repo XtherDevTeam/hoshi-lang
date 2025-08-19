@@ -166,6 +166,8 @@ namespace yoi {
 
     class newExpression;
 
+    class abstractExpr;
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -336,14 +338,27 @@ namespace yoi {
         rExpr &getExpr() const;
     };
 
-    class uniqueExpr : public AST {
+    class abstractExpr : public AST {
     public:
+        primary *lhs;
         lexer::token op;
-        primary *lhs{};
+        externModuleAccessExpression *rhs;
+
+        primary &getLhs() const;
 
         lexer::token &getOp();
 
-        primary &getLhs() const;
+        externModuleAccessExpression &getRhs() const;
+    };
+
+    class uniqueExpr : public AST {
+    public:
+        lexer::token op;
+        abstractExpr *lhs{};
+
+        lexer::token &getOp();
+
+        abstractExpr &getLhs() const;
 
         operator bool() const;
     };
@@ -1036,6 +1051,8 @@ namespace yoi {
     void finalizeAST(typeIdExpression *ptr);
 
     void finalizeAST(newExpression *ptr);
+
+    void finalizeAST(abstractExpr *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

@@ -1152,4 +1152,11 @@ namespace yoi {
         tempVarStack.push_back(compilerCtx->getIntObjectType());
         insert(IR{IR::Opcode::array_length, {}, currentDebugInfo});
     }
+
+    void IRBuilder::interfaceOfOp() {
+        tempVarStack.pop_back();
+        tempVarStack.pop_back();
+        tempVarStack.push_back(compilerCtx->getBoolObjectType());
+        insert(IR{IR::Opcode::interfaceof, {}, currentDebugInfo});
+    }
 } // namespace yoi

@@ -100,6 +100,7 @@ namespace yoi {
                 kAlwaysInline,
                 kNew,
                 kThreeDots,
+                kInterfaceOf,
                 eof,
             } kind;
 

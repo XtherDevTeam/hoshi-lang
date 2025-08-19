@@ -1,0 +1,41 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+interface Animal {
+    speak(): none
+}
+
+struct Dog {
+    name: string,
+    age: int,
+    weight: deci,
+    constructor(name: string, age: int, weight: deci)
+}
+
+impl Dog {
+    constructor(name: string, age: int, weight: deci) {
+        this.name = name
+        this.age = age
+        this.weight = weight
+        return this
+    }
+}
+
+impl Dog : Animal {
+    speak() : none {
+        puts("嚯嚯，大魔王科拉莉登场！")
+        return
+    }
+}
+
+func main() : int {
+    let dog = Dog("Coralie", 3, 5.5)
+    let animal = Animal(dog)
+    animal.speak()
+    if (animal interfaceof Dog && dog impl lang.NullInterface) {
+        puts("interfaceof validation passed")
+    } else {
+        puts("interfaceof validation failed")
+    }
+    return 0
+}

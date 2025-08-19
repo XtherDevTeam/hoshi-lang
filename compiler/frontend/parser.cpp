@@ -634,7 +634,7 @@ namespace yoi {
                 break;
             }
         }
-        primary *expr = nullptr;
+        abstractExpr *expr = nullptr;
         lexer::token node_start_token = lex.curToken;
 
         parse(expr, lex);
@@ -2115,6 +2115,29 @@ namespace yoi {
         }
         lex.scan();
         o = new dynCastExpression{node_start_token, type, expr};
+    }
+
+    void parse(abstractExpr *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        primary *lhs{};
+        parse(lhs, lex);
+        if (!lhs) {
+            o = nullptr;
+            return;
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::kInterfaceOf && lex.curToken.kind != lexer::token::tokenKind::kImpl) {
+            o = new abstractExpr{node_start_token, lhs, {}, nullptr};
+            return;
+        }
+        o = new abstractExpr{node_start_token, lhs, lex.curToken, nullptr};
+        lex.scan();
+
+        parse(o->rhs, lex);
+        if (!o->rhs) {
+            finalizeAST(o);
+            o = nullptr;
+            panic(lex.line, lex.col, "expected extern module access expression after `interfaceof` or `impl`");
+        }
     }
 } // namespace yoi
 

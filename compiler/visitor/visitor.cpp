@@ -152,6 +152,48 @@ namespace yoi {
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
+    yoi::indexT visitor::visit(yoi::abstractExpr *abstractExpr, bool isStoreOp) {
+        if (abstractExpr->rhs) {
+            yoi_assert(!isStoreOp, abstractExpr->getLine(), abstractExpr->getColumn(), "trying to apply store op on a boolean expression");
+            moduleContext->getIRBuilder().saveState();
+            visit(abstractExpr->lhs);
+            auto lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            auto rhs = parseTypeSpec(abstractExpr->rhs);
+
+
+            if (abstractExpr->op.kind == lexer::token::tokenKind::kImpl) {
+                yoi_assert (rhs.type == IRValueType::valueType::interfaceObject, abstractExpr->rhs->getLine(), abstractExpr->rhs->getColumn(), "RHS of 'impl' operator must be an interface type");
+                auto interfaceImplName = getInterfaceImplName({rhs.typeAffiliateModule, rhs.typeIndex}, lhs);
+                moduleContext->getIRBuilder().restoreState();
+                // push the boolean
+                if (moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->interfaceImplementationTable.contains(interfaceImplName)) {
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, true});
+                } else {
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, false});
+                }
+            } else if (abstractExpr->op.kind == lexer::token::tokenKind::kInterfaceOf) {
+                yoi_assert(lhs->type == IRValueType::valueType::interfaceObject, abstractExpr->lhs->getLine(), abstractExpr->lhs->getColumn(), "LHS of 'interfaceof' operator must be an interface type");
+                // cut off some possibilies here.
+                auto key = std::make_tuple(rhs.type, rhs.typeAffiliateModule, rhs.typeIndex);
+                auto &vec = moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->interfaceTable[lhs->typeIndex]->implementations;
+                if (std::find(vec.begin(), vec.end(), key) != vec.end()) {
+                    // emit typeid op and emit interfaceof
+                    moduleContext->getIRBuilder().discardState();
+                    moduleContext->getIRBuilder().typeIdOp(managedPtr(rhs));
+                    moduleContext->getIRBuilder().interfaceOfOp();
+                } else {
+                    // push the boolean
+                    moduleContext->getIRBuilder().restoreState();
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, false});
+
+                }
+            }
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        } else {
+            return visit(abstractExpr->lhs, isStoreOp);
+        }
+    }
+
     yoi::indexT visitor::visit(yoi::uniqueExpr *uniqueExpr, bool isStoreOp) {
         visit(uniqueExpr->lhs, isStoreOp);
 

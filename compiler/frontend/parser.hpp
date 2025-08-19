@@ -33,6 +33,8 @@ namespace yoi {
 
     void parse(subscript *&o, lexer &lex);
 
+    void parse(abstractExpr *&o, lexer &lex);
+
     void parse(identifierWithTemplateArg *&o, lexer &lex);
 
     void parse(identifierWithDefTemplateArg *&o, lexer &lex);

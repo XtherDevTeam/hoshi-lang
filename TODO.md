@@ -11,6 +11,7 @@
 - [ ] 对因为 `dyn_cast` 造成的额外 `null-check` 进行优化。
     - [ ] 在 IRValueType 中加入 `attrs` 字段用于存放变量属性
     - [ ] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`
-- [ ] 加入可变参数
+- [-] 加入可变参数
 - [ ] 加入 array 的导出型 FFI wrapper 支持
 - [-] 加入 `lang.argv`
+- [-] 加入 `interfaceof` `impl` 关键字和 `abstractExpr` 表达式

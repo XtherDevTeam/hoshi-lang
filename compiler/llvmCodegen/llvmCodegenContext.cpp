@@ -1743,6 +1743,50 @@ namespace yoi {
                 callGcFunction(array.llvmValue, array.yoiType, false);
                 break;
             }
+            case IR::Opcode::interfaceof: {
+                // get the typeid off the stack
+                auto typeidValue = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                yoi_assert(typeidValue.yoiType->type == IRValueType::valueType::integerObject, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: interfaceof with non-integer typeid.");
+                // get the interface object off the stack
+                auto interfaceValue = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                
+                // evaluate the interface this
+                auto interfaceKey = std::make_tuple(interfaceValue.yoiType->type, interfaceValue.yoiType->typeAffiliateModule, interfaceValue.yoiType->typeIndex);
+                auto thisPtrToStruct = Builder->CreateStructGEP(structTypeMap.at(interfaceKey), interfaceValue.llvmValue, 2, "this_ptr_to_struct");
+                auto loadedThisPtr = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt64Ty(), 0), thisPtrToStruct, "loaded_this_ptr");
+                // offset by 8 bytes and check typeid
+                auto* typeIdPtr = Builder->CreateGEP(Builder->getInt64Ty(), loadedThisPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 1, true)});
+                auto* loadedTypeId = Builder->CreateLoad(Builder->getInt64Ty(), typeIdPtr, "loaded_typeid");
+                auto* expectedTypeId = unboxValue(typeidValue.llvmValue, typeidValue.yoiType);
+                auto* typeIdMatch = Builder->CreateICmpEQ(loadedTypeId, expectedTypeId, "typeid_match");
+                
+                auto* failedMatchBB = llvm::BasicBlock::Create(*TheContext, "failed_match_bb", currentFunction);
+                auto* successBB = llvm::BasicBlock::Create(*TheContext, "success_bb", currentFunction);
+                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_bb", currentFunction);
+
+                Builder->CreateCondBr(typeIdMatch, successBB, failedMatchBB);
+                // failed match
+                Builder->SetInsertPoint(failedMatchBB);
+                auto *falseBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 0, true);
+                auto *falseObject = createBasicObject(compilerCtx->getBoolObjectType(), falseBoolean);
+                Builder->CreateBr(continueBB);
+                // success match
+                Builder->SetInsertPoint(successBB);
+                auto *trueBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 1, true);
+                auto *trueObject = createBasicObject(compilerCtx->getBoolObjectType(), trueBoolean);
+                Builder->CreateBr(continueBB);
+                // in continue block, decrement the interface refcount
+                // but phi first
+                Builder->SetInsertPoint(continueBB);
+                auto phiNode = Builder->CreatePHI(llvm::PointerType::get(yoiTypeToLLVMType(compilerCtx->getBoolObjectType()), 0), 2, "phi_node");
+                phiNode->addIncoming(trueObject, successBB);
+                phiNode->addIncoming(falseObject, failedMatchBB);
+
+                callGcFunction(interfaceValue.llvmValue, interfaceValue.yoiType, false);
+                callGcFunction(typeidValue.llvmValue, typeidValue.yoiType, false);
+                valueStackMap[fromBlock][toBlock].push_back({phiNode, compilerCtx->getBoolObjectType()});
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:

@@ -87,7 +87,7 @@ namespace yoi {
             std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
             vis->visit();
             for (auto &i : irMod->functionTable) {
-                printf("%s\n", wstring2string(i.second->to_string()).c_str());
+                // printf("%s\n", wstring2string(i.second->to_string()).c_str());
                 IROptimizer optimizer{shared_from_this(), irMod};
                 optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
             }
