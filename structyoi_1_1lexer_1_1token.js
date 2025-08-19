@@ -80,6 +80,7 @@ var structyoi_1_1lexer_1_1token =
       [ "kTypeId", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a801ae6277601f775ca52dc2d47c0ab23", null ],
       [ "kDynCast", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2cf89fd1b72127b3eaf5008b6b46b5d8", null ],
       [ "kNoFFI", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb", null ],
+      [ "kStatic", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aeb9af1ba35d0a6f48fd1e6218a4d82c9", null ],
       [ "kAlwaysInline", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab5152fa9f8596245f455b7f939f7e9fd", null ],
       [ "kNew", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aaf1adf7ec3673b4f5765cfbc5d43b7dc", null ],
       [ "kThreeDots", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a02da8208ef52f85b12e0b7b8b7394c1d", null ],

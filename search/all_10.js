@@ -99,7 +99,7 @@ var searchData=
   ['invoke_5fimported_96',['invoke_imported',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1',1,'yoi::IR']]],
   ['invoke_5fvirtual_97',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]],
   ['invokeimportedop_98',['invokeImportedOp',['../classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be',1,'yoi::IRBuilder']]],
-  ['invokemethodop_99',['invokeMethodOp',['../classyoi_1_1IRBuilder.html#a85edf4c7b532574a1a5f1c9a08090029',1,'yoi::IRBuilder']]],
+  ['invokemethodop_99',['invokeMethodOp',['../classyoi_1_1IRBuilder.html#a84bf6a9168637a2a3e32957838db2733',1,'yoi::IRBuilder']]],
   ['invokeop_100',['invokeOp',['../classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a',1,'yoi::IRBuilder']]],
   ['invokevirtualop_101',['invokeVirtualOp',['../classyoi_1_1IRBuilder.html#a320d6bd96e66bb7a59d069d8af3a4d09',1,'yoi::IRBuilder']]],
   ['ir_102',['ir',['../classyoi_1_1IR.html',1,'IR'],['../classyoi_1_1IR.html#a9c3a08807406902e6542eaba41b56c91',1,'yoi::IR::IR(Opcode opcode, const yoi::vec&lt; IROperand &gt; &amp;operands, IRDebugInfo debugInfo)'],['../classyoi_1_1IR.html#a5fad778bd7970d4b3efa05e8bfe670d6',1,'yoi::IR::IR()=default']]],

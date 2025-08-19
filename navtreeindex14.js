@@ -1,5 +1,13 @@
 var NAVTREEINDEX14 =
 {
+"structYoiCharObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,5,0],
+"structYoiCharObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,5,1],
+"structYoiCharObject.html#a37a445c311302c7c39cb0694c2504ad8":[13,0,5,2],
+"structYoiDecimalObject.html":[13,0,6],
+"structYoiDecimalObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,6,0],
+"structYoiDecimalObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,6,1],
+"structYoiDecimalObject.html#aee90379adb0307effb138f4871edbc5c":[13,0,6,2],
+"structYoiIntegerObject.html":[13,0,7],
 "structYoiIntegerObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,7,0],
 "structYoiIntegerObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,7,1],
 "structYoiIntegerObject.html#a8a850078f95585c20c624755a05d61b9":[13,0,7,2],
@@ -241,13 +249,5 @@ var NAVTREEINDEX14 =
 "structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a7595ec51b788725a74d2d928890383d8":[13,0,1,61,0,4],
 "structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a7595ec51b788725a74d2d928890383d8":[12,0,1,61,0,4],
 "structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[13,0,1,61,0,5],
-"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[12,0,1,61,0,5],
-"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ac72b0020474e32e02be80c2d5ad22a64":[13,0,1,61,0,2],
-"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ac72b0020474e32e02be80c2d5ad22a64":[12,0,1,61,0,2],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html":[13,0,1,66,0],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html":[12,0,1,66,0],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2":[12,0,1,66,0,2],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2":[13,0,1,66,0,2],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0":[12,0,1,66,0,3],
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0":[13,0,1,66,0,3]
+"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[12,0,1,61,0,5]
 };

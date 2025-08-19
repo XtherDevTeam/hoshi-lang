@@ -1,5 +1,13 @@
 var NAVTREEINDEX13 =
 {
+"namespaceyoi.html#ab5309c729caab758c7f25ac61cd34d53":[12,0,1,113],
+"namespaceyoi.html#abb81eeeb360b95fd38513a5592dd0f11":[12,0,1,195],
+"namespaceyoi.html#abdf61793a2f93319458e9f95a94a7bc9":[12,0,1,253],
+"namespaceyoi.html#abf345d6e9ab275a51836702b5f23bca1":[12,0,1,226],
+"namespaceyoi.html#ac098e1f2b2559f4cf6515d8971d7b62c":[12,0,1,236],
+"namespaceyoi.html#ac415f25310e3578b51002f08334082a4":[12,0,1,232],
+"namespaceyoi.html#ac46a61e8e62be6278c24d761055a296d":[12,0,1,161],
+"namespaceyoi.html#ac59b996aa6858ed5c3f3fb4416d9031b":[12,0,1,114],
 "namespaceyoi.html#ac63a78bd8a7a626a4e52ae594b15629d":[12,0,1,165],
 "namespaceyoi.html#ac7db98486b8d2e0073eca9b17b6dcafe":[12,0,1,158],
 "namespaceyoi.html#acaefe9cc648e09a806145ae4fb490e86":[12,0,1,231],
@@ -241,13 +249,5 @@ var NAVTREEINDEX13 =
 "structYoiBooleanObject.html#a0376be5904d0dd864b7d97c9ce1295ab":[13,0,4,2],
 "structYoiBooleanObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,4,0],
 "structYoiBooleanObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,4,1],
-"structYoiCharObject.html":[13,0,5],
-"structYoiCharObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,5,0],
-"structYoiCharObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,5,1],
-"structYoiCharObject.html#a37a445c311302c7c39cb0694c2504ad8":[13,0,5,2],
-"structYoiDecimalObject.html":[13,0,6],
-"structYoiDecimalObject.html#a1871146973c12628deff2a413c04f3ff":[13,0,6,0],
-"structYoiDecimalObject.html#a21197e49dd48d6f8dc580e42630ab047":[13,0,6,1],
-"structYoiDecimalObject.html#aee90379adb0307effb138f4871edbc5c":[13,0,6,2],
-"structYoiIntegerObject.html":[13,0,7]
+"structYoiCharObject.html":[13,0,5]
 };

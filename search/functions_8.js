@@ -6,7 +6,7 @@ var searchData=
   ['insert_3',['insert',['../classyoi_1_1IRCodeBlock.html#a1ce9d2325368dd3c3cffacd0f82e3bf9',1,'yoi::IRCodeBlock::insert()'],['../classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451',1,'yoi::IRBuilder::insert()'],['../structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a5f84b7c82640687e2aa21535ce8b0e3c',1,'yoi::IROptimizer::SimulationStack::Item::ContributedInstructionSet::insert()'],['../classyoi_1_1symbolTable.html#a8f2a167d0474516fad3b8dd9d6b203b2',1,'yoi::symbolTable::insert()']]],
   ['interfaceofop_4',['interfaceOfOp',['../classyoi_1_1IRBuilder.html#a2e9f8e4120e2508110d8375a5c892028',1,'yoi::IRBuilder']]],
   ['invokeimportedop_5',['invokeImportedOp',['../classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be',1,'yoi::IRBuilder']]],
-  ['invokemethodop_6',['invokeMethodOp',['../classyoi_1_1IRBuilder.html#a85edf4c7b532574a1a5f1c9a08090029',1,'yoi::IRBuilder']]],
+  ['invokemethodop_6',['invokeMethodOp',['../classyoi_1_1IRBuilder.html#a84bf6a9168637a2a3e32957838db2733',1,'yoi::IRBuilder']]],
   ['invokeop_7',['invokeOp',['../classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a',1,'yoi::IRBuilder']]],
   ['invokevirtualop_8',['invokeVirtualOp',['../classyoi_1_1IRBuilder.html#a320d6bd96e66bb7a59d069d8af3a4d09',1,'yoi::IRBuilder']]],
   ['ir_9',['ir',['../classyoi_1_1IR.html#a5fad778bd7970d4b3efa05e8bfe670d6',1,'yoi::IR::IR()=default'],['../classyoi_1_1IR.html#a9c3a08807406902e6542eaba41b56c91',1,'yoi::IR::IR(Opcode opcode, const yoi::vec&lt; IROperand &gt; &amp;operands, IRDebugInfo debugInfo)']]],

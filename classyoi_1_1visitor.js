@@ -17,6 +17,7 @@ var classyoi_1_1visitor =
     [ "getSpecializedMangledMethodName", "classyoi_1_1visitor.html#acd9b722865f36acebf527e25ece76a8d", null ],
     [ "getTemplateArgs", "classyoi_1_1visitor.html#a09735c2ec508155ec874db915f653b98", null ],
     [ "getTypeSpecUniqueNameStr", "classyoi_1_1visitor.html#a1373e305b6c738d4580bb63d8031b7a8", null ],
+    [ "handleBinaryOperatorOverload", "classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c", null ],
     [ "handleInvocation", "classyoi_1_1visitor.html#a68dc190548b1ffcdf16e008690a3aa21", null ],
     [ "handleInvocationExtern", "classyoi_1_1visitor.html#ab6589e7186ec7fb7523bfd63fe3c319a", null ],
     [ "isModuleName", "classyoi_1_1visitor.html#aaacfc67ef4909f5b8f25c1de64dd4b47", null ],
