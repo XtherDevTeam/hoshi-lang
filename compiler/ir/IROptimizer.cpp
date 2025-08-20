@@ -1355,7 +1355,7 @@ namespace yoi {
                     auto lhs = simulationStack.peek(1);
                     simulationStack.pop();
                     simulationStack.pop();
-                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
+                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::array_length: {
@@ -2385,7 +2385,7 @@ namespace yoi {
                     yoi_assert(*lhs.type == *rhs.type, 0, 0, "IROptimizer::analyzeBlock(): direct_assign: type mismatch");
                     simulationStack.pop();
                     simulationStack.pop();
-                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions);
+                    simulationStack.push(lhs.type, lhs.contributedInstructions + rhs.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::typeid_int:

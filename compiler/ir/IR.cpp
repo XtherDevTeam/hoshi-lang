@@ -151,12 +151,12 @@ namespace yoi {
     }
 
     const std::shared_ptr<IRValueType> &IRBuilder::getLhsFromTempVarStack() {
-        yoi_assert(tempVarStack.size() > 1, 0, 0, "tempVarStack is empty.");
+        yoi_assert(tempVarStack.size() > 1, currentDebugInfo.line, currentDebugInfo.column, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 2];
     }
 
     const std::shared_ptr<IRValueType> &IRBuilder::getRhsFromTempVarStack() {
-        yoi_assert(tempVarStack.size() > 0, 0, 0, "tempVarStack is empty.");
+        yoi_assert(tempVarStack.size() > 0, currentDebugInfo.line, currentDebugInfo.column, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 1];
     }
 

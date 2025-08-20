@@ -171,6 +171,9 @@ namespace yoi {
             tok.kind = token::tokenKind::kInterfaceOf;
         } else if (tempStr == L"static") {
             tok.kind = token::tokenKind::kStatic;
+        } else if (tempStr == L"operator") {
+            scan();
+            return operatorStart();
         } else if (tempStr == L"true" or tempStr == L"false") {
             tok.kind = token::tokenKind::boolean;
             tok.basicVal.vBool = tempStr == L"true";
@@ -521,4 +524,48 @@ namespace yoi {
             line(line), col(col), pos(pos), curCh(curCh), curToken(std::move(curToken)) {
 
     }
-} // hoshi
+
+    lexer::token lexer::operatorStart() {
+        yoi::wstr operatorId{L"operator"};
+        switch (curToken.kind) {
+            case token::tokenKind::plus: operatorId += L"+"; break;
+            case token::tokenKind::minus: operatorId += L"-"; break;
+            case token::tokenKind::asterisk: operatorId += L"*"; break;
+            case token::tokenKind::slash: operatorId += L"/"; break;
+            case token::tokenKind::percentSign: operatorId += L"%"; break;
+            case token::tokenKind::lessThan: operatorId += L"<"; break;
+            case token::tokenKind::greaterThan: operatorId += L">"; break;
+            case token::tokenKind::equal: operatorId += L"=="; break;
+            case token::tokenKind::notEqual: operatorId += L"!="; break;
+            case token::tokenKind::binaryAnd: operatorId += L"&"; break;
+            case token::tokenKind::binaryNot: operatorId += L"~"; break;
+            case token::tokenKind::binaryOr: operatorId += L"|"; break;
+            case token::tokenKind::binaryXor: operatorId += L"^"; break;
+            case token::tokenKind::binaryShiftLeft: operatorId += L"<<"; break;
+            case token::tokenKind::binaryShiftRight: operatorId += L">>"; break;
+            case token::tokenKind::incrementSign: operatorId += L"++"; break;
+            case token::tokenKind::decrementSign: operatorId += L"--"; break;
+            case token::tokenKind::directAssignSign: operatorId += L":="; break;
+            case token::tokenKind::additionAssignment: operatorId += L"+="; break;
+            case token::tokenKind::subtractionAssignment: operatorId += L"-="; break;
+            case token::tokenKind::multiplicationAssignment: operatorId += L"*="; break;
+            case token::tokenKind::divisionAssignment: operatorId += L"/="; break;
+            case token::tokenKind::reminderAssignment: operatorId += L"%="; break;
+            case token::tokenKind::assignSign: operatorId += L"="; break;
+            case token::tokenKind::leftParentheses: {
+                scan();
+                yoi_assert(curToken.kind == token::tokenKind::rightParentheses, line, col, "lexer::operatorStart() - invalid operator");
+                operatorId += L"()";
+                break;
+            }
+            case token::tokenKind::leftBracket: {
+                scan();
+                yoi_assert(curToken.kind == token::tokenKind::rightBracket, line, col, "lexer::operatorStart() - invalid operator");
+                operatorId += L"[]";
+                break;
+            }
+            default: throw std::runtime_error("lexer::operatorStart() - unknown operator");
+        }
+        return curToken = lexer::token{line, col, token::tokenKind::identifier, std::move(operatorId)};
+    }
+} // namespace yoi

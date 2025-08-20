@@ -1,0 +1,36 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+struct MyInt {
+    val: int,
+    constructor(val: int),
+    static operator+(lhs: MyInt, rhs: MyInt) : MyInt,
+    get() : int
+}
+
+impl MyInt {
+    constructor(val: int) {
+        this.val = val
+        return this
+    },
+    static operator+(lhs: MyInt, rhs: MyInt) : MyInt {
+        return MyInt(lhs.val + rhs.val)
+    },
+    get() : int {
+        return this.val
+    }
+}
+
+func main() : int {
+    let a = MyInt(114)
+    let b = MyInt(514)
+    let c = a + b
+    if (c.get() == 628) {
+        puts("operator overloading validation passed")
+        return 0
+    } else {
+        puts("operator overloading validation failed")
+        return 1
+    }
+    return 0
+}

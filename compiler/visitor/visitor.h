@@ -270,21 +270,21 @@ namespace yoi {
                               const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
 
         /**
-        * @brief Resolves an external function overload within a target module.
-        * @param baseName The base name of the function (e.g., "println" or "constructor").
-        * @param argTypes The types of the arguments provided at the call site.
-        * @param targetModule The index of the module being looked into.
-        * @param structContext Optional. If not null, searches for a method within this external struct.
-        * @return An OverloadResult struct with the resolution details.
-        */
+         * @brief Resolves an external function overload within a target module.
+         * @param baseName The base name of the function (e.g., "println" or "constructor").
+         * @param argTypes The types of the arguments provided at the call site.
+         * @param targetModule The index of the module being looked into.
+         * @param structContext Optional. If not null, searches for a method within this external struct.
+         * @return An OverloadResult struct with the resolution details.
+         */
         OverloadResult resolveOverloadExtern(const yoi::wstr &baseName,
                                              const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
                                              yoi::indexT targetModule,
                                              const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
 
         /**
-        * @brief Orchestrates an external function/method invocation IR generation.
-        */
+         * @brief Orchestrates an external function/method invocation IR generation.
+         */
         bool handleInvocationExtern(const yoi::wstr &baseName,
                                     yoi::invocationArguments *args,
                                     yoi::indexT targetModule,
@@ -298,6 +298,14 @@ namespace yoi {
          * @note Make sure the builder state is saved before calling this helper function.
          */
         yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName);
+
+        /**
+         * @brief Handles unary operator overload function when the operand owns a appropriate overloaded operator method.
+         * 
+         * @param overloadName the name of the operator overload method
+         * @return yoi::indexT current insertion point after the invocation
+         */
+        yoi::indexT handleUnaryOperatorOverload(const yoi::wstr &overloadName);
     };
 
 } // namespace yoi

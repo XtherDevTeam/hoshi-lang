@@ -162,6 +162,8 @@ namespace yoi {
 
         token alphaStart();
 
+        token operatorStart();
+
         token strStart();
 
         token digitStart();

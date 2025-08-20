@@ -201,31 +201,32 @@ namespace yoi {
             case lexer::token::tokenKind::incrementSign: {
                 // TODO: add support for operator overloading
                 auto &lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                yoi_assert(lhs->isBasicType(),
-                           uniqueExpr->getOp().line,
-                           uniqueExpr->getOp().col,
-                           "Lvalue type must be basic type for decrement");
-                moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::increment);
+
+                if (lhs->isBasicType()) {
+                    moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::increment);
+                } else {
+                    handleUnaryOperatorOverload(L"operator++");
+                }
                 break;
             }
             case lexer::token::tokenKind::decrementSign: {
                 // TODO: add support for operator overloading
                 auto &lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                yoi_assert(lhs->isBasicType(),
-                           uniqueExpr->getOp().line,
-                           uniqueExpr->getOp().col,
-                           "Lvalue type must be basic type for decrement");
-                moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::decrement);
+                if (lhs->isBasicType()) {
+                    moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::decrement);
+                } else {
+                    handleUnaryOperatorOverload(L"operator--");
+                }
                 break;
             }
             case lexer::token::tokenKind::binaryNot: {
                 // TODO: add support for operator overloading
                 auto &lhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                yoi_assert(lhs->isBasicType(),
-                           uniqueExpr->getOp().line,
-                           uniqueExpr->getOp().col,
-                           "Not basic type for bitwise not");
-                moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::bitwise_not);
+                if (lhs->isBasicType()) {
+                    moduleContext->getIRBuilder().uniqueArithmeticOp(IR::Opcode::bitwise_not);
+                } else {
+                    handleUnaryOperatorOverload(L"operator~");
+                }
                 break;
             }
             case lexer::token::tokenKind::unknown: {
@@ -245,6 +246,7 @@ namespace yoi {
                 case lexer::token::tokenKind::assignSign: {
                     visit(leftExpr->rhs);
                     visit(leftExpr->lhs, true);
+                    visit(leftExpr->lhs);
                     break;
                 }
                 case lexer::token::tokenKind::directAssignSign: {
@@ -263,23 +265,21 @@ namespace yoi {
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    if (lhs->type == IRValueType::valueType::structObject ||
-                        rhs->type == IRValueType::valueType::structObject) {
-                        // TODO: add support for operator overloading
+                    
+                    if (lhs->isBasicType() && rhs->isBasicType()) {
+                        if (lhs->type == IRValueType::valueType::decimalObject &&
+                            rhs->type == IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                        } else if (lhs->type == IRValueType::valueType::integerObject &&
+                                rhs->type == IRValueType::valueType::decimalObject) {
+                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                        }
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
+                        visit(leftExpr->lhs, true);
+                        visit(leftExpr->lhs);
+                    } else {
+                        handleBinaryOperatorOverload(L"operator+=");
                     }
-                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(),
-                               leftExpr->getOp().line,
-                               leftExpr->getOp().col,
-                               "Not basic type for addition");
-                    if (lhs->type == IRValueType::valueType::decimalObject &&
-                        rhs->type == IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                    } else if (lhs->type == IRValueType::valueType::integerObject &&
-                               rhs->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                    }
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
-                    visit(leftExpr->lhs, true);
                     break;
                 }
                 case lexer::token::tokenKind::subtractionAssignment: {
@@ -287,23 +287,20 @@ namespace yoi {
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    if (lhs->type == IRValueType::valueType::structObject ||
-                        rhs->type == IRValueType::valueType::structObject) {
-                        // TODO: add support for operator overloading
+                    if (lhs->isBasicType() && rhs->isBasicType()) {
+                        if (lhs->type == IRValueType::valueType::decimalObject &&
+                            rhs->type == IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                        } else if (lhs->type == IRValueType::valueType::integerObject &&
+                                rhs->type == IRValueType::valueType::decimalObject) {
+                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                        }
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
+                        visit(leftExpr->lhs, true);
+                        visit(leftExpr->lhs);
+                    } else {
+                        handleBinaryOperatorOverload(L"operator-=");
                     }
-                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(),
-                               leftExpr->getOp().line,
-                               leftExpr->getOp().col,
-                               "Not basic type for subtraction");
-                    if (lhs->type == IRValueType::valueType::decimalObject &&
-                        rhs->type == IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                    } else if (lhs->type == IRValueType::valueType::integerObject &&
-                               rhs->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                    }
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
-                    visit(leftExpr->lhs, true);
                     break;
                 }
                 case lexer::token::tokenKind::multiplicationAssignment: {
@@ -311,23 +308,20 @@ namespace yoi {
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    if (lhs->type == IRValueType::valueType::structObject ||
-                        rhs->type == IRValueType::valueType::structObject) {
-                        // TODO: add support for operator overloading
+                    if (lhs->isBasicType() && rhs->isBasicType()) {
+                        if (lhs->type == IRValueType::valueType::decimalObject &&
+                            rhs->type == IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                        } else if (lhs->type == IRValueType::valueType::integerObject &&
+                                rhs->type == IRValueType::valueType::decimalObject) {
+                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                        }
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
+                        visit(leftExpr->lhs, true);
+                        visit(leftExpr->lhs);
+                    } else {
+                        handleBinaryOperatorOverload(L"operator*=");
                     }
-                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(),
-                               leftExpr->getOp().line,
-                               leftExpr->getOp().col,
-                               "Not basic type for multiplication");
-                    if (lhs->type == IRValueType::valueType::decimalObject &&
-                        rhs->type == IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                    } else if (lhs->type == IRValueType::valueType::integerObject &&
-                               rhs->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                    }
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
-                    visit(leftExpr->lhs, true);
                     break;
                 }
                 case lexer::token::tokenKind::divisionAssignment: {
@@ -335,23 +329,20 @@ namespace yoi {
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                    if (lhs->type == IRValueType::valueType::structObject ||
-                        rhs->type == IRValueType::valueType::structObject) {
-                        // TODO: add support for operator overloading
+                    if (lhs->isBasicType() && rhs->isBasicType()) {
+                        if (lhs->type == IRValueType::valueType::decimalObject &&
+                            rhs->type == IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
+                        } else if (lhs->type == IRValueType::valueType::integerObject &&
+                                rhs->type == IRValueType::valueType::decimalObject) {
+                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
+                        }
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
+                        visit(leftExpr->lhs, true);
+                        visit(leftExpr->lhs);
+                    } else {
+                        handleBinaryOperatorOverload(L"operator/=");
                     }
-                    yoi_assert(lhs->isBasicType() && rhs->isBasicType(),
-                               leftExpr->getOp().line,
-                               leftExpr->getOp().col,
-                               "Not basic type for division");
-                    if (lhs->type == IRValueType::valueType::decimalObject &&
-                        rhs->type == IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                    } else if (lhs->type == IRValueType::valueType::integerObject &&
-                               rhs->type == IRValueType::valueType::decimalObject) {
-                        moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                    }
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
-                    visit(leftExpr->lhs, true);
                     break;
                 }
                 default: {
@@ -360,8 +351,10 @@ namespace yoi {
                           "Unexpected left expression operator, received: " + wstring2string(leftExpr->getOp().strVal));
                 }
             }
+        } else {
+            visit(leftExpr->lhs);
         }
-        visit(leftExpr->lhs);
+        
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -373,46 +366,23 @@ namespace yoi {
             auto rhsPos = visit(*++term); // rhs
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::asterisk: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for multiplication");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
-                    break;
+            
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::asterisk: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul); break;
+                    case lexer::token::tokenKind::slash: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div); break;
+                    case lexer::token::tokenKind::percentSign: moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mod); break;                    
+                    default: panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
-                case lexer::token::tokenKind::slash: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for multiplication");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
-                    break;
-                }
-                case lexer::token::tokenKind::percentSign: {
-                    yoi_assert(lhsType->type == IRValueType::valueType::integerObject &&
-                                   rhsType->type == IRValueType::valueType::integerObject,
-                               op->line,
-                               op->col,
-                               "Not basic type for multiplication");
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mod);
-                    break;
-                }
-                default: {
-                    panic(op->line, op->col, "Unexpected multiplication expression operator");
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::asterisk: handleBinaryOperatorOverload(L"operator*"); break;
+                    case lexer::token::tokenKind::slash: handleBinaryOperatorOverload(L"operator/"); break;
+                    case lexer::token::tokenKind::percentSign: handleBinaryOperatorOverload(L"operator%"); break;
+                    default: panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
             }
+            
             lhsPos = moduleContext->getIRBuilder().getCurrentInsertionPoint();
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -426,35 +396,18 @@ namespace yoi {
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::plus: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for addition");
 
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
-                    break;
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::plus: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add); break;
+                    case lexer::token::tokenKind::minus: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub); break;
+                    default: panic(op->line, op->col, "Unexpected addition expression operator");
                 }
-                case lexer::token::tokenKind::minus: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for subtraction");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
-                    break;
-                }
-                default: {
-                    panic(op->line, op->col, "Unexpected addition expression operator");
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::plus: handleBinaryOperatorOverload(L"operator+"); break;
+                    case lexer::token::tokenKind::minus: handleBinaryOperatorOverload(L"operator-"); break;
+                    default: panic(op->line, op->col, "Unexpected addition expression operator");
                 }
             }
             lhsPos = moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -470,32 +423,21 @@ namespace yoi {
             visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::binaryShiftLeft: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->type == IRValueType::valueType::integerObject,
-                               op->line,
-                               op->col,
-                               "Not basic type for left shift or right hand side is not integer");
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::left_shift);
-                    break;
+
+            if (lhsType->isBasicType() && rhsType->type == IRValueType::valueType::integerObject) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryShiftLeft: moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::left_shift); break;
+                    case lexer::token::tokenKind::binaryShiftRight: moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::right_shift); break;
+                    default:  panic(op->line, op->col, "Unexpected shift expression operator"); break;
                 }
-                case lexer::token::tokenKind::binaryShiftRight: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->type == IRValueType::valueType::integerObject,
-                               op->line,
-                               op->col,
-                               "Not basic type for right shift or right hand side is not integer");
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::right_shift);
-                    break;
-                }
-                default: {
-                    panic(op->line, op->col, "Unexpected shift expression operator");
-                    break;
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryShiftLeft: handleBinaryOperatorOverload(L"operator<<"); break;
+                    case lexer::token::tokenKind::binaryShiftRight: handleBinaryOperatorOverload(L"operator>>"); break;
+                    default:  panic(op->line, op->col, "Unexpected shift expression operator"); break;
                 }
             }
+            
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -508,57 +450,22 @@ namespace yoi {
             auto rhsPos = visit(*++term);
             auto lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::lessThan: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for less than");
 
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::less_than);
-                    break;
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::lessThan: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::less_than); break;
+                    case lexer::token::tokenKind::greaterThan: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_than); break;
+                    case lexer::token::tokenKind::lessEqual: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::less_equal); break;
+                    case lexer::token::tokenKind::greaterEqual: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_equal); break;
+                    default: panic(op->line, op->col, "Unexpected relational expression operator");
                 }
-                case lexer::token::tokenKind::greaterThan: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for greater than");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_than);
-                    break;
-                }
-                case lexer::token::tokenKind::lessEqual: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for less than or equal");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::less_equal);
-                    break;
-                }
-                case lexer::token::tokenKind::greaterEqual: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for greater than or equal");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_equal);
-                    break;
-                }
-                default: {
-                    panic(op->line, op->col, "Unexpected relational expression operator");
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::lessThan: handleBinaryOperatorOverload(L"operator<"); break;
+                    case lexer::token::tokenKind::greaterThan: handleBinaryOperatorOverload(L"operator>"); break;
+                    case lexer::token::tokenKind::lessEqual: handleBinaryOperatorOverload(L"operator<="); break;
+                    case lexer::token::tokenKind::greaterEqual: handleBinaryOperatorOverload(L"operator>="); break;
+                    default: panic(op->line, op->col, "Unexpected relational expression operator");
                 }
             }
             lhsPos = rhsPos;
@@ -575,35 +482,18 @@ namespace yoi {
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::equal: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType() || lhsType->type == IRValueType::valueType::pointerObject || rhsType->type == IRValueType::valueType::pointerObject,
-                               op->line,
-                               op->col,
-                               "Not basic type for equal");
 
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::equal);
-                    break;
+            if (lhsType->isBasicType() && rhsType->isBasicType() || lhsType->type == IRValueType::valueType::pointerObject || rhsType->type == IRValueType::valueType::pointerObject) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::equal: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::equal); break;
+                    case lexer::token::tokenKind::notEqual: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::not_equal); break;
+                    default: panic(op->line, op->col, "Unexpected equality expression operator"); return {};
                 }
-                case lexer::token::tokenKind::notEqual: {
-                    yoi_assert(
-                        lhsType->isBasicType() && rhsType->isBasicType() || lhsType->type == IRValueType::valueType::pointerObject || rhsType->type == IRValueType::valueType::pointerObject,
-                         op->line, op->col, "Not basic type for not");
-
-                    emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos);
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::not_equal);
-                    break;
-                }
-                default: {
-                    panic(op->line, op->col, "Unexpected equality expression operator");
-                    return {};
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::equal: handleBinaryOperatorOverload(L"operator=="); break;
+                    case lexer::token::tokenKind::notEqual: handleBinaryOperatorOverload(L"operator!="); break;
+                    default: panic(op->line, op->col, "Unexpected equality expression operator"); return {};
                 }
             }
             lhsPos = rhsPos;
@@ -619,34 +509,40 @@ namespace yoi {
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::binaryAnd: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for binary and");
+            
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryAnd: {
+                        if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(
+                                moduleContext->getCompilerContext()->getIntObjectType(), lhsPos, true);
+                        }
+                        if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(moduleContext->getCompilerContext()->getIntObjectType(),
+                                                                    rhsPos);
+                        }
 
-                    if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(
-                            moduleContext->getCompilerContext()->getIntObjectType(), lhsPos, true);
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_and);
+                        break;
                     }
-                    if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(moduleContext->getCompilerContext()->getIntObjectType(),
-                                                                rhsPos);
+                    default: {
+                        panic(op->line, op->col, "Unexpected and expression operator");
+                        return {};
                     }
-
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_and);
-                    break;
                 }
-                default: {
-                    panic(op->line, op->col, "Unexpected and expression operator");
-                    return {};
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryAnd: {
+                        handleBinaryOperatorOverload(L"operator&");
+                        break;
+                    }
+                    default: {
+                        panic(op->line, op->col, "Unexpected and expression operator");
+                        return {};
+                    }
                 }
             }
+            
             lhsPos = rhsPos;
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -660,34 +556,39 @@ namespace yoi {
             auto rhs = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::binaryXor: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for binary xor");
 
-                    if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(
-                            (moduleContext->getCompilerContext()->getIntObjectType()), lhs, true);
-                    }
-                    if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(
-                            (moduleContext->getCompilerContext()->getIntObjectType()), rhs);
-                    }
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryXor: {
+                        if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(
+                                (moduleContext->getCompilerContext()->getIntObjectType()), lhs, true);
+                        }
+                        if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(
+                                (moduleContext->getCompilerContext()->getIntObjectType()), rhs);
+                        }
 
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_xor);
-                    break;
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_xor);
+                        break;
+                    }
+                    default: {
+                        panic(op->line, op->col, "Unexpected exclusive expression operator");
+                        return {};
+                    }
                 }
-                default: {
-                    panic(op->line, op->col, "Unexpected exclusive expression operator");
-                    return {};
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryXor: {
+                        handleBinaryOperatorOverload(L"operator^");
+                        break;
+                    }
+                    default: {
+                        panic(op->line, op->col, "Unexpected exclusive expression operator");
+                    }
                 }
             }
+            lhs = rhs;
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
@@ -700,34 +601,40 @@ namespace yoi {
             auto rhs = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (lhsType->type == IRValueType::valueType::structObject ||
-                rhsType->type == IRValueType::valueType::structObject) {
-                // TODO: add support for operator overloading
-            }
-            switch (op->kind) {
-                case lexer::token::tokenKind::binaryOr: {
-                    yoi_assert(lhsType->isBasicType() && rhsType->isBasicType(),
-                               op->line,
-                               op->col,
-                               "Not basic type for binary or");
 
-                    if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(
-                            (moduleContext->getCompilerContext()->getIntObjectType()), lhs, true);
-                    }
-                    if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
-                        moduleContext->getIRBuilder().basicCast(
-                            (moduleContext->getCompilerContext()->getIntObjectType()), rhs);
-                    }
+            if (lhsType->isBasicType() && rhsType->isBasicType()) {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryOr: {
+                        if (lhsType->isBasicType() && lhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(
+                                (moduleContext->getCompilerContext()->getIntObjectType()), lhs, true);
+                        }
+                        if (rhsType->isBasicType() && rhsType->type != IRValueType::valueType::integerObject) {
+                            moduleContext->getIRBuilder().basicCast(
+                                (moduleContext->getCompilerContext()->getIntObjectType()), rhs);
+                        }
 
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_or);
-                    break;
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::bitwise_or);
+                        break;
+                    }
+                    default: {
+                        panic(op->line, op->col, "Unexpected inclusive expression operator");
+                        return {};
+                    }
                 }
-                default: {
-                    panic(op->line, op->col, "Unexpected inclusive expression operator");
-                    return {};
+            } else {
+                switch (op->kind) {
+                    case lexer::token::tokenKind::binaryOr: {
+                        handleBinaryOperatorOverload(L"operator|");
+                        break;
+                    }
+                    default: {
+                        panic(op->line, op->col, "Unexpected inclusive expression operator");
+                        return {};
+                    }
                 }
             }
+            lhs = rhs;
         }
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -1313,37 +1220,44 @@ namespace yoi {
             auto objectOnStackType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
             if (currentTerm->isSubscript()) {
-                yoi_assert(objectOnStackType->isArrayType() || objectOnStackType->isDynamicArrayType(), subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array access is not valid on non-array type.");
-                const auto& dimensions = objectOnStackType->dimensions;
-                yoi::vec<yoi::indexT> strides(dimensions.size());
-                strides.back() = 1;
-                for (long long i = static_cast<long long>(dimensions.size()) - 2; i >= 0; --i) {
-                    strides[i] = strides[i + 1] * dimensions[i + 1];
-                }
+                if (objectOnStackType->isArrayType() || objectOnStackType->isDynamicArrayType()) {
+                    const auto& dimensions = objectOnStackType->dimensions;
+                    yoi::vec<yoi::indexT> strides(dimensions.size());
+                    strides.back() = 1;
+                    for (long long i = static_cast<long long>(dimensions.size()) - 2; i >= 0; --i) {
+                        strides[i] = strides[i + 1] * dimensions[i + 1];
+                    }
 
-                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue{static_cast<int64_t>(0)}});
+                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, IROperand::operandValue{static_cast<int64_t>(0)}});
 
-                yoi::indexT currentDim = 0;
-                while (it != end && (*it)->isSubscript()) {
-                    yoi_assert(currentDim < dimensions.size(), (*it)->getLine(), (*it)->getColumn(), "Too many indices for array dimension.");
-                    visit((*it)->expr);
-                    yoi_assert(moduleContext->getIRBuilder().getRhsFromTempVarStack()->type == IRValueType::valueType::integerObject, (*it)->getLine(), (*it)->getColumn(), "Array subscript index must be an integer.");
-                    moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, strides[currentDim]});
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
-                    moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
-                    it++;
-                    currentDim++;
-                }
+                    yoi::indexT currentDim = 0;
+                    while (it != end && (*it)->isSubscript()) {
+                        yoi_assert(currentDim < dimensions.size(), (*it)->getLine(), (*it)->getColumn(), "Too many indices for array dimension.");
+                        visit((*it)->expr);
+                        yoi_assert(moduleContext->getIRBuilder().getRhsFromTempVarStack()->type == IRValueType::valueType::integerObject, (*it)->getLine(), (*it)->getColumn(), "Array subscript index must be an integer.");
+                        moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, {IROperand::operandType::integer, strides[currentDim]});
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
+                        moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
+                        it++;
+                        currentDim++;
+                    }
 
-                yoi_assert(currentDim == dimensions.size() || (isStoreOp && isLastTerm), currentTerm->getLine(), currentTerm->getColumn(), "Partial array access is not a loadable value. Not enough indices provided.");
+                    yoi_assert(currentDim == dimensions.size() || (isStoreOp && isLastTerm), currentTerm->getLine(), currentTerm->getColumn(), "Partial array access is not a loadable value. Not enough indices provided.");
 
-                if (isStoreOp && isLastTerm) {
-                    moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
+                    if (isStoreOp && isLastTerm) {
+                        moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
+                    } else {
+                        auto elementType = managedPtr(objectOnStackType->getElementType());
+                        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, elementType);
+                    }
+                    continue;
                 } else {
-                    auto elementType = managedPtr(objectOnStackType->getElementType());
-                    moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, elementType);
+                    if (isStoreOp) {
+                        handleBinaryOperatorOverload(L"operator[]");
+                    } else {
+                        handleUnaryOperatorOverload(L"operator[]");
+                    }
                 }
-                continue;
             } else if (currentTerm->isInvocation()) {
                 panic(currentTerm->getLine(), currentTerm->getColumn(), "TODO: Operator '()' overloading is not implemented yet.");
             }
@@ -3517,6 +3431,7 @@ namespace yoi {
     yoi::indexT visitor::handleBinaryOperatorOverload(const yoi::wstr &overloadName) {
         auto lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        bool isResolved = false;
 
         if (lhs->type == IRValueType::valueType::structObject)  {
             auto resolved = resolveOverloadExtern(overloadName, {lhs, rhs}, lhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->structTable[lhs->typeIndex]);
@@ -3526,12 +3441,14 @@ namespace yoi {
 
                 // same as below
                 moduleContext->getIRBuilder().invokeMethodOp(
-                    resolved.functionIndex, 1, resolved.function->returnType, true, true, lhs->typeAffiliateModule);
+                    resolved.functionIndex, 1, resolved.function->returnType, false, true, lhs->typeAffiliateModule);
+                isResolved = true;
             }
-        } else if (rhs->type == IRValueType::valueType::structObject) {
+        } 
+        if (!isResolved && rhs->type == IRValueType::valueType::structObject) {
             auto resolved = resolveOverloadExtern(overloadName, {lhs, rhs}, rhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->structTable[rhs->typeIndex]);
             if (resolved.found()) {
-                yoi_assert(resolved.isVariadic == false, 0, 0, "Binary operator overloading with variadic functions is not supported.");
+                yoi_assert(resolved.isVariadic == false, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with variadic functions is not supported.");
                 yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with non-static functions is not supported.");
 
                 // trick here: since when we set isStatic to true, we need 3 elements on the stack, which this ptr should also be present.
@@ -3540,8 +3457,10 @@ namespace yoi {
                 // this way, this method would take two elements from the stack and push the result to the stack.
                 moduleContext->getIRBuilder().invokeMethodOp(
                     resolved.functionIndex, 1, resolved.function->returnType, false, true, rhs->typeAffiliateModule);
+                isResolved = true;
             }
-        } else if (lhs->type == IRValueType::valueType::interfaceObject) {
+        } 
+        if (!isResolved && lhs->type == IRValueType::valueType::interfaceObject) {
             const auto& baseName = overloadName;
             auto mangledName = getFuncUniqueNameStr({rhs});
 
@@ -3558,6 +3477,44 @@ namespace yoi {
                        moduleContext->getIRBuilder().getCurrentDebugInfo().column,
                        "Argument count does not match");
             moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, 1, method->returnType);
+            isResolved = true;
         }
+        yoi_assert(isResolved, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading not found for " + yoi::wstring2string(overloadName));
+
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    yoi::indexT visitor::handleUnaryOperatorOverload(const yoi::wstr &overloadName) {
+        auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        bool isResolved = false;
+
+        if (rhs->type == IRValueType::valueType::structObject) {
+            auto resolved = resolveOverloadExtern(overloadName, {rhs}, rhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->structTable[rhs->typeIndex]);
+            if (resolved.found()) {
+                yoi_assert(resolved.isVariadic == false, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Unary operator overloading with variadic functions is not supported.");
+                yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Unary operator overloading with non-static functions is not supported.");
+                // why isStatic = false? check the comment in handleBinaryOperatorOverload
+                moduleContext->getIRBuilder().invokeMethodOp(
+                    resolved.functionIndex, 0, resolved.function->returnType, false, true, rhs->typeAffiliateModule);
+                isResolved = true;
+            }
+        } 
+        if (rhs->type == IRValueType::valueType::interfaceObject) {
+            const auto &baseName = overloadName;
+            auto mangledName = getFuncUniqueNameStr({});
+
+            auto methodIdx = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceTable[rhs->typeIndex]
+                                 ->methodMap.getIndex(baseName + mangledName);
+            auto method = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceTable[rhs->typeIndex]->methodMap[methodIdx];
+            yoi_assert(method->argumentTypes.size() == 1,
+                       moduleContext->getIRBuilder().getCurrentDebugInfo().line,
+                       moduleContext->getIRBuilder().getCurrentDebugInfo().column,
+                       "Argument count does not match");
+            moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, 0, method->returnType);
+            isResolved = true;
+        }
+        yoi_assert(isResolved, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Unary operator overloading not found for " + yoi::wstring2string(overloadName));
+
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 } // namespace yoi
