@@ -1,0 +1,45 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+interface Result<T> {
+    get() : T
+}
+
+struct TestStruct<T, U> {
+    a: T,
+    b: U,
+    add(): T,
+    constructor(a: T, b: U)
+}
+
+impl TestStruct<> {
+    add(): T {
+        this.a += this.b
+        return this.a
+    },
+    constructor(a: T, b: U) {
+        this.a = a
+        this.b = b
+        return this
+    }
+}
+
+impl TestStruct<> : Result<T> {
+    get(): T {
+        return this.a
+    }
+}
+
+func main() : int {
+    let s = TestStruct<int, deci>(114, 514.2)
+    s.add()
+    let r = Result<int>(s)
+    let res = r.get()
+    if (res == 628) {
+        puts("interface template validation passed")
+    } else {
+        puts("interface template validation failed")
+        return 1
+    }
+    return 0
+}

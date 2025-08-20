@@ -30,7 +30,8 @@ TEST_CASES = {
     "va-args": {"type": "executable", "return_code": 123},
     "interface-of": {"type": "executable", "return_code": 0},
     "static-method": {"type": "executable", "return_code": 0},
-    "operators": {"type": "executable", "return_code": 0}
+    "operators": {"type": "executable", "return_code": 0},
+    "interface-template": {"type": "executable", "return_code": 0}
 }
 
 

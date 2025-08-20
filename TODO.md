@@ -1,3 +1,5 @@
+# TODO List
+
 - [ ] 异常抛出、捕获的设计和实现
 - [x] dyn_cast 关键字实现
 - [x] 支持 基本类型 实现 interface
@@ -16,5 +18,9 @@
 - [x] 加入 `lang.argv`
 - [x] 加入 `interfaceof` `impl` 关键字和 `abstractExpr` 表达式
 - [x] 加入 static method 支持
-- [ ] 加入 interface template 支持
+- [x] 加入 interface template 支持
 - [ ] 完成 vector 模板的开发
+
+# Known issues
+
+- [ ] `||` 算符短路失效，不论条件，结果均为真

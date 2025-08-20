@@ -543,7 +543,7 @@ namespace yoi {
     IRFunctionDefinition::IRFunctionDefinition(
         const yoi::wstr &name,
         const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
-        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const yoi::vec<FunctionAttrs> &attrs, const IRDebugInfo &debugInfo)
+        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const yoi::vec<FunctionAttrs> &attrs, const IRDebugInfo &debugInfo) 
         : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo), attrs(attrs) {
         variableTable.createScope();
         for (auto &i : argumentTypes) {
@@ -783,16 +783,16 @@ namespace yoi {
 
     yoi::wstr IRInterfaceImplementationDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
-        r += yoi::wstr(indent, L' ') 
-            + L"impl " 
-            + name 
-            + L" for " 
-            + yoi::string2wstring(std::string{magic_enum::enum_name(std::get<0>(implStructIndex))}) 
-            + L"#" 
-            + std::to_wstring(std::get<1>(implStructIndex)) 
-            + L"#" 
+        r += yoi::wstr(indent, L' ')
+            + L"impl "
+            + name
+            + L" for "
+            + yoi::string2wstring(std::string{magic_enum::enum_name(std::get<0>(implStructIndex))})
+            + L"#"
+            + std::to_wstring(std::get<1>(implStructIndex))
+            + L"#"
             + std::to_wstring(std::get<2>(implStructIndex)) + L" {\n";
-            
+
         for (auto &i : virtualMethods) {
             r += yoi::wstr(indent + 4, L' ') + L"virtual " + i->to_string() + L"\n";
         }
@@ -833,7 +833,36 @@ namespace yoi {
             IRStructTemplate{templateDefinition, templateMethods, templateArguments});
     }
 
-    IRTemplateBuilder &
+    IRInterfaceInstanceTemplate::IRInterfaceInstanceTemplate(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition,
+                                             const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+        : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
+
+    IRInterfaceInstanceTemplate::Builder &
+    IRInterfaceInstanceTemplate::Builder::setTemplateDefinition(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition) {
+        this->templateDefinition = templateDefinition;
+        return *this;
+    }
+
+    std::shared_ptr<IRInterfaceInstanceTemplate> IRInterfaceInstanceTemplate::Builder::yield() {
+        return std::make_shared<IRInterfaceInstanceTemplate>(templateDefinition, templateArguments);
+    }
+
+    IRInterfaceImplementationTemplate::IRInterfaceImplementationTemplate(
+        const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition,
+        const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+        : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
+
+    IRInterfaceImplementationTemplate::Builder &IRInterfaceImplementationTemplate::Builder::setTemplateDefinition(
+        const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition) {
+        this->templateDefinition = templateDefinition;
+        return *this;
+    }
+
+    std::shared_ptr<IRInterfaceImplementationTemplate> IRInterfaceImplementationTemplate::Builder::yield() {
+        return std::make_shared<IRInterfaceImplementationTemplate>(templateDefinition, templateArguments);
+    }
+
+    IRTemplateBuilder & 
     IRTemplateBuilder::addTemplateArgument(const yoi::wstr &templateName,
                                            const std::shared_ptr<IRValueType> &templateType,
                                            const std::pair<yoi::indexT, yoi::indexT> &interfaceType) {

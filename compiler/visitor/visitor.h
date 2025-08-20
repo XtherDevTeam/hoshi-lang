@@ -106,6 +106,14 @@ namespace yoi {
         yoi::wstr getSpecializedMangledMethodName(yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
                                                   const yoi::wstr &baseMethodName,
                                                   const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes);
+                                                  
+        yoi::indexT specializeInterfaceTemplate(const yoi::wstr &templateName,
+                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs);
+
+        void specializeInterfaceImplementation(yoi::implStmt *implAst,
+                                               const std::shared_ptr<IRValueType> &concreteStructType,
+                                               const yoi::wstr& specializedStructName,
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs);
 
         yoi::wstr getMangledTemplateName(const yoi::wstr &baseName,
                                          const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);

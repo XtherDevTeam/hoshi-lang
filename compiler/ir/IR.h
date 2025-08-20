@@ -551,6 +551,48 @@ namespace yoi {
         };
     };
 
+    class IRInterfaceInstanceTemplate {
+      public:
+        std::shared_ptr<IRInterfaceInstanceDefinition> templateDefinition;
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
+
+        class Builder : public IRTemplateBuilder {
+          public:
+            std::shared_ptr<IRInterfaceInstanceDefinition> templateDefinition;
+
+            Builder() = default;
+
+            Builder &setTemplateDefinition(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition);
+
+            std::shared_ptr<IRInterfaceInstanceTemplate> yield();
+        };
+
+        IRInterfaceInstanceTemplate(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition,
+                            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+    };
+
+    class IRInterfaceImplementationTemplate {
+      public:
+        std::shared_ptr<IRInterfaceImplementationDefinition> templateDefinition;
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
+
+        class Builder : public IRTemplateBuilder {
+          public:
+            std::shared_ptr<IRInterfaceImplementationDefinition> templateDefinition;
+            yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> templateArguments;
+
+            Builder() = default;
+
+            Builder &setTemplateDefinition(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition);
+
+            std::shared_ptr<IRInterfaceImplementationTemplate> yield();
+        };
+
+        IRInterfaceImplementationTemplate(
+            const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition,
+            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+    };
+
     class IRStringLiteralPool {
       public:
         yoi::indexPool<yoi::wstr> pool;
@@ -596,10 +638,14 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceTemplate>> interfaceInstanceTemplateTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationTemplate>> interfaceImplTemplateTable;
 
         std::map<yoi::wstr, yoi::funcDefStmt *> funcTemplateAsts;
         std::map<yoi::wstr, yoi::structDefStmt *> structTemplateAsts;
+        std::map<yoi::wstr, yoi::interfaceDefStmt *> templateInterfaceAsts;
         std::map<yoi::wstr, yoi::implStmt *> templateImplAsts; // Maps struct template name to its impl block
+        std::map<yoi::wstr, yoi::vec<yoi::implStmt *>> templateInterfaceImplAsts;
 
         IRStringLiteralPool stringLiteralPool;
 
