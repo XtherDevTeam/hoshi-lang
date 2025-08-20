@@ -1,7 +1,9 @@
 <map id="invokeVirtualOp" name="invokeVirtualOp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="239,42,365,67"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="239,77,365,102"/>
 <area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c" title="Generates a call to certain operator overload function when left hand side or right hand side owns a ..." alt="" coords="5,5,191,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,46,190,41,191,36,226,41"/>
-<area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="35,70,161,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,68,162,77,161,71,225,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,75,162,48,163,43,249,70"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816" title="Handles unary operator overload function when the operand owns a appropriate overloaded operator meth..." alt="" coords="7,69,189,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,92,190,92,190,87,225,87"/>
+<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="35,134,161,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="245,109,191,124,147,136,145,131,190,119,243,103"/>
 </map>

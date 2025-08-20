@@ -20,6 +20,7 @@ var classyoi_1_1visitor =
     [ "handleBinaryOperatorOverload", "classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c", null ],
     [ "handleInvocation", "classyoi_1_1visitor.html#a68dc190548b1ffcdf16e008690a3aa21", null ],
     [ "handleInvocationExtern", "classyoi_1_1visitor.html#ab6589e7186ec7fb7523bfd63fe3c319a", null ],
+    [ "handleUnaryOperatorOverload", "classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816", null ],
     [ "isModuleName", "classyoi_1_1visitor.html#aaacfc67ef4909f5b8f25c1de64dd4b47", null ],
     [ "isModuleName", "classyoi_1_1visitor.html#a4cb995408a6223a44a4b61615a0f8096", null ],
     [ "isVisitingGlobalScope", "classyoi_1_1visitor.html#ac41639181d1520878a6d570857357f8b", null ],

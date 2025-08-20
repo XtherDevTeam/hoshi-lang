@@ -24,8 +24,9 @@ var searchData=
   ['operator_5b_5d_21',['operator[]',['../classyoi_1_1indexTableDeprecated.html#a2172ac23ccace7bbe941af751ae3cd74',1,'yoi::indexTableDeprecated::operator[]()'],['../classyoi_1_1indexTable.html#a371fe0d52a0bf0b73b6e2af503554581',1,'yoi::indexTable::operator[](const A &amp;k)'],['../classyoi_1_1indexTable.html#a2172ac23ccace7bbe941af751ae3cd74',1,'yoi::indexTable::operator[](yoi::indexT k)'],['../classyoi_1_1indexPool.html#a76a712961a253a215f5152fd40ae7cf8',1,'yoi::indexPool::operator[]()'],['../classyoi_1_1indexTableDeprecated.html#a371fe0d52a0bf0b73b6e2af503554581',1,'yoi::indexTableDeprecated::operator[]()'],['../classyoi_1_1IRVariableTable.html#a23ef58e96cfbb021340b34923e1f9268',1,'yoi::IRVariableTable::operator[]()']]],
   ['operator_5e_22',['operator^',['../namespacemagic__enum_1_1bitwise__operators.html#adfc25efbc82ccaba8466fbb898f4c927',1,'magic_enum::bitwise_operators']]],
   ['operator_5e_3d_23',['operator^=',['../namespacemagic__enum_1_1bitwise__operators.html#a3aff5f09f60e4a027ccbacaf137ad64c',1,'magic_enum::bitwise_operators']]],
-  ['operator_7c_24',['operator|',['../namespacemagic__enum_1_1bitwise__operators.html#a1c049493e6b29f8dde778b28878d0160',1,'magic_enum::bitwise_operators']]],
-  ['operator_7c_3d_25',['operator|=',['../namespacemagic__enum_1_1bitwise__operators.html#a023d92be0751f9bba6e9945b99316e46',1,'magic_enum::bitwise_operators']]],
-  ['operator_7e_26',['operator~',['../namespacemagic__enum_1_1bitwise__operators.html#aca9b5a381d855e31a5a13a1f9e56b96b',1,'magic_enum::bitwise_operators']]],
-  ['orstart_27',['orStart',['../classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49',1,'yoi::lexer']]]
+  ['operatorstart_24',['operatorStart',['../classyoi_1_1lexer.html#aee400f5ef44b7c11cd38fad90c05c5df',1,'yoi::lexer']]],
+  ['operator_7c_25',['operator|',['../namespacemagic__enum_1_1bitwise__operators.html#a1c049493e6b29f8dde778b28878d0160',1,'magic_enum::bitwise_operators']]],
+  ['operator_7c_3d_26',['operator|=',['../namespacemagic__enum_1_1bitwise__operators.html#a023d92be0751f9bba6e9945b99316e46',1,'magic_enum::bitwise_operators']]],
+  ['operator_7e_27',['operator~',['../namespacemagic__enum_1_1bitwise__operators.html#aca9b5a381d855e31a5a13a1f9e56b96b',1,'magic_enum::bitwise_operators']]],
+  ['orstart_28',['orStart',['../classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49',1,'yoi::lexer']]]
 ];

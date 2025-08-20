@@ -21,6 +21,7 @@ var classyoi_1_1lexer =
     [ "lessStart", "classyoi_1_1lexer.html#af05da5f9c8f5703ee28d28c69627cfd7", null ],
     [ "minusStart", "classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1", null ],
     [ "notStart", "classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24", null ],
+    [ "operatorStart", "classyoi_1_1lexer.html#aee400f5ef44b7c11cd38fad90c05c5df", null ],
     [ "orStart", "classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49", null ],
     [ "percentSignStart", "classyoi_1_1lexer.html#a099b462e84ac9b58b70b404350309b6c", null ],
     [ "plusStart", "classyoi_1_1lexer.html#a8d874d349fcbb8c3534c35d86fff0b37", null ],
