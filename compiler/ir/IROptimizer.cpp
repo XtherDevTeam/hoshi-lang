@@ -32,6 +32,7 @@ namespace yoi {
         for (auto &i: other.instructions) {
             result.insert(i);
         }
+        result.optimizable = result.optimizable && other.optimizable;
         return result;
     }
 

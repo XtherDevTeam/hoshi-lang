@@ -1571,7 +1571,7 @@ namespace yoi {
                 auto* offsettedRhsPtr = Builder->CreateGEP(llvm::Type::getInt8Ty(*TheContext), rhsPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 16, true)});
                 Builder->CreateMemCpy(offsettedLhsPtr, llvm::MaybeAlign(8), offsettedRhsPtr, llvm::MaybeAlign(8), structTypeSize - 16);
                 callGcFunction(rhs.llvmValue, rhs.yoiType, false);
-                callGcFunction(lhs.llvmValue, lhs.yoiType, false);
+                valueStackMap[fromBlock][toBlock].push_back(lhs);
                 break;
             }
             case IR::Opcode::typeid_int:
