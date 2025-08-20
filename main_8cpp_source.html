@@ -390,10 +390,10 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;e) {</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        exitCode = 1; </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;An unexpected error occurred: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        exitCode = 1; </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    }</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    }<span class="comment">/* catch (const std::exception&amp; e) {</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment">        std::cerr &lt;&lt; &quot;An unexpected error occurred: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">        exitCode = 1; </span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment">    }*/</span></div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    </div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keywordflow">if</span> (!preserveIntermediateFiles &amp;&amp; exitCode == 0) {</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : intermediateFilesToClean) {</div>

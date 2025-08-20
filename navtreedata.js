@@ -26,6 +26,7 @@ var NAVTREE =
 [
   [ "hoshi-lang", "index.html", [
     [ "The Hoshi-lang Programming Language", "index.html", "index" ],
+    [ "current_diff", "md_current__diff.html", null ],
     [ "Hoshi-lang Arrays", "md_docs_2Array.html", [
       [ "1. Fixed-Size Arrays", "md_docs_2Array.html#autotoc_md1", [
         [ "Declaration and Initialization", "md_docs_2Array.html#autotoc_md2", null ],
@@ -114,7 +115,9 @@ var NAVTREE =
     [ "模板隐式特化的实现思路", "md_docs_2Template.html", null ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
-    [ "TODO", "md_TODO.html", null ],
+    [ "TODO List", "md_TODO.html", [
+      [ "Known issues", "md_TODO.html#autotoc_md96", null ]
+    ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -157,20 +160,21 @@ var NAVTREEINDEX =
 "IRLinker_8cpp.html",
 "classyoi_1_1BuiltinModuleBuilder.html#a170a7036e9359575d23ed4cd95ce7c6b",
 "classyoi_1_1IRBuilder.html#a2c0487a0411af457d2a23859b8344375",
-"classyoi_1_1IRLinker.html#a20223d6c01f045c7e8c38e81cd1eed2e",
-"classyoi_1_1IRStructTemplate_1_1Builder.html#ad72b478f57f4d51a3c2f010afb03056f",
-"classyoi_1_1LLVMCodegen.html#ac4cc9579c633f4e6815f1fc0ff61fd17",
-"classyoi_1_1definitionArguments.html#a52f208ab3c950a48d57c4fa4d368c3be",
-"classyoi_1_1implInnerPair.html#afbcc34ca2ea0fda2f5706726a6589b63",
-"classyoi_1_1interfaceDefStmt.html#a38b5e7dde5836d07400f66289e29ca24",
-"classyoi_1_1returnStmt.html",
-"classyoi_1_1visitor.html#a628aac51b352074768d7d4b2d4d3dd65",
-"functions_vars_s.html",
-"moduleContext_8h_source.html",
-"namespaceyoi.html#aaed6e0f29c663d428e7051d3b479db29",
-"structYoiBooleanObject.html#a0376be5904d0dd864b7d97c9ce1295ab",
-"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a7595ec51b788725a74d2d928890383d8",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a95da522d005dab6fff2c0e2f6d1ce400"
+"classyoi_1_1IRInterfaceInstanceDefinition.html",
+"classyoi_1_1IROptimizer.html#af7e3b67434bae3b7bec592f0726a8a0f",
+"classyoi_1_1LLVMCodegen.html#a75db48edcf151d8a0ad9a7bb2470a776",
+"classyoi_1_1compilerContext.html#ade15a10b40c7c25be3a18aa4d465fdd1",
+"classyoi_1_1identifierWithTemplateArg.html#aeb120908e79b4a919cdc8252bf1fd4e0",
+"classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4",
+"classyoi_1_1newExpression.html#a532c5d8b36dd8296a2b1f5906571e441",
+"classyoi_1_1visitor.html#a22560c4340ac4dade215406386c15cd3",
+"functions_func_h.html",
+"md_docs_2Spec.html#autotoc_md49",
+"namespaceyoi.html#a5596b055501bff2d994e67dc8159eeba",
+"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd",
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#a4de20261a97f2859d9463995d9b20e4a",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a465289687a70db7aa7217cc240c29f0f",
+"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4c2ef546adead0ff4686bcac2590e7c1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

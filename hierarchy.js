@@ -117,7 +117,9 @@ var hierarchy =
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRFunctionDefinition > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRFunctionTemplate > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRInterfaceImplementationDefinition > >", "classyoi_1_1indexTable.html", null ],
+    [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRInterfaceImplementationTemplate > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRInterfaceInstanceDefinition > >", "classyoi_1_1indexTable.html", null ],
+    [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRInterfaceInstanceTemplate > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRStructDefinition > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRStructTemplate > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRValueType > >", "classyoi_1_1indexTable.html", null ],
@@ -143,7 +145,9 @@ var hierarchy =
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html", null ],
     [ "IRFunctionTemplate", "classyoi_1_1IRFunctionTemplate.html", null ],
     [ "IRInterfaceImplementationDefinition", "classyoi_1_1IRInterfaceImplementationDefinition.html", null ],
+    [ "IRInterfaceImplementationTemplate", "classyoi_1_1IRInterfaceImplementationTemplate.html", null ],
     [ "IRInterfaceInstanceDefinition", "classyoi_1_1IRInterfaceInstanceDefinition.html", null ],
+    [ "IRInterfaceInstanceTemplate", "classyoi_1_1IRInterfaceInstanceTemplate.html", null ],
     [ "IRLinker", "classyoi_1_1IRLinker.html", null ],
     [ "IRObjectFile", "classyoi_1_1IRObjectFile.html", null ],
     [ "IROperand", "classyoi_1_1IROperand.html", null ],
@@ -153,6 +157,8 @@ var hierarchy =
     [ "IRStructTemplate", "classyoi_1_1IRStructTemplate.html", null ],
     [ "IRTemplateBuilder", "classyoi_1_1IRTemplateBuilder.html", [
       [ "Builder", "classyoi_1_1IRFunctionTemplate_1_1Builder.html", null ],
+      [ "Builder", "classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html", null ],
+      [ "Builder", "classyoi_1_1IRInterfaceInstanceTemplate_1_1Builder.html", null ],
       [ "Builder", "classyoi_1_1IRStructTemplate_1_1Builder.html", null ]
     ] ],
     [ "IRValueType", "classyoi_1_1IRValueType.html", null ],

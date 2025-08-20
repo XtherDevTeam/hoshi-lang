@@ -38,6 +38,8 @@ var classyoi_1_1visitor =
     [ "resolveOverload", "classyoi_1_1visitor.html#af9eb5e33a769fb67df4924abb0fcb120", null ],
     [ "resolveOverloadExtern", "classyoi_1_1visitor.html#a7b8a2c4157e772c428b220f4f9c911c4", null ],
     [ "specializeFunctionTemplate", "classyoi_1_1visitor.html#a10e827da278a8d64bf26cc9f3baf3c97", null ],
+    [ "specializeInterfaceImplementation", "classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20", null ],
+    [ "specializeInterfaceTemplate", "classyoi_1_1visitor.html#a792d3023e4dd17cbbd8244a363c11790", null ],
     [ "specializeStructMethod", "classyoi_1_1visitor.html#a8154061a82cc6ddc1737b559c834d7e8", null ],
     [ "specializeStructTemplate", "classyoi_1_1visitor.html#a4b9cce69fabc43ded7762b343a3e0f2d", null ],
     [ "tryCastTo", "classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1", null ],
