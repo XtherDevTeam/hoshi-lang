@@ -181,53 +181,6 @@ namespace yoi {
 
     IR IRLinker::patchInstruction(const IR& instr, indexT currentModuleId) {
         IR newInstr = instr;
-        /*for (auto& operand : newInstr.operands) {
-            indexT symbolModuleId = currentModuleId;
-            indexT symbolIndex = operand.value.symbolIndex;
-            bool isExtern = false;
-
-            // Resolve externs first
-            if (instr.opcode == IR::Opcode::invoke ||
-                instr.opcode == IR::Opcode::load ||
-                instr.opcode == IR::Opcode::store_extern ||
-                instr.opcode == IR::Opcode::new_struct_extern ||
-                instr.opcode == IR::Opcode::new_interface_extern ||
-                instr.opcode == IR::Opcode::construct_interface_impl_extern) {
-                isExtern = true;
-                const auto& externEntry = compilerCtx->getImportedModule(currentModuleId)->externTable[symbolIndex];
-                symbolModuleId = externEntry->affiliateModule;
-                symbolIndex = externEntry->itemIndex;
-            }
-
-            switch (operand.type) {
-                case IROperand::operandType::globalVar:
-                    operand.value.symbolIndex = globalRemapping.at(symbolModuleId).at(symbolIndex);
-                    break;
-                case IROperand::operandType::stringLiteral:
-                    operand.value.stringLiteralIndex = stringRemapping.at(symbolModuleId).at(symbolIndex);
-                    break;
-                case IROperand::operandType::index:
-                    switch (instr.opcode) {
-                        case IR::Opcode::invoke: case IR::Opcode::invoke_extern:
-                            operand.value.symbolIndex = functionRemapping.at(symbolModuleId).at(symbolIndex);
-                            break;
-                        case IR::Opcode::new_struct: case IR::Opcode::new_struct_extern:
-                            operand.value.symbolIndex = structRemapping.at(symbolModuleId).at(symbolIndex);
-                            break;
-                        case IR::Opcode::new_interface: case IR::Opcode::new_interface_extern:
-                            operand.value.symbolIndex = interfaceRemapping.at(symbolModuleId).at(symbolIndex);
-                            break;
-                        case IR::Opcode::construct_interface_impl: case IR::Opcode::construct_interface_impl_extern:
-                            operand.value.symbolIndex = interfaceImplRemapping.at(symbolModuleId).at(symbolIndex);
-                            break;
-                        default: break; // Other indices might not need patching (e.g., member index)
-                    }
-                    break;
-                default:
-                    break; // Local vars, literals, etc., don't need patching
-            }
-        }*/
-
         switch (instr.opcode) {
             case IR::Opcode::invoke:
             case IR::Opcode::invoke_virtual:

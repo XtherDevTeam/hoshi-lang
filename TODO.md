@@ -20,6 +20,7 @@
 - [x] 加入 static method 支持
 - [x] 加入 interface template 支持
 - [ ] 完成 vector 模板的开发
+- [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
 
 # Known issues
 

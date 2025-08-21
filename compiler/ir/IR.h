@@ -10,6 +10,7 @@
 #include <compiler/frontend/ast.hpp>
 #include <map>
 #include <memory>
+#include <set>
 
 namespace yoi {
     struct IRBuildConfig {
@@ -62,6 +63,10 @@ namespace yoi {
 
     class IRValueType {
       public:
+        enum class ValueAttr : yoi::indexT {
+            Nullable,
+            Raw
+        };
         enum class valueType : yoi::indexT {
             integerRaw = 0,
             decimalRaw,
@@ -88,6 +93,8 @@ namespace yoi {
         yoi::indexT typeIndex;
 
         yoi::vec<yoi::indexT> dimensions;
+
+        std::set<ValueAttr> attributes;
 
         IRValueType(valueType type);
 
@@ -116,9 +123,15 @@ namespace yoi {
 
         IRValueType getDynamicArrayType();
 
-        yoi::wstr to_string() const;
+        yoi::wstr to_string(bool showAttributes = false) const;
 
         bool operator==(const yoi::IRValueType &rhs) const;
+
+        void addAttribute(ValueAttr attr);
+
+        void removeAttribute(ValueAttr attr);
+
+        bool hasAttribute(ValueAttr attr) const;
     };
 
     class IROperand {

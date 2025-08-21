@@ -577,43 +577,71 @@ namespace yoi {
         return type == valueType::booleanRaw || type == valueType::charRaw;
     }
 
-    yoi::wstr IRValueType::to_string() const {
+    yoi::wstr IRValueType::to_string(bool showAttributes) const {
+        yoi::wstr res;
         switch (type) {
             case valueType::integerRaw:
-                return L"int_literal";
+                res = L"int_literal";
+                break;
             case valueType::decimalRaw:
-                return L"deci_literal";
+                res = L"deci_literal";
+                break;
             case valueType::booleanRaw:
-                return L"bool_literal";
+                res = L"bool_literal";
+                break;
             case valueType::characterObject:
-                return L"char";
+                res = L"char";
+                break;
             case valueType::stringLiteral:
-                return L"string";
+                res = L"string";
+                break;
             case valueType::structObject:
-                return L"struct#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                res = L"struct#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                break;
             case valueType::null:
-                return L"null";
+                res = L"null";
+                break;
             case valueType::integerObject:
-                return L"int";
+                res = L"int";
+                break;
             case valueType::booleanObject:
-                return L"bool";
+                res = L"bool";
+                break;
             case valueType::decimalObject:
-                return L"decimal";
+                res = L"decimal";
+                break;
             case valueType::stringObject:
-                return L"string";
+                res = L"string";
+                break;
             case valueType::none:
-                return L"none";
+                res = L"none";
+                break;
             case valueType::interfaceObject:
-                return L"interface#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                res = L"interface#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                break;
             case valueType::pointerObject:
-                return L"pointer";
+                res = L"pointer";
+                break;
             case valueType::virtualMethod:
-                return L"virtual_method#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                res = L"virtual_method#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                break;
             case valueType::incompleteTemplateType:
-                return L"incomplete_template_type#" + std::to_wstring(typeIndex);
+                res = L"incomplete_template_type#" + std::to_wstring(typeIndex);
+                break;
             default:
-                return L"unknown";
+                res = L"unknown";
+                break;
         }
+
+        if (!dimensions.empty()) {
+            if (dimensions.back() == -1) res += L"[]";
+            else for (auto d : dimensions) res += L"[" + std::to_wstring(d) + L"]";
+        }
+
+        if (showAttributes)
+            for (auto &i : attributes) res += L" @" + string2wstring(std::string{magic_enum::enum_name(i)});
+
+        return res;
     }
 
     bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
@@ -699,7 +727,7 @@ namespace yoi {
         r += yoi::wstr(indent, L' ') + L"Variables {\n";
         for (int64_t i = 0; i < variables.size(); ++i) {
             r += yoi::wstr(indent + 4, L' ') + L"#" + std::to_wstring(i) + L" " + reversedVariableNameMap[i] +
-                 L"(scope#" + std::to_wstring(variableScopeMap[i]) + L") : " + variables[i]->to_string() + L"\n";
+                 L"(scope#" + std::to_wstring(variableScopeMap[i]) + L") : " + variables[i]->to_string(true) + L"\n";
         }
         return r + yoi::wstr(indent, L' ') + L"}\n";
     }
@@ -1192,5 +1220,17 @@ namespace yoi {
         tempVarStack.pop_back();
         tempVarStack.push_back(compilerCtx->getBoolObjectType());
         insert(IR{IR::Opcode::interfaceof, {}, currentDebugInfo});
+    }
+
+    bool IRValueType::hasAttribute(ValueAttr attr) const {
+        return attributes.count(attr) > 0;
+    }
+
+    void IRValueType::removeAttribute(ValueAttr attr) {
+        attributes.erase(attr);
+    }
+
+    void IRValueType::addAttribute(ValueAttr attr) {
+        attributes.insert(attr);
     }
 } // namespace yoi

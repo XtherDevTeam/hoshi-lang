@@ -189,9 +189,20 @@ namespace yoi {
 
         IROptimizer &reduceEmptyCodeBlock();
 
+        void handleInstruction(const IR &ins, yoi::indexT insIndex, yoi::indexT currentCodeBlockIndex);
+
         AnalysisState analyzeBlock(indexT blockIndex, const AnalysisState &inState);
 
         void transformBlock(indexT blockIndex, const AnalysisState &inState);        
+
+        IROptimizer &performNullableCheck();
+        IROptimizer &performRawCheck();
+
+    private:
+        AnalysisState analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState);
+        AnalysisState analyzeBlockForRaw(indexT blockIndex, const AnalysisState &inState);
+        AnalysisState mergeStatesForNullable(const AnalysisState &s1, const AnalysisState &s2);
+        AnalysisState mergeStatesForRaw(const AnalysisState &s1, const AnalysisState &s2);
     };
 
     struct AnalysisState {
