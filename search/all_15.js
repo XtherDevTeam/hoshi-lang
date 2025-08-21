@@ -41,7 +41,7 @@ var searchData=
   ['none_38',['none',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;rtti.h'],['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none']]],
   ['noneobjectsingleton_39',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]],
   ['nop_40',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
-  ['normalizeforeigntype_41',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#a85d3b5e48291b30d8391bea2b6d01c46',1,'yoi::LLVMCodegen']]],
+  ['normalizeforeigntype_41',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#a9079dfe3e360a05db5e1c0ded4e771ea',1,'yoi::LLVMCodegen']]],
   ['not_5fequal_42',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
   ['notequal_43',['notequal',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token::notEqual'],['../classyoi_1_1IROptimizer.html#a906f50f396f65314a3ac97310215a7bd',1,'yoi::IROptimizer::notEqual()']]],
   ['notstart_44',['notStart',['../classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24',1,'yoi::lexer']]],

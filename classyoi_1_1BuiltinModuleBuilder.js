@@ -12,7 +12,7 @@ var classyoi_1_1BuiltinModuleBuilder =
     [ "getForeignFloatObject", "classyoi_1_1BuiltinModuleBuilder.html#a4781b83d7331406ecadae2255a8dc4a8", null ],
     [ "getForeignInt32Object", "classyoi_1_1BuiltinModuleBuilder.html#a8bac07971cb6f1516043e3a953ebbb75", null ],
     [ "getIntObject", "classyoi_1_1BuiltinModuleBuilder.html#a801dcd88af51b038e7f7d1d3e362e047", null ],
-    [ "getIntObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#abd5c7ae12b5a1675cd1807cfcab0e66d", null ],
+    [ "getIntObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#ae3cea7871464b4059bc1f1db65ec80b6", null ],
     [ "getNoneObject", "classyoi_1_1BuiltinModuleBuilder.html#a86aa0a737da077799c39bcbb6e56b5db", null ],
     [ "getNullInterfaceInstanceDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a2580086e454bee20cf97f2c5acee25d5", null ],
     [ "getStringObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#abc7d6463b0f61f6782bb682123d2bafd", null ],
