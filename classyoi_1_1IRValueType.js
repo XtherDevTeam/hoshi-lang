@@ -1,5 +1,9 @@
 var classyoi_1_1IRValueType =
 [
+    [ "ValueAttr", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f", [
+      [ "Nullable", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6", null ],
+      [ "Raw", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00", null ]
+    ] ],
     [ "valueType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85", [
       [ "integerRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d", null ],
       [ "decimalRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0", null ],
@@ -25,16 +29,20 @@ var classyoi_1_1IRValueType =
     [ "IRValueType", "classyoi_1_1IRValueType.html#a14d684bc00d9849aa7bdab09175d1113", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#acff9d58b8437afee7de1aa5b49ad0e47", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a0a8161a9919991b3b5d4199f96536c29", null ],
+    [ "addAttribute", "classyoi_1_1IRValueType.html#ab7b792b6f6026011c471c03f24f181c6", null ],
     [ "getArrayType", "classyoi_1_1IRValueType.html#a2de748b29cbc22e987c06acf975d332d", null ],
     [ "getDynamicArrayType", "classyoi_1_1IRValueType.html#ab2fef6489e0aa5195ba823280d75dfdb", null ],
     [ "getElementType", "classyoi_1_1IRValueType.html#a833d2997db83c53a7bb92d301727c5fb", null ],
+    [ "hasAttribute", "classyoi_1_1IRValueType.html#ab9ed59507a002d0405a956b171000c15", null ],
     [ "is1ByteType", "classyoi_1_1IRValueType.html#a67688acef17fadd244d1c476fa749b75", null ],
     [ "isArrayType", "classyoi_1_1IRValueType.html#a14ebcb28dc869f75b96ee33aad01ab1f", null ],
     [ "isBasicType", "classyoi_1_1IRValueType.html#afaaeac2aa76c43e84e78b65e766596c6", null ],
     [ "isDynamicArrayType", "classyoi_1_1IRValueType.html#a9f5fad726c9a4f4fd5efb67be4746220", null ],
     [ "isForeignBasicType", "classyoi_1_1IRValueType.html#a3b4cbf12d006e4a2513ee03d50649f0c", null ],
     [ "operator==", "classyoi_1_1IRValueType.html#aecb7556b13ff55795d574f14582b205d", null ],
-    [ "to_string", "classyoi_1_1IRValueType.html#abf7d149967b8665bd54810d8b4b1c6b3", null ],
+    [ "removeAttribute", "classyoi_1_1IRValueType.html#ab9a2928d6579d116a11b3aa643944244", null ],
+    [ "to_string", "classyoi_1_1IRValueType.html#abbc2f435f7550779b490ed781d3c2222", null ],
+    [ "attributes", "classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84", null ],
     [ "dimensions", "classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73", null ],
     [ "type", "classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48", null ],
     [ "typeAffiliateModule", "classyoi_1_1IRValueType.html#afab8dfaed058530f129751726f90af78", null ],

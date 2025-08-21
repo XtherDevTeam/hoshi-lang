@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('md_docs_2Array.html',''); initResizabl
   <div class="headertitle"><div class="title">Hoshi-lang Arrays</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> Hoshi-lang provides two types of arrays: fixed-size and dynamic.</p>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a> Hoshi-lang provides two types of arrays: fixed-size and dynamic.</p>
+<h1><a class="anchor" id="autotoc_md3"></a>
 1. Fixed-Size Arrays</h1>
 <p>Fixed-size arrays have a length that is known at compile time. They are declared with the size specified in square brackets.</p>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Declaration and Initialization</h2>
 <div class="fragment"><div class="line">// An array of 5 integers, initialized with values</div>
 <div class="line">let arr1 = int[5](1, 2, 3, 4, 5)</div>
@@ -107,22 +107,22 @@ Declaration and Initialization</h2>
 <div class="line"> </div>
 <div class="line">// An array of 10 integers, initialized with default values (0 for int)</div>
 <div class="line">let arr3 = int[10]()</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 Element Access</h2>
 <p>Elements are accessed using zero-based indexing.</p>
 <div class="fragment"><div class="line">let first = arr1[0] // first will be 1</div>
 <div class="line">arr1[0] = 100      // Modify the first element</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 2. Dynamic Arrays</h1>
 <p>Dynamic arrays is a sort of array which length cannot be predicted in compile-time. They are declared with <code>new</code> expression.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Declaration and Initialization</h2>
 <div class="fragment"><div class="line">// A dynamic array with 3 initial elements</div>
 <div class="line">let dyn_arr1 = new int[3](1, 2, 3)</div>
 <div class="line"> </div>
 <div class="line">// A dynamic array with an initial capacity of 10, all elements default-initialized</div>
 <div class="line">let dyn_arr2 = new int[3](10)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 3. The &lt;tt&gt;.length&lt;/tt&gt; Property</h1>
 <p>Both fixed-size and dynamic arrays have a read-only <code>.length</code> property that returns the number of elements in the array.</p>
 <div class="fragment"><div class="line">let arr = int[5]()</div>

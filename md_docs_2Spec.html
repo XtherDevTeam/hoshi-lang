@@ -93,26 +93,26 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
   <div class="headertitle"><div class="title">Hoshi Language Specification</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md43"></a> </p>
-<h1><a class="anchor" id="autotoc_md44"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md48"></a> </p>
+<h1><a class="anchor" id="autotoc_md49"></a>
 1. Introduction</h1>
 <p>Hoshi is a statically-typed, strongly-typed programming language. It aims to support modern programming paradigms, including Object-Oriented Programming (OOP) and Generic Programming (GP), while maintaining a clear and efficient compilation process.</p>
 <p>The language compiles to its own high-level intermediate representation (IR) before being translated to LLVM IR for native code generation. It features a reference-counting-based memory management system for its object model.</p>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md50"></a>
 2. Lexical Structure</h1>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md51"></a>
 2.1. Comments</h2>
 <ul>
 <li><b>Single-line comments:</b> <code>// ...</code></li>
 <li><b>Multi-line comments:</b> <code>/* ... */</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 2.2. Keywords</h2>
 <p><code>use</code>, <code>func</code>, <code>interface</code>, <code>struct</code>, <code>impl</code>, <code>let</code>, <code>in</code>, <code>for</code>, <code>while</code>, <code>if</code>, <code>elif</code>, <code>else</code>, <code>return</code>, <code>continue</code>, <code>break</code>, <code>cast</code>, <code>dyn_cast</code>, <code>typeid</code>, <code>interfaceof</code>, <code>null</code>, <code>constructor</code>, <code>import</code>, <code>export</code>, <code>as</code>, <code>from</code>, <code>true</code>, <code>false</code>.</p>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<h1><a class="anchor" id="autotoc_md53"></a>
 3. Types and Data Structures</h1>
 <p>In Hoshi, all data types, including primitives, are treated as objects.</p>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<h2><a class="anchor" id="autotoc_md54"></a>
 3.1. Primitive Types</h2>
 <ul>
 <li>**<code>int</code>**: A 64-bit signed integer.</li>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
 <li>**<code>string</code>**: A sequence of characters.</li>
 <li>**<code>none</code>**: A type representing no value, similar to <code>void</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md55"></a>
 3.2. Structs</h2>
 <p>Structs are user-defined composite data types that group variables and methods.</p>
 <div class="fragment"><div class="line">struct Point {</div>
@@ -130,18 +130,18 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
 <div class="line">    y: int,</div>
 <div class="line">    constructor(x: int, y: int)</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md51"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md56"></a>
 3.3. Interfaces</h2>
 <p>Interfaces define a contract of methods that a <code>struct</code> can implement.</p>
 <div class="fragment"><div class="line">interface Addable {</div>
 <div class="line">    add() : int</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md52"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md57"></a>
 3.4. Implementations (&lt;tt&gt;impl&lt;/tt&gt;)</h2>
 <p>The <code>impl</code> keyword is used to provide implementations for <code>struct</code> methods or to implement an <code>interface</code> for a <code>struct</code>.</p>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md58"></a>
 3.5. Arrays and Dynamic Arrays</h2>
-<h3><a class="anchor" id="autotoc_md54"></a>
+<h3><a class="anchor" id="autotoc_md59"></a>
 Fixed-Size Arrays</h3>
 <p>Arrays are fixed-size collections of elements of the same type. The size must be known at compile time.</p>
 <ul>
@@ -149,7 +149,7 @@ Fixed-Size Arrays</h3>
 <div class="line">let arr = int[10](1, 2, 3, 4, 5, 6, 7, 8, 9, 10)</div>
 </div><!-- fragment --></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md55"></a>
+<h3><a class="anchor" id="autotoc_md60"></a>
 Dynamic Arrays</h3>
 <p>Dynamic arrays can grow or shrink at runtime.</p>
 <ul>
@@ -160,34 +160,34 @@ Dynamic Arrays</h3>
 <div class="line">let dyn_arr2 = int[](10)</div>
 </div><!-- fragment --></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md56"></a>
+<h3><a class="anchor" id="autotoc_md61"></a>
 The &lt;tt&gt;.length&lt;/tt&gt; Property</h3>
 <p>All array types have a read-only <code>.length</code> property.</p>
 <div class="fragment"><div class="line">let len = dyn_arr.length // Returns 3</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md57"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md62"></a>
 3.6. Generic Programming (Templates)</h2>
 <p>Hoshi supports generic programming through templates, which can be applied to functions and structs.</p>
 <div class="fragment"><div class="line">struct TestStruct&lt;T, U&gt; {</div>
 <div class="line">    a: T,</div>
 <div class="line">    b: U</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md58"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md63"></a>
 4. Object Model and Lifecycle</h1>
-<h2><a class="anchor" id="autotoc_md59"></a>
+<h2><a class="anchor" id="autotoc_md64"></a>
 4.1. Everything is an Object</h2>
 <p>All data types in Hoshi are objects allocated on the heap. This includes primitive types like <code>int</code> and <code>bool</code>, which are wrapped in corresponding object structures.</p>
-<h2><a class="anchor" id="autotoc_md60"></a>
+<h2><a class="anchor" id="autotoc_md65"></a>
 4.2. Memory Management: Reference Counting</h2>
 <p>Hoshi uses an automatic reference counting (ARC) system. The compiler and runtime automatically manage object lifecycles.</p>
-<h2><a class="anchor" id="autotoc_md61"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 4.3. Object Creation</h2>
 <ul>
 <li><b>Structs:</b> Created by calling their constructor.</li>
 <li><b>Interfaces:</b> An interface object is created by "casting" a struct instance that implements it. This creates a new interface object containing a pointer to the original struct instance and a virtual method table (v-table).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md62"></a>
+<h1><a class="anchor" id="autotoc_md67"></a>
 5. Type Introspection and Casting</h1>
-<h2><a class="anchor" id="autotoc_md63"></a>
+<h2><a class="anchor" id="autotoc_md68"></a>
 5.1. &lt;tt&gt;typeid&lt;/tt&gt; Operator</h2>
 <p>The <code>typeid</code> operator returns a unique <code>int</code> identifier for any type or value at runtime.</p>
 <div class="fragment"><div class="line">let int_id = typeid(int)</div>
@@ -196,14 +196,14 @@ The &lt;tt&gt;.length&lt;/tt&gt; Property</h3>
 <div class="line">let point_id = typeid(p)</div>
 <div class="line"> </div>
 <div class="line">if (typeid(p) == typeid&lt;Point&gt;) { ... }</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md64"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md69"></a>
 5.2. &lt;tt&gt;interfaceof&lt;/tt&gt; Operator</h2>
 <p>The <code>interfaceof</code> operator checks if an object instance implements a given interface. It returns <code>true</code> or <code>false</code>.</p>
 <div class="fragment"><div class="line">let p = Point(1, 2)</div>
 <div class="line">if (p interfaceof Addable) {</div>
 <div class="line">    // This will be true</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md65"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md70"></a>
 5.3. Dynamic Casting (&lt;tt&gt;dyn_cast&lt;/tt&gt;)</h2>
 <p>The <code>dyn_cast</code> operator provides a safe way to cast an interface object back to its original, concrete <code>struct</code> type. If the cast is successful, it returns the <code>struct</code> object otherwise, it returns <code>null</code>.</p>
 <div class="fragment"><div class="line">func process(a: Addable) {</div>
@@ -215,7 +215,7 @@ The &lt;tt&gt;.length&lt;/tt&gt; Property</h3>
 <div class="line">        io.println(&quot;The provided Addable was not a Point.&quot;)</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md66"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md71"></a>
 6. Compilation and Linking</h1>
 <p>The Hoshi compiler (<code>hoshi-lang</code>) performs the following steps:</p>
 <ol type="1">
@@ -225,13 +225,13 @@ The &lt;tt&gt;.length&lt;/tt&gt; Property</h3>
 <li><b>Object Code Generation:</b> LLVM IR is compiled into a native object file (<code>.o</code>).</li>
 <li><b>Final Linking:</b> An external linker (<code>cc</code> or <code>cl.exe</code>) links the object file with the Hoshi runtime library (<code>libelysia_runtime</code>) to produce the final executable.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md67"></a>
+<h1><a class="anchor" id="autotoc_md72"></a>
 7. Modules and Foreign Function Interface (FFI)</h1>
-<h2><a class="anchor" id="autotoc_md68"></a>
+<h2><a class="anchor" id="autotoc_md73"></a>
 7.1. Modules</h2>
 <p>The <code>use</code> keyword imports another Hoshi file.</p>
 <div class="fragment"><div class="line">use test1 &quot;examples/test1.hoshi&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md69"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md74"></a>
 7.2. Foreign Function Interface (FFI)</h2>
 <p>Hoshi provides an FFI to interoperate with C-compatible libraries.</p>
 <ul>

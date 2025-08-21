@@ -94,13 +94,13 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> </p>
-<h1><a class="anchor" id="autotoc_md76"></a>
+<h1><a class="anchor" id="autotoc_md81"></a>
 Intro</h1>
 <blockquote class="doxtable">
 <p>&zwj;This is one of my practice during Senior High School period. <code>hoshi</code> means both $\mathop{desire}\limits^{欲しい}$ and $\mathop{stars}\limits^{星}$ in Japanese, which also represents my silly wishes: I hope some day I would become the stars I once live up to. </p>
 </blockquote>
 <p>Hoshi-lang is a statically-typed, strong-typed programming language that supports modern programming design patterns like Generic Programming and Object-Oriented Programming.</p>
-<h1><a class="anchor" id="autotoc_md77"></a>
+<h1><a class="anchor" id="autotoc_md82"></a>
 Syntax</h1>
 <div class="fragment"><div class="line">use lang &quot;builtin&quot;</div>
 <div class="line">use io &quot;std/io&quot;</div>
@@ -133,7 +133,7 @@ Syntax</h1>
 <div class="line">  return 0</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Here is an example.</p>
-<h1><a class="anchor" id="autotoc_md78"></a>
+<h1><a class="anchor" id="autotoc_md83"></a>
 Object-Oriented Programming</h1>
 <p>Hoshi-lang's OOP is based on a composition model using three core components: <code>interface</code>, <code>struct</code>, and <code>impl</code>.</p>
 <ul>
@@ -141,9 +141,9 @@ Object-Oriented Programming</h1>
 <li><code>struct</code>: A concrete data structure that groups fields and methods.</li>
 <li><code>impl</code>: Implements the methods for a <code>struct</code> or an <code>interface</code> for a <code>struct</code>.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md79"></a>
+<h1><a class="anchor" id="autotoc_md84"></a>
 Object Model and Memory Management</h1>
-<h2><a class="anchor" id="autotoc_md80"></a>
+<h2><a class="anchor" id="autotoc_md85"></a>
 Object Layout</h2>
 <p>In Hoshi-lang, <b>all data types are heap-allocated objects</b>. This includes primitives like <code>int</code>, <code>bool</code>, etc., which are "boxed" into object wrappers. The compiler and runtime manage these objects through pointers.</p>
 <p>All objects share a common header:</p>
@@ -156,7 +156,7 @@ Object Layout</h2>
 <td class="markdownTableBodyNone">8-15   </td><td class="markdownTableBodyNone"><code>type_id</code>   </td><td class="markdownTableBodyNone"><code>unsigned long long</code>   </td><td class="markdownTableBodyNone">A unique ID for the object's runtime type.   </td></tr>
 </table>
 <p>Specific object types then have their own layouts following this header.</p>
-<h2><a class="anchor" id="autotoc_md81"></a>
+<h2><a class="anchor" id="autotoc_md86"></a>
 Interface Object Layout</h2>
 <p>Interface objects are special "shell" objects that enable polymorphism. When a <code>struct</code> instance is cast to an <code>interface</code>, a new <code>interfaceObject</code> is created with the following layout:</p>
 <table class="markdownTable">
@@ -174,7 +174,7 @@ Interface Object Layout</h2>
 <td class="markdownTableBodyNone">40+   </td><td class="markdownTableBodyNone">Virtual Method Pointers   </td><td class="markdownTableBodyNone">A sequence of function pointers to the concrete implementations of the interface's methods (the v-table).   </td></tr>
 </table>
 <p>This structure is created by the compiler via the <code>construct_interface_impl</code> IR instruction.</p>
-<h2><a class="anchor" id="autotoc_md82"></a>
+<h2><a class="anchor" id="autotoc_md87"></a>
 Garbage Collection (GC)</h2>
 <p>Memory is managed via <b>Automatic Reference Counting (ARC)</b>.</p>
 <ul>
@@ -183,9 +183,9 @@ Garbage Collection (GC)</h2>
 <li>When the count reaches zero, the object is deallocated.</li>
 </ul>
 <p>The compiler is responsible for generating calls to the appropriate <code>_gc_refcount_increase</code> and <code>_gc_refcount_decrease</code> functions for each type at the right places.</p>
-<h1><a class="anchor" id="autotoc_md83"></a>
+<h1><a class="anchor" id="autotoc_md88"></a>
 New Features</h1>
-<h2><a class="anchor" id="autotoc_md84"></a>
+<h2><a class="anchor" id="autotoc_md89"></a>
 Dynamic Arrays</h2>
 <p>Hoshi-lang now supports dynamic arrays, which can grow or shrink at runtime.</p>
 <ul>
@@ -194,14 +194,14 @@ Dynamic Arrays</h2>
 </li>
 <li><code> **Length Property:** The `.length` property can be used to get the current number of elements in any array (fixed or dynamic). </code>rust let len = dyn_arr.length // len will be 3 ```</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md85"></a>
+<h2><a class="anchor" id="autotoc_md90"></a>
 Type Introspection</h2>
 <p>You can inspect an object's type at runtime using the <code>typeid</code> and <code>interfaceof</code> operators.</p>
 <ul>
 <li>**<code>typeid</code>**: Returns a unique integer ID for a type. <code>rust let id = typeid(int) let p = Person("test") let p_id = typeid(p) </code></li>
 <li>**<code>interfaceof</code>**: Checks if an object implements a specific interface. <code>rust if (p interfaceof Greeter) { io.println("This object is a Greeter!") } </code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md86"></a>
+<h2><a class="anchor" id="autotoc_md91"></a>
 Dynamic Casting</h2>
 <p>Safely cast an interface object back to its concrete <code>struct</code> type using <code>dyn_cast</code>. If the cast fails, it returns <code>null</code>.</p>
 <div class="fragment"><div class="line">let g = Greeter(Person(&quot;test&quot;))</div>
@@ -214,12 +214,12 @@ Dynamic Casting</h2>
 <div class="line">} else {</div>
 <div class="line">  io.println(&quot;Cast failed.&quot;)</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md87"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md92"></a>
 Modules</h1>
 <p>Hoshi-lang supports modular programming using the <code>use</code> statement to import other source files.</p>
 <div class="fragment"><div class="line">// Import symbols from &quot;std/io.hoshi&quot; under the alias &quot;io&quot;</div>
 <div class="line">use io &quot;std/io&quot;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md88"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md93"></a>
 Generic Programming</h1>
 <p>Hoshi-lang supports Generic Programming via <code>template</code>s, which can be applied to both functions and structs.</p>
 <div class="fragment"><div class="line">struct Container&lt;T&gt; {</div>
@@ -229,15 +229,15 @@ Generic Programming</h1>
 <div class="line">func print_item&lt;T&gt;(c: Container&lt;T&gt;) {</div>
 <div class="line">  io.println(c.item)</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md89"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md94"></a>
 Variadic Arguments</h1>
 <p>Variadic arguments are supported in template functions via the <code>...</code> keyword, allowing a function to accept a variable number of arguments, which would be converted to <code>lang.NullInterface[]</code></p>
 <div class="fragment"><div class="line">func my_printf(format: string, args: ...) {</div>
 <div class="line">  // ... implementation ...</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md90"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md95"></a>
 Build and Run</h1>
-<h2><a class="anchor" id="autotoc_md91"></a>
+<h2><a class="anchor" id="autotoc_md96"></a>
 Build Instructions</h2>
 <p><b>macOS / Linux:</b> </p><div class="fragment"><div class="line">mkdir build</div>
 <div class="line">cd build</div>
@@ -247,10 +247,10 @@ Build Instructions</h2>
 <div class="line">cd build</div>
 <div class="line">cmake .. -G &quot;Visual Studio 17 2022&quot; -A x64</div>
 <div class="line">cmake --build . --config Release</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md92"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md97"></a>
 Run</h2>
 <div class="fragment"><div class="line">./hoshi_lang [filename] -o [output filename]</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md93"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md98"></a>
 Further Reading</h1>
 <ul>
 <li><a href="/Syntax.bnf">Syntax Definition</a></li>

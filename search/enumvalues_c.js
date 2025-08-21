@@ -22,5 +22,6 @@ var searchData=
   ['nop_19',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
   ['not_5fequal_20',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
   ['notequal_21',['notEqual',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token']]],
-  ['null_22',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType::null'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd',1,'null:&#160;rtti.h']]]
+  ['null_22',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType::null'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd',1,'null:&#160;rtti.h']]],
+  ['nullable_23',['Nullable',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6',1,'yoi::IRValueType']]]
 ];

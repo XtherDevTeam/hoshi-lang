@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('classyoi_1_1IROptimizer.html',''); ini
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classyoi_1_1IROptimizer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">IROptimizer Class Reference</div></div>
@@ -181,10 +182,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af01cb7e7c421a9992589a352b60f4bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a06457fcc325c97baeb61ceb8d0f2f" id="r_a73a06457fcc325c97baeb61ceb8d0f2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoi_1_1IROptimizer.html">IROptimizer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a73a06457fcc325c97baeb61ceb8d0f2f">reduceEmptyCodeBlock</a> ()</td></tr>
 <tr class="separator:a73a06457fcc325c97baeb61ceb8d0f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f1d31a93d08df2ccb81d4df99d78dba" id="r_a2f1d31a93d08df2ccb81d4df99d78dba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba">handleInstruction</a> (const <a class="el" href="classyoi_1_1IR.html">IR</a> &amp;ins, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> insIndex, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> <a class="el" href="classyoi_1_1IROptimizer.html#a6aa5d77eb53ccbb38448267c18b00ad8">currentCodeBlockIndex</a>)</td></tr>
+<tr class="separator:a2f1d31a93d08df2ccb81d4df99d78dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f0039fd849c7ca308fe5f2cc7100bb7" id="r_a8f0039fd849c7ca308fe5f2cc7100bb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7">analyzeBlock</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a> blockIndex, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;inState)</td></tr>
 <tr class="separator:a8f0039fd849c7ca308fe5f2cc7100bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35f75104c0b80b9a58f28db3216ecacf" id="r_a35f75104c0b80b9a58f28db3216ecacf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a35f75104c0b80b9a58f28db3216ecacf">transformBlock</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a> blockIndex, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;inState)</td></tr>
 <tr class="separator:a35f75104c0b80b9a58f28db3216ecacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d68cc9ef3dab84cc28e0c93abb78718" id="r_a9d68cc9ef3dab84cc28e0c93abb78718"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoi_1_1IROptimizer.html">IROptimizer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a9d68cc9ef3dab84cc28e0c93abb78718">performNullableCheck</a> ()</td></tr>
+<tr class="separator:a9d68cc9ef3dab84cc28e0c93abb78718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a446c97ceeedd6d4e412142eb188b14e8" id="r_a446c97ceeedd6d4e412142eb188b14e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoi_1_1IROptimizer.html">IROptimizer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a446c97ceeedd6d4e412142eb188b14e8">performRawCheck</a> ()</td></tr>
+<tr class="separator:a446c97ceeedd6d4e412142eb188b14e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -192,6 +199,17 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a08a5d74675c2b081a5d2b8958c655233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a122657ed875d3c1752af64783eec2078" id="r_a122657ed875d3c1752af64783eec2078"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="structyoi_1_1IROptimizer_1_1VariablesExtraInfo.html">VariablesExtraInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a122657ed875d3c1752af64783eec2078">variablesExtraInfo</a></td></tr>
 <tr class="separator:a122657ed875d3c1752af64783eec2078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a8ec09a5063d01d557b49c3201c43c092" id="r_a8ec09a5063d01d557b49c3201c43c092"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a8ec09a5063d01d557b49c3201c43c092">analyzeBlockForNullable</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a> blockIndex, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;inState)</td></tr>
+<tr class="separator:a8ec09a5063d01d557b49c3201c43c092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53fe25b9377f6dad0f0399c47a222993" id="r_a53fe25b9377f6dad0f0399c47a222993"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a53fe25b9377f6dad0f0399c47a222993">analyzeBlockForRaw</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a> blockIndex, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;inState)</td></tr>
+<tr class="separator:a53fe25b9377f6dad0f0399c47a222993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76118251ae1334e527dd712be8a0178" id="r_ab76118251ae1334e527dd712be8a0178"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#ab76118251ae1334e527dd712be8a0178">mergeStatesForNullable</a> (const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;s1, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;s2)</td></tr>
+<tr class="separator:ab76118251ae1334e527dd712be8a0178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732ef2ba483c732f0b6d0f5d22447925" id="r_a732ef2ba483c732f0b6d0f5d22447925"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a732ef2ba483c732f0b6d0f5d22447925">mergeStatesForRaw</a> (const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;s1, const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;s2)</td></tr>
+<tr class="separator:a732ef2ba483c732f0b6d0f5d22447925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -320,9 +338,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01833">1833</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01843">1843</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00021">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00198">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00199">AnalysisState::variableStates</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02628">IROptimizer::handleInstruction()</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>.</p>
 <div class="dynheader">
@@ -331,8 +349,10 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_cgraph" id="aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,115,38"/>
-<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="163,5,368,45"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="163,13,297,38"/>
 <area shape="poly" title=" " alt="" coords="115,23,149,23,149,28,115,28"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="345,5,551,45"/>
+<area shape="poly" title=" " alt="" coords="298,23,332,23,332,28,298,28"/>
 </map>
 </div>
 <div class="dynheader">
@@ -341,6 +361,160 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_icgraph" id="aclassyoi_1_1IROptimizer_a8f0039fd849c7ca308fe5f2cc7100bb7_icgraph">
 <area shape="rect" title=" " alt="" coords="472,69,581,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8ec09a5063d01d557b49c3201c43c092" name="a8ec09a5063d01d557b49c3201c43c092"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ec09a5063d01d557b49c3201c43c092">&#9670;&#160;</a></span>analyzeBlockForNullable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> analyzeBlockForNullable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a>&#160;</td>
+          <td class="paramname"><em>blockIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>inState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02038">2038</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332">IR::add</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a56819a6d5e48912fcb294546e6913182">IR::array_length</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a90cd923ab195168c5bc80f6f3e03ea">IR::bitwise_and</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa628ff492c9a550656b1a177a82a6274">IR::bitwise_not</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad823bdc16fb140683e3c274c5c13de20">IR::bitwise_or</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a320ca8207163cd63fc60307c388dd01c">IR::bitwise_xor</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00021">IROptimizer::compilerCtx</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61b3ab147c3ed552692e9b3b620e7f15">IR::direct_assign</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a">IR::div</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5">IR::dyn_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1">IR::dyn_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de">IR::dyn_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae">IR::dyn_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02">IR::dyn_cast_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be">IR::dyn_cast_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f">IR::equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2">IR::greater_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af9001e5685fe6f7cb467dc66269470b2">IR::greater_than</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02628">IROptimizer::handleInstruction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a33ced12f4457b20ae42e4628e54ea8d0">IR::interfaceof</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00086">IROptimizer::SimulationStack::items</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50628fab62b5a54a5f0a7e7c7b4f157b">IR::left_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77932225fb35fc4b74dc8fabf0992dac">IR::less_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7875e44acb1bebecb46c929deb43cef4">IR::less_than</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5">IR::load_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, <a class="el" href="def_8hpp_source.html#l00295">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5">IR::mod</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253">IR::mul</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2d11beba811e6ec7b47d7a801cf8173f">IR::negate</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5c93c16d8d510a30e676b17818553423">IR::new_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e">IR::not_equal</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd">IRValueType::null</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00108">IROptimizer::SimulationStack::peek()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442">IR::pointer_cast</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00104">IROptimizer::SimulationStack::pop()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b">IR::push_string</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0">IR::right_shift</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a921e717133b1ab22c6838e4378d9172e">IR::store_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140">IR::sub</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18384ae9fe241756e420e5c5e7dc43a4">IR::typeid_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6dc196cdeb50fd6359396d0b3fde1a56">IR::typeid_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a27bd65f37b6aa7e53f41b2bcc3f6dcff">IR::typeid_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ac33f43e2bf0242ec34f31665c99de298">IR::typeid_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e">IR::typeid_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906">IR::typeid_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d">IR::typeid_struct</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01941">IROptimizer::performNullableCheck()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_cgraph" id="aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_cgraph">
+<area shape="rect" title=" " alt="" coords="5,107,188,132"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="271,5,406,31"/>
+<area shape="poly" title=" " alt="" coords="119,104,171,77,235,48,277,32,279,37,237,52,174,82,122,109"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="489,23,695,63"/>
+<area shape="poly" title=" " alt="" coords="164,104,236,91,475,56,476,61,236,97,165,109"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="274,107,403,132"/>
+<area shape="poly" title=" " alt="" coords="188,117,260,117,260,122,188,122"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2" title=" " alt="" coords="236,157,441,197"/>
+<area shape="poly" title=" " alt="" coords="152,129,241,151,240,156,150,135"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="236,221,441,261"/>
+<area shape="poly" title=" " alt="" coords="116,130,169,167,237,206,254,213,252,218,235,211,166,172,113,134"/>
+<area shape="poly" title=" " alt="" coords="407,22,475,29,475,34,406,27"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_icgraph" id="aclassyoi_1_1IROptimizer_a8ec09a5063d01d557b49c3201c43c092_icgraph">
+<area shape="rect" title=" " alt="" coords="688,69,871,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a9d68cc9ef3dab84cc28e0c93abb78718" title=" " alt="" coords="472,69,640,94"/>
+<area shape="poly" title=" " alt="" coords="674,84,640,84,640,79,674,79"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a53fe25b9377f6dad0f0399c47a222993" name="a53fe25b9377f6dad0f0399c47a222993"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53fe25b9377f6dad0f0399c47a222993">&#9670;&#160;</a></span>analyzeBlockForRaw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> analyzeBlockForRaw </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">indexT</a>&#160;</td>
+          <td class="paramname"><em>blockIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>inState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02437">2437</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00021">IROptimizer::compilerCtx</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61b3ab147c3ed552692e9b3b620e7f15">IR::direct_assign</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02628">IROptimizer::handleInstruction()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00086">IROptimizer::SimulationStack::items</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd">IRValueType::null</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00108">IROptimizer::SimulationStack::peek()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00104">IROptimizer::SimulationStack::pop()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b">IR::push_string</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l02336">IROptimizer::performRawCheck()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_cgraph" id="aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_cgraph">
+<area shape="rect" title=" " alt="" coords="5,85,163,111"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="246,5,381,31"/>
+<area shape="poly" title=" " alt="" coords="116,83,210,47,256,32,258,37,212,53,118,88"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="464,23,669,63"/>
+<area shape="poly" title=" " alt="" coords="163,87,450,54,451,59,163,92"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2" title=" " alt="" coords="211,106,416,146"/>
+<area shape="poly" title=" " alt="" coords="163,105,197,109,197,114,162,110"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="211,170,416,210"/>
+<area shape="poly" title=" " alt="" coords="111,108,212,156,232,163,230,168,210,160,108,113"/>
+<area shape="poly" title=" " alt="" coords="381,22,450,29,449,34,381,27"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_icgraph" id="aclassyoi_1_1IROptimizer_a53fe25b9377f6dad0f0399c47a222993_icgraph">
+<area shape="rect" title=" " alt="" coords="663,69,820,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a446c97ceeedd6d4e412142eb188b14e8" title=" " alt="" coords="472,69,615,94"/>
+<area shape="poly" title=" " alt="" coords="649,84,615,84,615,79,649,79"/>
 <area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
 <area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
 <area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
@@ -807,7 +981,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01610">1610</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01557">IROptimizer::controlFlowOptimization()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02489">yoi::mergeStates()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01709">IROptimizer::reduceEmptyCodeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01529">IROptimizer::reduceRedundantJump()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01521">IROptimizer::reduceRedundantNop()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01557">IROptimizer::controlFlowOptimization()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01858">yoi::mergeStates()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01941">IROptimizer::performNullableCheck()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02336">IROptimizer::performRawCheck()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01712">IROptimizer::reduceEmptyCodeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01529">IROptimizer::reduceRedundantJump()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01521">IROptimizer::reduceRedundantNop()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00117">compilerContext::initializeSharedObjects()</a>.</p>
 <div class="dynheader">
@@ -815,50 +989,80 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IROptimizer_af01cb7e7c421a9992589a352b60f4bd6_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_af01cb7e7c421a9992589a352b60f4bd6_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1IROptimizer_af01cb7e7c421a9992589a352b60f4bd6_cgraph" id="aclassyoi_1_1IROptimizer_af01cb7e7c421a9992589a352b60f4bd6_cgraph">
-<area shape="rect" title=" " alt="" coords="5,179,196,219"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="531,237,641,262"/>
-<area shape="poly" title=" " alt="" coords="197,202,427,222,518,235,517,240,426,227,196,207"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#ace422cf0e04463e8e977a5b835b268a7" title=" " alt="" coords="244,86,427,112"/>
-<area shape="poly" title=" " alt="" coords="133,176,184,148,243,120,264,113,266,118,245,125,186,153,136,181"/>
-<area shape="rect" href="namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b" title=" " alt="" coords="269,136,402,161"/>
-<area shape="poly" title=" " alt="" coords="193,176,262,161,263,166,194,181"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a73a06457fcc325c97baeb61ceb8d0f2f" title=" " alt="" coords="497,34,675,60"/>
-<area shape="poly" title=" " alt="" coords="116,177,168,122,203,93,243,71,303,52,366,40,427,36,483,36,483,41,427,41,366,46,304,57,245,76,206,98,171,126,120,180"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a6c8823cc7045227a3d9dfc8bc5e96b85" title=" " alt="" coords="251,237,420,262"/>
-<area shape="poly" title=" " alt="" coords="194,216,263,231,262,237,193,221"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#ac65a9ed4adb4f92f106a9c00b411e1f7" title=" " alt="" coords="254,286,417,312"/>
-<area shape="poly" title=" " alt="" coords="137,217,187,244,245,271,269,280,268,285,243,276,185,249,134,221"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a35f75104c0b80b9a58f28db3216ecacf" title=" " alt="" coords="274,336,397,361"/>
-<area shape="poly" title=" " alt="" coords="121,217,173,270,208,298,245,322,262,329,260,334,243,327,205,302,170,274,117,221"/>
-<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="745,250,951,290"/>
-<area shape="poly" title=" " alt="" coords="641,251,732,258,732,263,641,256"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="543,136,629,161"/>
-<area shape="poly" title=" " alt="" coords="401,109,530,135,529,140,400,114"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="999,85,1141,110"/>
-<area shape="poly" title=" " alt="" coords="427,96,985,95,985,100,427,101"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="781,186,915,226"/>
-<area shape="poly" title=" " alt="" coords="630,155,768,185,767,191,628,160"/>
-<area shape="poly" title=" " alt="" coords="629,143,771,132,950,114,985,109,985,114,951,119,772,137,629,148"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="999,193,1141,218"/>
-<area shape="poly" title=" " alt="" coords="916,203,984,203,984,208,916,208"/>
-<area shape="poly" title=" " alt="" coords="906,183,949,164,1037,115,1039,120,952,169,908,188"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1189,193,1392,218"/>
-<area shape="poly" title=" " alt="" coords="1142,203,1176,203,1176,208,1142,208"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1440,193,1631,218"/>
-<area shape="poly" title=" " alt="" coords="1392,203,1426,203,1426,208,1392,208"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1189,85,1392,110"/>
-<area shape="poly" title=" " alt="" coords="1142,95,1176,95,1176,100,1142,100"/>
-<area shape="poly" title=" " alt="" coords="403,158,539,185,698,222,771,243,769,248,697,227,538,190,402,163"/>
-<area shape="poly" title=" " alt="" coords="402,146,529,146,529,151,402,151"/>
-<area shape="poly" title=" " alt="" coords="630,32,694,17,775,6,863,4,908,9,951,19,978,29,1004,43,1046,74,1043,78,1001,48,976,34,950,24,907,15,863,10,775,11,695,23,631,37"/>
-<area shape="rect" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c" title=" " alt="" coords="797,34,899,60"/>
-<area shape="poly" title=" " alt="" coords="675,44,783,44,783,50,675,50"/>
-<area shape="poly" title=" " alt="" coords="900,56,1001,79,1000,84,899,61"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a5b0d9394f9621e36df793551df95de83" title=" " alt="" coords="475,336,697,361"/>
-<area shape="poly" title=" " alt="" coords="397,346,460,346,460,351,397,351"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a71f2020e52c2bf40a447e2dfdd3c884d" title=" " alt="" coords="475,286,697,312"/>
-<area shape="poly" title=" " alt="" coords="396,334,507,312,508,317,397,339"/>
-<area shape="poly" title=" " alt="" coords="697,284,731,280,732,285,698,289"/>
+<area shape="rect" title=" " alt="" coords="5,527,196,567"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="274,161,383,187"/>
+<area shape="poly" title=" " alt="" coords="112,526,310,197,315,200,116,529"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#ace422cf0e04463e8e977a5b835b268a7" title=" " alt="" coords="481,585,664,611"/>
+<area shape="poly" title=" " alt="" coords="197,555,468,584,467,589,196,560"/>
+<area shape="rect" href="namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b" title=" " alt="" coords="506,536,639,561"/>
+<area shape="poly" title=" " alt="" coords="196,545,492,546,492,551,196,550"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a9d68cc9ef3dab84cc28e0c93abb78718" title=" " alt="" coords="245,435,413,460"/>
+<area shape="poly" title=" " alt="" coords="134,525,184,497,243,469,263,462,265,467,245,474,187,501,136,529"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a446c97ceeedd6d4e412142eb188b14e8" title=" " alt="" coords="257,336,400,361"/>
+<area shape="poly" title=" " alt="" coords="123,525,242,420,300,369,304,373,246,424,127,529"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a73a06457fcc325c97baeb61ceb8d0f2f" title=" " alt="" coords="755,640,932,665"/>
+<area shape="poly" title=" " alt="" coords="171,565,245,583,353,605,462,621,608,635,741,645,741,650,608,641,461,626,352,611,243,589,170,570"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a6c8823cc7045227a3d9dfc8bc5e96b85" title=" " alt="" coords="244,687,413,712"/>
+<area shape="poly" title=" " alt="" coords="123,566,176,614,210,641,245,665,275,679,272,684,243,670,207,645,173,619,120,570"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#ac65a9ed4adb4f92f106a9c00b411e1f7" title=" " alt="" coords="247,736,410,761"/>
+<area shape="poly" title=" " alt="" coords="115,566,135,601,165,643,202,686,246,722,255,728,252,733,242,727,198,690,160,646,131,603,110,569"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a35f75104c0b80b9a58f28db3216ecacf" title=" " alt="" coords="267,484,390,509"/>
+<area shape="poly" title=" " alt="" coords="190,525,257,510,258,515,192,530"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="776,5,911,31"/>
+<area shape="poly" title=" " alt="" coords="347,159,397,128,460,98,539,72,620,52,762,26,763,31,621,57,540,78,462,103,400,133,350,163"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="1003,329,1208,369"/>
+<area shape="poly" title=" " alt="" coords="912,25,935,34,956,48,987,78,1013,111,1054,185,1083,257,1099,315,1094,316,1078,259,1050,187,1009,114,983,81,953,52,933,39,910,30"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="801,539,886,564"/>
+<area shape="poly" title=" " alt="" coords="646,583,786,558,787,564,647,588"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1256,589,1399,615"/>
+<area shape="poly" title=" " alt="" coords="664,596,1242,599,1242,604,664,601"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1038,474,1173,514"/>
+<area shape="poly" title=" " alt="" coords="886,540,1024,509,1025,514,887,545"/>
+<area shape="poly" title=" " alt="" coords="886,551,1029,562,1208,581,1243,585,1242,591,1208,586,1029,568,886,557"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1256,481,1399,507"/>
+<area shape="poly" title=" " alt="" coords="1173,491,1242,491,1242,497,1173,497"/>
+<area shape="poly" title=" " alt="" coords="1165,512,1209,530,1297,580,1294,584,1207,535,1163,516"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1447,481,1649,507"/>
+<area shape="poly" title=" " alt="" coords="1399,491,1433,491,1433,497,1399,497"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1697,481,1888,507"/>
+<area shape="poly" title=" " alt="" coords="1650,491,1683,491,1683,497,1650,497"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1447,589,1649,615"/>
+<area shape="poly" title=" " alt="" coords="1399,599,1433,599,1433,605,1399,605"/>
+<area shape="poly" title=" " alt="" coords="639,539,707,528,787,511,872,487,953,456,1018,417,1071,376,1074,380,1021,422,956,460,873,492,788,516,708,533,640,544"/>
+<area shape="poly" title=" " alt="" coords="640,547,787,548,787,553,640,552"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="481,207,664,232"/>
+<area shape="poly" title=" " alt="" coords="343,432,411,371,459,321,545,240,549,243,463,325,415,375,347,436"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#ab76118251ae1334e527dd712be8a0178" title=" " alt="" coords="483,437,662,463"/>
+<area shape="poly" title=" " alt="" coords="413,446,469,446,469,452,413,451"/>
+<area shape="poly" title=" " alt="" coords="597,204,639,180,682,148,706,120,730,92,769,61,807,36,810,40,772,66,734,96,710,124,686,152,641,184,600,209"/>
+<area shape="poly" title=" " alt="" coords="665,221,803,236,880,250,956,270,1012,293,1062,319,1059,324,1010,298,954,275,879,256,802,241,664,226"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="779,285,908,311"/>
+<area shape="poly" title=" " alt="" coords="618,229,733,263,786,279,784,284,731,269,616,235"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2" title=" " alt="" coords="741,170,946,210"/>
+<area shape="poly" title=" " alt="" coords="664,207,727,200,727,205,665,212"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="741,106,946,146"/>
+<area shape="poly" title=" " alt="" coords="604,204,731,155,756,148,757,153,733,161,606,209"/>
+<area shape="poly" title=" " alt="" coords="662,451,801,446,878,437,954,421,1010,400,1060,373,1062,378,1012,404,955,426,879,442,801,451,662,456"/>
+<area shape="poly" title=" " alt="" coords="645,460,685,471,752,500,810,530,807,534,750,505,683,477,644,465"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="494,113,651,139"/>
+<area shape="poly" title=" " alt="" coords="337,334,385,270,421,230,460,192,496,165,532,143,535,148,499,169,463,196,424,233,390,273,341,337"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a732ef2ba483c732f0b6d0f5d22447925" title=" " alt="" coords="496,336,649,361"/>
+<area shape="poly" title=" " alt="" coords="400,346,482,346,482,351,400,351"/>
+<area shape="poly" title=" " alt="" coords="596,111,657,80,731,48,778,32,779,37,733,52,659,85,599,116"/>
+<area shape="poly" title=" " alt="" coords="647,111,683,103,761,82,824,65,854,62,885,64,919,74,956,92,986,113,1012,139,1034,169,1053,200,1081,262,1098,315,1093,316,1076,264,1049,202,1030,172,1008,143,982,117,953,96,917,79,884,70,854,67,825,71,762,88,685,109,648,116"/>
+<area shape="poly" title=" " alt="" coords="628,136,745,164,744,169,627,141"/>
+<area shape="poly" title=" " alt="" coords="652,123,727,123,727,129,652,129"/>
+<area shape="poly" title=" " alt="" coords="649,346,989,346,989,351,649,351"/>
+<area shape="poly" title=" " alt="" coords="595,359,686,423,818,528,815,532,682,427,592,364"/>
+<area shape="poly" title=" " alt="" coords="932,644,1062,633,1208,618,1242,613,1243,619,1208,623,1063,639,932,649"/>
+<area shape="rect" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c" title=" " alt="" coords="1054,691,1157,716"/>
+<area shape="poly" title=" " alt="" coords="910,663,1041,688,1040,693,909,668"/>
+<area shape="poly" title=" " alt="" coords="1154,688,1207,669,1254,645,1295,620,1297,625,1256,650,1209,674,1156,693"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a5b0d9394f9621e36df793551df95de83" title=" " alt="" coords="461,487,684,512"/>
+<area shape="poly" title=" " alt="" coords="390,495,447,495,447,501,390,500"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a71f2020e52c2bf40a447e2dfdd3c884d" title=" " alt="" coords="732,387,955,412"/>
+<area shape="poly" title=" " alt="" coords="384,481,412,469,426,458,435,445,444,433,460,422,524,401,591,388,657,383,718,384,718,389,657,389,591,394,525,406,463,427,448,437,439,448,430,461,415,474,386,486"/>
+<area shape="poly" title=" " alt="" coords="909,384,989,368,990,374,910,389"/>
 </map>
 </div>
 <div class="dynheader">
@@ -968,7 +1172,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l00455">455</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IR_8h_source.html#l00280">IR::debugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00024">IROptimizer::SimulationStack::Item::ContributedInstructionSet::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00062">IROptimizer::SimulationStack::Item::type</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IR_8h_source.html#l00293">IR::debugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00024">IROptimizer::SimulationStack::Item::ContributedInstructionSet::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00062">IROptimizer::SimulationStack::Item::type</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1093,6 +1297,83 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a2f1d31a93d08df2ccb81d4df99d78dba" name="a2f1d31a93d08df2ccb81d4df99d78dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f1d31a93d08df2ccb81d4df99d78dba">&#9670;&#160;</a></span>handleInstruction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void handleInstruction </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classyoi_1_1IR.html">IR</a> &amp;&#160;</td>
+          <td class="paramname"><em>ins</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>insIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>currentCodeBlockIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02628">2628</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00021">IROptimizer::compilerCtx</a>, <a class="el" href="classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d">IR::opcode</a>, <a class="el" href="IR_8h_source.html#l00291">IR::operands</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, and <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_cgraph" id="aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,140,38"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="188,5,393,45"/>
+<area shape="poly" title=" " alt="" coords="140,23,174,23,174,28,140,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_icgraph" id="aclassyoi_1_1IROptimizer_a2f1d31a93d08df2ccb81d4df99d78dba_icgraph">
+<area shape="rect" title=" " alt="" coords="919,69,1053,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="501,19,611,45"/>
+<area shape="poly" title=" " alt="" coords="921,68,870,59,730,43,611,36,611,31,730,38,871,53,922,63"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="688,69,871,94"/>
+<area shape="poly" title=" " alt="" coords="905,84,871,84,871,79,905,79"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="701,118,858,143"/>
+<area shape="poly" title=" " alt="" coords="920,100,834,121,833,115,918,95"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="488,49,422,64,421,59,487,44"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a9d68cc9ef3dab84cc28e0c93abb78718" title=" " alt="" coords="472,69,640,94"/>
+<area shape="poly" title=" " alt="" coords="674,84,640,84,640,79,674,79"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a446c97ceeedd6d4e412142eb188b14e8" title=" " alt="" coords="485,118,627,143"/>
+<area shape="poly" title=" " alt="" coords="687,133,627,133,627,128,687,128"/>
+<area shape="poly" title=" " alt="" coords="483,118,421,104,422,99,484,112"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a05d5068c00ac10b7b7a838f86f0e9f0f" name="a05d5068c00ac10b7b7a838f86f0e9f0f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05d5068c00ac10b7b7a838f86f0e9f0f">&#9670;&#160;</a></span>lessThan()</h2>
 
@@ -1198,6 +1479,174 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="894,23,927,23,927,28,894,28"/>
 <area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="691,66,893,91"/>
 <area shape="poly" title=" " alt="" coords="643,76,677,76,677,81,643,81"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab76118251ae1334e527dd712be8a0178" name="ab76118251ae1334e527dd712be8a0178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76118251ae1334e527dd712be8a0178">&#9670;&#160;</a></span>mergeStatesForNullable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> mergeStatesForNullable </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02285">2285</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00086">IROptimizer::SimulationStack::items</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="def_8cpp_source.html#l00085">yoi::panic()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00062">IROptimizer::SimulationStack::Item::type</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01941">IROptimizer::performNullableCheck()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_cgraph" id="aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_cgraph">
+<area shape="rect" title=" " alt="" coords="5,71,184,97"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="292,42,377,67"/>
+<area shape="poly" title=" " alt="" coords="184,70,278,59,279,64,184,76"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="232,92,437,132"/>
+<area shape="poly" title=" " alt="" coords="184,92,219,96,218,101,184,97"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="485,5,620,45"/>
+<area shape="poly" title=" " alt="" coords="377,46,471,34,472,39,378,52"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="668,66,811,91"/>
+<area shape="poly" title=" " alt="" coords="378,54,654,71,654,76,377,60"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="668,13,811,38"/>
+<area shape="poly" title=" " alt="" coords="620,23,654,23,654,28,620,28"/>
+<area shape="poly" title=" " alt="" coords="621,42,682,60,680,65,620,47"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="859,13,1061,38"/>
+<area shape="poly" title=" " alt="" coords="811,23,845,23,845,28,811,28"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1109,13,1300,38"/>
+<area shape="poly" title=" " alt="" coords="1062,23,1095,23,1095,28,1062,28"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="859,66,1061,91"/>
+<area shape="poly" title=" " alt="" coords="811,76,845,76,845,81,811,81"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_icgraph" id="aclassyoi_1_1IROptimizer_ab76118251ae1334e527dd712be8a0178_icgraph">
+<area shape="rect" title=" " alt="" coords="688,69,867,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a9d68cc9ef3dab84cc28e0c93abb78718" title=" " alt="" coords="472,69,640,94"/>
+<area shape="poly" title=" " alt="" coords="674,84,640,84,640,79,674,79"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a732ef2ba483c732f0b6d0f5d22447925" name="a732ef2ba483c732f0b6d0f5d22447925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a732ef2ba483c732f0b6d0f5d22447925">&#9670;&#160;</a></span>mergeStatesForRaw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> mergeStatesForRaw </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structyoi_1_1AnalysisState.html">AnalysisState</a> &amp;&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02576">2576</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00086">IROptimizer::SimulationStack::items</a>, <a class="el" href="def_8cpp_source.html#l00085">yoi::panic()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00062">IROptimizer::SimulationStack::Item::type</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l02336">IROptimizer::performRawCheck()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_cgraph" id="aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_cgraph">
+<area shape="rect" title=" " alt="" coords="5,71,159,97"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="267,42,352,67"/>
+<area shape="poly" title=" " alt="" coords="158,72,253,59,253,64,159,77"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="207,92,412,132"/>
+<area shape="poly" title=" " alt="" coords="159,91,193,95,193,100,158,96"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="460,5,595,45"/>
+<area shape="poly" title=" " alt="" coords="352,46,446,34,447,39,353,52"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="643,66,785,91"/>
+<area shape="poly" title=" " alt="" coords="352,54,629,71,629,76,352,60"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="643,13,785,38"/>
+<area shape="poly" title=" " alt="" coords="595,23,629,23,629,28,595,28"/>
+<area shape="poly" title=" " alt="" coords="596,42,657,60,655,65,594,47"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="833,13,1036,38"/>
+<area shape="poly" title=" " alt="" coords="786,23,820,23,820,28,786,28"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1084,13,1275,38"/>
+<area shape="poly" title=" " alt="" coords="1036,23,1070,23,1070,28,1036,28"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="833,66,1036,91"/>
+<area shape="poly" title=" " alt="" coords="786,76,820,76,820,81,786,81"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_icgraph" id="aclassyoi_1_1IROptimizer_a732ef2ba483c732f0b6d0f5d22447925_icgraph">
+<area shape="rect" title=" " alt="" coords="663,69,816,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a446c97ceeedd6d4e412142eb188b14e8" title=" " alt="" coords="472,69,615,94"/>
+<area shape="poly" title=" " alt="" coords="649,84,615,84,615,79,649,79"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
 </map>
 </div>
 
@@ -1413,6 +1862,158 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a9d68cc9ef3dab84cc28e0c93abb78718" name="a9d68cc9ef3dab84cc28e0c93abb78718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d68cc9ef3dab84cc28e0c93abb78718">&#9670;&#160;</a></span>performNullableCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classyoi_1_1IROptimizer.html">IROptimizer</a> &amp; performNullableCheck </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01941">1941</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02285">IROptimizer::mergeStatesForNullable()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_cgraph" id="aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_cgraph">
+<area shape="rect" title=" " alt="" coords="5,225,173,251"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="221,136,404,161"/>
+<area shape="poly" title=" " alt="" coords="121,223,266,164,268,169,123,228"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#ab76118251ae1334e527dd712be8a0178" title=" " alt="" coords="223,285,402,311"/>
+<area shape="poly" title=" " alt="" coords="138,248,252,279,251,284,137,253"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="487,5,622,31"/>
+<area shape="poly" title=" " alt="" coords="327,134,380,92,451,48,488,32,490,37,453,52,383,96,330,138"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="705,49,911,89"/>
+<area shape="poly" title=" " alt="" coords="338,134,389,111,451,91,512,80,575,72,691,65,692,71,575,78,513,85,453,97,391,116,340,138"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="490,107,619,132"/>
+<area shape="poly" title=" " alt="" coords="404,135,476,126,477,131,404,140"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2" title=" " alt="" coords="452,157,657,197"/>
+<area shape="poly" title=" " alt="" coords="404,157,439,161,438,166,404,162"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="452,221,657,261"/>
+<area shape="poly" title=" " alt="" coords="342,159,453,206,474,214,473,219,451,211,340,164"/>
+<area shape="poly" title=" " alt="" coords="620,28,695,43,693,49,619,33"/>
+<area shape="poly" title=" " alt="" coords="399,308,459,311,526,308,593,296,625,285,656,270,681,254,703,235,741,189,771,142,791,100,796,103,775,144,746,192,707,238,684,258,659,275,627,290,594,301,526,313,459,316,399,313"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="512,336,597,361"/>
+<area shape="poly" title=" " alt="" coords="375,308,499,334,498,340,374,313"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="741,299,875,339"/>
+<area shape="poly" title=" " alt="" coords="597,341,726,326,727,331,598,346"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="959,360,1101,385"/>
+<area shape="poly" title=" " alt="" coords="598,348,944,366,944,371,597,353"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="959,307,1101,332"/>
+<area shape="poly" title=" " alt="" coords="876,317,944,317,944,322,876,322"/>
+<area shape="poly" title=" " alt="" coords="876,333,964,354,963,359,875,338"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1149,307,1352,332"/>
+<area shape="poly" title=" " alt="" coords="1102,317,1136,317,1136,322,1102,322"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1400,307,1591,332"/>
+<area shape="poly" title=" " alt="" coords="1352,317,1386,317,1386,322,1352,322"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1149,360,1352,385"/>
+<area shape="poly" title=" " alt="" coords="1102,370,1136,370,1136,375,1102,375"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_icgraph" id="aclassyoi_1_1IROptimizer_a9d68cc9ef3dab84cc28e0c93abb78718_icgraph">
+<area shape="rect" title=" " alt="" coords="472,69,640,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a446c97ceeedd6d4e412142eb188b14e8" name="a446c97ceeedd6d4e412142eb188b14e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446c97ceeedd6d4e412142eb188b14e8">&#9670;&#160;</a></span>performRawCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classyoi_1_1IROptimizer.html">IROptimizer</a> &amp; performRawCheck </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02336">2336</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02576">IROptimizer::mergeStatesForRaw()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_cgraph" id="aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,175,148,200"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="196,113,353,139"/>
+<area shape="poly" title=" " alt="" coords="118,172,219,140,221,145,119,177"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a732ef2ba483c732f0b6d0f5d22447925" title=" " alt="" coords="198,235,351,260"/>
+<area shape="poly" title=" " alt="" coords="120,198,220,228,218,233,119,203"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="437,5,571,31"/>
+<area shape="poly" title=" " alt="" coords="292,111,340,80,400,48,440,32,442,37,402,52,343,85,295,115"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="655,49,860,89"/>
+<area shape="poly" title=" " alt="" coords="317,111,401,91,525,77,641,69,641,74,525,82,402,97,319,116"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a1236f042755582b9786062da357039c2" title=" " alt="" coords="401,106,607,146"/>
+<area shape="poly" title=" " alt="" coords="353,123,388,123,388,129,353,129"/>
+<area shape="rect" href="structyoi_1_1IROptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="401,170,607,210"/>
+<area shape="poly" title=" " alt="" coords="322,136,419,164,418,169,321,141"/>
+<area shape="poly" title=" " alt="" coords="569,28,644,43,643,49,568,33"/>
+<area shape="poly" title=" " alt="" coords="351,254,409,256,474,253,542,241,606,220,646,195,681,163,711,130,734,99,738,102,715,133,685,167,649,199,608,224,543,247,475,258,409,261,351,259"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="461,285,547,311"/>
+<area shape="poly" title=" " alt="" coords="334,258,449,283,447,288,333,263"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="690,249,825,289"/>
+<area shape="poly" title=" " alt="" coords="546,291,676,275,676,281,547,296"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="908,309,1051,335"/>
+<area shape="poly" title=" " alt="" coords="547,297,894,315,894,320,547,303"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="908,256,1051,281"/>
+<area shape="poly" title=" " alt="" coords="825,266,894,266,894,271,825,271"/>
+<area shape="poly" title=" " alt="" coords="826,282,913,304,912,309,824,287"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1099,256,1301,281"/>
+<area shape="poly" title=" " alt="" coords="1051,266,1085,266,1085,271,1051,271"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1349,256,1540,281"/>
+<area shape="poly" title=" " alt="" coords="1302,266,1335,266,1335,271,1302,271"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1099,309,1301,335"/>
+<area shape="poly" title=" " alt="" coords="1051,319,1085,319,1085,325,1051,325"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_icgraph" id="aclassyoi_1_1IROptimizer_a446c97ceeedd6d4e412142eb188b14e8_icgraph">
+<area shape="rect" title=" " alt="" coords="472,69,615,94"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#af01cb7e7c421a9992589a352b60f4bd6" title=" " alt="" coords="233,61,424,101"/>
+<area shape="poly" title=" " alt="" coords="458,84,424,84,424,79,458,79"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c" title=" " alt="" coords="16,29,175,69"/>
+<area shape="poly" title=" " alt="" coords="219,69,174,63,175,58,220,64"/>
+<area shape="rect" href="classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28" title=" " alt="" coords="5,93,185,133"/>
+<area shape="poly" title=" " alt="" coords="220,99,186,104,185,98,219,94"/>
+<area shape="poly" title=" " alt="" coords="135,18,121,11,95,8,73,10,60,15,55,21,57,28,52,30,49,20,56,10,72,5,95,3,122,6,137,13"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a1e4acb780286799d75eb5b1c64aa8b1e" name="a1e4acb780286799d75eb5b1c64aa8b1e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e4acb780286799d75eb5b1c64aa8b1e">&#9670;&#160;</a></span>reduce()</h2>
 
@@ -1480,7 +2081,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01709">1709</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01712">1712</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>, <a class="el" href="def_8cpp_source.html#l00097">yoi::warning()</a>, and <a class="el" href="def_8cpp_source.html#l00125">yoi::wstring2string()</a>.</p>
 
@@ -1537,7 +2138,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1577,7 +2178,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00021">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00089">IROptimizer::SimulationStack::push()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00023">IROptimizer::targetFunction</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1833,9 +2434,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l02559">2559</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l01928">1928</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00198">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00199">AnalysisState::variableStates</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00024">IROptimizer::currentCodeBlockIndex</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233">IROptimizer::simulationStack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00209">AnalysisState::stack</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00162">IROptimizer::variablesExtraInfo</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00210">AnalysisState::variableStates</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>.</p>
 <div class="dynheader">
@@ -1893,7 +2494,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00021">21</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00598">IROptimizer::equal()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00548">IROptimizer::greaterThan()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00573">IROptimizer::greaterThanOrEqual()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00498">IROptimizer::lessThan()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00523">IROptimizer::lessThanOrEqual()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00623">IROptimizer::notEqual()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00598">IROptimizer::equal()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00548">IROptimizer::greaterThan()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00573">IROptimizer::greaterThanOrEqual()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02628">IROptimizer::handleInstruction()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00498">IROptimizer::lessThan()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00523">IROptimizer::lessThanOrEqual()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00623">IROptimizer::notEqual()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>.</p>
 
 </div>
 </div>
@@ -1919,7 +2520,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00024">24</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00455">IROptimizer::generatePushOp()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00492">IROptimizer::setTargetFunction()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00455">IROptimizer::generatePushOp()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00492">IROptimizer::setTargetFunction()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 
 </div>
 </div>
@@ -1959,7 +2560,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01514">IROptimizer::reduceRedundantTempVar()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02628">IROptimizer::handleInstruction()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01514">IROptimizer::reduceRedundantTempVar()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 
 </div>
 </div>
@@ -1985,7 +2586,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00023">23</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01557">IROptimizer::controlFlowOptimization()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00455">IROptimizer::generatePushOp()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00113">IROptimizer::reduce()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01709">IROptimizer::reduceEmptyCodeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01529">IROptimizer::reduceRedundantJump()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01521">IROptimizer::reduceRedundantNop()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l00492">IROptimizer::setTargetFunction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01557">IROptimizer::controlFlowOptimization()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01610">IROptimizer::doOptimizationForCurrentFunction()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00455">IROptimizer::generatePushOp()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01941">IROptimizer::performNullableCheck()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02336">IROptimizer::performRawCheck()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00113">IROptimizer::reduce()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01712">IROptimizer::reduceEmptyCodeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01547">IROptimizer::reduceRedundantCodeAfterRet()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00648">IROptimizer::reduceRedundantConstantExpr()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01529">IROptimizer::reduceRedundantJump()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01521">IROptimizer::reduceRedundantNop()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l00492">IROptimizer::setTargetFunction()</a>.</p>
 
 </div>
 </div>
@@ -2003,7 +2604,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00162">162</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01833">IROptimizer::analyzeBlock()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l02559">IROptimizer::transformBlock()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l01843">IROptimizer::analyzeBlock()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02038">IROptimizer::analyzeBlockForNullable()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02437">IROptimizer::analyzeBlockForRaw()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l01928">IROptimizer::transformBlock()</a>.</p>
 
 </div>
 </div>
