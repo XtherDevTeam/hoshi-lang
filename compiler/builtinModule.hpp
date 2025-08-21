@@ -14,23 +14,6 @@
 namespace yoi {
     class BuiltinModuleBuilder {
         std::shared_ptr<IRModule> module;
-
-        yoi::IRValueType getIntObject();
-
-        yoi::IRValueType getBoolObject();
-
-        yoi::IRValueType getDeciObject();
-
-        yoi::IRValueType getStrObject();
-
-        yoi::IRValueType getNoneObject();
-
-        yoi::IRValueType getCharObject();
-
-        yoi::IRValueType getForeignInt32Object();
-
-        yoi::IRValueType getForeignFloatObject();
-
         static yoi::IRStructDefinition getIntObjectDefinition();
 
         static yoi::IRStructDefinition getBooleanObjectDefinition();
@@ -55,6 +38,22 @@ namespace yoi {
         BuiltinModuleBuilder(std::shared_ptr<IRModule> module);
 
         void build();
+
+        yoi::IRValueType getIntObject();
+
+        yoi::IRValueType getBoolObject();
+
+        yoi::IRValueType getDeciObject();
+
+        yoi::IRValueType getStrObject();
+
+        yoi::IRValueType getNoneObject();
+
+        yoi::IRValueType getCharObject();
+
+        yoi::IRValueType getForeignInt32Object();
+
+        yoi::IRValueType getForeignFloatObject();
     };
 }
 

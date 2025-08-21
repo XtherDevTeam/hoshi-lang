@@ -1,5 +1,5 @@
 .idea
 .vscode
 cmake-build-*
-build
+build*
 tools/vscode_extension

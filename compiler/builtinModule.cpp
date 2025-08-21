@@ -101,7 +101,7 @@ namespace yoi {
             IRValueType::valueType::interfaceObject,
             static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             0,
-            {}
+            yoi::vec<yoi::indexT>{}
         }));
     }
 

@@ -984,7 +984,7 @@ namespace yoi {
         : type(type), dimensions(dimensions), typeAffiliateModule(0), typeIndex(0) {}
 
     IRValueType IRValueType::getElementType() {
-        return {this->type, this->typeAffiliateModule, this->typeIndex, {}};
+        return {this->type, this->typeAffiliateModule, this->typeIndex, yoi::vec<yoi::indexT>{}};
     }
 
     void IRBuilder::newArrayOp(const std::shared_ptr<IRValueType> &elementType,
@@ -1232,5 +1232,53 @@ namespace yoi {
 
     void IRValueType::addAttribute(ValueAttr attr) {
         attributes.insert(attr);
+    }
+    
+    IRValueType::IRValueType(valueType type,
+                             yoi::indexT typeAffiliateModule,
+                             yoi::indexT objectPrototypeIndex,
+                             const std::set<ValueAttr> &attributes)
+        : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), dimensions(),
+          attributes(attributes) {}
+
+    bool IRValueType::isBasicRawType() const {
+        return type == valueType::integerRaw || type == valueType::decimalRaw || type == valueType::booleanRaw ||
+               type == valueType::charRaw;
+    }
+    
+    IRValueType IRValueType::getBasicRawType() const {
+        IRValueType result = *this;
+        switch (type) {
+            case valueType::integerObject:
+                result.type = valueType::integerRaw;
+                break;
+            case valueType::decimalObject:
+                result.type = valueType::decimalRaw;
+                break;
+            case valueType::booleanObject:
+                result.type = valueType::booleanRaw;
+                break;
+            case valueType::charRaw:
+                result.type = valueType::charRaw;
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    IRValueType IRValueType::getBasicObjectType() const {
+        switch (type) {
+            case valueType::integerRaw:
+                return {valueType::integerObject, typeAffiliateModule, typeIndex, dimensions};
+            case valueType::decimalRaw:
+                return {valueType::decimalObject, typeAffiliateModule, typeIndex, dimensions};
+            case valueType::booleanRaw:
+                return {valueType::booleanObject, typeAffiliateModule, typeIndex, dimensions};
+            case valueType::charRaw:
+                return {valueType::characterObject, typeAffiliateModule, typeIndex, dimensions};
+            default:
+                return {type, typeAffiliateModule, typeIndex, dimensions};
+        }
     }
 } // namespace yoi

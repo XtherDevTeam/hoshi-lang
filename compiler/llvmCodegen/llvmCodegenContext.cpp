@@ -816,20 +816,17 @@ namespace yoi {
         switch(instr.opcode) {
             case IR::Opcode::push_integer: {
                 auto val = llvm::ConstantInt::get(Builder->getInt64Ty(), instr.operands[0].value.integer, true);
-                auto objPtr = createBasicObject(compilerCtx->getIntObjectType(), val);
-                valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getIntObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::push_decimal: {
                 auto val = llvm::ConstantFP::get(Builder->getDoubleTy(), instr.operands[0].value.decimal);
-                auto objPtr = createBasicObject(compilerCtx->getDeciObjectType(), val);
-                valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getDeciObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getDeciObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::push_boolean: {
                 auto val = llvm::ConstantInt::get(Builder->getInt1Ty(), instr.operands[0].value.boolean);
-                auto objPtr = createBasicObject(compilerCtx->getBoolObjectType(), val);
-                valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getBoolObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::push_string: {
@@ -841,7 +838,6 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getStrObjectType()});
                 break;
             }
-
             // Basic Type Casting
             case IR::Opcode::basic_cast_int: {
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
@@ -860,8 +856,7 @@ namespace yoi {
                     panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_int");
                 }
 
-                auto* resultObj = createBasicObject(compilerCtx->getIntObjectType(), castedVal);
-                valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getIntObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
                 break;
             }
@@ -882,8 +877,7 @@ namespace yoi {
                     panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_deci");
                 }
 
-                auto* resultObj = createBasicObject(compilerCtx->getDeciObjectType(), castedVal);
-                valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getDeciObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getDeciObjectType()->getBasicRawType())});
                 callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
                 break;
             }
@@ -904,19 +898,16 @@ namespace yoi {
                     panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_bool");
                 }
 
-                auto* resultObj = createBasicObject(compilerCtx->getBoolObjectType(), castedVal);
-                valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getBoolObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
                 callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
                 break;
             }
-
             // Arithmetic
             case IR::Opcode::add: handleBinaryOp(llvm::Instruction::Add, false, fromBlock, toBlock); break;
             case IR::Opcode::sub: handleBinaryOp(llvm::Instruction::Sub, false, fromBlock, toBlock); break;
             case IR::Opcode::mul: handleBinaryOp(llvm::Instruction::Mul, false, fromBlock, toBlock); break;
             case IR::Opcode::div: handleBinaryOp(llvm::Instruction::SDiv, false, fromBlock, toBlock); break;
             case IR::Opcode::mod: handleBinaryOp(llvm::Instruction::SRem, false, fromBlock, toBlock); break;
-
             // Unary
             case IR::Opcode::negate: {
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
@@ -950,17 +941,21 @@ namespace yoi {
                 auto varIndex = instr.operands[0].value.symbolIndex;
                 auto* alloca = namedValues.at(varIndex);
                 auto yoiType = currentFunctionDef->variableTable.get(varIndex);
-                auto loadedPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "loadtmp");
-                // check if the loaded value is null
-                auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
-                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
-                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
-                callGcFunction(loadedPtr, yoiType, true); // Loading creates a new reference
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
+                auto loadedPtr = Builder->CreateLoad(yoiTypeToLLVMType(yoiType, yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)), alloca, "loadtmp");
+                if (currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Nullable)) {
+                    // check if the loaded value is null
+                    auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
+                    auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
+                    auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
+                    Builder->CreateCondBr(isNull, continueBB, notNullBB);
+                    // if not null, increase its reference count
+                    Builder->SetInsertPoint(notNullBB);
+                    callGcFunction(loadedPtr, yoiType, true); // Loading creates a new reference
+                    Builder->CreateBr(continueBB);
+                    Builder->SetInsertPoint(continueBB);
+                } else {
+                    callGcFunction(loadedPtr, yoiType, true);
+                }
                 valueStackMap[fromBlock][toBlock].push_back({loadedPtr, yoiType});
                 break;
             }
@@ -970,25 +965,18 @@ namespace yoi {
                 auto yoiType = currentFunctionDef->variableTable.get(varIndex);
                 auto valToStore = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
-                // Retain new value
-                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
-                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
-                // check if the value to store is null
-                auto* isNull = Builder->CreateIsNull(valToStore.llvmValue, "is_null_store");
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
-                callGcFunction(valToStore.llvmValue, valToStore.yoiType, true);
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
-
                 // Release old value
                 auto* oldPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "old_ptr_for_store");
                 callGcFunction(oldPtr, yoiType, false);
                 // Store new value
-                Builder->CreateStore(valToStore.llvmValue, alloca);
-                // The value from stack is now owned by the variable, so we release the stack's reference
-                callGcFunction(valToStore.llvmValue, valToStore.yoiType, false);
+                if (currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                    auto unboxedVal = unboxValue(valToStore.llvmValue, valToStore.yoiType);
+                    Builder->CreateStore(unboxedVal, alloca);
+                } else {
+                    auto object = ensureObject(valToStore.yoiType, valToStore.llvmValue);
+                    Builder->CreateStore(object.second, alloca);
+                }
+                
                 break;
             }
             case IR::Opcode::load_global: {
@@ -1014,21 +1002,12 @@ namespace yoi {
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto valToStore = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
-                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
-                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
-                // check if the value to store is null
-                auto* isNull = Builder->CreateIsNull(valToStore.llvmValue, "is_null_store");
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
-                callGcFunction(valToStore.llvmValue, valToStore.yoiType, true);
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
-
                 auto* oldPtr = Builder->CreateLoad(global->getValueType(), global, "old_global_ptr");
                 callGcFunction(oldPtr, yoiType, false);
-                Builder->CreateStore(valToStore.llvmValue, global);
-                callGcFunction(valToStore.llvmValue, valToStore.yoiType, false);
+
+                auto object = ensureObject(valToStore.yoiType, valToStore.llvmValue);
+
+                Builder->CreateStore(object.second, global);
                 break;
             }
             case IR::Opcode::load_member: {
@@ -1072,22 +1051,13 @@ namespace yoi {
                 auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
 
-                auto *continueBB = llvm::BasicBlock::Create(*TheContext, "continue_store", currentFunction);
-                auto *notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_store", currentFunction);
-                // check if the value to store is null
-                auto* isNull = Builder->CreateIsNull(valueToStore.llvmValue, "is_null_store");
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
-                callGcFunction(valueToStore.llvmValue, valueToStore.yoiType, true);
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
-
                 auto* oldMemberPtr = Builder->CreateLoad(yoiTypeToLLVMType(memberYoiType), gep, "old_member_ptr");
                 callGcFunction(oldMemberPtr, memberYoiType, false);
-                Builder->CreateStore(valueToStore.llvmValue, gep);
 
-                callGcFunction(valueToStore.llvmValue, valueToStore.yoiType, false);
+                auto object = ensureObject(valueToStore.yoiType, valueToStore.llvmValue);
+
+                Builder->CreateStore(object.second, gep);
+
                 callGcFunction(structVal.llvmValue, structVal.yoiType, false);
                 break;
             }
@@ -1119,7 +1089,8 @@ namespace yoi {
                 generateFunctionExitCleanup();
                 auto retVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 // The caller receives ownership, so we don't decrease the ref count here.
-                Builder->CreateRet(retVal.llvmValue);
+                auto object = ensureObject(retVal.yoiType, retVal.llvmValue);
+                Builder->CreateRet(object.second);
                 break;
             }
             case IR::Opcode::ret_none: {
@@ -1142,7 +1113,7 @@ namespace yoi {
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
-                    args.push_back(arg.llvmValue);
+                    args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
                     // Callee will retain, so we release the stack's reference
                     // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
@@ -1178,7 +1149,8 @@ namespace yoi {
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
-                    args.push_back(arg.llvmValue);
+                    
+                    args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
                     // Callee will retain, so we release the stack's reference
                     // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
@@ -1255,7 +1227,8 @@ namespace yoi {
 
                 // Store `this` pointer at index 1
                 auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
-                auto* castedStructPtr = Builder->CreateBitCast(structInstanceVal.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
+                auto [objectType, objectValue] = ensureObject(structInstanceVal.yoiType, structInstanceVal.llvmValue);
+                auto* castedStructPtr = Builder->CreateBitCast(objectValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
                 Builder->CreateStore(castedStructPtr, thisPtrField);
                 // The interface now holds a reference to the struct.
                 // callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true);
@@ -1333,7 +1306,7 @@ namespace yoi {
                 std::vector<llvm::Value*> finalArgs;
                 finalArgs.push_back(concreteThisPtrRaw);
                 for(const auto& arg : userArgs) {
-                    finalArgs.push_back(arg.llvmValue);
+                    finalArgs.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
                     // callGcFunction(arg.llvmValue, arg.yoiType, false); // Arguments are consumed by the call
                 }
 
@@ -1349,7 +1322,7 @@ namespace yoi {
             case IR::Opcode::new_array_deci:
             case IR::Opcode::new_array_str: {
                 yoi::indexT size = 1;
-                yoi::vec<llvm::Value *> dimensionsVal;
+                yoi::vec<StackValue> dimensionsVal;
                 yoi::vec<yoi::indexT> dimensions;
 
                 std::shared_ptr<yoi::IRValueType> elementType;
@@ -1358,7 +1331,7 @@ namespace yoi {
                     dimensions.push_back(i.value.symbolIndex);
                 }
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    dimensionsVal.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i].llvmValue);
+                    dimensionsVal.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i]);
                 }
 
                 switch (instr.opcode) {
@@ -1396,7 +1369,7 @@ namespace yoi {
             case IR::Opcode::new_array_struct:
             case IR::Opcode::new_array_interface: {
                 yoi::indexT size = 1;
-                yoi::vec<llvm::Value *> dimensionsVal;
+                yoi::vec<StackValue> dimensionsVal;
                 yoi::vec<yoi::indexT> dimensions;
 
                 std::shared_ptr<yoi::IRValueType> elementType;
@@ -1405,7 +1378,7 @@ namespace yoi {
                     dimensions.push_back(instr.operands[i].value.symbolIndex);
                 }
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    dimensionsVal.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i].llvmValue);
+                    dimensionsVal.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i]);
                 }
 
                 elementType = managedPtr(IRValueType{instr.opcode == IR::Opcode::new_array_struct ? IRValueType::valueType::structObject : IRValueType::valueType::interfaceObject, yoiModule->identifier, instr.operands[1].value.symbolIndex});
@@ -1431,12 +1404,11 @@ namespace yoi {
                 auto llvmSize = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 auto unboxedSize = unboxValue(llvmSize.llvmValue, llvmSize.yoiType);
 
-                yoi::vec<llvm::Value *> valuesToStore;
+                yoi::vec<StackValue> valuesToStore;
                 std::shared_ptr<yoi::IRValueType> elementType;
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    valuesToStore.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i].llvmValue);
+                    valuesToStore.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i]);
                 }
-
 
                 switch (instr.opcode) {
                     case IR::Opcode::new_dynamic_array_int:
@@ -1480,10 +1452,10 @@ namespace yoi {
                 auto llvmSize = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 auto unboxedSize = unboxValue(llvmSize.llvmValue, llvmSize.yoiType);
 
-                yoi::vec<llvm::Value *> valuesToStore;
+                yoi::vec<StackValue> valuesToStore;
                 std::shared_ptr<yoi::IRValueType> elementType;
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    valuesToStore.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i].llvmValue);
+                    valuesToStore.push_back(valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i]);
                 }
 
                 elementType = managedPtr(IRValueType{instr.opcode == IR::Opcode::new_dynamic_array_struct ? IRValueType::valueType::structObject : IRValueType::valueType::interfaceObject, yoiModule->identifier, instr.operands[1].value.symbolIndex});
@@ -1526,6 +1498,9 @@ namespace yoi {
             case IR::Opcode::direct_assign: {
                 auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 auto lhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+
+                auto object = ensureObject(rhs.yoiType, rhs.llvmValue);
+                rhs = {object.second, object.first};
 
                 auto lhsType = lhs.yoiType;
                 auto rhsType = rhs.yoiType;
@@ -1718,12 +1693,11 @@ namespace yoi {
                 auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
                 yoi_assert(lhs.yoiType->isArrayType() || lhs.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element on non-array type.");
-                yoi_assert(index.yoiType->type == IRValueType::valueType::integerObject, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
-                yoi_assert(rhs.yoiType->type == lhs.yoiType->type, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with mismatched type.");
+                yoi_assert(index.yoiType->type == IRValueType::valueType::integerObject || index.yoiType->type == IRValueType::valueType::integerRaw, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
 
                 // unbox index
                 auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
-                storeArrayElement(lhs.yoiType, lhs.llvmValue, indexValue, rhs.llvmValue);
+                storeArrayElement(lhs.yoiType, rhs.yoiType, lhs.llvmValue, indexValue, rhs.llvmValue);
 
                 // release resource
                 callGcFunction(index.llvmValue, index.yoiType, false);
@@ -1799,7 +1773,8 @@ namespace yoi {
             if (type->isArrayType()) {
                 // TODO
             }
-            auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
+            auto [typeEnum, typeModule, typeIndex, dim, attr] = type->isBasicRawType() ? type->getBasicObjectType() : *type;
+            auto key = std::make_tuple(typeEnum, typeModule, typeIndex);
             if (foreignTypeMap.count(key)) {
                 return foreignTypeMap.at(key);
             }
@@ -1886,8 +1861,7 @@ namespace yoi {
             resultRaw = Builder->CreateBinOp(op, lValRaw, rValRaw, "ibinop");
         }
 
-        auto* resultObj = createBasicObject(resultYoiType, resultRaw);
-        valueStackMap[fromBlock][toBlock].push_back({resultObj, resultYoiType});
+        valueStackMap[fromBlock][toBlock].push_back({resultRaw, managedPtr(resultYoiType->getBasicRawType())});
 
         // Consume operands
         callGcFunction(L.llvmValue, L.yoiType, false);
@@ -1932,6 +1906,11 @@ namespace yoi {
     }
 
     llvm::Value* LLVMCodegen::createBasicObject(const std::shared_ptr<IRValueType>& yoiType, llvm::Value* rawValue) {
+        if (yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+            auto bitCastedValue = Builder->CreateBitCast(rawValue, yoiTypeToLLVMType(yoiType, true), "bitcast_val");
+            return bitCastedValue;
+        }
+
         auto key = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex);
         auto typeIdKey = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex, 0);
         auto* objType = structTypeMap.at(key);
@@ -1956,6 +1935,11 @@ namespace yoi {
     }
 
     llvm::Value* LLVMCodegen::unboxValue(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType) {
+        if (yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+            auto bitCastedValue = Builder->CreateBitCast(objectPtr, yoiTypeToLLVMType(yoiType, true), "bitcast_val");
+            return bitCastedValue;
+        }
+
         auto key = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex);
         auto* objType = structTypeMap.at(key);
         auto* valuePtr = Builder->CreateStructGEP(objType, objectPtr, 2, "value_ptr");
@@ -1964,7 +1948,7 @@ namespace yoi {
 
     void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease) {
         // No GC for the none object singleton
-        if (yoiType->type == IRValueType::valueType::none) {
+        if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
             return;
         }
 
@@ -2435,7 +2419,7 @@ namespace yoi {
         }
     }
 
-    const std::shared_ptr<IRValueType> &
+    std::shared_ptr<IRValueType>
     LLVMCodegen::normalizeForeignType(const std::shared_ptr<IRValueType> &type) {
         switch (type->type) {
             case IRValueType::valueType::foreignFloatType: {
@@ -2561,7 +2545,7 @@ namespace yoi {
     }
 
     llvm::Value *LLVMCodegen::createArrayObject(const std::shared_ptr<IRValueType> &type,
-                                                const yoi::vec<llvm::Value *> &elements) {
+                                                const yoi::vec<StackValue> &elements) {
         yoi_assert(type->isArrayType(), 0, 0, "type must be an array type");
         llvm::Type *llvmType = getArrayLLVMType(type, false);
         // initialize the llvm struct, allocate memory and store the array
@@ -2594,12 +2578,12 @@ namespace yoi {
             if (type->isBasicType()) {
                 auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
                 auto arrayPointer = Builder->CreateGEP(elementLLVMType, arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), index)}, "array_element_ptr");
-                auto val = unboxValue(i, managedPtr(type->getElementType()));
+                auto val = unboxValue(i.llvmValue, i.yoiType);
                 Builder->CreateStore(val, arrayPointer);
             } else {
                 // otherwise, store the pointer directly
                 auto arrayPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), index)}, "array_element_ptr");
-                Builder->CreateStore(i, arrayPointer);
+                Builder->CreateStore(i.llvmValue, arrayPointer);
             }
             index ++;
         }
@@ -3014,7 +2998,7 @@ namespace yoi {
     }
 
     llvm::Value *LLVMCodegen::createDynamicArrayObject(const std::shared_ptr<IRValueType> &type,
-                                                       const yoi::vec<llvm::Value *> &elements,
+                                                       const yoi::vec<StackValue> &elements,
                                                        llvm::Value *size) {
         yoi_assert(type->isDynamicArrayType(), 0, 0, "type must be an dynamic array type");
         llvm::Type *llvmType = getArrayLLVMType(type);
@@ -3049,12 +3033,12 @@ namespace yoi {
             if (type->isBasicType()) {
                 auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
                 auto arrayPointer = Builder->CreateGEP(elementLLVMType, arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), index)}, "array_element_ptr");
-                auto val = unboxValue(element, managedPtr(type->getElementType()));
+                auto val = unboxValue(element.llvmValue, element.yoiType);
                 Builder->CreateStore(val, arrayPointer);
             } else {
                 // otherwise, store the pointer directly
                 auto arrayPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), index)}, "array_element_ptr");
-                Builder->CreateStore(element, arrayPointer);
+                Builder->CreateStore(element.llvmValue, arrayPointer);
             }
             index ++;
         }
@@ -3086,6 +3070,7 @@ namespace yoi {
     }
 
     void LLVMCodegen::storeArrayElement(const std::shared_ptr<IRValueType> &type,
+                                        const std::shared_ptr<IRValueType> &valueToStoreType,
                                         llvm::Value *arrayPtr,
                                         llvm::Value *index,
                                         llvm::Value *value) {
@@ -3094,7 +3079,7 @@ namespace yoi {
             auto elementLLVMType = yoiTypeToLLVMType(managedPtr(type->getElementType()), true);
             auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
             auto elementPointer = Builder->CreateGEP(elementLLVMType, basePointer, {index}, "array_element_ptr");
-            auto val = unboxValue(value, managedPtr(type->getElementType()));
+            auto val = unboxValue(value, valueToStoreType);
             Builder->CreateStore(val, elementPointer);
         } else {
             // otherwise, store the pointer directly
@@ -3240,5 +3225,16 @@ namespace yoi {
             Builder->CreateRetVoid();
         }
         Builder->SetInsertPoint(currentInsertPoint);
+    }
+
+    std::pair<std::shared_ptr<IRValueType>, llvm::Value *>
+    LLVMCodegen::ensureObject(const std::shared_ptr<IRValueType> &type, llvm::Value *val) {
+        if (type->hasAttribute(IRValueType::ValueAttr::Raw) || type->isBasicRawType()) {
+            auto unboxedValue = unboxValue(val, type);
+            auto boxedValue = createBasicObject(managedPtr(type->getBasicObjectType()), unboxedValue);
+            return {managedPtr(type->getBasicObjectType()), boxedValue};
+        } else {
+            return {type, val};
+        }
     }
 } // namespace yoi

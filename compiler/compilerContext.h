@@ -83,15 +83,15 @@ namespace yoi {
 
         void initializeSharedObjects();
 
-        std::shared_ptr<yoi::IRValueType> getIntObjectType();
+        std::shared_ptr<yoi::IRValueType> getIntObjectType(bool forceRawAttr = false);
 
-        std::shared_ptr<yoi::IRValueType> getBoolObjectType();
+        std::shared_ptr<yoi::IRValueType> getBoolObjectType(bool forceRawAttr = false);
 
-        std::shared_ptr<yoi::IRValueType> getDeciObjectType();
+        std::shared_ptr<yoi::IRValueType> getDeciObjectType(bool forceRawAttr = false);
 
-        std::shared_ptr<yoi::IRValueType> getStrObjectType();
+        std::shared_ptr<yoi::IRValueType> getStrObjectType(bool forceRawAttr = false);
 
-        std::shared_ptr<yoi::IRValueType> getCharObjectType();
+        std::shared_ptr<yoi::IRValueType> getCharObjectType(bool forceRawAttr = false);
 
         std::shared_ptr<yoi::IRValueType> getNoneObjectType();
 

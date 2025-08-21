@@ -100,6 +100,11 @@ namespace yoi {
 
         IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex);
 
+        IRValueType(valueType type,
+                    yoi::indexT typeAffiliateModule,
+                    yoi::indexT objectPrototypeIndex,
+                    const std::set<ValueAttr> &attributes);
+
         IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions);
 
         IRValueType(valueType type,
@@ -108,6 +113,8 @@ namespace yoi {
                     const yoi::vec<yoi::indexT> &dimensions);
 
         bool isBasicType() const;
+
+        bool isBasicRawType() const;
 
         bool isForeignBasicType() const;
 
@@ -122,6 +129,10 @@ namespace yoi {
         IRValueType getArrayType(const yoi::vec<yoi::indexT> &dimensions);
 
         IRValueType getDynamicArrayType();
+
+        IRValueType getBasicRawType() const;
+
+        IRValueType getBasicObjectType() const;
 
         yoi::wstr to_string(bool showAttributes = false) const;
 

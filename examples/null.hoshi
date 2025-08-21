@@ -13,7 +13,7 @@ func main() : int {
     let z = dyn_cast<string>(arr[2])
     let y = dyn_cast<int>(arr[1])
     if (y == null) {
-        sum += 1
+        puts("null functionality validation passed")
     } else {
         puts("null functionality validation failed")
         return 1

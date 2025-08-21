@@ -138,24 +138,24 @@ namespace yoi {
         finalizeAST(mod);
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType() {
-        return builtinModuleBuilder->sharedValueType[L"int"];
+    std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getIntObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"int"]);
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getBoolObjectType() {
-        return builtinModuleBuilder->sharedValueType[L"bool"];
+    std::shared_ptr<yoi::IRValueType> compilerContext::getBoolObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getBoolObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"bool"]);
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getDeciObjectType() {
-        return builtinModuleBuilder->sharedValueType[L"deci"];
+    std::shared_ptr<yoi::IRValueType> compilerContext::getDeciObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getDeciObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"deci"]);
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getStrObjectType() {
-        return builtinModuleBuilder->sharedValueType[L"string"];
+    std::shared_ptr<yoi::IRValueType> compilerContext::getStrObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getStrObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"string"]);
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getCharObjectType() {
-        return builtinModuleBuilder->sharedValueType[L"char"];
+    std::shared_ptr<yoi::IRValueType> compilerContext::getCharObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getCharObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"char"]);
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getNoneObjectType() {

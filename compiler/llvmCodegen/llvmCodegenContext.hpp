@@ -147,7 +147,7 @@ namespace yoi {
         void generateRTTIDeclaration();
         void generateRTTIImplmentation();
 
-        const std::shared_ptr<IRValueType> &normalizeForeignType(const std::shared_ptr<IRValueType> &type);
+        std::shared_ptr<IRValueType> normalizeForeignType(const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getDynamicArrayLLVMType(const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
@@ -169,19 +169,22 @@ namespace yoi {
                                            const std::shared_ptr<IRValueType> &foreignType,
                                            bool convertToForeign = false);
         llvm::Value *createArrayObject(const std::shared_ptr<IRValueType> &type,
-                                       const yoi::vec<llvm::Value *> &elements);
+                                       const yoi::vec<StackValue> &elements);
         llvm::DIType *getDIType(const std::shared_ptr<IRValueType> &type);
         llvm::Value *createDynamicArrayObject(const std::shared_ptr<IRValueType> &type,
-                                              const yoi::vec<llvm::Value *> &elements,
+                                              const yoi::vec<StackValue> &elements,
                                               llvm::Value *size);
         void storeArrayElement(const std::shared_ptr<IRValueType> &type,
+                               const std::shared_ptr<IRValueType> &valueToStoreType,
                                llvm::Value *arrayPtr,
                                llvm::Value *index,
                                llvm::Value *value);
-
         void generateArrayGCFunctionImplementations(const std::shared_ptr<IRValueType> &type,
                                                     llvm::StructType *structType,
                                                     llvm::Type *baseType);
+
+        std::pair<std::shared_ptr<IRValueType>, llvm::Value *> ensureObject(const std::shared_ptr<IRValueType> &type,
+                                                                            llvm::Value *val);
     };
 
 } // namespace yoi
