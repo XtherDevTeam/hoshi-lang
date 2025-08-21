@@ -1099,7 +1099,6 @@ namespace yoi {
                 Builder->CreateRet(noneObjectSingleton);
                 break;
             }
-
             // Functions
             case IR::Opcode::invoke: {
                 auto moduleIndex = instr.operands[0].value.symbolIndex;
@@ -1712,8 +1711,7 @@ namespace yoi {
                 // gep index 2
                 auto *arrayLen = Builder->CreateStructGEP(arrayLLVMType, array.llvmValue, 2, "array_len");
                 auto *loadedArrayLen = Builder->CreateLoad(Builder->getInt64Ty(), arrayLen, "loaded_array_len");
-                auto* resultObj = createBasicObject(compilerCtx->getIntObjectType(), loadedArrayLen);
-                valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getIntObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({loadedArrayLen, managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 callGcFunction(array.llvmValue, array.yoiType, false);
                 break;
             }
@@ -1897,8 +1895,7 @@ namespace yoi {
             resultRaw = Builder->CreateICmp(pred, lValRaw, rValRaw, "icmp");
         }
 
-        auto* resultObj = createBasicObject(compilerCtx->getBoolObjectType(), resultRaw);
-        valueStackMap[fromBlock][toBlock].push_back({resultObj, compilerCtx->getBoolObjectType()});
+        valueStackMap[fromBlock][toBlock].push_back({resultRaw, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
 
         // Consume operands
         callGcFunction(L.llvmValue, L.yoiType, false);
@@ -1993,6 +1990,7 @@ namespace yoi {
         auto* buildTypeStr = llvm::ConstantDataArray::getIntegerValue(llvm::Type::getInt64Ty(*TheContext), llvm::APInt(64, static_cast<uint64_t>(compilerCtx->getBuildConfig()->buildType)));
         auto* buildTypeGlobal = new llvm::GlobalVariable(*TheModule, buildTypeStr->getType(), true, llvm::GlobalValue::LinkageTypes::ExternalLinkage, buildTypeStr, "yoi_build_type");
     }
+
     void LLVMCodegen::generateTargetObjectCode(const yoi::wstr &pathToOutput) {
         llvm::InitializeAllTargetInfos();
         llvm::InitializeAllTargets();
@@ -2008,8 +2006,17 @@ namespace yoi {
             panic(0, 0, "Could not create target for " + TargetTriple + " (" + Error + ")");
         }
 
-        auto CPU = "generic";
-        auto Features = "";
+        auto CPU = llvm::sys::getHostCPUName();
+
+        // Automatically detect the features of the host CPU
+        llvm::SubtargetFeatures SubFeatures;
+        llvm::StringMap<bool> HostFeatures = llvm::sys::getHostCPUFeatures();
+        for (auto &F : HostFeatures) {
+            SubFeatures.AddFeature(F.first(), F.second);
+        }
+        auto Features = SubFeatures.getString();
+        printf("Target triple %s, using CPU %s with features %s\n", TargetTriple.c_str(), CPU.str().c_str(), Features.c_str());
+
         llvm::TargetOptions Opt;
         auto RM = std::optional<llvm::Reloc::Model>(llvm::Reloc::PIC_);
         llvm::CodeGenOptLevel OptLevel = compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release ? llvm::CodeGenOptLevel::Aggressive : llvm::CodeGenOptLevel::Default;

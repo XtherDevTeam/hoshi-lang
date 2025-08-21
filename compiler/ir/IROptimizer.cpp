@@ -2419,7 +2419,7 @@ namespace yoi {
             if (blockOutStates.empty()) isRaw = false; // No reachable blocks
             
             for(const auto& [blockIndex, outState] : blockOutStates) {
-                if(!outState.variableStates.count(varIndex) || !outState.variableStates.at(varIndex).possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                if(outState.variableStates.count(varIndex) && !outState.variableStates.at(varIndex).possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     isRaw = false;
                     break;
                 }
@@ -2486,7 +2486,7 @@ namespace yoi {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
                     auto varType = getVarType(ins.operands[0].value.symbolIndex);
-                    varType->attributes = value.type->attributes; // Direct propagation
+                    varType->attributes = value.type->attributes;
                     break;
                 }
                 // Rule 3: load_local propagates Raw attribute.
@@ -2605,22 +2605,19 @@ namespace yoi {
             auto it1 = s1.variableStates.find(key);
             auto it2 = s2.variableStates.find(key);
             
-            if (it1 != s1.variableStates.end() && it2 != s2.variableStates.end()) {
-                auto mergedType = std::make_shared<IRValueType>(*it1->second.possibleValue.type);
-                if (!it1->second.possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw) || !it2->second.possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                    mergedType->removeAttribute(IRValueType::ValueAttr::Raw);
-                }
-                mergedState.variableStates[key] = {false, true, {mergedType, false, {}}};
-            } else if (it1 != s1.variableStates.end()) {
-                // If only in one path, it's not guaranteed raw from all paths.
-                auto mergedType = std::make_shared<IRValueType>(*it1->second.possibleValue.type);
+            bool isRawInS1 = (it1 != s1.variableStates.end() && it1->second.possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw));
+            bool isRawInS2 = (it2 != s2.variableStates.end() && it2->second.possibleValue.type->hasAttribute(IRValueType::ValueAttr::Raw));
+
+            auto baseType = (it1 != s1.variableStates.end()) ? it1->second.possibleValue.type : it2->second.possibleValue.type;
+            auto mergedType = std::make_shared<IRValueType>(*baseType);
+
+            if ((it1 != s1.variableStates.end() && isRawInS1) && (it2 != s2.variableStates.end() && isRawInS2)) {
+                // printf("localVar#%lld is raw in both paths\n", key);
+                mergedType->addAttribute(IRValueType::ValueAttr::Raw);
+            }  else { // only in s2
                 mergedType->removeAttribute(IRValueType::ValueAttr::Raw);
-                mergedState.variableStates[key] = {false, true, {mergedType, false, {}}};
-            } else { // only in s2
-                auto mergedType = std::make_shared<IRValueType>(*it2->second.possibleValue.type);
-                mergedType->removeAttribute(IRValueType::ValueAttr::Raw);
-                mergedState.variableStates[key] = {false, true, {mergedType, false, {}}};
             }
+            mergedState.variableStates[key] = {false, true, {mergedType, false, {}}};
         }
         return mergedState;
     }

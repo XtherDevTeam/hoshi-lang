@@ -22,5 +22,5 @@ clean_prod:
 build/%: examples/%.hoshi build_debug
 	./cmake-build-debug/hoshi_lang $< -o $@ --build-mode debug --preserve-intermediate
 
-build-release/%: examples/%.hoshi build_debug
-	./cmake-build-debug/hoshi_lang $< -o $@ --build-mode release --preserve-intermediate
+build-release/%: examples/%.hoshi build_production
+	./cmake-build-release/hoshi_lang $< -o $@ --build-mode release --preserve-intermediate

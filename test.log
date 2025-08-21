@@ -1,0 +1,781 @@
+cd cmake-build-debug; make all -j
+[ 24%] Built target elysia_runtime
+[ 28%] Building CXX object CMakeFiles/hoshi_lang.dir/compiler/llvmCodegen/llvmCodegenContext.cpp.o
+/Users/chou/Desktop/project/hoshi-lang/compiler/llvmCodegen/llvmCodegenContext.cpp:2263:5: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+    }
+    ^
+/Users/chou/Desktop/project/hoshi-lang/compiler/llvmCodegen/llvmCodegenContext.cpp:2780:21: warning: 11 enumeration values not handled in switch: 'integerRaw', 'decimalRaw', 'booleanRaw'... [-Wswitch]
+            switch (type->type) {
+                    ^~~~~~~~~~
+/Users/chou/Desktop/project/hoshi-lang/compiler/llvmCodegen/llvmCodegenContext.cpp:2780:21: note: add missing switch cases
+            switch (type->type) {
+                    ^
+2 warnings generated.
+[ 32%] Linking CXX executable hoshi_lang
+[100%] Built target hoshi_lang
+./cmake-build-debug/hoshi_lang examples/argv.hoshi -o build/argv --build-mode debug --preserve-intermediate
+GEP base pointer is not a vector or a vector of pointers
+  %value_ptr = getelementptr inbounds nuw %yoi.basic.int, i64 %loaded_array_len, i32 0, i32 2, !dbg !39
+Load operand must be a pointer.
+  %unboxed_val = load i64, i64 %value_ptr, align 4, !dbg !39
+Invalid bitcast
+  %0 = bitcast i64 %loaded_array_len to ptr, !dbg !39
+GEP base pointer is not a vector or a vector of pointers
+  %value_ptr21 = getelementptr inbounds nuw %yoi.basic.int, i64 %loaded_array_len20, i32 0, i32 2, !dbg !39
+Load operand must be a pointer.
+  %unboxed_val22 = load i64, i64 %value_ptr21, align 4, !dbg !39
+Invalid bitcast
+  %1 = bitcast i64 %loaded_array_len20 to ptr, !dbg !39
+; ModuleID = 'yoi.module'
+source_filename = "yoi.module"
+
+%0 = type { i64, i64, i64, [1 x ptr] }
+%yoi.basic.none = type { i64 }
+%yoi.basic.int = type { i64, i64, i64 }
+%yoi.basic.decimal = type { i64, i64, double }
+%yoi.basic.bool = type { i64, i64, i1 }
+%yoi.basic.char = type { i64, i64, i8 }
+%yoi.basic.string = type { i64, i64, ptr }
+%struct.3782547968.e1751aff_TypeInfo = type { i64, i64, ptr, ptr, ptr, ptr, ptr, ptr }
+%interface.3782547968.e1751aff_NullInterface = type { i64, i64, ptr, ptr, ptr }
+
+@YoiNoneObject = internal constant %yoi.basic.none { i64 -1 }
+@debug_str = private constant [34 x i8] c"Increasing refcount of int object\00"
+@debug_str.1 = private constant [34 x i8] c"Decreasing refcount of int object\00"
+@debug_str.2 = private constant [38 x i8] c"Increasing refcount of decimal object\00"
+@debug_str.3 = private constant [38 x i8] c"Decreasing refcount of decimal object\00"
+@debug_str.4 = private constant [35 x i8] c"Increasing refcount of bool object\00"
+@debug_str.5 = private constant [35 x i8] c"Decreasing refcount of bool object\00"
+@debug_str.6 = private constant [35 x i8] c"Increasing refcount of char object\00"
+@debug_str.7 = private constant [35 x i8] c"Decreasing refcount of char object\00"
+@debug_str.8 = private constant [37 x i8] c"Increasing refcount of string object\00"
+@debug_str.9 = private constant [37 x i8] c"Decreasing refcount of string object\00"
+@debug_str.10 = private constant [5 x i8] c"puts\00"
+@rtti_table = external constant [12 x { i64, ptr, i64, i64, i64, i64 }]
+@debug_str.11 = private constant [27 x i8] c"0_yoimiya_glob_initializer\00"
+@debug_str.12 = private constant [22 x i8] c"Performing: ret_none \00"
+@debug_str.13 = private constant [9 x i8] c"yoi_main\00"
+@debug_str.14 = private constant [56 x i8] c"Performing: invoke index(3782547968) index(5) index(0) \00"
+@debug_str.15 = private constant [36 x i8] c"Performing: store_local localVar#0 \00"
+@debug_str.16 = private constant [30 x i8] c"Performing: jump codeBlock#1 \00"
+@debug_str.17 = private constant [33 x i8] c"Performing: push_integer int(0) \00"
+@debug_str.18 = private constant [36 x i8] c"Performing: store_local localVar#1 \00"
+@debug_str.19 = private constant [30 x i8] c"Performing: jump codeBlock#2 \00"
+@debug_str.20 = private constant [35 x i8] c"Performing: load_local localVar#1 \00"
+@debug_str.21 = private constant [35 x i8] c"Performing: load_local localVar#0 \00"
+@debug_str.22 = private constant [26 x i8] c"Performing: array_length \00"
+@debug_str.23 = private constant [23 x i8] c"Performing: less_than \00"
+@debug_str.24 = private constant [38 x i8] c"Performing: jump_if_true codeBlock#3 \00"
+@debug_str.25 = private constant [30 x i8] c"Performing: jump codeBlock#5 \00"
+@debug_str.26 = private constant [35 x i8] c"Performing: load_local localVar#0 \00"
+@debug_str.27 = private constant [33 x i8] c"Performing: push_integer int(0) \00"
+@debug_str.28 = private constant [35 x i8] c"Performing: load_local localVar#1 \00"
+@debug_str.29 = private constant [33 x i8] c"Performing: push_integer int(1) \00"
+@debug_str.30 = private constant [17 x i8] c"Performing: mul \00"
+@debug_str.31 = private constant [17 x i8] c"Performing: add \00"
+@debug_str.32 = private constant [26 x i8] c"Performing: load_element \00"
+@debug_str.33 = private constant [56 x i8] c"Performing: invoke_imported index(0) index(2) index(1) \00"
+@debug_str.34 = private constant [17 x i8] c"Performing: pop \00"
+@popped_value_str = private constant [24 x i8] c"Popped value: calltmp10\00"
+@debug_str.35 = private constant [30 x i8] c"Performing: jump codeBlock#4 \00"
+@debug_str.36 = private constant [35 x i8] c"Performing: load_local localVar#1 \00"
+@debug_str.37 = private constant [33 x i8] c"Performing: push_integer int(1) \00"
+@debug_str.38 = private constant [17 x i8] c"Performing: add \00"
+@debug_str.39 = private constant [36 x i8] c"Performing: store_local localVar#1 \00"
+@debug_str.40 = private constant [30 x i8] c"Performing: jump codeBlock#2 \00"
+@debug_str.41 = private constant [35 x i8] c"Performing: load_local localVar#1 \00"
+@debug_str.42 = private constant [35 x i8] c"Performing: load_local localVar#0 \00"
+@debug_str.43 = private constant [26 x i8] c"Performing: array_length \00"
+@debug_str.44 = private constant [23 x i8] c"Performing: less_than \00"
+@debug_str.45 = private constant [38 x i8] c"Performing: jump_if_true codeBlock#3 \00"
+@debug_str.46 = private constant [30 x i8] c"Performing: jump codeBlock#5 \00"
+@debug_str.47 = private constant [33 x i8] c"Performing: push_integer int(0) \00"
+@debug_str.48 = private constant [17 x i8] c"Performing: ret \00"
+
+declare ptr @calloc(i64, i64)
+
+declare ptr @runtime_object_alloc_report(i64, ptr)
+
+; Function Attrs: alwaysinline
+define internal ptr @object_alloc(i64 %0) #0 {
+entry:
+  %1 = call ptr @calloc(i64 1, i64 %0)
+  %2 = call ptr @runtime_object_alloc_report(i64 %0, ptr %1)
+  ret ptr %1
+}
+
+declare void @runtime_finalize_object_report(ptr)
+
+; Function Attrs: alwaysinline
+define internal void @finalize_object(ptr %0) #0 {
+entry:
+  call void @runtime_finalize_object_report(ptr %0)
+  tail call void @free(ptr %0)
+  ret void
+}
+
+declare void @free(ptr)
+
+declare void @runtime_debug_report_current_function(ptr)
+
+declare void @runtime_debug_print(ptr)
+
+declare void @runtime_debug_print_address(ptr)
+
+declare void @runtime_debug_print_int(i64)
+
+declare void @runtime_debug_print_deci(double)
+
+declare void @runtime_debug_print_current_allocated_memory()
+
+; Function Attrs: alwaysinline
+define internal void @basic_none_gc_refcount_increase(ptr %0) #0 {
+entry:
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_none_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_int_gc_refcount_increase(ptr %0) #0 {
+entry:
+  call void @runtime_debug_print(ptr @debug_str)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.int, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_int_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.1)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.int, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+declare void @"array_int[]_gc_refcount_increase"(ptr)
+
+declare void @"array_int[]_gc_refcount_decrease"(ptr)
+
+; Function Attrs: alwaysinline
+define internal void @basic_decimal_gc_refcount_increase(ptr %0) #0 {
+entry:
+  call void @runtime_debug_print(ptr @debug_str.2)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.decimal, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_decimal_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.3)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.decimal, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+declare void @"array_decimal[]_gc_refcount_increase"(ptr)
+
+declare void @"array_decimal[]_gc_refcount_decrease"(ptr)
+
+; Function Attrs: alwaysinline
+define internal void @basic_bool_gc_refcount_increase(ptr %0) #0 {
+entry:
+  call void @runtime_debug_print(ptr @debug_str.4)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.bool, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_bool_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.5)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.bool, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+declare void @"array_bool[]_gc_refcount_increase"(ptr)
+
+declare void @"array_bool[]_gc_refcount_decrease"(ptr)
+
+; Function Attrs: alwaysinline
+define internal void @basic_char_gc_refcount_increase(ptr %0) #0 {
+entry:
+  call void @runtime_debug_print(ptr @debug_str.6)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.char, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_char_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.7)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.char, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+declare void @"array_char[]_gc_refcount_increase"(ptr)
+
+declare void @"array_char[]_gc_refcount_decrease"(ptr)
+
+; Function Attrs: alwaysinline
+define internal void @basic_string_gc_refcount_increase(ptr %0) #0 {
+entry:
+  call void @runtime_debug_print(ptr @debug_str.8)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.string, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @basic_string_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.9)
+  call void @runtime_debug_print_address(ptr %0)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.string, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+declare void @"array_string[]_gc_refcount_increase"(ptr)
+
+declare void @"array_string[]_gc_refcount_decrease"(ptr)
+
+define ptr @"0_yoimiya_glob_initializer"() !dbg !5 {
+entry:
+  call void @runtime_debug_report_current_function(ptr @debug_str.11), !dbg !14
+  call void @runtime_debug_print(ptr @debug_str.12), !dbg !14
+  ret ptr @YoiNoneObject, !dbg !14
+}
+
+define ptr @yoi_main() !dbg !15 {
+entry:
+  call void @runtime_debug_report_current_function(ptr @debug_str.13), !dbg !22
+  %x = alloca ptr, align 8, !dbg !22
+  store ptr null, ptr %x, align 8, !dbg !22
+    #dbg_declare(ptr %x, !23, !DIExpression(), !35)
+  %i = alloca ptr, align 8, !dbg !22
+  store ptr null, ptr %i, align 8, !dbg !22
+    #dbg_declare(ptr %i, !36, !DIExpression(), !35)
+  call void @runtime_debug_print(ptr @debug_str.14), !dbg !37
+  %calltmp = call ptr @"e1751aff_argv#"(), !dbg !37
+  call void @runtime_debug_print(ptr @debug_str.15), !dbg !37
+  %old_ptr_for_store = load ptr, ptr %x, align 8, !dbg !37
+  call void @"array_string[]_gc_refcount_decrease"(ptr %old_ptr_for_store), !dbg !37
+  store ptr %calltmp, ptr %x, align 8, !dbg !37
+  call void @runtime_debug_print(ptr @debug_str.16), !dbg !38
+  br label %block_0_1, !dbg !38
+
+block_0_1:                                        ; preds = %entry
+  call void @runtime_debug_print(ptr @debug_str.17), !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.18), !dbg !39
+  %old_ptr_for_store1 = load ptr, ptr %i, align 8, !dbg !39
+  store i64 0, ptr %i, align 4, !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.19), !dbg !39
+  br label %block_1_2, !dbg !39
+
+block_1_2:                                        ; preds = %block_0_1
+  call void @runtime_debug_print(ptr @debug_str.20), !dbg !39
+  %loadtmp = load i64, ptr %i, align 4, !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.21), !dbg !39
+  %loadtmp2 = load ptr, ptr %x, align 8, !dbg !39
+  %is_null_load = icmp eq ptr %loadtmp2, null, !dbg !39
+  br i1 %is_null_load, label %continue_load, label %not_null_load, !dbg !39
+
+block_2_3:                                        ; preds = %continue_load17, %continue_load
+  call void @runtime_debug_print(ptr @debug_str.26), !dbg !40
+  %loadtmp3 = load ptr, ptr %x, align 8, !dbg !40
+  %is_null_load4 = icmp eq ptr %loadtmp3, null, !dbg !40
+  br i1 %is_null_load4, label %continue_load5, label %not_null_load6, !dbg !40
+
+block_2_5:                                        ; preds = %fallthrough24, %fallthrough
+  call void @runtime_debug_print(ptr @debug_str.47), !dbg !41
+  call void @runtime_debug_print(ptr @debug_str.48), !dbg !41
+  %cleanup_load = load ptr, ptr %x, align 8, !dbg !41
+  call void @"array_string[]_gc_refcount_decrease"(ptr %cleanup_load), !dbg !41
+  %cleanup_load25 = load ptr, ptr %i, align 8, !dbg !41
+  %new_obj_alloc26 = call ptr @object_alloc(i64 24), !dbg !41
+  %refcount_ptr27 = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc26, i32 0, i32 0, !dbg !41
+  store i64 1, ptr %refcount_ptr27, align 4, !dbg !41
+  %typeid_ptr28 = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc26, i32 0, i32 1, !dbg !41
+  store i64 0, ptr %typeid_ptr28, align 4, !dbg !41
+  %value_ptr29 = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc26, i32 0, i32 2, !dbg !41
+  store i64 0, ptr %value_ptr29, align 4, !dbg !41
+  ret ptr %new_obj_alloc26, !dbg !41
+
+continue_load:                                    ; preds = %not_null_load, %block_1_2
+  call void @runtime_debug_print(ptr @debug_str.22), !dbg !39
+  %array_len = getelementptr inbounds nuw %0, ptr %loadtmp2, i32 0, i32 2, !dbg !39
+  %loaded_array_len = load i64, ptr %array_len, align 4, !dbg !39
+  call void @"array_string[]_gc_refcount_decrease"(ptr %loadtmp2), !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.23), !dbg !39
+  %value_ptr = getelementptr inbounds nuw %yoi.basic.int, i64 %loaded_array_len, i32 0, i32 2, !dbg !39
+  %unboxed_val = load i64, i64 %value_ptr, align 4, !dbg !39
+  %icmp = icmp slt i64 %loadtmp, %unboxed_val, !dbg !39
+  %0 = bitcast i64 %loaded_array_len to ptr, !dbg !39
+  call void @basic_int_gc_refcount_decrease(ptr %0), !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.24), !dbg !39
+  br i1 %icmp, label %block_2_3, label %fallthrough, !dbg !39
+
+not_null_load:                                    ; preds = %block_1_2
+  call void @"array_string[]_gc_refcount_increase"(ptr %loadtmp2), !dbg !39
+  br label %continue_load, !dbg !39
+
+fallthrough:                                      ; preds = %continue_load
+  call void @runtime_debug_print(ptr @debug_str.25), !dbg !39
+  br label %block_2_5, !dbg !39
+
+block_3_4:                                        ; preds = %continue_load5
+  call void @runtime_debug_print(ptr @debug_str.36), !dbg !42
+  %loadtmp11 = load i64, ptr %i, align 4, !dbg !42
+  call void @runtime_debug_print(ptr @debug_str.37), !dbg !42
+  call void @runtime_debug_print(ptr @debug_str.38), !dbg !42
+  %ibinop12 = add i64 %loadtmp11, 1, !dbg !42
+  call void @runtime_debug_print(ptr @debug_str.39), !dbg !42
+  %old_ptr_for_store13 = load ptr, ptr %i, align 8, !dbg !42
+  store i64 %ibinop12, ptr %i, align 4, !dbg !42
+  call void @runtime_debug_print(ptr @debug_str.40), !dbg !42
+  br label %block_4_2, !dbg !42
+
+continue_load5:                                   ; preds = %not_null_load6, %block_2_3
+  call void @runtime_debug_print(ptr @debug_str.27), !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.28), !dbg !40
+  %loadtmp7 = load i64, ptr %i, align 4, !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.29), !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.30), !dbg !40
+  %ibinop = mul i64 %loadtmp7, 1, !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.31), !dbg !40
+  %ibinop8 = add i64 0, %ibinop, !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.32), !dbg !40
+  %array_ptr = getelementptr inbounds nuw %0, ptr %loadtmp3, i32 0, i32 3, !dbg !40
+  %element_ptr = getelementptr ptr, ptr %array_ptr, i64 %ibinop8, !dbg !40
+  %loaded_val = load ptr, ptr %element_ptr, align 8, !dbg !40
+  %new_obj_alloc = call ptr @object_alloc(i64 24), !dbg !40
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.string, ptr %new_obj_alloc, i32 0, i32 0, !dbg !40
+  store i64 1, ptr %refcount_ptr, align 4, !dbg !40
+  %typeid_ptr = getelementptr inbounds nuw %yoi.basic.string, ptr %new_obj_alloc, i32 0, i32 1, !dbg !40
+  store i64 4, ptr %typeid_ptr, align 4, !dbg !40
+  %value_ptr9 = getelementptr inbounds nuw %yoi.basic.string, ptr %new_obj_alloc, i32 0, i32 2, !dbg !40
+  store ptr %loaded_val, ptr %value_ptr9, align 8, !dbg !40
+  call void @"array_string[]_gc_refcount_decrease"(ptr %loadtmp3), !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.33), !dbg !40
+  %calltmp10 = call ptr @"imported#0#puts"(ptr %new_obj_alloc), !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.34), !dbg !40
+  call void @runtime_debug_print(ptr @popped_value_str), !dbg !40
+  call void @basic_int_gc_refcount_decrease(ptr %calltmp10), !dbg !40
+  call void @runtime_debug_print(ptr @debug_str.35), !dbg !40
+  br label %block_3_4, !dbg !40
+
+not_null_load6:                                   ; preds = %block_2_3
+  call void @"array_string[]_gc_refcount_increase"(ptr %loadtmp3), !dbg !40
+  br label %continue_load5, !dbg !40
+
+block_4_2:                                        ; preds = %block_3_4
+  call void @runtime_debug_print(ptr @debug_str.41), !dbg !39
+  %loadtmp14 = load i64, ptr %i, align 4, !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.42), !dbg !39
+  %loadtmp15 = load ptr, ptr %x, align 8, !dbg !39
+  %is_null_load16 = icmp eq ptr %loadtmp15, null, !dbg !39
+  br i1 %is_null_load16, label %continue_load17, label %not_null_load18, !dbg !39
+
+continue_load17:                                  ; preds = %not_null_load18, %block_4_2
+  call void @runtime_debug_print(ptr @debug_str.43), !dbg !39
+  %array_len19 = getelementptr inbounds nuw %0, ptr %loadtmp15, i32 0, i32 2, !dbg !39
+  %loaded_array_len20 = load i64, ptr %array_len19, align 4, !dbg !39
+  call void @"array_string[]_gc_refcount_decrease"(ptr %loadtmp15), !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.44), !dbg !39
+  %value_ptr21 = getelementptr inbounds nuw %yoi.basic.int, i64 %loaded_array_len20, i32 0, i32 2, !dbg !39
+  %unboxed_val22 = load i64, i64 %value_ptr21, align 4, !dbg !39
+  %icmp23 = icmp slt i64 %loadtmp14, %unboxed_val22, !dbg !39
+  %1 = bitcast i64 %loaded_array_len20 to ptr, !dbg !39
+  call void @basic_int_gc_refcount_decrease(ptr %1), !dbg !39
+  call void @runtime_debug_print(ptr @debug_str.45), !dbg !39
+  br i1 %icmp23, label %block_2_3, label %fallthrough24, !dbg !39
+
+not_null_load18:                                  ; preds = %block_4_2
+  call void @"array_string[]_gc_refcount_increase"(ptr %loadtmp15), !dbg !39
+  br label %continue_load17, !dbg !39
+
+fallthrough24:                                    ; preds = %continue_load17
+  call void @runtime_debug_print(ptr @debug_str.46), !dbg !39
+  br label %block_2_5, !dbg !39
+}
+
+declare ptr @e1751aff_yoimiya_glob_initializer()
+
+declare ptr @"e1751aff_TypeInfo::constructor#int#str#int#int#int#int"(ptr, ptr, ptr, ptr, ptr, ptr, ptr)
+
+declare ptr @"e1751aff_TypeInfo::constructor#int"(ptr, ptr)
+
+declare ptr @"e1751aff_argv#"()
+
+declare ptr @yoimiya_entry()
+
+declare ptr @rtti_object_alloc(ptr)
+
+declare ptr @runtime_get_argv()
+
+declare i32 @puts(ptr)
+
+define ptr @"imported#0#puts"(ptr %0) {
+entry:
+  call void @runtime_debug_report_current_function(ptr @debug_str.10)
+  %value_ptr = getelementptr inbounds nuw %yoi.basic.string, ptr %0, i32 0, i32 2
+  %unboxed_val = load ptr, ptr %value_ptr, align 8
+  call void @basic_string_gc_refcount_decrease(ptr %0)
+  %result = call i32 @puts(ptr %unboxed_val)
+  %int32_val = sext i32 %result to i64
+  %new_obj_alloc = call ptr @object_alloc(i64 24)
+  %refcount_ptr = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc, i32 0, i32 0
+  store i64 1, ptr %refcount_ptr, align 4
+  %typeid_ptr = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc, i32 0, i32 1
+  store i64 0, ptr %typeid_ptr, align 4
+  %value_ptr1 = getelementptr inbounds nuw %yoi.basic.int, ptr %new_obj_alloc, i32 0, i32 2
+  store i64 %int32_val, ptr %value_ptr1, align 4
+  ret ptr %new_obj_alloc
+}
+
+; Function Attrs: alwaysinline
+define internal void @struct_3782547968_0_gc_refcount_increase(ptr %0) #0 {
+entry:
+  %refcount_ptr = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @struct_3782547968_0_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  %refcount_ptr = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  %field_ptr = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 2
+  %loaded_field_for_gc = load ptr, ptr %field_ptr, align 8
+  call void @basic_int_gc_refcount_decrease(ptr %loaded_field_for_gc)
+  %field_ptr1 = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 3
+  %loaded_field_for_gc2 = load ptr, ptr %field_ptr1, align 8
+  call void @basic_string_gc_refcount_decrease(ptr %loaded_field_for_gc2)
+  %field_ptr3 = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 4
+  %loaded_field_for_gc4 = load ptr, ptr %field_ptr3, align 8
+  call void @basic_int_gc_refcount_decrease(ptr %loaded_field_for_gc4)
+  %field_ptr5 = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 5
+  %loaded_field_for_gc6 = load ptr, ptr %field_ptr5, align 8
+  call void @basic_int_gc_refcount_decrease(ptr %loaded_field_for_gc6)
+  %field_ptr7 = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 6
+  %loaded_field_for_gc8 = load ptr, ptr %field_ptr7, align 8
+  call void @basic_int_gc_refcount_decrease(ptr %loaded_field_for_gc8)
+  %field_ptr9 = getelementptr inbounds nuw %struct.3782547968.e1751aff_TypeInfo, ptr %0, i32 0, i32 7
+  %loaded_field_for_gc10 = load ptr, ptr %field_ptr9, align 8
+  call void @basic_int_gc_refcount_decrease(ptr %loaded_field_for_gc10)
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @interface_3782547968_0_gc_refcount_increase(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_wrapper
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_wrapper:                                 ; preds = %entry
+  %refcount_ptr = getelementptr inbounds nuw %interface.3782547968.e1751aff_NullInterface, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = add i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  ret void
+}
+
+; Function Attrs: alwaysinline
+define internal void @interface_3782547968_0_gc_refcount_decrease(ptr %0) #0 {
+entry:
+  %is_null = icmp eq ptr %0, null
+  br i1 %is_null, label %return_early, label %continue_decrement
+
+return_early:                                     ; preds = %entry
+  ret void
+
+continue_decrement:                               ; preds = %entry
+  %refcount_ptr = getelementptr inbounds nuw %interface.3782547968.e1751aff_NullInterface, ptr %0, i32 0, i32 0
+  %old_refcount = load i64, ptr %refcount_ptr, align 4
+  %new_refcount = sub i64 %old_refcount, 1
+  store i64 %new_refcount, ptr %refcount_ptr, align 4
+  %should_finalize = icmp sle i64 %new_refcount, 0
+  br i1 %should_finalize, label %finalize, label %continue
+
+finalize:                                         ; preds = %continue_decrement
+  %this_ptr_field = getelementptr inbounds nuw %interface.3782547968.e1751aff_NullInterface, ptr %0, i32 0, i32 2
+  %concrete_this = load ptr, ptr %this_ptr_field, align 8
+  %gc_dec_slot = getelementptr inbounds nuw %interface.3782547968.e1751aff_NullInterface, ptr %0, i32 0, i32 4
+  %gc_func_ptr = load ptr, ptr %gc_dec_slot, align 8
+  call void %gc_func_ptr(ptr %concrete_this)
+  call void @finalize_object(ptr %0)
+  br label %continue
+
+continue:                                         ; preds = %finalize, %continue_decrement
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#int_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#int_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @basic_int_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#bool_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#bool_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @basic_bool_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#decimal_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#decimal_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @basic_decimal_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#string_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#string_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @basic_string_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#char_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#char_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @basic_char_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#none_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#none_gc_refcount_decrease"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#struct#3782548223#0_gc_refcount_increase"(ptr %0) {
+entry:
+  ret void
+}
+
+define internal void @"e1751aff_interfaceImpl#3782548223#0#struct#3782548223#0_gc_refcount_decrease"(ptr %0) {
+entry:
+  call void @struct_3782547968_0_gc_refcount_decrease(ptr %0)
+  ret void
+}
+
+attributes #0 = { alwaysinline }
+
+!llvm.module.flags = !{!0}
+!llvm.dbg.cu = !{!1, !3}
+
+!0 = !{i32 2, !"Debug Info Version", i32 3}
+!1 = distinct !DICompileUnit(language: DW_LANG_C, file: !2, producer: "hoshi-lang", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug)
+!2 = !DIFile(filename: "<default>", directory: "")
+!3 = distinct !DICompileUnit(language: DW_LANG_C, file: !4, producer: "hoshi-lang", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug)
+!4 = !DIFile(filename: "argv.hoshi", directory: "/Users/chou/Desktop/project/hoshi-lang/examples")
+!5 = distinct !DISubprogram(name: "0_yoimiya_glob_initializer", scope: !4, file: !4, line: 1, type: !6, scopeLine: 1, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !3)
+!6 = !DISubroutineType(types: !7)
+!7 = !{!8}
+!8 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !9, size: 64)
+!9 = !DICompositeType(tag: DW_TAG_structure_type, name: "yoi.none", file: !2, line: 1, size: 128, align: 64, elements: !10)
+!10 = !{!11, !13}
+!11 = !DIDerivedType(tag: DW_TAG_member, name: "refcount", baseType: !12, size: 64, align: 64)
+!12 = !DIBasicType(name: "long long", size: 64, encoding: DW_ATE_signed)
+!13 = !DIDerivedType(tag: DW_TAG_member, name: "typeid", baseType: !12, size: 64, align: 64, offset: 64)
+!14 = !DILocation(line: 1, column: 1, scope: !5)
+!15 = distinct !DISubprogram(name: "yoi_main", scope: !4, file: !4, line: 4, type: !16, scopeLine: 4, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !3)
+!16 = !DISubroutineType(types: !17)
+!17 = !{!18}
+!18 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !19, size: 64)
+!19 = !DICompositeType(tag: DW_TAG_structure_type, name: "yoi.int", file: !2, line: 1, size: 192, align: 64, elements: !20)
+!20 = !{!11, !13, !21}
+!21 = !DIDerivedType(tag: DW_TAG_member, name: "value", baseType: !12, size: 64, align: 64, offset: 128)
+!22 = !DILocation(line: 4, column: 7, scope: !15)
+!23 = !DILocalVariable(name: "x", scope: !15, file: !24, line: 4, type: !25)
+!24 = !DIFile(filename: "/Users/chou/Desktop/project/hoshi-lang/examples/argv.hoshi", directory: "")
+!25 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !26, size: 64)
+!26 = !DICompositeType(tag: DW_TAG_structure_type, name: "array_string[]", file: !2, line: 1, size: 256, align: 64, elements: !27)
+!27 = !{!11, !13, !28, !29}
+!28 = !DIDerivedType(tag: DW_TAG_member, name: "array_length", baseType: !12, size: 64, align: 64, offset: 128)
+!29 = !DIDerivedType(tag: DW_TAG_member, name: "array", baseType: !30, size: 64, align: 64, offset: 192)
+!30 = !DICompositeType(tag: DW_TAG_array_type, baseType: !31, size: 64, align: 64, elements: !33)
+!31 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !32, size: 64)
+!32 = !DIBasicType(name: "char", size: 8, encoding: DW_ATE_signed_char)
+!33 = !{!34}
+!34 = !DISubrange(count: 1, lowerBound: 0)
+!35 = !DILocation(line: 3, column: 1, scope: !15)
+!36 = !DILocalVariable(name: "i", scope: !15, file: !24, line: 4, type: !18)
+!37 = !DILocation(line: 5, column: 6, scope: !15)
+!38 = !DILocation(line: 6, column: 6, scope: !15)
+!39 = !DILocation(line: 6, column: 11, scope: !15)
+!40 = !DILocation(line: 7, column: 10, scope: !15)
+!41 = !DILocation(line: 9, column: 6, scope: !15)
+!42 = !DILocation(line: 6, column: 35, scope: !15)
+Linking Yoi IR modules...
+Error: LLVM function verification failed for: yoi_main near /Users/chou/Desktop/project/hoshi-lang/examples/argv.hoshi:1:1
+use lang "builtin"
+^
+Intermediate files preserved.
+make: *** [build/argv] Error 1
