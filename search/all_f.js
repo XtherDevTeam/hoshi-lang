@@ -19,13 +19,12 @@ var searchData=
   ['hasrhs_16',['hasRhs',['../classyoi_1_1leftExpr.html#ad78175f2a69f24b1f0edeba47e9a0ce0',1,'yoi::leftExpr']]],
   ['hastemplatearg_17',['hasTemplateArg',['../classyoi_1_1identifierWithTemplateArg.html#a8fb23ad11b15966c30a23bafa5575453',1,'yoi::identifierWithTemplateArg']]],
   ['hasvalue_18',['hasValue',['../classyoi_1_1returnStmt.html#af236b4f0a7cbfd823979ca197e124adb',1,'yoi::returnStmt']]],
-  ['hoshi_20lang_19',['hoshi lang',['../md_docs_2Null.html#autotoc_md44',1,'Pointer Object in hoshi-lang'],['../md_docs_2Null.html',1,'The implementation of null literal in hoshi-lang']]],
+  ['hoshi_20lang_19',['hoshi lang',['../md_docs_2Null.html#autotoc_md42',1,'Pointer Object in hoshi-lang'],['../md_docs_2Null.html',1,'The implementation of null literal in hoshi-lang']]],
   ['hoshi_20lang_20arrays_20',['Hoshi-lang Arrays',['../md_docs_2Array.html',1,'']]],
   ['hoshi_20lang_20intermediate_20representation_20ir_20handbook_21',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]],
   ['hoshi_20lang_20programming_20language_22',['The Hoshi-lang Programming Language',['../index.html',1,'']]],
   ['hoshi_20language_20specification_23',['Hoshi Language Specification',['../md_docs_2Spec.html',1,'']]],
   ['hoshi_5fcompiler_5fctx_5fglob_5fid_5fconst_24',['HOSHI_COMPILER_CTX_GLOB_ID_CONST',['../builtinModule_8hpp.html#a5129f23ef269f231d45c7ac410630140',1,'builtinModule.hpp']]],
   ['hoshi_5flang_5fsdk_5fversion_25',['HOSHI_LANG_SDK_VERSION',['../build__config_8h.html#a6971dff27c70670fe52aeea69fbdc0cc',1,'build_config.h']]],
-  ['hoshimodule_26',['hoshiModule',['../classyoi_1_1hoshiModule.html',1,'yoi']]],
-  ['hpp_20tt_20的修改_27',['&lt;tt&gt;IROptimizer.hpp&lt;/tt&gt; 的修改',['../md_diff.html#autotoc_md0',1,'']]]
+  ['hoshimodule_26',['hoshiModule',['../classyoi_1_1hoshiModule.html',1,'yoi']]]
 ];
