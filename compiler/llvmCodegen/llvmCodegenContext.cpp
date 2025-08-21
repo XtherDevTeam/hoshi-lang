@@ -249,9 +249,7 @@ namespace yoi {
             }
 
             llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
-            llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
-            llvm::Value* incNewRefCount = Builder->CreateAdd(incOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(incNewRefCount, incRefCountPtr);
+            auto beforeInc = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Add, incRefCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
             Builder->CreateRetVoid();
 
             // --- Generate gc_refcount_decrease ---
@@ -288,10 +286,9 @@ namespace yoi {
             }
             llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
-            llvm::Value* decNewRefCount = Builder->CreateSub(decOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(decNewRefCount, decRefCountPtr);
+            auto beforeDec = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Sub, decRefCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
 
-            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(decNewRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
+            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(beforeDec, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "should_finalize");
             Builder->CreateCondBr(shouldFinalize, finalizeBlock, continueBlock);
 
             Builder->SetInsertPoint(finalizeBlock);
@@ -444,9 +441,7 @@ namespace yoi {
             Builder->SetInsertPoint(incBlock);
             llvm::Value* thisPtr = incFunction->arg_begin();
             llvm::Value* refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
-            llvm::Value* oldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), refCountPtr, "old_refcount");
-            llvm::Value* newRefCount = Builder->CreateAdd(oldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(newRefCount, refCountPtr);
+            auto beforeInc = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Add, refCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
             Builder->CreateRetVoid();
 
             // --- Generate gc_refcount_decrease ---
@@ -472,11 +467,9 @@ namespace yoi {
 
             Builder->SetInsertPoint(continueDecrementBlock); // Continue with existing logic here
             refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
-            oldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), refCountPtr, "old_refcount");
-            newRefCount = Builder->CreateSub(oldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(newRefCount, refCountPtr);
+            auto beforeDec = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Sub, refCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
 
-            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(newRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
+            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(beforeDec, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "should_finalize");
             Builder->CreateCondBr(shouldFinalize, finalizeBlock, continueBlock);
 
             Builder->SetInsertPoint(finalizeBlock);
@@ -587,9 +580,8 @@ namespace yoi {
             Builder->SetInsertPoint(incContinueBlock);
 
             llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
-            llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
-            llvm::Value* incNewRefCount = Builder->CreateAdd(incOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(incNewRefCount, incRefCountPtr);
+            // llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
+            auto beforeInc = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Add, incRefCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
             Builder->CreateRetVoid();
 
 
@@ -616,11 +608,12 @@ namespace yoi {
             Builder->SetInsertPoint(decContinueDecrementBlock);
 
             llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
-            llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
-            llvm::Value* decNewRefCount = Builder->CreateSub(decOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
-            Builder->CreateStore(decNewRefCount, decRefCountPtr);
+            // llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
+            // llvm::Value* decNewRefCount = Builder->CreateSub(decOldRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "new_refcount");
+            // Builder->CreateStore(decNewRefCount, decRefCountPtr);
+            auto beforeDec = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Sub, decRefCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
 
-            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(decNewRefCount, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "should_finalize");
+            llvm::Value* shouldFinalize = Builder->CreateICmpSLE(beforeDec, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), "should_finalize");
             Builder->CreateCondBr(shouldFinalize, decFinalizeBlock, decContinueBlock);
 
             Builder->SetInsertPoint(decFinalizeBlock);
@@ -1280,8 +1273,9 @@ namespace yoi {
                 auto* concreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtrField, "concrete_this_raw");
                 auto* bitcastedPointer = Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(Builder->getInt64Ty(), 0), "casted_this");
                 // increase the reference count of this pointer, so that when leaving the function, it won't be collected
-                auto* oldRefcount = Builder->CreateLoad(Builder->getInt64Ty(), bitcastedPointer, "old_refcount");
-                Builder->CreateStore(Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1)), bitcastedPointer);
+                // Builder->CreateStore(Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1)), bitcastedPointer);
+                Builder->CreateAtomicRMW(llvm::AtomicRMWInst::BinOp::Add, bitcastedPointer, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
+
                 // btw, we have increased the refcount of the interface as well before, so when we finish the invoking, we need to decrease it.
 
                 // Load the function pointer to call from the v-table. User methods start at index 5.
@@ -2740,6 +2734,23 @@ namespace yoi {
             arrayTypeDIMap[arrayKey] = resultDIType;
             return resultDIType;
         } else {
+            if (type->isBasicType() && type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                switch (type->type) {
+                    case IRValueType::valueType::integerObject:
+                        return di_i64;
+                    case IRValueType::valueType::decimalObject:
+                        return di_double;
+                    case IRValueType::valueType::booleanObject:
+                        return di_i1;
+                    case IRValueType::valueType::characterObject:
+                        return di_i8;
+                    case IRValueType::valueType::stringObject:
+                        return di_i8_ptr;
+                    default:
+                        panic(0, 0, "LLVM Codegen: Unhandled or unmapped raw type: " + std::string(magic_enum::enum_name(type->type)));
+                        break;
+                }
+            }
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeDIMap.count(key)) {
                 return structTypeDIMap[key];
