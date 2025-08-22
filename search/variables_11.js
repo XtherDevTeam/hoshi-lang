@@ -1,12 +1,12 @@
 var searchData=
 [
   ['searchpaths_0',['searchpaths',['../structyoi_1_1IRBuildConfig_1_1Builder.html#ad377858d628ceb6a9d78f47158131a55',1,'yoi::IRBuildConfig::Builder::searchPaths'],['../structyoi_1_1IRBuildConfig.html#ad377858d628ceb6a9d78f47158131a55',1,'yoi::IRBuildConfig::searchPaths']]],
-  ['sharedvaluetype_1',['sharedvaluetype',['../classyoi_1_1compilerContext.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::compilerContext::sharedValueType'],['../classyoi_1_1BuiltinModuleBuilder.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::BuiltinModuleBuilder::sharedValueType']]],
+  ['sharedvaluetype_1',['sharedvaluetype',['../classyoi_1_1BuiltinModuleBuilder.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::BuiltinModuleBuilder::sharedValueType'],['../classyoi_1_1compilerContext.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::compilerContext::sharedValueType']]],
   ['simulationstack_2',['simulationStack',['../classyoi_1_1IROptimizer.html#a08a5d74675c2b081a5d2b8958c655233',1,'yoi::IROptimizer']]],
   ['size_3',['size',['../structAllocatedMemoryList.html#a1e1268d164c38e4f8a4f4eb9058b0601',1,'AllocatedMemoryList']]],
   ['size_5f_4',['size_',['../structmagic__enum_1_1detail_1_1str__view.html#add803b988a784ef4f9d3a88a7d6e37f2',1,'magic_enum::detail::str_view']]],
   ['sourcefile_5',['sourceFile',['../structyoi_1_1IRDebugInfo.html#af7f6f87684c5ad59aff4619c585fb114',1,'yoi::IRDebugInfo']]],
-  ['spec_6',['spec',['../classyoi_1_1templateArgSpec.html#a4057bd455576c42666bc802787e051c1',1,'yoi::templateArgSpec::spec'],['../classyoi_1_1definitionArguments.html#a52f208ab3c950a48d57c4fa4d368c3be',1,'yoi::definitionArguments::spec'],['../classyoi_1_1templateArg.html#a509b448a0d3bdb7d34f349bde941b54d',1,'yoi::templateArg::spec'],['../classyoi_1_1defTemplateArg.html#a6f26fc8ebec2aeb1f5e7d91f5e71c191',1,'yoi::defTemplateArg::spec'],['../classyoi_1_1identifierWithTypeSpec.html#a4057bd455576c42666bc802787e051c1',1,'yoi::identifierWithTypeSpec::spec']]],
+  ['spec_6',['spec',['../classyoi_1_1identifierWithTypeSpec.html#a4057bd455576c42666bc802787e051c1',1,'yoi::identifierWithTypeSpec::spec'],['../classyoi_1_1defTemplateArg.html#a6f26fc8ebec2aeb1f5e7d91f5e71c191',1,'yoi::defTemplateArg::spec'],['../classyoi_1_1templateArgSpec.html#a4057bd455576c42666bc802787e051c1',1,'yoi::templateArgSpec::spec'],['../classyoi_1_1templateArg.html#a509b448a0d3bdb7d34f349bde941b54d',1,'yoi::templateArg::spec'],['../classyoi_1_1definitionArguments.html#a52f208ab3c950a48d57c4fa4d368c3be',1,'yoi::definitionArguments::spec']]],
   ['stack_7',['stack',['../structyoi_1_1AnalysisState.html#ad0e3c4a58230a063e539d56955bfb3f9',1,'yoi::AnalysisState']]],
   ['states_8',['states',['../classyoi_1_1lexer.html#a053b39b9ba4728509957ae887a1ab7ca',1,'yoi::lexer']]],
   ['stmts_9',['stmts',['../classyoi_1_1codeBlock.html#ac4de3ea24de21a4b5fdea83397e3a467',1,'yoi::codeBlock::stmts'],['../classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981',1,'yoi::hoshiModule::stmts']]],
@@ -21,12 +21,11 @@ var searchData=
   ['structremapping_18',['structRemapping',['../classyoi_1_1IRLinker.html#a566158d839283baec4c406e16a8c43b1',1,'yoi::IRLinker']]],
   ['structtable_19',['structTable',['../classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4',1,'yoi::IRModule']]],
   ['structtemplateasts_20',['structTemplateAsts',['../classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659',1,'yoi::IRModule']]],
-  ['structtemplatetable_21',['structTemplateTable',['../classyoi_1_1IRModule.html#a7fa93a12df7c809694549d71f55a5d04',1,'yoi::IRModule']]],
-  ['structtypedimap_22',['structTypeDIMap',['../classyoi_1_1LLVMCodegen.html#a6ee04a05f7c4f71de8e59d88ef57ac61',1,'yoi::LLVMCodegen']]],
-  ['structtypemap_23',['structTypeMap',['../classyoi_1_1LLVMCodegen.html#aa15e9eaf48c0cc50240d989e40325858',1,'yoi::LLVMCodegen']]],
-  ['strval_24',['strVal',['../structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14',1,'yoi::lexer::token']]],
-  ['subscriptval_25',['subscriptVal',['../classyoi_1_1subscriptExpr.html#a1e5d8a52b81784de65b5bf1ccd6bba28',1,'yoi::subscriptExpr']]],
-  ['subtype_5fv_26',['subtype_v',['../namespacemagic__enum_1_1detail.html#ab850ed34ba791f59f0dfe8d55323a97e',1,'magic_enum::detail']]],
-  ['symbolindex_27',['symbolIndex',['../unionyoi_1_1IROperand_1_1operandValue.html#a2910975fb599632c275243421aa5cb80',1,'yoi::IROperand::operandValue']]],
-  ['symbols_28',['symbols',['../classyoi_1_1symbolTable.html#a6b7cdf2baba5384998a10f5f80a6cda8',1,'yoi::symbolTable']]]
+  ['structtypedimap_21',['structTypeDIMap',['../classyoi_1_1LLVMCodegen.html#a6ee04a05f7c4f71de8e59d88ef57ac61',1,'yoi::LLVMCodegen']]],
+  ['structtypemap_22',['structTypeMap',['../classyoi_1_1LLVMCodegen.html#aa15e9eaf48c0cc50240d989e40325858',1,'yoi::LLVMCodegen']]],
+  ['strval_23',['strVal',['../structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14',1,'yoi::lexer::token']]],
+  ['subscriptval_24',['subscriptVal',['../classyoi_1_1subscriptExpr.html#a1e5d8a52b81784de65b5bf1ccd6bba28',1,'yoi::subscriptExpr']]],
+  ['subtype_5fv_25',['subtype_v',['../namespacemagic__enum_1_1detail.html#ab850ed34ba791f59f0dfe8d55323a97e',1,'magic_enum::detail']]],
+  ['symbolindex_26',['symbolIndex',['../unionyoi_1_1IROperand_1_1operandValue.html#a2910975fb599632c275243421aa5cb80',1,'yoi::IROperand::operandValue']]],
+  ['symbols_27',['symbols',['../classyoi_1_1symbolTable.html#a6b7cdf2baba5384998a10f5f80a6cda8',1,'yoi::symbolTable']]]
 ];

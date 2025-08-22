@@ -17,6 +17,5 @@ var searchData=
   ['functionindex_14',['functionIndex',['../structyoi_1_1visitor_1_1OverloadResult.html#a05e7652888e03bb99c12b7df039a59d4',1,'yoi::visitor::OverloadResult']]],
   ['functionmap_15',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
   ['functionremapping_16',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
-  ['functiontable_17',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]],
-  ['functiontemplatetable_18',['functionTemplateTable',['../classyoi_1_1IRModule.html#a21d443768b5e9d183339dfc259b7faf2',1,'yoi::IRModule']]]
+  ['functiontable_17',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]]
 ];

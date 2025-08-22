@@ -51,7 +51,7 @@ var searchData=
   ['argument_48',['argument',['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#afd063a6e96586bad9db2a565db39a29d',1,'yoi::IRTemplateBuilder::Argument::Argument()'],['../structyoi_1_1IRTemplateBuilder_1_1Argument.html',1,'IRTemplateBuilder::Argument'],['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#acb0175c7def3712fbd3be6b83894b2ef',1,'yoi::IRTemplateBuilder::Argument::Argument()']]],
   ['arguments_49',['Variadic Arguments',['../index.html#autotoc_md92',1,'']]],
   ['argumenttypes_50',['argumenttypes',['../classyoi_1_1IRFunctionDefinition.html#a0e5babfb8d2a4d3b0205b85c2a35afbe',1,'yoi::IRFunctionDefinition::argumentTypes'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a526e5e098adec9d9723318dcfc4f5100',1,'yoi::IRFunctionDefinition::Builder::argumentTypes']]],
-  ['arithmetic_20and_20logical_20operations_51',['arithmetic and logical operations',['../md_docs_2IR.html#autotoc_md20',1,'3.2. Arithmetic and Logical Operations'],['../md_docs_2IR.html#autotoc_md35',1,'3.2. Arithmetic and Logical Operations']]],
+  ['arithmetic_20and_20logical_20operations_51',['arithmetic and logical operations',['../md_docs_2IR.html#autotoc_md35',1,'3.2. Arithmetic and Logical Operations'],['../md_docs_2IR.html#autotoc_md20',1,'3.2. Arithmetic and Logical Operations']]],
   ['arithmeticop_52',['arithmeticOp',['../classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377',1,'yoi::IRBuilder']]],
   ['array_20lifecycle_53',['3.4. Object and Array Lifecycle',['../md_docs_2IR.html#autotoc_md22',1,'']]],
   ['array_2emd_54',['Array.md',['../Array_8md.html',1,'']]],
@@ -72,6 +72,7 @@ var searchData=
   ['ast_2ehpp_69',['ast.hpp',['../ast_8hpp.html',1,'']]],
   ['asterisk_70',['asterisk',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8',1,'yoi::lexer::token']]],
   ['asteriskstart_71',['asteriskStart',['../classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417',1,'yoi::lexer']]],
-  ['attributes_72',['attributes',['../classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84',1,'yoi::IRValueType']]],
-  ['attrs_73',['attrs',['../classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDef::attrs'],['../classyoi_1_1funcDefStmt.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::funcDefStmt::attrs'],['../classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDecl::attrs'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#acd5a2dc9a674e5a9ccaa521079fac0e1',1,'yoi::IRFunctionDefinition::Builder::attrs'],['../classyoi_1_1IRFunctionDefinition.html#acd5a2dc9a674e5a9ccaa521079fac0e1',1,'yoi::IRFunctionDefinition::attrs'],['../classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::exportDecl::attrs']]]
+  ['asttofinalize_72',['astToFinalize',['../classyoi_1_1compilerContext.html#a4198dadc50abd75ca5b76b7045369b11',1,'yoi::compilerContext']]],
+  ['attributes_73',['attributes',['../classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84',1,'yoi::IRValueType']]],
+  ['attrs_74',['attrs',['../classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDecl::attrs'],['../classyoi_1_1funcDefStmt.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::funcDefStmt::attrs'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#acd5a2dc9a674e5a9ccaa521079fac0e1',1,'yoi::IRFunctionDefinition::Builder::attrs'],['../classyoi_1_1IRFunctionDefinition.html#acd5a2dc9a674e5a9ccaa521079fac0e1',1,'yoi::IRFunctionDefinition::attrs'],['../classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::exportDecl::attrs'],['../classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDef::attrs']]]
 ];

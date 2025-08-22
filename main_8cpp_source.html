@@ -322,93 +322,95 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                                        .setBuildArch(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(<a class="code hl_define" href="def_8hpp.html#a33f92dd81296c001a9ef7eb731c7920a">YOI_ARCH</a>))</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                                        .setUseObjectLinker(useObjectLinker)</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                                        .setPreserveIntermediateFiles(preserveIntermediateFiles) </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                                        .yield());</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <a class="code hl_typedef" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> input = <a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(inputFile);</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="keyword">auto</span> entryModuleId = compilerCtx-&gt;compileModule(input);</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Linking Yoi IR modules...\n&quot;</span>;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <a class="code hl_class" href="classyoi_1_1IRLinker.html">yoi::IRLinker</a> linker;</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keyword">auto</span> objectIRFile = linker.<a class="code hl_function" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055">link</a>(compilerCtx, entryModuleId);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        compilerCtx-&gt;setIRObjectFile(objectIRFile);</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keyword">auto</span> unifiedModule = objectIRFile-&gt;compiledModule;</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <span class="keyword">auto</span> yoiIRStr = unifiedModule-&gt;to_string();</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        std::error_code ec_yoi;</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        llvm::raw_fd_stream yoi_file(yoiIRFile.string(), ec_yoi);</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="keywordflow">if</span> (ec_yoi) {</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Could not open YOI IR output file &#39;&quot;</span> + yoiIRFile.string() + <span class="stringliteral">&quot;&#39;: &quot;</span> + ec_yoi.message());</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        }</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        yoi_file &lt;&lt; <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(yoiIRStr);</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        yoi_file.close();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <a class="code hl_class" href="classyoi_1_1LLVMCodegen.html">yoi::LLVMCodegen</a> llvmCodegen(compilerCtx, unifiedModule);</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a3c01631a4116e8810c6c1021d7110ab7">generate</a>();</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        std::error_code ec_ll;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        llvm::raw_fd_stream ll_file(llvmIRFile.string(), ec_ll);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <span class="keywordflow">if</span> (ec_ll) {</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Could not open LLVM IR output file &#39;&quot;</span> + llvmIRFile.string() + <span class="stringliteral">&quot;&#39;: &quot;</span> + ec_ll.message());</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        }</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a31fecbe7a01dbfa60f245b1dfbc64276">getModule</a>()-&gt;print(ll_file, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        ll_file.close();</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        </div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Generating target object code...\n&quot;</span>;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a">generateTargetObjectCode</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()));</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        </div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keywordflow">if</span> (useObjectLinker != <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8">yoi::IRBuildConfig::UseObjectLinker::none</a>) {</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            <a class="code hl_class" href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a> *objectLinker = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            <span class="keywordflow">switch</span> (useObjectLinker) {</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010ae0323a9039add2978bf5b49550572c7c">yoi::IRBuildConfig::UseObjectLinker::cc</a>: {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                    objectLinker = <span class="keyword">new</span> <a class="code hl_class" href="classyoi_1_1ccObjectLinker.html">yoi::ccObjectLinker</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()), compilerCtx-&gt;getBuildConfig());</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                }</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a161747ec4dc9f55f1760195593742232">yoi::IRBuildConfig::UseObjectLinker::cl</a>: {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                    objectLinker = <span class="keyword">new</span> <a class="code hl_class" href="classyoi_1_1clObjectLinker.html">yoi::clObjectLinker</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()), compilerCtx-&gt;getBuildConfig());</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                }</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            }</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            <span class="keywordflow">if</span> (objectLinker) {</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;Linking final &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(targetPlatform) &lt;&lt; <span class="stringliteral">&quot; &quot;</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                          &lt;&lt; (buildType == <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343">yoi::IRBuildConfig::BuildType::executable</a> ? <span class="stringliteral">&quot;executable&quot;</span> : <span class="stringliteral">&quot;library&quot;</span>)</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                          &lt;&lt; <span class="stringliteral">&quot;...\n&quot;</span>;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#ad9cf9cac8117c250ae07ae54bc8db517">searchAndSetupLinker</a>();</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a9c7c6dc98e357c020debdc1b25e40376">setElysiaRuntimePath</a>(<a class="code hl_function" href="namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa">yoi::whereIsHoshiLang</a>()); </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#abf3eeb00b9123177fee9bf0cd8dacf26">link</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(finalOutput.string()));</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <span class="keyword">delete</span> objectLinker;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>            }</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;Object linking skipped (--linker none).\n&quot;</span>;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        }</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Compilation successful!\n&quot;</span>;</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;e) {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        exitCode = 1; </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    }<span class="comment">/* catch (const std::exception&amp; e) {</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment">        std::cerr &lt;&lt; &quot;An unexpected error occurred: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;</span></div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">        exitCode = 1; </span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment">    }*/</span></div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keywordflow">if</span> (!preserveIntermediateFiles &amp;&amp; exitCode == 0) {</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : intermediateFilesToClean) {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            std::error_code ec_remove;</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            fs::remove(file, ec_remove);</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            <span class="keywordflow">if</span> (ec_remove) {</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Could not remove intermediate file &#39;&quot;</span> &lt;&lt; file.string() &lt;&lt; <span class="stringliteral">&quot;&#39;: &quot;</span> &lt;&lt; ec_remove.message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            }</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        }</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (preserveIntermediateFiles) {</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Intermediate files preserved.\n&quot;</span>;</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    }</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keywordflow">return</span> exitCode;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>}</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                                        .setSearchPaths(includeDirs)</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                                        .yield());</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <a class="code hl_typedef" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> input = <a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(inputFile);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keyword">auto</span> entryModuleId = compilerCtx-&gt;compileModule(input);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        compilerCtx-&gt;runOptimizer();</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Linking Yoi IR modules...\n&quot;</span>;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <a class="code hl_class" href="classyoi_1_1IRLinker.html">yoi::IRLinker</a> linker;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keyword">auto</span> objectIRFile = linker.<a class="code hl_function" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055">link</a>(compilerCtx, entryModuleId);</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        compilerCtx-&gt;setIRObjectFile(objectIRFile);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <span class="keyword">auto</span> unifiedModule = objectIRFile-&gt;compiledModule;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keyword">auto</span> yoiIRStr = unifiedModule-&gt;to_string();</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        std::error_code ec_yoi;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        llvm::raw_fd_stream yoi_file(yoiIRFile.string(), ec_yoi);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keywordflow">if</span> (ec_yoi) {</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Could not open YOI IR output file &#39;&quot;</span> + yoiIRFile.string() + <span class="stringliteral">&quot;&#39;: &quot;</span> + ec_yoi.message());</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        }</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        yoi_file &lt;&lt; <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(yoiIRStr);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        yoi_file.close();</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <a class="code hl_class" href="classyoi_1_1LLVMCodegen.html">yoi::LLVMCodegen</a> llvmCodegen(compilerCtx, unifiedModule);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a3c01631a4116e8810c6c1021d7110ab7">generate</a>();</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        std::error_code ec_ll;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        llvm::raw_fd_stream ll_file(llvmIRFile.string(), ec_ll);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keywordflow">if</span> (ec_ll) {</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Could not open LLVM IR output file &#39;&quot;</span> + llvmIRFile.string() + <span class="stringliteral">&quot;&#39;: &quot;</span> + ec_ll.message());</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        }</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a31fecbe7a01dbfa60f245b1dfbc64276">getModule</a>()-&gt;print(ll_file, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        ll_file.close();</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Generating target object code...\n&quot;</span>;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        llvmCodegen.<a class="code hl_function" href="classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a">generateTargetObjectCode</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()));</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        </div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <span class="keywordflow">if</span> (useObjectLinker != <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8">yoi::IRBuildConfig::UseObjectLinker::none</a>) {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            <a class="code hl_class" href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a> *objectLinker = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            <span class="keywordflow">switch</span> (useObjectLinker) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010ae0323a9039add2978bf5b49550572c7c">yoi::IRBuildConfig::UseObjectLinker::cc</a>: {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                    objectLinker = <span class="keyword">new</span> <a class="code hl_class" href="classyoi_1_1ccObjectLinker.html">yoi::ccObjectLinker</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()), compilerCtx-&gt;getBuildConfig());</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a161747ec4dc9f55f1760195593742232">yoi::IRBuildConfig::UseObjectLinker::cl</a>: {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    objectLinker = <span class="keyword">new</span> <a class="code hl_class" href="classyoi_1_1clObjectLinker.html">yoi::clObjectLinker</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(objectFile.string()), compilerCtx-&gt;getBuildConfig());</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                }</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            }</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">if</span> (objectLinker) {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;Linking final &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(targetPlatform) &lt;&lt; <span class="stringliteral">&quot; &quot;</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                          &lt;&lt; (buildType == <a class="code hl_enumvalue" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343">yoi::IRBuildConfig::BuildType::executable</a> ? <span class="stringliteral">&quot;executable&quot;</span> : <span class="stringliteral">&quot;library&quot;</span>)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                          &lt;&lt; <span class="stringliteral">&quot;...\n&quot;</span>;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#ad9cf9cac8117c250ae07ae54bc8db517">searchAndSetupLinker</a>();</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#a9c7c6dc98e357c020debdc1b25e40376">setElysiaRuntimePath</a>(<a class="code hl_function" href="namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa">yoi::whereIsHoshiLang</a>()); </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                objectLinker-&gt;<a class="code hl_function" href="classyoi_1_1ObjectLinker.html#abf3eeb00b9123177fee9bf0cd8dacf26">link</a>(<a class="code hl_function" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023">yoi::string2wstring</a>(finalOutput.string()));</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                <span class="keyword">delete</span> objectLinker;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            }</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;Object linking skipped (--linker none).\n&quot;</span>;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        }</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Compilation successful!\n&quot;</span>;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;e) {</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        exitCode = 1; </div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    }<span class="comment">/* catch (const std::exception&amp; e) {</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment">        std::cerr &lt;&lt; &quot;An unexpected error occurred: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment">        exitCode = 1; </span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment">    }*/</span></div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keywordflow">if</span> (!preserveIntermediateFiles &amp;&amp; exitCode == 0) {</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : intermediateFilesToClean) {</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            std::error_code ec_remove;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            fs::remove(file, ec_remove);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="keywordflow">if</span> (ec_remove) {</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Could not remove intermediate file &#39;&quot;</span> &lt;&lt; file.string() &lt;&lt; <span class="stringliteral">&quot;&#39;: &quot;</span> &lt;&lt; ec_remove.message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            }</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (preserveIntermediateFiles) {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Intermediate files preserved.\n&quot;</span>;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    }</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keywordflow">return</span> exitCode;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>}</div>
 </div>
 <div class="ttc" id="aIRLinker_8hpp_html"><div class="ttname"><a href="IRLinker_8hpp.html">IRLinker.hpp</a></div></div>
 <div class="ttc" id="aIR_8h_html"><div class="ttname"><a href="IR_8h.html">IR.h</a></div></div>

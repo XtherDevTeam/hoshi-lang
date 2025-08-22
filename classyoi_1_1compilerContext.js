@@ -2,6 +2,7 @@ var classyoi_1_1compilerContext =
 [
     [ "compilerContext", "classyoi_1_1compilerContext.html#a20a81d02d116e13a93ffcdeeef161fb0", null ],
     [ "compilerContext", "classyoi_1_1compilerContext.html#ae697f792e0686de32550a48bbd0aafaa", null ],
+    [ "~compilerContext", "classyoi_1_1compilerContext.html#aaf82832c0a47ae6d87616853e2c98d1d", null ],
     [ "compileModule", "classyoi_1_1compilerContext.html#a8e997394cfa7bbf6a3f68f66b5935f2c", null ],
     [ "getBoolObjectType", "classyoi_1_1compilerContext.html#a6098abada76e01b27c855c5748257e33", null ],
     [ "getBuildConfig", "classyoi_1_1compilerContext.html#ade15a10b40c7c25be3a18aa4d465fdd1", null ],
@@ -21,8 +22,10 @@ var classyoi_1_1compilerContext =
     [ "getNullInterfaceType", "classyoi_1_1compilerContext.html#a3bf21b1452c928fc1d40091e3a4197ef", null ],
     [ "getStrObjectType", "classyoi_1_1compilerContext.html#af32e4c1d7dbe772c3a00da65d37f6244", null ],
     [ "initializeSharedObjects", "classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28", null ],
+    [ "runOptimizer", "classyoi_1_1compilerContext.html#abe31b1fe910dbd2547cc06213ea20f9e", null ],
     [ "setBuildConfig", "classyoi_1_1compilerContext.html#a4167f0bdd822c6d4e78802e5564228ff", null ],
     [ "setIRObjectFile", "classyoi_1_1compilerContext.html#a1c82adae599e9a3ccfaa34bc2dede43e", null ],
+    [ "astToFinalize", "classyoi_1_1compilerContext.html#a4198dadc50abd75ca5b76b7045369b11", null ],
     [ "buildConfig", "classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb", null ],
     [ "builtinModuleBuilder", "classyoi_1_1compilerContext.html#ac28385e81d6cab2c31e6a73b2f3d9580", null ],
     [ "irFFITable", "classyoi_1_1compilerContext.html#ab1a756bab4145c0bccef783635f391f5", null ],
