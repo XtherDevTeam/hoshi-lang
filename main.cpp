@@ -217,11 +217,13 @@ int main(int argc, const char **argv) {
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 
+                                        .setSearchPaths(includeDirs)
                                         .yield());
 
         yoi::wstr input = yoi::string2wstring(inputFile);
 
         auto entryModuleId = compilerCtx->compileModule(input);
+        compilerCtx->runOptimizer();
 
         std::cout << "Linking Yoi IR modules...\n";
         yoi::IRLinker linker;

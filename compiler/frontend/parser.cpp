@@ -1798,6 +1798,11 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
+            finalizeAST(args);
+            panic(lex.line, lex.col, "constructor declaration cannot have a return type");
+            o = nullptr;
+        }
         o = new constructorDecl{node_start_token, args};
     }
 
@@ -1818,6 +1823,11 @@ namespace yoi {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
             o = nullptr;
             return;
+        }
+        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
+            finalizeAST(args);
+            panic(lex.line, lex.col, "constructor declaration cannot have a return type");
+            o = nullptr;
         }
         parse(block, lex);
         if (!block) {

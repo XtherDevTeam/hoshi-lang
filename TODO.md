@@ -25,3 +25,4 @@
 # Known issues
 
 - [ ] `||` 算符短路失效，不论条件，结果均为真
+- [ ] Interface template foreign specialization 未完成

@@ -5,14 +5,15 @@
 #ifndef HOSHI_LANG_COMPILERCONTEXT_H
 #define HOSHI_LANG_COMPILERCONTEXT_H
 
-static const char *__yoi_builtin_module_hoshi = 
-  #include <compiler/builtinModule.hoshi>
-;
-
-#include <memory>
+static const char *__yoi_builtin_module_hoshi =
+#include <compiler/builtinModule.hoshi>
+    ;
 
 #include "share/def.hpp"
+#include <compiler/frontend/ast.hpp>
 #include <map>
+#include <memory>
+#include <set>
 
 namespace yoi {
     class moduleContext;
@@ -40,11 +41,12 @@ namespace yoi {
         std::shared_ptr<IRBuildConfig> buildConfig;
         std::shared_ptr<IRFFITable> irFFITable;
         std::shared_ptr<BuiltinModuleBuilder> builtinModuleBuilder;
+        std::set<hoshiModule *> astToFinalize;
 
-      public:
+    public:
         compilerContext() = default;
 
-        compilerContext(const compilerContext& context) = default;
+        compilerContext(const compilerContext &context) = default;
 
         /**
          * Get the IRModule by module name.
@@ -55,7 +57,7 @@ namespace yoi {
 
         /**
          * @brief get module context by index
-         * 
+         *
          * @param index The index of the module.
          */
         std::shared_ptr<yoi::moduleContext> getModuleContext(yoi::indexT index);
@@ -66,13 +68,12 @@ namespace yoi {
          * @return The IRModule, nullptr if not found.
          */
         std::shared_ptr<IRModule> getImportedModule(const yoi::wstr &modRealPath);
-        
+
         /**
          * Get all compiled IR modules.
          * @return A map from module ID to the IRModule.
          */
-        const std::map<yoi::indexT, std::shared_ptr<IRModule>>& getCompiledModules() const;
-
+        const std::map<yoi::indexT, std::shared_ptr<IRModule>> &getCompiledModules() const;
 
         /**
          * Get the index of the module by module real path.
@@ -84,7 +85,7 @@ namespace yoi {
 
         yoi::indexT compileModule(const yoi::wstr &filepath);
 
-        const std::shared_ptr<IRObjectFile>& getIRObjectFile() const;
+        const std::shared_ptr<IRObjectFile> &getIRObjectFile() const;
 
         void setIRObjectFile(const std::shared_ptr<IRObjectFile> &irObjectFile);
 
@@ -108,18 +109,23 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getNullInterfaceType();
 
-        // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type or export type. they are just wrapper types.
-        // as for import function wrapper and export function wrapper, ofc we need to treat it differently
-        // or in another word, the differentiation of import and export struct type should not even exist.
-        // cuz you can declare a struct object and export it as foreign type which can be used in import function wrapper too.
+        // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type
+        // or export type. they are just wrapper types. as for import function wrapper and export function wrapper, ofc
+        // we need to treat it differently or in another word, the differentiation of import and export struct type
+        // should not even exist. cuz you can declare a struct object and export it as foreign type which can be used in
+        // import function wrapper too.
 
         std::shared_ptr<IRBuildConfig> getBuildConfig() const;
 
         void setBuildConfig(const std::shared_ptr<IRBuildConfig> &buildConfig);
 
         std::shared_ptr<IRFFITable> getIRFFITable();
+
+        void runOptimizer();
+        
+        ~compilerContext();
     };
 
-} // yoi
+} // namespace yoi
 
-#endif //HOSHI_LANG_COMPILERCONTEXT_H
+#endif // HOSHI_LANG_COMPILERCONTEXT_H

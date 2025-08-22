@@ -151,6 +151,8 @@ namespace yoi {
             }
         }
         B &operator[](const A &k) {
+            if (indexes.empty())
+                throw std::out_of_range("indexTable: empty table");
             if (auto it = indexes.find(k); it == indexes.end()) {
                 throw std::out_of_range("indexTableRefactored: invalid key");
             } else {

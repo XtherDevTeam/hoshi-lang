@@ -45,13 +45,12 @@ namespace yoi {
         yoi::wstr rFilepath;
         if (filepath != L"builtin") {
             for (auto &prep : buildConfig->searchPaths) {
-                try {
-                    std::filesystem::path final = prep / std::filesystem::path(filepath);
-                    rFilepath = realpath(final.wstring());
+                std::filesystem::path final = prep / std::filesystem::path(filepath);
+                rFilepath = realpath(final.wstring());
+                if(std::filesystem::exists(rFilepath))
                     break;
-                } catch (std::runtime_error &e) {
+                else
                     continue;
-                }
             }
         } else {
             return HOSHI_COMPILER_CTX_GLOB_ID_CONST;
@@ -95,12 +94,8 @@ namespace yoi {
             moduleImported[idx] = irMod;
             std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
             vis->visit();
-            for (auto &i : irMod->functionTable) {
-                IROptimizer optimizer{shared_from_this(), irMod};
-                optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
-                // printf("%s\n", wstring2string(i.second->to_string()).c_str());
-            }
-            finalizeAST(mod);
+            
+            astToFinalize.insert(mod);
             set_current_file_path(current_file);
 
             // pop current directory from search path
@@ -130,12 +125,7 @@ namespace yoi {
         std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), L"builtin", mod);
         std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
         vis->visit();
-        for (auto &i : builtinModule->functionTable) {
-            // printf("%s\n", wstring2string(i.second->to_string()).c_str());
-            IROptimizer optimizer{shared_from_this(), builtinModule};
-            optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
-        }
-        finalizeAST(mod);
+        astToFinalize.insert(mod);
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType(bool forceRawAttr) {
@@ -194,5 +184,21 @@ namespace yoi {
     
     std::shared_ptr<yoi::moduleContext> compilerContext::getModuleContext(yoi::indexT index) {
         return modules[index];
+    }
+
+    compilerContext::~compilerContext() {
+        for (auto &i : astToFinalize) {
+            finalizeAST(i);
+        }
+    }
+    
+    void compilerContext::runOptimizer() {
+        for (auto &[modIndex, irMod] : moduleImported) {
+            for (auto &i : irMod->functionTable) {
+                IROptimizer optimizer{shared_from_this(), irMod};
+                optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
+                printf("%s\n", wstring2string(i.second->to_string()).c_str());
+            }
+        }
     }
 } // namespace yoi

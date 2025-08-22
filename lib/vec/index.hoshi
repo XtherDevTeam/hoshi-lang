@@ -1,21 +1,90 @@
-struct VecIter<T> {
-    vec: Vec<T>,
-    index: int,
-    constructor(vec: Vec<T>, index: int) : none
-}
-
 struct Vec<T> {
     length: int,
     capacity: int,
     data: T[],
     push(x: T) : none,
     pop() : none,
-    __get_index__(i: int) : T,
-    __set_index__(i: int, x: T) : none,
+    static operator[](self: Vec<T>, i: int) : T,
+    static operator[](value: T, self: Vec<T>, i: int) : none,
     size(): int,
     clear() : none,
-    iter() : VecIter<T>,
-    constructor(capacity: int) : none,
-    constructor(data: T[]) : none,
-    constructor(data: T[], capacity: int) : none
+    capacity_resize(new_capacity: int) : none,
+    constructor(capacity: int),
+    constructor(data: T[]),
+    constructor(data: T[], capacity: int),
+    shrink_to_fit() : none
+}
+
+impl Vec<> {
+    constructor(capacity: int) {
+        this.length = 0
+        this.capacity = capacity
+        this.data = new T[capacity]()
+        return this
+    },
+    constructor(data: T[]) {
+        this.length = data.length
+        this.capacity = data.length
+        this.data = data
+        return this
+    },
+    constructor(data: T[], capacity: int) {
+        this.length = data.length
+        this.capacity = capacity
+        this.data = data
+        return this
+    },
+    size() : int {
+        return this.length
+    },
+    clear() : none {
+        this.length = 0
+        return
+    },
+    push(x: T) : none {
+        if (this.length == this.capacity) {
+            this.capacity_resize(this.capacity * 2)
+        }
+        this.data[this.length] = x
+        this.length += 1
+        return
+    },
+    pop() : none {
+        if (this.length == 0) {
+            return
+        }
+        this.length -= 1
+        return
+    },
+    static operator[](self: Vec<T>, i: int) : T {
+        return self.data[i]
+    },
+    static operator[](value: T, self: Vec<T>, i: int) : none {
+        self.data[i] = value
+        return
+    },
+    capacity_resize(new_capacity: int) : none {
+        if (new_capacity <= this.capacity) {
+            return
+        }
+        let new_data = new T[new_capacity]()
+        for (let i = 0; i < this.length; i += 1) {
+            new_data[i] = this.data[i]
+        }
+        this.data = new_data
+        this.capacity = new_capacity
+        return
+    },
+    shrink_to_fit() : none {
+        if (this.length == this.capacity) {
+            return
+        }
+        let new_data = new T[this.length]()
+        for (let i = 0; i < this.length; i += 1) {
+            new_data[i] = this.data[i]
+        }
+        this.data = new_data
+        this.capacity = this.length
+        return
+    }
 }

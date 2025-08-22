@@ -97,19 +97,25 @@ namespace yoi {
 
         yoi::vec<std::shared_ptr<IRValueType>> parseTemplateArgs(const yoi::templateArg &templateArgs);
 
-        yoi::indexT specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
-                                               yoi::funcDefStmt *astNode,
+        yoi::indexT specializeFunctionTemplate(yoi::funcDefStmt *astNode,
                                                const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs, yoi::indexT moduleIndex);
 
         yoi::indexT specializeStructTemplate(const yoi::wstr &templateName,
                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
                                              yoi::implStmt *pureTemplateImplAst, yoi::indexT moduleIndex);
 
-        void specializeStructMethod(const std::shared_ptr<IRStructTemplate> &structTemplate,
-                                    const std::shared_ptr<IRStructDefinition> &specializedStruct,
-                                    yoi::implInnerPair *methodAstNode,
-                                    const yoi::wstr &specializedStructName,
-                                    const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT moduleIndex);
+        std::pair<yoi::indexT, yoi::wstr>  specializeStructMethodDeclaration(IRTemplateBuilder &structTemplate,
+                                               yoi::structDefInnerPair *methodAstNode,
+                                               const yoi::wstr &specializedStructName,
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                               yoi::indexT moduleIndex);
+
+        void specializeStructMethodDefinition(IRTemplateBuilder &structTemplate,
+                                             const std::shared_ptr<IRStructDefinition> &specializedStruct,
+                                             yoi::implInnerPair *methodAstNode,
+                                             const yoi::wstr &specializedStructName,
+                                             const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                             yoi::indexT moduleIndex);
 
         yoi::wstr getSpecializedMangledMethodName(yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
                                                   const yoi::wstr &baseMethodName,
@@ -297,7 +303,7 @@ namespace yoi {
         bool handleInvocationExtern(const yoi::wstr &baseName,
                                     yoi::invocationArguments *args,
                                     yoi::indexT targetModule,
-                                    const std::shared_ptr<IRValueType> &structContext = nullptr);
+                                    const std::shared_ptr<IRValueType> &structContext = nullptr, bool noThisCall = false);
 
         /**
          * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator method.
@@ -315,6 +321,15 @@ namespace yoi {
          * @return yoi::indexT current insertion point after the invocation
          */
         yoi::indexT handleUnaryOperatorOverload(const yoi::wstr &overloadName);
+
+        /**
+         * @brief Handle subscript
+         * @return bool whether the it need to continue to handle subscript
+         */
+        bool handleSubscript(yoi::vec<yoi::subscript *>::iterator &it,
+                             yoi::vec<yoi::subscript *>::iterator end,
+                             bool isStoreOp,
+                             bool isLastTerm);
     };
 
 } // namespace yoi

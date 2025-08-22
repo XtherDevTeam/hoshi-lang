@@ -660,10 +660,6 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceDefinition>> interfaceTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> functionTemplateTable;
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructTemplate>> structTemplateTable;
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceTemplate>> interfaceInstanceTemplateTable;
-        yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationTemplate>> interfaceImplTemplateTable;
 
         std::map<yoi::wstr, yoi::funcDefStmt *> funcTemplateAsts;
         std::map<yoi::wstr, yoi::structDefStmt *> structTemplateAsts;

@@ -1,0 +1,17 @@
+use vec "vec"
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    puts("compiliation success")
+    let v = vec.Vec<int>(10)
+    v[1] = 233
+    v[2] = 114
+    if (v[1] == 233 && v[2] == 114) {
+        puts("vector validation passed")
+    } else {
+        puts("vector validation failed")
+        return 1
+    }
+    return 0
+}
