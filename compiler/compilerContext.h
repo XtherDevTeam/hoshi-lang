@@ -54,6 +54,13 @@ namespace yoi {
         std::shared_ptr<IRModule> getImportedModule(yoi::indexT index);
 
         /**
+         * @brief get module context by index
+         * 
+         * @param index The index of the module.
+         */
+        std::shared_ptr<yoi::moduleContext> getModuleContext(yoi::indexT index);
+
+        /**
          * Get the IRModule by module real path.
          * @param modRealPath The real path of the module.
          * @return The IRModule, nullptr if not found.

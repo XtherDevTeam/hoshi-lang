@@ -21,12 +21,20 @@ namespace yoi {
         struct OverloadResult {
             yoi::indexT functionIndex = -1;
             bool isVariadic = false;
+            bool isVirtual = false;
             yoi::indexT fixedArgCount = 0;
             std::shared_ptr<IRValueType> variadicElementType = nullptr;
             std::shared_ptr<IRFunctionDefinition> function = nullptr;
 
             bool found() const;
         };
+
+        std::stack<std::pair<std::shared_ptr<yoi::moduleContext>, yoi::indexT>> moduleContextStack;
+
+        void pushModuleContext(yoi::indexT moduleIndex);
+
+        void popModuleContext();
+
       public:
         std::shared_ptr<yoi::moduleContext> moduleContext;
         std::shared_ptr<yoi::IRModule> irModule;
@@ -91,17 +99,17 @@ namespace yoi {
 
         yoi::indexT specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
                                                yoi::funcDefStmt *astNode,
-                                               const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs, yoi::indexT moduleIndex);
 
         yoi::indexT specializeStructTemplate(const yoi::wstr &templateName,
                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
-                                             yoi::implStmt *pureTemplateImplAst);
+                                             yoi::implStmt *pureTemplateImplAst, yoi::indexT moduleIndex);
 
         void specializeStructMethod(const std::shared_ptr<IRStructTemplate> &structTemplate,
                                     const std::shared_ptr<IRStructDefinition> &specializedStruct,
                                     yoi::implInnerPair *methodAstNode,
                                     const yoi::wstr &specializedStructName,
-                                    const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs);
+                                    const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT moduleIndex);
 
         yoi::wstr getSpecializedMangledMethodName(yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
                                                   const yoi::wstr &baseMethodName,
@@ -256,26 +264,19 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> evaluateArguments(yoi::invocationArguments *args);
 
         /**
-        * @brief Resolves a function overload based on name and argument types.
-        * @param baseName The base name of the function (e.g., "println" or "constructor").
-        * @param argTypes The types of the arguments provided at the call site.
-        * @param structContext Optional. If not null, searches for a method within this struct.
-        * @return An OverloadResult struct with the resolution details.
-        */
-        OverloadResult resolveOverload(const yoi::wstr &baseName,
-                                       const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
-                                       const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
-
-        /**
-        * @brief Orchestrates function/method invocation IR generation.
-        * @param baseName The base name of the function or method.
-        * @param args The AST argument list.
-        * @param structContext Optional. If not null, treats this as a method call on the struct.
-        * @return True if a function was successfully resolved and invoked, false otherwise.
-        */
-        bool handleInvocation(const yoi::wstr &baseName,
-                              yoi::invocationArguments *args,
-                              const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
+         * @brief Resolves an function overload within the interface context.
+         * 
+         * @param baseName The base name of the function (e.g., "println" or "constructor").
+         * @param argTypes The types of the arguments provided at the call site.
+         * @param targetModule The index of the module being looked into.
+         * @param interfaceContext The interface context where the function is being called.
+         * @return visitor::OverloadResult with the resolution details.
+         */
+        visitor::OverloadResult
+        resolveOverloadInterface(const yoi::wstr &baseName,
+                                 const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
+                                 yoi::indexT targetModule,
+                                 const std::shared_ptr<IRInterfaceInstanceDefinition> &interfaceContext);
 
         /**
          * @brief Resolves an external function overload within a target module.
@@ -296,7 +297,7 @@ namespace yoi {
         bool handleInvocationExtern(const yoi::wstr &baseName,
                                     yoi::invocationArguments *args,
                                     yoi::indexT targetModule,
-                                    const std::shared_ptr<IRStructDefinition> &structContext = nullptr);
+                                    const std::shared_ptr<IRValueType> &structContext = nullptr);
 
         /**
          * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator method.

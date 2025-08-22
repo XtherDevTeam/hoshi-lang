@@ -834,49 +834,7 @@ namespace yoi {
                            memberName->getLine(),
                            memberName->getColumn(),
                            "Expected subscript for static method call");
-                /*try {
-                    auto structName = (*it)->id;
-                    auto structType = type->typeIndex;
-                    
-                    yoi_assert(!memberName->id->hasTemplateArg(),
-                               memberName->getLine(),
-                               memberName->getColumn(),
-                               "Unexpected template argument for static method call");
-                    yoi_assert(!memberName->getSubscript().empty(),
-                               memberName->getLine(),
-                               memberName->getColumn(),
-                               "Expected subscript for static method call");
-                    for (auto &sub : memberName->getSubscript()) {
-                        yoi_assert(sub->isInvocation(),
-                                   sub->getLine(),
-                                   sub->getColumn(),
-                                   "Expected invocation for static method call");
-                        auto argTypes = evaluateArguments(sub->args);
-                        auto methodName = memberName->id->getId().get().strVal + getFuncUniqueNameStr(argTypes);
-                        auto methodIdx = moduleContext->getCompilerContext()
-                                             ->getImportedModule(type->typeAffiliateModule)
-                                             ->structTable[structType]
-                                             ->nameIndexMap[methodName]
-                                             .index;
 
-                        auto funcDef = moduleContext->getCompilerContext()
-                                           ->getImportedModule(type->typeAffiliateModule)
-                                           ->functionTable[methodIdx];
-                        yoi_assert(funcDef->argumentTypes.size() == sub->args->get().size(),
-                                   sub->getLine(),
-                                   sub->getColumn(),
-                                   "Argument count does not match");
-
-                        moduleContext->getIRBuilder().invokeMethodOp(
-                            methodIdx, argTypes.size() - 1, funcDef->returnType, false, true, type->typeAffiliateModule);
-                        isStaticMethod = true;
-                        break;
-                    }
-                } catch (std::out_of_range &e) {
-                    panic(memberExpr->getLine(),
-                          memberExpr->getColumn(),
-                          "Unresolved static method call: " + yoi::wstring2string(memberExpr->getTerms().front()->id->getId().get().strVal));
-                }*/
                 auto &sub = memberName->getSubscript().front();
                 moduleContext->getIRBuilder().saveState();
                 auto argTypes = evaluateArguments(sub->args);
@@ -934,9 +892,7 @@ namespace yoi {
                             memberName->getId().get().strVal, 
                             sub->args, 
                             termType->typeAffiliateModule, 
-                            moduleContext->getCompilerContext()
-                                            ->getImportedModule(termType->typeAffiliateModule)
-                                            ->structTable[termType->typeIndex]);
+                            termType);
                     } else if (termType->type == IRValueType::valueType::interfaceObject) {
                         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                         for (auto &arg : sub->args->get()) {
@@ -1119,7 +1075,7 @@ namespace yoi {
                 if (irModule->functionTemplateTable.contains(baseName)) {
                     auto funcTemplate = irModule->functionTemplateTable[baseName];
                     auto astNode = irModule->funcTemplateAsts.at(baseName);
-                    specializeFunctionTemplate(funcTemplate, astNode, concreteTemplateArgs);
+                    specializeFunctionTemplate(funcTemplate, astNode, concreteTemplateArgs, currentModuleIndex);
                 } else {
                     try {
                         auto baseType = managedPtr(parseTypeSpec(subscriptExpr->id));
@@ -1136,22 +1092,48 @@ namespace yoi {
 
             // --- Step 2: Unified Invocation Logic with correct precedence ---
 
+            // Attempt 0: Check whether is a accessible variable
+            moduleContext->getIRBuilder().saveState();
+            {
+                bool isAccessible = false;
+                try {
+                    visit(subscriptExpr->id, false);
+                    isAccessible = true;
+                } catch (const std::runtime_error &) {
+                    moduleContext->getIRBuilder().restoreState();
+                }
+                if (isAccessible) {
+                    auto structObject = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if(structObject->type == IRValueType::valueType::structObject || structObject->type == IRValueType::valueType::interfaceObject) {
+                        handleInvocationExtern(L"operator()", args, currentModuleIndex, structObject);
+                        resolved = true;
+                    } else {
+                        // TODO: handle interface objects
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Interface objects are not implemented yet.");
+                    }
+                }
+            }
+
+            moduleContext->getIRBuilder().saveState();
             // Attempt 1: Struct Constructor (handles regular, variadic, and specialized template structs)
             if (irModule->structTable.contains(baseName)) {
                 auto structIndex = irModule->structTable.getIndex(baseName);
                 auto structType = irModule->structTable[structIndex];
                 moduleContext->getIRBuilder().newStructOp(structIndex);
-                if (handleInvocation(L"constructor", args, structType)) {
+                auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                if (handleInvocationExtern(L"constructor", args, currentModuleIndex, rhs)) {
                     resolved = true;
+                    moduleContext->getIRBuilder().discardState();
                 } else {
-                    // IMPORTANT: If constructor call fails, pop the unused struct to prevent stack corruption.
-                    moduleContext->getIRBuilder().popFromTempVarStack();
+                    moduleContext->getIRBuilder().restoreState();
                 }
+            } else {
+                moduleContext->getIRBuilder().restoreState();
             }
 
             // Attempt 2: Free Function (handles regular, variadic, and implicit template functions)
             if (!resolved) {
-                resolved = handleInvocation(baseName, args);
+                resolved = handleInvocationExtern(baseName, args, currentModuleIndex);
             }
 
             // Attempt 3: Interface Constructor
@@ -1333,14 +1315,39 @@ namespace yoi {
 
             // --- Unified Invocation Logic for Extern Calls ---
 
+            // Attempt 0: Check whether is a accessible variable
+            moduleContext->getIRBuilder().saveState();
+            {
+                bool isAccessible = false;
+                try {
+                    visit(subscriptExpr->id, false);
+                    isAccessible = true;
+                } catch (const std::runtime_error &) {
+                    moduleContext->getIRBuilder().restoreState();
+                }
+                if (isAccessible) {
+                    auto structObject = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if(structObject->type == IRValueType::valueType::structObject || structObject->type == IRValueType::valueType::interfaceObject) {
+                        auto structIndex = structObject->typeIndex;
+                        auto structType = moduleContext->getCompilerContext()->getImportedModule(structObject->typeAffiliateModule)->structTable[structIndex];
+                        
+                        handleInvocationExtern(L"operator()", args, currentModuleIndex, structObject);
+                        resolved = true;
+                        moduleContext->getIRBuilder().discardState();
+                    } else {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot call operator() on non-struct object or interface object.");
+                    }
+                }
+            }
+
             // Attempt 1: Extern Struct Constructor (regular or variadic)
             if (targetedModule->structTable.contains(mangledBaseName)) {
                 auto externStructEntry = getExternEntry(targetModule, mangledBaseName);
                 auto targetedStruct = targetedModule->structTable[mangledBaseName];
                 
                 moduleContext->getIRBuilder().newStructOp(externStructEntry.itemIndex, true, externStructEntry.affiliateModule);
-                
-                if (handleInvocationExtern(L"constructor", args, targetModule, targetedStruct)) {
+                auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                if (handleInvocationExtern(L"constructor", args, targetModule, rhs)) {
                     resolved = true;
                 } else {
                     moduleContext->getIRBuilder().popFromTempVarStack(); // Pop unused extern struct
@@ -1427,8 +1434,7 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
-            // TODO: what the heck is this
-            return {};
+            panic(identifierWithTemplateArg->getLine(), identifierWithTemplateArg->getColumn(), "Invalid visit of identifier with template arg.");
         } else {
             return visit(identifierWithTemplateArg->id, isStoreOp);
         }
@@ -1928,7 +1934,7 @@ namespace yoi {
                 } else {
                     // specialize template struct
                     auto structTemplateAst = irModule->structTemplateAsts[structBaseName];
-                    specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt);
+                    specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt, currentModuleIndex);
                 }
             }
 
@@ -2299,7 +2305,7 @@ namespace yoi {
             if (irModule->structTemplateTable.contains(baseName)) {
                 try {
                     auto pureTemplateAst = irModule->templateImplAsts.at(baseName);
-                    auto specializedIndex = specializeStructTemplate(baseName, concreteTypes, pureTemplateAst);
+                    auto specializedIndex = specializeStructTemplate(baseName, concreteTypes, pureTemplateAst, currentModuleIndex);
                     return {IRValueType::valueType::structObject, currentModuleIndex, specializedIndex};
                 } catch (std::out_of_range &e) {
                     panic(identifierWithTemplateArg->getLine(),
@@ -2707,19 +2713,21 @@ namespace yoi {
     yoi::indexT
     visitor::specializeFunctionTemplate(const std::shared_ptr<IRFunctionTemplate> &templateFunc,
                                         yoi::funcDefStmt *astNode,
-                                        const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs) {
+                                        const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                        yoi::indexT moduleIndex) {
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
 
         yoi::wstr specializedName =
             getMangledTemplateName(templateFunc->templateDefinition->name, concreteTemplateArgs);
 
-        if (irModule->functionTable.contains(specializedName)) {
-            return irModule->functionTable.getIndex(specializedName);
+        if (targetedModule->functionTable.contains(specializedName)) {
+            return targetedModule->functionTable.getIndex(specializedName);
         }
 
         // Create a new function definition by specializing the template
         IRFunctionDefinition::Builder builder;
 
-        builder.setDebugInfo({irModule->modulePath, astNode->getLine(), astNode->getColumn()});
+        builder.setDebugInfo({targetedModule->modulePath, astNode->getLine(), astNode->getColumn()});
         builder.setName(specializedName);
 
         // Create specialization context
@@ -2728,6 +2736,9 @@ namespace yoi {
             auto paramName = templateFunc->templateArguments.getKey(i);
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
         }
+
+        
+        pushModuleContext(moduleIndex);
         moduleContext->pushTemplateBuilder(specializationContext);
 
         // Specialize arguments and return type
@@ -2739,11 +2750,11 @@ namespace yoi {
         builder.setReturnType(managedPtr(parseTypeSpec(&astNode->getResultType())));
 
         auto specializedFunc = builder.yield();
-        auto funcIndex = irModule->functionTable.put_create(specializedName, specializedFunc);
+        auto funcIndex = targetedModule->functionTable.put_create(specializedName, specializedFunc);
 
         // Visit the body to generate IR
-        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, specializedFunc});
-        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, astNode->getLine(), astNode->getColumn()});
+        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), targetedModule, specializedFunc});
+        moduleContext->getIRBuilder().setDebugInfo({targetedModule->modulePath, astNode->getLine(), astNode->getColumn()});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(&astNode->getBlock(), true);
         moduleContext->getIRBuilder().yield();
@@ -2751,6 +2762,7 @@ namespace yoi {
 
         // Pop context
         moduleContext->popTemplateBuilder();
+        popModuleContext();
 
         return funcIndex;
     }
@@ -2770,14 +2782,17 @@ namespace yoi {
 
     yoi::indexT visitor::specializeStructTemplate(const yoi::wstr &templateName,
                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
-                                              yoi::implStmt *pureTemplateImplAst) {
+                                              yoi::implStmt *pureTemplateImplAst, yoi::indexT moduleIndex) {
+
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
+
         yoi::wstr specializedName = getMangledTemplateName(templateName, concreteTemplateArgs);
 
-        if (irModule->structTable.contains(specializedName)) {
-            return irModule->structTable.getIndex(specializedName);
+        if (targetedModule->structTable.contains(specializedName)) {
+            return targetedModule->structTable.getIndex(specializedName);
         }
-        auto structTemplate = irModule->structTemplateTable[templateName];
-        auto structAst = irModule->structTemplateAsts.at(templateName);
+        auto structTemplate = targetedModule->structTemplateTable[templateName];
+        auto structAst = targetedModule->structTemplateAsts.at(templateName);
 
         IRTemplateBuilder specializationContext;
         yoi_assert(concreteTemplateArgs.size() == structTemplate->templateArguments.size(),
@@ -2787,10 +2802,13 @@ namespace yoi {
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
         }
 
-        auto specializedStructIndex = irModule->structTable.put_create(specializedName, nullptr);
+        auto specializedStructIndex = targetedModule->structTable.put_create(specializedName, nullptr);
+
         generateNullInterfaceImplementation(managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex}));
         auto selfType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, specializedStructIndex});
         specializationContext.addTemplateArgument(L"STRUCT", selfType);
+
+        pushModuleContext(moduleIndex);
         moduleContext->pushTemplateBuilder(specializationContext);
 
         IRStructDefinition::Builder builder;
@@ -2803,22 +2821,24 @@ namespace yoi {
             }
         }
         auto specializedStruct = builder.yield();
-        irModule->structTable[specializedStructIndex] = specializedStruct;
+        targetedModule->structTable[specializedStructIndex] = specializedStruct;
 
         // Specialize methods defined in `impl MyStruct<T> { ... }`
         if (pureTemplateImplAst) {
             for (auto &methodAst : pureTemplateImplAst->getInner().getInner()) {
-                specializeStructMethod(structTemplate, specializedStruct, methodAst, specializedName, concreteTemplateArgs);
+                specializeStructMethod(structTemplate, specializedStruct, methodAst, specializedName, concreteTemplateArgs, moduleIndex);
             }
         }
 
-        if (irModule->templateInterfaceImplAsts.count(templateName)) {
-            for (auto& implAst : irModule->templateInterfaceImplAsts.at(templateName)) {
+        if (targetedModule->templateInterfaceImplAsts.count(templateName)) {
+            for (auto& implAst : targetedModule->templateInterfaceImplAsts.at(templateName)) {
                 specializeInterfaceImplementation(implAst, selfType, specializedName, concreteTemplateArgs);
             }
         }
 
         moduleContext->popTemplateBuilder();
+        popModuleContext();
+
         return specializedStructIndex;
     }
 
@@ -2826,7 +2846,10 @@ namespace yoi {
                                          const std::shared_ptr<IRStructDefinition> &specializedStruct,
                                          yoi::implInnerPair *methodAstNode,
                                          const yoi::wstr &specializedStructName,
-                                         const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs) {
+                                         const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                         yoi::indexT moduleIndex) {
+
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
 
         // Push the template's own context to resolve generic types like 'T' to their placeholder
         // 'incompleteTemplateType'.
@@ -2885,13 +2908,13 @@ namespace yoi {
         }
         auto selfType = managedPtr(IRValueType{IRValueType::valueType::structObject,
                                                currentModuleIndex,
-                                               irModule->structTable.getIndex(specializedStructName)});
+                                               targetedModule->structTable.getIndex(specializedStructName)});
         specializationContext.addTemplateArgument(L"STRUCT", selfType);
         moduleContext->pushTemplateBuilder(specializationContext);
 
         IRFunctionDefinition::Builder funcBuilder;
 
-        funcBuilder.setDebugInfo({irModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
+        funcBuilder.setDebugInfo({targetedModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
 
         yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
 
@@ -2918,14 +2941,14 @@ namespace yoi {
         funcBuilder.setName(specializedMethodName);
 
         auto specializedFunc = funcBuilder.yield();
-        auto funcIndex = irModule->functionTable.put_create(specializedMethodName, specializedFunc);
+        auto funcIndex = targetedModule->functionTable.put_create(specializedMethodName, specializedFunc);
 
-        irModule->structTable[specializedStructName]
+        targetedModule->structTable[specializedStructName]
             ->nameIndexMap[baseMethodName + getFuncUniqueNameStr(specializedArgTypes)] = {
             IRStructDefinition::nameInfo::nameType::method, funcIndex};
 
-        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, specializedFunc});
-        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
+        moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), targetedModule, specializedFunc});
+        moduleContext->getIRBuilder().setDebugInfo({targetedModule->modulePath, methodAstNode->getLine(), methodAstNode->getColumn()});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         visit(methodAstNode->isConstructor() ? &methodAstNode->getConstructor().getBlock()
                                              : &methodAstNode->getMethod().getBlock(),
@@ -3016,7 +3039,7 @@ namespace yoi {
                                                             moduleContext->getCompilerContext()
                                                                 ->getImportedModule(targetModule)
                                                                 ->funcTemplateAsts[templateName],
-                                                            templateArgs);
+                                                            templateArgs, targetModule);
 
                 auto attrs = getFunctionAttributes(exportDecl->attrs);
 
@@ -3226,157 +3249,6 @@ namespace yoi {
         return argTypes;
     }
 
-
-    visitor::OverloadResult visitor::resolveOverload(const yoi::wstr& baseName, const yoi::vec<std::shared_ptr<IRValueType>>& argTypes, const std::shared_ptr<IRStructDefinition> & structContext) {
-        OverloadResult result;
-
-        // Pass 1: Look for an exact, non-variadic match.
-        auto exactMangledName = baseName + getFuncUniqueNameStr(argTypes);
-        if (structContext) {
-            if (structContext->nameIndexMap.count(exactMangledName)) {
-                result.functionIndex = structContext->nameIndexMap.at(exactMangledName).index;
-            }
-        } else {
-            if (irModule->functionTable.contains(exactMangledName)) {
-                result.functionIndex = irModule->functionTable.getIndex(exactMangledName);
-            }
-        }
-
-        if (result.found()) {
-            result.function = irModule->functionTable[result.functionIndex];
-            if (std::find(result.function->attrs.begin(), result.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != result.function->attrs.end()) {
-                 result.isVariadic = true;
-                 result.fixedArgCount = result.function->argumentTypes.size() - 1;
-                 result.variadicElementType = managedPtr(result.function->argumentTypes.back()->getElementType());
-            }
-            return result;
-        }
-
-        // Pass 2: Look for a compatible variadic match (works for free functions and constructors).
-        auto findVariadicMatch = [&](yoi::indexT funcIdx, bool skipFirstParam = false) {
-            auto func = irModule->functionTable[funcIdx];
-            if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != func->attrs.end()) {
-                const auto& paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam && paramTypes.size() > 1 ? 1 : 0);
-                if (argTypes.size() >= fixedParamCount) {
-                    bool fixedMatch = true;
-                    for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
-                        if (*paramTypes[i] != *argTypes[i]) { fixedMatch = false; break; }
-                    }
-                    if (fixedMatch) {
-                        result.functionIndex = funcIdx;
-                        result.isVariadic = true;
-                        result.fixedArgCount = fixedParamCount;
-                        result.variadicElementType = managedPtr(paramTypes.back()->getElementType());
-                        result.function = func;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-
-        if (structContext) {
-            for (const auto& [name, memberInfo] : structContext->nameIndexMap) {
-                if (memberInfo.type == IRStructDefinition::nameInfo::nameType::method && name.starts_with(baseName)) {
-                    if (findVariadicMatch(memberInfo.index, true)) return result;
-                }
-            }
-        } else {
-            for (const auto& [key, value] : irModule->functionTable) {
-                if (key.starts_with(baseName)) {
-                    if (findVariadicMatch(irModule->functionTable.getIndex(key))) return result;
-                }
-            }
-        }
-        if (result.found()) return result;
-
-        // Pass 3: Try implicit function template instantiation (only for non-methods).
-        if (!structContext && irModule->functionTemplateTable.contains(baseName)) {
-            try {
-                auto funcTemplate = irModule->functionTemplateTable[baseName];
-                auto astNode = irModule->funcTemplateAsts.at(baseName);
-                yoi::vec<std::shared_ptr<IRValueType>> deducedArgs(funcTemplate->templateArguments.size());
-                
-                // --- FULL TEMPLATE ARGUMENT DEDUCTION LOGIC ---
-                for (yoi::indexT i = 0; i < argTypes.size(); i++) {
-                    if (i < funcTemplate->templateDefinition->argumentTypes.size() &&
-                        funcTemplate->templateDefinition->argumentTypes[i]->type == IRValueType::valueType::incompleteTemplateType) {
-                        auto &srcTypeToPlace = argTypes[i];
-                        auto incompleteTypeIndex = funcTemplate->templateDefinition->argumentTypes[i]->typeIndex;
-                        if (deducedArgs[incompleteTypeIndex] && *deducedArgs[incompleteTypeIndex] != *srcTypeToPlace) {
-                             throw std::runtime_error("Template argument type mismatch during deduction.");
-                        }
-                        deducedArgs[incompleteTypeIndex] = srcTypeToPlace;
-                    }
-                }
-                for (yoi::indexT i = 0; i < deducedArgs.size(); i++) {
-                    if (deducedArgs[i] == nullptr) {
-                        throw std::runtime_error("Cannot deduce all template arguments for: " + yoi::wstring2string(funcTemplate->templateArguments.getKey(i)));
-                    }
-                }
-                
-                auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, deducedArgs);
-                result.functionIndex = specializedFuncIndex;
-                result.function = irModule->functionTable[specializedFuncIndex];
-
-                // The newly specialized function might itself be variadic
-                if(std::find(result.function->attrs.begin(), result.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != result.function->attrs.end()) {
-                    result.isVariadic = true;
-                    result.fixedArgCount = result.function->argumentTypes.size() - 1;
-                    result.variadicElementType = managedPtr(result.function->argumentTypes.back()->getElementType());
-                }
-                return result;
-            } catch (const std::exception&) {
-                result.functionIndex = -1; 
-            }
-        }
-        
-        return result; // Not found.
-    }
-
-    bool visitor::handleInvocation(const yoi::wstr &baseName,
-                                   yoi::invocationArguments *args,
-                                   const std::shared_ptr<IRStructDefinition> &structContext) {
-        moduleContext->getIRBuilder().saveState();
-        auto argTypes = evaluateArguments(args);
-        auto overload = resolveOverload(baseName, argTypes, structContext);
-
-        if (!overload.found()) {
-            moduleContext->getIRBuilder().restoreState();
-            return false;
-        }
-
-        if (overload.isVariadic) {
-            moduleContext->getIRBuilder().restoreState();
-            for (size_t i = 0; i < overload.fixedArgCount; ++i) {
-                visit(args->get()[i]);
-            }
-            auto variadicArgCount = argTypes.size() - overload.fixedArgCount;
-            if (variadicArgCount > 0) {
-                for (size_t i = 0; i < variadicArgCount; ++i) {
-                    visit(args->get()[i + overload.fixedArgCount]);
-                    tryCastTo(overload.variadicElementType);
-                }
-                moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {static_cast<yoi::indexT>(variadicArgCount)});
-            } else {
-                moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {0});
-            }
-        } else {
-            moduleContext->getIRBuilder().discardState();
-        }
-
-        size_t finalParamCount = overload.function->argumentTypes.size();
-        if (structContext) {
-            bool isStatic = std::find(overload.function->attrs.begin(), overload.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != overload.function->attrs.end();
-            moduleContext->getIRBuilder().invokeMethodOp(overload.functionIndex, finalParamCount - !isStatic, overload.function->returnType, isStatic);
-        } else {
-            moduleContext->getIRBuilder().invokeOp(overload.functionIndex, finalParamCount, overload.function->returnType);
-        }
-
-        return true;
-    }
-
     visitor::OverloadResult visitor::resolveOverloadExtern(const yoi::wstr &baseName,
                                                            const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
                                                            yoi::indexT targetModule,
@@ -3438,16 +3310,65 @@ namespace yoi {
             }
         }
 
+        if (!structContext && targetedModule->functionTemplateTable.contains(baseName)) {
+            try {
+                auto funcTemplate = targetedModule->functionTemplateTable[baseName];
+                auto astNode = targetedModule->funcTemplateAsts.at(baseName);
+                yoi::vec<std::shared_ptr<IRValueType>> deducedArgs(funcTemplate->templateArguments.size());
+                
+                // --- FULL TEMPLATE ARGUMENT DEDUCTION LOGIC ---
+                for (yoi::indexT i = 0; i < argTypes.size(); i++) {
+                    if (i < funcTemplate->templateDefinition->argumentTypes.size() &&
+                        funcTemplate->templateDefinition->argumentTypes[i]->type == IRValueType::valueType::incompleteTemplateType) {
+                        auto &srcTypeToPlace = argTypes[i];
+                        auto incompleteTypeIndex = funcTemplate->templateDefinition->argumentTypes[i]->typeIndex;
+                        if (deducedArgs[incompleteTypeIndex] && *deducedArgs[incompleteTypeIndex] != *srcTypeToPlace) {
+                             throw std::runtime_error("Template argument type mismatch during deduction.");
+                        }
+                        deducedArgs[incompleteTypeIndex] = srcTypeToPlace;
+                    }
+                }
+                for (yoi::indexT i = 0; i < deducedArgs.size(); i++) {
+                    if (deducedArgs[i] == nullptr) {
+                        throw std::runtime_error("Cannot deduce all template arguments for: " + yoi::wstring2string(funcTemplate->templateArguments.getKey(i)));
+                    }
+                }
+                
+                auto specializedFuncIndex = specializeFunctionTemplate(funcTemplate, astNode, deducedArgs, targetModule);
+                result.functionIndex = specializedFuncIndex;
+                result.function = irModule->functionTable[specializedFuncIndex];
+
+                // The newly specialized function might itself be variadic
+                if(std::find(result.function->attrs.begin(), result.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) != result.function->attrs.end()) {
+                    result.isVariadic = true;
+                    result.fixedArgCount = result.function->argumentTypes.size() - 1;
+                    result.variadicElementType = managedPtr(result.function->argumentTypes.back()->getElementType());
+                }
+                return result;
+            } catch (const std::exception&) {
+                result.functionIndex = -1; 
+            }
+        }
+
         return result; // Not found
     }
 
     bool visitor::handleInvocationExtern(const yoi::wstr &baseName,
                                          yoi::invocationArguments *args,
                                          yoi::indexT targetModule,
-                                         const std::shared_ptr<IRStructDefinition> &structContext) {
+                                         const std::shared_ptr<IRValueType> &structContext) {
         moduleContext->getIRBuilder().saveState();
         auto argTypes = evaluateArguments(args);
-        auto overload = resolveOverloadExtern(baseName, argTypes, targetModule, structContext);
+        OverloadResult overload;
+        if (structContext && structContext->type == IRValueType::valueType::structObject) {
+            auto structType = moduleContext->getCompilerContext()->getImportedModule(structContext->typeAffiliateModule)->structTable[structContext->typeIndex];
+            overload = resolveOverloadExtern(baseName, argTypes, targetModule, structType);
+        } else if (structContext && structContext->type == IRValueType::valueType::interfaceObject) {
+            auto interfaceType = moduleContext->getCompilerContext()->getImportedModule(structContext->typeAffiliateModule)->interfaceTable[structContext->typeIndex];
+            overload = resolveOverloadInterface(baseName, argTypes, targetModule, interfaceType);
+        } else {
+            overload = resolveOverloadExtern(baseName, argTypes, targetModule, nullptr);
+        }
 
         if (!overload.found()) {
             moduleContext->getIRBuilder().restoreState();
@@ -3455,7 +3376,6 @@ namespace yoi {
         }
 
         auto fullMangledName = overload.function->name;
-        auto externEntry = getExternEntry(targetModule, fullMangledName);
 
         if (overload.isVariadic) {
             moduleContext->getIRBuilder().restoreState();
@@ -3478,7 +3398,8 @@ namespace yoi {
         }
 
         size_t finalParamCount = overload.function->argumentTypes.size();
-        if (structContext) {
+        if (structContext && structContext->type == IRValueType::valueType::structObject) {
+            auto externEntry = getExternEntry(targetModule, fullMangledName);
             auto isStaticMethod = std::find(overload.function->attrs.begin(), overload.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != overload.function->attrs.end();
             moduleContext->getIRBuilder().invokeMethodOp(externEntry.itemIndex,
                                                          finalParamCount - !isStaticMethod,
@@ -3486,7 +3407,14 @@ namespace yoi {
                                                          isStaticMethod,
                                                          true,
                                                          externEntry.affiliateModule);
+        } else if (structContext && structContext->type == IRValueType::valueType::interfaceObject) {
+            moduleContext->getIRBuilder().invokeVirtualOp(overload.functionIndex,
+                                                          finalParamCount,
+                                                          overload.function->returnType,
+                                                          true,
+                                                          structContext->typeAffiliateModule);
         } else {
+            auto externEntry = getExternEntry(targetModule, fullMangledName);
             moduleContext->getIRBuilder().invokeOp(externEntry.itemIndex,
                                                    finalParamCount,
                                                    overload.function->returnType,
@@ -3722,5 +3650,79 @@ namespace yoi {
         }
         
         irModule->interfaceImplementationTable[implIndex] = builder.yield();
+    }
+
+    visitor::OverloadResult
+    visitor::resolveOverloadInterface(const yoi::wstr &baseName,
+                                      const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
+                                      yoi::indexT targetModule,
+                                      const std::shared_ptr<IRInterfaceInstanceDefinition> &interfaceContext) {
+        OverloadResult result;
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
+
+        auto exactMangledName = baseName + getFuncUniqueNameStr(argTypes);
+
+        if (interfaceContext->methodMap.contains(exactMangledName)) {
+            result.isVirtual = true;
+            result.functionIndex = interfaceContext->methodMap.getIndex(exactMangledName);
+            result.function = interfaceContext->methodMap[result.functionIndex];
+            if (std::find(result.function->attrs.begin(),
+                          result.function->attrs.end(),
+                          IRFunctionDefinition::FunctionAttrs::Variadic) != result.function->attrs.end()) {
+                result.isVariadic = true;
+                result.fixedArgCount = result.function->argumentTypes.size() - 1;
+                result.variadicElementType = managedPtr(result.function->argumentTypes.back()->getElementType());
+            }
+            return result;
+        }
+
+        auto findVariadicMatch = [&](const yoi::wstr &funcKey) {
+            auto func = interfaceContext->methodMap[funcKey];
+            if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) !=
+                func->attrs.end()) {
+                const auto &paramTypes = func->argumentTypes;
+                size_t fixedParamCount = paramTypes.size() - 1;
+                if (argTypes.size() >= fixedParamCount) {
+                    bool fixedMatch = true;
+                    for (size_t i = 0; i < fixedParamCount; ++i) {
+                        if (*paramTypes[i] != *argTypes[i]) {
+                            fixedMatch = false;
+                            break;
+                        }
+                    }
+                    if (fixedMatch) {
+                        result.functionIndex = interfaceContext->methodMap.getIndex(funcKey);
+                        result.isVariadic = true;
+                        result.isVirtual = true;
+                        result.fixedArgCount = fixedParamCount;
+                        result.variadicElementType = managedPtr(paramTypes.back()->getElementType());
+                        result.function = func;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        for (const auto &[key, value] : targetedModule->functionTable) {
+            if (key.starts_with(baseName)) {
+                if (findVariadicMatch(key))
+                    return result;
+            }
+        }
+
+        return result; // Not found
+    }
+
+    void visitor::pushModuleContext(yoi::indexT moduleIndex) {
+        moduleContextStack.emplace(moduleContext, currentModuleIndex);
+        this->moduleContext = moduleContext->getCompilerContext()->getModuleContext(moduleIndex);
+        currentModuleIndex = moduleIndex;
+    }
+
+    void visitor::popModuleContext() {
+        this->moduleContext = moduleContextStack.top().first;
+        currentModuleIndex = moduleContextStack.top().second;
+        moduleContextStack.pop();
     }
 } // namespace yoi

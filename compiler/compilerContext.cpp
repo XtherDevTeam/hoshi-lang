@@ -191,4 +191,8 @@ namespace yoi {
     std::shared_ptr<yoi::IRValueType> compilerContext::getNullInterfaceType() {
         return builtinModuleBuilder->sharedValueType[L"NullInterface"];
     }
+    
+    std::shared_ptr<yoi::moduleContext> compilerContext::getModuleContext(yoi::indexT index) {
+        return modules[index];
+    }
 } // namespace yoi
