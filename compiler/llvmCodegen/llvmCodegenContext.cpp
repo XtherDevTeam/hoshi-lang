@@ -1580,8 +1580,9 @@ namespace yoi {
                 auto structTypeIndex = instr.operands[1].value.symbolIndex;
                 auto typeIdKey = std::make_tuple(type, moduleIndex, structTypeIndex, 0);
                 auto typeId = typeIDMap.at(typeIdKey);                
-                auto typeIdObj = createBasicObject(compilerCtx->getIntObjectType(), llvm::ConstantInt::get(Builder->getInt64Ty(), typeId, true));
-                valueStackMap[fromBlock][toBlock].push_back({typeIdObj, compilerCtx->getIntObjectType()});
+                // valueStackMap[fromBlock][toBlock].push_back({typeIdObj, compilerCtx->getIntObjectType()});
+                auto typeIdRaw = llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), typeId, true);
+                valueStackMap[fromBlock][toBlock].push_back({typeIdRaw, managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::dyn_cast_int:
@@ -1589,7 +1590,8 @@ namespace yoi {
             case IR::Opcode::dyn_cast_deci:
             case IR::Opcode::dyn_cast_str:
             case IR::Opcode::dyn_cast_char:
-            case IR::Opcode::dyn_cast_struct: {
+            case IR::Opcode::dyn_cast_struct:
+            case IR::Opcode::dyn_cast_any: {
                 std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> structTypeKey;
                 std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT> structTypeIDKey;
 
@@ -1623,6 +1625,10 @@ namespace yoi {
                         structTypeIDKey = std::make_tuple(IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
                         structYoiType = managedPtr(IRValueType{yoi::IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex});
                         break;
+                    case IR::Opcode::dyn_cast_any:
+                        structTypeIDKey = std::make_tuple(static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, instr.operands[3].value.symbolIndex);
+                        structYoiType = managedPtr(IRValueType{static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{instr.operands[3].value.symbolIndex}});
+                        break;
                     default:
                         structTypeKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex);
                         structTypeIDKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex, 0);
@@ -1631,7 +1637,9 @@ namespace yoi {
                 }
 
                 auto structTypeId = typeIDMap.at(structTypeIDKey);
-                auto structTypeLLVMType = structTypeMap.at(structTypeKey);
+                auto structTypeLLVMType = structYoiType->isArrayType() || structYoiType->isDynamicArrayType() 
+                    ? arrayTypeMap.at(structTypeIDKey)
+                    : structTypeMap.at(structTypeKey);
                 
                 // offset by 16 bytes to skip the refcount and typeid
                 auto* interfacePtr = Builder->CreateBitCast(interfaceRhs.llvmValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "interface_ptr");
@@ -1751,6 +1759,12 @@ namespace yoi {
                 callGcFunction(interfaceValue.llvmValue, interfaceValue.yoiType, false);
                 callGcFunction(typeidValue.llvmValue, typeidValue.yoiType, false);
                 valueStackMap[fromBlock][toBlock].push_back({phiNode, compilerCtx->getBoolObjectType()});
+                break;
+            }
+            case IR::Opcode::typeid_object_non_stack: {
+                auto key = std::make_tuple(static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, instr.operands[3].value.symbolIndex);
+                auto typeId = typeIDMap.at(key);
+                valueStackMap[fromBlock][toBlock].push_back({llvm::ConstantInt::get(Builder->getInt64Ty(), typeId, true), managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::nop:

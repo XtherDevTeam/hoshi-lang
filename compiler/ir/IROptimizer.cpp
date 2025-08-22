@@ -1433,6 +1433,12 @@ namespace yoi {
                     simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
+                case IR::Opcode::dyn_cast_any: {
+                    auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex), ins.operands[1].value.symbolIndex, ins.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                    simulationStack.pop();
+                    simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
                 case IR::Opcode::pointer_cast: {
                     simulationStack.pop();
                     simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::pointerObject}), {currentCodeBlockIndex, {insIndex}, false});
@@ -1500,6 +1506,16 @@ namespace yoi {
                         compilerCtx->getBoolObjectType(),
                         {currentCodeBlockIndex, {insIndex}, false}
                     );
+                    break;
+                }
+                case IR::Opcode::typeid_object: {
+                    auto objectType = simulationStack.peek(0).type;
+                    simulationStack.pop();
+                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                    break;
+                }
+                case IR::Opcode::typeid_object_non_stack: {
+                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 default: {
@@ -2214,6 +2230,13 @@ namespace yoi {
                     auto finalType = std::make_shared<IRValueType>(*resultType);
                     finalType->addAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.push(finalType, {});
+                    break;
+                }
+                case IR::Opcode::dyn_cast_any: {
+                    auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex), ins.operands[1].value.symbolIndex, ins.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                    type->addAttribute(IRValueType::ValueAttr::Nullable);
+                    simulationStack.pop();
+                    simulationStack.push(type, {});
                     break;
                 }
                 case IR::Opcode::array_length: {
@@ -3257,6 +3280,13 @@ namespace yoi {
                 simulationStack.push(value_type, {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
+            case IR::Opcode::dyn_cast_any: {
+                auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex), ins.operands[1].value.symbolIndex, ins.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                type->addAttribute(IRValueType::ValueAttr::Nullable);
+                simulationStack.pop();
+                simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
+                break;
+            }
             case IR::Opcode::dyn_cast_struct: {
                 auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject,
                                                          ins.operands[0].value.symbolIndex,
@@ -3304,6 +3334,16 @@ namespace yoi {
                 simulationStack.pop();
                 simulationStack.pop();
                 simulationStack.push(compilerCtx->getBoolObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                break;
+            }
+            case IR::Opcode::typeid_object: {
+                auto objectType = simulationStack.peek(0).type;
+                simulationStack.pop();
+                simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
+                break;
+            }
+            case IR::Opcode::typeid_object_non_stack: {
+                simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
             default: {

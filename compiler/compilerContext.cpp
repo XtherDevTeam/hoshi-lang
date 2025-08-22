@@ -191,13 +191,13 @@ namespace yoi {
             finalizeAST(i);
         }
     }
-    
+
     void compilerContext::runOptimizer() {
         for (auto &[modIndex, irMod] : moduleImported) {
             for (auto &i : irMod->functionTable) {
+                printf("%s\n", wstring2string(i.second->to_string()).c_str());
                 IROptimizer optimizer{shared_from_this(), irMod};
                 optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
-                printf("%s\n", wstring2string(i.second->to_string()).c_str());
             }
         }
     }

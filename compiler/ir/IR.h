@@ -286,6 +286,7 @@ namespace yoi {
             typeid_struct,
             typeid_interface,
             typeid_object,
+            typeid_object_non_stack,
             typeid_interface_impl,
             dyn_cast_int,
             dyn_cast_deci,
@@ -293,6 +294,7 @@ namespace yoi {
             dyn_cast_char,
             dyn_cast_str,
             dyn_cast_struct,
+            dyn_cast_any,
             nop,
             FINAL,
         } opcode;

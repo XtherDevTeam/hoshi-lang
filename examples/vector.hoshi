@@ -4,14 +4,29 @@ import puts(str: string) : int32 from "builtin"
 
 func main() : int {
     puts("compiliation success")
-    let v = vec.Vec<int>(10)
-    v[1] = 233
-    v[2] = 114
-    if (v[1] == 233 && v[2] == 114) {
-        puts("vector validation passed")
-    } else {
-        puts("vector validation failed")
+    let v = vec.Vec<int>(0)
+    v.push(1)
+    v.push(2)
+    v.push(3)
+    v.push(4)
+    v.push(5)
+    let ni = lang.NullInterface(v.data)
+    let data = dyn_cast<int[]>(ni)
+    if (data == null) {
+        puts("vector validation failed: data cast")
         return 1
     }
+    for (let i = 0;i < v.length; i += 1) {
+        if (v[i] != i + 1) {
+            puts("vector validation failed: push")
+            return 1
+        }
+    }
+    v.shrink_to_fit()
+    if (v.capacity != 5) {
+        puts("vector validation failed: shrink_to_fit")
+        return 1
+    }
+    puts("vector validation passed")
     return 0
 }

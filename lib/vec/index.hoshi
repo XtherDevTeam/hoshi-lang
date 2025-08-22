@@ -1,3 +1,5 @@
+import puts(str: string) : int32 from "builtin"
+
 struct Vec<T> {
     length: int,
     capacity: int,
@@ -9,14 +11,19 @@ struct Vec<T> {
     size(): int,
     clear() : none,
     capacity_resize(new_capacity: int) : none,
+    shrink_to_fit() : none,
     constructor(capacity: int),
     constructor(data: T[]),
     constructor(data: T[], capacity: int),
-    shrink_to_fit() : none
+    constructor(),
 }
 
 impl Vec<> {
     constructor(capacity: int) {
+        if (capacity < 1) {
+            capacity = 1
+        }
+
         this.length = 0
         this.capacity = capacity
         this.data = new T[capacity]()
@@ -32,6 +39,12 @@ impl Vec<> {
         this.length = data.length
         this.capacity = capacity
         this.data = data
+        return this
+    },
+    constructor() {
+        this.length = 0
+        this.capacity = 1
+        this.data = new T[1]()
         return this
     },
     size() : int {

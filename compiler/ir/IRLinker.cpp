@@ -182,6 +182,12 @@ namespace yoi {
     IR IRLinker::patchInstruction(const IR& instr, indexT currentModuleId) {
         IR newInstr = instr;
         switch (instr.opcode) {
+            case IR::Opcode::push_string: {
+                auto stringIndex = instr.operands[0].value.symbolIndex;
+                auto newStringIndex = stringRemapping.at(currentModuleId).at(stringIndex);
+                newInstr.operands[0].value.symbolIndex = newStringIndex;
+                break;
+            }
             case IR::Opcode::invoke:
             case IR::Opcode::invoke_virtual:
             case IR::Opcode::load_global:

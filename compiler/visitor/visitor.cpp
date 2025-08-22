@@ -1076,6 +1076,7 @@ namespace yoi {
             }
             
             yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
+            generateNullInterfaceImplementation(managedPtr(baseType->getArrayType(dimensions)));
             moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
         } 
         // Case 2: Invocation `id<...>(...)` or `id(...)`
@@ -1279,6 +1280,8 @@ namespace yoi {
                 it = dim_it;
             }
             yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
+
+            generateNullInterfaceImplementation(managedPtr(baseType->getArrayType(dimensions)));
             moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
         } 
         // Case 2: Extern Invocation
@@ -1339,13 +1342,15 @@ namespace yoi {
                         moduleContext->getIRBuilder().newInterfaceOp(externInterface.itemIndex, true, externInterface.affiliateModule);
 
                         auto interfaceImplName = getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex}, argTypes[0]);
-                        auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
+                        auto interfaceImplIndex = targetedModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, targetModule != currentModuleIndex, targetModule);
                         
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
+                    } catch (const std::runtime_error &e) {
+                        throw e;
                     } catch (const std::exception &) {
-                        moduleContext->getIRBuilder().restoreState();
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find matched extern interface constructor for " + wstring2string(baseName));
                     }
                 }
             }
@@ -3004,11 +3009,11 @@ namespace yoi {
     yoi::indexT visitor::generateNullInterfaceImplementation(const std::shared_ptr<IRValueType> &structType) {
         auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
         auto nullImplName = getInterfaceImplName(nullInterface, structType);
-        moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(
-            structType->type, structType->typeAffiliateModule, structType->typeIndex);
         try {
             return moduleContext->getCompilerContext()->getImportedModule(structType->typeAffiliateModule)->interfaceImplementationTable.getIndex(nullImplName);
         } catch (std::out_of_range &e) {
+            moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(
+                structType->type, structType->typeAffiliateModule, structType->typeIndex);
             auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, {structType->type, structType->typeAffiliateModule, structType->typeIndex}, 0, {}, {}});
             return moduleContext->getCompilerContext()->getImportedModule(structType->typeAffiliateModule)->interfaceImplementationTable.put_create(nullImplName, nullImpl);
         }
@@ -3036,6 +3041,7 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::newExpression *newExpression) {
         auto baseType = parseTypeSpec(newExpression->type);
+        generateNullInterfaceImplementation(managedPtr(baseType.getDynamicArrayType()));
         for (auto &i : newExpression->args->get()) {
             visit(i);
             tryCastTo(managedPtr(baseType));

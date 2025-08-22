@@ -1080,40 +1080,51 @@ namespace yoi {
     void IRBuilder::typeIdOp(const std::shared_ptr<IRValueType> &type) {
         IR::Opcode op;
         vec<IROperand> operand;
-        switch (type->type) {
-            case IRValueType::valueType::integerObject:
-                op = IR::Opcode::push_integer;
-                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
-                break;
-            case IRValueType::valueType::booleanObject:
-                op = IR::Opcode::push_integer;
-                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(2));
-                break;
-            case IRValueType::valueType::decimalObject:
-                op = IR::Opcode::push_integer;
-                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(1));
-                break;
-            case IRValueType::valueType::characterObject:
-                op = IR::Opcode::push_integer;
-                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(3));
-                break;
-            case IRValueType::valueType::stringObject:
-                op = IR::Opcode::push_integer;
-                operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(4));
-                break;
-            case IRValueType::valueType::structObject:
-                op = IR::Opcode::typeid_struct;
-                operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
-                operand.emplace_back(IROperand::operandType::index, type->typeIndex);
-                break;
-            case IRValueType::valueType::interfaceObject:
-                op = IR::Opcode::typeid_interface;
-                operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
-                operand.emplace_back(IROperand::operandType::index, type->typeIndex);
-                break;
-            default:
-                /* TODO: add more typeid opcodes */
-                break;
+        if (type->isArrayType() || type->isDynamicArrayType()) {
+            yoi::indexT size = 1;
+            for (auto &dim : type->dimensions) {
+                size *= dim;
+            }
+
+            op = IR::Opcode::typeid_object_non_stack;
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
+            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+            operand.emplace_back(IROperand::operandType::index, size);
+        } else {
+            switch (type->type) {
+                case IRValueType::valueType::integerObject:
+                    op = IR::Opcode::push_integer;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
+                    break;
+                case IRValueType::valueType::booleanObject:
+                    op = IR::Opcode::push_integer;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(2));
+                    break;
+                case IRValueType::valueType::decimalObject:
+                    op = IR::Opcode::push_integer;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(1));
+                    break;
+                case IRValueType::valueType::characterObject:
+                    op = IR::Opcode::push_integer;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(3));
+                    break;
+                case IRValueType::valueType::stringObject:
+                    op = IR::Opcode::push_integer;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(4));
+                    break;
+                case IRValueType::valueType::structObject:
+                case IRValueType::valueType::interfaceObject:
+                    op = IR::Opcode::typeid_object_non_stack;
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
+                    operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
+                    break;
+                default:
+                    /* TODO: add more typeid opcodes */
+                    break;
+            }
         }
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.push_back(managedPtr(IRValueType(IRValueType::valueType::integerObject)));
@@ -1122,31 +1133,44 @@ namespace yoi {
     void IRBuilder::dynCastOp(const std::shared_ptr<IRValueType> &type) {
         IR::Opcode op;
         vec<IROperand> operand;
-        switch (type->type) {
-            case IRValueType::valueType::integerObject:
-                op = IR::Opcode::dyn_cast_int;
-                break;
-            case IRValueType::valueType::booleanObject:
-                op = IR::Opcode::dyn_cast_bool;
-                break;
-            case IRValueType::valueType::decimalObject:
-                op = IR::Opcode::dyn_cast_deci;
-                break;
-            case IRValueType::valueType::stringObject:
-                op = IR::Opcode::dyn_cast_str;
-                break;
-            case IRValueType::valueType::characterObject:
-                op = IR::Opcode::dyn_cast_char;
-                break;
-            case IRValueType::valueType::structObject:
-                op = IR::Opcode::dyn_cast_struct;
-                break;
-            default:
-                /* TODO: add more dynamic cast opcodes */
-                break;
+        if (type->isDynamicArrayType() || type->isArrayType()) {
+            yoi::indexT size = 1;
+            for (auto &dim : type->dimensions) {
+                size *= dim;
+            }
+
+            op = IR::Opcode::dyn_cast_any;
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
+            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+            operand.emplace_back(IROperand::operandType::index, size);
+        } else {
+            switch (type->type) {
+                case IRValueType::valueType::integerObject:
+                    op = IR::Opcode::dyn_cast_int;
+                    break;
+                case IRValueType::valueType::booleanObject:
+                    op = IR::Opcode::dyn_cast_bool;
+                    break;
+                case IRValueType::valueType::decimalObject:
+                    op = IR::Opcode::dyn_cast_deci;
+                    break;
+                case IRValueType::valueType::stringObject:
+                    op = IR::Opcode::dyn_cast_str;
+                    break;
+                case IRValueType::valueType::characterObject:
+                    op = IR::Opcode::dyn_cast_char;
+                    break;
+                case IRValueType::valueType::structObject:
+                    op = IR::Opcode::dyn_cast_struct;
+                    break;
+                default:
+                    /* TODO: add more dynamic cast opcodes */
+                    break;
+            }
+            operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
+            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
         }
-        operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
-        operand.emplace_back(IROperand::operandType::index, type->typeIndex);
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.pop_back();
         tempVarStack.push_back(type);
