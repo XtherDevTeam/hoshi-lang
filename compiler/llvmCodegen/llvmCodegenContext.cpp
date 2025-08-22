@@ -1720,7 +1720,7 @@ namespace yoi {
             case IR::Opcode::interfaceof: {
                 // get the typeid off the stack
                 auto typeidValue = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
-                yoi_assert(typeidValue.yoiType->type == IRValueType::valueType::integerObject, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: interfaceof with non-integer typeid.");
+                yoi_assert(typeidValue.yoiType->type == IRValueType::valueType::integerObject || typeidValue.yoiType->type == IRValueType::valueType::integerRaw, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: interfaceof with non-integer typeid.");
                 // get the interface object off the stack
                 auto interfaceValue = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 
@@ -2830,18 +2830,21 @@ namespace yoi {
                 }
                 case IRValueType::valueType::structObject: {
                     auto structDef = yoiModule->structTable[type->typeIndex];
+                    yoi::vec<std::string> fieldNames(structDef->fieldTypes.size());
                     for (auto it = structDef->nameIndexMap.begin(); it!= structDef->nameIndexMap.end(); ++it) {
                         if (it->second.type == IRStructDefinition::nameInfo::nameType::method)
                             continue;
-                        auto fieldYoiType = structDef->fieldTypes[it->second.index];
+                        auto fieldName = wstring2string(it->first);
+                        fieldNames[it->second.index] = fieldName;
+                    }
+                    for (yoi::indexT i = 0; i < fieldNames.size(); i++) {
+                        auto fieldYoiType = structDef->fieldTypes[i];
                         // Recursively get the DIType for the field.
                         auto* fieldDIType = getDIType(fieldYoiType);
-                        auto fieldName = wstring2string(it->first);
-
                         uint64_t fieldSize = TheModule->getDataLayout().getTypeSizeInBits(yoiTypeToLLVMType(fieldYoiType));
 
                         MemberTypes.push_back(DBuilder->createMemberType(
-                            compileUnits[L"<default>"], fieldName, nullptr, 0,
+                            compileUnits[L"<default>"], fieldNames[i], nullptr, 0,
                             fieldSize, fieldSize, currentSize,
                             llvm::DINode::FlagZero, fieldDIType
                         ));

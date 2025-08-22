@@ -1338,20 +1338,23 @@ namespace yoi {
                         auto argTypes = evaluateArguments(args);
                         yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
 
+                        auto concreteThis = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                        
                         auto externInterface = getExternEntry(targetModule, baseName);
                         moduleContext->getIRBuilder().newInterfaceOp(externInterface.itemIndex, true, externInterface.affiliateModule);
 
                         auto interfaceImplName = getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex}, argTypes[0]);
-                        auto interfaceImplIndex = targetedModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                        auto interfaceImplIndex = moduleContext->getCompilerContext()->getImportedModule(concreteThis->typeAffiliateModule)->interfaceImplementationTable.getIndex(interfaceImplName);
                         moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, targetModule != currentModuleIndex, targetModule);
                         
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
                     } catch (const std::runtime_error &e) {
                         throw e;
-                    } catch (const std::exception &) {
-                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find matched extern interface constructor for " + wstring2string(baseName));
-                    }
+                    }/* catch (const std::exception &e) {
+                        // panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find matched extern interface constructor for " + wstring2string(baseName));
+                        throw e;
+                    }*/
                 }
             }
 

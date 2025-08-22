@@ -228,6 +228,23 @@ namespace yoi {
                     default: break;
                 }
             }
+            case IR::Opcode::typeid_object_non_stack:
+            case IR::Opcode::dyn_cast_any: {
+                auto valueType = static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex);
+                switch (valueType) {
+                    case IRValueType::valueType::structObject:
+                        newInstr.operands[1].value.symbolIndex = ENTRY_MODULE_ID_CONST;
+                        newInstr.operands[2].value.symbolIndex = structRemapping.at(currentModuleId).at(instr.operands[1].value.symbolIndex);
+                        break;
+                    case IRValueType::valueType::interfaceObject:
+                        newInstr.operands[1].value.symbolIndex = ENTRY_MODULE_ID_CONST;
+                        newInstr.operands[2].value.symbolIndex = interfaceRemapping.at(currentModuleId).at(instr.operands[1].value.symbolIndex);
+                        break;
+                    default: 
+                        break;
+                }
+                break;
+            }
             default:
                 break;
         }
