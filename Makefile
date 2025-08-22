@@ -25,7 +25,7 @@ build/%: examples/%.hoshi cmake_debug build_debug
 build-release/%: examples/%.hoshi cmake_production build_production
 	./cmake-build-release/hoshi_lang $< -o $@ --build-mode release --preserve-intermediate
 
-package: build_production
+package:
 	rm -rf build-package
 	mkdir -p build-package/bin
 	cp cmake-build-release/*hoshi* build-package/bin
