@@ -11,6 +11,7 @@ var searchData=
   ['typeid_5finterface_8',['typeid_interface',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e',1,'yoi::IR']]],
   ['typeid_5finterface_5fimpl_9',['typeid_interface_impl',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad91696d28942cb5539ce5a2031a6da9',1,'yoi::IR']]],
   ['typeid_5fobject_10',['typeid_object',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1ce501a67014d20ed9b4530677585fac',1,'yoi::IR']]],
-  ['typeid_5fstr_11',['typeid_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906',1,'yoi::IR']]],
-  ['typeid_5fstruct_12',['typeid_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d',1,'yoi::IR']]]
+  ['typeid_5fobject_5fnon_5fstack_11',['typeid_object_non_stack',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0',1,'yoi::IR']]],
+  ['typeid_5fstr_12',['typeid_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906',1,'yoi::IR']]],
+  ['typeid_5fstruct_13',['typeid_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d',1,'yoi::IR']]]
 ];

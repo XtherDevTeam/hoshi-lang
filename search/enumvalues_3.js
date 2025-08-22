@@ -14,10 +14,11 @@ var searchData=
   ['dot_11',['dot',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a69eb76c88557a8211cbfc9beda5fc062',1,'yoi::lexer::token']]],
   ['dummy_5fbreak_12',['dummy_break',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af1d60dfb506a7016f93ce3bd20a4eff5',1,'yoi::IR']]],
   ['dummy_5fcontinue_13',['dummy_continue',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae993ca208002c12466593a3adf1c6b8f',1,'yoi::IR']]],
-  ['dyn_5fcast_5fbool_14',['dyn_cast_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5',1,'yoi::IR']]],
-  ['dyn_5fcast_5fchar_15',['dyn_cast_char',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1',1,'yoi::IR']]],
-  ['dyn_5fcast_5fdeci_16',['dyn_cast_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de',1,'yoi::IR']]],
-  ['dyn_5fcast_5fint_17',['dyn_cast_int',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae',1,'yoi::IR']]],
-  ['dyn_5fcast_5fstr_18',['dyn_cast_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02',1,'yoi::IR']]],
-  ['dyn_5fcast_5fstruct_19',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]]
+  ['dyn_5fcast_5fany_14',['dyn_cast_any',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942',1,'yoi::IR']]],
+  ['dyn_5fcast_5fbool_15',['dyn_cast_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5',1,'yoi::IR']]],
+  ['dyn_5fcast_5fchar_16',['dyn_cast_char',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1',1,'yoi::IR']]],
+  ['dyn_5fcast_5fdeci_17',['dyn_cast_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de',1,'yoi::IR']]],
+  ['dyn_5fcast_5fint_18',['dyn_cast_int',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae',1,'yoi::IR']]],
+  ['dyn_5fcast_5fstr_19',['dyn_cast_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02',1,'yoi::IR']]],
+  ['dyn_5fcast_5fstruct_20',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]]
 ];

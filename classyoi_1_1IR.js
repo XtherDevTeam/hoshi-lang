@@ -81,6 +81,7 @@ var classyoi_1_1IR =
       [ "typeid_struct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d", null ],
       [ "typeid_interface", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e", null ],
       [ "typeid_object", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1ce501a67014d20ed9b4530677585fac", null ],
+      [ "typeid_object_non_stack", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0", null ],
       [ "typeid_interface_impl", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad91696d28942cb5539ce5a2031a6da9", null ],
       [ "dyn_cast_int", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae", null ],
       [ "dyn_cast_deci", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de", null ],
@@ -88,6 +89,7 @@ var classyoi_1_1IR =
       [ "dyn_cast_char", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1", null ],
       [ "dyn_cast_str", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02", null ],
       [ "dyn_cast_struct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be", null ],
+      [ "dyn_cast_any", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942", null ],
       [ "nop", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0", null ],
       [ "FINAL", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6c8361dc2036c0559376fe4957699f69", null ]
     ] ],
