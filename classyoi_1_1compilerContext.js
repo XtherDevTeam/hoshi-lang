@@ -15,6 +15,7 @@ var classyoi_1_1compilerContext =
     [ "getIntObjectType", "classyoi_1_1compilerContext.html#aadfa1ff9bc52b3e274d10c0c929ea7fa", null ],
     [ "getIRFFITable", "classyoi_1_1compilerContext.html#a77767dd0f2c2939c1ca6ffe930aa2be4", null ],
     [ "getIRObjectFile", "classyoi_1_1compilerContext.html#a470579c9fc8319567797e651b81ba882", null ],
+    [ "getModuleContext", "classyoi_1_1compilerContext.html#a2dc82e44dde3f0b189e72967fe309c39", null ],
     [ "getModuleIndexByRealPath", "classyoi_1_1compilerContext.html#a6957e65d056c54f75fa6ab54f3bfd9d5", null ],
     [ "getNoneObjectType", "classyoi_1_1compilerContext.html#a8ab82256b764cd6289ea66eef1d8d5c1", null ],
     [ "getNullInterfaceType", "classyoi_1_1compilerContext.html#a3bf21b1452c928fc1d40091e3a4197ef", null ],

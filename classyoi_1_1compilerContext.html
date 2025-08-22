@@ -132,6 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae697f792e0686de32550a48bbd0aafaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc4abde21f69a2557320bbcde9fe025d" id="r_abc4abde21f69a2557320bbcde9fe025d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#abc4abde21f69a2557320bbcde9fe025d">getImportedModule</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> index)</td></tr>
 <tr class="separator:abc4abde21f69a2557320bbcde9fe025d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dc82e44dde3f0b189e72967fe309c39" id="r_a2dc82e44dde3f0b189e72967fe309c39"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1moduleContext.html">yoi::moduleContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a2dc82e44dde3f0b189e72967fe309c39">getModuleContext</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> index)</td></tr>
+<tr class="memdesc:a2dc82e44dde3f0b189e72967fe309c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">get module context by index  <br /></td></tr>
+<tr class="separator:a2dc82e44dde3f0b189e72967fe309c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb23716e427df75cc0185ef4719e817f" id="r_afb23716e427df75cc0185ef4719e817f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#afb23716e427df75cc0185ef4719e817f">getImportedModule</a> (const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;modRealPath)</td></tr>
 <tr class="separator:afb23716e427df75cc0185ef4719e817f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a087fe063ad18c6713808a6530b99e21d" id="r_a087fe063ad18c6713808a6530b99e21d"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a087fe063ad18c6713808a6530b99e21d">getCompiledModules</a> () const</td></tr>
@@ -798,6 +801,36 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a2dc82e44dde3f0b189e72967fe309c39" name="a2dc82e44dde3f0b189e72967fe309c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dc82e44dde3f0b189e72967fe309c39">&#9670;&#160;</a></span>getModuleContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classyoi_1_1moduleContext.html">yoi::moduleContext</a> &gt; getModuleContext </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get module context by index </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the module. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00195">195</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00035">compilerContext::modules</a>.</p>
+
+</div>
+</div>
 <a id="a6957e65d056c54f75fa6ab54f3bfd9d5" name="a6957e65d056c54f75fa6ab54f3bfd9d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6957e65d056c54f75fa6ab54f3bfd9d5">&#9670;&#160;</a></span>getModuleIndexByRealPath()</h2>
 
@@ -1331,7 +1364,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00035">35</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00195">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>.</p>
 
 </div>
 </div>

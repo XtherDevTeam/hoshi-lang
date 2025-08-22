@@ -168,17 +168,17 @@ var NAVTREEINDEX =
 "classyoi_1_1IROptimizer.html#acbbf150e3f416d70e19547ab59630cfb",
 "classyoi_1_1LLVMCodegen.html#a385ee26f67b8d2c9ee371932e55651ca",
 "classyoi_1_1compilerContext.html#a20a81d02d116e13a93ffcdeeef161fb0",
-"classyoi_1_1globalStmt.html#a8d4dd3d00c7b4c344059f4a8f873edd5",
-"classyoi_1_1indexTable_1_1iterator.html#a7d6021149f3583ff964377e41848d066",
-"classyoi_1_1moduleContext.html#a247e384d5bcbeff12b600b7bae077228",
-"classyoi_1_1useStmt.html",
-"def_8hpp.html#a9b1a87fa4d0a59f9b776d685d6873353",
-"md_docs_2IR.html",
-"namespaceyoi.html#a15cf680cc70bbdf85336b11baf987a6f",
-"parser_8hpp.html#a85a5c3fdeea1b1b7bf09f0f79fa1bf4d",
-"structyoi_1_1IRBuildConfig_1_1Builder.html#a1f633ce5c87a96842f9a6886a2310739",
-"structyoi_1_1lexer_1_1token.html",
-"unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#ac34323f3e05c900621055671d8d5124e"
+"classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87",
+"classyoi_1_1indexTable_1_1iterator.html#a74202cdd96628bc49a756e5fc87d22de",
+"classyoi_1_1moduleContext.html#a226899936496c57ff9775da9612aede8",
+"classyoi_1_1uniqueExpr.html#ac485117f5866ff463acba2ce4e224ac7",
+"def_8hpp.html#a49de16146e5ab66039f7f95b79a82023",
+"md_docs_2Array.html#autotoc_md2",
+"namespaceyoi.html#a0f18b1f65be512f512f24b847704ba55",
+"parser_8hpp.html#a6fbcc9eb2eac7faf4e7d5d36c100b681",
+"structyoi_1_1IRBuildConfig_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac",
+"structyoi_1_1lexer_1_1lexerState.html#aa8d76d83ac34f1a589e4fb9aafdc5933",
+"unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#a1da67e1cae7840ed8a47fc5b04f678c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

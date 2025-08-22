@@ -49,13 +49,14 @@ var searchData=
   ['modulecontext_46',['modulecontext',['../classyoi_1_1moduleContext.html#aef836205cda58b0b2eb84c5a29ce5245',1,'yoi::moduleContext::moduleContext()'],['../classyoi_1_1visitor.html#ac4eceba0edc69fec4b80e1ad2d1e6f45',1,'yoi::visitor::moduleContext'],['../classyoi_1_1moduleContext.html',1,'moduleContext']]],
   ['modulecontext_2ecpp_47',['moduleContext.cpp',['../moduleContext_8cpp.html',1,'']]],
   ['modulecontext_2eh_48',['moduleContext.h',['../moduleContext_8h.html',1,'']]],
-  ['moduleimported_49',['moduleImported',['../classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4',1,'yoi::compilerContext']]],
-  ['moduleimports_50',['moduleImports',['../classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5',1,'yoi::IRModule']]],
-  ['modulepath_51',['modulePath',['../classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882',1,'yoi::IRModule']]],
-  ['modules_52',['modules',['../md_docs_2Spec.html#autotoc_md71',1,'7.1. Modules'],['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext::modules'],['../index.html#autotoc_md90',1,'Modules']]],
-  ['modules_20and_20foreign_20function_20interface_20ffi_53',['7. Modules and Foreign Function Interface (FFI)',['../md_docs_2Spec.html#autotoc_md70',1,'']]],
-  ['mul_54',['mul',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253',1,'yoi::IR::mul'],['../classyoi_1_1IROptimizer.html#a5d3c34dd5e969ad2820acb1c739df6ce',1,'yoi::IROptimizer::mul()']]],
-  ['mulexpr_55',['mulExpr',['../classyoi_1_1mulExpr.html',1,'yoi']]],
-  ['multiplicationassignment_56',['multiplicationAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a295d57fba259dde47fb17b835e3c21df',1,'yoi::lexer::token']]],
-  ['must_20be_20a_20tt_20import_20wrapper_20tt_57',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md76',1,'']]]
+  ['modulecontextstack_49',['moduleContextStack',['../classyoi_1_1visitor.html#a3b839db7f6dd34f648ae7333a033eb4c',1,'yoi::visitor']]],
+  ['moduleimported_50',['moduleImported',['../classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4',1,'yoi::compilerContext']]],
+  ['moduleimports_51',['moduleImports',['../classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5',1,'yoi::IRModule']]],
+  ['modulepath_52',['modulePath',['../classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882',1,'yoi::IRModule']]],
+  ['modules_53',['modules',['../md_docs_2Spec.html#autotoc_md71',1,'7.1. Modules'],['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext::modules'],['../index.html#autotoc_md90',1,'Modules']]],
+  ['modules_20and_20foreign_20function_20interface_20ffi_54',['7. Modules and Foreign Function Interface (FFI)',['../md_docs_2Spec.html#autotoc_md70',1,'']]],
+  ['mul_55',['mul',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253',1,'yoi::IR::mul'],['../classyoi_1_1IROptimizer.html#a5d3c34dd5e969ad2820acb1c739df6ce',1,'yoi::IROptimizer::mul()']]],
+  ['mulexpr_56',['mulExpr',['../classyoi_1_1mulExpr.html',1,'yoi']]],
+  ['multiplicationassignment_57',['multiplicationAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a295d57fba259dde47fb17b835e3c21df',1,'yoi::lexer::token']]],
+  ['must_20be_20a_20tt_20import_20wrapper_20tt_58',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md76',1,'']]]
 ];

@@ -1,5 +1,11 @@
 var NAVTREEINDEX12 =
 {
+"md_docs_2Array.html#autotoc_md2":[2,0,0],
+"md_docs_2Array.html#autotoc_md3":[2,0,1],
+"md_docs_2Array.html#autotoc_md4":[2,1],
+"md_docs_2Array.html#autotoc_md5":[2,1,0],
+"md_docs_2Array.html#autotoc_md6":[2,2],
+"md_docs_2Direct_01Assignment.html":[3],
 "md_docs_2IR.html":[5],
 "md_docs_2IR.html#autotoc_md11":[5,0],
 "md_docs_2IR.html#autotoc_md12":[5,0,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX12 =
 "namespaceyoi.html#a091b106e7d8a560a9ebce468e0d7586e":[14,0,1,154],
 "namespaceyoi.html#a0b2ef8e68d038ee3fa1314c428a16399":[14,0,1,130],
 "namespaceyoi.html#a0dae1c7c6f5a6f2893134e06ba2f6808":[14,0,1,132],
-"namespaceyoi.html#a0e820800c4ca90258ce64bea7bcbe5f3":[14,0,1,222],
-"namespaceyoi.html#a0f18b1f65be512f512f24b847704ba55":[14,0,1,162],
-"namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd":[14,0,1,185],
-"namespaceyoi.html#a134cef18ba3b99a601622a0b270a6ac0":[14,0,1,190],
-"namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a":[14,0,1,267],
-"namespaceyoi.html#a1593e68af5fb2ae02f61a244c3695fc0":[14,0,1,138],
-"namespaceyoi.html#a1599eecf8781c9dba0e44baefb471abf":[14,0,1,230]
+"namespaceyoi.html#a0e820800c4ca90258ce64bea7bcbe5f3":[14,0,1,222]
 };

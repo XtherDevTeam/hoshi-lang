@@ -11,8 +11,9 @@ var searchData=
   ['min_5fv_8',['min_v',['../namespacemagic__enum_1_1detail.html#a830bec78565c9a58160a14b6d9a59650',1,'magic_enum::detail']]],
   ['moduleast_9',['moduleAST',['../classyoi_1_1moduleContext.html#affc03367afdb2b7984d698b1af375424',1,'yoi::moduleContext']]],
   ['modulecontext_10',['moduleContext',['../classyoi_1_1visitor.html#ac4eceba0edc69fec4b80e1ad2d1e6f45',1,'yoi::visitor']]],
-  ['moduleimported_11',['moduleImported',['../classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4',1,'yoi::compilerContext']]],
-  ['moduleimports_12',['moduleImports',['../classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5',1,'yoi::IRModule']]],
-  ['modulepath_13',['modulePath',['../classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882',1,'yoi::IRModule']]],
-  ['modules_14',['modules',['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext']]]
+  ['modulecontextstack_11',['moduleContextStack',['../classyoi_1_1visitor.html#a3b839db7f6dd34f648ae7333a033eb4c',1,'yoi::visitor']]],
+  ['moduleimported_12',['moduleImported',['../classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4',1,'yoi::compilerContext']]],
+  ['moduleimports_13',['moduleImports',['../classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5',1,'yoi::IRModule']]],
+  ['modulepath_14',['modulePath',['../classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882',1,'yoi::IRModule']]],
+  ['modules_15',['modules',['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext']]]
 ];
