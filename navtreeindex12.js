@@ -1,5 +1,9 @@
 var NAVTREEINDEX12 =
 {
+"main_8cpp.html#a217dbf8b442f20279ea00b898af96f52":[16,0,4,1],
+"main_8cpp.html#a3d7a1902985a2e1eac2e2fe92d9fbb46":[16,0,4,0],
+"main_8cpp.html#afab1557244eb6ab3cb446f0e7cad8905":[16,0,4,2],
+"main_8cpp_source.html":[16,0,4],
 "md_THIRDPARTY.html":[11],
 "md_TODO.html":[12],
 "md_TODO.html#autotoc_md99":[12,0],
@@ -245,9 +249,5 @@ var NAVTREEINDEX12 =
 "namespacemembers_w.html":[14,1,0,18],
 "namespacemembers_y.html":[14,1,0,19],
 "namespaces.html":[14,0],
-"namespaceyoi.html":[14,0,1],
-"namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0":[14,0,1,265],
-"namespaceyoi.html#a0227cf7705c32fb1e978512cc35fe93d":[14,0,1,177],
-"namespaceyoi.html#a030e332a183a7274ce49b20fd9bd2eaf":[14,0,1,157],
-"namespaceyoi.html#a064b9dd6909be989b8cb9bae73e4b579":[14,0,1,240]
+"namespaceyoi.html":[14,0,1]
 };

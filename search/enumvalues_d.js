@@ -7,9 +7,10 @@ var searchData=
   ['pop_4',['pop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48',1,'yoi::IR']]],
   ['pop_5fexception_5fhandler_5',['pop_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0234ee301782476fafbfec28816162d2',1,'yoi::IR']]],
   ['push_5fboolean_6',['push_boolean',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a',1,'yoi::IR']]],
-  ['push_5fdecimal_7',['push_decimal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1',1,'yoi::IR']]],
-  ['push_5fexception_5fhandler_8',['push_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7073575d0da91ba9b403a3c01de666e3',1,'yoi::IR']]],
-  ['push_5finteger_9',['push_integer',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f',1,'yoi::IR']]],
-  ['push_5fnull_10',['push_null',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90',1,'yoi::IR']]],
-  ['push_5fstring_11',['push_string',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b',1,'yoi::IR']]]
+  ['push_5fcharacter_7',['push_character',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afb6a04d1b184942ceb195a407f9a2f97',1,'yoi::IR']]],
+  ['push_5fdecimal_8',['push_decimal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1',1,'yoi::IR']]],
+  ['push_5fexception_5fhandler_9',['push_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7073575d0da91ba9b403a3c01de666e3',1,'yoi::IR']]],
+  ['push_5finteger_10',['push_integer',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f',1,'yoi::IR']]],
+  ['push_5fnull_11',['push_null',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90',1,'yoi::IR']]],
+  ['push_5fstring_12',['push_string',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b',1,'yoi::IR']]]
 ];
