@@ -473,7 +473,7 @@ namespace yoi {
                 break;
             case IRValueType::valueType::characterObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_string, {{IROperand::operandType::character, IROperand::operandValue{static_cast<int64_t>(item.possibleValue.charValue)}}}, IRArr[index].debugInfo});
+                                 IR::Opcode::push_character, {{IROperand::operandType::character, IROperand::operandValue{static_cast<int64_t>(item.possibleValue.charValue)}}}, IRArr[index].debugInfo});
                 break;
             default:
                 panic(0, 0, "IROptimizer::generatePushOp: Unsupported value type for push constant operation");
@@ -1134,9 +1134,13 @@ namespace yoi {
                     auto definitionType = targetFunction->getVariableTable().get(ins.operands[0].value.symbolIndex);
                     auto value = simulationStack.peek(0);
 
+                    if (value.type->isForeignBasicType()) {
+                        *value.type = compilerCtx->normalizeForeignBasicType(value.type);
+                    }
+
                     if(*definitionType != *value.type) {
                         // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_local: type mismatch");
+                        panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_local: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -1163,9 +1167,13 @@ namespace yoi {
                     auto definitionType = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
                     auto value = simulationStack.peek(0);
 
+                    if (value.type->isForeignBasicType()) {
+                        *value.type = compilerCtx->normalizeForeignBasicType(value.type);
+                    }
+
                     if(*definitionType != *value.type) {
                         // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_global: type mismatch");
+                        panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_global: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -1191,9 +1199,13 @@ namespace yoi {
                     auto memberIndex = ins.operands[0].value.symbolIndex;
                     auto memberDef = structDef->fieldTypes[memberIndex];
 
+                    if (value.type->isForeignBasicType()) {
+                        *value.type = compilerCtx->normalizeForeignBasicType(value.type);
+                    }
+
                     if(*memberDef != *value.type) {
                         // type mismatch, panic
-                        panic(0, 0, "IROptimizer::reduceRedundantConstantExpr(): store_member: type mismatch");
+                        panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_member: type mismatch");
                     }
 
                     simulationStack.pop();
@@ -3046,9 +3058,13 @@ namespace yoi {
                     compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
                 auto value = simulationStack.peek(0);
 
+                if (value.type->isForeignBasicType()) {
+                    *value.type = compilerCtx->normalizeForeignBasicType(value.type);
+                }
+
                 if (*definitionType != *value.type) {
                     // type mismatch, panic
-                    panic(0, 0, "IROptimizer::analyzeBlock(): store_global: type mismatch");
+                    panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::analyzeBlock(): store_global: type mismatch");
                 }
 
                 simulationStack.pop();
@@ -3076,9 +3092,13 @@ namespace yoi {
                 auto memberIndex = ins.operands[0].value.symbolIndex;
                 auto memberDef = structDef->fieldTypes[memberIndex];
 
+                if (value.type->isForeignBasicType()) {
+                    *value.type = compilerCtx->normalizeForeignBasicType(value.type);
+                }
+
                 if (*memberDef != *value.type) {
                     // type mismatch, panic
-                    panic(0, 0, "IROptimizer::analyzeBlock(): store_member: type mismatch");
+                    panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::analyzeBlock(): store_member: type mismatch");
                 }
 
                 simulationStack.pop();
@@ -3302,6 +3322,10 @@ namespace yoi {
             case IR::Opcode::direct_assign: {
                 auto rhs = simulationStack.peek(0);
                 auto lhs = simulationStack.peek(1);
+
+                if (rhs.type->isForeignBasicType()) {
+                    *rhs.type = rhs.type->getNormalizedForeignBasicType();
+                }
                 yoi_assert(*lhs.type == *rhs.type, 0, 0, "IROptimizer::analyzeBlock(): direct_assign: type mismatch");
                 simulationStack.pop();
                 simulationStack.pop();

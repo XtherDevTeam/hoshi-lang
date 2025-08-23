@@ -922,7 +922,6 @@ namespace yoi {
                         if (currentObjectType->isArrayType() || currentObjectType->isDynamicArrayType()) {
                             if (isStoreOp && isFinalOperation) {
                                 // This handles `... = obj.field[i]`
-                                tryCastTo(managedPtr(currentObjectType->getElementType()));
                                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
                             } else {
                                 // This handles `let x = obj.field[i]`
@@ -1441,6 +1440,8 @@ namespace yoi {
             return *moduleContext->getCompilerContext()->getForeignInt32ObjectType();
         } else if (typeName == L"float") {
             return *moduleContext->getCompilerContext()->getForeignFloatObjectType();
+        } else if (typeName == L"ptr") {
+            return *moduleContext->getCompilerContext()->getPointerObjectType();
         } else {
             panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }
@@ -2303,8 +2304,15 @@ namespace yoi {
     }
 
     void visitor::emitBasicCastInBasicArithOpByLhsAndRhs(yoi::indexT lhs, yoi::indexT rhs) {
-        auto lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
-        auto rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
+        auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
+        if (lhsType->isForeignBasicType()) {
+            lhsType = managedPtr(lhsType->getNormalizedForeignBasicType());
+        }
+        if (rhsType->isForeignBasicType()) {
+            rhsType = managedPtr(rhsType->getNormalizedForeignBasicType());
+        }
 
         // if bool and char with other, upcast to other
         if (lhsType->is1ByteType() && !rhsType->is1ByteType()) {
@@ -2932,6 +2940,10 @@ namespace yoi {
 
     void visitor::tryCastTo(const std::shared_ptr<IRValueType> &toType) {
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        if (rhs->isForeignBasicType()) {
+            rhs = managedPtr(rhs->getNormalizedForeignBasicType());
+        }
+
         if (*rhs == *toType) {
             return;
         } else if (rhs->isArrayType() && toType->isDynamicArrayType()) {

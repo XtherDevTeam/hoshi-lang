@@ -124,6 +124,8 @@ namespace yoi {
 
         bool isDynamicArrayType() const;
 
+        IRValueType getNormalizedForeignBasicType();
+
         IRValueType getElementType();
 
         IRValueType getArrayType(const yoi::vec<yoi::indexT> &dimensions);
@@ -730,9 +732,9 @@ namespace yoi {
 
         IRValueType getLocalVar(yoi::indexT index);
 
-        const std::shared_ptr<IRValueType> &getLhsFromTempVarStack();
+        std::shared_ptr<IRValueType> &getLhsFromTempVarStack();
 
-        const std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
+        std::shared_ptr<IRValueType> &getRhsFromTempVarStack();
 
         void basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint, bool lhs = false);
 

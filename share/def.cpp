@@ -53,6 +53,9 @@ namespace yoi {
                         value.push_back(fuckutf);
                         break;
                     }
+                    case '0':
+                        value.push_back('\0');
+                        break;
                     default:
                         value.push_back(ch);
                         break;

@@ -196,9 +196,28 @@ namespace yoi {
         for (auto &[modIndex, irMod] : moduleImported) {
             for (auto &i : irMod->functionTable) {
                 // printf("%s\n", wstring2string(i.second->to_string()).c_str());
+                set_current_file_path(i.second->debugInfo.sourceFile);
                 IROptimizer optimizer{shared_from_this(), irMod};
                 optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
             }
         }
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getPointerObjectType() {
+        return builtinModuleBuilder->sharedValueType[L"ptr"];
+    }
+    yoi::IRValueType compilerContext::normalizeForeignBasicType(const std::shared_ptr<yoi::IRValueType> &type) {
+        if (type->isForeignBasicType()) {
+            switch (type->type) {
+                case IRValueType::valueType::foreignInt32Type:
+                case IRValueType::valueType::pointerObject:
+                    return *getIntObjectType();
+                case IRValueType::valueType::foreignFloatType:
+                    return *getDeciObjectType();
+                default:
+                    throw std::runtime_error("unknown foreign basic type");
+            }
+        }
+        return *type;
     }
 } // namespace yoi

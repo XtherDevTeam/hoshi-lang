@@ -65,6 +65,14 @@ namespace yoi {
         };
     }
 
+    yoi::IRValueType BuiltinModuleBuilder::getPointerObject() {
+        return {
+            IRValueType::valueType::pointerObject,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            {}
+        };
+    }
+
     void BuiltinModuleBuilder::initializeSharedObjectDefinitions() {
         module->interfaceTable.put_create(L"NullInterface", managedPtr(getNullInterfaceInstanceDefinition()));
     }
@@ -79,6 +87,8 @@ namespace yoi {
 
         sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
         sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
+        sharedValueType.put(L"ptr", managedPtr(getPointerObject()));
+
 
         for (auto &sharedValue : sharedValueType) {
             if (sharedValue.second->isForeignBasicType())

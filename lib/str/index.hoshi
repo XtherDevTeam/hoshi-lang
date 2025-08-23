@@ -1,0 +1,174 @@
+import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
+import strlen(str: string) : int from "builtin"
+import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
+import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
+
+struct Str {
+    data: char[],
+    length: int,
+    capacity: int,
+    push(ch: char) : none,
+    pop() : none,
+    size() : int,
+    clear() : none,
+    capacity_resize(new_capacity: int) : none,
+    shrink_to_fit() : none,
+    startswith(prefix: Str) : bool,
+    endswith(suffix: Str) : bool,
+    c_str() : int,
+    constructor(literal: string),
+    constructor(arr: char[]),
+    constructor(capacity: int),
+    constructor(),
+    static operator+(a: Str, b: Str) : Str,
+    static operator+(a: Str, b: string) : Str,
+    static operator+(a: string, b: Str) : Str,
+    static operator==(a: Str, b: Str) : bool,
+    static operator==(a: Str, b: string) : bool,
+    static operator==(a: string, b: Str) : bool,
+    static operator[](self: Str, index: int) : char,
+    static operator[](value: char, self: Str, index: int) : none
+}
+
+impl Str {
+    constructor(literal: string) {
+        this.length = strlen(literal)
+        this.capacity = this.length + 1
+        this.data = new char[this.capacity]()
+        memcpy(runtime_get_string_array_data_pointer(this.data), literal, this.length)
+        this.data[this.length] = '\0'
+        return this
+    },
+    constructor(arr: char[]) {
+        this.length = arr.length
+        this.data = arr
+        this.capacity = this.length + 1
+        return this
+    },
+    constructor(capacity: int) {
+        if (capacity < 1) {
+            capacity = 1
+        }
+        this.length = 0
+        this.capacity = capacity
+        this.data = new char[capacity]()
+        this.data[0] = '\0'
+        return this
+    },
+    constructor() {
+        this.length = 0
+        this.capacity = 1
+        this.data = new char[1]()
+        this.data[0] = '\0'
+        return this
+    },
+    capacity_resize(new_capacity: int) : none {
+        if (new_capacity <= this.capacity) {
+            return
+        }
+        let new_data = new char[new_capacity]()
+        memcpy(runtime_get_string_array_data_pointer(new_data), runtime_get_string_array_data_pointer(this.data), this.length)
+        this.data = new_data
+        this.capacity = new_capacity
+    },
+    push(ch: char) : none {
+        if (this.length == this.capacity) {
+            this.capacity_resize(this.capacity * 2)
+        }
+        this.data[this.length] = ch
+        this.length += 1
+        this.data[this.length] = '\0'
+    },
+    pop() : none {
+        if (this.length == 0) {
+            return
+        }
+        this.length -= 1
+        this.data[this.length] = '\0'
+    },
+    size() : int {
+        return this.length
+    },
+    clear() : none {
+        this.length = 0
+        this.data[0] = '\0'
+    },
+    shrink_to_fit() : none {
+        if (this.length == this.capacity) {
+            return
+        }
+        let new_data = new char[this.length + 1]()
+        memcpy(runtime_get_string_array_data_pointer(new_data), runtime_get_string_array_data_pointer(this.data), this.length)
+        this.data = new_data
+        this.capacity = this.length + 1
+    },
+    startswith(prefix: Str) : bool {
+        if (prefix.length > this.length) {
+            return false
+        }
+        return memcmp(runtime_get_string_array_data_pointer(this.data), runtime_get_string_array_data_pointer(prefix.data), prefix.length) == 0
+    },
+    endswith(suffix: Str) : bool {
+        if (suffix.length > this.length) {
+            return false
+        }
+        return memcmp(runtime_get_string_array_data_pointer(this.data) + this.length - suffix.length, runtime_get_string_array_data_pointer(suffix.data), suffix.length) == 0
+    },
+    static operator+(a: Str, b: Str) : Str {
+        let new_str = Str(a.length + b.length)
+        memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(a.data), a.length)
+        memcpy(runtime_get_string_array_data_pointer(new_str.data) + a.length, runtime_get_string_array_data_pointer(b.data), b.length)
+        new_str.data[a.length + b.length] = '\0'
+        new_str.length = a.length + b.length
+        return new_str
+    },
+    static operator+(a: Str, b: string) : Str {
+        let new_str = Str(a.length + strlen(b))
+        memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(a.data), a.length)
+        memcpy(runtime_get_string_array_data_pointer(new_str.data) + a.length, b, strlen(b))
+        new_str.data[a.length + strlen(b)] = '\0'
+        new_str.length = a.length + strlen(b)
+        return new_str
+    },
+    static operator+(a: string, b: Str) : Str {
+        let new_str = Str(strlen(a) + b.length)
+        memcpy(runtime_get_string_array_data_pointer(new_str.data), a, strlen(a))
+        memcpy(runtime_get_string_array_data_pointer(new_str.data) + strlen(a), runtime_get_string_array_data_pointer(b.data), b.length)
+        new_str.data[strlen(a) + b.length] = '\0'
+        new_str.length = strlen(a) + b.length
+        return new_str
+    },
+    static operator==(a: Str, b: Str) : bool {
+        if (a.length != b.length) {
+            return false
+        }
+        return memcmp(runtime_get_string_array_data_pointer(a.data), runtime_get_string_array_data_pointer(b.data), a.length) == 0
+    },
+    static operator==(a: Str, b: string) : bool {
+        if (a.length != strlen(b)) {
+            return false
+        }
+        return memcmp(runtime_get_string_array_data_pointer(a.data), b, a.length) == 0
+    },
+    static operator==(a: string, b: Str) : bool {
+        if (strlen(a) != b.length) {
+            return false
+        }
+        return memcmp(a, runtime_get_string_array_data_pointer(b.data), b.length) == 0
+    },
+    static operator[](self: Str, index: int) : char {
+        if (index < 0 || index >= self.length) {
+            return '\0'
+        }
+        return self.data[index]
+    },
+    static operator[](value: char, self: Str, index: int) : none {
+        if (index < 0 || index >= self.length) {
+            return
+        }
+        self.data[index] = value
+    },
+    c_str() : int {
+        return runtime_get_string_array_data_pointer(this.data)
+    }
+}

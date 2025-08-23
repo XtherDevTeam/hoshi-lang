@@ -1163,12 +1163,15 @@ namespace yoi {
 
                 auto* function = functionMap.at(mangledFuncName);
 
+                std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
                 std::vector<llvm::Value*> args;
+
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
                     
-                    args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
+                    postCleanup.push_back(ensureObject(arg.yoiType, arg.llvmValue));
+                    args.push_back(postCleanup.back().second);
                     // Callee will retain, so we release the stack's reference
                     // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
@@ -1178,11 +1181,18 @@ namespace yoi {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value is the singleton, but we still put it on the stack.
                     // It doesn't need a ref count increase.
-                    valueStackMap[fromBlock][toBlock].push_back({call, funcDef->returnType});
+                    valueStackMap[fromBlock][toBlock].push_back({call, managedPtr(compilerCtx->normalizeForeignBasicType(funcDef->returnType))});
                 } else {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value comes with a reference count for us to own.
-                    valueStackMap[fromBlock][toBlock].push_back({call, funcDef->returnType});
+                    // valueStackMap[fromBlock][toBlock].push_back({call, funcDef->returnType});
+                    valueStackMap[fromBlock][toBlock].push_back({call, managedPtr(compilerCtx->normalizeForeignBasicType(funcDef->returnType))});
+                }
+
+                if (!noffi) {
+                    for (auto &i : postCleanup) {
+                        callGcFunction(i.second, i.first, false);
+                    }
                 }
                 break;
             }
@@ -2354,8 +2364,6 @@ namespace yoi {
 
                     yoi_assert(!funcDef->returnType->isArrayType() && !funcDef->returnType->isDynamicArrayType(), funcDef->debugInfo.line, funcDef->debugInfo.column, "Array return type not supported for foreign functions");
 
-                    yoi::vec<std::pair<llvm::Value*, std::shared_ptr<IRValueType>>> postCleanArgs;
-
                     yoi::vec<llvm::Value*> args;
                     auto it = wrapperFuncDecl->arg_begin();
                     for (auto &arg : funcDef->argumentTypes) {
@@ -2368,10 +2376,8 @@ namespace yoi {
                                 // bitcast to pointer type
                                 auto *arrayDataPtr = Builder->CreateBitCast(arrayData, llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(arg->getElementType())), 0));
                                 args.push_back(arrayDataPtr);
-                                postCleanArgs.emplace_back(arrayDataPtr, arg); // we can't clean this pointer yet since we need to pass it to the function
                             } else {
                                 auto *argVal = unboxValue(it, arg);
-                                callGcFunction(it, arg, false);
                                 args.push_back(argVal);
                             }
                         } else if (arg->isForeignBasicType()) {
@@ -2388,24 +2394,15 @@ namespace yoi {
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
                         Builder->CreateCall(externFuncDecl, args);
-
-                        for (auto &arg : postCleanArgs) {
-                            callGcFunction(arg.first, arg.second, false);
-                        }
-
                         Builder->CreateRet(noneObjectSingleton);
                     } else {
                         auto result = Builder->CreateCall(externFuncDecl, args, "result");
 
-                        for (auto &arg : postCleanArgs) {
-                            callGcFunction(arg.first, arg.second, false);
-                        }
-
                         llvm::Value *actualResultVal = nullptr;
-                        if (funcDef->returnType->isBasicType()) {
-                            actualResultVal = createBasicObject(funcDef->returnType, result);
-                        } else if (funcDef->returnType->isForeignBasicType()) {
+                        if (funcDef->returnType->isForeignBasicType()) {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
+                        } else if (funcDef->returnType->isBasicType()) {
+                            actualResultVal = createBasicObject(funcDef->returnType, result);
                         } else {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, 0, false); //convert back to yoi type
                         }
@@ -2467,7 +2464,8 @@ namespace yoi {
             case IRValueType::valueType::foreignFloatType: {
                 return compilerCtx->getDeciObjectType();
             }
-            case IRValueType::valueType::foreignInt32Type: {
+            case IRValueType::valueType::foreignInt32Type:
+            case IRValueType::valueType::pointerObject: {
                 return compilerCtx->getIntObjectType();
             }
             default: {
@@ -2506,6 +2504,21 @@ namespace yoi {
                     auto *int32Val = Builder->CreateSExt(val, llvm::Type::getInt64Ty(*TheContext), "int32_val");
                     // create new object
                     auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int32Val);
+                    return newObj;
+                }
+            }
+            case IRValueType::valueType::pointerObject: {
+                if (convertToForeign) {
+                    auto *ptrVal = unboxValue(val, compilerCtx->getIntObjectType());
+                    // bit cast void*
+                    auto *voidPtr = Builder->CreateIntToPtr(ptrVal, llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0), "void_ptr");
+                    return voidPtr;
+                } else {
+                    // bitcast to i64
+                    auto *voidPtr = Builder->CreateBitCast(val, llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0), "void_ptr");
+                    auto *int64Val = Builder->CreatePtrToInt(voidPtr, llvm::Type::getInt64Ty(*TheContext), "int64_val");
+                    // create new object
+                    auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int64Val);
                     return newObj;
                 }
             }

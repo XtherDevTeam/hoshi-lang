@@ -150,12 +150,12 @@ namespace yoi {
         }
     }
 
-    const std::shared_ptr<IRValueType> &IRBuilder::getLhsFromTempVarStack() {
+    std::shared_ptr<IRValueType> &IRBuilder::getLhsFromTempVarStack() {
         yoi_assert(tempVarStack.size() > 1, currentDebugInfo.line, currentDebugInfo.column, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 2];
     }
 
-    const std::shared_ptr<IRValueType> &IRBuilder::getRhsFromTempVarStack() {
+    std::shared_ptr<IRValueType> &IRBuilder::getRhsFromTempVarStack() {
         yoi_assert(tempVarStack.size() > 0, currentDebugInfo.line, currentDebugInfo.column, "tempVarStack is empty.");
         return tempVarStack[tempVarStack.size() - 1];
     }
@@ -573,15 +573,33 @@ namespace yoi {
 
     bool IRValueType::isBasicType() const {
         return type == valueType::integerObject || type == valueType::decimalObject ||
-               type == valueType::booleanObject || type == valueType::stringObject || type == valueType::characterObject;
+               type == valueType::booleanObject || type == valueType::stringObject || type == valueType::characterObject || type == valueType::foreignFloatType || type == valueType::foreignInt32Type;
     }
 
     bool IRValueType::isForeignBasicType() const {
-        return type == valueType::foreignFloatType || type == valueType::foreignInt32Type;
+        return type == valueType::foreignFloatType || type == valueType::foreignInt32Type || type == valueType::pointerObject;
     }
 
     bool IRValueType::is1ByteType() const {
         return type == valueType::booleanObject || type == valueType::characterObject;
+    }
+
+    IRValueType IRValueType::getNormalizedForeignBasicType() {
+        auto res = *this;
+        switch (type) {
+            case IRValueType::valueType::foreignFloatType:
+                res.type = valueType::decimalObject;
+                break;
+            case IRValueType::valueType::foreignInt32Type:
+                res.type = valueType::integerObject;
+                break;
+            case IRValueType::valueType::pointerObject:
+                res.type = valueType::integerObject;
+                break;
+            default:
+                break;
+        }
+        return res;
     }
 
     yoi::wstr IRValueType::to_string(bool showAttributes) const {

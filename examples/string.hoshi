@@ -1,0 +1,20 @@
+use str "str"
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    let a = str.Str("Hello, ") + "world!"
+    puts("string validation passed: operator+")
+    if (a.startswith(str.Str("Hello")) == false) {
+        puts("string valiation failed: startswith 'Hello'")
+        return 1
+    }
+    puts("string valiation passed: startswith 'Hello'")
+    if (a.endswith(str.Str("!")) == false) {
+        puts("string valiation failed: endswith '!'")
+        return 1
+    }
+    puts("string valiation passed: endswith '!'")
+    puts(a.c_str())
+    return 0
+}

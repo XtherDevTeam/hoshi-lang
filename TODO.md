@@ -19,10 +19,13 @@
 - [x] 加入 `interfaceof` `impl` 关键字和 `abstractExpr` 表达式
 - [x] 加入 static method 支持
 - [x] 加入 interface template 支持
-- [ ] 完成 vector 模板的开发
+- [x] 完成 vector 模板的开发
+- [x] 完成 string 的标准库开发
 - [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
+- [ ] 改造 `new struct` 的逻辑
 
 # Known issues
 
-- [ ] `||` 算符短路失效，不论条件，结果均为真
+- [x] `||` 算符短路失效，不论条件，结果均为真
+- [ ] 没有原生 uint64_t 支持导致 string 实现中的某些操作存在安全隐患
 - [ ] Interface template foreign specialization 未完成

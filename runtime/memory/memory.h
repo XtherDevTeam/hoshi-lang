@@ -76,7 +76,7 @@ extern "C" void runtime_finalize_object(YoiObject *object);
 
 extern "C" void *runtime_object_alloc(unsigned long size);
 
-extern "C" YoiIntegerObject *runtime_get_array_data_pointer(YoiObjectArray *array);
+extern "C" YoiIntegerObject *runtime_get_string_array_data_pointer(YoiObjectArray *array);
 
 #define GC_WRAPPER_DECL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj);      \
                                                                                             \
