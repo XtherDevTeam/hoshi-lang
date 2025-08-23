@@ -107,7 +107,7 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getForeignFloatObjectType();
 
-        std::shared_ptr<yoi::IRValueType> getPointerObjectType();
+        std::shared_ptr<yoi::IRValueType> getPointerType();
 
         std::shared_ptr<yoi::IRValueType> getNullInterfaceType();
 

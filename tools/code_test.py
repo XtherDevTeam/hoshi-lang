@@ -32,7 +32,8 @@ TEST_CASES = {
     "static-method": {"type": "executable", "return_code": 0},
     "operators": {"type": "executable", "return_code": 0},
     "interface-template": {"type": "executable", "return_code": 0},
-    "char": {"type": "executable", "return_code": 0}
+    "char": {"type": "executable", "return_code": 0},
+    "string": {"type": "executable", "return_code": 0},
 }
 
 

@@ -2187,18 +2187,25 @@ namespace yoi {
                 }
                 case IR::Opcode::invoke_virtual: {
                     auto argCount = ins.operands[2].value.symbolIndex;
-                    for(size_t i = 0; i < argCount; ++i) if(!simulationStack.items.empty()) simulationStack.pop();
-                    auto returnType = std::make_shared<IRValueType>(IRValueType::valueType::pointerObject); // Placeholder
+                    for (int i = 0; i < argCount - 1; i++) {
+                        simulationStack.pop();
+                    }
+                    auto returnType = managedPtr(*compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[1].value.symbolIndex]->returnType);
                     returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
-                    simulationStack.push(returnType, {});
+                    simulationStack.pop();
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }
                 case IR::Opcode::invoke_imported: {
-                    auto argCount = ins.operands[2].value.symbolIndex;
-                    for(size_t i = 0; i < argCount; ++i) if(!simulationStack.items.empty()) simulationStack.pop();
-                    auto returnType = std::make_shared<IRValueType>(IRValueType::valueType::pointerObject); // Placeholder
+                    auto function = compilerCtx->getIRFFITable()->importedLibraries[ins.operands[0].value.symbolIndex].importedFunctionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr(*function->returnType);
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
                     returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
-                    simulationStack.push(returnType, {});
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }
                 // Binary Ops: Result is nullable if either operand is.
@@ -2608,11 +2615,15 @@ namespace yoi {
                 }
                 case IR::Opcode::invoke_virtual:
                 case IR::Opcode::invoke_imported: {
-                    auto argCount = ins.operands.back().value.symbolIndex;
-                    for(size_t i = 0; i < argCount; ++i) if(!simulationStack.items.empty()) simulationStack.pop();
-                    auto placeholderType = std::make_shared<IRValueType>(IRValueType::valueType::pointerObject);
-                    placeholderType->removeAttribute(IRValueType::ValueAttr::Raw);
-                    simulationStack.push(placeholderType, {});
+                    auto function = compilerCtx->getIRFFITable()->importedLibraries[ins.operands[0].value.symbolIndex].importedFunctionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr(*function->returnType);
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    for (int i = 0; i < argCount; i++) {
+                        simulationStack.pop();
+                    }
+                    returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }
                 case IR::Opcode::basic_cast_int:

@@ -81,6 +81,7 @@ namespace yoi {
             stringObject,
             virtualMethod,
             pointerObject, // a placeholder for void* in llvmCodegen for unified interface this pointer
+            pointer,
             interfaceObject,
             none,
             charRaw,

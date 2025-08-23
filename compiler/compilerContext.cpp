@@ -203,14 +203,14 @@ namespace yoi {
         }
     }
 
-    std::shared_ptr<yoi::IRValueType> compilerContext::getPointerObjectType() {
+    std::shared_ptr<yoi::IRValueType> compilerContext::getPointerType() {
         return builtinModuleBuilder->sharedValueType[L"ptr"];
     }
     yoi::IRValueType compilerContext::normalizeForeignBasicType(const std::shared_ptr<yoi::IRValueType> &type) {
         if (type->isForeignBasicType()) {
             switch (type->type) {
                 case IRValueType::valueType::foreignInt32Type:
-                case IRValueType::valueType::pointerObject:
+                case IRValueType::valueType::pointer:
                     return *getIntObjectType();
                 case IRValueType::valueType::foreignFloatType:
                     return *getDeciObjectType();

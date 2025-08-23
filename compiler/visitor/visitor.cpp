@@ -1441,7 +1441,7 @@ namespace yoi {
         } else if (typeName == L"float") {
             return *moduleContext->getCompilerContext()->getForeignFloatObjectType();
         } else if (typeName == L"ptr") {
-            return *moduleContext->getCompilerContext()->getPointerObjectType();
+            return *moduleContext->getCompilerContext()->getPointerType();
         } else {
             panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }

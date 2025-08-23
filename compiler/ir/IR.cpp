@@ -577,7 +577,7 @@ namespace yoi {
     }
 
     bool IRValueType::isForeignBasicType() const {
-        return type == valueType::foreignFloatType || type == valueType::foreignInt32Type || type == valueType::pointerObject;
+        return type == valueType::foreignFloatType || type == valueType::foreignInt32Type || type == valueType::pointer;
     }
 
     bool IRValueType::is1ByteType() const {
@@ -593,7 +593,7 @@ namespace yoi {
             case IRValueType::valueType::foreignInt32Type:
                 res.type = valueType::integerObject;
                 break;
-            case IRValueType::valueType::pointerObject:
+            case IRValueType::valueType::pointer:
                 res.type = valueType::integerObject;
                 break;
             default:
@@ -645,6 +645,9 @@ namespace yoi {
                 res = L"interface#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
                 break;
             case valueType::pointerObject:
+                res = L"pointerObject";
+                break;
+            case valueType::pointer:
                 res = L"pointer";
                 break;
             case valueType::virtualMethod:

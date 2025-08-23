@@ -65,9 +65,9 @@ namespace yoi {
         };
     }
 
-    yoi::IRValueType BuiltinModuleBuilder::getPointerObject() {
+    yoi::IRValueType BuiltinModuleBuilder::getPointerDefinition() {
         return {
-            IRValueType::valueType::pointerObject,
+            IRValueType::valueType::pointer,
             static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
             {}
         };
@@ -87,7 +87,7 @@ namespace yoi {
 
         sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
         sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
-        sharedValueType.put(L"ptr", managedPtr(getPointerObject()));
+        sharedValueType.put(L"ptr", managedPtr(getPointerDefinition()));
 
 
         for (auto &sharedValue : sharedValueType) {

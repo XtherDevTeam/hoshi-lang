@@ -55,7 +55,7 @@ namespace yoi {
 
         yoi::IRValueType getForeignFloatObject();
 
-        yoi::IRValueType getPointerObject();
+        yoi::IRValueType getPointerDefinition();
     };
 }
 

@@ -1844,6 +1844,7 @@ namespace yoi {
                 return Builder->getInt1Ty();
             case IRValueType::valueType::charRaw:
                 return Builder->getInt8Ty();
+            case IRValueType::valueType::pointer:
             case IRValueType::valueType::pointerObject: // generic pointer
                 return llvm::PointerType::get(Builder->getInt8Ty(), 0);
             case yoi::IRValueType::valueType::foreignFloatType:
@@ -2507,7 +2508,7 @@ namespace yoi {
                     return newObj;
                 }
             }
-            case IRValueType::valueType::pointerObject: {
+            case IRValueType::valueType::pointer: {
                 if (convertToForeign) {
                     auto *ptrVal = unboxValue(val, compilerCtx->getIntObjectType());
                     // bit cast void*
