@@ -12,7 +12,21 @@ impl Test {
     }
 }
 
+func short_circuit(a: int, b: int, c: int) : bool {
+    if (a != b || b == c) {
+        puts("short circuit validation failed")
+        return false
+    } else {
+        puts("short circuit validation passed")
+    }
+    return true
+}
+
 func main() : int {
+    if (short_circuit(2, 2, 3) == false) {
+        puts("short circuit validation failed")
+        return 1
+    }
     let a = 1, b = 2, c = 3
     if (a == 1 && b == 2 && c == 3) {
         puts("validation passed")

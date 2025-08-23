@@ -472,7 +472,8 @@ namespace yoi {
                                  IR::Opcode::push_string, {{IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::characterObject:
-                // TODO: Implement push_character
+                IRArr.insert(IRArr.begin() + index + 1, IR{
+                                 IR::Opcode::push_string, {{IROperand::operandType::character, IROperand::operandValue{static_cast<int64_t>(item.possibleValue.charValue)}}}, IRArr[index].debugInfo});
                 break;
             default:
                 panic(0, 0, "IROptimizer::generatePushOp: Unsupported value type for push constant operation");
@@ -665,6 +666,37 @@ namespace yoi {
                 }
                 case IR::Opcode::push_string: {
                     simulationStack.push(compilerCtx->getStrObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.stringLiteralIndex);
+                    break;
+                }
+                case IR::Opcode::push_character: {
+                    simulationStack.push(compilerCtx->getCharObjectType(), {currentCodeBlockIndex, {insIndex}}, static_cast<char>(ins.operands[0].value.character));
+                    break;
+                }
+                case IR::Opcode::basic_cast_char: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.intValue = static_cast<char>(value.possibleValue.deciValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.intValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.intValue = static_cast<char>(value.possibleValue.intValue);
+                            break;
+                            default:
+                            break;
+                        }
+                        value.type = compilerCtx->getCharObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getCharObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
                     break;
                 }
                 case IR::Opcode::basic_cast_bool: {
@@ -1641,10 +1673,6 @@ namespace yoi {
                         indexT target = ins.operands[0].value.codeBlockIndex;
                         successors[i].push_back(target); // Branch target
                         predecessors[target].push_back(i);
-                        if (i + 1 < targetFunction->codeBlock.size()) {
-                            successors[i].push_back(i + 1); // Fallthrough
-                            predecessors[i + 1].push_back(i);
-                        }
                         break;
                     }
                     case IR::Opcode::ret:
@@ -1710,10 +1738,12 @@ namespace yoi {
         }
 
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
+            // printf(wstring2string(targetFunction->to_string(0)).c_str());
             if (blockInStates.count(i) > 0) { // Only transform reachable blocks
                 transformBlock(i, blockInStates[i]);
             } else {
                 // unreachable, clear it.
+                // printf("Removing unreachable block %d\n", i);
                 targetFunction->codeBlock[i]->getIRArray().clear();
             }
         }
@@ -2073,6 +2103,7 @@ namespace yoi {
                 case IR::Opcode::push_decimal: simulationStack.push(compilerCtx->getDeciObjectType(), {}); break;
                 case IR::Opcode::push_boolean: simulationStack.push(compilerCtx->getBoolObjectType(), {}); break;
                 case IR::Opcode::push_string: simulationStack.push(compilerCtx->getStrObjectType(), {}); break;
+                case IR::Opcode::push_character: simulationStack.push(compilerCtx->getCharObjectType(), {}); break;
                 // `push_null` is the source of nullability
                 case IR::Opcode::push_null: {
                     auto type = std::make_shared<IRValueType>(IRValueType::valueType::null);
@@ -2185,12 +2216,13 @@ namespace yoi {
                     break;
                 }
                 // Casting: Nullability propagates.
-                case IR::Opcode::basic_cast_int: case IR::Opcode::basic_cast_deci: case IR::Opcode::basic_cast_bool: {
+                case IR::Opcode::basic_cast_int: case IR::Opcode::basic_cast_deci: case IR::Opcode::basic_cast_bool: case IR::Opcode::basic_cast_char: {
                     auto val = simulationStack.peek(0); simulationStack.pop();
                     std::shared_ptr<IRValueType> targetType;
                     if (ins.opcode == IR::Opcode::basic_cast_int) targetType = compilerCtx->getIntObjectType();
                     else if (ins.opcode == IR::Opcode::basic_cast_deci) targetType = compilerCtx->getDeciObjectType();
-                    else targetType = compilerCtx->getBoolObjectType();
+                    else if (ins.opcode == IR::Opcode::basic_cast_bool) targetType = compilerCtx->getBoolObjectType();
+                    else targetType = compilerCtx->getCharObjectType();
                     
                     auto resultType = std::make_shared<IRValueType>(*targetType);
                     if (val.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
@@ -2499,6 +2531,11 @@ namespace yoi {
                     simulationStack.push(newType, {});
                     break;
                 }
+                case IR::Opcode::push_character: {
+                    auto newType = std::make_shared<IRValueType>(*compilerCtx->getCharObjectType());
+                    simulationStack.push(newType, {});
+                    break;
+                }
                 case IR::Opcode::push_null: {
                     auto newType = std::make_shared<IRValueType>(IRValueType::valueType::null);
                     simulationStack.push(newType, {});
@@ -2568,12 +2605,14 @@ namespace yoi {
                 }
                 case IR::Opcode::basic_cast_int:
                 case IR::Opcode::basic_cast_deci:
-                case IR::Opcode::basic_cast_bool: {
+                case IR::Opcode::basic_cast_bool:
+                case IR::Opcode::basic_cast_char: {
                     auto val = simulationStack.peek(0); simulationStack.pop();
                     std::shared_ptr<IRValueType> targetType;
                     if (ins.opcode == IR::Opcode::basic_cast_int) targetType = compilerCtx->getIntObjectType();
                     else if (ins.opcode == IR::Opcode::basic_cast_deci) targetType = compilerCtx->getDeciObjectType();
-                    else targetType = compilerCtx->getBoolObjectType();
+                    else if (ins.opcode == IR::Opcode::basic_cast_bool) targetType = compilerCtx->getBoolObjectType();
+                    else targetType = compilerCtx->getCharObjectType();
                     
                     auto resultType = std::make_shared<IRValueType>(*targetType);
                     if (val.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
@@ -2671,6 +2710,10 @@ namespace yoi {
                                      ins.operands[0].value.stringLiteralIndex);
                 break;
             }
+            case IR::Opcode::push_character: {
+                simulationStack.push(compilerCtx->getCharObjectType(), {currentCodeBlockIndex, {insIndex}}, static_cast<char>(ins.operands[0].value.character));
+                break;
+            }
             case IR::Opcode::basic_cast_bool: {
                 auto value = simulationStack.peek(0);
                 simulationStack.pop();
@@ -2748,6 +2791,33 @@ namespace yoi {
                     simulationStack.push(value);
                 } else {
                     simulationStack.push(compilerCtx->getDeciObjectType(),
+                                         value.contributedInstructions +
+                                             SimulationStack::Item::ContributedInstructionSet{
+                                                 currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                }
+                break;
+            }
+            case IR::Opcode::basic_cast_char: {
+                auto value = simulationStack.peek(0);
+                simulationStack.pop();
+                if (value.hasPossibleValue) {
+                    switch (value.type->type) {
+                        case IRValueType::valueType::decimalObject:
+                            value.possibleValue.charValue = static_cast<char>(value.possibleValue.deciValue);
+                            break;
+                        case IRValueType::valueType::booleanObject:
+                            value.possibleValue.charValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                        case IRValueType::valueType::integerObject:
+                            value.possibleValue.charValue = static_cast<char>(value.possibleValue.intValue);
+                            break;
+                        default:
+                            break;
+                    }
+                    value.type = compilerCtx->getCharObjectType();
+                    simulationStack.push(value);
+                } else {
+                    simulationStack.push(compilerCtx->getCharObjectType(),
                                          value.contributedInstructions +
                                              SimulationStack::Item::ContributedInstructionSet{
                                                  currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});

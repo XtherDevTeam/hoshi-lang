@@ -172,6 +172,11 @@ namespace yoi {
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     compilerCtx->getDeciObjectType();
                 break;
+            case IRValueType::valueType::characterObject:
+                insert({IR::Opcode::basic_cast_char, {}, currentDebugInfo}, insertionPoint);
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
+                    compilerCtx->getCharObjectType();
+                break;
             case IRValueType::valueType::booleanObject:
                 insert({IR::Opcode::basic_cast_bool, {}, currentDebugInfo}, insertionPoint);
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
@@ -256,6 +261,8 @@ namespace yoi {
             tempVarStack.emplace_back(compilerCtx->getIntObjectType());
         } else if (constV.type == IROperand::operandType::boolean) {
             tempVarStack.emplace_back(compilerCtx->getBoolObjectType());
+        } else if (constV.type == IROperand::operandType::character) {
+            tempVarStack.emplace_back(compilerCtx->getCharObjectType());
         } else if (constV.type == IROperand::operandType::decimal) {
             tempVarStack.emplace_back(compilerCtx->getDeciObjectType());
         } else if (constV.type == IROperand::operandType::stringLiteral) {
@@ -574,7 +581,7 @@ namespace yoi {
     }
 
     bool IRValueType::is1ByteType() const {
-        return type == valueType::booleanRaw || type == valueType::charRaw;
+        return type == valueType::booleanObject || type == valueType::characterObject;
     }
 
     yoi::wstr IRValueType::to_string(bool showAttributes) const {
@@ -1004,6 +1011,9 @@ namespace yoi {
             case IRValueType::valueType::stringObject:
                 op = IR::Opcode::new_array_str;
                 break;
+            case IRValueType::valueType::characterObject:
+                op = IR::Opcode::new_array_char;
+                break;
             case IRValueType::valueType::structObject:
                 op = IR::Opcode::new_array_struct;
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
@@ -1203,6 +1213,9 @@ namespace yoi {
             case IRValueType::valueType::stringObject:
                 op = IR::Opcode::new_dynamic_array_str;
                 break;
+            case IRValueType::valueType::characterObject:
+                op = IR::Opcode::new_dynamic_array_char;
+                break;
             case IRValueType::valueType::structObject:
                 op = IR::Opcode::new_dynamic_array_struct;
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
@@ -1282,7 +1295,7 @@ namespace yoi {
             case valueType::booleanObject:
                 result.type = valueType::booleanRaw;
                 break;
-            case valueType::charRaw:
+            case valueType::characterObject:
                 result.type = valueType::charRaw;
                 break;
             default:

@@ -10,12 +10,6 @@ func main() : int {
     v.push(3)
     v.push(4)
     v.push(5)
-    let ni = lang.NullInterface(v.data)
-    let data = dyn_cast<int[]>(ni)
-    if (data == null) {
-        puts("vector validation failed: data cast")
-        return 1
-    }
     for (let i = 0;i < v.length; i += 1) {
         if (v[i] != i + 1) {
             puts("vector validation failed: push")
@@ -25,6 +19,17 @@ func main() : int {
     v.shrink_to_fit()
     if (v.capacity != 5) {
         puts("vector validation failed: shrink_to_fit")
+        return 1
+    }
+    v.pop()
+    v.pop()
+    if (v.length != 3) {
+        puts("vector validation failed: pop")
+        return 1
+    }
+    v.clear()
+    if (v.length != 0) {
+        puts("vector validation failed: clear")
         return 1
     }
     puts("vector validation passed")

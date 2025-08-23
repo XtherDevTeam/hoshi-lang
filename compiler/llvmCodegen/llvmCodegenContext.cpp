@@ -831,7 +831,33 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getStrObjectType()});
                 break;
             }
+            case IR::Opcode::push_character: {
+                auto val = llvm::ConstantInt::get(Builder->getInt8Ty(), instr.operands[0].value.character);
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getCharObjectType()->getBasicRawType())});
+                break;
+            }
             // Basic Type Casting
+            case IR::Opcode::basic_cast_char: {
+                auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isDoubleTy()) {
+                    castedVal = Builder->CreateFPToSI(rawVal, Builder->getInt8Ty(), "deci_to_char_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool
+                    castedVal = Builder->CreateTrunc(rawVal, Builder->getInt8Ty(), "bool_to_char_cast");
+                } else if (rawVal->getType()->isIntegerTy(64)) { // int (no-op)
+                    castedVal = Builder->CreateTrunc(rawVal, Builder->getInt8Ty(), "int_to_char_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char (no-op)
+                    castedVal = rawVal;
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_char");
+                }
+
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getCharObjectType()->getBasicRawType())});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
             case IR::Opcode::basic_cast_int: {
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
@@ -1472,7 +1498,8 @@ namespace yoi {
                 auto arrayType = arrayVal.yoiType;
                 auto unboxedIndexVal = unboxValue(indexVal.llvmValue, indexVal.yoiType);
                 auto result = loadArrayElement(arrayType, arrayVal.llvmValue, unboxedIndexVal);
-                valueStackMap[fromBlock][toBlock].push_back({result, managedPtr(arrayType->getElementType())});
+
+                valueStackMap[fromBlock][toBlock].push_back({result, managedPtr(arrayType->isBasicType() ? arrayType->getElementType().getBasicRawType() : arrayType->getElementType())});
                 // resource releasing
                 callGcFunction(indexVal.llvmValue, indexVal.yoiType, false);
                 callGcFunction(arrayVal.llvmValue, arrayVal.yoiType, false);
@@ -2619,12 +2646,11 @@ namespace yoi {
             case IRValueType::valueType::characterObject: {
                 auto elementType = managedPtr(type->getElementType());
                 auto elementLLVMType = yoiTypeToLLVMType(elementType, true);
-                auto pointerToElement = Builder->CreateGEP(llvm::PointerType::get(elementLLVMType, 0), arrayPointer, {
+                auto pointerToElement = Builder->CreateGEP(elementLLVMType, arrayPointer, {
                     index
                 }, "element_ptr");
                 auto loadedVal = Builder->CreateLoad(elementLLVMType, pointerToElement, "loaded_val"); // get unboxed value, so ffi type
-                auto *val = createBasicObject(elementType, loadedVal);
-                return val;
+                return loadedVal;
             }
             case IRValueType::valueType::structObject:
             case IRValueType::valueType::interfaceObject: {

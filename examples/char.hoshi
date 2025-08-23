@@ -1,0 +1,35 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func assign_check() : bool {
+    let a = 'a'
+    let b = 'b'
+    if (a == b) {
+        puts("assign check failed: a should not be equal to b")
+        return false
+    }
+    b = 'a'
+    if (a == b) {
+        return true
+    }
+    puts("assign check failed: a should be equal to b after b is assigned to 'a'")
+    return false
+}
+
+func array_check() : bool {
+    let arr = char[6]('e', 'l', 'y', 's', 'i', 'a')
+    if (arr[0] != 'e' || arr[1] != 'l' || arr[2] != 'y' || arr[3] !='s' || arr[4] != 'i' || arr[5] != 'a') {
+        puts("array check failed: array elements are not correct")
+        return false
+    }
+    return true
+}
+
+func main() : int {
+    if (assign_check() && array_check()) {
+        puts("char validation passed")
+        return 0
+    }
+    puts("char validation failed")
+    return 1
+}
