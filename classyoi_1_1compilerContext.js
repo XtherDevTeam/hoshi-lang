@@ -20,7 +20,7 @@ var classyoi_1_1compilerContext =
     [ "getModuleIndexByRealPath", "classyoi_1_1compilerContext.html#a6957e65d056c54f75fa6ab54f3bfd9d5", null ],
     [ "getNoneObjectType", "classyoi_1_1compilerContext.html#a8ab82256b764cd6289ea66eef1d8d5c1", null ],
     [ "getNullInterfaceType", "classyoi_1_1compilerContext.html#a3bf21b1452c928fc1d40091e3a4197ef", null ],
-    [ "getPointerObjectType", "classyoi_1_1compilerContext.html#ab02f0e6a910ed1ca58f5f0e33bf2bb72", null ],
+    [ "getPointerType", "classyoi_1_1compilerContext.html#a46cadfb4c75374d1bfdfa2d7fef94eda", null ],
     [ "getStrObjectType", "classyoi_1_1compilerContext.html#af32e4c1d7dbe772c3a00da65d37f6244", null ],
     [ "initializeSharedObjects", "classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28", null ],
     [ "normalizeForeignBasicType", "classyoi_1_1compilerContext.html#a24c84eb32e9e4f5625faa9a60bf67128", null ],

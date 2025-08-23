@@ -18,6 +18,7 @@ var classyoi_1_1IRValueType =
       [ "stringObject", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b", null ],
       [ "virtualMethod", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194", null ],
       [ "pointerObject", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc", null ],
+      [ "pointer", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9", null ],
       [ "interfaceObject", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5", null ],
       [ "none", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8", null ],
       [ "charRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab2b4413697d41001f9afad4a0fc515a7", null ],

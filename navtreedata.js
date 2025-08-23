@@ -166,19 +166,19 @@ var NAVTREEINDEX =
 "classyoi_1_1IRBuilder.html#a0e82125bac8069a5ee90e607478781a0",
 "classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#a0af291915f004b398df09056fc75c117",
 "classyoi_1_1IROptimizer.html#ac8acc16fd12469e3322b62b22db6c5cb",
-"classyoi_1_1LLVMCodegen.html#a31fecbe7a01dbfa60f245b1dfbc64276",
-"classyoi_1_1compilerContext.html#a087fe063ad18c6713808a6530b99e21d",
-"classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200",
-"classyoi_1_1indexTable_1_1iterator.html#a3b9cb78dc7f639c348cdb0acded1528e",
-"classyoi_1_1logicalOrExpr.html#ac801820254d616d790ab6fddc8456e8a",
-"classyoi_1_1typeSpec.html#af2f61ee5e6b7b211ecfd6f7bf0c10f1b",
-"def_8cpp.html#a49de16146e5ab66039f7f95b79a82023",
-"magic__enum_8h.html#aedd74a7cae2afd91a6b3d5fe81095336",
-"namespacemembers_type.html",
-"parser_8hpp.html#a4f09fa14b982b1e202be381baac506c1",
-"structyoi_1_1IRBuildConfig.html#ab5581c9fd0b7cdfb797b3067628ee026",
-"structyoi_1_1ifStmt_1_1ifBlock.html#a07f9633ac52baaaf0c76bd380f688487",
-"unionyoi_1_1IROperand_1_1operandValue.html#a71db20a3b2d96507e57e2a47fa8b1a1e"
+"classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a",
+"classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4",
+"classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9e",
+"classyoi_1_1indexTable_1_1iterator.html#a276365c456eb3c21c884ad1282173639",
+"classyoi_1_1logicalOrExpr.html#a9e0cf23a22b6af67b8b52a65f27ef7a2",
+"classyoi_1_1typeSpec.html#ae335a812d05d350997b49f2f2005cba4",
+"def_8cpp.html#a147de820f25f66f42a6fd04341fcfd0a",
+"magic__enum_8h.html#aeb24ce9f57fa538036bc1b5e7612f045",
+"namespacemembers_s.html",
+"parser_8hpp.html#a47115387be28c9419497e9da7a2f1d82",
+"structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71",
+"structyoi_1_1ifStmt_1_1ifBlock.html",
+"unionyoi_1_1IROperand_1_1operandValue.html#a700a82d732da3e8b52478b9dea25ab79"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
