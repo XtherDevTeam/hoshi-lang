@@ -36,6 +36,7 @@ var classyoi_1_1IRValueType =
     [ "getBasicRawType", "classyoi_1_1IRValueType.html#a2ff0cd5f22ebfe149bebca1e86e7840c", null ],
     [ "getDynamicArrayType", "classyoi_1_1IRValueType.html#ab2fef6489e0aa5195ba823280d75dfdb", null ],
     [ "getElementType", "classyoi_1_1IRValueType.html#a833d2997db83c53a7bb92d301727c5fb", null ],
+    [ "getNormalizedForeignBasicType", "classyoi_1_1IRValueType.html#a259a068b7be505fb6ba15dabd1a15e07", null ],
     [ "hasAttribute", "classyoi_1_1IRValueType.html#ab9ed59507a002d0405a956b171000c15", null ],
     [ "is1ByteType", "classyoi_1_1IRValueType.html#a67688acef17fadd244d1c476fa749b75", null ],
     [ "isArrayType", "classyoi_1_1IRValueType.html#a14ebcb28dc869f75b96ee33aad01ab1f", null ],

@@ -15,6 +15,7 @@ var classyoi_1_1BuiltinModuleBuilder =
     [ "getIntObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#ae3cea7871464b4059bc1f1db65ec80b6", null ],
     [ "getNoneObject", "classyoi_1_1BuiltinModuleBuilder.html#a86aa0a737da077799c39bcbb6e56b5db", null ],
     [ "getNullInterfaceInstanceDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a2580086e454bee20cf97f2c5acee25d5", null ],
+    [ "getPointerObject", "classyoi_1_1BuiltinModuleBuilder.html#a18be76007c111509c9d64fee499c37df", null ],
     [ "getStringObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#abc7d6463b0f61f6782bb682123d2bafd", null ],
     [ "getStrObject", "classyoi_1_1BuiltinModuleBuilder.html#a46f4cbbbee818e7cce6cdadb3bd1451a", null ],
     [ "initializeSharedObjectDefinitions", "classyoi_1_1BuiltinModuleBuilder.html#ac598b01954aad25e58ec621cbe5e27ad", null ],

@@ -115,13 +115,16 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[x] 加入 <code>interfaceof</code> <code>impl</code> 关键字和 <code>abstractExpr</code> 表达式</li>
 <li>[x] 加入 static method 支持</li>
 <li>[x] 加入 interface template 支持</li>
-<li>[ ] 完成 vector 模板的开发</li>
+<li>[x] 完成 vector 模板的开发</li>
+<li>[x] 完成 string 的标准库开发</li>
 <li>[ ] 完成 <code>let [x, y] = depacker()</code> 的语法设计和实现</li>
+<li>[ ] 改造 <code>new struct</code> 的逻辑</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md99"></a>
 Known issues</h1>
 <ul>
-<li>[ ] <code>||</code> 算符短路失效，不论条件，结果均为真</li>
+<li>[x] <code>||</code> 算符短路失效，不论条件，结果均为真</li>
+<li>[ ] 没有原生 uint64_t 支持导致 string 实现中的某些操作存在安全隐患</li>
 <li>[ ] Interface template foreign specialization 未完成 </li>
 </ul>
 </div></div><!-- contents -->
