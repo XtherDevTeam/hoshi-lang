@@ -687,7 +687,7 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpOp(endBlock);
 
         moduleContext->getIRBuilder().switchCodeBlock(finalFalseBlock);
-        moduleContext->getIRBuilder().insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, false}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
+        moduleContext->getIRBuilder().insert({IR::Opcode::push_boolean, {{IROperand::operandType::boolean, IROperand::operandValue{false}}}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
         moduleContext->getIRBuilder().jumpOp(endBlock);
 
         moduleContext->getIRBuilder().switchCodeBlock(endBlock);
