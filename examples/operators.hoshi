@@ -11,7 +11,6 @@ struct MyInt {
 impl MyInt {
     constructor(val: int) {
         this.val = val
-        return this
     },
     static operator+(lhs: MyInt, rhs: MyInt) : MyInt {
         return MyInt(lhs.val + rhs.val)

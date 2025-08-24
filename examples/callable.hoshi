@@ -11,11 +11,9 @@ impl Point {
     constructor(x: int, y: int) {
         this.x = x
         this.y = y
-        return this
     },
     operator()() : none {
         puts("I was being called upon~ Never let you go~ This is way I did them all~ For a chance at least, to live in your way~")
-        return
     }
 }
 

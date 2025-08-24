@@ -15,7 +15,6 @@ impl Test {
     constructor(a: bool, extra: lang.NullInterface[]) {
         this.a = a
         this.extra = extra
-        return this
     }
 }
 

@@ -8,7 +8,6 @@ struct Test {
 impl Test {
     constructor(a: bool) {
         this.a = a
-        return this
     }
 }
 

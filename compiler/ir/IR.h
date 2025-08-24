@@ -372,6 +372,7 @@ namespace yoi {
             NoFFI,
             Variadic,
             Static,
+            Constructor
         };
 
         yoi::wstr name;
@@ -392,6 +393,8 @@ namespace yoi {
         IRVariableTable &getVariableTable();
 
         yoi::wstr to_string(yoi::indexT indent = 0);
+
+        bool hasAttribute(const FunctionAttrs &attr);
 
         struct Builder {
             yoi::wstr name;

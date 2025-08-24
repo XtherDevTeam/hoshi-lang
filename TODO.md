@@ -10,9 +10,9 @@
 - [x] 编译器为 TypeInfo 结构体开洞
 - [x] 为 `import` `export` 增加 `noffi` 关键字
 - [x] 加入原生动态创建数组
-- [ ] 对因为 `dyn_cast` 造成的额外 `null-check` 进行优化。
-    - [ ] 在 IRValueType 中加入 `attrs` 字段用于存放变量属性
-    - [ ] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`
+- [x] 对因为 `dyn_cast` 造成的额外 `null-check` 进行优化。
+    - [x] 在 IRValueType 中加入 `attrs` 字段用于存放变量属性
+    - [x] 在 llvmCodegen 阶段对 IRValueType 加入 `Nullable` 属性检查，存在的情况下才进行 `null-check`
 - [x] 加入可变参数
 - [ ] 加入 array 的导出型 FFI wrapper 支持
 - [x] 加入 `lang.argv`
@@ -21,6 +21,7 @@
 - [x] 加入 interface template 支持
 - [x] 完成 vector 模板的开发
 - [x] 完成 string 的标准库开发
+- [x] 完成 constructor 不强制要求 return this 的语法糖
 - [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
 - [ ] 改造 `new struct` 的逻辑
 

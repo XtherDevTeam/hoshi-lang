@@ -17,7 +17,6 @@ impl Dog {
         this.name = name
         this.age = age
         this.weight = weight
-        return this
     }
 }
 

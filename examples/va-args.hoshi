@@ -22,7 +22,6 @@ impl Test {
     constructor(a: int, args: ...) {
         this.a = a
         this.extra = args
-        return this
     }
 }
 

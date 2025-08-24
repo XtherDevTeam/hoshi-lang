@@ -37,13 +37,11 @@ impl Str {
         this.data = new char[this.capacity]()
         memcpy(runtime_get_string_array_data_pointer(this.data), literal, this.length)
         this.data[this.length] = '\0'
-        return this
     },
     constructor(arr: char[]) {
         this.length = arr.length
         this.data = arr
         this.capacity = this.length + 1
-        return this
     },
     constructor(capacity: int) {
         if (capacity < 1) {
@@ -53,14 +51,12 @@ impl Str {
         this.capacity = capacity
         this.data = new char[capacity]()
         this.data[0] = '\0'
-        return this
     },
     constructor() {
         this.length = 0
         this.capacity = 1
         this.data = new char[1]()
         this.data[0] = '\0'
-        return this
     },
     capacity_resize(new_capacity: int) : none {
         if (new_capacity <= this.capacity) {

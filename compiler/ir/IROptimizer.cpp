@@ -1658,6 +1658,9 @@ namespace yoi {
                     // there's no return instruction, add a ret instruction at the end of the block if it returns none
                     if (targetFunction->returnType->type == IRValueType::valueType::none) {
                         targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetBlock->getIRArray().back().debugInfo});
+                    } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Constructor)) {
+                        targetBlock->getIRArray().push_back(IR{IR::Opcode::load_local, {{IROperand::operandType::localVar, IROperand::operandValue{static_cast<yoi::indexT>(0)}}}, targetBlock->getIRArray().back().debugInfo});
+                        targetBlock->getIRArray().push_back(IR{IR::Opcode::ret, {}, targetBlock->getIRArray().back().debugInfo});
                     } else {
                         panic(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
                     }

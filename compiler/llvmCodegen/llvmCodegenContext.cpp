@@ -351,7 +351,7 @@ namespace yoi {
             auto* funcType = getFunctionType(funcDef);
             auto* function = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, funcName, TheModule.get());
 
-            if (std::find(funcDef->attrs.begin(), funcDef->attrs.end(), IRFunctionDefinition::FunctionAttrs::AlwaysInline) != funcDef->attrs.end()) {
+            if (funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::AlwaysInline)) {
                 function->addFnAttr(llvm::Attribute::AlwaysInline);
             }
             
@@ -1155,7 +1155,7 @@ namespace yoi {
                 auto argCount = instr.operands[2].value.symbolIndex;
 
                 auto funcDef = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable[funcIndex];
-                bool noffi = std::find(funcDef->attrs.begin(), funcDef->attrs.end(), IRFunctionDefinition::FunctionAttrs::NoFFI) != funcDef->attrs.end();
+                bool noffi = funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI);
 
                 auto rawFuncName = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable.getKey(funcIndex);
                 auto mangledFuncName = L"imported#" + std::to_wstring(libIndex) + L"#" + rawFuncName;
@@ -2344,7 +2344,7 @@ namespace yoi {
                 auto wrapperMangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName + L"#wrapper";
                 auto mangledName = L"imported#" + std::to_wstring(moduleIndex) + L"#" + funcName;
                 auto &funcDef = functionPair.second;
-                bool noffi = std::find(funcDef->attrs.begin(), funcDef->attrs.end(), IRFunctionDefinition::FunctionAttrs::NoFFI) != funcDef->attrs.end();
+                bool noffi = funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI);
                 auto &wrapperFuncDecl = functionMap[wrapperMangledName];
                 auto &externFuncDecl = functionMap[mangledName];
 

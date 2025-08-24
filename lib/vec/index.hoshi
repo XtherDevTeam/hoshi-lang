@@ -27,32 +27,27 @@ impl Vec<> {
         this.length = 0
         this.capacity = capacity
         this.data = new T[capacity]()
-        return this
     },
     constructor(data: T[]) {
         this.length = data.length
         this.capacity = data.length
         this.data = data
-        return this
     },
     constructor(data: T[], capacity: int) {
         this.length = data.length
         this.capacity = capacity
         this.data = data
-        return this
     },
     constructor() {
         this.length = 0
         this.capacity = 1
         this.data = new T[1]()
-        return this
     },
     size() : int {
         return this.length
     },
     clear() : none {
         this.length = 0
-        return
     },
     push(x: T) : none {
         if (this.length == this.capacity) {
@@ -60,21 +55,18 @@ impl Vec<> {
         }
         this.data[this.length] = x
         this.length += 1
-        return
     },
     pop() : none {
         if (this.length == 0) {
             return
         }
         this.length -= 1
-        return
     },
     static operator[](self: Vec<T>, i: int) : T {
         return self.data[i]
     },
     static operator[](value: T, self: Vec<T>, i: int) : none {
         self.data[i] = value
-        return
     },
     capacity_resize(new_capacity: int) : none {
         if (new_capacity <= this.capacity) {
@@ -86,7 +78,6 @@ impl Vec<> {
         }
         this.data = new_data
         this.capacity = new_capacity
-        return
     },
     shrink_to_fit() : none {
         if (this.length == this.capacity) {
@@ -98,6 +89,5 @@ impl Vec<> {
         }
         this.data = new_data
         this.capacity = this.length
-        return
     }
 }

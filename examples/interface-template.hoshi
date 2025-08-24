@@ -20,7 +20,6 @@ impl TestStruct<> {
     constructor(a: T, b: U) {
         this.a = a
         this.b = b
-        return this
     }
 }
 

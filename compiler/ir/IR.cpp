@@ -1339,4 +1339,8 @@ namespace yoi {
                 return {type, typeAffiliateModule, typeIndex, dimensions};
         }
     }
+    
+    bool IRFunctionDefinition::hasAttribute(const FunctionAttrs &attr) {
+        return std::find(attrs.begin(), attrs.end(), attr) != attrs.end();
+    }
 } // namespace yoi

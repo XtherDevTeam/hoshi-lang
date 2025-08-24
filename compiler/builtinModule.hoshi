@@ -21,11 +21,9 @@ impl TypeInfo {
         this.module = module
         this.index = index
         this.is_array = is_array
-        return this
     },
     constructor(id: int) {
         this := rtti_object_alloc(id)
-        return this
     }
 }
 

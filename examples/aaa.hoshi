@@ -12,7 +12,6 @@ impl Point {
     constructor(x: int, y: int) {
         this.x = x
         this.y = y
-        return this
     }
 }
 

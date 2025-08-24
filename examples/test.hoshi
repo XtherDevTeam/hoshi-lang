@@ -15,11 +15,9 @@ impl aaa {
     constructor(x: int, y: int) {
         this.x = x
         this.y = y
-        return this
     },
     a() : none {
         this.x += 1
-        return
     }
 }
 
@@ -32,7 +30,6 @@ impl aaa : Test {
 impl aaa : test1.ExternalInterface {
     test() : none {
         this.a()
-        return
     }
 }
 
