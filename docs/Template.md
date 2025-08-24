@@ -1,11 +1,75 @@
-# 模板隐式特化的实现思路
+# Generic Programming with Templates
 
-假设我们有一个函数模板定义如下：
+Hoshi-lang supports generic programming using `template`s, which allow you to write code that can work with different data types. Templates can be applied to functions, structs, and interfaces.
 
-```yoi
-func aaa<T, U>(a: T, b: U) : int {
+## Function Templates
+
+Function templates allow you to create functions that can operate on different types.
+
+```rust
+func add<T>(a: T, b: T) : T {
     return a + b
+}
+
+func main() : int {
+    let x = add<int>(1, 2)       // Explicit specialization
+    let y = add(3.0, 4.0) // Implicit specialization
+    return 0
 }
 ```
 
-已知在特化时无法获得将要赋予的左值的类型，无法通过返回值推断类型，只能通过参数来推断类型，所以其实挺好做的。
+### Implicit vs. Explicit Specialization
+
+-   **Explicit Specialization:** You explicitly provide the template arguments (e.g., `<int>`).
+-   **Implicit Specialization:** The compiler deduces the template arguments from the function's arguments.
+
+## Struct Templates
+
+Struct templates allow you to create generic data structures.
+
+```rust
+struct Container<T> {
+    item: T,
+    constructor(item: T)
+}
+
+impl Container<> {
+    constructor(item: T) {
+        this.item = item
+    }
+}
+
+func main() : int {
+    let c = Container<int>(123)
+    return 0
+}
+```
+
+## Interface Templates
+
+Interface templates allow you to define generic contracts.
+
+```rust
+interface Result<T> {
+    get() : T
+}
+
+struct TestStruct<T, U> {
+    a: T,
+    b: U,
+    constructor(a: T, b: U)
+}
+
+impl TestStruct<> {
+    constructor(a: T, b: U) {
+        this.a = a
+        this.b = b
+    }
+}
+
+impl TestStruct<> : Result<T> {
+    get(): T {
+        return this.a
+    }
+}
+```

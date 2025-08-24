@@ -218,7 +218,11 @@ namespace yoi {
             case IR::Opcode::div:
             case IR::Opcode::mod:
             case IR::Opcode::left_shift:
-            case IR::Opcode::right_shift: {
+            case IR::Opcode::right_shift: 
+            case IR::Opcode::bitwise_not:
+            case IR::Opcode::bitwise_and: 
+            case IR::Opcode::bitwise_or: 
+            case IR::Opcode::bitwise_xor: {
                 tempVarStack.emplace_back(left);
                 break;
             }

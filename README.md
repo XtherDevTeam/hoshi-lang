@@ -92,6 +92,61 @@ The compiler is responsible for generating calls to the appropriate `_gc_refcoun
 
 ## New Features
 
+### Operator Overloading
+
+Hoshi-lang supports operator overloading for `struct` types. This allows you to define custom behavior for operators like `+`, `-`, `*`, `/`, etc.
+
+```rust
+struct MyInt {
+    val: int,
+    constructor(val: int),
+    static operator+(lhs: MyInt, rhs: MyInt) : MyInt,
+    get() : int
+}
+
+impl MyInt {
+    constructor(val: int) {
+        this.val = val
+    },
+    static operator+(lhs: MyInt, rhs: MyInt) : MyInt {
+        return MyInt(lhs.val + rhs.val)
+    },
+    get() : int {
+        return this.val
+    }
+}
+```
+
+### Interface Templates
+
+Hoshi-lang now supports templates for interfaces, allowing for more generic and reusable code.
+
+```rust
+interface Result<T> {
+    get() : T
+}
+
+struct TestStruct<T, U> {
+    a: T,
+    b: U,
+    add(): T,
+    constructor(a: T, b: U)
+}
+
+impl TestStruct<> : Result<T> {
+    get(): T {
+        return this.a
+    }
+}
+```
+
+### Standard Library
+
+Hoshi-lang now includes a standard library with `string` and `vector` support.
+
+-   **`string`:** A string library with common string operations.
+-   **`vector`:** A dynamic array implementation.
+
 ### Dynamic Arrays
 
 Hoshi-lang now supports dynamic arrays, which can grow or shrink at runtime.
@@ -186,6 +241,7 @@ mkdir build
 cd build
 cmake ..
 make
+make package
 ```
 
 **Windows:**
@@ -207,4 +263,5 @@ cmake --build . --config Release
 -   [Syntax Definition](/Syntax.bnf)
 -   [IR Handbook](/docs/IR.md)
 -   [Language Specification](/docs/Spec.md)
+-   [Nullable and Raw Check Passes](/docs/Nullable%20Check%20&%20Raw%20Check.md)
 -   [TODO List](/TODO.md)

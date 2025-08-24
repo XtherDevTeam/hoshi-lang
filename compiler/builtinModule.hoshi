@@ -29,4 +29,36 @@ impl TypeInfo {
 
 func argv() : string[] {
     return runtime_get_argv()
+}
+
+interface Hashable {
+    hash() : int
+}
+
+impl int : Hashable {
+    hash() : int {
+        return this
+    }
+}
+
+impl bool : Hashable {
+    hash() : int {
+        if (this) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+}
+
+impl deci : Hashable {
+    hash() : int {
+        return this
+    }
+}
+
+impl char : Hashable {
+    hash() : int {
+        return this
+    }
 })"

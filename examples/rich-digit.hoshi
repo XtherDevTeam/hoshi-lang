@@ -1,0 +1,14 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    let hex = 0xe1751aff
+    let bin = 0b00010
+    let dec = 0o77
+    if (3782548223 == hex && 2 == bin && 63 == dec) {
+        puts("rich-digit validation passed")
+        return 0
+    }
+    puts("rich-digit validation failed")
+    return 1
+}

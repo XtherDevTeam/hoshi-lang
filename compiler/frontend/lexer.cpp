@@ -206,15 +206,61 @@ namespace yoi {
     }
 
     lexer::token lexer::digitStart() {
+        enum class MatchPattern {
+            hex,
+            oct,
+            dec,
+            bin
+        } matchPattern = MatchPattern::dec;
         lexer::token tok{line, col, token::tokenKind::integer, token::vBasicValue{(int64_t) 0}};
         wstr tempStr;
-        tempStr += curCh;
-        getCh();
-        while (isdigit(curCh)) {
+        if (curCh == '0') {
+            tempStr += curCh;
+            getCh();
+            switch (curCh) {
+                case 'x':
+                case 'X':
+                    matchPattern = MatchPattern::hex;
+                    getCh();
+                    tempStr += curCh;
+                    getCh();
+                    break;
+                case 'b':
+                case 'B':
+                    matchPattern = MatchPattern::bin;
+                    getCh();
+                    tempStr += curCh;
+                    getCh();
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                    matchPattern = MatchPattern::oct;
+                    tempStr += curCh;
+                    getCh();
+                    break;
+                case 'o':
+                case 'O':
+                    matchPattern = MatchPattern::oct;
+                    getCh();
+                    tempStr += curCh;
+                    getCh();
+                    break;
+                default:
+                    break;
+            }
+        }
+        while (isdigit(curCh) || (matchPattern == MatchPattern::hex && isxdigit(curCh))) {
             tempStr += curCh;
             getCh();
         }
         if (curCh == '.') {
+            yoi_assert(line, col, matchPattern == MatchPattern::dec, "lexer::digitStart() - invalid match pattern");
             tok.kind = token::tokenKind::decimal;
             tempStr += curCh;
             getCh();
@@ -223,8 +269,26 @@ namespace yoi {
                 getCh();
             }
         }
-        if (tok.kind == token::tokenKind::integer)
-            tok.basicVal.vInt = std::stol(tempStr);
+        if (tok.kind == token::tokenKind::integer) {
+            switch (matchPattern) {
+                case MatchPattern::dec: {
+                    tok.basicVal.vInt = std::stoll(tempStr); 
+                    break;
+                }
+                case MatchPattern::hex: {
+                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 16);
+                    break;
+                }
+                case MatchPattern::oct: {
+                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 8);
+                    break;
+                }
+                case MatchPattern::bin: {
+                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 2);
+                    break;
+                }
+            }
+        }
         else
             tok.basicVal.vDeci = std::stof(tempStr);
         return tok;

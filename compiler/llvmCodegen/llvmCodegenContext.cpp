@@ -927,6 +927,9 @@ namespace yoi {
             case IR::Opcode::mul: handleBinaryOp(llvm::Instruction::Mul, false, fromBlock, toBlock); break;
             case IR::Opcode::div: handleBinaryOp(llvm::Instruction::SDiv, false, fromBlock, toBlock); break;
             case IR::Opcode::mod: handleBinaryOp(llvm::Instruction::SRem, false, fromBlock, toBlock); break;
+            case IR::Opcode::bitwise_and: handleBinaryOp(llvm::Instruction::And, false, fromBlock, toBlock); break;
+            case IR::Opcode::bitwise_or: handleBinaryOp(llvm::Instruction::Or, false, fromBlock, toBlock); break;
+            case IR::Opcode::bitwise_xor: handleBinaryOp(llvm::Instruction::Xor, false, fromBlock, toBlock); break;
             // Unary
             case IR::Opcode::negate: {
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();

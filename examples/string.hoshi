@@ -15,6 +15,16 @@ func main() : int {
         return 1
     }
     puts("string valiation passed: endswith '!'")
+    if (a.substring(0, 5) != str.Str("Hello")) {
+        puts("string valiation failed: substring(0, 5) == 'Hello'")
+        return 1
+    }
+    puts("string valiation passed: substring(0, 5) == 'Hello'")
+    if (a.find(str.Str("llo")) != 2) {
+        puts("string valiation failed: find('llo') == 2")
+        return 1
+    }
+    puts("string valiation passed: find('llo') == 2")
     puts(a.c_str())
     return 0
 }
