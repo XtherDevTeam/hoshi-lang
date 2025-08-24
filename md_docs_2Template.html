@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>hoshi-lang: 模板隐式特化的实现思路</title>
+<title>hoshi-lang: Generic Programming with Templates</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,15 +90,72 @@ $(document).ready(function(){initNavTree('md_docs_2Template.html',''); initResiz
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">模板隐式特化的实现思路</div></div>
+  <div class="headertitle"><div class="title">Generic Programming with Templates</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md73"></a> 假设我们有一个函数模板定义如下：</p>
-<div class="fragment"><div class="line">func aaa&lt;T, U&gt;(a: T, b: U) : int {</div>
+<div class="textblock"><p><a class="anchor" id="autotoc_md68"></a> Hoshi-lang supports generic programming using <code>template</code>s, which allow you to write code that can work with different data types. Templates can be applied to functions, structs, and interfaces.</p>
+<h1><a class="anchor" id="autotoc_md69"></a>
+Function Templates</h1>
+<p>Function templates allow you to create functions that can operate on different types.</p>
+<div class="fragment"><div class="line">func add&lt;T&gt;(a: T, b: T) : T {</div>
 <div class="line">    return a + b</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>已知在特化时无法获得将要赋予的左值的类型，无法通过返回值推断类型，只能通过参数来推断类型，所以其实挺好做的。 </p>
-</div></div><!-- contents -->
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">    let x = add&lt;int&gt;(1, 2)       // Explicit specialization</div>
+<div class="line">    let y = add(3.0, 4.0) // Implicit specialization</div>
+<div class="line">    return 0</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md70"></a>
+Implicit vs. Explicit Specialization</h2>
+<ul>
+<li><b>Explicit Specialization:</b> You explicitly provide the template arguments (e.g., <code>&lt;int&gt;</code>).</li>
+<li><b>Implicit Specialization:</b> The compiler deduces the template arguments from the function's arguments.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md71"></a>
+Struct Templates</h1>
+<p>Struct templates allow you to create generic data structures.</p>
+<div class="fragment"><div class="line">struct Container&lt;T&gt; {</div>
+<div class="line">    item: T,</div>
+<div class="line">    constructor(item: T)</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">impl Container&lt;&gt; {</div>
+<div class="line">    constructor(item: T) {</div>
+<div class="line">        this.item = item</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">    let c = Container&lt;int&gt;(123)</div>
+<div class="line">    return 0</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md72"></a>
+Interface Templates</h1>
+<p>Interface templates allow you to define generic contracts.</p>
+<div class="fragment"><div class="line">interface Result&lt;T&gt; {</div>
+<div class="line">    get() : T</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">struct TestStruct&lt;T, U&gt; {</div>
+<div class="line">    a: T,</div>
+<div class="line">    b: U,</div>
+<div class="line">    constructor(a: T, b: U)</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">impl TestStruct&lt;&gt; {</div>
+<div class="line">    constructor(a: T, b: U) {</div>
+<div class="line">        this.a = a</div>
+<div class="line">        this.b = b</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">impl TestStruct&lt;&gt; : Result&lt;T&gt; {</div>
+<div class="line">    get(): T {</div>
+<div class="line">        return this.a</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

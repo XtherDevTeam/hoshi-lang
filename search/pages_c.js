@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['specification_0',['Hoshi Language Specification',['../md_docs_2Spec.html',1,'']]]
+  ['referenced_20third_20party_20codes_0',['Referenced third party codes',['../md_THIRDPARTY.html',1,'']]],
+  ['representation_20ir_20handbook_1',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]]
 ];

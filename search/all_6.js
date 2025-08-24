@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['7_201_20modules_0',['7.1. Modules',['../md_docs_2Spec.html#autotoc_md71',1,'']]],
-  ['7_202_20foreign_20function_20interface_20ffi_1',['7.2. Foreign Function Interface (FFI)',['../md_docs_2Spec.html#autotoc_md72',1,'']]],
-  ['7_20modules_20and_20foreign_20function_20interface_20ffi_2',['7. Modules and Foreign Function Interface (FFI)',['../md_docs_2Spec.html#autotoc_md70',1,'']]]
+  ['7_20interface_20templates_0',['7. Interface Templates',['../md_docs_2Spec.html#autotoc_md63',1,'']]]
 ];

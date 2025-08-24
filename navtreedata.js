@@ -81,45 +81,44 @@ var NAVTREE =
       [ "Raw Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md44", null ],
       [ "IRValueType 属性的增加和改写", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md45", null ]
     ] ],
-    [ "Hoshi Language Specification", "md_docs_2Spec.html", [
-      [ "1. Introduction", "md_docs_2Spec.html#autotoc_md47", null ],
-      [ "2. Lexical Structure", "md_docs_2Spec.html#autotoc_md48", [
-        [ "2.1. Comments", "md_docs_2Spec.html#autotoc_md49", null ],
-        [ "2.2. Keywords", "md_docs_2Spec.html#autotoc_md50", null ]
-      ] ],
-      [ "3. Types and Data Structures", "md_docs_2Spec.html#autotoc_md51", [
-        [ "3.1. Primitive Types", "md_docs_2Spec.html#autotoc_md52", null ],
-        [ "3.2. Structs", "md_docs_2Spec.html#autotoc_md53", null ],
-        [ "3.3. Interfaces", "md_docs_2Spec.html#autotoc_md54", null ],
-        [ "3.4. Implementations (<tt>impl</tt>)", "md_docs_2Spec.html#autotoc_md55", null ],
-        [ "3.5. Arrays and Dynamic Arrays", "md_docs_2Spec.html#autotoc_md56", [
-          [ "Fixed-Size Arrays", "md_docs_2Spec.html#autotoc_md57", null ],
-          [ "Dynamic Arrays", "md_docs_2Spec.html#autotoc_md58", null ],
-          [ "The <tt>.length</tt> Property", "md_docs_2Spec.html#autotoc_md59", null ]
-        ] ],
-        [ "3.6. Generic Programming (Templates)", "md_docs_2Spec.html#autotoc_md60", null ]
-      ] ],
-      [ "4. Object Model and Lifecycle", "md_docs_2Spec.html#autotoc_md61", [
-        [ "4.1. Everything is an Object", "md_docs_2Spec.html#autotoc_md62", null ],
-        [ "4.2. Memory Management: Reference Counting", "md_docs_2Spec.html#autotoc_md63", null ],
-        [ "4.3. Object Creation", "md_docs_2Spec.html#autotoc_md64", null ]
-      ] ],
-      [ "5. Type Introspection and Casting", "md_docs_2Spec.html#autotoc_md65", [
-        [ "5.1. <tt>typeid</tt> Operator", "md_docs_2Spec.html#autotoc_md66", null ],
-        [ "5.2. <tt>interfaceof</tt> Operator", "md_docs_2Spec.html#autotoc_md67", null ],
-        [ "5.3. Dynamic Casting (<tt>dyn_cast</tt>)", "md_docs_2Spec.html#autotoc_md68", null ]
-      ] ],
-      [ "6. Compilation and Linking", "md_docs_2Spec.html#autotoc_md69", null ],
-      [ "7. Modules and Foreign Function Interface (FFI)", "md_docs_2Spec.html#autotoc_md70", [
-        [ "7.1. Modules", "md_docs_2Spec.html#autotoc_md71", null ],
-        [ "7.2. Foreign Function Interface (FFI)", "md_docs_2Spec.html#autotoc_md72", null ]
+    [ "Operator Overloading", "md_docs_2Operator_01Overloading.html", [
+      [ "Overloadable Operators", "md_docs_2Operator_01Overloading.html#autotoc_md47", null ],
+      [ "Defining Operator Overloads", "md_docs_2Operator_01Overloading.html#autotoc_md48", [
+        [ "Binary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md49", null ],
+        [ "Unary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md50", null ],
+        [ "Callable Objects (operator())", "md_docs_2Operator_01Overloading.html#autotoc_md51", null ],
+        [ "Subscript Operator (operator[])", "md_docs_2Operator_01Overloading.html#autotoc_md52", null ]
       ] ]
     ] ],
-    [ "模板隐式特化的实现思路", "md_docs_2Template.html", null ],
+    [ "Hoshi-lang Language Specification", "md_docs_2Spec.html", [
+      [ "1. Lexical Structure", "md_docs_2Spec.html#autotoc_md54", [
+        [ "1.1. Identifiers", "md_docs_2Spec.html#autotoc_md55", null ],
+        [ "1.2. Keywords", "md_docs_2Spec.html#autotoc_md56", null ],
+        [ "1.3. Literals", "md_docs_2Spec.html#autotoc_md57", null ]
+      ] ],
+      [ "2. Types", "md_docs_2Spec.html#autotoc_md58", null ],
+      [ "3. Structs", "md_docs_2Spec.html#autotoc_md59", null ],
+      [ "4. Interfaces", "md_docs_2Spec.html#autotoc_md60", null ],
+      [ "5. Functions", "md_docs_2Spec.html#autotoc_md61", null ],
+      [ "6. Operator Overloading", "md_docs_2Spec.html#autotoc_md62", null ],
+      [ "7. Interface Templates", "md_docs_2Spec.html#autotoc_md63", null ],
+      [ "8. Standard Library", "md_docs_2Spec.html#autotoc_md64", null ]
+    ] ],
+    [ "Standard Library", "md_docs_2Standard_01Library.html", [
+      [ "String (<tt>str</tt>)", "md_docs_2Standard_01Library.html#autotoc_md66", null ],
+      [ "Vector (<tt>vec</tt>)", "md_docs_2Standard_01Library.html#autotoc_md67", null ]
+    ] ],
+    [ "Generic Programming with Templates", "md_docs_2Template.html", [
+      [ "Function Templates", "md_docs_2Template.html#autotoc_md69", [
+        [ "Implicit vs. Explicit Specialization", "md_docs_2Template.html#autotoc_md70", null ]
+      ] ],
+      [ "Struct Templates", "md_docs_2Template.html#autotoc_md71", null ],
+      [ "Interface Templates", "md_docs_2Template.html#autotoc_md72", null ]
+    ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
-      [ "Known issues", "md_TODO.html#autotoc_md99", null ]
+      [ "Known issues", "md_TODO.html#autotoc_md101", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -172,12 +171,12 @@ var NAVTREEINDEX =
 "classyoi_1_1logicalOrExpr.html#a67b76affb3b5d35fa419ac234144038b",
 "classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4",
 "debug_8h.html#ae8247f718dd0d710b7fb5d221f93a2ec",
-"magic__enum_8h.html#ae07d99ed9989963c4d7cb37c32b0770c",
-"namespacemembers_o.html",
-"parser_8hpp.html#a2bb2b4deff545dac7b82f7fe14c52e74",
-"structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d",
-"structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2",
-"unionyoi_1_1IROperand_1_1operandValue.html#a57ef39e8def0d695ce9f6744ea05c48c"
+"magic__enum_8h.html#ad1e8ca7399ef090ef09549302d9d7d40a4e5868d676cb634aa75b125a0f741abf",
+"namespacemembers_m.html",
+"parser_8hpp.html#a20fb5f7b02960fa3b9b90d8bad0b538c",
+"structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593a123fead50246387983ee340507115ef4",
+"structyoi_1_1LLVMCodegen_1_1StackValue.html#a4aecd6896ac1b6503a4e0a19dec00928",
+"unionyoi_1_1IROperand_1_1operandValue.html#a42bccff23eea4fd68ca80b3d85cb29f6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

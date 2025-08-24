@@ -1,6 +1,6 @@
 var indexSectionsWithContent =
 {
-  0: "1234567_abcdefghijklmnoprstuvwxy~和复实属接模的直语",
+  0: "12345678_abcdefghijklmnoprstuvwxy~和复实属接的直语",
   1: "abcdefghilmnoprstuvwy",
   2: "my",
   3: "abcdilmnoprstuvw",
@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "abcdefgijklmnprstuvw",
   9: "o",
   10: "eghmpwy",
-  11: "acdefhilnoprstw实接模的直"
+  11: "acdefghilnoprstw实接的直"
 };
 
 var indexSectionNames =

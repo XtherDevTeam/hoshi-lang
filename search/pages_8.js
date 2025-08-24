@@ -1,5 +1,13 @@
 var searchData=
 [
-  ['null_20literal_20in_20hoshi_20lang_0',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]],
-  ['nullable_20check_1',['Nullable Check',['../md_docs_2Nullable_01Check_01_6_01Raw_01Check.html',1,'']]]
+  ['lang_0',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]],
+  ['lang_20arrays_1',['Hoshi-lang Arrays',['../md_docs_2Array.html',1,'']]],
+  ['lang_20intermediate_20representation_20ir_20handbook_2',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]],
+  ['lang_20language_20specification_3',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
+  ['lang_20programming_20language_4',['The Hoshi-lang Programming Language',['../index.html',1,'']]],
+  ['language_5',['The Hoshi-lang Programming Language',['../index.html',1,'']]],
+  ['language_20specification_6',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
+  ['library_7',['Standard Library',['../md_docs_2Standard_01Library.html',1,'']]],
+  ['list_8',['list',['../deprecated.html',1,'Deprecated List'],['../md_TODO.html',1,'TODO List']]],
+  ['literal_20in_20hoshi_20lang_9',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]]
 ];
