@@ -12,7 +12,7 @@ var searchData=
   ['has_5fis_5fflags_9',['has_is_flags',['../structmagic__enum_1_1detail_1_1has__is__flags.html',1,'magic_enum::detail']]],
   ['has_5fis_5fflags_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28customize_3a_3aenum_5frange_3c_20t_20_3e_3a_3ais_5fflags_29_3e_20_3e_10',['has_is_flags&lt; T, std::void_t&lt; decltype(customize::enum_range&lt; T &gt;::is_flags)&gt; &gt;',['../structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html',1,'magic_enum::detail']]],
   ['hasarraytypespec_11',['hasArrayTypeSpec',['../classyoi_1_1typeSpec.html#ad060c6c394399834953e33490afab637',1,'yoi::typeSpec']]],
-  ['hasattribute_12',['hasAttribute',['../classyoi_1_1IRValueType.html#ab9ed59507a002d0405a956b171000c15',1,'yoi::IRValueType']]],
+  ['hasattribute_12',['hasattribute',['../classyoi_1_1IRValueType.html#ab9ed59507a002d0405a956b171000c15',1,'yoi::IRValueType::hasAttribute()'],['../classyoi_1_1IRFunctionDefinition.html#ae11ef1d0fd94f0034aa77d1664e2006f',1,'yoi::IRFunctionDefinition::hasAttribute()']]],
   ['hasdeftemplatearg_13',['hasDefTemplateArg',['../classyoi_1_1identifierWithDefTemplateArg.html#a7ae4ac7918adf5becb96d2ec1d1d5d53',1,'yoi::identifierWithDefTemplateArg']]],
   ['haselseblock_14',['hasElseBlock',['../classyoi_1_1ifStmt.html#af044ddfd3b04e1d353afb1eb898de444',1,'yoi::ifStmt']]],
   ['haspossiblevalue_15',['haspossiblevalue',['../structyoi_1_1IROptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IROptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IROptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IROptimizer::VariablesExtraInfo::hasPossibleValue']]],

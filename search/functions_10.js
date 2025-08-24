@@ -32,7 +32,7 @@ var searchData=
   ['slashstart_29',['slashStart',['../classyoi_1_1lexer.html#a971f9ff65b52c70eb02783703c43334d',1,'yoi::lexer']]],
   ['specializefunctiontemplate_30',['specializeFunctionTemplate',['../classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd',1,'yoi::visitor']]],
   ['specializeinterfaceimplementation_31',['specializeInterfaceImplementation',['../classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20',1,'yoi::visitor']]],
-  ['specializeinterfacetemplate_32',['specializeInterfaceTemplate',['../classyoi_1_1visitor.html#a792d3023e4dd17cbbd8244a363c11790',1,'yoi::visitor']]],
+  ['specializeinterfacetemplate_32',['specializeInterfaceTemplate',['../classyoi_1_1visitor.html#a5337c501841fe8add3ffe32aaca18b67',1,'yoi::visitor']]],
   ['specializestructmethoddeclaration_33',['specializeStructMethodDeclaration',['../classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc',1,'yoi::visitor']]],
   ['specializestructmethoddefinition_34',['specializeStructMethodDefinition',['../classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208',1,'yoi::visitor']]],
   ['specializestructtemplate_35',['specializeStructTemplate',['../classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254',1,'yoi::visitor']]],

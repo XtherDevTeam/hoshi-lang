@@ -5,6 +5,5 @@ var searchData=
   ['clobjectlinker_2ecpp_2',['clObjectLinker.cpp',['../clObjectLinker_8cpp.html',1,'']]],
   ['clobjectlinker_2eh_3',['clObjectLinker.h',['../clObjectLinker_8h.html',1,'']]],
   ['compilercontext_2ecpp_4',['compilerContext.cpp',['../compilerContext_8cpp.html',1,'']]],
-  ['compilercontext_2eh_5',['compilerContext.h',['../compilerContext_8h.html',1,'']]],
-  ['current_5fdiff_2emd_6',['current_diff.md',['../current__diff_8md.html',1,'']]]
+  ['compilercontext_2eh_5',['compilerContext.h',['../compilerContext_8h.html',1,'']]]
 ];

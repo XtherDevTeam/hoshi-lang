@@ -6,10 +6,12 @@ var classyoi_1_1IRFunctionDefinition =
       [ "BuiltinImplementation", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f", null ],
       [ "NoFFI", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a", null ],
       [ "Variadic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b", null ],
-      [ "Static", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a84a8921b25f505d0d2077aeb5db4bc16", null ]
+      [ "Static", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a84a8921b25f505d0d2077aeb5db4bc16", null ],
+      [ "Constructor", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a678d0a4421b60dc59999ac02837496a6", null ]
     ] ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html#a89c653b9e1bb756b2b4d29b2b97941c2", null ],
     [ "getVariableTable", "classyoi_1_1IRFunctionDefinition.html#aefcf4ac267aede8e9f26f9c643a58538", null ],
+    [ "hasAttribute", "classyoi_1_1IRFunctionDefinition.html#ae11ef1d0fd94f0034aa77d1664e2006f", null ],
     [ "to_string", "classyoi_1_1IRFunctionDefinition.html#a61fa8c172e7397d729af1135ec6076a6", null ],
     [ "argumentTypes", "classyoi_1_1IRFunctionDefinition.html#a0e5babfb8d2a4d3b0205b85c2a35afbe", null ],
     [ "attrs", "classyoi_1_1IRFunctionDefinition.html#acd5a2dc9a674e5a9ccaa521079fac0e1", null ],

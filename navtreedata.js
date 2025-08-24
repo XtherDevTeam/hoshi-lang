@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "hoshi-lang", "index.html", [
     [ "The Hoshi-lang Programming Language", "index.html", "index" ],
-    [ "current_diff", "md_current__diff.html", null ],
     [ "Hoshi-lang Arrays", "md_docs_2Array.html", [
       [ "1. Fixed-Size Arrays", "md_docs_2Array.html#autotoc_md1", [
         [ "Declaration and Initialization", "md_docs_2Array.html#autotoc_md2", null ],
@@ -164,21 +163,21 @@ var NAVTREEINDEX =
 "IRLinker_8cpp.html",
 "classyoi_1_1BuiltinModuleBuilder.html#a170a7036e9359575d23ed4cd95ce7c6b",
 "classyoi_1_1IRBuilder.html#a0e82125bac8069a5ee90e607478781a0",
-"classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#a0af291915f004b398df09056fc75c117",
-"classyoi_1_1IROptimizer.html#ac8acc16fd12469e3322b62b22db6c5cb",
-"classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a",
-"classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4",
-"classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9e",
-"classyoi_1_1indexTable_1_1iterator.html#a276365c456eb3c21c884ad1282173639",
-"classyoi_1_1logicalOrExpr.html#a9e0cf23a22b6af67b8b52a65f27ef7a2",
-"classyoi_1_1typeSpec.html#ae335a812d05d350997b49f2f2005cba4",
-"def_8cpp.html#a147de820f25f66f42a6fd04341fcfd0a",
-"magic__enum_8h.html#aeb24ce9f57fa538036bc1b5e7612f045",
-"namespacemembers_s.html",
-"parser_8hpp.html#a47115387be28c9419497e9da7a2f1d82",
-"structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71",
-"structyoi_1_1ifStmt_1_1ifBlock.html",
-"unionyoi_1_1IROperand_1_1operandValue.html#a700a82d732da3e8b52478b9dea25ab79"
+"classyoi_1_1IRInterfaceImplementationTemplate.html#ac2821dbb7405311f25a5b578e8e2bef7",
+"classyoi_1_1IROptimizer.html#ab7ab4e42dfb8a8195027f81a0ef47d10",
+"classyoi_1_1LLVMCodegen.html#a2e61cae680796ff5a75ae45d70fd4b9f",
+"classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb",
+"classyoi_1_1globalStmt.html",
+"classyoi_1_1indexTable_1_1iterator.html#a1251251e13f9f43f150a6567e761b433",
+"classyoi_1_1logicalOrExpr.html#a67b76affb3b5d35fa419ac234144038b",
+"classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4",
+"debug_8h.html#ae8247f718dd0d710b7fb5d221f93a2ec",
+"magic__enum_8h.html#ae07d99ed9989963c4d7cb37c32b0770c",
+"namespacemembers_o.html",
+"parser_8hpp.html#a2bb2b4deff545dac7b82f7fe14c52e74",
+"structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d",
+"structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2",
+"unionyoi_1_1IROperand_1_1operandValue.html#a57ef39e8def0d695ce9f6744ea05c48c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

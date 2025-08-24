@@ -104,9 +104,9 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[x] 编译器为 TypeInfo 结构体开洞</li>
 <li>[x] 为 <code>import</code> <code>export</code> 增加 <code>noffi</code> 关键字</li>
 <li>[x] 加入原生动态创建数组</li>
-<li>[ ] 对因为 <code>dyn_cast</code> 造成的额外 <code>null-check</code> 进行优化。<ul>
-<li>[ ] 在 IRValueType 中加入 <code>attrs</code> 字段用于存放变量属性</li>
-<li>[ ] 在 llvmCodegen 阶段对 IRValueType 加入 <code>Nullable</code> 属性检查，存在的情况下才进行 <code>null-check</code></li>
+<li>[x] 对因为 <code>dyn_cast</code> 造成的额外 <code>null-check</code> 进行优化。<ul>
+<li>[x] 在 IRValueType 中加入 <code>attrs</code> 字段用于存放变量属性</li>
+<li>[x] 在 llvmCodegen 阶段对 IRValueType 加入 <code>Nullable</code> 属性检查，存在的情况下才进行 <code>null-check</code></li>
 </ul>
 </li>
 <li>[x] 加入可变参数</li>
@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[x] 加入 interface template 支持</li>
 <li>[x] 完成 vector 模板的开发</li>
 <li>[x] 完成 string 的标准库开发</li>
+<li>[x] 完成 constructor 不强制要求 return this 的语法糖</li>
 <li>[ ] 完成 <code>let [x, y] = depacker()</code> 的语法设计和实现</li>
 <li>[ ] 改造 <code>new struct</code> 的逻辑</li>
 </ul>

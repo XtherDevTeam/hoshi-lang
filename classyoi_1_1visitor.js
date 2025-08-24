@@ -41,7 +41,7 @@ var classyoi_1_1visitor =
     [ "resolveOverloadInterface", "classyoi_1_1visitor.html#a44aecdd55c60ee9672a3f5ea03179306", null ],
     [ "specializeFunctionTemplate", "classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd", null ],
     [ "specializeInterfaceImplementation", "classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20", null ],
-    [ "specializeInterfaceTemplate", "classyoi_1_1visitor.html#a792d3023e4dd17cbbd8244a363c11790", null ],
+    [ "specializeInterfaceTemplate", "classyoi_1_1visitor.html#a5337c501841fe8add3ffe32aaca18b67", null ],
     [ "specializeStructMethodDeclaration", "classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc", null ],
     [ "specializeStructMethodDefinition", "classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208", null ],
     [ "specializeStructTemplate", "classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254", null ],
