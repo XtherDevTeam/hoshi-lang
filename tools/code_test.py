@@ -34,6 +34,7 @@ TEST_CASES = {
     "interface-template": {"type": "executable", "return_code": 0},
     "char": {"type": "executable", "return_code": 0},
     "string": {"type": "executable", "return_code": 0},
+    "rich-digit": {"type": "executable", "return_code": 0},
 }
 
 
