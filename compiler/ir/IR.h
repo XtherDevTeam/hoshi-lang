@@ -786,6 +786,7 @@ namespace yoi {
                             yoi::indexT moduleIndex = -1);
 
         void invokeVirtualOp(yoi::indexT funcIndex,
+                             yoi::indexT interfaceIndex,
                              yoi::indexT methodArgsCount,
                              const std::shared_ptr<IRValueType> &returnType,
                              bool externalInvocation = false,

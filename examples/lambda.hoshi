@@ -1,0 +1,20 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func test_lambda(x: int, y: int, f: func (int, int) : int) : int {
+    return f(x, y)
+}
+
+func main() : int {
+    let salt = 114514
+    let closure = func[salt] (x: int, y: int) : int {
+        return x + y + this.salt
+    }
+    let result = test_lambda(2, 3, closure)
+    if (result != 114519) {
+        puts("lambda validation failed")
+        return 1
+    }
+    puts("lambda validation passed")
+    return 0
+}

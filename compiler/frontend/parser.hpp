@@ -27,6 +27,8 @@ namespace yoi {
 
     void parse(definitionArguments *&o, lexer &lex);
 
+    void parse(unnamedDefinitionArguments *&o, lexer &lex);
+
     void parse(funcTypeSpec *&o, lexer &lex);
 
     void parse(typeSpec *&o, lexer &lex);
@@ -148,6 +150,10 @@ namespace yoi {
     void parse(dynCastExpression *&o, lexer &lex);
 
     void parse(newExpression *&o, lexer &lex);
+
+    void parse(lambdaExpr *&o, lexer &lex);
+
+    void parse(callableExpression *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

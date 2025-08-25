@@ -1291,8 +1291,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::invoke_virtual: {
-                auto methodVTableIndex = instr.operands[1].value.symbolIndex;
-                auto userArgCount = instr.operands[2].value.symbolIndex;
+                auto methodVTableIndex = instr.operands[2].value.symbolIndex;
+                auto userArgCount = instr.operands[3].value.symbolIndex;
 
                 std::vector<StackValue> userArgs;
                 for (size_t i = 0; i < userArgCount - 1; ++i) { // userArgCount includes 'this'
@@ -1327,7 +1327,7 @@ namespace yoi {
 
                 std::vector<llvm::Type*> virtualArgTypes;
                 virtualArgTypes.push_back(llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                for (size_t i = 1; i < funcType->getNumParams(); ++i) {
+                for (size_t i = 0; i < funcType->getNumParams(); ++i) {
                     virtualArgTypes.push_back(funcType->getParamType(i));
                 }
                 auto* virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);

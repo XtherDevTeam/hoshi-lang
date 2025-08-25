@@ -368,6 +368,7 @@ namespace yoi {
     }
 
     void IRBuilder::invokeVirtualOp(yoi::indexT funcIndex,
+                                    yoi::indexT interfaceIndex,
                                     yoi::indexT methodArgsCount,
                                     const std::shared_ptr<IRValueType> &returnType,
                                     bool externalInvocation,
@@ -378,6 +379,7 @@ namespace yoi {
         tempVarStack.push_back(returnType);
         insert(IR(IR::Opcode::invoke_virtual,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
+                   {IROperand::operandType::index, interfaceIndex},
                    {IROperand::operandType::index, funcIndex},
                    {IROperand::operandType::index, methodArgsCount + 1}}, currentDebugInfo));
     }

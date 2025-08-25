@@ -100,6 +100,7 @@ namespace yoi {
                 kStatic,
                 kAlwaysInline,
                 kNew,
+                kCallable,
                 kThreeDots,
                 kInterfaceOf,
                 eof,

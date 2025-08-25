@@ -168,6 +168,25 @@ namespace yoi {
 
     class abstractExpr;
 
+    class lambdaExpr;
+
+    class unnamedDefinitionArguments;
+
+    class callableExpression;
+
+    class callableExpression : public AST {
+        public:
+         rExpr *expr;
+    };
+
+    class lambdaExpr : public AST {
+    public:
+        vec<yoi::identifier *> captures;
+        definitionArguments *args;
+        typeSpec *resultType;
+        codeBlock *block;
+    };
+
     class basicLiterals : public AST {
     public:
         lexer::token node;
@@ -239,10 +258,10 @@ namespace yoi {
 
     class funcTypeSpec : public AST {
     public:
-        definitionArguments *args;
+        unnamedDefinitionArguments *args;
         typeSpec *resultType;
 
-        definitionArguments &getArgs() const;
+        unnamedDefinitionArguments &getArgs() const;
 
         typeSpec &getResultType() const;
 
@@ -323,13 +342,15 @@ namespace yoi {
 
     class primary : public AST {
     public:
-        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression
+        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is callableExpression
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
         typeIdExpression *typeId;
         dynCastExpression *dynCast;
         newExpression *newExpr;
+        lambdaExpr *lambda;
+        callableExpression *callable;
 
         memberExpr &getMemberExpr() const;
 
@@ -917,6 +938,11 @@ namespace yoi {
             rExpr *expr;
     };
 
+    class unnamedDefinitionArguments : public AST {
+        public:
+            vec<typeSpec *> types;
+    };
+
     void finalizeAST(exportDecl *ptr);
 
     void finalizeAST(importInner *ptr);
@@ -1054,6 +1080,12 @@ namespace yoi {
     void finalizeAST(newExpression *ptr);
 
     void finalizeAST(abstractExpr *ptr);
+
+    void finalizeAST(lambdaExpr *ptr);
+
+    void finalizeAST(unnamedDefinitionArguments *ptr);
+
+    void finalizeAST(callableExpression *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

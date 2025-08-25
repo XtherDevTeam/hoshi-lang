@@ -2,6 +2,7 @@
 // Created by XIaokang00010 on 2023/2/11.
 //
 
+#include "compiler/compilerContext.h"
 #include "compiler/frontend/lexer.hpp"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp" 
@@ -289,7 +290,7 @@ namespace yoi {
         }
         lexer::token node_start_token = lex.curToken;
 
-        definitionArguments *args = nullptr;
+        unnamedDefinitionArguments *args = nullptr;
         typeSpec *spec = nullptr;
 
         parse(args, lex);
@@ -566,33 +567,45 @@ namespace yoi {
         typeIdExpression *d = nullptr;
         dynCastExpression *e = nullptr;
         newExpression *f = nullptr;
+        lambdaExpr *g = nullptr;
+        callableExpression *h = nullptr;
         rExpr *c = nullptr;
 
         lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
         if (a) {
-            o = new primary{node_start_token, 0, a, nullptr, nullptr, nullptr};
+            o = new primary{node_start_token, 0, a, nullptr, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(b, lex);
         if (b) {
-            o = new primary{node_start_token, 1, nullptr, b, nullptr, nullptr};
+            o = new primary{node_start_token, 1, nullptr, b, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(d, lex);
         if (d) {
-            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d, nullptr};
+            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d, nullptr, nullptr, nullptr};
             return;
         }
         parse(e, lex);
         if (e) {
-            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e, nullptr};
+            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e, nullptr, nullptr, nullptr};
             return;
         }
         parse(f, lex);
         if (f) {
-            o = new primary{node_start_token, 5, nullptr, nullptr, nullptr, nullptr, nullptr, f};
+            o = new primary{node_start_token, 5, nullptr, nullptr, nullptr, nullptr, nullptr, f, nullptr, nullptr};
+            return;
+        }
+        parse(g, lex);
+        if (g) {
+            o = new primary{node_start_token, 6, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, g, nullptr};
+            return;
+        }
+        parse(h, lex);
+        if (h) {
+            o = new primary{node_start_token, 7, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, h};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
@@ -2153,6 +2166,125 @@ namespace yoi {
             o = nullptr;
             panic(lex.line, lex.col, "expected extern module access expression after `interfaceof` or `impl`");
         }
+    }
+
+    void parse(lambdaExpr *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kFunc) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftBracket) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `[` after `func` in lambda expression");
+        }
+        lex.scan();
+        vec<yoi::identifier *> captures;
+        while (lex.curToken.kind == lexer::token::tokenKind::identifier) {
+            identifier *capture = nullptr;
+            parse(capture, lex);
+            captures.push_back(capture);
+            if (!capture) {
+                for (auto c : captures) finalizeAST(c);
+                o = nullptr;
+                panic(lex.line, lex.col, "expected identifier in capture list in lambda expression");
+            }
+            if (lex.curToken.kind != lexer::token::tokenKind::comma) {
+                break;
+            }
+            lex.scan();
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `]` after capture list in lambda expression");
+        }
+        lex.scan();
+        definitionArguments *args = nullptr;
+        parse(args, lex);
+        if (!args) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected arguments after capture list in lambda expression");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::colon) {
+            o = nullptr;
+            finalizeAST(args);
+            panic(lex.line, lex.col, "expected `:` after arguments in lambda expression");
+        }
+        lex.scan();
+        typeSpec *resultType = nullptr;
+        parse(resultType, lex);
+        if (!resultType) {
+            o = nullptr;
+            finalizeAST(args);
+            panic(lex.line, lex.col, "expected typeSpec after `:` in lambda expression");
+        }
+        codeBlock *block = nullptr;
+        parse(block, lex);
+        if (!block) {
+            o = nullptr;
+            finalizeAST(args);
+            finalizeAST(resultType);
+            panic(lex.line, lex.col, "expected codeBlock after `:` in lambda expression");
+        }
+        o = new lambdaExpr{node_start_token, captures, args, resultType, block};
+    }
+
+    void parse(unnamedDefinitionArguments *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        vec<typeSpec *> types;
+        while (true) {
+            typeSpec *type = nullptr;
+            parse(type, lex);
+            if (!type) {
+                o = nullptr;
+                panic(lex.line, lex.col, "expected typeSpec in unnamed definition arguments");
+            }
+            types.push_back(type);
+            if (lex.curToken.kind != lexer::token::tokenKind::comma) {
+                break;
+            }
+            lex.scan();
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            for (auto t : types) finalizeAST(t);
+            panic(lex.line, lex.col, "expected `)` after typeSpecs in unnamed definition arguments");
+        }
+        lex.scan();
+        o = new unnamedDefinitionArguments{node_start_token, types};
+    }
+
+    void parse(callableExpression *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kCallable) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        rExpr *expr = nullptr;
+        parse(expr, lex);
+        if (!expr) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected expression in callable expression");
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            finalizeAST(expr);
+            panic(lex.line, lex.col, "expected `)` after expression in callable expression");
+        }
+        lex.scan();
+        o = new callableExpression{node_start_token, expr};
     }
 } // namespace yoi
 

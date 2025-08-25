@@ -6,6 +6,7 @@
 #define HOSHI_LANG_VISITOR_H
 
 #include "compiler/builtinModule.hpp"
+#include "compiler/compilerContext.h"
 #include "compiler/frontend/lexer.hpp"
 #include "compiler/frontend/parser.hpp"
 #include "share/def.hpp"
@@ -217,6 +218,8 @@ namespace yoi {
 
         IRValueType parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
+        IRValueType parseTypeSpec(yoi::funcTypeSpec *typeSpec);
+
         IRValueType parseTypeSpec(yoi::typeSpec *typeSpec);
 
         IRValueType parseTypeSpec(yoi::externModuleAccessExpression *emaExpression);
@@ -260,6 +263,8 @@ namespace yoi {
         yoi::indexT visit(yoi::breakStmt *breakStmt);
 
         void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
+
+        yoi::indexT visit(yoi::callableExpression *callableExpression);
 
         /**
         * @brief Visits a list of argument expressions and returns their types.
@@ -330,6 +335,15 @@ namespace yoi {
                              yoi::vec<yoi::subscript *>::iterator end,
                              bool isStoreOp,
                              bool isLastTerm);
+
+        yoi::indexT createCallableInterface(const yoi::vec<std::shared_ptr<IRValueType>> &parameterTypes,
+                                            const std::shared_ptr<IRValueType> &returnType);
+
+        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForLambda(const std::shared_ptr<IRStructDefinition> &lambda,
+                                                          yoi::indexT lambdaStructIndex,
+                                                          yoi::indexT moduleIndex);
+
+        yoi::indexT createLambdaUnnamedStruct(yoi::lambdaExpr *lambdaExpr);
     };
 
 } // namespace yoi

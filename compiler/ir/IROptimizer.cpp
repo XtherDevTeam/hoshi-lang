@@ -1240,11 +1240,15 @@ namespace yoi {
                     break;
                 }
                 case IR::Opcode::invoke_virtual: {
-                    auto argCount = ins.operands[2].value.symbolIndex;
+                    auto argCount = ins.operands[3].value.symbolIndex;
                     for (int i = 0; i < argCount - 1; i++) {
                         simulationStack.pop();
                     }
-                    auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[1].value.symbolIndex]->returnType;
+                    auto returnType = compilerCtx
+                        ->getImportedModule(ins.operands[0].value.symbolIndex)
+                        ->interfaceTable[ins.operands[1].value.symbolIndex]
+                        ->methodMap[ins.operands[2].value.symbolIndex]
+                        ->returnType;
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
@@ -2189,11 +2193,15 @@ namespace yoi {
                     break;
                 }
                 case IR::Opcode::invoke_virtual: {
-                    auto argCount = ins.operands[2].value.symbolIndex;
+                    auto argCount = ins.operands[3].value.symbolIndex;
                     for (int i = 0; i < argCount - 1; i++) {
                         simulationStack.pop();
                     }
-                    auto returnType = managedPtr(*compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->interfaceTable[simulationStack.peek(0).type->typeIndex]->methodMap[ins.operands[1].value.symbolIndex]->returnType);
+                    auto returnType = compilerCtx
+                        ->getImportedModule(ins.operands[0].value.symbolIndex)
+                        ->interfaceTable[ins.operands[1].value.symbolIndex]
+                        ->methodMap[ins.operands[2].value.symbolIndex]
+                        ->returnType;
                     returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
@@ -2616,7 +2624,21 @@ namespace yoi {
                     simulationStack.push(returnType, {});
                     break;
                 }
-                case IR::Opcode::invoke_virtual:
+                case IR::Opcode::invoke_virtual: {
+                    auto argCount = ins.operands[3].value.symbolIndex;
+                    for (int i = 0; i < argCount - 1; i++) {
+                        simulationStack.pop();
+                    }
+                    auto returnType = compilerCtx
+                        ->getImportedModule(ins.operands[0].value.symbolIndex)
+                        ->interfaceTable[ins.operands[1].value.symbolIndex]
+                        ->methodMap[ins.operands[2].value.symbolIndex]
+                        ->returnType;
+                    returnType->removeAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.pop();
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
+                    break;
+                }
                 case IR::Opcode::invoke_imported: {
                     auto function = compilerCtx->getIRFFITable()->importedLibraries[ins.operands[0].value.symbolIndex].importedFunctionTable[ins.operands[1].value.symbolIndex];
                     auto returnType = managedPtr(*function->returnType);
@@ -3151,14 +3173,15 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::invoke_virtual: {
-                auto argCount = ins.operands[2].value.symbolIndex;
+                auto argCount = ins.operands[3].value.symbolIndex;
                 for (int i = 0; i < argCount - 1; i++) {
                     simulationStack.pop();
                 }
-                auto returnType = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)
-                                      ->interfaceTable[simulationStack.peek(0).type->typeIndex]
-                                      ->methodMap[ins.operands[1].value.symbolIndex]
-                                      ->returnType;
+                auto returnType = compilerCtx
+                        ->getImportedModule(ins.operands[0].value.symbolIndex)
+                        ->interfaceTable[ins.operands[1].value.symbolIndex]
+                        ->methodMap[ins.operands[2].value.symbolIndex]
+                        ->returnType;
                 simulationStack.pop();
                 simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                 break;

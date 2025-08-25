@@ -206,7 +206,6 @@ namespace yoi {
                 newInstr.operands[0].value.symbolIndex = ENTRY_MODULE_ID_CONST;
                 switch (instr.opcode) {
                     case IR::Opcode::invoke:
-                    case IR::Opcode::invoke_virtual:
                         newInstr.operands[1].value.symbolIndex = functionRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::load_global:
@@ -218,6 +217,7 @@ namespace yoi {
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::new_interface:
+                    case IR::Opcode::invoke_virtual:
                     case IR::Opcode::new_array_interface:
                     case IR::Opcode::new_dynamic_array_interface:
                         newInstr.operands[1].value.symbolIndex = interfaceRemapping.at(moduleId).at(symbolIndex);

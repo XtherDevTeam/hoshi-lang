@@ -49,7 +49,7 @@ namespace yoi {
         return spec;
     }
 
-    definitionArguments &funcTypeSpec::getArgs() const {
+    unnamedDefinitionArguments &funcTypeSpec::getArgs() const {
         return *args;
     }
 
@@ -575,6 +575,18 @@ namespace yoi {
             case 2:
                 finalizeAST(ptr->expr);
                 break;
+            case 3:
+                finalizeAST(ptr->typeId);
+                break;
+            case 4:
+                finalizeAST(ptr->dynCast);
+                break;
+            case 5:
+                finalizeAST(ptr->newExpr);
+                break;
+            case 6:
+                finalizeAST(ptr->lambda);
+                break;
         }
         delete ptr;
     }
@@ -1023,6 +1035,7 @@ namespace yoi {
         if (ptr->finallyBlock) {
             finalizeAST(ptr->finallyBlock);
         }
+        delete ptr;
     }
 
     void finalizeAST(catchParam *ptr) {
@@ -1035,15 +1048,18 @@ namespace yoi {
         if (ptr->block) {
             finalizeAST(ptr->block);
         }
+        delete ptr;
     }
 
     void finalizeAST(throwStmt *ptr) {
         finalizeAST(ptr->expr);
+        delete ptr;
     }
     
     void finalizeAST(dynCastExpression *ptr) {
         finalizeAST(ptr->expr);
         finalizeAST(ptr->type);
+        delete ptr;
     }
 
     void finalizeAST(typeIdExpression *ptr) {
@@ -1051,12 +1067,14 @@ namespace yoi {
             finalizeAST(ptr->expr);
         if (ptr->type)
             finalizeAST(ptr->type);
+        delete ptr;
     }
     
     void finalizeAST(newExpression *ptr) {
         finalizeAST(ptr->type);
         finalizeAST(ptr->type);
         finalizeAST(ptr->args);
+        delete ptr;
     }
     primary &abstractExpr::getLhs() const {
         return *lhs;
@@ -1071,6 +1089,29 @@ namespace yoi {
         finalizeAST(ptr->lhs);
         if (ptr->rhs)
             finalizeAST(ptr->rhs);
+        delete ptr;
+    }
+
+    void finalizeAST(lambdaExpr *ptr) {
+        for (auto &i : ptr->captures) {
+            finalizeAST(i);
+        }
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->block);
+        finalizeAST(ptr->resultType);
+        ptr->captures.clear();
+        delete ptr;
+    }
+
+    void finalizeAST(unnamedDefinitionArguments *ptr) {
+        for (auto &arg : ptr->types) {
+            finalizeAST(arg);
+        }
+        delete ptr;
+    }
+    
+    void finalizeAST(callableExpression *ptr) {
+        finalizeAST(ptr->expr);
         delete ptr;
     }
 } // namespace yoi

@@ -146,6 +146,13 @@ namespace yoi {
                 visit(primary->newExpr);
                 break;
             }
+            case 6: {
+                auto lambdaStructIndex = createLambdaUnnamedStruct(primary->lambda);
+                auto [lambdaCallableIndex, callableInterface] = createCallableImplementationForLambda(irModule->structTable[lambdaStructIndex], lambdaStructIndex, currentModuleIndex);
+                moduleContext->getIRBuilder().newInterfaceOp(callableInterface.second, true, callableInterface.first);
+                moduleContext->getIRBuilder().constructInterfaceImplOp(lambdaCallableIndex);
+                break;
+            }
             default: {
                 panic(primary->getLine(), primary->getColumn(), "Unexpected primary type");
             }
@@ -1102,8 +1109,7 @@ namespace yoi {
                         handleInvocationExtern(L"operator()", args, currentModuleIndex, structObject);
                         resolved = true;
                     } else {
-                        // TODO: handle interface objects
-                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "TODO: Interface objects are not implemented yet.");
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot call operator() on non-struct object or interface object.");
                     }
                 }
             }
@@ -2177,8 +2183,7 @@ namespace yoi {
             }
             case 1: {
                 // func
-                // TODO: Implement function type
-                return {IRValueType::valueType::null};
+                return parseTypeSpec(typeSpec->func);
             }
             case 2: {
                 // null
@@ -3258,6 +3263,7 @@ namespace yoi {
             }
         } else if (structContext && structContext->type == IRValueType::valueType::interfaceObject) {
             moduleContext->getIRBuilder().invokeVirtualOp(overload.functionIndex,
+                                                          structContext->typeIndex,
                                                           finalParamCount,
                                                           overload.function->returnType,
                                                           true,
@@ -3322,7 +3328,7 @@ namespace yoi {
                         moduleContext->getIRBuilder().getCurrentDebugInfo().line,
                         moduleContext->getIRBuilder().getCurrentDebugInfo().column,
                         "Argument count does not match");
-                moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, 1, method->returnType);
+                moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, lhs->typeIndex, 1, method->returnType, true, lhs->typeAffiliateModule);
                 isResolved = true;
             } catch (const std::out_of_range &) {
 
@@ -3359,7 +3365,7 @@ namespace yoi {
                        moduleContext->getIRBuilder().getCurrentDebugInfo().line,
                        moduleContext->getIRBuilder().getCurrentDebugInfo().column,
                        "Argument count does not match");
-            moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, 0, method->returnType);
+            moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, rhs->typeIndex, 0, method->returnType, true, rhs->typeAffiliateModule);
             isResolved = true;
         }
         yoi_assert(isResolved, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Unary operator overloading not found for " + yoi::wstring2string(overloadName));
@@ -3668,5 +3674,186 @@ namespace yoi {
             }
         }
         return false;
+    }
+
+    IRValueType visitor::parseTypeSpec(yoi::funcTypeSpec *typeSpec) {
+        vec<std::shared_ptr<IRValueType>> argTypes;
+        for (auto &arg : typeSpec->args->types) {
+            argTypes.push_back(managedPtr(parseTypeSpec(arg)));
+        }
+        auto returnType = managedPtr(parseTypeSpec(typeSpec->resultType));
+
+        return IRValueType{IRValueType::valueType::interfaceObject,
+                            HOSHI_COMPILER_CTX_GLOB_ID_CONST,
+                            createCallableInterface(argTypes, returnType)};
+    }
+
+    yoi::indexT visitor::createCallableInterface(const yoi::vec<std::shared_ptr<IRValueType>> &parameterTypes,
+                                                 const std::shared_ptr<IRValueType> &returnType) {
+        auto callableInterfaceName = L"callable" + getFuncUniqueNameStr(parameterTypes);
+        callableInterfaceName += getTypeSpecUniqueNameStr(returnType);
+        if (moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable.contains(callableInterfaceName)) {
+            return moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)
+                ->interfaceTable.getIndex(callableInterfaceName);
+        }
+
+        auto interfaceIndex = moduleContext->getCompilerContext()
+            ->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)
+            ->interfaceTable.put_create(callableInterfaceName, {});
+
+        yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argTypes;
+        for (auto &arg : parameterTypes) {
+            argTypes.emplace_back(L"arg", arg);
+        }
+        IRInterfaceInstanceDefinition::Builder builder;
+        builder.setName(callableInterfaceName);
+        builder.addMethod(L"operator()" + getFuncUniqueNameStr(parameterTypes), managedPtr(IRFunctionDefinition{
+            L"operator()" + getFuncUniqueNameStr(parameterTypes),
+            argTypes,
+            returnType,
+            {},
+            {},
+            {}
+        }));
+        
+        moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[interfaceIndex] = builder.yield();
+
+        return interfaceIndex;
+    }
+
+    yoi::indexT visitor::createLambdaUnnamedStruct(yoi::lambdaExpr *lambdaExpr) {
+        auto structName = L"lambda" + std::to_wstring(lambdaExpr->getLine()) + L"_" + std::to_wstring(lambdaExpr->getColumn());
+        auto structIndex = irModule->structTable.put_create(structName, nullptr);
+
+        auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
+
+        IRStructDefinition::Builder builder;
+        builder.setName(structName);
+        // add captured variables as fields
+        IRFunctionDefinition::Builder callableBuilder;
+        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+
+        callableBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
+        callableBuilder.addArgument(L"this", structType);
+        for (auto &i : lambdaExpr->args->spec) {
+            auto argType = managedPtr(parseTypeSpec(i->spec));
+            callableBuilder.addArgument(i->id->node.strVal, argType);
+            argTypes.push_back(argType);
+        }
+        auto returnType = managedPtr(parseTypeSpec(lambdaExpr->resultType));
+        callableBuilder.setReturnType(returnType);
+        callableBuilder.setName(structName + L"::operator()" + getFuncUniqueNameStr(argTypes));
+        auto callableFunc = callableBuilder.yield();
+        auto callableFuncIndex = irModule->functionTable.put_create(callableFunc->name, callableFunc);
+        builder.addMethod(L"operator()" + getFuncUniqueNameStr(argTypes), callableFuncIndex);
+        
+        // add captured variables as fields
+        // now a trick here, we put new_struct op first, so that we can build the IR without rolling back the builder state
+        // when we add captured variables as fields
+        argTypes.clear();
+        moduleContext->getIRBuilder().newStructOp(structIndex);
+        for (auto &i : lambdaExpr->captures) {
+            visit(i);
+            auto capturedVar = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            argTypes.push_back(capturedVar);
+            builder.addField(i->node.strVal, capturedVar);
+        }
+        // add the constructor method
+        IRFunctionDefinition::Builder constructorBuilder;
+        constructorBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
+        constructorBuilder.addArgument(L"this", structType);
+        constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Constructor);
+        for (yoi::indexT i = 0;i < argTypes.size(); ++i) {
+            constructorBuilder.addArgument(lambdaExpr->captures[i]->node.strVal, argTypes[i]);
+        }
+        constructorBuilder.setReturnType(structType);
+        constructorBuilder.setName(structName + L"::constructor" + getFuncUniqueNameStr(argTypes));
+        auto constructorFunc = constructorBuilder.yield();
+        auto constructorFuncIndex = irModule->functionTable.put_create(constructorFunc->name, constructorFunc);
+        builder.addMethod(L"constructor" + getFuncUniqueNameStr(argTypes), constructorFuncIndex);
+
+        // now we add the struct to the module
+        irModule->structTable[structIndex] = builder.yield();
+
+        // now we invokes the constructor method to initialize the struct
+        moduleContext->getIRBuilder().invokeMethodOp(constructorFuncIndex, argTypes.size(), structType, false, true, currentModuleIndex);
+
+        // finally, we generate the implementations for both operator() and constructor
+        moduleContext->pushIRBuilder(IRBuilder{
+            moduleContext->getCompilerContext(),
+            irModule,
+            irModule->functionTable[callableFuncIndex]
+        });
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        visit(lambdaExpr->block, true);
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        moduleContext->pushIRBuilder(IRBuilder{
+            moduleContext->getCompilerContext(),
+            irModule,
+            irModule->functionTable[constructorFuncIndex]
+        });
+        moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        for (yoi::indexT i = 0; i < lambdaExpr->captures.size(); ++i) {
+            // we store our parameters into the fields of the struct
+            // load local in accordance with the order of arguments
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, i + 1}, argTypes[i]); // take advantages of the argTypes which we haven't clear it yet.
+            // store the parameter into the field
+            // now we load the this pointer, and store the parameter into the field
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, IROperand::operandValue{static_cast<yoi::indexT>(0)}}, structType);
+            moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, i});
+        }
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        return structIndex;
+    }
+
+    std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> visitor::createCallableImplementationForLambda(const std::shared_ptr<IRStructDefinition> &lambda,
+                                                               yoi::indexT lambdaStructIndex,
+                                                               yoi::indexT moduleIndex) {
+        yoi::wstr callableName;
+        yoi::indexT callableIndex;
+        yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+        for (auto &[key, value] : lambda->nameIndexMap) {
+            if (key.starts_with(L"operator()")) {
+                callableName = key;
+                callableIndex = value.index;
+                break;
+            }
+        }
+        auto callableFunc = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->functionTable[callableIndex];
+        // ignore the first argument, which is the this pointer
+        for (yoi::indexT i = 1; i < callableFunc->argumentTypes.size(); ++i) {
+            argTypes.push_back(callableFunc->argumentTypes[i]);
+        }
+        auto returnType = callableFunc->returnType;
+
+        auto interfaceSrc = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(argTypes, returnType)};
+        auto interfaceImpl = getInterfaceImplName(interfaceSrc, moduleContext->getIRBuilder().getRhsFromTempVarStack());
+
+
+        IRInterfaceImplementationDefinition::Builder builder;
+        builder.setImplInterfaceIndex(interfaceSrc.second)
+               .setImplStructIndex({IRValueType::valueType::structObject, moduleIndex, lambdaStructIndex})
+               .setName(interfaceImpl)
+               .addVirtualMethod(callableName, managedPtr(IRValueType{
+                IRValueType::valueType::virtualMethod,
+                moduleIndex,
+                callableIndex
+               }));
+        auto implIndex = irModule->interfaceImplementationTable.put_create(interfaceImpl, builder.yield());
+
+        return {implIndex, interfaceSrc};
+    }
+
+    yoi::indexT visitor::visit(yoi::callableExpression *callableExpression) {
+        visit(callableExpression->expr);
+        auto callableType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+        // unfinished
+        return -1;
     }
 } // namespace yoi

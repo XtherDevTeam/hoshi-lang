@@ -35,6 +35,7 @@ TEST_CASES = {
     "char": {"type": "executable", "return_code": 0},
     "string": {"type": "executable", "return_code": 0},
     "rich-digit": {"type": "executable", "return_code": 0},
+    "lambda": {"type": "executable", "return_code": 0},
 }
 
 
