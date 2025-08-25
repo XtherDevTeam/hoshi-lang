@@ -23,7 +23,7 @@ var classyoi_1_1IRBuilder =
     [ "invokeImportedOp", "classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be", null ],
     [ "invokeMethodOp", "classyoi_1_1IRBuilder.html#a84bf6a9168637a2a3e32957838db2733", null ],
     [ "invokeOp", "classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a", null ],
-    [ "invokeVirtualOp", "classyoi_1_1IRBuilder.html#a320d6bd96e66bb7a59d069d8af3a4d09", null ],
+    [ "invokeVirtualOp", "classyoi_1_1IRBuilder.html#a2bab0d18ac442e78db58359f37e4d264", null ],
     [ "irFuncDefinition", "classyoi_1_1IRBuilder.html#a5c3ef4c3c62fc2e1ea329f94af0bf8da", null ],
     [ "jumpIfOp", "classyoi_1_1IRBuilder.html#ac93ddbd8eae3817474f18b8567fa0fc4", null ],
     [ "jumpOp", "classyoi_1_1IRBuilder.html#aba16b000354d64ddc78ad96f82a8a9d3", null ],

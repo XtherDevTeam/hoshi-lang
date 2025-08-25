@@ -1,6 +1,8 @@
 var ast_8hpp =
 [
     [ "AST", "classyoi_1_1AST.html", "classyoi_1_1AST" ],
+    [ "callableExpression", "classyoi_1_1callableExpression.html", "classyoi_1_1callableExpression" ],
+    [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", "classyoi_1_1lambdaExpr" ],
     [ "basicLiterals", "classyoi_1_1basicLiterals.html", "classyoi_1_1basicLiterals" ],
     [ "identifier", "classyoi_1_1identifier.html", "classyoi_1_1identifier" ],
     [ "identifierWithTypeSpec", "classyoi_1_1identifierWithTypeSpec.html", "classyoi_1_1identifierWithTypeSpec" ],
@@ -72,11 +74,13 @@ var ast_8hpp =
     [ "tryCatchStmt", "classyoi_1_1tryCatchStmt.html", "classyoi_1_1tryCatchStmt" ],
     [ "typeIdExpression", "classyoi_1_1typeIdExpression.html", "classyoi_1_1typeIdExpression" ],
     [ "dynCastExpression", "classyoi_1_1dynCastExpression.html", "classyoi_1_1dynCastExpression" ],
+    [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", "classyoi_1_1unnamedDefinitionArguments" ],
     [ "finalizeAST", "ast_8hpp.html#a30a0b5978f8b8e8c023debb9ac86e21c", null ],
     [ "finalizeAST", "ast_8hpp.html#ab5309c729caab758c7f25ac61cd34d53", null ],
     [ "finalizeAST", "ast_8hpp.html#ac59b996aa6858ed5c3f3fb4416d9031b", null ],
     [ "finalizeAST", "ast_8hpp.html#a5426637233d982037f50afc1d6d5b89e", null ],
     [ "finalizeAST", "ast_8hpp.html#aa088147c0130f6cd93b33259fbf76306", null ],
+    [ "finalizeAST", "ast_8hpp.html#a1b846afb8cff1c3abc302ed1822242f6", null ],
     [ "finalizeAST", "ast_8hpp.html#ab2e9d349c1c0ae32491a37098047d8bb", null ],
     [ "finalizeAST", "ast_8hpp.html#a2a67f1a4f14af076678458a63452a88d", null ],
     [ "finalizeAST", "ast_8hpp.html#a3c1e8acbd0c6982239a39d342071f389", null ],
@@ -114,6 +118,7 @@ var ast_8hpp =
     [ "finalizeAST", "ast_8hpp.html#a24cd3fa3fc75bba60db94fa711e12e38", null ],
     [ "finalizeAST", "ast_8hpp.html#a091b106e7d8a560a9ebce468e0d7586e", null ],
     [ "finalizeAST", "ast_8hpp.html#ae150c767b1f751ea8f9b79cbbe9919f3", null ],
+    [ "finalizeAST", "ast_8hpp.html#a37ef49a3356b628a51ffaa9d590556b7", null ],
     [ "finalizeAST", "ast_8hpp.html#af5373f2e2074cb7c29cf4fe06c5f6b22", null ],
     [ "finalizeAST", "ast_8hpp.html#a030e332a183a7274ce49b20fd9bd2eaf", null ],
     [ "finalizeAST", "ast_8hpp.html#a258c2f25b921c6fed0c5436b8f3c64d1", null ],
@@ -139,6 +144,7 @@ var ast_8hpp =
     [ "finalizeAST", "ast_8hpp.html#a4c7470fb1228d09fef4e841dcb074c4c", null ],
     [ "finalizeAST", "ast_8hpp.html#aab115eee620854c0954a5624e24b9685", null ],
     [ "finalizeAST", "ast_8hpp.html#a4b3d708e6e43dd3c1a4acbc0f671ef45", null ],
+    [ "finalizeAST", "ast_8hpp.html#ac401c077074f29513030701ef718fc20", null ],
     [ "finalizeAST", "ast_8hpp.html#a6810d05945e9ffd02c155c63845bc30f", null ],
     [ "finalizeAST", "ast_8hpp.html#a50a63064721d63461fe152a633004009", null ]
 ];

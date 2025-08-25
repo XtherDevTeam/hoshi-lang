@@ -212,96 +212,102 @@ Private Attributes</h2></td></tr>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00022">moduleContext::compilerContext</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03008">visitor::generateNullInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02253">visitor::getExternEntry()</a>, <a class="el" href="visitor_8cpp_source.html#l03276">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03195">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03336">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03053">visitor::isModuleName()</a>, <a class="el" href="visitor_8cpp_source.html#l02219">visitor::parseInterfaceName()</a>, <a class="el" href="visitor_8cpp_source.html#l01405">visitor::parseTypeSpec()</a>, <a class="el" href="visitor_8cpp_source.html#l02098">visitor::parseTypeSpecExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l02109">visitor::parseTypeSpecExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03575">visitor::popModuleContext()</a>, <a class="el" href="visitor_8cpp_source.html#l03568">visitor::pushModuleContext()</a>, <a class="el" href="visitor_8cpp_source.html#l03091">visitor::resolveOverloadExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03507">visitor::resolveOverloadInterface()</a>, <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03432">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03370">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02633">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l02567">visitor::specializeStructTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02943">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00157">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00515">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02992">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00562">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02815">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01450">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01659">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02892">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00607">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01501">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00654">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00699">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00789">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01554">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01013">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01399">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02421">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01216">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03815">visitor::createCallableImplementationForLambda()</a>, <a class="el" href="visitor_8cpp_source.html#l03691">visitor::createCallableInterface()</a>, <a class="el" href="visitor_8cpp_source.html#l03724">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03013">visitor::generateNullInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02258">visitor::getExternEntry()</a>, <a class="el" href="visitor_8cpp_source.html#l03282">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03200">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03588">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03342">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03058">visitor::isModuleName()</a>, <a class="el" href="visitor_8cpp_source.html#l02224">visitor::parseInterfaceName()</a>, <a class="el" href="visitor_8cpp_source.html#l01411">visitor::parseTypeSpec()</a>, <a class="el" href="visitor_8cpp_source.html#l02104">visitor::parseTypeSpecExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l02115">visitor::parseTypeSpecExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03581">visitor::popModuleContext()</a>, <a class="el" href="visitor_8cpp_source.html#l03574">visitor::pushModuleContext()</a>, <a class="el" href="visitor_8cpp_source.html#l03096">visitor::resolveOverloadExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03513">visitor::resolveOverloadInterface()</a>, <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03438">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03376">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02638">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l02572">visitor::specializeStructTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02948">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00164">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00522">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02997">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00569">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02820">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01456">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01665">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02897">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00614">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01507">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00661">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00706">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00796">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01560">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01020">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01405">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02426">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01222">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1moduleContext_af6a622e483813b2016dcd89c0218eb69_icgraph.png" border="0" usemap="#aclassyoi_1_1moduleContext_af6a622e483813b2016dcd89c0218eb69_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1moduleContext_af6a622e483813b2016dcd89c0218eb69_icgraph" id="aclassyoi_1_1moduleContext_af6a622e483813b2016dcd89c0218eb69_icgraph">
-<area shape="rect" title=" " alt="" coords="285,1210,439,1235"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aedd8c8aafbddcb4d221e4e0dd4e813d4" title=" " alt="" coords="29,5,213,45"/>
-<area shape="poly" title=" " alt="" coords="357,1196,346,962,322,599,305,414,285,251,262,126,249,84,235,59,212,41,215,37,239,56,254,82,267,125,290,250,310,414,327,599,351,961,362,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ad9b1bb0013729251e8d7becc36d88abc" title="search and return extern entry by identifier in target module" alt="" coords="23,70,219,95"/>
-<area shape="poly" title=" " alt="" coords="357,1196,345,971,321,624,305,447,285,291,261,173,249,133,235,110,218,96,221,92,239,106,253,131,267,172,290,290,310,447,327,623,351,970,362,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c" title="Generates a call to certain operator overload function when left hand side or right hand side owns a ..." alt="" coords="29,120,214,160"/>
-<area shape="poly" title=" " alt="" coords="357,1196,344,982,318,656,301,491,282,344,259,233,248,196,235,174,213,157,216,152,239,170,252,194,265,232,287,344,307,490,324,656,349,981,362,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da" title="Orchestrates an external function/method invocation IR generation." alt="" coords="16,184,227,224"/>
-<area shape="poly" title=" " alt="" coords="358,1196,358,1007,354,869,346,719,331,568,309,430,294,369,277,315,258,271,235,238,222,226,226,222,239,234,262,269,282,313,299,367,314,428,336,568,351,718,360,869,363,1007,364,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d" title="Handle subscript." alt="" coords="20,249,223,274"/>
-<area shape="poly" title=" " alt="" coords="358,1196,358,1015,353,884,344,741,330,599,308,468,293,411,276,361,257,319,235,288,220,276,223,272,239,285,262,317,281,359,298,409,313,467,335,598,350,741,359,884,363,1015,364,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816" title="Handles unary operator overload function when the operand owns a appropriate overloaded operator meth..." alt="" coords="30,299,213,339"/>
-<area shape="poly" title=" " alt="" coords="358,1196,355,1026,349,905,339,773,324,641,302,520,273,420,255,381,235,353,211,335,214,330,239,349,260,379,278,418,307,518,329,640,344,772,354,904,360,1026,363,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aaacfc67ef4909f5b8f25c1de64dd4b47" title=" " alt="" coords="23,363,220,389"/>
-<area shape="poly" title=" " alt="" coords="358,1196,354,1034,348,919,338,795,323,671,301,557,272,464,255,428,235,402,218,389,222,385,239,398,259,426,277,462,306,556,328,670,343,794,353,919,359,1034,363,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9285608858efe130c2c2763dd44f00e2" title=" " alt="" coords="5,413,237,438"/>
-<area shape="poly" title=" " alt="" coords="358,1196,352,1043,335,818,319,702,298,596,270,509,254,476,235,451,221,440,225,436,239,447,258,473,275,507,303,595,325,701,340,818,358,1043,363,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#af85bd039ca4512af3722ec9cbbf76555" title=" " alt="" coords="23,462,219,487"/>
-<area shape="poly" title=" " alt="" coords="357,1196,350,1053,332,843,316,735,295,637,268,556,253,525,235,502,218,489,221,484,239,498,257,522,273,554,300,635,321,734,337,842,356,1052,363,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a690b648fe3ab0a80c36f6c8a60bcaddb" title=" " alt="" coords="23,512,219,552"/>
-<area shape="poly" title=" " alt="" coords="357,1196,347,1064,326,874,310,777,290,688,265,615,251,587,235,566,218,552,221,548,239,562,255,584,270,613,295,687,315,776,331,874,353,1064,362,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a697d3ce905c13bc9ad1931f3eae33f34" title=" " alt="" coords="23,576,219,616"/>
-<area shape="poly" title=" " alt="" coords="356,1196,345,1075,322,905,306,818,286,739,263,674,249,649,235,630,218,616,221,612,239,626,254,646,267,671,291,737,311,817,327,904,350,1075,361,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a5fc4654afa2fb6b6c5a37ba5afbcd4ad" title=" " alt="" coords="10,641,233,666"/>
-<area shape="poly" title=" " alt="" coords="356,1197,344,1085,320,929,304,850,284,778,261,720,235,681,219,668,222,664,239,677,266,717,289,776,309,849,325,928,349,1084,361,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a674147925de519e90ee6f0616d0b130c" title=" " alt="" coords="32,691,211,731"/>
-<area shape="poly" title=" " alt="" coords="355,1196,340,1097,315,961,298,892,279,830,258,779,235,745,209,727,212,722,239,741,263,776,284,828,303,891,320,960,345,1096,360,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a7b8a2c4157e772c428b220f4f9c911c4" title="Resolves an external function overload within a target module." alt="" coords="18,755,225,795"/>
-<area shape="poly" title=" " alt="" coords="358,1197,355,1121,338,1016,323,960,301,905,273,854,235,809,220,797,224,793,239,805,277,851,306,903,328,958,344,1015,360,1120,364,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a44aecdd55c60ee9672a3f5ea03179306" title="Resolves an function overload within the interface context." alt="" coords="18,819,225,859"/>
-<area shape="poly" title=" " alt="" coords="357,1197,349,1131,330,1044,315,997,294,952,268,910,236,873,220,861,223,857,239,869,272,906,299,949,320,995,335,1042,355,1130,362,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="39,883,203,923"/>
-<area shape="poly" title=" " alt="" coords="354,1197,343,1142,322,1072,306,1035,287,999,263,966,236,937,202,918,205,913,239,933,267,962,291,996,311,1033,327,1070,348,1141,360,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="29,947,213,987"/>
-<area shape="poly" title=" " alt="" coords="351,1197,336,1154,313,1101,279,1047,259,1022,236,1001,212,987,215,982,239,997,263,1018,284,1044,317,1098,341,1152,356,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a5337c501841fe8add3ffe32aaca18b67" title=" " alt="" coords="39,1011,203,1051"/>
-<area shape="poly" title=" " alt="" coords="346,1199,303,1132,272,1095,236,1065,203,1049,205,1044,239,1060,276,1092,307,1128,350,1196"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc" title=" " alt="" coords="29,1075,213,1115"/>
-<area shape="poly" title=" " alt="" coords="336,1202,292,1165,236,1129,208,1117,210,1112,239,1124,295,1160,339,1198"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="35,1139,207,1179"/>
-<area shape="poly" title=" " alt="" coords="299,1209,197,1181,198,1176,301,1204"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254" title=" " alt="" coords="39,1203,203,1243"/>
-<area shape="poly" title=" " alt="" coords="271,1225,204,1225,204,1220,271,1220"/>
-<area shape="rect" href="classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="41,1267,201,1293"/>
-<area shape="poly" title=" " alt="" coords="301,1241,238,1257,183,1270,182,1265,237,1252,299,1236"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="58,1341,185,1366"/>
-<area shape="poly" title=" " alt="" coords="334,1246,290,1276,239,1306,158,1343,155,1338,236,1302,287,1271,331,1241"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ac06563a24d76b19b9f21c4dc11a6b050" title=" " alt="" coords="58,1390,185,1415"/>
-<area shape="poly" title=" " alt="" coords="350,1249,307,1315,276,1350,239,1380,213,1392,186,1399,184,1394,211,1387,236,1375,272,1346,303,1312,346,1246"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1" title=" " alt="" coords="58,1439,185,1465"/>
-<area shape="poly" title=" " alt="" coords="355,1250,339,1290,315,1339,282,1388,262,1410,239,1429,213,1442,186,1450,184,1445,211,1437,236,1424,258,1406,278,1384,311,1336,335,1288,350,1248"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a98d9baf73f46b10fa463499d6fe3b499" title=" " alt="" coords="58,1489,185,1514"/>
-<area shape="poly" title=" " alt="" coords="358,1249,346,1299,323,1361,288,1424,265,1453,239,1478,213,1492,186,1500,184,1495,211,1488,236,1474,262,1450,284,1421,318,1359,341,1297,353,1248"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9a2477954be96a3e9fb66f7457677c96" title=" " alt="" coords="58,1538,185,1563"/>
-<area shape="poly" title=" " alt="" coords="361,1249,351,1307,330,1383,314,1422,294,1461,269,1497,239,1527,214,1542,185,1550,184,1545,211,1537,236,1523,265,1493,290,1458,309,1420,325,1381,346,1306,355,1248"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a269edf3da143e1f462d7c4eb6bf2cccb" title=" " alt="" coords="58,1587,185,1613"/>
-<area shape="poly" title=" " alt="" coords="362,1250,355,1316,337,1405,321,1452,300,1497,273,1540,239,1577,214,1592,186,1600,184,1595,212,1587,236,1573,269,1537,295,1495,316,1450,332,1403,350,1315,357,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="58,1637,185,1662"/>
-<area shape="poly" title=" " alt="" coords="364,1249,360,1324,343,1426,328,1480,306,1533,277,1583,239,1626,214,1642,186,1650,184,1645,212,1637,236,1622,272,1580,301,1531,323,1478,338,1424,354,1323,358,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="58,1686,185,1711"/>
-<area shape="poly" title=" " alt="" coords="360,1249,345,1344,319,1472,302,1536,283,1595,262,1643,239,1675,214,1691,186,1700,184,1694,212,1686,235,1671,258,1640,278,1593,297,1535,314,1471,339,1343,354,1248"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="58,1735,185,1761"/>
-<area shape="poly" title=" " alt="" coords="360,1250,347,1354,322,1496,306,1569,286,1634,264,1688,239,1725,214,1741,186,1749,184,1744,212,1736,235,1721,260,1685,281,1632,301,1567,317,1495,342,1353,355,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4dc8ff32bdbda37d20eadabcbb13a3fa" title=" " alt="" coords="58,1785,185,1810"/>
-<area shape="poly" title=" " alt="" coords="361,1250,349,1363,326,1520,309,1600,289,1673,266,1733,253,1756,239,1774,214,1790,186,1799,184,1794,212,1786,236,1770,249,1753,262,1731,284,1672,304,1599,320,1519,344,1362,356,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a615fd8f087f699ae6b65026ec145f9a2" title=" " alt="" coords="58,1834,185,1859"/>
-<area shape="poly" title=" " alt="" coords="362,1249,351,1371,329,1544,313,1632,293,1712,268,1778,254,1804,239,1823,214,1840,186,1848,184,1843,212,1835,236,1819,250,1801,263,1776,287,1711,307,1631,324,1543,346,1371,356,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="58,1883,185,1909"/>
-<area shape="poly" title=" " alt="" coords="362,1249,353,1380,332,1567,316,1663,296,1751,270,1823,255,1851,239,1873,214,1889,186,1898,184,1893,212,1884,236,1869,251,1848,265,1821,290,1750,311,1662,327,1566,348,1379,357,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="58,1933,185,1958"/>
-<area shape="poly" title=" " alt="" coords="362,1249,355,1389,335,1591,319,1695,298,1790,272,1868,257,1899,239,1922,214,1939,186,1947,184,1942,212,1934,235,1918,252,1896,267,1866,293,1789,314,1694,330,1590,350,1388,357,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="58,1982,185,2007"/>
-<area shape="poly" title=" " alt="" coords="363,1250,357,1398,338,1615,323,1727,301,1829,274,1914,258,1946,239,1971,214,1988,185,1997,184,1992,212,1983,235,1967,253,1944,269,1912,296,1828,317,1726,333,1614,351,1398,357,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#adb1dc84651b232a35ce406fcc7cd022b" title=" " alt="" coords="58,2031,185,2057"/>
-<area shape="poly" title=" " alt="" coords="363,1249,358,1406,341,1638,326,1758,304,1868,276,1959,259,1994,239,2021,214,2038,186,2046,184,2041,212,2033,235,2017,254,1991,271,1957,299,1867,321,1757,336,1637,353,1405,358,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4a3f65674c9aa77071bba7a6daa45dca" title=" " alt="" coords="58,2081,185,2106"/>
-<area shape="poly" title=" " alt="" coords="363,1249,360,1415,354,1533,344,1661,329,1790,307,1907,294,1959,278,2004,260,2041,239,2070,214,2087,186,2095,184,2090,212,2082,235,2066,255,2039,273,2002,289,1957,302,1906,324,1789,339,1661,349,1533,355,1414,358,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4c1333c9541265ca3ae159f0b6420b3f" title=" " alt="" coords="58,2130,185,2155"/>
-<area shape="poly" title=" " alt="" coords="364,1249,362,1423,357,1548,347,1685,332,1821,310,1946,296,2001,280,2049,261,2089,239,2119,214,2136,186,2145,184,2140,212,2132,235,2115,256,2086,275,2047,291,1999,305,1945,327,1820,342,1684,351,1548,356,1423,358,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a029bf6f1f9cafd22b9bfe5f482bca6ce" title=" " alt="" coords="37,2179,206,2205"/>
-<area shape="poly" title=" " alt="" coords="364,1249,363,1432,359,1564,350,1708,336,1852,313,1985,299,2043,282,2094,262,2136,239,2168,224,2181,207,2189,205,2184,222,2176,235,2165,257,2134,277,2092,294,2042,308,1984,330,1852,345,1708,354,1564,358,1431,358,1249"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a84d2668813b4cc6ec9859a9d22f06f33" title=" " alt="" coords="37,2229,206,2254"/>
-<area shape="poly" title=" " alt="" coords="362,1249,349,1454,323,1762,306,1918,286,2055,264,2160,252,2196,239,2218,225,2230,207,2238,205,2233,222,2225,235,2214,247,2194,259,2159,281,2055,300,1917,318,1761,343,1453,357,1249"/>
-<area shape="poly" title=" " alt="" coords="165,1332,153,1323,121,1319,96,1321,82,1326,79,1332,86,1339,82,1342,74,1332,78,1322,94,1316,121,1314,155,1318,168,1327"/>
+<area shape="rect" title=" " alt="" coords="285,1306,439,1331"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a518ede4200beecdfb916060f01cb1579" title=" " alt="" coords="22,5,221,45"/>
+<area shape="poly" title=" " alt="" coords="357,1292,347,1040,325,647,308,446,288,268,263,132,250,86,235,59,219,45,223,41,239,56,255,84,269,131,293,267,313,445,330,647,353,1040,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#acac4734d246c0afd94301e9ebcd0d119" title=" " alt="" coords="25,69,218,109"/>
+<area shape="poly" title=" " alt="" coords="357,1293,346,1052,323,679,306,489,286,320,262,192,249,149,235,123,217,108,220,104,239,120,254,147,267,191,291,320,311,489,328,679,352,1052,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title=" " alt="" coords="25,133,217,173"/>
+<area shape="poly" title=" " alt="" coords="357,1293,345,1064,321,711,304,532,284,373,261,252,248,211,235,187,216,172,220,167,239,184,253,209,266,251,289,372,309,531,326,711,351,1063,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aedd8c8aafbddcb4d221e4e0dd4e813d4" title=" " alt="" coords="29,197,213,237"/>
+<area shape="poly" title=" " alt="" coords="357,1293,344,1075,319,743,302,575,282,425,260,312,248,274,235,251,212,233,215,229,239,248,253,272,265,311,287,425,307,574,324,743,349,1075,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ad9b1bb0013729251e8d7becc36d88abc" title="search and return extern entry by identifier in target module" alt="" coords="23,262,219,287"/>
+<area shape="poly" title=" " alt="" coords="357,1292,344,1084,318,768,301,607,282,466,259,359,248,323,235,302,218,288,221,284,239,298,252,321,265,358,287,465,307,607,324,767,349,1083,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c" title="Generates a call to certain operator overload function when left hand side or right hand side owns a ..." alt="" coords="29,312,214,352"/>
+<area shape="poly" title=" " alt="" coords="358,1292,357,1108,353,975,344,830,329,684,307,551,293,492,276,440,257,398,235,366,213,349,216,344,239,362,262,395,281,439,298,490,312,550,334,684,349,829,358,975,362,1108,364,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da" title="Orchestrates an external function/method invocation IR generation." alt="" coords="16,376,227,416"/>
+<area shape="poly" title=" " alt="" coords="358,1292,355,1120,350,995,340,860,325,725,303,601,289,547,274,499,256,460,235,430,222,418,226,414,239,426,260,457,279,497,295,545,308,600,330,724,345,860,355,995,361,1119,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d" title="Handle subscript." alt="" coords="20,441,223,466"/>
+<area shape="poly" title=" " alt="" coords="358,1292,354,1128,349,1011,339,883,324,756,302,640,288,589,273,544,255,508,235,481,220,468,223,464,239,477,260,505,278,542,293,587,307,639,329,755,344,883,354,1010,360,1128,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816" title="Handles unary operator overload function when the operand owns a appropriate overloaded operator meth..." alt="" coords="30,491,213,531"/>
+<area shape="poly" title=" " alt="" coords="358,1292,351,1139,333,915,318,798,297,691,269,604,253,570,235,545,212,527,215,523,239,541,258,567,274,602,302,690,323,797,339,914,357,1139,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aaacfc67ef4909f5b8f25c1de64dd4b47" title=" " alt="" coords="23,555,220,581"/>
+<area shape="poly" title=" " alt="" coords="357,1292,351,1148,332,937,316,828,295,729,269,648,253,617,235,594,219,581,222,577,239,590,257,614,273,646,301,728,322,827,337,936,356,1147,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9285608858efe130c2c2763dd44f00e2" title=" " alt="" coords="5,605,237,630"/>
+<area shape="poly" title=" " alt="" coords="357,1292,349,1156,329,960,313,860,292,768,267,693,252,665,235,643,221,632,225,628,239,639,256,662,272,691,298,767,318,859,334,960,354,1156,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#af85bd039ca4512af3722ec9cbbf76555" title=" " alt="" coords="23,654,219,679"/>
+<area shape="poly" title=" " alt="" coords="357,1292,347,1165,325,985,309,892,289,808,264,740,251,713,235,694,218,681,221,677,239,690,255,711,269,737,294,807,314,891,331,984,352,1164,362,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a690b648fe3ab0a80c36f6c8a60bcaddb" title=" " alt="" coords="23,704,219,744"/>
+<area shape="poly" title=" " alt="" coords="356,1292,344,1177,320,1017,304,935,284,860,261,799,235,758,218,744,221,740,239,754,266,797,289,858,309,934,325,1016,349,1177,361,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a697d3ce905c13bc9ad1931f3eae33f34" title=" " alt="" coords="23,768,219,808"/>
+<area shape="poly" title=" " alt="" coords="355,1293,341,1189,316,1048,299,976,280,911,259,858,235,822,218,809,221,804,239,818,264,855,286,909,305,975,321,1047,346,1189,360,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5fc4654afa2fb6b6c5a37ba5afbcd4ad" title=" " alt="" coords="10,833,233,858"/>
+<area shape="poly" title=" " alt="" coords="354,1292,339,1198,313,1072,297,1008,278,950,258,904,235,873,218,860,221,856,239,869,262,901,283,948,302,1006,319,1070,344,1197,360,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a674147925de519e90ee6f0616d0b130c" title=" " alt="" coords="32,883,211,923"/>
+<area shape="poly" title=" " alt="" coords="358,1292,352,1222,334,1126,319,1075,298,1024,270,978,236,937,209,920,212,915,239,933,275,974,303,1022,324,1073,340,1124,357,1221,363,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a7b8a2c4157e772c428b220f4f9c911c4" title="Resolves an external function overload within a target module." alt="" coords="18,947,225,987"/>
+<area shape="poly" title=" " alt="" coords="356,1292,346,1232,326,1153,310,1112,290,1071,266,1033,236,1001,219,989,222,985,239,997,270,1030,295,1068,315,1110,331,1152,352,1231,361,1291"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a44aecdd55c60ee9672a3f5ea03179306" title="Resolves an function overload within the interface context." alt="" coords="18,1011,225,1051"/>
+<area shape="poly" title=" " alt="" coords="353,1293,340,1244,317,1182,283,1119,261,1090,236,1065,218,1053,221,1049,239,1061,265,1086,288,1116,322,1180,345,1242,358,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="39,1075,203,1115"/>
+<area shape="poly" title=" " alt="" coords="349,1294,332,1257,308,1212,276,1167,236,1129,203,1112,205,1107,239,1124,280,1163,312,1209,337,1254,354,1292"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="29,1139,213,1179"/>
+<area shape="poly" title=" " alt="" coords="342,1297,298,1244,268,1216,236,1193,212,1181,214,1176,239,1188,272,1212,302,1240,346,1293"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5337c501841fe8add3ffe32aaca18b67" title=" " alt="" coords="39,1203,203,1243"/>
+<area shape="poly" title=" " alt="" coords="326,1302,284,1279,236,1257,202,1245,204,1240,238,1252,286,1274,329,1297"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc" title=" " alt="" coords="29,1267,213,1307"/>
+<area shape="poly" title=" " alt="" coords="271,1309,213,1302,214,1296,272,1304"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="35,1331,207,1371"/>
+<area shape="poly" title=" " alt="" coords="272,1333,208,1342,207,1337,271,1328"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254" title=" " alt="" coords="39,1395,203,1435"/>
+<area shape="poly" title=" " alt="" coords="329,1341,286,1363,238,1385,204,1397,202,1392,236,1380,284,1359,326,1336"/>
+<area shape="rect" href="classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="41,1459,201,1485"/>
+<area shape="poly" title=" " alt="" coords="346,1345,302,1398,272,1426,239,1449,202,1464,200,1459,236,1444,269,1422,298,1394,342,1341"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="58,1533,185,1558"/>
+<area shape="poly" title=" " alt="" coords="351,1345,308,1419,276,1461,239,1498,205,1520,169,1535,167,1530,202,1515,236,1494,272,1458,304,1416,347,1343"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ac06563a24d76b19b9f21c4dc11a6b050" title=" " alt="" coords="58,1582,185,1607"/>
+<area shape="poly" title=" " alt="" coords="358,1345,345,1394,323,1456,288,1518,265,1547,239,1571,213,1586,186,1594,184,1589,211,1581,236,1567,261,1543,283,1515,318,1453,340,1393,353,1344"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1" title=" " alt="" coords="58,1631,185,1657"/>
+<area shape="poly" title=" " alt="" coords="361,1346,351,1403,330,1478,314,1517,294,1555,269,1590,239,1621,214,1636,185,1644,184,1639,211,1631,236,1617,265,1587,289,1552,309,1515,324,1476,345,1402,355,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a98d9baf73f46b10fa463499d6fe3b499" title=" " alt="" coords="58,1681,185,1706"/>
+<area shape="poly" title=" " alt="" coords="362,1345,355,1411,336,1499,321,1546,300,1591,273,1633,239,1670,214,1685,186,1694,184,1688,212,1681,236,1666,269,1630,295,1589,316,1544,331,1498,350,1411,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9a2477954be96a3e9fb66f7457677c96" title=" " alt="" coords="58,1730,185,1755"/>
+<area shape="poly" title=" " alt="" coords="364,1345,360,1419,343,1520,327,1574,306,1627,277,1677,239,1719,214,1735,186,1743,184,1738,212,1730,236,1715,272,1673,301,1625,322,1573,338,1519,354,1419,358,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a269edf3da143e1f462d7c4eb6bf2cccb" title=" " alt="" coords="58,1779,185,1805"/>
+<area shape="poly" title=" " alt="" coords="360,1346,344,1440,319,1567,302,1631,283,1689,262,1736,239,1769,214,1785,186,1793,184,1788,212,1780,235,1765,258,1734,278,1687,297,1629,313,1566,339,1439,354,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="58,1829,185,1854"/>
+<area shape="poly" title=" " alt="" coords="360,1346,347,1449,322,1591,306,1663,286,1728,264,1782,239,1818,214,1834,186,1842,184,1837,212,1829,235,1814,260,1779,281,1726,300,1661,317,1590,341,1448,355,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="58,1878,185,1903"/>
+<area shape="poly" title=" " alt="" coords="361,1345,349,1458,325,1615,309,1694,289,1767,266,1827,239,1867,214,1884,186,1892,184,1887,212,1879,235,1863,261,1824,284,1765,304,1693,320,1614,344,1457,356,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="58,1927,185,1953"/>
+<area shape="poly" title=" " alt="" coords="362,1346,351,1467,329,1639,312,1726,292,1806,268,1872,254,1897,239,1917,214,1933,186,1942,184,1936,212,1928,236,1913,250,1894,263,1870,287,1805,307,1725,323,1638,346,1467,356,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4dc8ff32bdbda37d20eadabcbb13a3fa" title=" " alt="" coords="58,1977,185,2002"/>
+<area shape="poly" title=" " alt="" coords="362,1345,353,1475,332,1662,316,1758,295,1845,270,1917,255,1945,239,1966,214,1983,186,1991,184,1986,212,1978,236,1962,251,1942,265,1915,290,1844,311,1757,327,1661,348,1475,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a615fd8f087f699ae6b65026ec145f9a2" title=" " alt="" coords="58,2026,185,2051"/>
+<area shape="poly" title=" " alt="" coords="362,1345,355,1484,335,1686,319,1789,298,1884,272,1962,257,1992,239,2015,214,2032,186,2040,184,2035,212,2027,235,2011,252,1989,267,1960,293,1883,314,1788,330,1685,349,1484,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="58,2075,185,2101"/>
+<area shape="poly" title=" " alt="" coords="363,1345,356,1493,338,1709,322,1821,301,1923,274,2007,258,2040,239,2065,214,2082,185,2090,184,2085,212,2077,235,2061,253,2037,269,2005,296,1922,317,1820,333,1709,351,1493,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="58,2125,185,2150"/>
+<area shape="poly" title=" " alt="" coords="363,1345,358,1501,341,1732,326,1852,304,1962,276,2052,259,2087,239,2114,214,2131,186,2139,184,2134,212,2126,235,2110,254,2084,271,2050,299,1961,320,1851,336,1732,353,1501,358,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="58,2174,185,2199"/>
+<area shape="poly" title=" " alt="" coords="363,1345,360,1510,354,1628,344,1756,329,1884,307,2001,294,2052,278,2097,260,2135,239,2163,214,2180,186,2189,184,2184,212,2176,235,2159,255,2132,273,2095,288,2051,302,2000,324,1883,339,1756,349,1628,355,1510,358,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#adb1dc84651b232a35ce406fcc7cd022b" title=" " alt="" coords="58,2223,185,2249"/>
+<area shape="poly" title=" " alt="" coords="364,1345,361,1519,356,1644,347,1780,332,1915,310,2040,296,2095,280,2143,261,2182,239,2213,214,2230,186,2238,184,2233,212,2225,235,2209,256,2180,275,2141,291,2093,305,2039,327,1915,342,1779,351,1644,356,1519,358,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4a3f65674c9aa77071bba7a6daa45dca" title=" " alt="" coords="58,2273,185,2298"/>
+<area shape="poly" title=" " alt="" coords="364,1345,363,1527,359,1659,350,1803,335,1946,313,2079,299,2137,282,2188,262,2230,239,2262,215,2279,186,2288,184,2282,212,2274,235,2258,257,2227,277,2186,293,2135,308,2078,330,1946,345,1802,354,1659,358,1527,358,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4c1333c9541265ca3ae159f0b6420b3f" title=" " alt="" coords="58,2322,185,2347"/>
+<area shape="poly" title=" " alt="" coords="362,1345,349,1549,323,1856,306,2012,286,2149,264,2254,252,2289,239,2311,215,2329,186,2337,184,2332,212,2324,235,2308,247,2287,259,2252,281,2148,300,2011,317,1856,343,1549,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a029bf6f1f9cafd22b9bfe5f482bca6ce" title=" " alt="" coords="37,2371,206,2397"/>
+<area shape="poly" title=" " alt="" coords="362,1345,349,1558,324,1881,307,2045,288,2190,265,2300,253,2337,239,2360,225,2373,208,2381,205,2376,222,2368,235,2357,248,2335,260,2298,282,2189,302,2044,319,1880,344,1558,357,1345"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a84d2668813b4cc6ec9859a9d22f06f33" title=" " alt="" coords="37,2421,206,2446"/>
+<area shape="poly" title=" " alt="" coords="362,1345,350,1567,326,1906,309,2078,289,2230,266,2346,253,2385,239,2410,225,2422,208,2430,205,2425,222,2418,235,2406,248,2383,261,2345,284,2229,304,2078,321,1906,345,1567,357,1345"/>
+<area shape="poly" title=" " alt="" coords="165,1524,153,1515,121,1511,96,1513,82,1518,79,1524,86,1531,82,1534,74,1524,78,1514,94,1508,121,1506,155,1510,168,1519"/>
 </map>
 </div>
 
@@ -326,120 +332,126 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00023">moduleContext::IRBuilderStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02307">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02340">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03082">visitor::evaluateArguments()</a>, <a class="el" href="visitor_8cpp_source.html#l02354">visitor::getTypeSpecUniqueNameStr()</a>, <a class="el" href="visitor_8cpp_source.html#l03276">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03195">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03336">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l02303">visitor::isVisitingGlobalScope()</a>, <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03432">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l02943">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00157">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00402">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00515">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00052">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02049">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00776">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02044">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02992">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00488">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00562">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02815">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01977">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01450">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01895">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01659">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02892">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00607">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00975">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01501">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00254">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01835">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00654">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00699">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00789">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00372">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03041">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00126">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00456">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02030">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00429">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01554">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01013">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02978">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00199">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01399">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01942">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02421">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01216">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03815">visitor::createCallableImplementationForLambda()</a>, <a class="el" href="visitor_8cpp_source.html#l03724">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02312">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02345">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03087">visitor::evaluateArguments()</a>, <a class="el" href="visitor_8cpp_source.html#l02359">visitor::getTypeSpecUniqueNameStr()</a>, <a class="el" href="visitor_8cpp_source.html#l03282">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03200">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03588">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03342">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l02308">visitor::isVisitingGlobalScope()</a>, <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03438">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l02948">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00164">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00409">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00522">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00052">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02055">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03853">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00783">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02050">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02997">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00495">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00569">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02820">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01983">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01456">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01901">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01665">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02897">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00614">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00982">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01507">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00261">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01841">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00661">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00706">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00796">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00379">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03046">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00126">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00463">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02036">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00436">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01560">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01020">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02983">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00206">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01405">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01948">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02426">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01222">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1moduleContext_a0419cd963e30ad21d64c2919001de5a0_icgraph.png" border="0" usemap="#aclassyoi_1_1moduleContext_a0419cd963e30ad21d64c2919001de5a0_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1moduleContext_a0419cd963e30ad21d64c2919001de5a0_icgraph" id="aclassyoi_1_1moduleContext_a0419cd963e30ad21d64c2919001de5a0_icgraph">
-<area shape="rect" title=" " alt="" coords="280,1447,383,1473"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a6641d63668aeb197a61c57a59ecf2aac" title=" " alt="" coords="15,5,222,45"/>
-<area shape="poly" title=" " alt="" coords="327,1434,324,1157,312,718,300,493,283,294,259,141,245,90,230,59,217,47,221,44,234,56,250,88,265,140,288,293,305,493,317,718,330,1157,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a0fc82df99ed253292cb7c369e898d198" title=" " alt="" coords="15,70,222,95"/>
-<area shape="poly" title=" " alt="" coords="327,1434,324,1166,312,742,300,525,283,333,260,187,246,138,230,108,217,98,221,94,234,105,250,136,265,186,288,332,305,525,317,742,330,1165,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ad511cff294f219693d6afa94a4a1175e" title="Visits a list of argument expressions and returns their types." alt="" coords="5,119,232,145"/>
-<area shape="poly" title=" " alt="" coords="327,1433,324,1173,310,767,298,559,281,374,258,234,245,187,230,159,215,147,219,143,234,156,250,185,264,233,286,374,303,558,316,766,329,1173,333,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a1373e305b6c738d4580bb63d8031b7a8" title=" " alt="" coords="28,169,209,209"/>
-<area shape="poly" title=" " alt="" coords="327,1434,322,1186,307,800,295,603,278,428,256,295,244,250,230,223,208,206,211,201,234,220,249,248,262,294,283,427,300,602,312,800,327,1186,332,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c" title="Generates a call to certain operator overload function when left hand side or right hand side owns a ..." alt="" coords="26,233,211,273"/>
-<area shape="poly" title=" " alt="" coords="327,1433,321,1197,305,832,293,645,276,480,255,355,243,312,230,287,210,271,213,267,234,284,248,311,260,354,281,480,298,645,311,831,326,1197,332,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da" title="Orchestrates an external function/method invocation IR generation." alt="" coords="13,297,224,337"/>
-<area shape="poly" title=" " alt="" coords="327,1433,320,1208,303,864,291,688,274,533,254,415,242,375,230,351,217,339,221,336,234,348,247,373,259,414,279,532,296,688,309,863,325,1208,332,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d" title="Handle subscript." alt="" coords="17,362,220,387"/>
-<area shape="poly" title=" " alt="" coords="327,1434,320,1218,303,888,290,721,274,574,254,462,242,424,230,402,215,390,219,386,234,398,247,422,259,460,279,573,295,721,308,888,325,1217,332,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816" title="Handles unary operator overload function when the operand owns a appropriate overloaded operator meth..." alt="" coords="27,412,210,452"/>
-<area shape="poly" title=" " alt="" coords="326,1433,318,1229,300,921,287,765,271,627,252,522,241,487,230,466,209,449,212,445,234,462,246,485,257,521,276,626,292,764,305,921,323,1229,332,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ac41639181d1520878a6d570857357f8b" title=" " alt="" coords="39,476,198,516"/>
-<area shape="poly" title=" " alt="" coords="326,1434,317,1242,298,954,285,808,269,680,251,582,240,549,230,530,215,517,197,508,199,503,218,512,234,526,245,547,256,581,274,679,290,808,303,953,322,1241,332,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="37,540,201,580"/>
-<area shape="poly" title=" " alt="" coords="326,1434,316,1253,296,986,283,851,267,732,249,642,240,612,230,594,216,582,200,573,202,568,219,577,234,590,245,610,254,641,272,731,288,850,301,985,321,1253,331,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="27,604,211,644"/>
-<area shape="poly" title=" " alt="" coords="328,1434,328,1277,318,1044,306,923,289,811,263,720,248,685,230,658,209,641,212,637,234,654,252,682,268,718,294,810,312,922,323,1043,333,1277,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="33,668,205,708"/>
-<area shape="poly" title=" " alt="" coords="328,1434,326,1288,314,1074,302,963,285,862,261,778,246,746,230,722,203,703,206,698,234,718,251,744,266,776,290,861,308,962,320,1073,331,1287,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="39,733,199,758"/>
-<area shape="poly" title=" " alt="" coords="327,1434,325,1296,313,1096,301,993,284,899,260,823,246,793,230,771,215,760,198,752,200,747,218,755,234,767,251,790,265,821,289,898,306,993,318,1096,330,1296,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="55,806,182,831"/>
-<area shape="poly" title=" " alt="" coords="327,1434,322,1309,308,1131,296,1040,279,957,257,890,244,864,230,845,208,829,182,822,183,816,210,825,234,841,249,861,262,888,284,956,301,1039,314,1131,328,1308,332,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ac06563a24d76b19b9f21c4dc11a6b050" title=" " alt="" coords="55,855,182,881"/>
-<area shape="poly" title=" " alt="" coords="327,1434,321,1318,305,1155,293,1072,276,997,255,935,243,911,230,894,208,879,181,871,183,866,210,874,234,890,248,909,260,933,281,995,298,1071,311,1154,326,1318,332,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ada790c5cb50fa1990c13f9d1093f596a" title=" " alt="" coords="55,905,182,930"/>
-<area shape="poly" title=" " alt="" coords="326,1433,319,1326,302,1178,289,1103,273,1035,254,980,230,943,208,928,181,920,183,915,210,923,234,939,258,978,278,1034,294,1102,307,1177,324,1325,331,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1" title=" " alt="" coords="55,954,182,979"/>
-<area shape="poly" title=" " alt="" coords="326,1434,317,1336,299,1203,286,1136,270,1075,252,1026,230,993,208,978,182,970,183,965,210,973,234,989,256,1023,275,1073,291,1135,304,1202,322,1336,331,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a619711d98a61127e0cdb8fbdf529b38f" title=" " alt="" coords="55,1003,182,1029"/>
-<area shape="poly" title=" " alt="" coords="325,1434,314,1345,295,1227,267,1114,250,1071,230,1042,208,1027,182,1020,183,1014,210,1022,234,1038,254,1068,272,1113,301,1226,320,1344,330,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9b92ec0821a2a26446904de21da87b4c" title=" " alt="" coords="55,1053,182,1078"/>
-<area shape="poly" title=" " alt="" coords="324,1434,312,1355,292,1252,264,1154,248,1116,230,1091,208,1077,181,1069,183,1064,210,1072,234,1087,253,1114,269,1152,297,1250,317,1354,329,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ae32c02a57c9f8340c0f36aa3c1abec4b" title=" " alt="" coords="55,1102,182,1127"/>
-<area shape="poly" title=" " alt="" coords="328,1434,324,1373,311,1294,299,1252,281,1211,259,1173,230,1141,208,1127,182,1119,183,1114,210,1122,234,1137,263,1170,286,1209,304,1250,316,1292,330,1373,333,1434"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a315dc961d954f433f9040e2fc97023f9" title=" " alt="" coords="55,1151,182,1177"/>
-<area shape="poly" title=" " alt="" coords="326,1434,320,1381,304,1315,292,1281,276,1247,255,1217,230,1190,207,1176,181,1169,183,1164,210,1171,234,1186,259,1213,280,1245,297,1279,309,1314,325,1380,331,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a98d9baf73f46b10fa463499d6fe3b499" title=" " alt="" coords="55,1201,182,1226"/>
-<area shape="poly" title=" " alt="" coords="324,1434,314,1391,297,1338,270,1284,252,1260,230,1239,207,1226,181,1219,183,1214,209,1221,234,1235,256,1257,274,1281,302,1336,319,1390,329,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#acc2d8294c74a98573061f43f887f4b80" title=" " alt="" coords="55,1250,182,1275"/>
-<area shape="poly" title=" " alt="" coords="320,1435,308,1401,290,1361,264,1322,230,1289,207,1276,181,1269,183,1264,209,1271,234,1285,268,1318,294,1359,313,1399,325,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a9a2477954be96a3e9fb66f7457677c96" title=" " alt="" coords="55,1299,182,1325"/>
-<area shape="poly" title=" " alt="" coords="315,1436,281,1386,258,1360,231,1338,207,1327,181,1320,183,1315,209,1322,233,1334,261,1356,285,1382,319,1433"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a269edf3da143e1f462d7c4eb6bf2cccb" title=" " alt="" coords="55,1349,182,1374"/>
-<area shape="poly" title=" " alt="" coords="306,1440,272,1412,231,1388,181,1372,183,1367,233,1383,275,1408,309,1436"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a17733bfd438ff33e6ec37e0534f10205" title=" " alt="" coords="55,1398,182,1423"/>
-<area shape="poly" title=" " alt="" coords="269,1446,231,1437,181,1426,182,1421,233,1432,270,1441"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="55,1447,182,1473"/>
-<area shape="poly" title=" " alt="" coords="266,1463,182,1463,182,1457,266,1457"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a1b8d8a04c7f31f4b114414d81173a6aa" title=" " alt="" coords="55,1497,182,1522"/>
-<area shape="poly" title=" " alt="" coords="267,1478,233,1487,178,1499,176,1494,231,1481,266,1473"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aaed49e3b28622b6cc2b1e3fb002740f7" title=" " alt="" coords="55,1546,182,1571"/>
-<area shape="poly" title=" " alt="" coords="308,1484,274,1511,233,1536,183,1552,182,1547,231,1531,271,1507,305,1480"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="55,1595,182,1621"/>
-<area shape="poly" title=" " alt="" coords="319,1486,285,1537,261,1563,233,1585,209,1597,183,1604,181,1599,207,1592,231,1580,258,1559,281,1533,315,1483"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="55,1645,182,1670"/>
-<area shape="poly" title=" " alt="" coords="325,1487,313,1520,294,1560,268,1600,234,1634,209,1647,183,1655,181,1650,207,1642,230,1630,264,1597,289,1558,308,1518,320,1485"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4dc8ff32bdbda37d20eadabcbb13a3fa" title=" " alt="" coords="55,1694,182,1719"/>
-<area shape="poly" title=" " alt="" coords="329,1487,319,1530,302,1583,274,1637,255,1662,234,1683,209,1698,183,1706,181,1700,207,1693,230,1679,251,1659,269,1635,297,1581,314,1528,324,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a03df671f583af11d6c8b7cc90e50ba58" title=" " alt="" coords="55,1743,182,1769"/>
-<area shape="poly" title=" " alt="" coords="331,1487,324,1539,309,1605,296,1640,280,1674,259,1705,234,1733,210,1748,183,1756,181,1751,207,1743,230,1729,255,1702,275,1671,291,1638,304,1604,319,1538,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a615fd8f087f699ae6b65026ec145f9a2" title=" " alt="" coords="55,1793,182,1818"/>
-<area shape="poly" title=" " alt="" coords="333,1486,329,1547,316,1627,303,1669,286,1710,263,1749,234,1782,210,1797,183,1805,182,1800,208,1792,230,1778,259,1745,281,1708,298,1667,310,1625,324,1546,328,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a6e30a778ee54e6c764f12b7cba359d1a" title=" " alt="" coords="55,1842,182,1867"/>
-<area shape="poly" title=" " alt="" coords="329,1487,317,1566,297,1669,269,1767,252,1805,234,1831,210,1847,183,1855,181,1850,208,1842,230,1827,248,1802,264,1765,292,1668,312,1565,324,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a22560c4340ac4dade215406386c15cd3" title=" " alt="" coords="55,1891,182,1917"/>
-<area shape="poly" title=" " alt="" coords="330,1487,319,1575,300,1693,272,1806,254,1850,234,1881,210,1896,183,1905,182,1900,208,1892,230,1877,250,1848,267,1805,295,1692,314,1575,325,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="55,1941,182,1966"/>
-<area shape="poly" title=" " alt="" coords="331,1486,322,1584,304,1717,291,1784,275,1845,256,1896,234,1930,210,1946,183,1954,182,1949,208,1941,230,1926,252,1893,270,1844,286,1783,299,1716,316,1583,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="55,1990,182,2015"/>
-<area shape="poly" title=" " alt="" coords="331,1487,324,1594,307,1742,294,1817,278,1885,258,1941,234,1979,210,1995,183,2004,181,1999,208,1991,230,1975,253,1939,273,1883,289,1815,302,1741,318,1594,326,1487"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="55,2039,182,2065"/>
-<area shape="poly" title=" " alt="" coords="332,1486,326,1602,310,1765,298,1848,281,1924,260,1986,248,2010,234,2029,210,2045,183,2053,182,2048,208,2040,230,2025,243,2007,255,1984,276,1922,292,1847,305,1764,320,1602,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a8422d3bcf54ab37a5e8ecd2d8e06b246" title=" " alt="" coords="55,2089,182,2114"/>
-<area shape="poly" title=" " alt="" coords="332,1486,328,1611,313,1789,301,1880,284,1963,262,2031,249,2058,234,2078,210,2094,183,2103,182,2098,208,2090,230,2074,244,2055,257,2029,279,1961,296,1879,308,1788,322,1611,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aea5a6755f1dc61d8543b00feaeb6d84e" title=" " alt="" coords="55,2138,182,2163"/>
-<area shape="poly" title=" " alt="" coords="333,1486,329,1620,316,1812,304,1911,287,2002,264,2076,250,2105,234,2127,211,2144,183,2152,182,2147,208,2139,230,2123,245,2102,259,2074,282,2000,299,1910,311,1812,324,1620,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ac5aa883647855ce7ec46cff094476b8b" title=" " alt="" coords="55,2187,182,2213"/>
-<area shape="poly" title=" " alt="" coords="333,1487,331,1629,319,1836,307,1943,290,2041,266,2121,251,2153,234,2177,211,2193,183,2202,182,2196,208,2188,230,2173,246,2150,261,2119,285,2040,302,1942,314,1836,326,1629,328,1487"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a0150d4511bf27c613ff807fdf60156e3" title=" " alt="" coords="55,2237,182,2262"/>
-<area shape="poly" title=" " alt="" coords="333,1486,333,1637,322,1859,311,1974,293,2079,268,2166,252,2200,234,2226,210,2243,183,2251,181,2246,208,2238,230,2222,247,2197,263,2164,288,2078,305,1973,317,1859,327,1637,328,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a1c8d80605fb1b08f95fc5ab1c0f989db" title=" " alt="" coords="55,2286,182,2311"/>
-<area shape="poly" title=" " alt="" coords="331,1487,321,1658,300,1908,287,2034,272,2144,254,2228,244,2257,234,2275,210,2292,183,2300,181,2295,208,2287,230,2272,239,2255,249,2227,266,2143,282,2033,295,1907,315,1657,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a56fa99bf4698ff7f6cc5f04772ec8353" title=" " alt="" coords="55,2335,182,2361"/>
-<area shape="poly" title=" " alt="" coords="331,1487,322,1667,302,1933,289,2067,273,2185,255,2275,245,2305,234,2324,210,2341,183,2350,181,2345,208,2337,230,2321,240,2303,250,2273,268,2184,283,2066,297,1932,316,1666,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#adb1dc84651b232a35ce406fcc7cd022b" title=" " alt="" coords="55,2385,182,2410"/>
-<area shape="poly" title=" " alt="" coords="332,1486,323,1675,304,1957,290,2100,275,2225,256,2321,245,2353,234,2374,211,2391,183,2399,181,2394,208,2386,230,2370,241,2351,251,2320,269,2224,285,2099,298,1957,317,1675,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4a3f65674c9aa77071bba7a6daa45dca" title=" " alt="" coords="55,2434,182,2459"/>
-<area shape="poly" title=" " alt="" coords="332,1486,323,1684,305,1982,292,2133,276,2266,257,2367,246,2402,234,2423,211,2440,183,2449,181,2443,208,2435,230,2420,241,2400,252,2366,271,2265,287,2132,300,1982,318,1684,326,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ad8cc77d97249d99c80f9d5194dc58135" title=" " alt="" coords="55,2483,182,2509"/>
-<area shape="poly" title=" " alt="" coords="332,1486,324,1693,307,2007,294,2166,278,2306,258,2413,247,2450,234,2472,211,2489,183,2498,182,2493,208,2485,230,2469,242,2448,253,2412,272,2306,288,2165,301,2006,319,1693,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a7e7fb2c39cc57152e5f6855aaae500fd" title=" " alt="" coords="55,2533,182,2558"/>
-<area shape="poly" title=" " alt="" coords="332,1487,325,1703,308,2032,295,2199,279,2347,259,2460,247,2498,234,2522,211,2539,183,2547,182,2542,208,2534,230,2518,242,2496,254,2458,274,2346,290,2199,303,2032,320,1702,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a4c1333c9541265ca3ae159f0b6420b3f" title=" " alt="" coords="55,2582,182,2607"/>
-<area shape="poly" title=" " alt="" coords="332,1487,326,1712,310,2057,297,2232,280,2388,260,2506,248,2546,234,2571,211,2588,183,2597,182,2592,208,2583,230,2568,243,2544,255,2505,275,2387,292,2232,304,2057,321,1712,327,1487"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ae6ed1cb9a2fbe5e0e62ec07f18be642e" title=" " alt="" coords="55,2631,182,2657"/>
-<area shape="poly" title=" " alt="" coords="332,1486,327,1720,311,2081,299,2265,282,2428,261,2552,248,2594,234,2620,211,2638,183,2646,182,2641,208,2633,230,2617,243,2592,256,2551,277,2427,293,2265,306,2081,321,1720,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a029bf6f1f9cafd22b9bfe5f482bca6ce" title=" " alt="" coords="34,2681,203,2706"/>
-<area shape="poly" title=" " alt="" coords="332,1486,327,1729,313,2106,300,2298,283,2468,262,2598,249,2642,234,2670,221,2681,205,2689,203,2685,218,2677,230,2666,244,2640,257,2597,278,2468,295,2298,307,2106,322,1729,327,1486"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a84d2668813b4cc6ec9859a9d22f06f33" title=" " alt="" coords="34,2730,203,2755"/>
-<area shape="poly" title=" " alt="" coords="332,1486,328,1738,314,2130,302,2331,285,2509,263,2644,249,2691,234,2719,221,2731,205,2739,203,2734,218,2726,230,2716,244,2689,257,2643,280,2508,297,2331,309,2130,323,1738,327,1486"/>
-<area shape="poly" title=" " alt="" coords="156,796,146,788,119,785,96,787,84,791,82,797,88,804,84,808,77,798,81,788,95,782,119,779,148,783,160,792"/>
+<area shape="rect" title=" " alt="" coords="280,1551,383,1577"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a518ede4200beecdfb916060f01cb1579" title=" " alt="" coords="19,5,218,45"/>
+<area shape="poly" title=" " alt="" coords="327,1537,326,1242,315,770,303,528,285,312,274,222,261,148,247,93,230,59,217,47,220,43,234,56,252,91,267,147,280,222,291,312,308,528,320,770,331,1242,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title=" " alt="" coords="23,69,215,109"/>
+<area shape="poly" title=" " alt="" coords="327,1537,325,1253,313,802,301,570,284,365,273,279,260,208,246,155,230,123,213,108,217,104,234,120,251,153,265,207,278,278,289,364,306,570,318,802,330,1253,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a6641d63668aeb197a61c57a59ecf2aac" title=" " alt="" coords="15,133,222,173"/>
+<area shape="poly" title=" " alt="" coords="327,1537,324,1265,311,834,299,613,282,417,259,268,245,217,230,187,217,175,221,172,234,184,250,216,264,267,287,417,304,613,316,834,329,1265,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a0fc82df99ed253292cb7c369e898d198" title=" " alt="" coords="15,198,222,223"/>
+<area shape="poly" title=" " alt="" coords="327,1537,324,1273,311,857,299,645,282,456,259,313,245,265,230,236,217,226,221,222,234,233,250,263,264,312,287,456,304,644,317,857,329,1272,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ad511cff294f219693d6afa94a4a1175e" title="Visits a list of argument expressions and returns their types." alt="" coords="5,247,232,273"/>
+<area shape="poly" title=" " alt="" coords="327,1538,323,1283,310,883,297,679,280,498,258,361,245,315,230,287,215,275,219,271,234,284,250,313,263,360,286,498,303,679,315,883,329,1282,332,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a1373e305b6c738d4580bb63d8031b7a8" title=" " alt="" coords="28,297,209,337"/>
+<area shape="poly" title=" " alt="" coords="327,1538,322,1294,306,916,294,723,277,552,256,421,243,377,230,351,208,334,211,329,234,348,248,376,261,420,282,551,299,722,312,916,327,1294,332,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c" title="Generates a call to certain operator overload function when left hand side or right hand side owns a ..." alt="" coords="26,361,211,401"/>
+<area shape="poly" title=" " alt="" coords="327,1538,321,1305,305,948,292,765,275,604,255,481,243,440,230,415,210,399,213,395,234,412,248,438,260,480,281,603,297,765,310,947,326,1305,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da" title="Orchestrates an external function/method invocation IR generation." alt="" coords="13,425,224,465"/>
+<area shape="poly" title=" " alt="" coords="327,1538,320,1317,303,980,290,808,273,657,253,541,242,502,230,479,217,467,221,464,234,476,247,500,259,540,279,656,295,808,308,979,325,1317,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d" title="Handle subscript." alt="" coords="17,490,220,515"/>
+<area shape="poly" title=" " alt="" coords="327,1538,319,1326,302,1005,289,842,273,698,253,588,242,552,230,530,215,518,219,514,234,526,247,549,258,587,278,697,295,841,308,1004,325,1326,332,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816" title="Handles unary operator overload function when the operand owns a appropriate overloaded operator meth..." alt="" coords="27,540,210,580"/>
+<area shape="poly" title=" " alt="" coords="326,1538,318,1338,299,1037,286,885,270,751,251,649,241,614,230,594,209,577,212,573,234,590,246,612,256,647,275,750,291,885,305,1037,323,1338,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ac41639181d1520878a6d570857357f8b" title=" " alt="" coords="39,604,198,644"/>
+<area shape="poly" title=" " alt="" coords="326,1538,317,1350,297,1070,284,928,268,803,250,709,240,677,230,658,215,645,197,636,199,631,218,640,234,654,245,675,255,707,274,803,289,928,303,1069,322,1349,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="37,668,201,708"/>
+<area shape="poly" title=" " alt="" coords="326,1538,316,1362,295,1102,282,971,266,856,249,769,240,739,230,722,216,710,200,701,202,696,219,705,234,718,244,737,254,767,272,855,287,971,301,1102,321,1362,331,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="27,732,211,772"/>
+<area shape="poly" title=" " alt="" coords="328,1537,327,1384,317,1158,305,1041,287,934,262,846,247,812,230,786,209,769,212,765,234,782,252,809,267,844,292,933,310,1041,322,1158,332,1384,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="33,796,205,836"/>
+<area shape="poly" title=" " alt="" coords="327,1537,325,1395,313,1189,301,1082,283,985,260,904,246,873,230,850,203,831,206,826,234,846,251,871,265,902,289,983,306,1081,318,1188,330,1395,333,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="39,861,199,886"/>
+<area shape="poly" title=" " alt="" coords="327,1538,324,1404,311,1211,299,1113,282,1022,259,949,245,920,230,899,215,888,198,880,200,875,218,883,234,895,250,918,264,947,287,1021,305,1112,317,1211,330,1404,333,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="55,934,182,959"/>
+<area shape="poly" title=" " alt="" coords="327,1537,322,1417,307,1246,294,1159,278,1080,256,1016,244,991,230,973,208,957,182,950,183,945,210,953,234,969,248,988,261,1014,283,1079,300,1159,312,1246,327,1416,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ac06563a24d76b19b9f21c4dc11a6b050" title=" " alt="" coords="55,983,182,1009"/>
+<area shape="poly" title=" " alt="" coords="326,1538,320,1426,304,1271,291,1192,275,1120,255,1061,243,1039,230,1022,208,1007,181,999,183,994,210,1002,234,1018,247,1036,259,1059,280,1118,296,1191,309,1270,325,1426,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ada790c5cb50fa1990c13f9d1093f596a" title=" " alt="" coords="55,1033,182,1058"/>
+<area shape="poly" title=" " alt="" coords="326,1538,318,1435,300,1295,288,1223,272,1159,253,1106,230,1071,208,1056,181,1049,183,1043,210,1051,234,1067,257,1104,277,1157,293,1222,306,1294,323,1435,331,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1" title=" " alt="" coords="55,1082,182,1107"/>
+<area shape="poly" title=" " alt="" coords="325,1538,316,1444,297,1319,284,1255,269,1198,251,1152,230,1121,208,1106,182,1098,183,1093,210,1101,234,1117,255,1149,274,1196,289,1254,302,1318,321,1444,331,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a619711d98a61127e0cdb8fbdf529b38f" title=" " alt="" coords="55,1131,182,1157"/>
+<area shape="poly" title=" " alt="" coords="324,1538,313,1454,294,1343,266,1238,249,1197,230,1170,208,1155,181,1148,183,1143,210,1151,234,1166,254,1194,271,1236,299,1342,319,1453,330,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9b92ec0821a2a26446904de21da87b4c" title=" " alt="" coords="55,1181,182,1206"/>
+<area shape="poly" title=" " alt="" coords="328,1538,326,1473,314,1387,302,1341,285,1296,261,1255,230,1219,208,1205,182,1197,183,1192,210,1200,234,1215,265,1252,289,1294,307,1339,319,1386,332,1473,334,1538"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a6612926778cf11f6fcfc72b182c38bc5" title=" " alt="" coords="55,1230,182,1255"/>
+<area shape="poly" title=" " alt="" coords="327,1537,322,1481,307,1408,295,1370,279,1333,257,1298,230,1269,208,1255,181,1247,183,1242,210,1250,234,1265,261,1295,283,1330,300,1368,313,1406,327,1480,332,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ae32c02a57c9f8340c0f36aa3c1abec4b" title=" " alt="" coords="55,1279,182,1305"/>
+<area shape="poly" title=" " alt="" coords="325,1537,317,1489,300,1430,272,1369,253,1342,230,1318,208,1305,182,1297,183,1292,210,1300,234,1314,257,1338,277,1366,305,1428,322,1488,330,1536"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a315dc961d954f433f9040e2fc97023f9" title=" " alt="" coords="55,1329,182,1354"/>
+<area shape="poly" title=" " alt="" coords="322,1538,311,1499,293,1453,267,1406,250,1385,230,1367,207,1355,182,1347,183,1342,209,1350,234,1363,254,1382,271,1403,298,1451,316,1498,327,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a98d9baf73f46b10fa463499d6fe3b499" title=" " alt="" coords="55,1378,182,1403"/>
+<area shape="poly" title=" " alt="" coords="318,1540,286,1477,261,1444,230,1417,207,1405,181,1398,183,1393,209,1400,234,1412,265,1440,290,1474,323,1537"/>
+<area shape="rect" href="classyoi_1_1visitor.html#acc2d8294c74a98573061f43f887f4b80" title=" " alt="" coords="55,1427,182,1453"/>
+<area shape="poly" title=" " alt="" coords="311,1542,277,1502,255,1483,231,1466,207,1456,181,1449,183,1444,209,1451,233,1462,258,1478,281,1499,315,1539"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a9a2477954be96a3e9fb66f7457677c96" title=" " alt="" coords="55,1477,182,1502"/>
+<area shape="poly" title=" " alt="" coords="296,1547,231,1516,182,1502,183,1497,233,1511,299,1542"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a269edf3da143e1f462d7c4eb6bf2cccb" title=" " alt="" coords="55,1526,182,1551"/>
+<area shape="poly" title=" " alt="" coords="266,1559,182,1549,183,1544,267,1554"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a17733bfd438ff33e6ec37e0534f10205" title=" " alt="" coords="55,1575,182,1601"/>
+<area shape="poly" title=" " alt="" coords="267,1574,183,1584,182,1578,266,1569"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="55,1625,182,1650"/>
+<area shape="poly" title=" " alt="" coords="297,1586,233,1615,183,1629,182,1623,231,1609,295,1581"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a1b8d8a04c7f31f4b114414d81173a6aa" title=" " alt="" coords="55,1674,182,1699"/>
+<area shape="poly" title=" " alt="" coords="315,1589,280,1628,258,1647,233,1664,209,1674,183,1682,181,1676,207,1669,231,1659,255,1643,277,1624,311,1586"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aaed49e3b28622b6cc2b1e3fb002740f7" title=" " alt="" coords="55,1723,182,1749"/>
+<area shape="poly" title=" " alt="" coords="322,1591,289,1653,264,1685,234,1713,209,1725,183,1733,181,1728,207,1721,230,1708,260,1682,285,1650,318,1588"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="55,1773,182,1798"/>
+<area shape="poly" title=" " alt="" coords="327,1591,316,1629,298,1676,271,1723,253,1744,234,1762,209,1776,183,1784,182,1779,207,1771,230,1758,250,1740,266,1719,293,1673,311,1628,322,1589"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="55,1822,182,1847"/>
+<area shape="poly" title=" " alt="" coords="330,1591,322,1639,305,1698,277,1759,257,1787,234,1811,210,1826,183,1834,182,1829,208,1821,230,1807,253,1784,272,1757,300,1697,317,1638,325,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4dc8ff32bdbda37d20eadabcbb13a3fa" title=" " alt="" coords="55,1871,182,1897"/>
+<area shape="poly" title=" " alt="" coords="332,1591,327,1647,312,1720,300,1758,283,1796,261,1830,234,1861,210,1876,183,1884,181,1879,208,1871,230,1857,257,1827,278,1793,295,1756,307,1719,322,1646,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a03df671f583af11d6c8b7cc90e50ba58" title=" " alt="" coords="55,1921,182,1946"/>
+<area shape="poly" title=" " alt="" coords="334,1590,331,1655,319,1741,306,1787,289,1832,265,1874,234,1910,210,1925,183,1934,181,1929,208,1921,230,1906,260,1870,284,1830,301,1785,314,1740,326,1655,328,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a615fd8f087f699ae6b65026ec145f9a2" title=" " alt="" coords="55,1970,182,1995"/>
+<area shape="poly" title=" " alt="" coords="330,1591,318,1674,299,1785,271,1890,253,1931,234,1959,210,1975,183,1983,182,1978,208,1970,230,1955,249,1929,265,1888,293,1784,313,1674,324,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a6e30a778ee54e6c764f12b7cba359d1a" title=" " alt="" coords="55,2019,182,2045"/>
+<area shape="poly" title=" " alt="" coords="330,1591,321,1684,302,1809,289,1872,274,1929,255,1976,234,2009,210,2024,183,2033,182,2028,208,2020,230,2005,251,1974,268,1928,284,1871,297,1808,315,1683,325,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a22560c4340ac4dade215406386c15cd3" title=" " alt="" coords="55,2069,182,2094"/>
+<area shape="poly" title=" " alt="" coords="331,1591,323,1693,305,1833,292,1904,277,1969,257,2022,234,2058,210,2074,183,2082,181,2077,208,2069,230,2054,252,2019,271,1967,287,1903,300,1832,317,1693,326,1591"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="55,2118,182,2143"/>
+<area shape="poly" title=" " alt="" coords="332,1590,325,1702,309,1856,296,1935,280,2007,259,2067,247,2090,234,2107,210,2124,183,2132,181,2127,208,2119,230,2103,243,2087,254,2064,274,2006,291,1934,303,1856,319,1701,326,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="55,2167,182,2193"/>
+<area shape="poly" title=" " alt="" coords="332,1591,327,1711,312,1881,299,1967,283,2047,261,2112,248,2137,234,2157,210,2173,183,2181,182,2176,208,2168,230,2153,244,2134,256,2110,277,2045,294,1967,306,1880,321,1711,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a265cea76f193a51298d616bfaaf4ade9" title=" " alt="" coords="55,2217,182,2242"/>
+<area shape="poly" title=" " alt="" coords="332,1591,328,1720,315,1904,302,1999,285,2086,263,2157,249,2185,234,2206,210,2222,183,2231,182,2226,208,2218,230,2202,245,2182,258,2155,280,2084,297,1998,310,1904,323,1720,327,1591"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a8422d3bcf54ab37a5e8ecd2d8e06b246" title=" " alt="" coords="55,2266,182,2291"/>
+<area shape="poly" title=" " alt="" coords="333,1591,330,1729,318,1928,306,2031,288,2125,265,2202,250,2232,234,2255,211,2272,183,2280,182,2275,208,2267,230,2251,246,2229,260,2200,283,2124,300,2030,313,1928,325,1729,327,1591"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aea5a6755f1dc61d8543b00feaeb6d84e" title=" " alt="" coords="55,2315,182,2341"/>
+<area shape="poly" title=" " alt="" coords="333,1590,332,1737,321,1951,309,2062,291,2164,267,2247,252,2280,234,2305,210,2321,183,2330,181,2325,208,2316,230,2301,247,2277,262,2245,286,2162,304,2061,316,1951,327,1737,328,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ac5aa883647855ce7ec46cff094476b8b" title=" " alt="" coords="55,2365,182,2390"/>
+<area shape="poly" title=" " alt="" coords="331,1591,320,1757,300,1999,286,2121,271,2228,253,2309,244,2336,234,2354,210,2371,183,2379,181,2374,208,2366,230,2350,239,2334,248,2307,265,2227,281,2120,294,1998,315,1757,326,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a0150d4511bf27c613ff807fdf60156e3" title=" " alt="" coords="55,2414,182,2439"/>
+<area shape="poly" title=" " alt="" coords="331,1590,321,1765,301,2023,288,2153,272,2268,254,2355,245,2385,234,2403,210,2420,183,2428,181,2423,208,2415,230,2400,240,2382,249,2354,267,2267,283,2153,296,2023,316,1765,326,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a1c8d80605fb1b08f95fc5ab1c0f989db" title=" " alt="" coords="55,2463,182,2489"/>
+<area shape="poly" title=" " alt="" coords="332,1590,322,1775,303,2049,290,2187,274,2309,255,2401,245,2433,234,2452,210,2469,183,2478,181,2473,208,2465,230,2449,240,2431,250,2400,269,2308,284,2186,298,2048,317,1774,326,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a56fa99bf4698ff7f6cc5f04772ec8353" title=" " alt="" coords="55,2513,182,2538"/>
+<area shape="poly" title=" " alt="" coords="332,1591,323,1784,304,2074,291,2220,275,2349,256,2447,246,2481,234,2502,211,2519,183,2527,181,2522,208,2514,230,2498,241,2479,251,2446,270,2348,286,2219,299,2073,318,1784,326,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#adb1dc84651b232a35ce406fcc7cd022b" title=" " alt="" coords="55,2562,182,2587"/>
+<area shape="poly" title=" " alt="" coords="332,1591,324,1793,306,2098,293,2253,277,2390,257,2494,246,2529,234,2551,211,2568,183,2577,182,2571,208,2563,230,2548,241,2527,252,2492,271,2389,288,2253,301,2098,319,1793,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4a3f65674c9aa77071bba7a6daa45dca" title=" " alt="" coords="55,2611,182,2637"/>
+<area shape="poly" title=" " alt="" coords="332,1590,325,1802,308,2123,295,2286,278,2430,258,2540,247,2577,234,2600,211,2617,183,2626,182,2621,208,2613,230,2597,242,2575,253,2539,273,2429,289,2285,302,2123,319,1801,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ad8cc77d97249d99c80f9d5194dc58135" title=" " alt="" coords="55,2661,182,2686"/>
+<area shape="poly" title=" " alt="" coords="332,1591,325,1811,309,2148,296,2319,280,2471,259,2586,247,2625,234,2650,211,2667,183,2675,182,2670,208,2662,230,2646,242,2623,254,2585,274,2470,291,2319,304,2148,320,1811,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a7e7fb2c39cc57152e5f6855aaae500fd" title=" " alt="" coords="55,2710,182,2735"/>
+<area shape="poly" title=" " alt="" coords="332,1590,326,1819,311,2172,298,2352,281,2511,260,2632,248,2673,234,2699,211,2716,183,2725,182,2720,208,2711,230,2696,243,2671,255,2631,276,2510,292,2352,305,2172,321,1819,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a4c1333c9541265ca3ae159f0b6420b3f" title=" " alt="" coords="55,2759,182,2785"/>
+<area shape="poly" title=" " alt="" coords="332,1590,327,1828,312,2197,299,2385,283,2552,261,2678,248,2722,234,2748,211,2766,183,2774,182,2769,208,2761,230,2745,244,2720,256,2677,277,2551,294,2385,307,2197,322,1828,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ae6ed1cb9a2fbe5e0e62ec07f18be642e" title=" " alt="" coords="55,2809,182,2834"/>
+<area shape="poly" title=" " alt="" coords="332,1590,328,1837,313,2222,301,2418,284,2592,262,2725,249,2770,234,2798,211,2815,183,2823,182,2818,208,2810,230,2794,244,2768,257,2723,279,2591,296,2418,308,2222,323,1837,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a029bf6f1f9cafd22b9bfe5f482bca6ce" title=" " alt="" coords="34,2858,203,2883"/>
+<area shape="poly" title=" " alt="" coords="332,1590,329,1846,315,2246,303,2451,286,2633,263,2771,250,2818,234,2847,221,2859,205,2867,203,2862,218,2854,230,2844,245,2816,258,2770,280,2632,297,2451,310,2246,323,1846,327,1590"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a84d2668813b4cc6ec9859a9d22f06f33" title=" " alt="" coords="34,2907,203,2933"/>
+<area shape="poly" title=" " alt="" coords="333,1590,329,1855,316,2271,304,2484,287,2673,264,2817,250,2866,234,2896,221,2908,205,2916,203,2911,218,2904,230,2893,245,2864,259,2816,282,2672,299,2484,311,2271,324,1855,327,1590"/>
+<area shape="poly" title=" " alt="" coords="156,924,146,916,119,913,96,915,84,919,82,925,88,932,84,936,77,926,81,916,95,910,119,907,148,911,160,920"/>
 </map>
 </div>
 
@@ -498,7 +510,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00024">moduleContext::templateBuilders</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02460">visitor::getIncompleteType()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02465">visitor::getIncompleteType()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -531,26 +543,28 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00023">moduleContext::IRBuilderStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03432">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01450">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01659">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03724">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03438">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01456">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01665">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1moduleContext_ad1b425b42f99202f53f61ee9efa78c4b_icgraph.png" border="0" usemap="#aclassyoi_1_1moduleContext_ad1b425b42f99202f53f61ee9efa78c4b_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1moduleContext_ad1b425b42f99202f53f61ee9efa78c4b_icgraph" id="aclassyoi_1_1moduleContext_ad1b425b42f99202f53f61ee9efa78c4b_icgraph">
-<area shape="rect" title=" " alt="" coords="237,182,343,207"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="15,5,179,45"/>
-<area shape="poly" title=" " alt="" coords="274,171,240,115,216,85,188,59,168,48,171,43,191,55,220,81,244,112,279,168"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="5,69,189,109"/>
-<area shape="poly" title=" " alt="" coords="262,175,228,149,188,124,162,112,164,107,191,119,231,144,265,171"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="11,133,183,173"/>
-<area shape="poly" title=" " alt="" coords="223,183,183,174,184,169,225,178"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="34,222,161,247"/>
-<area shape="poly" title=" " alt="" coords="224,211,159,225,158,219,223,206"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="34,271,161,297"/>
-<area shape="poly" title=" " alt="" coords="263,218,229,240,190,261,155,274,153,269,188,256,226,236,260,213"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="34,321,161,346"/>
-<area shape="poly" title=" " alt="" coords="276,220,241,266,217,290,191,310,162,324,160,319,188,306,214,286,237,263,272,217"/>
-<area shape="poly" title=" " alt="" coords="131,212,122,204,97,201,77,203,66,207,64,213,70,220,66,223,59,214,62,204,76,198,97,195,124,199,135,208"/>
+<area shape="rect" title=" " alt="" coords="245,205,351,230"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title=" " alt="" coords="5,5,197,45"/>
+<area shape="poly" title=" " alt="" coords="285,193,252,126,227,90,196,59,177,48,180,43,199,55,231,87,256,123,290,190"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="19,69,183,109"/>
+<area shape="poly" title=" " alt="" coords="276,196,241,159,196,124,172,112,175,107,199,119,245,155,280,192"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="9,133,193,173"/>
+<area shape="poly" title=" " alt="" coords="244,203,163,176,164,171,246,198"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="15,197,187,237"/>
+<area shape="poly" title=" " alt="" coords="231,220,187,220,187,215,231,215"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="38,286,165,311"/>
+<area shape="poly" title=" " alt="" coords="255,238,134,288,132,283,253,233"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="38,335,165,361"/>
+<area shape="poly" title=" " alt="" coords="282,243,247,285,224,307,199,325,166,339,164,334,196,320,221,303,243,282,278,240"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="38,385,165,410"/>
+<area shape="poly" title=" " alt="" coords="290,244,256,309,231,344,199,374,166,390,164,385,196,370,227,341,252,306,285,241"/>
+<area shape="poly" title=" " alt="" coords="136,276,126,268,101,265,81,267,70,271,68,277,73,284,69,287,62,278,66,268,79,262,101,259,128,263,139,272"/>
 </map>
 </div>
 
@@ -575,7 +589,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00024">moduleContext::templateBuilders</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03370">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02633">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, and <a class="el" href="visitor_8cpp_source.html#l02567">visitor::specializeStructTemplate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03376">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02638">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, and <a class="el" href="visitor_8cpp_source.html#l02572">visitor::specializeStructTemplate()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -617,26 +631,28 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00023">moduleContext::IRBuilderStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03432">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01450">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01659">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03724">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03438">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00031">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01456">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01665">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1moduleContext_a3a87b40f9616a71669c3650e0116022a_icgraph.png" border="0" usemap="#aclassyoi_1_1moduleContext_a3a87b40f9616a71669c3650e0116022a_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1moduleContext_a3a87b40f9616a71669c3650e0116022a_icgraph" id="aclassyoi_1_1moduleContext_a3a87b40f9616a71669c3650e0116022a_icgraph">
-<area shape="rect" title=" " alt="" coords="237,182,349,207"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="15,5,179,45"/>
-<area shape="poly" title=" " alt="" coords="277,171,241,115,216,85,188,59,168,48,170,43,191,55,220,81,246,112,282,168"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="5,69,189,109"/>
-<area shape="poly" title=" " alt="" coords="265,175,229,149,188,124,162,112,164,107,191,119,232,145,268,171"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="11,133,183,173"/>
-<area shape="poly" title=" " alt="" coords="223,183,183,174,184,169,224,177"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="34,222,161,247"/>
-<area shape="poly" title=" " alt="" coords="224,211,161,225,160,219,223,206"/>
-<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="34,271,161,297"/>
-<area shape="poly" title=" " alt="" coords="265,218,230,240,190,261,155,274,153,269,188,256,228,236,262,213"/>
-<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="34,321,161,346"/>
-<area shape="poly" title=" " alt="" coords="279,220,242,266,218,290,191,310,162,323,160,318,188,306,214,286,238,263,274,217"/>
-<area shape="poly" title=" " alt="" coords="132,212,122,204,97,201,77,203,66,207,64,213,69,220,65,223,58,214,62,204,75,198,97,195,124,199,135,208"/>
+<area shape="rect" title=" " alt="" coords="245,205,357,230"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title=" " alt="" coords="5,5,197,45"/>
+<area shape="poly" title=" " alt="" coords="288,193,253,127,227,90,196,59,177,48,179,43,199,55,231,87,258,124,293,191"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="19,69,183,109"/>
+<area shape="poly" title=" " alt="" coords="279,196,242,159,196,124,172,112,175,107,199,119,246,155,282,192"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aedd817e3b744bac6267c3629f68a9e20" title=" " alt="" coords="9,133,193,173"/>
+<area shape="poly" title=" " alt="" coords="247,203,164,176,165,171,249,198"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="15,197,187,237"/>
+<area shape="poly" title=" " alt="" coords="231,220,188,220,188,215,231,215"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="38,286,165,311"/>
+<area shape="poly" title=" " alt="" coords="258,238,135,288,133,283,256,233"/>
+<area shape="rect" href="classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="38,335,165,361"/>
+<area shape="poly" title=" " alt="" coords="285,243,248,285,225,307,199,325,166,339,164,334,196,320,221,303,244,281,281,240"/>
+<area shape="rect" href="classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="38,385,165,410"/>
+<area shape="poly" title=" " alt="" coords="292,244,258,309,231,344,199,374,166,390,164,385,196,370,227,341,253,306,288,241"/>
+<area shape="poly" title=" " alt="" coords="137,276,127,268,101,265,80,267,69,271,67,277,73,284,68,287,61,278,65,268,79,262,101,259,129,263,140,272"/>
 </map>
 </div>
 
@@ -662,7 +678,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="moduleContext_8h_source.html#l00024">moduleContext::templateBuilders</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02499">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03370">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02633">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02718">visitor::specializeStructMethodDefinition()</a>, and <a class="el" href="visitor_8cpp_source.html#l02567">visitor::specializeStructTemplate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02504">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03376">visitor::specializeInterfaceTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l02638">visitor::specializeStructMethodDeclaration()</a>, <a class="el" href="visitor_8cpp_source.html#l02723">visitor::specializeStructMethodDefinition()</a>, and <a class="el" href="visitor_8cpp_source.html#l02572">visitor::specializeStructTemplate()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

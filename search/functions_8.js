@@ -8,7 +8,7 @@ var searchData=
   ['invokeimportedop_5',['invokeImportedOp',['../classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be',1,'yoi::IRBuilder']]],
   ['invokemethodop_6',['invokeMethodOp',['../classyoi_1_1IRBuilder.html#a84bf6a9168637a2a3e32957838db2733',1,'yoi::IRBuilder']]],
   ['invokeop_7',['invokeOp',['../classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a',1,'yoi::IRBuilder']]],
-  ['invokevirtualop_8',['invokeVirtualOp',['../classyoi_1_1IRBuilder.html#a320d6bd96e66bb7a59d069d8af3a4d09',1,'yoi::IRBuilder']]],
+  ['invokevirtualop_8',['invokeVirtualOp',['../classyoi_1_1IRBuilder.html#a2bab0d18ac442e78db58359f37e4d264',1,'yoi::IRBuilder']]],
   ['ir_9',['ir',['../classyoi_1_1IR.html#a5fad778bd7970d4b3efa05e8bfe670d6',1,'yoi::IR::IR()=default'],['../classyoi_1_1IR.html#a9c3a08807406902e6542eaba41b56c91',1,'yoi::IR::IR(Opcode opcode, const yoi::vec&lt; IROperand &gt; &amp;operands, IRDebugInfo debugInfo)']]],
   ['irbuilder_10',['irbuilder',['../classyoi_1_1IRBuilder.html#ab4093e8cfecbe1cc54ea82886d9fa39b',1,'yoi::IRBuilder::IRBuilder()=delete'],['../classyoi_1_1IRBuilder.html#a8c8800de44b86dbde01c19a95f81e93c',1,'yoi::IRBuilder::IRBuilder(std::shared_ptr&lt; compilerContext &gt; compilerCtx, std::shared_ptr&lt; IRModule &gt; currentModule, std::shared_ptr&lt; IRFunctionDefinition &gt; currentFunction)']]],
   ['ircodeblock_11',['IRCodeBlock',['../classyoi_1_1IRCodeBlock.html#a6974930395a35fca1104d8093115fa27',1,'yoi::IRCodeBlock']]],

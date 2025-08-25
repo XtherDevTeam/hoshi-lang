@@ -9,6 +9,7 @@ var hierarchy =
       [ "andExpr", "classyoi_1_1andExpr.html", null ],
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", null ],
       [ "breakStmt", "classyoi_1_1breakStmt.html", null ],
+      [ "callableExpression", "classyoi_1_1callableExpression.html", null ],
       [ "catchParam", "classyoi_1_1catchParam.html", null ],
       [ "codeBlock", "classyoi_1_1codeBlock.html", null ],
       [ "constructorDecl", "classyoi_1_1constructorDecl.html", null ],
@@ -45,6 +46,7 @@ var hierarchy =
       [ "interfaceDefInnerPair", "classyoi_1_1interfaceDefInnerPair.html", null ],
       [ "interfaceDefStmt", "classyoi_1_1interfaceDefStmt.html", null ],
       [ "invocationArguments", "classyoi_1_1invocationArguments.html", null ],
+      [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", null ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", null ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", null ],
       [ "letStmt", "classyoi_1_1letStmt.html", null ],
@@ -70,6 +72,7 @@ var hierarchy =
       [ "typeIdExpression", "classyoi_1_1typeIdExpression.html", null ],
       [ "typeSpec", "classyoi_1_1typeSpec.html", null ],
       [ "uniqueExpr", "classyoi_1_1uniqueExpr.html", null ],
+      [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", null ],
       [ "useStmt", "classyoi_1_1useStmt.html", null ],
       [ "whileStmt", "classyoi_1_1whileStmt.html", null ]
     ] ],

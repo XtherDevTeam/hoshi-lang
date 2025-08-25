@@ -41,6 +41,7 @@ var annotated_dup =
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", "classyoi_1_1basicLiterals" ],
       [ "breakStmt", "classyoi_1_1breakStmt.html", null ],
       [ "BuiltinModuleBuilder", "classyoi_1_1BuiltinModuleBuilder.html", "classyoi_1_1BuiltinModuleBuilder" ],
+      [ "callableExpression", "classyoi_1_1callableExpression.html", "classyoi_1_1callableExpression" ],
       [ "catchParam", "classyoi_1_1catchParam.html", "classyoi_1_1catchParam" ],
       [ "ccObjectLinker", "classyoi_1_1ccObjectLinker.html", "classyoi_1_1ccObjectLinker" ],
       [ "clObjectLinker", "classyoi_1_1clObjectLinker.html", "classyoi_1_1clObjectLinker" ],
@@ -108,6 +109,7 @@ var annotated_dup =
       [ "IRTemplateBuilder", "classyoi_1_1IRTemplateBuilder.html", "classyoi_1_1IRTemplateBuilder" ],
       [ "IRValueType", "classyoi_1_1IRValueType.html", "classyoi_1_1IRValueType" ],
       [ "IRVariableTable", "classyoi_1_1IRVariableTable.html", "classyoi_1_1IRVariableTable" ],
+      [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", "classyoi_1_1lambdaExpr" ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", "classyoi_1_1leftExpr" ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", "classyoi_1_1letAssignmentPair" ],
       [ "letStmt", "classyoi_1_1letStmt.html", "classyoi_1_1letStmt" ],
@@ -139,6 +141,7 @@ var annotated_dup =
       [ "typeIdExpression", "classyoi_1_1typeIdExpression.html", "classyoi_1_1typeIdExpression" ],
       [ "typeSpec", "classyoi_1_1typeSpec.html", "classyoi_1_1typeSpec" ],
       [ "uniqueExpr", "classyoi_1_1uniqueExpr.html", "classyoi_1_1uniqueExpr" ],
+      [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", "classyoi_1_1unnamedDefinitionArguments" ],
       [ "useStmt", "classyoi_1_1useStmt.html", "classyoi_1_1useStmt" ],
       [ "visitor", "classyoi_1_1visitor.html", "classyoi_1_1visitor" ],
       [ "whileStmt", "classyoi_1_1whileStmt.html", "classyoi_1_1whileStmt" ]
