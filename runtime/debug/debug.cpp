@@ -30,6 +30,10 @@ void runtime_debug_print_int(int64_t value) {
     #endif
 }
 
+void runtime_debug_print_int_1(int64_t value) {
+    printf("[Elysia/DEBUG] Debug Integer: %lld\n", value);
+}
+
 void runtime_debug_print_deci(double value) {
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
     printf("[Elysia/DEBUG] Debug Double: %lf\n", value);

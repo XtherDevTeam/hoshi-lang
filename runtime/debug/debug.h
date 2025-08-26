@@ -16,4 +16,6 @@ extern "C" void runtime_debug_print_int(int64_t value);
 
 extern "C" void runtime_debug_print_deci(double value);
 
+extern "C" void runtime_debug_print_int_1(int64_t value);
+
 #endif //HOSHI_LANG_RUNTIME_DEBUG_H

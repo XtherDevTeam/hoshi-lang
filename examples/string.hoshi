@@ -26,5 +26,29 @@ func main() : int {
     }
     puts("string valiation passed: find('llo') == 2")
     puts(a.c_str())
+    
+    let b = str.Str("  May all the beauty be blessed.  ").trim()
+    if (b != str.Str("May all the beauty be blessed.")) {
+        puts("string valiation failed: trim()")
+        return 1
+    }
+    puts(b.c_str())
+
+    let c = str.Str("K423 & Raiden Mei & K423")
+
+    if (c.find_all(str.Str("Raiden")) != 1 || c.find_all(str.Str("K423")) != 2) {
+        puts("string valiation failed: find_all('Raiden') == 1 && find_all('K423') == 2")
+        return 1
+    }
+    puts("string valiation passed: find_all('Raiden') == 1 && find_all('K423') == 2")
+
+    c = c.replace(str.Str("K423"), str.Str("Kiana Kaslana"))
+    
+    if (c != str.Str("Kiana Kaslana & Raiden Mei & Kiana Kaslana")) {
+        puts("string valiation failed: replace('K423', 'Kiana Kaslana')")
+        return 1
+    }
+
+    puts("string valiation passed: all tests passed")
     return 0
 }

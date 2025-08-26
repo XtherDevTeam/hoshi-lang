@@ -310,7 +310,7 @@ namespace yoi {
             else if (tok.kind == token::tokenKind::shortInt)
                 tok.basicVal.vShort = static_cast<int16_t>(std::stoi(tempStr, nullptr, base));
         } else {
-            tok.basicVal.vDeci = std::stof(tempStr);
+            tok.basicVal.vDeci = std::stod(tempStr);
         }
         return tok;
     }

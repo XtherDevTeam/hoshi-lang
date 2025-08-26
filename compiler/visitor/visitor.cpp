@@ -113,7 +113,7 @@ namespace yoi {
                     IR::Opcode::load_local, {IROperand::operandType::localVar, yoi::indexT{index}}, valType);
             }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
-        } catch (std::runtime_error &e) {
+        } catch (std::out_of_range &e) {
             // let it go, try to find it in global variables
         }
         try {
@@ -313,13 +313,7 @@ namespace yoi {
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                     if (lhs->isBasicType() && rhs->isBasicType()) {
-                        if (lhs->type == IRValueType::valueType::decimalObject &&
-                            rhs->type == IRValueType::valueType::integerObject) {
-                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                        } else if (lhs->type == IRValueType::valueType::integerObject &&
-                                rhs->type == IRValueType::valueType::decimalObject) {
-                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                        }
+                        tryCastTo(lhs);
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
@@ -334,13 +328,7 @@ namespace yoi {
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                     if (lhs->isBasicType() && rhs->isBasicType()) {
-                        if (lhs->type == IRValueType::valueType::decimalObject &&
-                            rhs->type == IRValueType::valueType::integerObject) {
-                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                        } else if (lhs->type == IRValueType::valueType::integerObject &&
-                                rhs->type == IRValueType::valueType::decimalObject) {
-                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                        }
+                        tryCastTo(lhs);
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
@@ -355,13 +343,7 @@ namespace yoi {
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                     if (lhs->isBasicType() && rhs->isBasicType()) {
-                        if (lhs->type == IRValueType::valueType::decimalObject &&
-                            rhs->type == IRValueType::valueType::integerObject) {
-                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                        } else if (lhs->type == IRValueType::valueType::integerObject &&
-                                rhs->type == IRValueType::valueType::decimalObject) {
-                            moduleContext->getIRBuilder().basicCast(rhs, lhsPos);
-                        }
+                        tryCastTo(lhs);
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
@@ -901,10 +883,12 @@ namespace yoi {
 
                 if (isMethodCall) {
                     if (objectType->type == IRValueType::valueType::structObject) {
-                        handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType);
+                        if(!handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType))
+                            panic(currentTermNode->getLine(), currentTermNode->getColumn(), "No matching method found for: " + wstring2string(currentTermNode->id->getId().get().strVal));
                     } else if (objectType->type == IRValueType::valueType::interfaceObject) {
                         // Interface method call logic... (was already correct)
-                        handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType);
+                        if(!handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType))
+                            panic(currentTermNode->getLine(), currentTermNode->getColumn(), "No matching method found for: " + wstring2string(currentTermNode->id->getId().get().strVal));
                     }
                 } else {
                     // It's a field access followed by subscript, e.g., `obj.data[i]`
@@ -1120,13 +1104,15 @@ namespace yoi {
                 try {
                     visit(subscriptExpr->id, false);
                     isAccessible = true;
+                    moduleContext->getIRBuilder().discardState();
                 } catch (const std::runtime_error &) {
                     moduleContext->getIRBuilder().restoreState();
                 }
                 if (isAccessible) {
                     auto structObject = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                     if(structObject->type == IRValueType::valueType::structObject || structObject->type == IRValueType::valueType::interfaceObject) {
-                        handleInvocationExtern(L"operator()", args, currentModuleIndex, structObject);
+                        if(!handleInvocationExtern(L"operator()", args, currentModuleIndex, structObject))
+                            panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "No matching method found for: " + wstring2string(baseName));
                         resolved = true;
                     } else {
                         panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Cannot call operator() on non-struct object or interface object.");
@@ -1145,7 +1131,7 @@ namespace yoi {
                     resolved = true;
                     moduleContext->getIRBuilder().discardState();
                 } else {
-                    moduleContext->getIRBuilder().restoreState();
+                    panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not resolve constructor for struct '" + wstring2string(baseName) + "'.");
                 }
             } else {
                 moduleContext->getIRBuilder().restoreState();
@@ -1227,7 +1213,8 @@ namespace yoi {
                 if (handleSubscript(it, end, isStoreOp, isLastTerm)) continue;
             } else if (currentTerm->isInvocation()) {
                 if(objectOnStackType->type == IRValueType::valueType::structObject || objectOnStackType->type == IRValueType::valueType::interfaceObject) {
-                    handleInvocationExtern(L"operator()", currentTerm->args, currentModuleIndex, objectOnStackType);
+                    if(!handleInvocationExtern(L"operator()", currentTerm->args, currentModuleIndex, objectOnStackType))
+                        panic(currentTerm->getLine(), currentTerm->getColumn(), "No matching method found for: " + wstring2string(subscriptExpr->id->getId().get().strVal));
                 } else {
                     panic(currentTerm->getLine(), currentTerm->getColumn(), "Cannot call operator() on non-struct object or interface object.");
                 }

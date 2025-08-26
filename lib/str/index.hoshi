@@ -5,6 +5,7 @@ import strlen(str: string) : unsigned from "builtin"
 import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
 import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
 import puts(str: string) : int32 from "builtin"
+import runtime_debug_print_int_1(value: int) : none from "builtin"
 
 struct Str {
     data: char[],
@@ -22,6 +23,11 @@ struct Str {
     find(pattern: Str, start: int) : int,
     always_inline find(pattern: Str) : int,
     substring(start: unsigned, end: unsigned) : Str,
+    trim() : Str,
+    replace(pattern: Str, value: Str) : Str,
+    split(sep: Str) : Str[],
+    split(sep: string) : Str[],
+    find_all(pattern: Str) : int,
     always_inline substring(start: int, end: int) : Str,
     static join(strs: Str[]) : Str,
     static join(args: ...) : Str,
@@ -81,7 +87,7 @@ impl Str {
     },
     push(ch: char) : none {
         if (this.length == this.capacity) {
-            this.capacity_resize(this.capacity * 2)
+            this.capacity_resize(this.capacity * 2u)
         }
         this.data[this.length] = ch
         this.length += 1
@@ -221,7 +227,7 @@ impl Str {
             }
         }
         // search
-        i = 0
+        i = start
         let j = 0
         while (i < this.length) {
             if (this[i] == pattern[j]) {
@@ -237,6 +243,19 @@ impl Str {
             }
         }
         return -1
+    },
+    find_all(pattern: Str) : int {
+        let occurences = 0
+        let index = 0
+        let index_after_last_sep = 0
+        while (index != -1) {
+            index = this.find(pattern, index_after_last_sep)
+            if (index != -1) {
+                occurences += 1
+                index_after_last_sep = index + pattern.length
+            }
+        }
+        return occurences
     },
     always_inline find(pattern: Str) : int {
         return this.find(pattern, 0)
@@ -276,6 +295,69 @@ impl Str {
             }
         }
         return Str.join(strs)
+    },
+    trim() : Str {
+        let start = 0u
+        let end = this.length
+        while (start < end && this.data[start] <= ' ') {
+            start += 1
+        }
+        while (end > start && this.data[end - 1] <= ' ') {
+            end -= 1
+        }
+        return this.substring(start, end)
+    },
+    replace(pattern: Str, value: Str) : Str {
+        let occur = this.find_all(pattern) as unsigned
+        if (occur == 0u) {
+            return this
+        }
+
+        let res = Str(this.length - pattern.length * occur + value.length * occur)
+        let index = this.find(pattern) as unsigned // the index of occurrence of pattern
+        let index_after_last_pattern = 0u // fuck it, while 0 become 0u, it tell me index not exist
+        let offset = 0u // the current offset in res.data
+
+        let res_data_ptr = runtime_get_string_array_data_pointer(res.data)
+        let this_data_ptr = runtime_get_string_array_data_pointer(this.data)
+        let value_data_ptr = runtime_get_string_array_data_pointer(value.data)
+
+        while (index != -1) {
+            // copy the part before the pattern
+            memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
+            offset += index - index_after_last_pattern
+            // copy the value
+            memcpy(res_data_ptr + offset, value_data_ptr, value.length)
+            offset += value.length
+            index_after_last_pattern = index + pattern.length
+            index = this.find(pattern, index_after_last_pattern as int)
+        }
+        // copy the part after the last pattern
+        memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, this.length - index_after_last_pattern)
+        res.length = this.length - pattern.length * occur + value.length * occur
+        res.data[res.length] = '\0'
+        return res
+    },
+    split(sep: Str) : Str[] {
+        let occurences = this.find_all(sep) + 1
+        let res = new Str[occurences]()
+        let index = 0u
+        let index_after_last_sep = 0u
+        let offset = 0u
+        for (let i = 0; i < occurences + 1; i += 1) {
+            index = this.find(sep, index_after_last_sep + 1)
+            if (index != -1) {
+                res[i] = this.substring(offset, index)
+                offset = index + sep.length
+                index_after_last_sep = index
+            } else {
+                res[i] = this.substring(offset, this.length)
+            }
+        }
+        return res
+    },
+    split(sep: string) : Str[] {
+        return this.split(Str(sep))
     }
 }
 
@@ -288,3 +370,21 @@ impl Str : lang.Hashable {
         return res
     }
 }
+
+interface Stringable {
+    to_string() : Str
+}
+
+/* func format(fmt: Str, params: ...) : Str {
+    let strs = new Str[args.length]()
+    for (let i = 0; i < args.length; i += 1) {
+        if (args[i] interfaceof Str) {
+            strs[i] = dyn_cast<Str>(args[i])
+        } elif (args[i] interfaceof string) {
+            strs[i] = Str(dyn_cast<string>(args[i]))
+        } elif (args[i] interfaceof int) {
+            strs[i] = Str(dyn_cast<int>(args[i]))
+        }
+    }
+    
+} */

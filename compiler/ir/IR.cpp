@@ -223,7 +223,7 @@ namespace yoi {
         tempVarStack.pop_back();
         auto left = tempVarStack.back();
         tempVarStack.pop_back();
-        yoi_assert(left->type == right->type, 0, 0, "Type mismatch in multiplication operation.");
+        yoi_assert(left->type == right->type, 0, 0, "Type mismatch in arithmetic operation: " + wstring2string(left->to_string()) + " " + std::string{magic_enum::enum_name<>(op)} + " " + wstring2string(right->to_string()));
         // push result to tempVarStack
         switch (op) {
             case IR::Opcode::add:
