@@ -16,8 +16,12 @@ var classyoi_1_1BuiltinModuleBuilder =
     [ "getNoneObject", "classyoi_1_1BuiltinModuleBuilder.html#a86aa0a737da077799c39bcbb6e56b5db", null ],
     [ "getNullInterfaceInstanceDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a2580086e454bee20cf97f2c5acee25d5", null ],
     [ "getPointerDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a4d9ff0ab28c8093b80caeb8a59d0b943", null ],
+    [ "getShortObject", "classyoi_1_1BuiltinModuleBuilder.html#af87bdf4e0e757ef581e3f30b73eac471", null ],
+    [ "getShortObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a03d59b9faabd3e5022cd6045a10759e4", null ],
     [ "getStringObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#abc7d6463b0f61f6782bb682123d2bafd", null ],
     [ "getStrObject", "classyoi_1_1BuiltinModuleBuilder.html#a46f4cbbbee818e7cce6cdadb3bd1451a", null ],
+    [ "getUnsignedObject", "classyoi_1_1BuiltinModuleBuilder.html#aaa9fe2ee1f20df2b58d91f3065f46ef7", null ],
+    [ "getUnsignedObjectDefinition", "classyoi_1_1BuiltinModuleBuilder.html#a19df66110fb50344f8dc39513d393322", null ],
     [ "initializeSharedObjectDefinitions", "classyoi_1_1BuiltinModuleBuilder.html#ac598b01954aad25e58ec621cbe5e27ad", null ],
     [ "initializeSharedObjects", "classyoi_1_1BuiltinModuleBuilder.html#a92fb762cae04d5701345764007ddeb28", null ],
     [ "sharedValueType", "classyoi_1_1BuiltinModuleBuilder.html#aeb909bccf279ecfe16362628c660a1f8", null ]

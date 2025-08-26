@@ -10,6 +10,8 @@ var classyoi_1_1IROperand =
       [ "stringLiteral", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a424010b6c68d2de44a625dfb16c5b516", null ],
       [ "codeBlock", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aff6bdb31a97ea58712d35004a9ec0fea", null ],
       [ "index", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86", null ],
+      [ "shortInt", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206ada78de4127377591c515888bad472367", null ],
+      [ "unsignedInt", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e", null ],
       [ "localVar", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a117f9156b705724b662c761eee711103", null ],
       [ "globalVar", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206afd997be2a00c7a4a5920fd759028457c", null ],
       [ "externVar", "classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206af9c29c2de0fd3056abe1b5f184114824", null ],

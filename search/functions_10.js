@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['savestate_0',['savestate',['../classyoi_1_1IRBuilder.html#aba94fcee9162fa79506654bd44d07362',1,'yoi::IRBuilder::saveState()'],['../classyoi_1_1lexer.html#aba94fcee9162fa79506654bd44d07362',1,'yoi::lexer::saveState()']]],
+  ['savestate_0',['savestate',['../classyoi_1_1IRBuilder.html#a0ce0ef596a691b98e649d70302cc1c23',1,'yoi::IRBuilder::saveState()'],['../classyoi_1_1lexer.html#aba94fcee9162fa79506654bd44d07362',1,'yoi::lexer::saveState()']]],
   ['scan_1',['scan',['../classyoi_1_1lexer.html#a22359d6cf8e440f564bb2ca956cee6cf',1,'yoi::lexer']]],
   ['searchandsetuplinker_2',['searchandsetuplinker',['../classyoi_1_1ccObjectLinker.html#ac1e7eb2f6a34c92c5a81b6d706625200',1,'yoi::ccObjectLinker::searchAndSetupLinker()'],['../classyoi_1_1clObjectLinker.html#ac1e7eb2f6a34c92c5a81b6d706625200',1,'yoi::clObjectLinker::searchAndSetupLinker()'],['../classyoi_1_1ObjectLinker.html#ad9cf9cac8117c250ae07ae54bc8db517',1,'yoi::ObjectLinker::searchAndSetupLinker()']]],
   ['semicolonstart_3',['semicolonStart',['../classyoi_1_1lexer.html#a2f0c80d4ea2591bb608b0662fcb40c8f',1,'yoi::lexer']]],

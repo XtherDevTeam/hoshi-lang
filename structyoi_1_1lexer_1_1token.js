@@ -7,6 +7,8 @@ var structyoi_1_1lexer_1_1token =
       [ "character", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa956161a69928cd130a889b88082fb6e", null ],
       [ "string", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab45cffe084dd3d20d928bee85e7b0f21", null ],
       [ "integer", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a157db7df530023575515d366c9b672e8", null ],
+      [ "unsignedInt", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e", null ],
+      [ "shortInt", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ada78de4127377591c515888bad472367", null ],
       [ "decimal", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32abdaa3c20a3e3851599514f7c6be5f62f", null ],
       [ "boolean", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a84e2c64f38f78ba3ea5c905ab5a2da27", null ],
       [ "toSign", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aade2fe32a74d0d7cc7750b400e6651fa", null ],
