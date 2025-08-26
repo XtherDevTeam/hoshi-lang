@@ -181,13 +181,13 @@ var NAVTREEINDEX =
 "classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc",
 "classyoi_1_1subscriptExpr.html#a017162956e7cfdb52aaf1691b1930177",
 "classyoi_1_1visitor.html#a9b92ec0821a2a26446904de21da87b4c",
-"lexer_8cpp_source.html",
-"namespacemagic__enum.html#ac3a448ce59bc0f085fcf9458dcf26c8e",
-"namespaceyoi.html#ad69cb9eff54c3948f3f5f264f6a2432c",
-"structYoiObject.html",
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a42b8b38b8b19aeddb778a8c3350fab22",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa363b8d38ef47ae6bfc2f84653dc1a3b",
-"whereami_8cpp.html#a39b37162eaf1ae5b907b22c1d0eaeb14"
+"index.html#autotoc_md99",
+"namespacemagic__enum.html#abdabde8a87782dc3372172200935e5d1",
+"namespaceyoi.html#ad36c647b0695dda56ddc3eacbfbecdda",
+"structYoiIntegerObject.html#a21197e49dd48d6f8dc580e42630ab047",
+"structyoi_1_1IROptimizer_1_1SimulationStack.html#a35e360a464709adff5606088ca07c8db",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81",
+"visitor_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

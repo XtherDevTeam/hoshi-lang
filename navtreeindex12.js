@@ -1,5 +1,7 @@
 var NAVTREEINDEX12 =
 {
+"index.html#autotoc_md99":[0,5],
+"lexer_8cpp.html":[18,0,0,0,2],
 "lexer_8cpp_source.html":[18,0,0,0,2],
 "lexer_8hpp.html":[18,0,0,0,3],
 "lexer_8hpp_source.html":[18,0,0,0,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX12 =
 "namespacemagic__enum.html#a992d343573e9ce8721aefb1f4d35f6b0":[16,0,0,14],
 "namespacemagic__enum.html#aa1f3704d1aefe4f7c76167f0e8e7a99d":[16,0,0,29],
 "namespacemagic__enum.html#ab594fb2e545785768c14860f3ff031d2":[16,0,0,19],
-"namespacemagic__enum.html#abd3e2cf5a74ee3679f8ee6c71c949b9c":[16,0,0,32],
-"namespacemagic__enum.html#abdabde8a87782dc3372172200935e5d1":[16,0,0,25],
-"namespacemagic__enum.html#abfa3c1cab6b215be0f993c090492850f":[16,0,0,6]
+"namespacemagic__enum.html#abd3e2cf5a74ee3679f8ee6c71c949b9c":[16,0,0,32]
 };
