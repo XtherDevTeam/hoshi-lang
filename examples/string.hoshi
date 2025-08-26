@@ -3,7 +3,7 @@ use lang "builtin"
 import puts(str: string) : int32 from "builtin"
 
 func main() : int {
-    let a = str.Str("Hello, ") + "world!"
+    let a = str.Str.join("Hello, ", "world!")
     puts("string validation passed: operator+")
     if (a.startswith(str.Str("Hello")) == false) {
         puts("string valiation failed: startswith 'Hello'")

@@ -16,6 +16,10 @@ namespace yoi {
         std::shared_ptr<IRModule> module;
         static yoi::IRStructDefinition getIntObjectDefinition();
 
+        static yoi::IRStructDefinition getUnsignedObjectDefinition();
+
+        static yoi::IRStructDefinition getShortObjectDefinition();
+
         static yoi::IRStructDefinition getBooleanObjectDefinition();
 
         static yoi::IRStructDefinition getDecimalObjectDefinition();
@@ -56,6 +60,10 @@ namespace yoi {
         yoi::IRValueType getForeignFloatObject();
 
         yoi::IRValueType getPointerDefinition();
+
+        yoi::IRValueType getUnsignedObject();
+
+        yoi::IRValueType getShortObject();
     };
 }
 

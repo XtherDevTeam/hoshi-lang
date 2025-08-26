@@ -272,27 +272,46 @@ namespace yoi {
             }
         }
         if (tok.kind == token::tokenKind::integer) {
+            switch (curCh) {
+                case 'u':
+                case 'U':
+                    getCh();
+                    tok.kind = token::tokenKind::unsignedInt;
+                    break;
+                case 's':
+                case 'S':
+                    getCh();
+                    tok.kind = token::tokenKind::shortInt;
+                    break;
+            }
+            int base = 10;
             switch (matchPattern) {
                 case MatchPattern::dec: {
-                    tok.basicVal.vInt = std::stoll(tempStr); 
+                    base = 10;
                     break;
                 }
                 case MatchPattern::hex: {
-                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 16);
+                    base = 16;
                     break;
                 }
                 case MatchPattern::oct: {
-                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 8);
+                    base = 8;
                     break;
                 }
                 case MatchPattern::bin: {
-                    tok.basicVal.vInt = std::stoll(tempStr, nullptr, 2);
+                    base = 2;
                     break;
                 }
             }
-        }
-        else
+            if (tok.kind == token::tokenKind::integer)
+                tok.basicVal.vInt = std::stoll(tempStr, nullptr, base);
+            else if (tok.kind == token::tokenKind::unsignedInt)
+                tok.basicVal.vUint = std::stoull(tempStr, nullptr, base);
+            else if (tok.kind == token::tokenKind::shortInt)
+                tok.basicVal.vShort = static_cast<int16_t>(std::stoi(tempStr, nullptr, base));
+        } else {
             tok.basicVal.vDeci = std::stof(tempStr);
+        }
         return tok;
     }
 
@@ -634,4 +653,6 @@ namespace yoi {
         }
         return curToken = lexer::token{line, col, token::tokenKind::identifier, std::move(operatorId)};
     }
+    lexer::token::vBasicValue::vBasicValue(int16_t v) : vShort(v) {}
+    lexer::token::vBasicValue::vBasicValue(uint64_t v) : vUint(v) {}
 } // namespace yoi

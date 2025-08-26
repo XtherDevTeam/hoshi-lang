@@ -210,8 +210,9 @@ namespace yoi {
         if (type->isForeignBasicType()) {
             switch (type->type) {
                 case IRValueType::valueType::foreignInt32Type:
-                case IRValueType::valueType::pointer:
                     return *getIntObjectType();
+                case IRValueType::valueType::pointer:
+                    return *getUnsignedObjectType();
                 case IRValueType::valueType::foreignFloatType:
                     return *getDeciObjectType();
                 default:
@@ -219,5 +220,13 @@ namespace yoi {
             }
         }
         return *type;
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getShortObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getShortObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"short"]);
+    }
+
+    std::shared_ptr<yoi::IRValueType> compilerContext::getUnsignedObjectType(bool forceRawAttr) {
+        return forceRawAttr ? managedPtr(builtinModuleBuilder->getUnsignedObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"unsigned"]);
     }
 } // namespace yoi

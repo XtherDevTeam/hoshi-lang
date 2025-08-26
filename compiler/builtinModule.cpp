@@ -84,6 +84,8 @@ namespace yoi {
         sharedValueType.put(L"string", managedPtr(getStrObject()));
         sharedValueType.put(L"char", managedPtr(getCharObject()));
         sharedValueType.put(L"none", managedPtr(getNoneObject()));
+        sharedValueType.put(L"unsigned", managedPtr(getUnsignedObject()));
+        sharedValueType.put(L"short", managedPtr(getShortObject()));
 
         sharedValueType.put(L"foreignInt32Type", managedPtr(getForeignInt32Object()));
         sharedValueType.put(L"foreignFloatType", managedPtr(getForeignFloatObject()));
@@ -127,5 +129,21 @@ namespace yoi {
 
         initializeSharedObjectDefinitions();
         initializeSharedObjects();
+    }
+
+    yoi::IRValueType BuiltinModuleBuilder::getUnsignedObject() {
+        return {
+            IRValueType::valueType::unsignedObject,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            {}
+        };
+    }
+
+    yoi::IRValueType BuiltinModuleBuilder::getShortObject() {
+        return {
+            IRValueType::valueType::shortObject,
+            static_cast<yoi::indexT>(HOSHI_COMPILER_CTX_GLOB_ID_CONST),
+            {}
+        };
     }
 } // namespace yoi

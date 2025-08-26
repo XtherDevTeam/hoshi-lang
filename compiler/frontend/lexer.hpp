@@ -24,6 +24,8 @@ namespace yoi {
                 character,
                 string,
                 integer,
+                unsignedInt,
+                shortInt,
                 decimal,
                 boolean,
                 toSign,
@@ -110,12 +112,18 @@ namespace yoi {
                 int64_t vInt;
                 double vDeci;
                 bool vBool;
+                uint64_t vUint;
+                int16_t vShort;
 
                 vBasicValue(int64_t v);
 
                 vBasicValue(double v);
 
                 vBasicValue(bool v);
+
+                vBasicValue(uint64_t v);
+
+                vBasicValue(int16_t v);
 
                 vBasicValue();
             } basicVal;

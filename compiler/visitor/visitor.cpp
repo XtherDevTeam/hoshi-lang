@@ -77,6 +77,16 @@ namespace yoi {
                     IR::Opcode::push_character, {IROperand::operandType::character, basicLiterals->node.strVal[0]});
                 break;
             }
+            case yoi::lexer::token::tokenKind::shortInt: {
+                moduleContext->getIRBuilder().pushOp(
+                    IR::Opcode::push_short, {IROperand::operandType::shortInt, basicLiterals->node.basicVal.vShort});
+                break;
+            }
+            case yoi::lexer::token::tokenKind::unsignedInt: {
+                moduleContext->getIRBuilder().pushOp(
+                    IR::Opcode::push_unsigned, {IROperand::operandType::unsignedInt, basicLiterals->node.basicVal.vUint});
+                break;
+            }
             case yoi::lexer::token::tokenKind::kNull: {
                 moduleContext->getIRBuilder().pushOp(IR::Opcode::push_null, {});
                 break;
@@ -196,6 +206,9 @@ namespace yoi {
                     moduleContext->getIRBuilder().pushOp(IR::Opcode::push_boolean, {IROperand::operandType::boolean, IROperand::operandValue{false}});
 
                 }
+            } else if (abstractExpr->op.kind == lexer::token::tokenKind::kAs) {
+                auto typeSpec = managedPtr(rhs);
+                tryCastTo(typeSpec);
             }
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } else {
@@ -285,13 +298,7 @@ namespace yoi {
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                     
                     if (lhs->isBasicType() && rhs->isBasicType()) {
-                        if (lhs->type == IRValueType::valueType::decimalObject &&
-                            rhs->type == IRValueType::valueType::integerObject) {
-                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                        } else if (lhs->type == IRValueType::valueType::integerObject &&
-                                rhs->type == IRValueType::valueType::decimalObject) {
-                            moduleContext->getIRBuilder().basicCast(lhs, rhsPos);
-                        }
+                        tryCastTo(lhs);
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
@@ -794,6 +801,9 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visit(yoi::memberExpr* memberExpr, bool isStoreOp) {
+        // take a snapshot for builder state
+        auto snapshotIndex = moduleContext->getIRBuilder().saveState();
+
         auto it = memberExpr->getTerms().begin();
         yoi::indexT targetModule = -1, lastModule = -1;
         // 1. Resolve module prefixes (e.g., std::io)
@@ -807,9 +817,11 @@ namespace yoi {
         std::shared_ptr<IRValueType> staticTypeBase{};
         try {
             if (it + 1 != memberExpr->getTerms().end()) {
-                staticTypeBase = managedPtr(parseTypeSpec(*it));
+                staticTypeBase = managedPtr(parseTypeSpecExtern(*it, targetModule == -1 ? currentModuleIndex : targetModule));
             }
         } catch (std::runtime_error&) {
+            // Not a type name, so it's an instance member expression.
+        } catch (std::out_of_range&) {
             // Not a type name, so it's an instance member expression.
         }
 
@@ -819,7 +831,8 @@ namespace yoi {
                     memberNameNode->getLine(), memberNameNode->getColumn(), "Static member access must be a method call.");
             
             auto& invocation = memberNameNode->getSubscript().front();
-            handleInvocationExtern(memberNameNode->id->getId().node.strVal, invocation->args, staticTypeBase->typeAffiliateModule, staticTypeBase, true);
+            if(!handleInvocationExtern(memberNameNode->id->getId().node.strVal, invocation->args, staticTypeBase->typeAffiliateModule, staticTypeBase, true))
+                panic(memberNameNode->getLine(), memberNameNode->getColumn(), "No matching static method found for: " + wstring2string(memberNameNode->id->getId().get().strVal));
             // After a static call, subsequent member accesses operate on its return value.
         } else {
             // 3. It's an instance member expression. Visit the base instance.
@@ -866,8 +879,12 @@ namespace yoi {
                         
                         // A store operation can only happen on the very last term of the expression.
                         if (isStoreOp && isFinalTerm) {
+                            moduleContext->getIRBuilder().restoreStateTemporarily();
+                            tryCastTo(fieldType);
+                            moduleContext->getIRBuilder().commitState();
                             moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, nameInfo.index});
                         } else {
+                            moduleContext->getIRBuilder().discardState();
                             moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, fieldType);
                         }
                     } catch (std::out_of_range&) {
@@ -923,8 +940,9 @@ namespace yoi {
                         panic(sub->getLine(), sub->getColumn(), "Chained function calls are not yet supported in this context.");
                     } else if (sub->isSubscript()) {
                         visit(sub->expr); // Evaluate the index and push it.
+                        tryCastTo(moduleContext->getCompilerContext()->getUnsignedObjectType());
                         auto indexType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                        yoi_assert(indexType->type == IRValueType::valueType::integerObject, sub->getLine(), sub->getColumn(), "Array/subscript index must be an integer.");
+                        yoi_assert(indexType->type == IRValueType::valueType::unsignedObject, sub->getLine(), sub->getColumn(), "Array/subscript index must be an integer or unsigned integer.");
                         
                         if (currentObjectType->isArrayType() || currentObjectType->isDynamicArrayType()) {
                             if (isStoreOp && isFinalOperation) {
@@ -976,6 +994,8 @@ namespace yoi {
                 }
             }
         }
+
+        moduleContext->getIRBuilder().discardStateUntil(snapshotIndex);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -1448,6 +1468,10 @@ namespace yoi {
             return *moduleContext->getCompilerContext()->getForeignFloatObjectType();
         } else if (typeName == L"ptr") {
             return *moduleContext->getCompilerContext()->getPointerType();
+        } else if (typeName == L"unsigned") {
+            return *moduleContext->getCompilerContext()->getUnsignedObjectType();
+        } else if (typeName == L"short") {
+            return *moduleContext->getCompilerContext()->getShortObjectType();
         } else {
             panic(identifier->getLine(), identifier->getColumn(), "Unsupported type: " + wstring2string(typeName));
         }
@@ -2326,12 +2350,33 @@ namespace yoi {
         } else if (!lhsType->is1ByteType() && rhsType->is1ByteType()) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
+        // if short with other, upcast to other
+        if (lhsType->type == IRValueType::valueType::shortObject && rhsType->type != IRValueType::valueType::shortObject) {
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+        } else if (lhsType->type != IRValueType::valueType::shortObject && rhsType->type == IRValueType::valueType::shortObject) {
+            moduleContext->getIRBuilder().basicCast(lhsType, rhs);
+        }
         // if int with deci, upcast to deci
         else if (lhsType->type == IRValueType::valueType::integerObject &&
                  rhsType->type == IRValueType::valueType::decimalObject) {
             moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
         } else if (lhsType->type == IRValueType::valueType::decimalObject &&
                    rhsType->type == IRValueType::valueType::integerObject) {
+            moduleContext->getIRBuilder().basicCast(lhsType, rhs);
+        }
+        // if unsigned with int, upcast to int
+        else if (lhsType->type == IRValueType::valueType::unsignedObject && rhsType->type == IRValueType::valueType::integerObject) {
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+        } else if (lhsType->type == IRValueType::valueType::integerObject &&
+                   rhsType->type == IRValueType::valueType::unsignedObject) {
+            moduleContext->getIRBuilder().basicCast(lhsType, rhs);
+        }
+        // if unsigned with deci, upcast to deci
+        else if (lhsType->type == IRValueType::valueType::unsignedObject &&
+                 rhsType->type == IRValueType::valueType::decimalObject) {
+            moduleContext->getIRBuilder().basicCast(rhsType, lhs, true);
+        } else if (lhsType->type == IRValueType::valueType::decimalObject &&
+                       rhsType->type == IRValueType::valueType::unsignedObject) {
             moduleContext->getIRBuilder().basicCast(lhsType, rhs);
         }
         // if left or right is pointer, cast the other to pointer
@@ -2373,6 +2418,12 @@ namespace yoi {
                 break;
             case IRValueType::valueType::characterObject:
                 res = L"char";
+                break;
+            case IRValueType::valueType::shortObject:
+                res = L"short";
+                break;
+            case IRValueType::valueType::unsignedObject:
+                res = L"unsigned";
                 break;
             case IRValueType::valueType::structObject:
                 res = L"struct#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
@@ -3601,8 +3652,8 @@ namespace yoi {
             }
 
             moduleContext->getIRBuilder().pushOp(
-                IR::Opcode::push_integer,
-                {IROperand::operandType::integer, IROperand::operandValue{static_cast<int64_t>(0)}});
+                IR::Opcode::push_unsigned,
+                {IROperand::operandType::unsignedInt, IROperand::operandValue{static_cast<int64_t>(0)}});
 
             yoi::indexT currentDim = 0;
             while (it != end && (*it)->isSubscript()) {
@@ -3611,13 +3662,14 @@ namespace yoi {
                            (*it)->getColumn(),
                            "Too many indices for array dimension.");
                 visit((*it)->expr);
+                tryCastTo(moduleContext->getCompilerContext()->getUnsignedObjectType());
                 yoi_assert(moduleContext->getIRBuilder().getRhsFromTempVarStack()->type ==
-                               IRValueType::valueType::integerObject,
+                               IRValueType::valueType::unsignedObject,
                            (*it)->getLine(),
                            (*it)->getColumn(),
-                           "Array subscript index must be an integer.");
-                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer,
-                                                     {IROperand::operandType::integer, strides[currentDim]});
+                           "Array subscript index must be an integer or unsigned integer.");
+                moduleContext->getIRBuilder().pushOp(IR::Opcode::push_unsigned,
+                                                     {IROperand::operandType::unsignedInt, strides[currentDim]});
                 moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
                 moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
                 it++;

@@ -71,6 +71,8 @@ namespace yoi {
             integerRaw = 0,
             decimalRaw,
             booleanRaw,
+            shortRaw,
+            unsignedRaw,
             characterObject,
             stringLiteral,
             structObject,
@@ -78,6 +80,8 @@ namespace yoi {
             integerObject,
             booleanObject,
             decimalObject,
+            shortObject,
+            unsignedObject,
             stringObject,
             virtualMethod,
             pointerObject, // a placeholder for void* in llvmCodegen for unified interface this pointer
@@ -159,6 +163,8 @@ namespace yoi {
             stringLiteral,
             codeBlock,
             index,
+            shortInt,
+            unsignedInt,
             /* a local var operand can only be used in a load_local instruction for loading a local variable, not
                available for other instructions */
             localVar,
@@ -179,6 +185,8 @@ namespace yoi {
             yoi::indexT stringLiteralIndex;
             yoi::indexT symbolIndex;
             yoi::indexT codeBlockIndex;
+            uint64_t unsignedV;
+            short shortV;
 
             operandValue();
 
@@ -191,6 +199,8 @@ namespace yoi {
             operandValue(bool boolean);
 
             operandValue(yoi::wchar character);
+
+            operandValue(short shortV);
         } value;
 
         std::shared_ptr<IRValueType> lvalueType;
@@ -246,11 +256,15 @@ namespace yoi {
             push_boolean,
             push_character,
             push_null,
+            push_short,
+            push_unsigned,
             pop,
             basic_cast_int,
             basic_cast_deci,
             basic_cast_bool,
             basic_cast_char,
+            basic_cast_short,
+            basic_cast_unsigned,
             pointer_cast,
             push_string,
             store_global,
@@ -269,6 +283,8 @@ namespace yoi {
             new_array_bool,
             new_array_char,
             new_array_str,
+            new_array_short,
+            new_array_unsigned,
             new_array_struct,
             new_array_interface,
             new_dynamic_array_int,
@@ -276,6 +292,8 @@ namespace yoi {
             new_dynamic_array_bool,
             new_dynamic_array_char,
             new_dynamic_array_str,
+            new_dynamic_array_short,
+            new_dynamic_array_unsigned,
             new_dynamic_array_struct,
             new_dynamic_array_interface,
             array_length,
@@ -288,6 +306,8 @@ namespace yoi {
             typeid_bool,
             typeid_char,
             typeid_str,
+            typeid_short,
+            typeid_unsigned,
             typeid_struct,
             typeid_interface,
             typeid_object,
@@ -690,6 +710,8 @@ namespace yoi {
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
         yoi::vec<std::pair<yoi::indexT, yoi::indexT>> codeBlockInsertionStates;
+        std::vector<IR> tempStateCodeBlock;
+        std::vector<std::shared_ptr<yoi::IRValueType>> tempStateTempVarStack;
         IRDebugInfo currentDebugInfo;
 
       public:
@@ -703,11 +725,17 @@ namespace yoi {
 
         const IRDebugInfo &getCurrentDebugInfo();
 
-        void saveState();
+        yoi::indexT saveState();
 
         void discardState();
 
         void restoreState();
+
+        void restoreStateTemporarily(); // rollback to the state with current state saved
+
+        void commitState(); // commit the overriden state and pour the saved state back
+
+        void discardStateUntil(yoi::indexT stateIndex);
 
         void pushTempVar(const std::shared_ptr<IRValueType> &type);
 

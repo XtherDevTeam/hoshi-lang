@@ -101,6 +101,10 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getCharObjectType(bool forceRawAttr = false);
 
+        std::shared_ptr<yoi::IRValueType> getShortObjectType(bool forceRawAttr = false);
+
+        std::shared_ptr<yoi::IRValueType> getUnsignedObjectType(bool forceRawAttr = false);
+
         std::shared_ptr<yoi::IRValueType> getNoneObjectType();
 
         std::shared_ptr<yoi::IRValueType> getForeignInt32ObjectType();

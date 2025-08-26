@@ -22,11 +22,12 @@
 - [x] 完成 vector 模板的开发
 - [x] 完成 string 的标准库开发
 - [x] 完成 constructor 不强制要求 return this 的语法糖
+- [x] 加入 lambda
 - [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
 - [ ] 改造 `new struct` 的逻辑
 
 # Known issues
 
 - [x] `||` 算符短路失效，不论条件，结果均为真
-- [ ] 没有原生 uint64_t 支持导致 string 实现中的某些操作存在安全隐患
-- [ ] Interface template foreign specialization 未完成
+- [x] 没有原生 uint64_t 支持导致 string 实现中的某些操作存在安全隐患
+- [x] Interface template foreign specialization 未完成

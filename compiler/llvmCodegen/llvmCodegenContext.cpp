@@ -160,7 +160,9 @@ namespace yoi {
             {compilerCtx->getDeciObjectType(), Builder->getDoubleTy()},
             {compilerCtx->getBoolObjectType(), Builder->getInt1Ty()},
             {compilerCtx->getCharObjectType(), Builder->getInt8Ty()},
-            {compilerCtx->getStrObjectType(), llvm::PointerType::get(Builder->getInt8Ty(), 0)}
+            {compilerCtx->getStrObjectType(), llvm::PointerType::get(Builder->getInt8Ty(), 0)},
+            {compilerCtx->getUnsignedObjectType(), Builder->getInt64Ty()},
+            {compilerCtx->getShortObjectType(), Builder->getInt16Ty()}
         };
 
         for (const auto& pair : basicTypes) {
@@ -822,6 +824,16 @@ namespace yoi {
                 valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
                 break;
             }
+            case IR::Opcode::push_short: {
+                auto val = llvm::ConstantInt::get(Builder->getInt16Ty(), instr.operands[0].value.shortV);
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getShortObjectType()->getBasicRawType())});
+                break;
+            }
+            case IR::Opcode::push_unsigned: {
+                auto val = llvm::ConstantInt::get(Builder->getInt64Ty(), instr.operands[0].value.unsignedV, false);
+                valueStackMap[fromBlock][toBlock].push_back({val, managedPtr(compilerCtx->getUnsignedObjectType()->getBasicRawType())});
+                break;
+            }
             case IR::Opcode::push_string: {
                 auto& str = yoiModule->stringLiteralPool.getStringLiteral(instr.operands[0].value.stringLiteralIndex);
                 // Create a global string literal for this string
@@ -897,6 +909,48 @@ namespace yoi {
                 }
 
                 valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getDeciObjectType()->getBasicRawType())});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
+            case IR::Opcode::basic_cast_unsigned: {
+                auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isIntegerTy(64)) { // int
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "int_to_unsigned_cast");
+                } else if (rawVal->getType()->isDoubleTy()) { // deci
+                    castedVal = Builder->CreateFPToUI(rawVal, Builder->getInt64Ty(), "deci_to_unsigned_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "char_to_unsigned_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "bool_to_unsigned_cast");
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_unsigned");
+                }
+
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getUnsignedObjectType()->getBasicRawType())});
+                callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
+                break;
+            }
+            case IR::Opcode::basic_cast_short: {
+                auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+                llvm::Value* rawVal = unboxValue(val.llvmValue, val.yoiType);
+                llvm::Value* castedVal = nullptr;
+
+                if (rawVal->getType()->isIntegerTy(64)) { // int
+                    castedVal = Builder->CreateTrunc(rawVal, Builder->getInt16Ty(), "int_to_short_cast");
+                } else if (rawVal->getType()->isDoubleTy()) { // deci
+                    castedVal = Builder->CreateFPToSI(rawVal, Builder->getInt16Ty(), "deci_to_short_cast");
+                } else if (rawVal->getType()->isIntegerTy(8)) { // char
+                    castedVal = Builder->CreateTrunc(rawVal, Builder->getInt16Ty(), "char_to_short_cast");
+                } else if (rawVal->getType()->isIntegerTy(1)) { // bool
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt16Ty(), "bool_to_short_cast");
+                } else {
+                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_short");
+                }
+
+                valueStackMap[fromBlock][toBlock].push_back({castedVal, managedPtr(compilerCtx->getShortObjectType()->getBasicRawType())});
                 callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
                 break;
             }
@@ -1352,6 +1406,8 @@ namespace yoi {
             case IR::Opcode::new_array_bool:
             case IR::Opcode::new_array_char:
             case IR::Opcode::new_array_deci:
+            case IR::Opcode::new_array_unsigned:
+            case IR::Opcode::new_array_short:
             case IR::Opcode::new_array_str: {
                 yoi::indexT size = 1;
                 yoi::vec<StackValue> dimensionsVal;
@@ -1381,6 +1437,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::new_array_str:
                         elementType = compilerCtx->getStrObjectType();
+                        break;
+                    case IR::Opcode::new_array_unsigned:
+                        elementType = compilerCtx->getUnsignedObjectType();
+                        break;
+                    case IR::Opcode::new_array_short:
+                        elementType = compilerCtx->getShortObjectType();
                         break;
                     default:
                         break;
@@ -1430,6 +1492,8 @@ namespace yoi {
             case IR::Opcode::new_dynamic_array_bool:
             case IR::Opcode::new_dynamic_array_char:
             case IR::Opcode::new_dynamic_array_deci:
+            case IR::Opcode::new_dynamic_array_unsigned:
+            case IR::Opcode::new_dynamic_array_short:
             case IR::Opcode::new_dynamic_array_str: {
                 yoi::indexT size = instr.operands.back().value.symbolIndex;
 
@@ -1457,6 +1521,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::new_dynamic_array_str:
                         elementType = compilerCtx->getStrObjectType();
+                        break;
+                    case IR::Opcode::new_dynamic_array_short:
+                        elementType = compilerCtx->getShortObjectType();
+                        break;
+                    case IR::Opcode::new_dynamic_array_unsigned:
+                        elementType = compilerCtx->getUnsignedObjectType();
                         break;
                     default:
                         break;
@@ -1588,6 +1658,8 @@ namespace yoi {
             case IR::Opcode::typeid_deci:
             case IR::Opcode::typeid_str:
             case IR::Opcode::typeid_interface:
+            case IR::Opcode::typeid_unsigned:
+            case IR::Opcode::typeid_short:
             case IR::Opcode::typeid_struct: {
                 IRValueType::valueType type;
                 switch (instr.opcode) {
@@ -1611,6 +1683,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::typeid_struct:
                         type = IRValueType::valueType::structObject;
+                        break;
+                    case IR::Opcode::typeid_short:
+                        type = IRValueType::valueType::shortObject;
+                        break;
+                    case IR::Opcode::typeid_unsigned:
+                        type = IRValueType::valueType::unsignedObject;
                         break;
                     default:
                         panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IROpcode: " + std::string(magic_enum::enum_name(instr.opcode)));
@@ -1734,7 +1812,7 @@ namespace yoi {
                 auto rhs = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
 
                 yoi_assert(lhs.yoiType->isArrayType() || lhs.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element on non-array type.");
-                yoi_assert(index.yoiType->type == IRValueType::valueType::integerObject || index.yoiType->type == IRValueType::valueType::integerRaw, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
+                yoi_assert(index.yoiType->type == IRValueType::valueType::unsignedObject || index.yoiType->type == IRValueType::valueType::unsignedRaw, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
 
                 // unbox index
                 auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
@@ -1845,6 +1923,10 @@ namespace yoi {
                 return Builder->getDoubleTy();
             case IRValueType::valueType::booleanRaw:
                 return Builder->getInt1Ty();
+            case IRValueType::valueType::shortRaw:
+                return Builder->getInt16Ty();
+            case IRValueType::valueType::unsignedRaw:
+                return Builder->getInt64Ty();
             case IRValueType::valueType::charRaw:
                 return Builder->getInt8Ty();
             case IRValueType::valueType::pointer:
@@ -1882,12 +1964,13 @@ namespace yoi {
     void LLVMCodegen::handleBinaryOp(llvm::Instruction::BinaryOps op, bool isFloat, yoi::indexT fromBlock, yoi::indexT toBlock) {
         auto R = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
         auto L = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+        bool isUnsigned = L.yoiType->type == IRValueType::valueType::unsignedObject || L.yoiType->type == IRValueType::valueType::unsignedRaw;
 
         llvm::Value* lValRaw = unboxValue(L.llvmValue, L.yoiType);
         llvm::Value* rValRaw = unboxValue(R.llvmValue, R.yoiType);
 
         bool typesAreFloats = lValRaw->getType()->isDoubleTy() || rValRaw->getType()->isDoubleTy();
-        auto resultYoiType = typesAreFloats ? compilerCtx->getDeciObjectType() : compilerCtx->getIntObjectType();
+        auto resultYoiType = typesAreFloats ? compilerCtx->getDeciObjectType() : (isUnsigned ? compilerCtx->getUnsignedObjectType() : compilerCtx->getIntObjectType());
 
         llvm::Value* resultRaw;
 
@@ -1904,6 +1987,14 @@ namespace yoi {
                 default: panic(0,0, "Unsupported float binary op");
             }
             resultRaw = Builder->CreateBinOp(fop, lValRaw, rValRaw, "fbinop");
+        } else if (isUnsigned) {
+            auto newOp = op;
+            switch (op) {
+                case llvm::Instruction::SDiv: newOp = llvm::Instruction::UDiv; break;
+                case llvm::Instruction::SRem: newOp = llvm::Instruction::URem; break;
+                default: break;
+            }
+            resultRaw = Builder->CreateBinOp(newOp, lValRaw, rValRaw, "ubinop");
         } else {
             resultRaw = Builder->CreateBinOp(op, lValRaw, rValRaw, "ibinop");
         }
@@ -1922,6 +2013,7 @@ namespace yoi {
         llvm::Value* lValRaw = L.yoiType->type == IRValueType::valueType::pointerObject ? L.llvmValue : unboxValue(L.llvmValue, L.yoiType);
         llvm::Value* rValRaw = R.yoiType->type == IRValueType::valueType::pointerObject ? R.llvmValue : unboxValue(R.llvmValue, R.yoiType);
 
+        bool isUnsigned = L.yoiType->type == IRValueType::valueType::unsignedObject || L.yoiType->type == IRValueType::valueType::unsignedRaw;
         bool typesAreFloats = lValRaw->getType()->isDoubleTy() || rValRaw->getType()->isDoubleTy();
 
         llvm::Value* resultRaw;
@@ -1940,6 +2032,16 @@ namespace yoi {
                 default: panic(0,0, "Unsupported float comparison op");
             }
             resultRaw = Builder->CreateFCmp(fpred, lValRaw, rValRaw, "fcmp");
+        } else if (isUnsigned) {
+            auto newPred = pred;
+            switch (pred) {
+                case llvm::CmpInst::ICMP_SLT: newPred = llvm::CmpInst::ICMP_ULT; break;
+                case llvm::CmpInst::ICMP_SLE: newPred = llvm::CmpInst::ICMP_ULE; break;
+                case llvm::CmpInst::ICMP_SGT: newPred = llvm::CmpInst::ICMP_UGT; break;
+                case llvm::CmpInst::ICMP_SGE: newPred = llvm::CmpInst::ICMP_UGE; break;
+                default: break;
+            }
+            resultRaw = Builder->CreateICmp(newPred, lValRaw, rValRaw, "ucmp");
         } else {
             resultRaw = Builder->CreateICmp(pred, lValRaw, rValRaw, "icmp");
         }
@@ -2010,6 +2112,8 @@ namespace yoi {
                 case IRValueType::valueType::booleanObject: funcNameBase = "basic_bool"; break;
                 case IRValueType::valueType::stringObject: funcNameBase = "basic_string"; break;
                 case IRValueType::valueType::characterObject: funcNameBase = "basic_char"; break;
+                case IRValueType::valueType::shortObject: funcNameBase = "basic_short"; break;
+                case IRValueType::valueType::unsignedObject: funcNameBase = "basic_unsigned"; break;
                 case IRValueType::valueType::structObject:
                     funcNameBase = "struct_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
                     break;
@@ -2468,9 +2572,11 @@ namespace yoi {
             case IRValueType::valueType::foreignFloatType: {
                 return compilerCtx->getDeciObjectType();
             }
-            case IRValueType::valueType::foreignInt32Type:
-            case IRValueType::valueType::pointerObject: {
+            case IRValueType::valueType::foreignInt32Type: {
                 return compilerCtx->getIntObjectType();
+            }
+            case IRValueType::valueType::pointerObject: {
+                return compilerCtx->getUnsignedObjectType();
             }
             default: {
                 return type;
@@ -2568,6 +2674,12 @@ namespace yoi {
                 case IRValueType::valueType::decimalObject:
                     baseType = llvm::Type::getDoubleTy(*TheContext);
                     break;
+                case IRValueType::valueType::unsignedObject:
+                    baseType = llvm::Type::getInt64Ty(*TheContext);
+                    break;
+                case IRValueType::valueType::shortObject:
+                    baseType = llvm::Type::getInt16Ty(*TheContext);
+                    break;
                 case IRValueType::valueType::booleanObject:
                     baseType = llvm::Type::getInt1Ty(*TheContext);
                     break;
@@ -2660,6 +2772,8 @@ namespace yoi {
             case IRValueType::valueType::decimalObject:
             case IRValueType::valueType::booleanObject:
             case IRValueType::valueType::stringObject:
+            case IRValueType::valueType::shortObject:
+            case IRValueType::valueType::unsignedObject:
             case IRValueType::valueType::characterObject: {
                 auto elementType = managedPtr(type->getElementType());
                 auto elementLLVMType = yoiTypeToLLVMType(elementType, true);
@@ -2705,9 +2819,11 @@ namespace yoi {
     }
 
     llvm::DIType *LLVMCodegen::getDIType(const std::shared_ptr<IRValueType> &type) {
+        auto* di_i64_u = DBuilder->createBasicType("unsigned long long", 64, llvm::dwarf::DW_ATE_unsigned);
         auto* di_i64 = DBuilder->createBasicType("long long", 64, llvm::dwarf::DW_ATE_signed);
         auto* di_double = DBuilder->createBasicType("double", 64, llvm::dwarf::DW_ATE_float);
         auto* di_i1 = DBuilder->createBasicType("bool", 8, llvm::dwarf::DW_ATE_boolean); // Represent bool as 8 bits
+        auto* di_i16 = DBuilder->createBasicType("short", 16, llvm::dwarf::DW_ATE_signed);
         auto* di_i8 = DBuilder->createBasicType("char", 8, llvm::dwarf::DW_ATE_signed_char);
         auto* di_i8_ptr = DBuilder->createPointerType(di_i8, 64);
         auto* unknown_object_struct = DBuilder->createStructType(
@@ -2761,6 +2877,12 @@ namespace yoi {
                     case IRValueType::valueType::stringObject:
                         elementDIType = di_i8_ptr;
                         break;
+                    case IRValueType::valueType::unsignedObject:
+                        elementDIType = di_i64_u;
+                        break;
+                    case IRValueType::valueType::shortObject:
+                        elementDIType = di_i16;
+                        break;
                     default:
                         panic(0, 0, "LLVM Codegen: Unhandled or unmapped array element type: " + std::string(magic_enum::enum_name(type->type)));
                         break;
@@ -2803,6 +2925,10 @@ namespace yoi {
                         return di_i8;
                     case IRValueType::valueType::stringObject:
                         return di_i8_ptr;
+                    case IRValueType::valueType::unsignedObject:
+                        return di_i64_u;
+                    case IRValueType::valueType::shortObject:
+                        return di_i16;
                     default:
                         panic(0, 0, "LLVM Codegen: Unhandled or unmapped raw type: " + std::string(magic_enum::enum_name(type->type)));
                         break;
@@ -2869,6 +2995,16 @@ namespace yoi {
                 case IRValueType::valueType::characterObject: {
                     MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 8, 8, currentSize, llvm::DINode::FlagZero, di_i8));
                     currentSize += 8;
+                    break;
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 64, 64, currentSize, llvm::DINode::FlagZero, di_i64_u));
+                    currentSize += 64;
+                    break;
+                }
+                case IRValueType::valueType::shortObject: {
+                    MemberTypes.push_back(DBuilder->createMemberType(compileUnits[L"<default>"], "value", nullptr, 0, 16, 16, currentSize, llvm::DINode::FlagZero, di_i16));
+                    currentSize += 16;
                     break;
                 }
                 case IRValueType::valueType::structObject: {

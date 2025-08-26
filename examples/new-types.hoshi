@@ -1,0 +1,32 @@
+use lang "builtin"
+import puts(str: string) : int32 from "builtin"
+
+func main() : int {
+    // test unsigned integer
+    let a = -100
+    let b = 200u
+
+    if (a > b) {
+        puts("unsigned validation failed: a is greater than b")
+        return 1
+    }
+
+    let c = 100s
+    let d = 65537s // should overflow
+
+    if (d > c) {
+        puts("signed validation failed: d is greater than c")
+        return 1
+    }
+
+    // test array
+    let arrShort = new short[7]('e', 'l', 'y', 's', 'i', 'a', '!')
+    if (arrShort[0] != 'e' || arrShort[1] != 'l' || arrShort[2] != 'y' || arrShort[3] !='s' || arrShort[4] != 'i' || arrShort[5] != 'a' || arrShort[6] != '!') {
+        puts("array validation failed: arrShort is not correct")
+        return 1
+    }
+    arrShort[6] = '~'
+
+    puts("new types validation passed")
+    return 0
+}

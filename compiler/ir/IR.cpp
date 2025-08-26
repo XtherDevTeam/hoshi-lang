@@ -58,6 +58,10 @@ namespace yoi {
                 return L"globalVar#" + std::to_wstring(value.symbolIndex);
             case operandType::externVar:
                 return L"externVar#" + std::to_wstring(value.symbolIndex);
+            case operandType::shortInt:
+                return L"short(" + std::to_wstring(value.shortV) + L")";
+            case operandType::unsignedInt:
+                return L"unsigned(" + std::to_wstring(value.unsignedV) + L")";
             default:
                 return L"unknown";
         }
@@ -187,6 +191,16 @@ namespace yoi {
                 tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
                     managedPtr(IRValueType{IRValueType::valueType::pointerObject});
                 break;
+            case IRValueType::valueType::shortObject:
+                insert({IR::Opcode::basic_cast_short, {}, currentDebugInfo}, insertionPoint);
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
+                    compilerCtx->getShortObjectType();
+                break;
+            case IRValueType::valueType::unsignedObject:
+                insert({IR::Opcode::basic_cast_unsigned, {}, currentDebugInfo}, insertionPoint);
+                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
+                    compilerCtx->getUnsignedObjectType();
+                break;
             default: {
                 panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast");
                 break;
@@ -271,6 +285,10 @@ namespace yoi {
             tempVarStack.emplace_back(compilerCtx->getDeciObjectType());
         } else if (constV.type == IROperand::operandType::stringLiteral) {
             tempVarStack.emplace_back(compilerCtx->getStrObjectType());
+        } else if (constV.type == IROperand::operandType::shortInt) {
+            tempVarStack.emplace_back(compilerCtx->getShortObjectType());
+        } else if (constV.type == IROperand::operandType::unsignedInt) {
+            tempVarStack.emplace_back(compilerCtx->getUnsignedObjectType());
         } else {
             panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported constant type for pushOp");
         }
@@ -579,7 +597,9 @@ namespace yoi {
 
     bool IRValueType::isBasicType() const {
         return type == valueType::integerObject || type == valueType::decimalObject ||
-               type == valueType::booleanObject || type == valueType::stringObject || type == valueType::characterObject || type == valueType::foreignFloatType || type == valueType::foreignInt32Type;
+               type == valueType::booleanObject || type == valueType::stringObject || 
+               type == valueType::characterObject || type == valueType::foreignFloatType || type == valueType::foreignInt32Type ||
+               type == valueType::shortObject || type == valueType::unsignedObject;
     }
 
     bool IRValueType::isForeignBasicType() const {
@@ -600,7 +620,7 @@ namespace yoi {
                 res.type = valueType::integerObject;
                 break;
             case IRValueType::valueType::pointer:
-                res.type = valueType::integerObject;
+                res.type = valueType::unsignedObject;
                 break;
             default:
                 break;
@@ -619,6 +639,12 @@ namespace yoi {
                 break;
             case valueType::booleanRaw:
                 res = L"bool_literal";
+                break;
+            case valueType::shortRaw:
+                res = L"short_literal";
+                break;
+            case valueType::unsignedRaw:
+                res = L"unsigned_literal";
                 break;
             case valueType::characterObject:
                 res = L"char";
@@ -640,6 +666,12 @@ namespace yoi {
                 break;
             case valueType::decimalObject:
                 res = L"decimal";
+                break;
+            case valueType::shortObject:
+                res = L"short";
+                break;
+            case valueType::unsignedObject:
+                res = L"unsigned";
                 break;
             case valueType::stringObject:
                 res = L"string";
@@ -1041,6 +1073,12 @@ namespace yoi {
             case IRValueType::valueType::characterObject:
                 op = IR::Opcode::new_array_char;
                 break;
+            case IRValueType::valueType::shortObject:
+                op = IR::Opcode::new_array_short;
+                break;
+            case IRValueType::valueType::unsignedObject:
+                op = IR::Opcode::new_array_unsigned;
+                break;
             case IRValueType::valueType::structObject:
                 op = IR::Opcode::new_array_struct;
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
@@ -1071,8 +1109,9 @@ namespace yoi {
         return {type, typeAffiliateModule, typeIndex, dimensions};
     }
 
-    void IRBuilder::saveState() {
+    yoi::indexT IRBuilder::saveState() {
         codeBlockInsertionStates.push_back({codeBlocks[currentCodeBlockIndex]->getIRArray().size(), tempVarStack.size()});
+        return codeBlockInsertionStates.size() - 1;
     }
 
     void IRBuilder::discardState() {
@@ -1237,6 +1276,12 @@ namespace yoi {
             case IRValueType::valueType::decimalObject:
                 op = IR::Opcode::new_dynamic_array_deci;
                 break;
+            case IRValueType::valueType::shortObject:
+                op = IR::Opcode::new_dynamic_array_short;
+                break;
+            case IRValueType::valueType::unsignedObject:
+                op = IR::Opcode::new_dynamic_array_unsigned;
+                break;
             case IRValueType::valueType::stringObject:
                 op = IR::Opcode::new_dynamic_array_str;
                 break;
@@ -1307,7 +1352,7 @@ namespace yoi {
 
     bool IRValueType::isBasicRawType() const {
         return type == valueType::integerRaw || type == valueType::decimalRaw || type == valueType::booleanRaw ||
-               type == valueType::charRaw;
+               type == valueType::charRaw || type == IRValueType::valueType::shortRaw || type == IRValueType::valueType::unsignedRaw;
     }
     
     IRValueType IRValueType::getBasicRawType() const {
@@ -1325,6 +1370,12 @@ namespace yoi {
             case valueType::characterObject:
                 result.type = valueType::charRaw;
                 break;
+            case IRValueType::valueType::shortObject:
+                result.type = IRValueType::valueType::shortRaw;
+                break;
+            case IRValueType::valueType::unsignedObject:
+                result.type = IRValueType::valueType::unsignedRaw;
+                break;
             default:
                 break;
         }
@@ -1341,6 +1392,10 @@ namespace yoi {
                 return {valueType::booleanObject, typeAffiliateModule, typeIndex, dimensions};
             case valueType::charRaw:
                 return {valueType::characterObject, typeAffiliateModule, typeIndex, dimensions};
+            case IRValueType::valueType::shortRaw:
+                return {IRValueType::valueType::shortObject, typeAffiliateModule, typeIndex, dimensions};
+            case IRValueType::valueType::unsignedRaw:
+                return {IRValueType::valueType::unsignedObject, typeAffiliateModule, typeIndex, dimensions};
             default:
                 return {type, typeAffiliateModule, typeIndex, dimensions};
         }
@@ -1348,5 +1403,36 @@ namespace yoi {
     
     bool IRFunctionDefinition::hasAttribute(const FunctionAttrs &attr) {
         return std::find(attrs.begin(), attrs.end(), attr) != attrs.end();
+    }
+
+    IROperand::operandValue::operandValue(short shortV) {
+        this->shortV = shortV;
+    }
+
+    void IRBuilder::restoreStateTemporarily() {
+        auto current = codeBlockInsertionStates.back();
+        tempStateCodeBlock = std::vector<IR>(codeBlocks[currentCodeBlockIndex]->getIRArray().begin() + current.first, codeBlocks[currentCodeBlockIndex]->getIRArray().end());
+        tempStateTempVarStack = std::vector<std::shared_ptr<IRValueType>>(tempVarStack.begin() + current.second, tempVarStack.end());
+
+        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(current.first);
+        tempVarStack.resize(current.second);
+    }
+
+    void IRBuilder::commitState() {
+        for (auto &block : tempStateCodeBlock) {
+            codeBlocks[currentCodeBlockIndex]->getIRArray().push_back(block);
+        }
+        for (auto &type : tempStateTempVarStack) {
+            tempVarStack.push_back(type);
+        }
+        tempStateCodeBlock.clear();
+        tempStateTempVarStack.clear();
+        discardState();
+    }
+
+    void IRBuilder::discardStateUntil(yoi::indexT stateIndex) {
+        while (codeBlockInsertionStates.size() > stateIndex) {
+            discardState();
+        }
     }
 } // namespace yoi

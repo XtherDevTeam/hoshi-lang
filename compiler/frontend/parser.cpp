@@ -30,6 +30,8 @@ namespace yoi {
             case lexer::token::tokenKind::string:
             case lexer::token::tokenKind::boolean:
             case lexer::token::tokenKind::kNull:
+            case lexer::token::tokenKind::unsignedInt:
+            case lexer::token::tokenKind::shortInt:
                 o = new yoi::basicLiterals{lex.curToken, lex.curToken};
                 lex.scan();
                 break;
@@ -2153,7 +2155,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        if (lex.curToken.kind != lexer::token::tokenKind::kInterfaceOf && lex.curToken.kind != lexer::token::tokenKind::kImpl) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kInterfaceOf && lex.curToken.kind != lexer::token::tokenKind::kImpl && lex.curToken.kind != lexer::token::tokenKind::kAs) {
             o = new abstractExpr{node_start_token, lhs, {}, nullptr};
             return;
         }

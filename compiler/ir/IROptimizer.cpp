@@ -84,6 +84,9 @@ namespace yoi {
 
     IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(char charValue) : charValue(charValue) {
     }
+    
+    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(short shortValue) : shortValue(shortValue) {
+    }
 
 
     void IROptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
@@ -137,6 +140,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue + b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue + b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue + b.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {a.possibleValue.deciValue + b.possibleValue.deciValue}, {}};
                 }
@@ -163,6 +172,12 @@ namespace yoi {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue - b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue - b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue - b.possibleValue.shortValue)}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {a.possibleValue.deciValue - b.possibleValue.deciValue}, {}};
@@ -191,6 +206,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue * b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue * b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue * b.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {a.possibleValue.deciValue * b.possibleValue.deciValue}, {}};
                 }
@@ -217,6 +238,12 @@ namespace yoi {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue / b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue / b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue / b.possibleValue.shortValue)}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {a.possibleValue.deciValue / b.possibleValue.deciValue}, {}};
@@ -245,6 +272,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue % b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue % b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue % b.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {std::fmod(a.possibleValue.deciValue, b.possibleValue.deciValue)}, {}};
                 }
@@ -271,6 +304,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {-a.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {static_cast<uint64_t>(-a.possibleValue.unsignedValue)}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(-a.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {-a.possibleValue.deciValue}, {}};
                 }
@@ -296,6 +335,12 @@ namespace yoi {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {~a.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {~a.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(~a.possibleValue.shortValue)}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {~int64_t(a.possibleValue.deciValue)}, {}};
@@ -324,6 +369,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue & b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue & b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue & b.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {int64_t(a.possibleValue.deciValue) & int64_t(b.possibleValue.deciValue)}, {}};
                 }
@@ -350,6 +401,12 @@ namespace yoi {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue | b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue | b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue | b.possibleValue.shortValue)}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {int64_t(a.possibleValue.deciValue) | int64_t(b.possibleValue.deciValue)}, {}};
@@ -378,6 +435,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue ^ b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue ^ b.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue ^ b.possibleValue.shortValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {int64_t(a.possibleValue.deciValue) ^ int64_t(b.possibleValue.deciValue)}, {}};
                 }
@@ -404,6 +467,12 @@ namespace yoi {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue << b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue << b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue << b.possibleValue.intValue)}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {int64_t(a.possibleValue.deciValue) << b.possibleValue.intValue}, {}};
@@ -432,6 +501,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {a.type, true, {a.possibleValue.intValue >> b.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {a.type, true, {a.possibleValue.unsignedValue >> b.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue >> b.possibleValue.intValue)}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {a.type, true, {int64_t(a.possibleValue.deciValue) >> b.possibleValue.intValue}, {}};
                 }
@@ -458,6 +533,14 @@ namespace yoi {
             case IRValueType::valueType::integerObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
                                  IR::Opcode::push_integer, {IROperand{IROperand::operandType::integer, {item.possibleValue.intValue}}}, IRArr[index].debugInfo});
+                break;
+            case IRValueType::valueType::unsignedObject:
+                IRArr.insert(IRArr.begin() + index + 1, IR{
+                                 IR::Opcode::push_unsigned, {{IROperand::operandType::unsignedInt, IROperand::operandValue{item.possibleValue.unsignedValue}}}, IRArr[index].debugInfo});
+                break;
+            case IRValueType::valueType::shortObject:
+                IRArr.insert(IRArr.begin() + index + 1, IR{
+                                 IR::Opcode::push_short, {{IROperand::operandType::shortInt, IROperand::operandValue{static_cast<int64_t>(item.possibleValue.shortValue)}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::decimalObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
@@ -503,6 +586,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue < right.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue < right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue < right.possibleValue.shortValue}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue < right.possibleValue.deciValue}, {}};
                 }
@@ -527,6 +616,12 @@ namespace yoi {
             switch (item.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue <= right.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue <= right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue <= right.possibleValue.shortValue}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue <= right.possibleValue.deciValue}, {}};
@@ -553,6 +648,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue > right.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue > right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue > right.possibleValue.shortValue}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue > right.possibleValue.deciValue}, {}};
                 }
@@ -577,6 +678,12 @@ namespace yoi {
             switch (item.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue >= right.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue >= right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue >= right.possibleValue.shortValue}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue >= right.possibleValue.deciValue}, {}};
@@ -603,6 +710,12 @@ namespace yoi {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue == right.possibleValue.intValue}, {}};
                 }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue == right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue == right.possibleValue.shortValue}, {}};
+                }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue == right.possibleValue.deciValue}, {}};
                 }
@@ -627,6 +740,12 @@ namespace yoi {
             switch (item.type->type) {
                 case IRValueType::valueType::integerObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.intValue!= right.possibleValue.intValue}, {}};
+                }
+                case IRValueType::valueType::unsignedObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.unsignedValue != right.possibleValue.unsignedValue}, {}};
+                }
+                case IRValueType::valueType::shortObject: {
+                    return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.shortValue != right.possibleValue.shortValue}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
                     return {compilerCtx->getBoolObjectType(), true, {item.possibleValue.deciValue != right.possibleValue.deciValue}, {}};
@@ -664,6 +783,13 @@ namespace yoi {
                     simulationStack.push(compilerCtx->getDeciObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.decimal);
                     break;
                 }
+                case IR::Opcode::push_short: {
+                    simulationStack.push(compilerCtx->getShortObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.shortV);
+                    break;
+                }
+                case IR::Opcode::push_unsigned: {
+                    simulationStack.push(compilerCtx->getUnsignedObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.unsignedV);                    break;
+                }
                 case IR::Opcode::push_string: {
                     simulationStack.push(compilerCtx->getStrObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.stringLiteralIndex);
                     break;
@@ -678,13 +804,19 @@ namespace yoi {
                     if (value.hasPossibleValue) {
                         switch (value.type->type) {
                             case IRValueType::valueType::decimalObject:
-                                value.possibleValue.intValue = static_cast<char>(value.possibleValue.deciValue);
+                                value.possibleValue.charValue = static_cast<char>(value.possibleValue.deciValue);
                             break;
                             case IRValueType::valueType::booleanObject:
-                                value.possibleValue.intValue = value.possibleValue.boolValue ? 1 : 0;
+                                value.possibleValue.charValue = value.possibleValue.boolValue ? 1 : 0;
                             break;
                             case IRValueType::valueType::integerObject:
-                                value.possibleValue.intValue = static_cast<char>(value.possibleValue.intValue);
+                                value.possibleValue.charValue = static_cast<char>(value.possibleValue.intValue);
+                            break;
+                            case IRValueType::valueType::shortObject:
+                                value.possibleValue.charValue = static_cast<char>(value.possibleValue.shortValue);
+                            break;
+                            case IRValueType::valueType::unsignedObject:
+                                value.possibleValue.charValue = static_cast<char>(value.possibleValue.unsignedValue);
                             break;
                             default:
                             break;
@@ -714,6 +846,12 @@ namespace yoi {
                             case IRValueType::valueType::characterObject:
                                 value.possibleValue.boolValue = value.possibleValue.charValue != 0;
                             break;
+                            case IRValueType::valueType::shortObject:
+                                value.possibleValue.boolValue = value.possibleValue.shortValue != 0;
+                            break;
+                            case IRValueType::valueType::unsignedObject:
+                                value.possibleValue.boolValue = value.possibleValue.unsignedValue != 0;
+                            break;
                             default:
                                 break;
                         }
@@ -740,6 +878,12 @@ namespace yoi {
                             break;
                             case IRValueType::valueType::characterObject:
                                 value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.charValue);
+                            break;
+                            case IRValueType::valueType::shortObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.shortValue);
+                            break;
+                            case IRValueType::valueType::unsignedObject:
+                                value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.unsignedValue);
                             break;
                             default:
                             break;
@@ -769,6 +913,12 @@ namespace yoi {
                             case IRValueType::valueType::characterObject:
                                 value.possibleValue.deciValue = static_cast<double>(value.possibleValue.charValue);
                             break;
+                            case IRValueType::valueType::unsignedObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.unsignedValue);
+                            break;
+                            case IRValueType::valueType::shortObject:
+                                value.possibleValue.deciValue = static_cast<double>(value.possibleValue.shortValue);
+                            break;
                             default:
                             break;
                         }
@@ -778,6 +928,74 @@ namespace yoi {
                         insIndex = generatePushOp(value, insIndex);
                     } else {
                         simulationStack.push(compilerCtx->getDeciObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
+                    break;
+                }
+                case IR::Opcode::basic_cast_short: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // std::cout << "simulate basic_cast_deci " << value.hasPossibleValue << std::endl;
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.shortValue = static_cast<short>(value.possibleValue.intValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.shortValue = value.possibleValue.boolValue;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.shortValue = static_cast<short>(value.possibleValue.charValue);
+                            break;
+                            case IRValueType::valueType::unsignedObject:
+                                value.possibleValue.shortValue = static_cast<short>(value.possibleValue.unsignedValue);
+                            break;
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.shortValue = static_cast<short>(value.possibleValue.deciValue);
+                            break;
+                            default:
+                            break;
+                        }
+                        value.type = compilerCtx->getShortObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getShortObjectType(),
+                                             value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                    }
+                    break;
+                }
+                case IR::Opcode::basic_cast_unsigned: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    // std::cout << "simulate basic_cast_deci " << value.hasPossibleValue << std::endl;
+                    if (value.hasPossibleValue) {
+                        switch (value.type->type) {
+                            case IRValueType::valueType::integerObject:
+                                value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.intValue);
+                            break;
+                            case IRValueType::valueType::booleanObject:
+                                value.possibleValue.unsignedValue = value.possibleValue.boolValue;
+                            break;
+                            case IRValueType::valueType::characterObject:
+                                value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.charValue);
+                            break;
+                            case IRValueType::valueType::shortObject:
+                                value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.shortValue);
+                            break;
+                            case IRValueType::valueType::decimalObject:
+                                value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.deciValue);
+                            break;
+                            default:
+                            break;
+                        }
+                        value.type = compilerCtx->getUnsignedObjectType();
+                        insIndex = reduce(value.contributedInstructions, insIndex);
+                        ins = IR{IR::Opcode::nop, {}, ins.debugInfo};
+                        insIndex = generatePushOp(value, insIndex);
+                    } else {
+                        simulationStack.push(compilerCtx->getUnsignedObjectType(),
                                              value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
                     }
                     break;
@@ -1323,6 +1541,8 @@ namespace yoi {
                 case IR::Opcode::new_array_bool:
                 case IR::Opcode::new_array_char:
                 case IR::Opcode::new_array_deci:
+                case IR::Opcode::new_array_short:
+                case IR::Opcode::new_array_unsigned:
                 case IR::Opcode::new_array_str: {
                     // we can't optimize it
                     // dims in operands
@@ -1342,6 +1562,12 @@ namespace yoi {
                             break;
                         case IR::Opcode::new_array_str:
                             baseType = compilerCtx->getStrObjectType();
+                            break;
+                        case IR::Opcode::new_array_short:
+                            baseType = compilerCtx->getShortObjectType();
+                            break;
+                        case IR::Opcode::new_array_unsigned:
+                            baseType = compilerCtx->getUnsignedObjectType();
                             break;
                         default:
                             break;
@@ -1442,6 +1668,8 @@ namespace yoi {
                 case IR::Opcode::typeid_deci:
                 case IR::Opcode::typeid_str:
                 case IR::Opcode::typeid_struct:
+                case IR::Opcode::typeid_unsigned:
+                case IR::Opcode::typeid_short:
                 case IR::Opcode::typeid_interface: {
                     simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
@@ -1501,6 +1729,8 @@ namespace yoi {
                 case IR::Opcode::new_dynamic_array_char:
                 case IR::Opcode::new_dynamic_array_deci:
                 case IR::Opcode::new_dynamic_array_str:
+                case IR::Opcode::new_dynamic_array_short:
+                case IR::Opcode::new_dynamic_array_unsigned:
                 case IR::Opcode::new_dynamic_array_struct:
                 case IR::Opcode::new_dynamic_array_interface: {
                     std::shared_ptr<IRValueType> baseType;
@@ -1516,6 +1746,12 @@ namespace yoi {
                             break;
                         case IR::Opcode::new_dynamic_array_deci:
                             baseType = compilerCtx->getDeciObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_short:
+                            baseType = compilerCtx->getShortObjectType();
+                            break;
+                        case IR::Opcode::new_dynamic_array_unsigned:
+                            baseType = compilerCtx->getUnsignedObjectType();
                             break;
                         case IR::Opcode::new_dynamic_array_str:
                             baseType = compilerCtx->getStrObjectType();
@@ -2123,6 +2359,8 @@ namespace yoi {
                 case IR::Opcode::push_boolean: simulationStack.push(compilerCtx->getBoolObjectType(), {}); break;
                 case IR::Opcode::push_string: simulationStack.push(compilerCtx->getStrObjectType(), {}); break;
                 case IR::Opcode::push_character: simulationStack.push(compilerCtx->getCharObjectType(), {}); break;
+                case IR::Opcode::push_short: simulationStack.push(compilerCtx->getShortObjectType(), {}); break;
+                case IR::Opcode::push_unsigned: simulationStack.push(compilerCtx->getUnsignedObjectType(), {}); break;
                 // `push_null` is the source of nullability
                 case IR::Opcode::push_null: {
                     auto type = std::make_shared<IRValueType>(IRValueType::valueType::null);
@@ -2571,6 +2809,18 @@ namespace yoi {
                     simulationStack.push(newType, {});
                     break;
                 }
+                case IR::Opcode::push_short: {
+                    auto newType = std::make_shared<IRValueType>(*compilerCtx->getShortObjectType());
+                    newType->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(newType, {});
+                    break;
+                }
+                case IR::Opcode::push_unsigned: {
+                    auto newType = std::make_shared<IRValueType>(*compilerCtx->getUnsignedObjectType());
+                    newType->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(newType, {});
+                    break;
+                }
                 // Rule 2: store_local propagates Raw attribute.
                 case IR::Opcode::store_local: {
                     auto value = simulationStack.peek(0);
@@ -2752,6 +3002,18 @@ namespace yoi {
                                      ins.operands[0].value.decimal);
                 break;
             }
+            case IR::Opcode::push_short: {
+                simulationStack.push(compilerCtx->getShortObjectType(),
+                                     {currentCodeBlockIndex, {insIndex}},
+                                     ins.operands[0].value.shortV);
+                break;
+            }
+            case IR::Opcode::push_unsigned: {
+                simulationStack.push(compilerCtx->getUnsignedObjectType(),
+                                     {currentCodeBlockIndex, {insIndex}},
+                                     ins.operands[0].value.unsignedV);
+                break;
+            }
             case IR::Opcode::push_string: {
                 simulationStack.push(compilerCtx->getStrObjectType(),
                                      {currentCodeBlockIndex, {insIndex}},
@@ -2770,6 +3032,12 @@ namespace yoi {
                     switch (value.type->type) {
                         case IRValueType::valueType::integerObject:
                             value.possibleValue.boolValue = value.possibleValue.intValue != 0;
+                            break;
+                        case IRValueType::valueType::unsignedObject:
+                            value.possibleValue.boolValue = value.possibleValue.unsignedValue != 0;
+                            break;
+                        case IRValueType::valueType::shortObject:
+                            value.possibleValue.boolValue = value.possibleValue.shortValue != 0;
                             break;
                         case IRValueType::valueType::decimalObject:
                             value.possibleValue.boolValue = value.possibleValue.deciValue != 0.0;
@@ -2797,6 +3065,12 @@ namespace yoi {
                     switch (value.type->type) {
                         case IRValueType::valueType::decimalObject:
                             value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.deciValue);
+                            break;
+                        case IRValueType::valueType::unsignedObject:
+                            value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.unsignedValue);
+                            break;
+                        case IRValueType::valueType::shortObject:
+                            value.possibleValue.intValue = static_cast<int64_t>(value.possibleValue.shortValue);
                             break;
                         case IRValueType::valueType::booleanObject:
                             value.possibleValue.intValue = value.possibleValue.boolValue ? 1 : 0;
@@ -2826,6 +3100,12 @@ namespace yoi {
                         case IRValueType::valueType::integerObject:
                             value.possibleValue.deciValue = static_cast<double>(value.possibleValue.intValue);
                             break;
+                        case IRValueType::valueType::unsignedObject:
+                            value.possibleValue.deciValue = static_cast<double>(value.possibleValue.unsignedValue);
+                            break;
+                        case IRValueType::valueType::shortObject:
+                            value.possibleValue.deciValue = static_cast<double>(value.possibleValue.shortValue);
+                            break;
                         case IRValueType::valueType::booleanObject:
                             value.possibleValue.deciValue = value.possibleValue.boolValue ? 1.0 : 0.0;
                             break;
@@ -2845,6 +3125,72 @@ namespace yoi {
                 }
                 break;
             }
+            case IR::Opcode::basic_cast_short: {
+                auto value = simulationStack.peek(0);
+                simulationStack.pop();
+                if (value.hasPossibleValue) {
+                    switch (value.type->type) {
+                        case IRValueType::valueType::integerObject:
+                            value.possibleValue.shortValue = static_cast<short>(value.possibleValue.intValue);
+                            break;
+                        case IRValueType::valueType::unsignedObject:
+                            value.possibleValue.shortValue = static_cast<short>(value.possibleValue.unsignedValue);
+                            break;
+                        case IRValueType::valueType::decimalObject:
+                            value.possibleValue.shortValue = static_cast<short>(value.possibleValue.deciValue);
+                            break;
+                        case IRValueType::valueType::booleanObject:
+                            value.possibleValue.shortValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                        case IRValueType::valueType::characterObject:
+                            value.possibleValue.shortValue = static_cast<short>(value.possibleValue.charValue);
+                            break;
+                        default:
+                            break;
+                    }
+                    value.type = compilerCtx->getShortObjectType();
+                    simulationStack.push(value);
+                } else {
+                    simulationStack.push(compilerCtx->getShortObjectType(),
+                                         value.contributedInstructions +
+                                         SimulationStack::Item::ContributedInstructionSet{
+                                                 currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                }
+                break;
+            }
+            case IR::Opcode::basic_cast_unsigned: {
+                auto value = simulationStack.peek(0);
+                simulationStack.pop();
+                if (value.hasPossibleValue) {
+                    switch (value.type->type) {
+                        case IRValueType::valueType::integerObject:
+                            value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.intValue);
+                            break;
+                        case IRValueType::valueType::shortObject:
+                            value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.shortValue);
+                            break;
+                        case IRValueType::valueType::decimalObject:
+                            value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.deciValue);
+                            break;
+                        case IRValueType::valueType::booleanObject:
+                            value.possibleValue.unsignedValue = value.possibleValue.boolValue ? 1 : 0;
+                            break;
+                        case IRValueType::valueType::characterObject:
+                            value.possibleValue.unsignedValue = static_cast<uint64_t>(value.possibleValue.charValue);
+                            break;
+                        default:
+                            break;
+                    }
+                    value.type = compilerCtx->getUnsignedObjectType();
+                    simulationStack.push(value);
+                } else {
+                    simulationStack.push(compilerCtx->getUnsignedObjectType(),
+                                         value.contributedInstructions +
+                                         SimulationStack::Item::ContributedInstructionSet{
+                                                 currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                }
+                break;
+            }
             case IR::Opcode::basic_cast_char: {
                 auto value = simulationStack.peek(0);
                 simulationStack.pop();
@@ -2852,6 +3198,12 @@ namespace yoi {
                     switch (value.type->type) {
                         case IRValueType::valueType::decimalObject:
                             value.possibleValue.charValue = static_cast<char>(value.possibleValue.deciValue);
+                            break;
+                        case IRValueType::valueType::unsignedObject:
+                            value.possibleValue.charValue = static_cast<char>(value.possibleValue.unsignedValue);
+                            break;
+                        case IRValueType::valueType::shortObject:
+                            value.possibleValue.charValue = static_cast<char>(value.possibleValue.shortValue);
                             break;
                         case IRValueType::valueType::booleanObject:
                             value.possibleValue.charValue = value.possibleValue.boolValue ? 1 : 0;
@@ -3226,7 +3578,11 @@ namespace yoi {
             case IR::Opcode::new_array_bool:
             case IR::Opcode::new_array_char:
             case IR::Opcode::new_array_deci:
+            case IR::Opcode::new_array_short:
+            case IR::Opcode::new_array_unsigned:
             case IR::Opcode::new_array_str: {
+                // we can't optimize it
+                // dims in operands
                 std::shared_ptr<IRValueType> baseType;
                 switch (ins.opcode) {
                     case IR::Opcode::new_array_int:
@@ -3243,6 +3599,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::new_array_str:
                         baseType = compilerCtx->getStrObjectType();
+                        break;
+                    case IR::Opcode::new_array_short:
+                        baseType = compilerCtx->getShortObjectType();
+                        break;
+                    case IR::Opcode::new_array_unsigned:
+                        baseType = compilerCtx->getUnsignedObjectType();
                         break;
                     default:
                         break;
@@ -3290,6 +3652,8 @@ namespace yoi {
             case IR::Opcode::new_dynamic_array_char:
             case IR::Opcode::new_dynamic_array_deci:
             case IR::Opcode::new_dynamic_array_str:
+            case IR::Opcode::new_dynamic_array_short:
+            case IR::Opcode::new_dynamic_array_unsigned:
             case IR::Opcode::new_dynamic_array_struct:
             case IR::Opcode::new_dynamic_array_interface: {
                 std::shared_ptr<IRValueType> baseType;
@@ -3305,6 +3669,12 @@ namespace yoi {
                         break;
                     case IR::Opcode::new_dynamic_array_deci:
                         baseType = compilerCtx->getDeciObjectType();
+                        break;
+                    case IR::Opcode::new_dynamic_array_short:
+                        baseType = compilerCtx->getShortObjectType();
+                        break;
+                    case IR::Opcode::new_dynamic_array_unsigned:
+                        baseType = compilerCtx->getUnsignedObjectType();
                         break;
                     case IR::Opcode::new_dynamic_array_str:
                         baseType = compilerCtx->getStrObjectType();
@@ -3378,6 +3748,8 @@ namespace yoi {
             case IR::Opcode::typeid_deci:
             case IR::Opcode::typeid_str:
             case IR::Opcode::typeid_struct:
+            case IR::Opcode::typeid_unsigned:
+            case IR::Opcode::typeid_short:
             case IR::Opcode::typeid_interface: {
                 simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                 break;

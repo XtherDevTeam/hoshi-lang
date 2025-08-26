@@ -67,6 +67,8 @@ namespace yoi {
                     bool boolValue;
                     char charValue;
                     yoi::indexT stringConstIndex;
+                    uint64_t unsignedValue;
+                    short shortValue;
 
                     PossibleValue() = default;
 
@@ -79,6 +81,8 @@ namespace yoi {
                     PossibleValue(yoi::indexT stringConstIndex);
 
                     PossibleValue(char charValue);
+
+                    PossibleValue(short shortValue);
                 } possibleValue;
 
                 ContributedInstructionSet contributedInstructions;

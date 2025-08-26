@@ -1,29 +1,33 @@
 use lang "builtin"
 
 import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
-import strlen(str: string) : int from "builtin"
+import strlen(str: string) : unsigned from "builtin"
 import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
 import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
+import puts(str: string) : int32 from "builtin"
 
 struct Str {
     data: char[],
-    length: int,
-    capacity: int,
+    length: unsigned,
+    capacity: unsigned,
     push(ch: char) : none,
     pop() : none,
     size() : int,
     clear() : none,
-    capacity_resize(new_capacity: int) : none,
+    capacity_resize(new_capacity: unsigned) : none,
     shrink_to_fit() : none,
     startswith(prefix: Str) : bool,
     endswith(suffix: Str) : bool,
     c_str() : int,
     find(pattern: Str, start: int) : int,
     always_inline find(pattern: Str) : int,
-    substring(start: int, end: int) : Str,
+    substring(start: unsigned, end: unsigned) : Str,
+    always_inline substring(start: int, end: int) : Str,
+    static join(strs: Str[]) : Str,
+    static join(args: ...) : Str,
     constructor(literal: string),
     constructor(arr: char[]),
-    constructor(capacity: int),
+    constructor(capacity: unsigned),
     constructor(),
     static operator+(a: Str, b: Str) : Str,
     static operator+(a: Str, b: string) : Str,
@@ -51,22 +55,22 @@ impl Str {
         this.data = arr
         this.capacity = this.length + 1
     },
-    constructor(capacity: int) {
-        if (capacity < 1) {
-            capacity = 1
+    constructor(capacity: unsigned) {
+        if (capacity < 1u) {
+            capacity = 1u
         }
-        this.length = 0
+        this.length = 0u
         this.capacity = capacity
         this.data = new char[capacity]()
         this.data[0] = '\0'
     },
     constructor() {
-        this.length = 0
-        this.capacity = 1
+        this.length = 0u
+        this.capacity = 1u
         this.data = new char[1]()
         this.data[0] = '\0'
     },
-    capacity_resize(new_capacity: int) : none {
+    capacity_resize(new_capacity: unsigned) : none {
         if (new_capacity <= this.capacity) {
             return
         }
@@ -84,24 +88,24 @@ impl Str {
         this.data[this.length] = '\0'
     },
     pop() : none {
-        if (this.length == 0) {
+        if (this.length == 0u) {
             return
         }
-        this.length -= 1
+        this.length -= 1u
         this.data[this.length] = '\0'
     },
     size() : int {
         return this.length
     },
     clear() : none {
-        this.length = 0
+        this.length = 0u
         this.data[0] = '\0'
     },
     shrink_to_fit() : none {
         if (this.length == this.capacity) {
             return
         }
-        let new_data = new char[this.length + 1]()
+        let new_data = new char[this.length + 1u]()
         memcpy(runtime_get_string_array_data_pointer(new_data), runtime_get_string_array_data_pointer(this.data), this.length)
         this.data = new_data
         this.capacity = this.length + 1
@@ -237,12 +241,41 @@ impl Str {
     always_inline find(pattern: Str) : int {
         return this.find(pattern, 0)
     },
-    substring(start: int, end: int) : Str {
+    substring(start: unsigned, end: unsigned) : Str {
         let new_str = Str(end - start)
         memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(this.data) + start, end - start)
         new_str.data[end - start] = '\0'
         new_str.length = end - start
         return new_str
+    },
+    always_inline substring(start: int, end: int) : Str {
+        return this.substring(start as unsigned, end as unsigned)
+    },
+    join(strs: Str[]) : Str {
+        let total_length = 0u
+        for (let i = 0; i < strs.length; i += 1) {
+            total_length += strs[i].length
+        }
+        let new_str = Str(total_length)
+        let offset = 0
+        for (let i = 0; i < strs.length; i += 1) {
+            memcpy(runtime_get_string_array_data_pointer(new_str.data) + offset, runtime_get_string_array_data_pointer(strs[i].data), strs[i].length)
+            offset += strs[i].length
+        }
+        new_str.data[total_length] = '\0'
+        new_str.length = total_length
+        return new_str
+    },
+    join(args: ...) : Str {
+        let strs = new Str[args.length]()
+        for (let i = 0; i < args.length; i += 1) {
+            if (args[i] interfaceof Str) {
+                strs[i] = dyn_cast<Str>(args[i])
+            } elif (args[i] interfaceof string) {
+                strs[i] = Str(dyn_cast<string>(args[i]))
+            }
+        }
+        return Str.join(strs)
     }
 }
 
