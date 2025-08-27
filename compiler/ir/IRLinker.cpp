@@ -183,9 +183,10 @@ namespace yoi {
         IR newInstr = instr;
         switch (instr.opcode) {
             case IR::Opcode::push_string: {
-                auto stringIndex = instr.operands[0].value.symbolIndex;
-                auto newStringIndex = stringRemapping.at(currentModuleId).at(stringIndex);
-                newInstr.operands[0].value.symbolIndex = newStringIndex;
+                auto moduleId = instr.operands[0].value.symbolIndex;
+                auto stringIndex = instr.operands[1].value.symbolIndex;
+                auto newStringIndex = stringRemapping.at(moduleId).at(stringIndex);
+                newInstr.operands[1].value.symbolIndex = newStringIndex;
                 break;
             }
             case IR::Opcode::invoke:

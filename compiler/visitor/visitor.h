@@ -128,7 +128,7 @@ namespace yoi {
         void specializeInterfaceImplementation(yoi::implStmt *implAst,
                                                const std::shared_ptr<IRValueType> &concreteStructType,
                                                const yoi::wstr& specializedStructName,
-                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs);
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT targetModule);
 
         yoi::wstr getMangledTemplateName(const yoi::wstr &baseName,
                                          const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);

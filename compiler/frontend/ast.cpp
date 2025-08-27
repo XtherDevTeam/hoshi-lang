@@ -357,7 +357,7 @@ namespace yoi {
         return *interfaceName;
     }
 
-    identifierWithTemplateArg &implStmt::getStructId() {
+    externModuleAccessExpression &implStmt::getStructId() {
         return *structName;
     }
 
@@ -1071,7 +1071,6 @@ namespace yoi {
     }
     
     void finalizeAST(newExpression *ptr) {
-        finalizeAST(ptr->type);
         finalizeAST(ptr->type);
         finalizeAST(ptr->args);
         delete ptr;

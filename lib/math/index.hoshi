@@ -1,0 +1,49 @@
+func always_inline max<T>(a: T, b: T) : T {
+    if (a > b) {
+        return a
+    } else {
+        return b
+    }
+}
+
+func always_inline min<T>(a: T, b: T) : T {
+    if (a < b) {
+        return a
+    } else {
+         return b
+    }
+}
+
+func always_inline abs<T>(a: T) : T {
+    if (a < 0) {
+        return -a
+    } else {
+        return a
+    }
+}
+
+func pow<T>(base: T, exponent: T) : T {
+    if (exponent == 0) {
+        return 1
+    }
+    let result = pow(base, exponent / 2)
+    if (exponent % 2 == 0) {
+        return result * result
+    } else {
+        return base * result * result
+    }
+}
+
+func always_inline sqrt<T>(a: T) : T {
+    let x = a
+    let y = (x + 1) / 2
+    while (abs(x - y) > 0.000001) {
+        x = y
+        y = (x + a / x) / 2
+    }
+    return x
+}
+
+func always_inline isnan(a : deci) : bool {
+    return a != a
+}

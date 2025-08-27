@@ -1336,7 +1336,7 @@ namespace yoi {
 
                         auto interfaceImplName = getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex}, argTypes[0]);
                         auto interfaceImplIndex = moduleContext->getCompilerContext()->getImportedModule(concreteThis->typeAffiliateModule)->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, targetModule != currentModuleIndex, targetModule);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, concreteThis->typeAffiliateModule != currentModuleIndex, concreteThis->typeAffiliateModule);
                         
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
@@ -1675,37 +1675,54 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::implStmt *implStmt) {
         auto &structIdNode = implStmt->getStructId();
-        auto structBaseName = structIdNode.getId().get().strVal;
 
-        if (structIdNode.hasTemplateArg()) {
+        auto it = structIdNode.getTerms().begin();
+        yoi::indexT targetModule = -1, lastModule = -1;
+        while (it + 1 != structIdNode.getTerms().end() && (targetModule = isModuleName(*it, targetModule)) != lastModule) {
+            it++;
+            lastModule = targetModule;
+        }
+        if (targetModule == -1) {
+            targetModule = currentModuleIndex;
+        }
+        yoi_assert(it + 1 == structIdNode.getTerms().end(),
+                   structIdNode.getLine(),
+                   structIdNode.getColumn(),
+                   "Invalid interface name");
+
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
+        auto structBaseName = (*it)->getId().get().strVal;
+
+        if ((*it)->hasTemplateArg()) {
             // Impl for a template struct
-            yoi_assert(irModule->structTemplateAsts.contains(structBaseName),
+            yoi_assert(targetedModule->structTemplateAsts.contains(structBaseName),
                        implStmt->getLine(),
                        implStmt->getColumn(),
                        "Impl for undefined struct template: " + wstring2string(structBaseName));
 
-            yoi::vec<std::shared_ptr<IRValueType>> concreteTemplateArgs = parseTemplateArgs(structIdNode.getArg());
+            yoi::vec<std::shared_ptr<IRValueType>> concreteTemplateArgs = parseTemplateArgs((*it)->getArg());
 
             if (implStmt->isImplForStmt()) {
                 // interface implementation for a template struct
                 if (concreteTemplateArgs.empty()) {
-                    irModule->templateInterfaceImplAsts[structBaseName].push_back(implStmt);
+                    targetedModule->templateInterfaceImplAsts[structBaseName].push_back(implStmt);
                 } else {
                     // specialize template interface
-                    auto interfaceTemplateAst = irModule->templateInterfaceAsts[structBaseName];
+                    auto interfaceTemplateAst = targetedModule->templateInterfaceAsts[structBaseName];
                     auto concreteStructName = getMangledTemplateName(structBaseName, concreteTemplateArgs);
                     auto concreteStructType = managedPtr(parseTypeSpec(implStmt->structName)); // quick specialization check
                     yoi_assert(concreteStructType->type == IRValueType::valueType::structObject, implStmt->getLine(), implStmt->getColumn(), "Invalid struct name for struct specialization: " + wstring2string(concreteStructName) + " (except structObject but got " + wstring2string(concreteStructType->to_string()) + ")");                    
-                    specializeInterfaceImplementation(implStmt, concreteStructType, concreteStructName, concreteTemplateArgs);
+                    // FIXME: module index
+                    specializeInterfaceImplementation(implStmt, concreteStructType, concreteStructName, concreteTemplateArgs, targetModule);
                 }
             } else {
                 if (concreteTemplateArgs.empty()) {
                     // pure template struct, store them and specialize when used
-                    irModule->templateImplAsts[structBaseName] = implStmt;
+                    targetedModule->templateImplAsts[structBaseName] = implStmt;
                 } else {
                     // specialize template struct
-                    auto structTemplateAst = irModule->structTemplateAsts[structBaseName];
-                    specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt, currentModuleIndex);
+                    auto structTemplateAst = targetedModule->structTemplateAsts[structBaseName];
+                    specializeStructTemplate(structBaseName, concreteTemplateArgs, implStmt, targetModule);
                 }
             }
 
@@ -1718,6 +1735,8 @@ namespace yoi {
             std::shared_ptr<IRValueType> srcType;
             try {
                 srcType = managedPtr(parseTypeSpec(implStmt->structName));
+                targetModule = srcType->typeAffiliateModule;
+                targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
             } catch (std::runtime_error &e) {
                 panic(
                     implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structBaseName));
@@ -1729,7 +1748,7 @@ namespace yoi {
             auto interfaceImplName =
                 getInterfaceImplName(interfaceName.first, srcType);
 
-            auto interfaceImplIndex = irModule->interfaceImplementationTable.put(interfaceImplName, {});
+            auto interfaceImplIndex = targetedModule->interfaceImplementationTable.put(interfaceImplName, {});
             IRInterfaceImplementationDefinition::Builder builder;
             builder.setName(interfaceImplName);
             builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
@@ -1746,7 +1765,7 @@ namespace yoi {
                 auto methodName = i->getMethod().getName().get().strVal;
                 IRFunctionDefinition::Builder methodBuilder;
 
-                methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+                methodBuilder.setDebugInfo({targetedModule->modulePath, i->getLine(), i->getColumn()});
                 methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
 
                 yoi::vec<std::shared_ptr<IRValueType>> argTypes;
@@ -1775,10 +1794,10 @@ namespace yoi {
                 methodBuilder.setName(structBaseName + L"::" + methodName + uniq);
 
                 auto func = methodBuilder.yield();
-                auto funcIndex = irModule->functionTable.put_create(func->name, func);
+                auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
                 builder.addVirtualMethod(
                     methodName + uniq,
-                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex}));
+                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));
 
                 moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
                 moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
@@ -1787,11 +1806,11 @@ namespace yoi {
                 moduleContext->getIRBuilder().yield();
                 moduleContext->popIRBuilder();
             }
-            irModule->interfaceImplementationTable[interfaceImplIndex] = builder.yield();
+            targetedModule->interfaceImplementationTable[interfaceImplIndex] = builder.yield();
         } else {
             indexT structIndex;
             try {
-                structIndex = irModule->structTable.getIndex(structBaseName);
+                structIndex = targetedModule->structTable.getIndex(structBaseName);
             } catch (std::runtime_error &e) {
                 panic(
                     implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structBaseName));
@@ -1830,8 +1849,8 @@ namespace yoi {
                 }
 
                 try {
-                    auto funcIndex = irModule->functionTable.getIndex(mangledName);
-                    auto func = irModule->functionTable[funcIndex];
+                    auto funcIndex = targetedModule->functionTable.getIndex(mangledName);
+                    auto func = targetedModule->functionTable[funcIndex];
                     moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
                     moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                     moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
@@ -2663,7 +2682,7 @@ namespace yoi {
 
         if (targetedModule->templateInterfaceImplAsts.count(templateName)) {
             for (auto& implAst : targetedModule->templateInterfaceImplAsts.at(templateName)) {
-                specializeInterfaceImplementation(implAst, selfType, specializedName, concreteTemplateArgs);
+                specializeInterfaceImplementation(implAst, selfType, specializedName, concreteTemplateArgs, currentModuleIndex); // now we are in the specialized context
             }
         }
 
@@ -3476,9 +3495,11 @@ namespace yoi {
     void visitor::specializeInterfaceImplementation(yoi::implStmt *implAst,
                                                 const std::shared_ptr<IRValueType> &concreteStructType,
                                                 const yoi::wstr& specializedStructName,
-                                                const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs) {
+                                                const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT targetModule) {
         
         yoi_assert(implAst->isImplForStmt(), implAst->getLine(), implAst->getColumn(), "Expected 'impl for' AST node for interface implementation specialization.");
+        
+        pushModuleContext(targetModule);
 
         // The active specialization context (from specializeStructTemplate) resolves types like `T` to concrete types.
         auto concreteInterfaceType = managedPtr(parseTypeSpec(implAst->interfaceName));
@@ -3544,6 +3565,8 @@ namespace yoi {
             moduleContext->popIRBuilder();
         }
         
+        popModuleContext();
+
         irModule->interfaceImplementationTable[implIndex] = builder.yield();
     }
 

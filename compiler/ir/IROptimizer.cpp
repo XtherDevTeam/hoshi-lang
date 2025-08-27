@@ -552,7 +552,7 @@ namespace yoi {
                 break;
             case IRValueType::valueType::stringObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
-                                 IR::Opcode::push_string, {{IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}, IRArr[index].debugInfo});
+                                 IR::Opcode::push_string, {{IROperand::operandType::index, IROperand::operandValue{irModule->identifier}}, {IROperand::operandType::stringLiteral, IROperand::operandValue{item.possibleValue.stringConstIndex}}}, IRArr[index].debugInfo});
                 break;
             case IRValueType::valueType::characterObject:
                 IRArr.insert(IRArr.begin() + index + 1, IR{
@@ -791,7 +791,7 @@ namespace yoi {
                     simulationStack.push(compilerCtx->getUnsignedObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.unsignedV);                    break;
                 }
                 case IR::Opcode::push_string: {
-                    simulationStack.push(compilerCtx->getStrObjectType(), {currentCodeBlockIndex, {insIndex}}, ins.operands[0].value.stringLiteralIndex);
+                    simulationStack.push(compilerCtx->getStrObjectType(), {currentCodeBlockIndex, {insIndex}});
                     break;
                 }
                 case IR::Opcode::push_character: {
@@ -1890,7 +1890,14 @@ namespace yoi {
                         // no predecessor, and no successor, and no instructions, it's empty block, do nothing
                     } else {
                         // has predecessor, but no successor, it's the out block but with empty instructions
-                        panic(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                        if (targetFunction->returnType->type == IRValueType::valueType::none) {
+                            targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetFunction->debugInfo});
+                        } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Constructor)) {
+                            targetBlock->getIRArray().push_back(IR{IR::Opcode::load_local, {{IROperand::operandType::localVar, IROperand::operandValue{static_cast<yoi::indexT>(0)}}}, targetFunction->debugInfo});
+                            targetBlock->getIRArray().push_back(IR{IR::Opcode::ret, {}, targetFunction->debugInfo});
+                        } else {
+                            panic(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "IROptimizer::controlFlowOptimization(): function " + wstring2string(targetFunction->name) + " has no return instruction in out block");
+                        }
                     }
                     continue;
                 }
@@ -3016,8 +3023,7 @@ namespace yoi {
             }
             case IR::Opcode::push_string: {
                 simulationStack.push(compilerCtx->getStrObjectType(),
-                                     {currentCodeBlockIndex, {insIndex}},
-                                     ins.operands[0].value.stringLiteralIndex);
+                                     {currentCodeBlockIndex, {insIndex}});
                 break;
             }
             case IR::Opcode::push_character: {

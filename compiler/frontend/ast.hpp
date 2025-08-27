@@ -644,12 +644,12 @@ namespace yoi {
     class implStmt : public AST {
     public:
         externModuleAccessExpression *interfaceName;
-        identifierWithTemplateArg *structName;
+        externModuleAccessExpression *structName;
         implInner *inner;
 
         externModuleAccessExpression &getInterfaceId();
 
-        identifierWithTemplateArg &getStructId();
+        externModuleAccessExpression &getStructId();
 
         implInner &getInner();
 

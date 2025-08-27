@@ -1,4 +1,5 @@
 use lang "builtin"
+use math "math"
 
 import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
 import strlen(str: string) : unsigned from "builtin"
@@ -28,6 +29,7 @@ struct Str {
     split(sep: Str) : Str[],
     split(sep: string) : Str[],
     find_all(pattern: Str) : int,
+    reverse() : none,
     always_inline substring(start: int, end: int) : Str,
     static join(strs: Str[]) : Str,
     static join(args: ...) : Str,
@@ -358,6 +360,17 @@ impl Str {
     },
     split(sep: string) : Str[] {
         return this.split(Str(sep))
+    },
+    reverse() : none {
+        let left = 0u
+        let right = this.length - 1u
+        while (left < right) {
+            let temp = this.data[left]
+            this.data[left] = this.data[right]
+            this.data[right] = temp
+            left += 1
+            right -= 1
+        }
     }
 }
 
@@ -375,16 +388,78 @@ interface Stringable {
     to_string() : Str
 }
 
-/* func format(fmt: Str, params: ...) : Str {
-    let strs = new Str[args.length]()
-    for (let i = 0; i < args.length; i += 1) {
-        if (args[i] interfaceof Str) {
-            strs[i] = dyn_cast<Str>(args[i])
-        } elif (args[i] interfaceof string) {
-            strs[i] = Str(dyn_cast<string>(args[i]))
-        } elif (args[i] interfaceof int) {
-            strs[i] = Str(dyn_cast<int>(args[i]))
+impl int : Stringable {
+    to_string() : Str {
+        let x = math.abs(this)
+        let res = Str(24u)
+        let is_negative = this < 0
+        while (x > 0) {
+            let digit = (x % 10) as char
+            res.push(digit + '0')
+            x /= 10
+        }
+        if (is_negative) {
+            res.push('-')
+        }
+        res.reverse()
+        return res
+    }
+}
+
+impl bool : Stringable {
+    to_string() : Str {
+        if (this) {
+            return Str("true")
+        } else {
+            return Str("false")
         }
     }
+}
+
+impl string : Stringable {
+    to_string() : Str {
+        return Str(this)
+    }
+}
+
+func format(fmt: Str, args: Stringable[]) : Str {
+    let occur = fmt.find_all(Str("{}"))
+    if (occur == 0u) {
+        runtime_debug_print_int_1(occur)
+        return fmt
+    }
+    let strs = new Str[args.length]()
+    let total_strs_length = 0u
+    for (let i = 0; i < args.length; i += 1) {
+        strs[i] = args[i].to_string()
+        total_strs_length += strs[i].length
+    }
+    let index_after_last_pattern = 0u
+    let index = 0u
+    let offset = 0u
+    let res = Str(fmt.length + total_strs_length - occur as unsigned * 2u)
+    let res_data_ptr = runtime_get_string_array_data_pointer(res.data)
+    let fmt_data_ptr = runtime_get_string_array_data_pointer(fmt.data)
+    let current_arg = 0u
     
-} */
+    while (index != -1) {
+        // copy the part before the pattern
+        memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
+        offset += index - index_after_last_pattern
+        index_after_last_pattern = index + 2u
+        index = fmt.find(Str("{}"), index_after_last_pattern as int)
+        // copy the value
+        memcpy(res_data_ptr + offset, runtime_get_string_array_data_pointer(strs[current_arg].data), strs[current_arg].length)
+        offset += strs[current_arg].length
+        current_arg += 1
+    }
+    // copy the part after the last pattern
+    memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, fmt.length - index_after_last_pattern)
+    res.length = fmt.length + total_strs_length - occur * 2u
+    res.data[res.length] = '\0'
+    return res
+}
+
+func always_inline format(fmt: string, args: Stringable[]) : Str {
+    return format(Str(fmt), args)
+}

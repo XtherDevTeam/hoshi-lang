@@ -48,6 +48,29 @@ func main() : int {
         puts("string valiation failed: replace('K423', 'Kiana Kaslana')")
         return 1
     }
+    puts(c.c_str())
+    puts("string valiation passed: replace('K423', 'Kiana Kaslana')")
+
+    let d = str.Stringable(-123).to_string()
+    if (d != "-123") {
+        puts("string valiation failed: to_string()")
+        return 1
+    }
+    puts(d.c_str())
+    puts("string valiation passed: to_string()")
+
+    let f = str.format(
+        "{}: RESPOND ME! {}!\n{}: {} {}, {}, {}~",
+        new str.Stringable[7]("Raiden Mei", "ELYSIA", "Elysia", "Can you hear me? 1, 2, 3~", 1, 2, 3))
+
+    if (f != "Raiden Mei: RESPOND ME! ELYSIA!\nElysia: Can you hear me? 1, 2, 3~ 1, 2, 3~") {
+        puts(f.c_str())
+        puts("string valiation failed: format()")
+        return 1
+    }
+    puts(f.c_str())
+
+    puts("string valiation passed: format()")
 
     puts("string valiation passed: all tests passed")
     return 0

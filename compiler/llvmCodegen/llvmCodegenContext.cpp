@@ -835,7 +835,7 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::push_string: {
-                auto& str = yoiModule->stringLiteralPool.getStringLiteral(instr.operands[0].value.stringLiteralIndex);
+                auto& str = yoiModule->stringLiteralPool.getStringLiteral(instr.operands[1].value.stringLiteralIndex);
                 // Create a global string literal for this string
                 auto *literal = llvm::ConstantDataArray::getString(*TheContext, yoi::wstring2string(str), true);
                 auto *globalStr = Builder->CreateGlobalString(wstring2string(str), "global_string_literal");
@@ -1970,7 +1970,7 @@ namespace yoi {
         llvm::Value* rValRaw = unboxValue(R.llvmValue, R.yoiType);
 
         bool typesAreFloats = lValRaw->getType()->isDoubleTy() || rValRaw->getType()->isDoubleTy();
-        auto resultYoiType = typesAreFloats ? compilerCtx->getDeciObjectType() : (isUnsigned ? compilerCtx->getUnsignedObjectType() : compilerCtx->getIntObjectType());
+        auto resultYoiType = L.yoiType->getBasicRawType();
 
         llvm::Value* resultRaw;
 
@@ -1999,7 +1999,7 @@ namespace yoi {
             resultRaw = Builder->CreateBinOp(op, lValRaw, rValRaw, "ibinop");
         }
 
-        valueStackMap[fromBlock][toBlock].push_back({resultRaw, managedPtr(resultYoiType->getBasicRawType())});
+        valueStackMap[fromBlock][toBlock].push_back({resultRaw, managedPtr(resultYoiType)});
 
         // Consume operands
         callGcFunction(L.llvmValue, L.yoiType, false);
@@ -2084,6 +2084,10 @@ namespace yoi {
 
     llvm::Value* LLVMCodegen::unboxValue(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType) {
         if (yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+            // if i8 bitcast to i64, check it
+            if (objectPtr->getType()->isIntegerTy(8) && yoiTypeToLLVMType(yoiType, true)->isIntegerTy(64)) {
+                printf("crashed");
+            }
             auto bitCastedValue = Builder->CreateBitCast(objectPtr, yoiTypeToLLVMType(yoiType, true), "bitcast_val");
             return bitCastedValue;
         }
@@ -2475,7 +2479,11 @@ namespace yoi {
                     yoi::vec<llvm::Value*> args;
                     auto it = wrapperFuncDecl->arg_begin();
                     for (auto &arg : funcDef->argumentTypes) {
-                        if (arg->isBasicType()) {
+                        if (arg->isForeignBasicType()) {
+                            auto *argVal = handleForeignTypeConv(it, arg, true);
+                            callGcFunction(it, arg, false);
+                            args.push_back(argVal);
+                        } else if (arg->isBasicType()) {
                             if (arg->isArrayType() || arg->isDynamicArrayType()) {
                                 auto arrayLLVMType = getArrayLLVMType(arg);
                                 auto *object = Builder->CreateLoad(llvm::PointerType::get(arrayLLVMType, 0), it, "loaded_arg");
@@ -2488,10 +2496,6 @@ namespace yoi {
                                 auto *argVal = unboxValue(it, arg);
                                 args.push_back(argVal);
                             }
-                        } else if (arg->isForeignBasicType()) {
-                            auto *argVal = handleForeignTypeConv(it, arg, true);
-                            callGcFunction(it, arg, false);
-                            args.push_back(argVal);
                         } else {
                             auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, 0, true);
                             callGcFunction(it, arg, false);

@@ -1109,7 +1109,7 @@ namespace yoi {
         lexer::token node_start_token = lex.curToken;
 
         externModuleAccessExpression *first = nullptr; // Represents the interface (optional)
-        identifierWithTemplateArg *second = nullptr;   // Represents the struct
+        externModuleAccessExpression *second = nullptr;   // Represents the struct
         implInner *inner = nullptr;
 
         // Save state for potential backtracking related to the optional ':' interface

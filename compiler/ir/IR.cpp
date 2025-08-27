@@ -285,6 +285,8 @@ namespace yoi {
             tempVarStack.emplace_back(compilerCtx->getDeciObjectType());
         } else if (constV.type == IROperand::operandType::stringLiteral) {
             tempVarStack.emplace_back(compilerCtx->getStrObjectType());
+            insert({op, {{IROperand::operandType::index, currentModule->identifier}, constV}, currentDebugInfo});
+            return;
         } else if (constV.type == IROperand::operandType::shortInt) {
             tempVarStack.emplace_back(compilerCtx->getShortObjectType());
         } else if (constV.type == IROperand::operandType::unsignedInt) {
