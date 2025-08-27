@@ -145,7 +145,7 @@ var searchData=
   ['getstringobjectdefinition_142',['getStringObjectDefinition',['../classyoi_1_1BuiltinModuleBuilder.html#abc7d6463b0f61f6782bb682123d2bafd',1,'yoi::BuiltinModuleBuilder']]],
   ['getstrobject_143',['getStrObject',['../classyoi_1_1BuiltinModuleBuilder.html#a46f4cbbbee818e7cce6cdadb3bd1451a',1,'yoi::BuiltinModuleBuilder']]],
   ['getstrobjecttype_144',['getStrObjectType',['../classyoi_1_1compilerContext.html#af32e4c1d7dbe772c3a00da65d37f6244',1,'yoi::compilerContext']]],
-  ['getstructid_145',['getStructId',['../classyoi_1_1implStmt.html#a13cdbf399bcfdbf94074e5cce5c42aa9',1,'yoi::implStmt']]],
+  ['getstructid_145',['getStructId',['../classyoi_1_1implStmt.html#a78fd9ceeac9f472bd4dbc00d4b55db34',1,'yoi::implStmt']]],
   ['getsubscript_146',['getSubscript',['../classyoi_1_1subscriptExpr.html#a017162956e7cfdb52aaf1691b1930177',1,'yoi::subscriptExpr']]],
   ['gettemplateargs_147',['getTemplateArgs',['../classyoi_1_1visitor.html#a09735c2ec508155ec874db915f653b98',1,'yoi::visitor']]],
   ['gettemplatebuilders_148',['getTemplateBuilders',['../classyoi_1_1moduleContext.html#adbf0458fdd379a42b781966bdc7f401a',1,'yoi::moduleContext']]],

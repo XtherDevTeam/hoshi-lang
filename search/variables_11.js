@@ -19,7 +19,7 @@ var searchData=
   ['stringliteralpool_16',['stringLiteralPool',['../classyoi_1_1IRModule.html#a8f003beb2b59c1bce258d693e7d00aae',1,'yoi::IRModule']]],
   ['stringremapping_17',['stringRemapping',['../classyoi_1_1IRLinker.html#af7d2845248772148f23ce8405725aca5',1,'yoi::IRLinker']]],
   ['structdefstmtval_18',['structDefStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#ad4c685cda5e13fdbc4e358861f6fae92',1,'yoi::globalStmt::vValue']]],
-  ['structname_19',['structName',['../classyoi_1_1implStmt.html#a65fd97878ef64b5bee036108d27d8fa7',1,'yoi::implStmt']]],
+  ['structname_19',['structName',['../classyoi_1_1implStmt.html#a835a78fb455cf493a5869b2f3f3830c0',1,'yoi::implStmt']]],
   ['structremapping_20',['structRemapping',['../classyoi_1_1IRLinker.html#a566158d839283baec4c406e16a8c43b1',1,'yoi::IRLinker']]],
   ['structtable_21',['structTable',['../classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4',1,'yoi::IRModule']]],
   ['structtemplateasts_22',['structTemplateAsts',['../classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659',1,'yoi::IRModule']]],
