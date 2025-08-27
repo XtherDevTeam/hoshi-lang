@@ -30,7 +30,7 @@ namespace yoi {
         if (curCh == '\0') {
             return curToken = lexer::token {line, col, token::tokenKind::eof};
         }
-        while (curCh == ' ' or curCh == '\n' or curCh == '\r' or curCh == '\t') getCh();
+        while (curCh == ' ' or curCh == '\n' or curCh == '\t') getCh();
         if (std::isalpha(curCh) or curCh == '_') {
             return curToken = alphaStart();
         } else if (std::isdigit(curCh)) {

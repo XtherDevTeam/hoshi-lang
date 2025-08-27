@@ -63,7 +63,7 @@ namespace yoi {
         try {
             return modules.getIndex(rFilepath);
         } catch (const std::out_of_range &e) {
-            auto fp = fopen(wstring2string(rFilepath).c_str(), "r");
+            auto fp = fopen(wstring2string(rFilepath).c_str(), "rb");
             if (!fp)
                 throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
 
