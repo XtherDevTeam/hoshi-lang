@@ -47,7 +47,7 @@ Here is an example of how to define and use a lambda expression:
 
 ```rust
 use lang "builtin"
-import puts(str: string) : int32 from "builtin"
+import puts(str: ptr) : int32 from "builtin"
 
 // A function that accepts a callable object as a parameter
 func test_lambda(x: int, y: int, f: func (int, int) : int) : int {

@@ -1,4 +1,4 @@
-import puts(str: string) : int32 from "builtin"
+import puts(str: ptr) : int32 from "builtin"
 
 func get_first_element(arr: int[]) : int {
     return arr[0]

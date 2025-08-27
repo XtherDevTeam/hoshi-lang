@@ -3,7 +3,7 @@
  * Comment supported!
  */
 
-import puts(str : string) : int32 from "builtin"
+import puts(str : ptr) : int32 from "builtin"
 
 func main() : int {
     puts("Hello, C-style world! This is main() from yoi-lang!")

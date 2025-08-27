@@ -1,5 +1,5 @@
 use lang "builtin"
-import puts(str: string) : int32 from "builtin"
+import puts(str: ptr) : int32 from "builtin"
 
 func main() : int {
     let x = lang.argv()

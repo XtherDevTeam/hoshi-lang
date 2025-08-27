@@ -1227,8 +1227,18 @@ namespace yoi {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
                     
-                    postCleanup.push_back(ensureObject(arg.yoiType, arg.llvmValue));
-                    args.push_back(postCleanup.back().second);
+                    if ((arg.yoiType->isBasicType() || arg.yoiType->isBasicRawType()) && !noffi) {
+                        auto *param = unboxValue(arg.llvmValue, arg.yoiType);
+                        if (arg.yoiType->type == IRValueType::valueType::stringObject) {
+                            // the only fucking pointer that needs special handling here
+                            // we convert it to a int64 while passing it to the imported function
+                            param = Builder->CreatePtrToInt(param, llvm::Type::getInt64Ty(*TheContext), "string_to_int");
+                        }
+                        args.push_back(param);
+                    } else {
+                        postCleanup.emplace_back(ensureObject(arg.yoiType, arg.llvmValue));
+                        args.push_back(postCleanup.back().second);
+                    }
                     // Callee will retain, so we release the stack's reference
                     // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
@@ -2481,7 +2491,7 @@ namespace yoi {
                     for (auto &arg : funcDef->argumentTypes) {
                         if (arg->isForeignBasicType()) {
                             auto *argVal = handleForeignTypeConv(it, arg, true);
-                            callGcFunction(it, arg, false);
+                            // callGcFunction(it, arg, false);  // no gc now, cause all raw value
                             args.push_back(argVal);
                         } else if (arg->isBasicType()) {
                             if (arg->isArrayType() || arg->isDynamicArrayType()) {
@@ -2493,8 +2503,9 @@ namespace yoi {
                                 auto *arrayDataPtr = Builder->CreateBitCast(arrayData, llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(arg->getElementType())), 0));
                                 args.push_back(arrayDataPtr);
                             } else {
-                                auto *argVal = unboxValue(it, arg);
-                                args.push_back(argVal);
+                                // auto *argVal = unboxValue(it, managedPtr(arg->getBasicRawType()));
+                                // auto *argVal = Builder->CreateLoad(yoiTypeToLLVMType(arg, true), it, "loaded_arg");
+                                args.push_back(it);
                             }
                         } else {
                             auto handledLLVMType = handleForeignTypeConv(it, arg->typeIndex, 0, true);
@@ -2556,7 +2567,13 @@ namespace yoi {
                     llvm::Type *wrapperReturnType = yoiTypeToLLVMType(normalizeForeignType(functionPair.second->returnType), false);
                     yoi::vec<llvm::Type*> wrapperArgTypes;
                     for (auto &argType : functionPair.second->argumentTypes) {
-                        wrapperArgTypes.push_back(yoiTypeToLLVMType(normalizeForeignType(argType), false)); // normalize foreign int32 type to integerObject
+                        auto paramYoiType = normalizeForeignType(argType);  // normalize foreign int32 type to integerObject
+                        if (paramYoiType->isBasicType()) {
+                            // if parameter is a basic type, we pass it as raw value, so as reduce the FFI cost
+                            wrapperArgTypes.push_back(yoiTypeToLLVMType(paramYoiType, true));
+                        } else {
+                            wrapperArgTypes.push_back(yoiTypeToLLVMType(paramYoiType, false)); // otherwise, object
+                        }
                     }
                     llvm::FunctionType *wrapperFuncType = llvm::FunctionType::get(wrapperReturnType, wrapperArgTypes, false);
                     llvm::Function *wrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::ExternalLinkage, yoi::wstring2string(mangledName), TheModule.get());
@@ -2579,6 +2596,7 @@ namespace yoi {
             case IRValueType::valueType::foreignInt32Type: {
                 return compilerCtx->getIntObjectType();
             }
+            case IRValueType::valueType::pointer:
             case IRValueType::valueType::pointerObject: {
                 return compilerCtx->getUnsignedObjectType();
             }
@@ -2596,8 +2614,10 @@ namespace yoi {
             case IRValueType::valueType::foreignFloatType: {
                 if (convertToForeign) {
                     // unbox double type and convert to float type
-                    auto *doubleVal = unboxValue(val, compilerCtx->getDeciObjectType());
-                    auto *floatVal = Builder->CreateFPTrunc(doubleVal, llvm::Type::getFloatTy(*TheContext), "float_val");
+                    // since the default behaviour is changed, we now unbox raw value
+                    // auto *doubleVal = unboxValue(val, managedPtr(compilerCtx->getDeciObjectType()->getBasicRawType()));
+                    // auto *doubleVal = Builder->CreateLoad(llvm::Type::getDoubleTy(*TheContext), val, "double_val");
+                    auto *floatVal = Builder->CreateFPTrunc(val, llvm::Type::getFloatTy(*TheContext), "float_val");
                     return floatVal;
                 } else {
                     // convert float type to double type
@@ -2610,8 +2630,9 @@ namespace yoi {
             case IRValueType::valueType::foreignInt32Type: {
                 if (convertToForeign) {
                     // unbox integer type and convert to int32 type
-                    auto *intVal = unboxValue(val, compilerCtx->getIntObjectType());
-                    auto *int32Val = Builder->CreateTrunc(intVal, llvm::Type::getInt32Ty(*TheContext), "int32_val");
+                    // auto *intVal = unboxValue(val, managedPtr(compilerCtx->getIntObjectType()->getBasicRawType()));
+                    // auto *intVal = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), val, "int_val");
+                    auto *int32Val = Builder->CreateTrunc(val, llvm::Type::getInt32Ty(*TheContext), "int32_val");
                     return int32Val;
                 } else {
                     // convert int32 type to integer type
@@ -2623,9 +2644,10 @@ namespace yoi {
             }
             case IRValueType::valueType::pointer: {
                 if (convertToForeign) {
-                    auto *ptrVal = unboxValue(val, compilerCtx->getIntObjectType());
+                    // auto *ptrVal = unboxValue(val, managedPtr(compilerCtx->getUnsignedObjectType()->getBasicRawType()));
+                    // auto *ptrVal = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), val, "ptr_val");
                     // bit cast void*
-                    auto *voidPtr = Builder->CreateIntToPtr(ptrVal, llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0), "void_ptr");
+                    auto *voidPtr = Builder->CreateIntToPtr(val, llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0), "void_ptr");
                     return voidPtr;
                 } else {
                     // bitcast to i64
