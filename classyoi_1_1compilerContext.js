@@ -32,6 +32,7 @@ var classyoi_1_1compilerContext =
     [ "astToFinalize", "classyoi_1_1compilerContext.html#a4198dadc50abd75ca5b76b7045369b11", null ],
     [ "buildConfig", "classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb", null ],
     [ "builtinModuleBuilder", "classyoi_1_1compilerContext.html#ac28385e81d6cab2c31e6a73b2f3d9580", null ],
+    [ "builtinModuleContext", "classyoi_1_1compilerContext.html#a0fcef451b02b4d81c9661f95bafb7839", null ],
     [ "irFFITable", "classyoi_1_1compilerContext.html#ab1a756bab4145c0bccef783635f391f5", null ],
     [ "irObjectFile", "classyoi_1_1compilerContext.html#ab195635760b1ab2a6ca334151bb3d2b8", null ],
     [ "moduleImported", "classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4", null ],

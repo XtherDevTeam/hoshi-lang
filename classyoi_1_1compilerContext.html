@@ -204,6 +204,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:ac28385e81d6cab2c31e6a73b2f3d9580"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4198dadc50abd75ca5b76b7045369b11" id="r_a4198dadc50abd75ca5b76b7045369b11"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="classyoi_1_1hoshiModule.html">hoshiModule</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a4198dadc50abd75ca5b76b7045369b11">astToFinalize</a></td></tr>
 <tr class="separator:a4198dadc50abd75ca5b76b7045369b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fcef451b02b4d81c9661f95bafb7839" id="r_a0fcef451b02b4d81c9661f95bafb7839"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1moduleContext.html">moduleContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a0fcef451b02b4d81c9661f95bafb7839">builtinModuleContext</a></td></tr>
+<tr class="separator:a0fcef451b02b4d81c9661f95bafb7839"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -832,7 +834,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00185">185</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00036">compilerContext::modules</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::builtinModuleContext</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, and <a class="el" href="compilerContext_8h_source.html#l00036">compilerContext::modules</a>.</p>
 
 </div>
 </div>
@@ -1081,7 +1083,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00112">112</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00008">__yoi_builtin_module_hoshi</a>, <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::irFFITable</a>, <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, and <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00008">__yoi_builtin_module_hoshi</a>, <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::builtinModuleContext</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::irFFITable</a>, <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, and <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1414,6 +1416,32 @@ Here is the call graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00043">43</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00135">compilerContext::getBoolObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00147">compilerContext::getCharObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00139">compilerContext::getDeciObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00177">compilerContext::getForeignFloatObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00173">compilerContext::getForeignInt32ObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00131">compilerContext::getIntObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00151">compilerContext::getNoneObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00181">compilerContext::getNullInterfaceType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00201">compilerContext::getPointerType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00220">compilerContext::getShortObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00143">compilerContext::getStrObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00224">compilerContext::getUnsignedObjectType()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00112">compilerContext::initializeSharedObjects()</a>.</p>
+
+</div>
+</div>
+<a id="a0fcef451b02b4d81c9661f95bafb7839" name="a0fcef451b02b4d81c9661f95bafb7839"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fcef451b02b4d81c9661f95bafb7839">&#9670;&#160;</a></span>builtinModuleContext</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classyoi_1_1moduleContext.html">moduleContext</a>&gt; builtinModuleContext</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00045">45</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00185">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00112">compilerContext::initializeSharedObjects()</a>.</p>
 
 </div>
 </div>

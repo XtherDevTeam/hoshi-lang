@@ -96,7 +96,8 @@ $(document).ready(function(){initNavTree('runtime_8h.html',''); initResizable();
   <div class="headertitle"><div class="title">runtime.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdio&gt;</code><br />
+<code>#include &lt;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="build__config_8h_source.html">runtime/build_config.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="debug_8h_source.html">runtime/debug/debug.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="rtti_8h_source.html">runtime/rtti/rtti.h</a>&gt;</code><br />
@@ -105,15 +106,17 @@ Include dependency graph for runtime.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="runtime_8h__incl.png" border="0" usemap="#aruntime_2runtime_8h" alt=""/></div>
 <map name="aruntime_2runtime_8h" id="aruntime_2runtime_8h">
-<area shape="rect" title=" " alt="" coords="243,5,383,31"/>
+<area shape="rect" title=" " alt="" coords="174,5,314,31"/>
+<area shape="rect" title=" " alt="" coords="7,79,68,104"/>
+<area shape="poly" title=" " alt="" coords="212,33,82,77,81,72,210,28"/>
 <area shape="rect" href="memory_8h.html" title=" " alt="" coords="143,79,345,104"/>
-<area shape="poly" title=" " alt="" coords="304,33,267,71,263,67,300,29"/>
+<area shape="poly" title=" " alt="" coords="247,31,247,65,241,65,241,31"/>
 <area shape="rect" href="build__config_8h.html" title=" " alt="" coords="302,152,469,177"/>
-<area shape="poly" title=" " alt="" coords="325,29,358,77,381,138,376,140,354,80,321,32"/>
+<area shape="poly" title=" " alt="" coords="282,28,321,47,341,61,358,77,375,107,384,137,379,139,370,109,354,80,338,65,319,52,280,33"/>
 <area shape="rect" href="rtti_8h.html" title=" " alt="" coords="5,152,136,177"/>
-<area shape="poly" title=" " alt="" coords="246,33,187,51,159,64,132,81,104,109,84,141,80,138,100,106,129,77,156,60,186,46,244,28"/>
+<area shape="poly" title=" " alt="" coords="214,33,173,53,132,81,106,110,86,141,81,138,101,107,129,77,171,48,212,28"/>
 <area shape="rect" href="debug_8h.html" title=" " alt="" coords="420,79,593,104"/>
-<area shape="poly" title=" " alt="" coords="345,28,463,71,462,76,343,33"/>
+<area shape="poly" title=" " alt="" coords="287,28,452,72,450,78,286,33"/>
 <area shape="rect" title=" " alt="" coords="231,225,297,251"/>
 <area shape="poly" title=" " alt="" coords="248,104,263,211,258,212,243,105"/>
 <area shape="rect" title=" " alt="" coords="161,152,226,177"/>
@@ -145,6 +148,8 @@ Functions</h2></td></tr>
 <tr class="separator:a4519923e43680d275ec2169d1db1705f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0417a71c55e8edf37c8f1be6e1be4c5" id="r_aa0417a71c55e8edf37c8f1be6e1be4c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiObjectArray.html">YoiObjectArray</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8h.html#aa0417a71c55e8edf37c8f1be6e1be4c5">runtime_get_argv</a> ()</td></tr>
 <tr class="separator:aa0417a71c55e8edf37c8f1be6e1be4c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb799f1a8860104369dc8b06e734f060" id="r_aeb799f1a8860104369dc8b06e734f060"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8h.html#aeb799f1a8860104369dc8b06e734f060">runtime_panic</a> (char *message)</td></tr>
+<tr class="separator:aeb799f1a8860104369dc8b06e734f060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3302890ca27fb35f72095c2e63cfae7d" id="r_a3302890ca27fb35f72095c2e63cfae7d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="runtime_8h.html#a3302890ca27fb35f72095c2e63cfae7d">elysia_main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a3302890ca27fb35f72095c2e63cfae7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -188,7 +193,7 @@ Variables</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00008">8</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::value</a>, <a class="el" href="runtime_8cpp_source.html#l00006">yoi_argc</a>, <a class="el" href="runtime_8cpp_source.html#l00005">yoi_argv</a>, <a class="el" href="runtime_8h_source.html#l00019">yoi_build_type</a>, <a class="el" href="runtime_8h_source.html#l00017">yoi_desc</a>, and <a class="el" href="runtime_8h.html#a4519923e43680d275ec2169d1db1705f">yoimiya_entry()</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::value</a>, <a class="el" href="runtime_8cpp_source.html#l00006">yoi_argc</a>, <a class="el" href="runtime_8cpp_source.html#l00005">yoi_argv</a>, <a class="el" href="runtime_8h_source.html#l00020">yoi_build_type</a>, <a class="el" href="runtime_8h_source.html#l00018">yoi_desc</a>, and <a class="el" href="runtime_8h.html#a4519923e43680d275ec2169d1db1705f">yoimiya_entry()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -217,7 +222,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00033">33</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00032">32</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00019">YoiObjectArray::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="runtime_8cpp_source.html#l00006">yoi_argc</a>, and <a class="el" href="runtime_8cpp_source.html#l00005">yoi_argv</a>.</p>
 <div class="dynheader">
@@ -232,6 +237,26 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="350,23,384,23,384,28,350,28"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="aeb799f1a8860104369dc8b06e734f060" name="aeb799f1a8860104369dc8b06e734f060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb799f1a8860104369dc8b06e734f060">&#9670;&#160;</a></span>runtime_panic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runtime_panic </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="runtime_8cpp_source.html#l00044">44</a> of file <a class="el" href="runtime_8cpp_source.html">runtime.cpp</a>.</p>
 
 </div>
 </div>
@@ -277,7 +302,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00015">15</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00016">16</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +318,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00013">13</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00014">14</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
 
 </div>
 </div>
@@ -309,7 +334,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00019">19</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00020">20</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="runtime_8cpp_source.html#l00008">elysia_main()</a>.</p>
 
@@ -327,7 +352,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00017">17</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8h_source.html#l00018">18</a> of file <a class="el" href="runtime_8h_source.html">runtime.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="runtime_8cpp_source.html#l00008">elysia_main()</a>.</p>
 
