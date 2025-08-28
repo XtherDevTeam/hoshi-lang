@@ -1134,7 +1134,10 @@ namespace yoi {
                 auto retVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 // The caller receives ownership, so we don't decrease the ref count here.
                 if (currentFunctionDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                    Builder->CreateRet(unboxValue(retVal.llvmValue, retVal.yoiType));
+                    auto res = unboxValue(retVal.llvmValue, retVal.yoiType);
+                    // call gc function for the return value
+                    callGcFunction(retVal.llvmValue, retVal.yoiType, false);
+                    Builder->CreateRet(res);
                 } else {
                     auto object = ensureObject(retVal.yoiType, retVal.llvmValue);
                     Builder->CreateRet(object.second);
@@ -1163,12 +1166,10 @@ namespace yoi {
 
                     if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
+                        callGcFunction(arg.llvmValue, arg.yoiType, false);
                     } else {
                         args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
                     }
-                    
-                    // Callee will retain, so we release the stack's reference
-                    // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
                 std::reverse(args.begin(), args.end());
 
@@ -1209,6 +1210,8 @@ namespace yoi {
                             // we convert it to a int64 while passing it to the imported function
                             param = Builder->CreatePtrToInt(param, llvm::Type::getInt64Ty(*TheContext), "string_to_int");
                         }
+                        // clean up the mess immediately
+                        callGcFunction(arg.llvmValue, arg.yoiType, false);
                         args.push_back(param);
                     } else {
                         postCleanup.emplace_back(ensureObject(arg.yoiType, arg.llvmValue));
