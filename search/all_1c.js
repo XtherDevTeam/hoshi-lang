@@ -1,7 +1,7 @@
 var searchData=
 [
   ['ualue_0',['ualue',['../namespacemagic__enum_1_1detail.html#ab2bb2a6f1450b296c4daf15794dcc1c0',1,'magic_enum::detail']]],
-  ['unary_20operators_1',['Unary Operators',['../md_docs_2Operator_01Overloading.html#autotoc_md57',1,'']]],
+  ['unary_20operators_1',['Unary Operators',['../md_docs_2Operator_01Overloading.html#autotoc_md58',1,'']]],
   ['unboxvalue_2',['unboxValue',['../classyoi_1_1LLVMCodegen.html#a5e4d8510114ee30df367dfefeb57b165',1,'yoi::LLVMCodegen']]],
   ['under_20the_20hood_3a_20implementation_20details_3',['3. Under the Hood: Implementation Details',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md13',1,'']]],
   ['underlying_5ftype_4',['underlying_type',['../structmagic__enum_1_1underlying__type.html',1,'underlying_type&lt; T &gt;'],['../structmagic__enum_1_1detail_1_1underlying__type.html',1,'underlying_type&lt; T, bool &gt;']]],
@@ -12,15 +12,17 @@ var searchData=
   ['uniqueexpr_9',['uniqueExpr',['../classyoi_1_1uniqueExpr.html',1,'yoi']]],
   ['unknown_10',['unknown',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a',1,'yoi::lexer::token::unknown'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aad921d60486366258809553a3db49a4a',1,'yoi::IROperand::unknown'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad921d60486366258809553a3db49a4a',1,'yoi::IR::unknown'],['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a88183b946cc5f0e8c96b2e66e1c74a7e',1,'yoi::symbol::Unknown']]],
   ['unnameddefinitionarguments_11',['unnamedDefinitionArguments',['../classyoi_1_1unnamedDefinitionArguments.html',1,'yoi']]],
-  ['unsignedint_12',['unsignedint',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::lexer::token::unsignedInt'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::IROperand::unsignedInt']]],
-  ['unsignedobject_13',['unsignedObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96',1,'yoi::IRValueType']]],
-  ['unsignedraw_14',['unsignedRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634',1,'yoi::IRValueType']]],
-  ['unsignedv_15',['unsignedV',['../unionyoi_1_1IROperand_1_1operandValue.html#a98dfeee6c7fcbe8f2adf39d0c10b06ec',1,'yoi::IROperand::operandValue']]],
-  ['unsignedvalue_16',['unsignedValue',['../unionyoi_1_1IROptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#ab46341597423c0871f3f3f866be43ea5',1,'yoi::IROptimizer::SimulationStack::Item::PossibleValue']]],
-  ['useobjectlinker_17',['useobjectlinker',['../structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66',1,'yoi::IRBuildConfig::useObjectLinker'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a86491084b995b806ba2d80410ba16a57',1,'yoi::IRBuildConfig::Builder::useObjectLinker'],['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010',1,'yoi::IRBuildConfig::UseObjectLinker']]],
-  ['usestmt_18',['usestmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb',1,'yoi::globalStmt::useStmt'],['../classyoi_1_1useStmt.html',1,'useStmt']]],
-  ['usestmtval_19',['useStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a185f486108c6b985a09070078a604451',1,'yoi::globalStmt::vValue']]],
-  ['utf8tounicode_20',['utf8ToUnicode',['../classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707',1,'utf8Unicode']]],
-  ['utf8unicode_21',['utf8Unicode',['../classutf8Unicode.html',1,'']]],
-  ['utfutils_2ehpp_22',['utfutils.hpp',['../utfutils_8hpp.html',1,'']]]
+  ['unreachable_12',['Unreachable',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a',1,'yoi::IRFunctionDefinition']]],
+  ['unreachablefunctions_13',['unreachableFunctions',['../structyoi_1_1CallGraph.html#ada7115dfdf3cabc952a284dcb2d86ef8',1,'yoi::CallGraph']]],
+  ['unsignedint_14',['unsignedint',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::lexer::token::unsignedInt'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::IROperand::unsignedInt']]],
+  ['unsignedobject_15',['unsignedObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96',1,'yoi::IRValueType']]],
+  ['unsignedraw_16',['unsignedRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634',1,'yoi::IRValueType']]],
+  ['unsignedv_17',['unsignedV',['../unionyoi_1_1IROperand_1_1operandValue.html#a98dfeee6c7fcbe8f2adf39d0c10b06ec',1,'yoi::IROperand::operandValue']]],
+  ['unsignedvalue_18',['unsignedValue',['../unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#ab46341597423c0871f3f3f866be43ea5',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::PossibleValue']]],
+  ['useobjectlinker_19',['useobjectlinker',['../structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66',1,'yoi::IRBuildConfig::useObjectLinker'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a86491084b995b806ba2d80410ba16a57',1,'yoi::IRBuildConfig::Builder::useObjectLinker'],['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010',1,'yoi::IRBuildConfig::UseObjectLinker']]],
+  ['usestmt_20',['usestmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb',1,'yoi::globalStmt::useStmt'],['../classyoi_1_1useStmt.html',1,'useStmt']]],
+  ['usestmtval_21',['useStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a185f486108c6b985a09070078a604451',1,'yoi::globalStmt::vValue']]],
+  ['utf8tounicode_22',['utf8ToUnicode',['../classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707',1,'utf8Unicode']]],
+  ['utf8unicode_23',['utf8Unicode',['../classutf8Unicode.html',1,'']]],
+  ['utfutils_2ehpp_24',['utfutils.hpp',['../utfutils_8hpp.html',1,'']]]
 ];

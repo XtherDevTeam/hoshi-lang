@@ -1,7 +1,7 @@
 var searchData=
 [
   ['shiftexpr_0',['shiftExpr',['../classyoi_1_1shiftExpr.html',1,'yoi']]],
-  ['simulationstack_1',['SimulationStack',['../structyoi_1_1IROptimizer_1_1SimulationStack.html',1,'yoi::IROptimizer']]],
+  ['simulationstack_1',['SimulationStack',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html',1,'yoi::IRFunctionOptimizer']]],
   ['stackvalue_2',['StackValue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html',1,'yoi::LLVMCodegen']]],
   ['static_5fstr_3',['static_str',['../classmagic__enum_1_1detail_1_1static__str.html',1,'magic_enum::detail']]],
   ['static_5fstr_3c_200_20_3e_4',['static_str&lt; 0 &gt;',['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html',1,'magic_enum::detail']]],

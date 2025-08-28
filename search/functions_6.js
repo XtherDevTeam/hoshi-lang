@@ -24,7 +24,7 @@ var searchData=
   ['generateinterfaceobjectgcfunctions_21',['generateInterfaceObjectGCFunctions',['../classyoi_1_1LLVMCodegen.html#ae6bcfa2b7066407a88fb64e0ef9c47fb',1,'yoi::LLVMCodegen']]],
   ['generatemainfunction_22',['generateMainFunction',['../classyoi_1_1LLVMCodegen.html#a2272674bdac9907957f83b8b1a00fd95',1,'yoi::LLVMCodegen']]],
   ['generatenullinterfaceimplementation_23',['generateNullInterfaceImplementation',['../classyoi_1_1visitor.html#aedd8c8aafbddcb4d221e4e0dd4e813d4',1,'yoi::visitor']]],
-  ['generatepushop_24',['generatePushOp',['../classyoi_1_1IROptimizer.html#a87056fdaacf383df3c490c6e2a492132',1,'yoi::IROptimizer']]],
+  ['generatepushop_24',['generatePushOp',['../classyoi_1_1IRFunctionOptimizer.html#a87056fdaacf383df3c490c6e2a492132',1,'yoi::IRFunctionOptimizer']]],
   ['generaterttideclaration_25',['generateRTTIDeclaration',['../classyoi_1_1LLVMCodegen.html#a203e30df99fd1f9283c764211f2c4e1f',1,'yoi::LLVMCodegen']]],
   ['generaterttiimplmentation_26',['generateRTTIImplmentation',['../classyoi_1_1LLVMCodegen.html#ab26d02dad9cc4ea70cd1856d6fe30f22',1,'yoi::LLVMCodegen']]],
   ['generatestructdeclarations_27',['generateStructDeclarations',['../classyoi_1_1LLVMCodegen.html#a273f2c5246340b93fdd84a7e45122739',1,'yoi::LLVMCodegen']]],
@@ -161,6 +161,6 @@ var searchData=
   ['getvariables_158',['getVariables',['../classyoi_1_1IRVariableTable.html#abb5efb2c1a8a0dc437df1c678bee64ab',1,'yoi::IRVariableTable']]],
   ['getvariabletable_159',['getVariableTable',['../classyoi_1_1IRFunctionDefinition.html#aefcf4ac267aede8e9f26f9c643a58538',1,'yoi::IRFunctionDefinition']]],
   ['greaterstart_160',['greaterStart',['../classyoi_1_1lexer.html#a4bfe830a28614ff2d3268f21261f4424',1,'yoi::lexer']]],
-  ['greaterthan_161',['greaterThan',['../classyoi_1_1IROptimizer.html#ad47ba3a1027f88333bd3cec043672127',1,'yoi::IROptimizer']]],
-  ['greaterthanorequal_162',['greaterThanOrEqual',['../classyoi_1_1IROptimizer.html#ac8acc16fd12469e3322b62b22db6c5cb',1,'yoi::IROptimizer']]]
+  ['greaterthan_161',['greaterThan',['../classyoi_1_1IRFunctionOptimizer.html#afa99abb8be663b5844b3845c59e5e517',1,'yoi::IRFunctionOptimizer']]],
+  ['greaterthanorequal_162',['greaterThanOrEqual',['../classyoi_1_1IRFunctionOptimizer.html#a50ae79fe5803e845abdf0b0914d1933c',1,'yoi::IRFunctionOptimizer']]]
 ];

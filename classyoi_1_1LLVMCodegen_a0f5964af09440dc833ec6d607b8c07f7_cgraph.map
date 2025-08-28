@@ -1,29 +1,28 @@
 <map id="generateStructImplementations" name="generateStructImplementations">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,235,81"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1LLVMCodegen.html#a8d28c8827059ef94eb32f655e634ae3a" title=" " alt="" coords="294,11,422,37"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,53,280,36,281,41,190,58"/>
-<area shape="rect" id="Node000010" href="$classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242" title=" " alt="" coords="283,79,433,105"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="235,77,269,80,269,86,235,82"/>
-<area shape="rect" id="Node000003" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="724,42,809,67"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,21,540,23,676,33,711,39,710,44,676,39,540,28,422,26"/>
-<area shape="rect" id="Node000004" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="857,5,992,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="809,44,843,38,844,43,810,49"/>
-<area shape="rect" id="Node000008" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1040,66,1183,91"/>
-<area shape="poly" id="edge9_Node000003_Node000008" title=" " alt="" coords="810,55,1026,70,1026,75,809,60"/>
-<area shape="rect" id="Node000005" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1040,13,1183,38"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="992,23,1026,23,1026,28,992,28"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="993,42,1054,60,1052,65,992,47"/>
-<area shape="rect" id="Node000006" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1231,13,1433,38"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1183,23,1217,23,1217,28,1183,28"/>
-<area shape="rect" id="Node000007" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1481,13,1672,38"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1434,23,1467,23,1467,28,1434,28"/>
-<area shape="rect" id="Node000009" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1231,66,1433,91"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1183,76,1217,76,1217,81,1183,81"/>
-<area shape="poly" id="edge13_Node000010_Node000003" title=" " alt="" coords="433,82,481,77,710,57,711,62,482,83,434,87"/>
-<area shape="rect" id="Node000011" href="$namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="481,117,676,142"/>
-<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="434,102,490,112,489,117,433,107"/>
-<area shape="rect" id="Node000012" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="520,166,637,191"/>
-<area shape="poly" id="edge14_Node000010_Node000012" title=" " alt="" coords="382,103,427,127,482,152,507,160,506,165,480,157,425,132,379,107"/>
-<area shape="poly" id="edge12_Node000011_Node000011" title=" " alt="" coords="548,118,541,108,545,98,557,92,579,90,604,94,615,102,612,106,602,98,579,95,559,97,549,102,546,108,552,115"/>
-<area shape="poly" id="edge15_Node000012_Node000003" title=" " alt="" coords="637,168,675,152,697,136,717,117,748,77,752,81,721,120,700,140,677,157,639,173"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,235,81"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1LLVMCodegen.html#a8d28c8827059ef94eb32f655e634ae3a" title=" " alt="" coords="294,31,422,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,54,280,49,280,54,235,59"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242" title=" " alt="" coords="283,80,433,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,78,269,81,269,86,235,83"/>
+<area shape="rect" id="Node000004" href="$namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="481,29,676,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="414,77,509,55,510,60,415,82"/>
+<area shape="rect" id="Node000005" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="724,105,809,131"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="434,95,710,112,710,117,434,100"/>
+<area shape="rect" id="Node000012" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="520,131,637,156"/>
+<area shape="poly" id="edge13_Node000003_Node000012" title=" " alt="" coords="415,103,510,125,509,130,414,108"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="548,31,541,21,545,11,557,5,579,3,604,6,615,15,612,19,602,11,579,8,559,10,549,15,546,20,552,28"/>
+<area shape="rect" id="Node000006" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="857,69,992,109"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="809,108,843,101,844,106,810,113"/>
+<area shape="rect" id="Node000010" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1040,129,1183,155"/>
+<area shape="poly" id="edge12_Node000005_Node000010" title=" " alt="" coords="810,118,1026,133,1026,139,809,124"/>
+<area shape="rect" id="Node000007" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1040,76,1183,101"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="992,86,1026,86,1026,91,992,91"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="993,105,1054,123,1052,128,992,110"/>
+<area shape="rect" id="Node000008" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1231,76,1433,101"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="1183,86,1217,86,1217,91,1183,91"/>
+<area shape="rect" id="Node000009" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1481,76,1672,101"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="1434,86,1467,86,1467,91,1434,91"/>
+<area shape="rect" id="Node000011" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1231,129,1433,155"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="1183,139,1217,139,1217,145,1183,145"/>
+<area shape="poly" id="edge14_Node000012_Node000005" title=" " alt="" coords="637,133,710,123,710,128,638,138"/>
 </map>

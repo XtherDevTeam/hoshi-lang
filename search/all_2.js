@@ -9,8 +9,8 @@ var searchData=
   ['3_205_20type_20operations_6',['3.5. Type Operations',['../md_docs_2IR.html#autotoc_md30',1,'']]],
   ['3_206_20function_20and_20method_20calls_7',['3.6. Function and Method Calls',['../md_docs_2IR.html#autotoc_md31',1,'']]],
   ['3_20instruction_20set_20reference_8',['3 instruction set reference',['../md_docs_2IR.html#autotoc_md25',1,'3. Instruction Set Reference'],['../md_docs_2IR.html#autotoc_md40',1,'3. Instruction Set Reference']]],
-  ['3_20literals_9',['1.3. Literals',['../md_docs_2Spec.html#autotoc_md64',1,'']]],
-  ['3_20structs_10',['3. Structs',['../md_docs_2Spec.html#autotoc_md66',1,'']]],
+  ['3_20literals_9',['1.3. Literals',['../md_docs_2Spec.html#autotoc_md65',1,'']]],
+  ['3_20structs_10',['3. Structs',['../md_docs_2Spec.html#autotoc_md67',1,'']]],
   ['3_20the_20tt_20length_20tt_20property_11',['3. The &lt;tt&gt;.length&lt;/tt&gt; Property',['../md_docs_2Array.html#autotoc_md6',1,'']]],
   ['3_20tt_20ircodeblock_20tt_12',['2.3. &lt;tt&gt;IRCodeBlock&lt;/tt&gt;',['../md_docs_2IR.html#autotoc_md36',1,'']]],
   ['3_20under_20the_20hood_3a_20implementation_20details_13',['3. Under the Hood: Implementation Details',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md13',1,'']]]

@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('md_docs_2Operator_01Overloading.html',
   <div class="headertitle"><div class="title">Operator Overloading</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md53"></a> Hoshi-lang allows you to define custom implementations for most of its operators on your own <code>struct</code> types. This is achieved by defining special static methods within an <code>impl</code> block.</p>
-<h1><a class="anchor" id="autotoc_md54"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md54"></a> Hoshi-lang allows you to define custom implementations for most of its operators on your own <code>struct</code> types. This is achieved by defining special static methods within an <code>impl</code> block.</p>
+<h1><a class="anchor" id="autotoc_md55"></a>
 Overloadable Operators</h1>
 <p>The following operators can be overloaded:</p>
 <table class="markdownTable">
@@ -126,10 +126,10 @@ Overloadable Operators</h1>
 <td class="markdownTableBodyNone"><code>&amp;</code>   </td><td class="markdownTableBodyNone"><code>operator&amp;</code>   </td></tr>
 </table>
 <p>| <code>|</code> | <code>operator|</code> | | <code>^</code> | <code>operator^</code> | | <code>~</code> | <code>operator~</code> | | <code>&lt;&lt;</code> | <code>operator&lt;&lt;</code> | | <code>&gt;&gt;</code> | <code>operator&gt;&gt;</code> | | <code>++</code> | <code>operator++</code> | | <code>--</code> | <code>operator--</code> | | <code>()</code> | <code>operator()</code> | | <code>[]</code> | <code>operator[]</code> |</p>
-<h1><a class="anchor" id="autotoc_md55"></a>
+<h1><a class="anchor" id="autotoc_md56"></a>
 Defining Operator Overloads</h1>
 <p>To overload an operator, you define a <code>static</code> method with the corresponding <code>operator</code> name inside an <code>impl</code> block for your <code>struct</code>.</p>
-<h2><a class="anchor" id="autotoc_md56"></a>
+<h2><a class="anchor" id="autotoc_md57"></a>
 Binary Operators</h2>
 <p>For binary operators (e.g., <code>+</code>, <code>-</code>, <code>*</code>), the overloaded method must be <code>static</code> and take two arguments, representing the left-hand side (LHS) and right-hand side (RHS) of the operation.</p>
 <div class="fragment"><div class="line">struct MyInt {</div>
@@ -157,10 +157,10 @@ Binary Operators</h2>
 <div class="line">    let c = a + b // c.get() will be 628</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md57"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md58"></a>
 Unary Operators</h2>
 <p>For unary operators (e.g., <code>-</code>, <code>~</code>, <code>++</code>, <code>--</code>), the overloaded method must be <code>static</code> and take a single argument.</p>
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md59"></a>
 Callable Objects (operator())</h2>
 <p>You can make a <code>struct</code> callable like a function by overloading the <code>()</code> operator. The method can take any number of arguments.</p>
 <div class="fragment"><div class="line">struct Callable {</div>
@@ -180,7 +180,7 @@ Callable Objects (operator())</h2>
 <div class="line">    c() // Prints &quot;I am callable!&quot;</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md59"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md60"></a>
 Subscript Operator (operator[])</h2>
 <p>The subscript operator <code>[]</code> can be overloaded to provide custom indexing for your <code>struct</code>s.</p>
 <ul>

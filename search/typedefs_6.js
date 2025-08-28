@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reference_0',['reference',['../classyoi_1_1indexTable_1_1iterator.html#a74202cdd96628bc49a756e5fc87d22de',1,'yoi::indexTable::iterator']]]
+  ['pointer_0',['pointer',['../classyoi_1_1indexTable_1_1iterator.html#a4738635aff9c2bb2c8ccc2875ae72496',1,'yoi::indexTable::iterator']]]
 ];

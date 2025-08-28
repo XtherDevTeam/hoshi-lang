@@ -14,8 +14,10 @@ var searchData=
   ['funcdefstmtval_11',['funcDefStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd',1,'yoi::globalStmt::vValue']]],
   ['functemplateasts_12',['funcTemplateAsts',['../classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899',1,'yoi::IRModule']]],
   ['function_13',['function',['../structyoi_1_1visitor_1_1OverloadResult.html#a3b447aef27cab2fa1c2ed4ddec87b5b2',1,'yoi::visitor::OverloadResult']]],
-  ['functionindex_14',['functionIndex',['../structyoi_1_1visitor_1_1OverloadResult.html#a05e7652888e03bb99c12b7df039a59d4',1,'yoi::visitor::OverloadResult']]],
-  ['functionmap_15',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
-  ['functionremapping_16',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
-  ['functiontable_17',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]]
+  ['functionanalysisresults_14',['functionAnalysisResults',['../classyoi_1_1IROptimizer.html#aea48e1a66d27e022bfe09a0fe307add2',1,'yoi::IROptimizer']]],
+  ['functionindex_15',['functionIndex',['../structyoi_1_1visitor_1_1OverloadResult.html#a05e7652888e03bb99c12b7df039a59d4',1,'yoi::visitor::OverloadResult']]],
+  ['functionmap_16',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
+  ['functionremapping_17',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
+  ['functions_18',['functions',['../structyoi_1_1CallGraph.html#a6fe9d59ef1e6243b8f380ae40bb69eb3',1,'yoi::CallGraph']]],
+  ['functiontable_19',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]]
 ];

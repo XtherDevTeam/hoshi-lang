@@ -89,46 +89,47 @@ var NAVTREE =
     ] ],
     [ "Nullable Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html", [
       [ "Raw Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md51", null ],
-      [ "IRValueType 属性的增加和改写", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md52", null ]
+      [ "Inter-functional call graph building and raw check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md52", null ],
+      [ "IRValueType 属性的增加和改写", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md53", null ]
     ] ],
     [ "Operator Overloading", "md_docs_2Operator_01Overloading.html", [
-      [ "Overloadable Operators", "md_docs_2Operator_01Overloading.html#autotoc_md54", null ],
-      [ "Defining Operator Overloads", "md_docs_2Operator_01Overloading.html#autotoc_md55", [
-        [ "Binary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md56", null ],
-        [ "Unary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md57", null ],
-        [ "Callable Objects (operator())", "md_docs_2Operator_01Overloading.html#autotoc_md58", null ],
-        [ "Subscript Operator (operator[])", "md_docs_2Operator_01Overloading.html#autotoc_md59", null ]
+      [ "Overloadable Operators", "md_docs_2Operator_01Overloading.html#autotoc_md55", null ],
+      [ "Defining Operator Overloads", "md_docs_2Operator_01Overloading.html#autotoc_md56", [
+        [ "Binary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md57", null ],
+        [ "Unary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md58", null ],
+        [ "Callable Objects (operator())", "md_docs_2Operator_01Overloading.html#autotoc_md59", null ],
+        [ "Subscript Operator (operator[])", "md_docs_2Operator_01Overloading.html#autotoc_md60", null ]
       ] ]
     ] ],
     [ "Hoshi-lang Language Specification", "md_docs_2Spec.html", [
-      [ "1. Lexical Structure", "md_docs_2Spec.html#autotoc_md61", [
-        [ "1.1. Identifiers", "md_docs_2Spec.html#autotoc_md62", null ],
-        [ "1.2. Keywords", "md_docs_2Spec.html#autotoc_md63", null ],
-        [ "1.3. Literals", "md_docs_2Spec.html#autotoc_md64", null ]
+      [ "1. Lexical Structure", "md_docs_2Spec.html#autotoc_md62", [
+        [ "1.1. Identifiers", "md_docs_2Spec.html#autotoc_md63", null ],
+        [ "1.2. Keywords", "md_docs_2Spec.html#autotoc_md64", null ],
+        [ "1.3. Literals", "md_docs_2Spec.html#autotoc_md65", null ]
       ] ],
-      [ "2. Types", "md_docs_2Spec.html#autotoc_md65", null ],
-      [ "3. Structs", "md_docs_2Spec.html#autotoc_md66", null ],
-      [ "4. Interfaces", "md_docs_2Spec.html#autotoc_md67", null ],
-      [ "5. Functions", "md_docs_2Spec.html#autotoc_md68", null ],
-      [ "6. Operator Overloading", "md_docs_2Spec.html#autotoc_md69", null ],
-      [ "7. Interface Templates", "md_docs_2Spec.html#autotoc_md70", null ],
-      [ "8. Standard Library", "md_docs_2Spec.html#autotoc_md71", null ]
+      [ "2. Types", "md_docs_2Spec.html#autotoc_md66", null ],
+      [ "3. Structs", "md_docs_2Spec.html#autotoc_md67", null ],
+      [ "4. Interfaces", "md_docs_2Spec.html#autotoc_md68", null ],
+      [ "5. Functions", "md_docs_2Spec.html#autotoc_md69", null ],
+      [ "6. Operator Overloading", "md_docs_2Spec.html#autotoc_md70", null ],
+      [ "7. Interface Templates", "md_docs_2Spec.html#autotoc_md71", null ],
+      [ "8. Standard Library", "md_docs_2Spec.html#autotoc_md72", null ]
     ] ],
     [ "Standard Library", "md_docs_2Standard_01Library.html", [
-      [ "String (<tt>str</tt>)", "md_docs_2Standard_01Library.html#autotoc_md73", null ],
-      [ "Vector (<tt>vec</tt>)", "md_docs_2Standard_01Library.html#autotoc_md74", null ]
+      [ "String (<tt>str</tt>)", "md_docs_2Standard_01Library.html#autotoc_md74", null ],
+      [ "Vector (<tt>vec</tt>)", "md_docs_2Standard_01Library.html#autotoc_md75", null ]
     ] ],
     [ "Generic Programming with Templates", "md_docs_2Template.html", [
-      [ "Function Templates", "md_docs_2Template.html#autotoc_md76", [
-        [ "Implicit vs. Explicit Specialization", "md_docs_2Template.html#autotoc_md77", null ]
+      [ "Function Templates", "md_docs_2Template.html#autotoc_md77", [
+        [ "Implicit vs. Explicit Specialization", "md_docs_2Template.html#autotoc_md78", null ]
       ] ],
-      [ "Struct Templates", "md_docs_2Template.html#autotoc_md78", null ],
-      [ "Interface Templates", "md_docs_2Template.html#autotoc_md79", null ]
+      [ "Struct Templates", "md_docs_2Template.html#autotoc_md79", null ],
+      [ "Interface Templates", "md_docs_2Template.html#autotoc_md80", null ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
-      [ "Known issues", "md_TODO.html#autotoc_md108", null ]
+      [ "Known issues", "md_TODO.html#autotoc_md109", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -172,22 +173,22 @@ var NAVTREEINDEX =
 "IRLinker_8cpp.html",
 "classyoi_1_1BuiltinModuleBuilder.html",
 "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af196fe5188bbef3e23f9fd76b7d2cc00",
-"classyoi_1_1IRFunctionDefinition.html#ae11ef1d0fd94f0034aa77d1664e2006f",
-"classyoi_1_1IROptimizer.html#a35f75104c0b80b9a58f28db3216ecacf",
-"classyoi_1_1IRVariableTable.html#a61fa8c172e7397d729af1135ec6076a6",
-"classyoi_1_1addExpr.html#a9e0cf23a22b6af67b8b52a65f27ef7a2",
-"classyoi_1_1externModuleAccessExpression.html#a9fdb49e7d01ff76d7a8d12e70c231aec",
-"classyoi_1_1indexPool.html#ab9096678e21c77ed4b5e90d5fbad5afe",
-"classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc",
-"classyoi_1_1subscriptExpr.html#a017162956e7cfdb52aaf1691b1930177",
-"classyoi_1_1visitor.html#a9b92ec0821a2a26446904de21da87b4c",
-"index.html#autotoc_md99",
-"namespacemagic__enum.html#abdabde8a87782dc3372172200935e5d1",
-"namespaceyoi.html#ad36c647b0695dda56ddc3eacbfbecdda",
-"structYoiIntegerObject.html#a21197e49dd48d6f8dc580e42630ab047",
-"structyoi_1_1IROptimizer_1_1SimulationStack.html#a35e360a464709adff5606088ca07c8db",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81",
-"visitor_8h_source.html"
+"classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9",
+"classyoi_1_1IRModule.html#a5ff575527eac5139bb55573da0f2869b",
+"classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00",
+"classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089",
+"classyoi_1_1exclusiveExpr.html",
+"classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaff6bdb31a97ea58712d35004a9ec0fea",
+"classyoi_1_1letStmt.html#ae464c58c92d663b5a203ecd885d44bf9",
+"classyoi_1_1structDefInnerPair.html#ae5448fe8d1bf305388ad8ca27d87f5db",
+"classyoi_1_1visitor.html#a7b8a2c4157e772c428b220f4f9c911c4",
+"globals_enum.html",
+"moduleContext_8cpp_source.html",
+"namespaceyoi.html#aa5ce60ddf09d46808c758c7fa3283a45",
+"string_8cpp.html#a6381320bae7a4ab6cb71a26599d246bf",
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#a8e984024f844af1ac65e850174419871",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8",
+"unionyoi_1_1globalStmt_1_1vValue.html#af7ca634c2bafa3a4c74e89f0d461754d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

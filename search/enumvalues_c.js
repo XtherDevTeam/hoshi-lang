@@ -24,8 +24,9 @@ var searchData=
   ['noffi_21',['NoFFI',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a',1,'yoi::IRFunctionDefinition']]],
   ['none_22',['none',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRBuildConfig::none'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'yoi::IRValueType::none'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'none:&#160;rtti.h']]],
   ['nop_23',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
-  ['not_5fequal_24',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
-  ['notequal_25',['notEqual',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token']]],
-  ['null_26',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType::null'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd',1,'null:&#160;rtti.h']]],
-  ['nullable_27',['Nullable',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6',1,'yoi::IRValueType']]]
+  ['norawandnulloptimization_24',['NoRawAndNullOptimization',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9',1,'yoi::IRFunctionDefinition']]],
+  ['not_5fequal_25',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
+  ['notequal_26',['notEqual',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token']]],
+  ['null_27',['null',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd',1,'yoi::IRValueType::null'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a37a6259cc0c1dae299a7866489dff0bd',1,'null:&#160;rtti.h']]],
+  ['nullable_28',['Nullable',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6',1,'yoi::IRValueType']]]
 ];

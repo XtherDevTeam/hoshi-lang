@@ -20,6 +20,7 @@ var classyoi_1_1IRBuilder =
     [ "getLhsFromTempVarStack", "classyoi_1_1IRBuilder.html#a1255b99ce01bc5f1ff9ece4eca837fe6", null ],
     [ "getLocalVar", "classyoi_1_1IRBuilder.html#a1129711e4ce2d628837b5918d70a912f", null ],
     [ "getRhsFromTempVarStack", "classyoi_1_1IRBuilder.html#afae6ae10de9da202901d6aedc0a6a64c", null ],
+    [ "hasTerminated", "classyoi_1_1IRBuilder.html#a09af64578d379fd7719ae0f8ebac8bbf", null ],
     [ "insert", "classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451", null ],
     [ "interfaceOfOp", "classyoi_1_1IRBuilder.html#a2e9f8e4120e2508110d8375a5c892028", null ],
     [ "invokeImportedOp", "classyoi_1_1IRBuilder.html#a693c76bf4ded3879028e83f8286ed1be", null ],
