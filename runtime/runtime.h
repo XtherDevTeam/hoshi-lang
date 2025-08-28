@@ -5,6 +5,7 @@
 #ifndef HOSHI_LANG_RUNTIME_RUNTIME_H
 #define HOSHI_LANG_RUNTIME_RUNTIME_H
 
+#include <cstdio>
 #include <runtime/memory/memory.h>
 #include <runtime/build_config.h>
 #include <runtime/debug/debug.h>
@@ -21,6 +22,8 @@ extern "C" const unsigned long long yoi_build_type;
 extern "C" YoiIntegerObject* yoimiya_entry();
 
 extern "C" YoiObjectArray *runtime_get_argv();
+
+extern "C" void runtime_panic(char *message);
 
 extern "C" int elysia_main(int argc, char *argv[]);
 

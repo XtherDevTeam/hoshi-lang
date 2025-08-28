@@ -122,8 +122,8 @@ namespace yoi {
         l.scan();
         hoshiModule *mod;
         yoi::parse(mod, l);
-        std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), L"builtin", mod);
-        std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
+        builtinModuleContext = std::make_shared<moduleContext>(shared_from_this(), L"builtin", mod);
+        std::shared_ptr<visitor> vis = std::make_shared<visitor>(builtinModuleContext, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
         vis->visit();
         astToFinalize.insert(mod);
     }
@@ -183,7 +183,7 @@ namespace yoi {
     }
     
     std::shared_ptr<yoi::moduleContext> compilerContext::getModuleContext(yoi::indexT index) {
-        return modules[index];
+        return index == HOSHI_COMPILER_CTX_GLOB_ID_CONST ? builtinModuleContext : modules[index];
     }
 
     compilerContext::~compilerContext() {

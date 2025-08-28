@@ -2492,6 +2492,7 @@ namespace yoi {
                     }
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
+                        Builder->CreateCall(externFuncDecl, args);
                         Builder->CreateRetVoid();
                     } else {
                         auto result = Builder->CreateCall(externFuncDecl, args, "result");

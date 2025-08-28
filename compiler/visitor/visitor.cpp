@@ -1340,8 +1340,8 @@ namespace yoi {
                         
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
-                    } catch (const std::runtime_error &e) {
-                        throw e;
+                    } catch (const std::out_of_range &e) {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find matched extern interface constructor for " + wstring2string(baseName));
                     }/* catch (const std::exception &e) {
                         // panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find matched extern interface constructor for " + wstring2string(baseName));
                         throw e;
@@ -2449,6 +2449,9 @@ namespace yoi {
             case IRValueType::valueType::interfaceObject:
                 res = L"interfaceObject#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
                 break;
+            case IRValueType::valueType::pointerObject: 
+                res = L"pointerObject";
+                break;
             default:
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Invalid type");
                 break;
@@ -3034,6 +3037,9 @@ namespace yoi {
             if (structType->nameIndexMap.contains(constructorName)) {
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
             }
+        } else if (rhs->type == IRValueType::valueType::pointerObject) {
+            // no cast needed for pointer type
+            return;
         } else {
             panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
         }

@@ -13,6 +13,8 @@ import noffi rtti_object_alloc(id: int) : TypeInfo from "builtin"
 
 import noffi runtime_get_argv() : string[] from "builtin"
 
+import runtime_panic(reason: ptr) : none from "builtin"
+
 impl TypeInfo {
     constructor(id: int, name: string, type_enum: int, module: int, index: int, is_array: int) {
         this.id = id
@@ -60,5 +62,55 @@ impl deci : Hashable {
 impl char : Hashable {
     hash() : int {
         return this
+    }
+}
+
+struct Result<T, E> {
+    value: T,
+    error: E,
+    constructor(error: E),
+    constructor(value: T),
+    is_ok() : bool,
+    is_err() : bool,
+    unwrap() : T,
+    unwrap_err() : E,
+    static ok(value: T) : Result<T, E>,
+    static err(error: E) : Result<T, E>
+}
+
+impl Result<> {
+    constructor(error: E) {
+        this.error = error
+    },
+    constructor(value: T) {
+        this.value = value
+    },
+    is_ok() : bool {
+        return this.error == null
+    },
+    is_err() : bool {
+        return this.error != null
+    },
+    unwrap() : T {
+        if (this.is_err()) {
+            runtime_panic("hoshi-lang: exception unhandled")
+            return null
+        } else {
+            return this.value
+        }
+    },
+    unwrap_err() : E {
+        if (this.is_err()) {
+            return this.error
+        } else {
+            runtime_panic("hoshi-lang: attempt to unwrap an error value, but got ok")
+            return null
+        }
+    },
+    static ok(value: T) : Result<T, E> {
+        return Result<T, E>(value)
+    },
+    static err(error: E) : Result<T, E> {
+        return Result<T, E>(error)
     }
 })"

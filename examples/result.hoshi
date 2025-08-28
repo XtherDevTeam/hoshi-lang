@@ -1,0 +1,38 @@
+use lang "builtin"
+use str "str"
+
+import puts(str: ptr) : int32 from "builtin"
+
+func test(value: int) : lang.Result<int, str.Str> {
+    if (value == 0xe1751aff) {
+        return lang.Result<int, str.Str>.ok(value)
+    } else {
+        return lang.Result<int, str.Str>.err(str.Str("Error: invalid value"))
+    }
+}
+
+func main() : int {
+    let result = test(0xe1751aff)
+    if (result.is_ok()) {
+        puts("result validation passed: Ok")
+        let x = str.Stringable(result.unwrap()).to_string()
+        puts(x.c_str())
+    } else {
+        puts("result validation failed: result.err()")
+        return 1
+    }
+
+    result = test(0)
+    if (result.is_err()) {
+        puts("result validation passed: Err")
+        let x = result.unwrap_err()
+        puts(x.c_str())
+    } else {
+        puts("result validation failed: result.ok()")
+        return 1
+    }
+
+    puts("result validation passed, now testing unwrap_err()")
+    test(0xe1751aff).unwrap_err()
+    return 0
+}

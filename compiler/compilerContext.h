@@ -42,6 +42,7 @@ namespace yoi {
         std::shared_ptr<IRFFITable> irFFITable;
         std::shared_ptr<BuiltinModuleBuilder> builtinModuleBuilder;
         std::set<hoshiModule *> astToFinalize;
+        std::shared_ptr<moduleContext> builtinModuleContext;
 
     public:
         compilerContext() = default;

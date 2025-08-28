@@ -8,7 +8,6 @@ int yoi_argc{};
 int elysia_main(int argc, char *argv[]) {
     yoi_argv = (const char **)argv;
     yoi_argc = argc;
-    
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) || defined(ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION)
     printf("[Elysia/DEBUG] Yoi-lang descriptor: %s, build_type: %llu. Runtime linked, invoking yoimiya_entry()...\n", &yoi_desc, yoi_build_type);
     #endif
@@ -40,4 +39,9 @@ YoiObjectArray *runtime_get_argv() {
         argv_start[i] = yoi_argv[i];
     }
     return argv;
+}
+
+void runtime_panic(char *message) {
+    fprintf(stderr, "%s\n", message);
+    exit(1);
 }
