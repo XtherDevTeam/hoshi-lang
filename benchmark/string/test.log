@@ -1,0 +1,16 @@
+❯ clang++ benchmark/string/string.cpp -o string -std=c++20
+❯ time ./string &> test.log
+./string &> test.log  0.39s user 1.02s system 80% cpu 1.767 total
+❯ clang++ benchmark/string/string.cpp -o string -std=c++20
+❯ time ./string &> test.log
+./string &> test.log  0.39s user 1.01s system 85% cpu 1.636 total
+❯ time python benchmark/string/string.py &> test.log
+python benchmark/string/string.py &> test.log  0.19s user 0.03s system 84% cpu 0.258 total
+❯ ./cmake-build-release/hoshi_lang benchmark/string/string.hoshi -o string.1 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 
+Linking final darwin executable...
+Compilation successful!
+❯ time ./string &> test.log
+./string &> test.log  1.94s user 0.03s system 86% cpu 2.273 total

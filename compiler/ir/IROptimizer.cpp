@@ -2367,6 +2367,7 @@ namespace yoi {
     AnalysisState IRFunctionOptimizer::analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState) {
         simulationStack = inState.stack;
         variablesExtraInfo.clear();
+
         for(const auto& [idx, state] : inState.variableStates) {
             variablesExtraInfo[idx] = {false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}}};
         }
@@ -2543,20 +2544,6 @@ namespace yoi {
                         resultType->addAttribute(IRValueType::ValueAttr::Nullable);
                     }
                     simulationStack.push(resultType, {});
-                    break;
-                }
-                // Creation: Results are never null.
-                case IR::Opcode::new_struct:
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex}), {});
-                    break;
-                case IR::Opcode::new_interface:
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex}), {});
-                    break;
-                case IR::Opcode::construct_interface_impl: {
-                    simulationStack.pop(); // struct
-                    auto interfaceShell = simulationStack.peek(0);
-                    simulationStack.pop(); // interface
-                    simulationStack.push(std::make_shared<IRValueType>(*interfaceShell.type), {});
                     break;
                 }
                 // Dynamic Casts: Results are always nullable.
@@ -3782,6 +3769,7 @@ namespace yoi {
                 for (yoi::indexT i = 0; i < ins.operands.back().value.symbolIndex; i++) {
                     simulationStack.pop();
                 }
+                simulationStack.pop(); // fuck array length
                 simulationStack.push(managedPtr(baseType->getDynamicArrayType()),
                                      {currentCodeBlockIndex, {insIndex}, false});
                 break;

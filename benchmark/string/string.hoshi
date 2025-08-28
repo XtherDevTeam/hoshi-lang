@@ -1,0 +1,70 @@
+use str "str"
+use lang "builtin"
+import puts(str: ptr) : int32 from "builtin"
+
+func main() : int {
+    for (let i = 0; i < 50000; i += 1) {
+        let a = str.Str.join("Hello, ", "world!")
+        puts("string validation passed: operator+")
+        if (a.startswith(str.Str("Hello")) == false) {
+            puts("string valiation failed: startswith 'Hello'")
+        }
+        puts("string valiation passed: startswith 'Hello'")
+        if (a.endswith(str.Str("!")) == false) {
+            puts("string valiation failed: endswith '!'")
+        }
+        puts("string valiation passed: endswith '!'")
+        if (a.substring(0, 5) != str.Str("Hello")) {
+            puts("string valiation failed: substring(0, 5) == 'Hello'")
+        }
+        puts("string valiation passed: substring(0, 5) == 'Hello'")
+        if (a.find(str.Str("llo")) != 2) {
+            puts("string valiation failed: find('llo') == 2")
+        }
+        puts("string valiation passed: find('llo') == 2")
+        puts(a.c_str())
+        
+        let b = str.Str("  May all the beauty be blessed.  ").trim()
+        if (b != str.Str("May all the beauty be blessed.")) {
+            puts("string valiation failed: trim()")
+        }
+        puts(b.c_str())
+
+        let c = str.Str("K423 & Raiden Mei & K423")
+
+        if (c.find_all(str.Str("Raiden")) != 1 || c.find_all(str.Str("K423")) != 2) {
+            puts("string valiation failed: find_all('Raiden') == 1 && find_all('K423') == 2")
+        }
+        puts("string valiation passed: find_all('Raiden') == 1 && find_all('K423') == 2")
+
+        c = c.replace(str.Str("K423"), str.Str("Kiana Kaslana"))
+        
+        if (c != str.Str("Kiana Kaslana & Raiden Mei & Kiana Kaslana")) {
+            puts("string valiation failed: replace('K423', 'Kiana Kaslana')")
+        }
+        puts(c.c_str())
+        puts("string valiation passed: replace('K423', 'Kiana Kaslana')")
+
+        let d = str.Stringable(-123).to_string()
+        if (d != "-123") {
+            puts("string valiation failed: to_string()")
+        }
+        puts(d.c_str())
+        puts("string valiation passed: to_string()")
+
+        let f = str.format(
+            "{}: RESPOND ME! {}!\n{}: {} {}, {}, {}~",
+            new str.Stringable[7]("Raiden Mei", "ELYSIA", "Elysia", "Can you hear me? 1, 2, 3~", 1, 2, 3))
+
+        if (f != "Raiden Mei: RESPOND ME! ELYSIA!\nElysia: Can you hear me? 1, 2, 3~ 1, 2, 3~") {
+            puts(f.c_str())
+            puts("string valiation failed: format()")
+        }
+        puts(f.c_str())
+
+        puts("string valiation passed: format()")
+
+        puts("string valiation passed: all tests passed")
+    }
+    return 0
+}
