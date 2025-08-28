@@ -7,21 +7,49 @@
 #include <set>
 
 #include "IR.h"
+#include "share/def.hpp"
 
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/lexer.hpp>
 
 namespace yoi {
 
-    class IROptimizer;
+    class IRFunctionOptimizer;
 
     class AnalysisState;
 
-    class IROptimizer {
+    struct CallGraph {
+        using FuncIdentifier = std::pair<indexT, indexT>; // (module index, function index)
+
+        yoi::indexT entryModuleIndex{};
+
+        std::map<FuncIdentifier, std::set<FuncIdentifier>> callGraph; // successors for each function
+        std::map<FuncIdentifier, std::set<FuncIdentifier>> callerGraph; // predecessors for each function
+        std::set<FuncIdentifier> entryPoints; // entry points of the program
+        std::set<FuncIdentifier> unreachableFunctions; // functions that are not reachable from the entry points
+        std::set<FuncIdentifier> functions; // all functions in the program
+
+        CallGraph() = default;
+
+        void addCall(FuncIdentifier caller, FuncIdentifier callee);
+
+        void traverseGraph();
+    };
+
+    struct FunctionAnalysisInfo {
+        bool isReturnValueNullable = false;
+        bool isReturnValueRaw = true;
+
+        // For checking if the analysis has reached a fixed point.
+        bool operator!=(const FunctionAnalysisInfo &other) const;
+    };
+
+    class IRFunctionOptimizer {
         std::shared_ptr<compilerContext> compilerCtx;
         std::shared_ptr<IRModule> irModule;
         std::shared_ptr<IRFunctionDefinition> targetFunction;
         yoi::indexT currentCodeBlockIndex;
+        const std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> &globalAnalysisResults;
     public:
 
         struct SimulationStack {
@@ -121,29 +149,29 @@ namespace yoi {
         */
         yoi::indexT reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions, yoi::indexT currentIndex);
 
-        SimulationStack::Item add(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item add(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item sub(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item sub(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item mul(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item mul(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item div(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item div(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item mod(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item mod(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item negate(const IROptimizer::SimulationStack::Item& a);
+        SimulationStack::Item negate(const IRFunctionOptimizer::SimulationStack::Item& a);
 
-        SimulationStack::Item bitwiseNot(const IROptimizer::SimulationStack::Item& a);
+        SimulationStack::Item bitwiseNot(const IRFunctionOptimizer::SimulationStack::Item& a);
 
-        SimulationStack::Item bitwiseAnd(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseAnd(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseOr(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseOr(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseXor(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseXor(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseShiftLeft(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseShiftLeft(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseShiftRight(const IROptimizer::SimulationStack::Item& a, const IROptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseShiftRight(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
 
         SimulationStack::Item lessThan(const SimulationStack::Item & item, const SimulationStack::Item & right);
 
@@ -173,25 +201,25 @@ namespace yoi {
          */
         yoi::indexT generatePushOp(const SimulationStack::Item &item, yoi::indexT index);
 
-        IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx, const std::shared_ptr<IRModule> &irModule);
+        IRFunctionOptimizer(const std::shared_ptr<compilerContext> &compilerCtx, const std::shared_ptr<IRModule> &irModule, const std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo>& globalResults);
 
-        IROptimizer &setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction);
+        IRFunctionOptimizer &setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction);
 
-        IROptimizer &reduceRedundantConstantExpr();
+        IRFunctionOptimizer &reduceRedundantConstantExpr();
 
-        IROptimizer &reduceRedundantTempVar();
+        IRFunctionOptimizer &reduceRedundantTempVar();
 
-        IROptimizer &reduceRedundantNop();
+        IRFunctionOptimizer &reduceRedundantNop();
 
-        IROptimizer &reduceRedundantJump();
+        IRFunctionOptimizer &reduceRedundantJump();
 
-        IROptimizer &reduceRedundantCodeAfterRet();
+        IRFunctionOptimizer &reduceRedundantCodeAfterRet();
 
-        IROptimizer &controlFlowOptimization();
+        IRFunctionOptimizer &controlFlowOptimization();
 
-        IROptimizer &doOptimizationForCurrentFunction();
+        IRFunctionOptimizer &doOptimizationForCurrentFunction();
 
-        IROptimizer &reduceEmptyCodeBlock();
+        IRFunctionOptimizer &reduceEmptyCodeBlock();
 
         void handleInstruction(const IR &ins, yoi::indexT insIndex, yoi::indexT currentCodeBlockIndex);
 
@@ -199,8 +227,8 @@ namespace yoi {
 
         void transformBlock(indexT blockIndex, const AnalysisState &inState);        
 
-        IROptimizer &performNullableCheck();
-        IROptimizer &performRawCheck();
+        bool performNullableCheck();
+        bool performRawCheck();
 
     private:
         AnalysisState analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState);
@@ -210,15 +238,29 @@ namespace yoi {
     };
 
     struct AnalysisState {
-        IROptimizer::SimulationStack stack;
-        std::map<indexT, IROptimizer::VariablesExtraInfo> variableStates;
+        IRFunctionOptimizer::SimulationStack stack;
+        std::map<indexT, IRFunctionOptimizer::VariablesExtraInfo> variableStates;
 
         // A simple comparison for the worklist algorithm to detect changes.
         bool operator!=(const AnalysisState &other) const;
     };
 
+
     AnalysisState mergeStates(const AnalysisState &s1, const AnalysisState &s2);
 
+    class IROptimizer {
+        std::shared_ptr<compilerContext> compilerCtx;
+        CallGraph callGraph;
+        yoi::indexT entryModuleIndex;
+        std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> functionAnalysisResults;
+    public:
+        IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx, yoi::indexT entryModuleIndex);
+
+        void buildCallGraph();
+
+        void optimize();
+    };
+        
 } // yoi
 
 #endif //IROPTIMIZER_HPP

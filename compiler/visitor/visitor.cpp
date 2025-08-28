@@ -1712,7 +1712,7 @@ namespace yoi {
                     auto concreteStructName = getMangledTemplateName(structBaseName, concreteTemplateArgs);
                     auto concreteStructType = managedPtr(parseTypeSpec(implStmt->structName)); // quick specialization check
                     yoi_assert(concreteStructType->type == IRValueType::valueType::structObject, implStmt->getLine(), implStmt->getColumn(), "Invalid struct name for struct specialization: " + wstring2string(concreteStructName) + " (except structObject but got " + wstring2string(concreteStructType->to_string()) + ")");                    
-                    // FIXME: module index
+                    // FIXED: module index
                     specializeInterfaceImplementation(implStmt, concreteStructType, concreteStructName, concreteTemplateArgs, targetModule);
                 }
             } else {
@@ -1767,6 +1767,8 @@ namespace yoi {
 
                 methodBuilder.setDebugInfo({targetedModule->modulePath, i->getLine(), i->getColumn()});
                 methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
+                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
 
                 yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
@@ -3532,6 +3534,8 @@ namespace yoi {
             IRFunctionDefinition::Builder methodBuilder;
             methodBuilder.setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
             methodBuilder.attrs = getFunctionAttributes(methodAst.attrs);
+            methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+            methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
             
             yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
             
@@ -3796,6 +3800,8 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
         callableBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
+        callableBuilder.attrs.push_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+        callableBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         callableBuilder.addArgument(L"this", structType);
         for (auto &i : lambdaExpr->args->spec) {
             auto argType = managedPtr(parseTypeSpec(i->spec));
@@ -3825,6 +3831,7 @@ namespace yoi {
         constructorBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
         constructorBuilder.addArgument(L"this", structType);
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Constructor);
+        constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         for (yoi::indexT i = 0;i < argTypes.size(); ++i) {
             constructorBuilder.addArgument(lambdaExpr->captures[i]->node.strVal, argTypes[i]);
         }

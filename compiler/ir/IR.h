@@ -392,7 +392,10 @@ namespace yoi {
             NoFFI,
             Variadic,
             Static,
-            Constructor
+            Constructor,
+            Unreachable,
+            Preserve,
+            NoRawAndNullOptimization,
         };
 
         yoi::wstr name;
@@ -775,6 +778,8 @@ namespace yoi {
         void uniqueArithmeticOp(IR::Opcode op);
 
         void arithmeticOp(IR::Opcode op);
+
+        bool hasTerminated();
 
         void jumpOp(yoi::indexT target);
 

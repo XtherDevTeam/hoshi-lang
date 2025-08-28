@@ -292,6 +292,8 @@ namespace yoi {
         IRBuilder builder(compilerCtx, finalModule, entry);
         builder.switchCodeBlock(builder.createCodeBlock());
         for (auto &initIdx: globInitializerIndexes) {
+            if (finalModule->functionTable[initIdx]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Unreachable))
+                continue;
             builder.invokeOp(initIdx, 0, compilerCtx->getIntObjectType());
         }
         if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {

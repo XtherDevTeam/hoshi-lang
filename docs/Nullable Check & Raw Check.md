@@ -27,6 +27,15 @@
 5. 对于 `invoke` `invoke_virtual` 等将对应量引入外部控制流的命令，其 `Raw` 属性无法预测，均设置为 `false`。
     - 对函数返回值、参数亦是如此。
 
+# Inter-functional call graph building and raw check
+
+在先前的优化中，跨函数代码并未加入代码之中，而是采用保守的优化策略，视为 Nullable 变量，故引入 Call Graph 分析。
+
+函数按从 Call Graph 的 BFS 起点开始调用 Optimizer，大体逻辑不变，加入对返回值的 Nullable 和 Raw 分析。
+同时依据函数返回值的 Nullable 和 Raw 属性确定栈上返回值的 Nullable 和 Raw。
+
+在初始态，所有的参数和返回值均被推断为 Rawable 和 Non-nullable，直到出现不符合推断信息时，删去 Raw 或添加 Nullable 
+
 # IRValueType 属性的增加和改写
 
 对于设置某一属性为 (真/假)，其含义为在 IRValueType 中 (增加/删除) 对该属性的定义

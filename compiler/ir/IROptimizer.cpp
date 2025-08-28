@@ -3,6 +3,7 @@
 //
 
 #include "IROptimizer.hpp"
+#include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
 
@@ -12,21 +13,21 @@
 #include <queue>
 
 namespace yoi {
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
         const std::set<yoi::indexT> &instructions): codeBlockIndex(codeBlockIndex), instructions(instructions) {
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::ContributedInstructionSet(yoi::indexT codeBlockIndex,
         const std::set<yoi::indexT> &instructions, bool optimizable)  : codeBlockIndex(codeBlockIndex), instructions(    instructions), optimizable(optimizable) {
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet &IROptimizer::SimulationStack::Item::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet &IRFunctionOptimizer::SimulationStack::Item::
     ContributedInstructionSet::insert(yoi::indexT index) {
         instructions.insert(index);
         return *this;
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet IROptimizer::SimulationStack::Item::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet IRFunctionOptimizer::SimulationStack::Item::
     ContributedInstructionSet::operator+(const ContributedInstructionSet &other) const {
         ContributedInstructionSet result{*this};
         for (auto &i: other.instructions) {
@@ -36,84 +37,84 @@ namespace yoi {
         return result;
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::
     Iterator(const std::set<yoi::indexT> &set): it(set.begin()) {
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::Iterator(
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::Iterator(
         std::set<yoi::indexT>::const_iterator it): it(it) {
     }
 
-    bool IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::operator!=(
+    bool IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::operator!=(
         const Iterator &other) const {
         return it != other.it;
     }
 
-    yoi::indexT IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::operator*() const {
+    yoi::indexT IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator::operator*() const {
         return *it;
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator &IROptimizer::SimulationStack::Item::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator &IRFunctionOptimizer::SimulationStack::Item::
     ContributedInstructionSet::Iterator::operator++() {
         ++it;
         return *this;
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator IROptimizer::SimulationStack::Item::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator IRFunctionOptimizer::SimulationStack::Item::
     ContributedInstructionSet::begin() const {
         return Iterator(instructions.begin());
     }
 
-    IROptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator IROptimizer::SimulationStack::Item::
+    IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator IRFunctionOptimizer::SimulationStack::Item::
     ContributedInstructionSet::end() const {
         return Iterator(instructions.end());
     }
 
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(int64_t intValue): intValue(intValue) {
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(int64_t intValue): intValue(intValue) {
     }
 
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(double deciValue): deciValue(deciValue) {
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(double deciValue): deciValue(deciValue) {
     }
 
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(bool boolValue): boolValue(boolValue) {
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(bool boolValue): boolValue(boolValue) {
     }
 
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(yoi::indexT stringConstIndex): stringConstIndex(
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(yoi::indexT stringConstIndex): stringConstIndex(
         stringConstIndex) {
     }
 
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(char charValue) : charValue(charValue) {
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(char charValue) : charValue(charValue) {
     }
     
-    IROptimizer::SimulationStack::Item::PossibleValue::PossibleValue(short shortValue) : shortValue(shortValue) {
+    IRFunctionOptimizer::SimulationStack::Item::PossibleValue::PossibleValue(short shortValue) : shortValue(shortValue) {
     }
 
 
-    void IROptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
+    void IRFunctionOptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
                                             const Item::ContributedInstructionSet &contributedInstructions) {
         items.emplace_back(Item{type, false, {}, contributedInstructions});
     }
 
-    void IROptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
+    void IRFunctionOptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
                                             const Item::ContributedInstructionSet &contributedInstructions,
                                             Item::PossibleValue value) {
         items.emplace_back(Item{type, true, value, contributedInstructions});
     }
 
-    void IROptimizer::SimulationStack::push(const Item &item) {
+    void IRFunctionOptimizer::SimulationStack::push(const Item &item) {
         items.push_back(item);
     }
 
-    void IROptimizer::SimulationStack::pop() {
+    void IRFunctionOptimizer::SimulationStack::pop() {
         items.pop_back();
     }
 
-    IROptimizer::SimulationStack::Item &IROptimizer::SimulationStack::peek(yoi::indexT index) {
+    IRFunctionOptimizer::SimulationStack::Item &IRFunctionOptimizer::SimulationStack::peek(yoi::indexT index) {
         assert(index < items.size());
         return items[items.size() - 1 - index];
     }
 
-    yoi::indexT IROptimizer::reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions,
+    yoi::indexT IRFunctionOptimizer::reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions,
         yoi::indexT currentIndex) {
 
         // std::cout << "IROptimizer::reduce() called" << std::endl;s
@@ -133,8 +134,8 @@ namespace yoi {
         return currentIndex;
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::add(const IROptimizer::SimulationStack::Item &a,
-                                                        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::add(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                                        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -166,8 +167,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::sub(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::sub(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -199,8 +200,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::mul(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::mul(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -232,8 +233,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::div(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::div(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -265,8 +266,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::mod(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::mod(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -298,7 +299,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::negate(const IROptimizer::SimulationStack::Item &a) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::negate(const IRFunctionOptimizer::SimulationStack::Item &a) {
         if (a.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -330,7 +331,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseNot(const IROptimizer::SimulationStack::Item &a) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseNot(const IRFunctionOptimizer::SimulationStack::Item &a) {
         if (a.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -362,8 +363,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseAnd(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseAnd(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -395,8 +396,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseOr(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseOr(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -428,8 +429,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseXor(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseXor(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -461,8 +462,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseShiftLeft(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseShiftLeft(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -494,8 +495,8 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::bitwiseShiftRight(const IROptimizer::SimulationStack::Item &a,
-        const IROptimizer::SimulationStack::Item &b) {
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::bitwiseShiftRight(const IRFunctionOptimizer::SimulationStack::Item &a,
+        const IRFunctionOptimizer::SimulationStack::Item &b) {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
@@ -527,7 +528,7 @@ namespace yoi {
         }
     }
 
-    yoi::indexT IROptimizer::generatePushOp(const SimulationStack::Item &item, yoi::indexT index) {
+    yoi::indexT IRFunctionOptimizer::generatePushOp(const SimulationStack::Item &item, yoi::indexT index) {
         auto &IRArr = targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray();
         switch (item.type->type) {
             case IRValueType::valueType::integerObject:
@@ -568,18 +569,18 @@ namespace yoi {
         return index;
     }
 
-    IROptimizer::IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx,
-                             const std::shared_ptr<IRModule> &irModule): compilerCtx(compilerCtx), irModule(irModule),
-                                                                         targetFunction(nullptr) {
+    IRFunctionOptimizer::IRFunctionOptimizer(const std::shared_ptr<compilerContext> &compilerCtx,
+                             const std::shared_ptr<IRModule> &irModule, const std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo>& globalResults): compilerCtx(compilerCtx), irModule(irModule),
+                                                                         targetFunction(nullptr), globalAnalysisResults(globalResults) {
     }
 
-    IROptimizer &IROptimizer::setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction) {
+    IRFunctionOptimizer &IRFunctionOptimizer::setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction) {
         this->targetFunction = targetFunction;
         currentCodeBlockIndex = 0;
         return *this;
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::lessThan(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::lessThan(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -610,7 +611,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::lessThanOrEqual(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::lessThanOrEqual(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -641,7 +642,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::greaterThan(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::greaterThan(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -672,7 +673,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::greaterThanOrEqual(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::greaterThanOrEqual(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -703,7 +704,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::equal(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::equal(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -734,7 +735,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer::SimulationStack::Item IROptimizer::notEqual(const SimulationStack::Item &item,
+    IRFunctionOptimizer::SimulationStack::Item IRFunctionOptimizer::notEqual(const SimulationStack::Item &item,
         const SimulationStack::Item &right) {
         if (item.hasPossibleValue && right.hasPossibleValue) {
             switch (item.type->type) {
@@ -765,7 +766,7 @@ namespace yoi {
         }
     }
 
-    IROptimizer &IROptimizer::reduceRedundantConstantExpr() {
+    IRFunctionOptimizer &IRFunctionOptimizer::reduceRedundantConstantExpr() {
         for (yoi::indexT insIndex = 0; insIndex < targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().size();++insIndex) {
             auto &ins = targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray()[insIndex];
             // std::cout << "ins " << insIndex << " " << wstring2string(ins.to_string()) << std::endl;
@@ -1811,14 +1812,14 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer & IROptimizer::reduceRedundantTempVar() {
+    IRFunctionOptimizer & IRFunctionOptimizer::reduceRedundantTempVar() {
         for (auto &i : simulationStack.items) {
             reduce(i.contributedInstructions, 0);
         }
         return *this;
     }
 
-    IROptimizer & IROptimizer::reduceRedundantNop() {
+    IRFunctionOptimizer & IRFunctionOptimizer::reduceRedundantNop() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             auto &codeBlock = targetFunction->codeBlock[i]->getIRArray();
             std::erase_if(codeBlock, [](const IR &ins) { return ins.opcode == IR::Opcode::nop; });
@@ -1826,7 +1827,7 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer & IROptimizer::reduceRedundantJump() {
+    IRFunctionOptimizer & IRFunctionOptimizer::reduceRedundantJump() {
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
             auto &codeBlock = targetFunction->codeBlock[i]->getIRArray();
             if (codeBlock.empty()) {
@@ -1844,7 +1845,7 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer & IROptimizer::reduceRedundantCodeAfterRet() {
+    IRFunctionOptimizer & IRFunctionOptimizer::reduceRedundantCodeAfterRet() {
         auto it = std::find_if(targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().begin(), targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().end(),
             [&](const IR &ins) { return ins.opcode == IR::Opcode::ret; });
         if (it != targetFunction->codeBlock[currentCodeBlockIndex]->getIRArray().end()) {
@@ -1854,7 +1855,7 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer& IROptimizer::controlFlowOptimization() {
+    IRFunctionOptimizer& IRFunctionOptimizer::controlFlowOptimization() {
         std::map<yoi::indexT, std::vector<indexT>> G; // graph
         std::map<yoi::indexT, std::vector<indexT>> reverseG; // record the predecessors of each block
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
@@ -1917,7 +1918,7 @@ namespace yoi {
         return *this;
     }
 
-    IROptimizer & IROptimizer::doOptimizationForCurrentFunction() {
+    IRFunctionOptimizer & IRFunctionOptimizer::doOptimizationForCurrentFunction() {
         std::map<indexT, std::vector<indexT>> successors;
         std::map<indexT, std::vector<indexT>> predecessors;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
@@ -2017,7 +2018,7 @@ namespace yoi {
         return *this;
     }
     
-    IROptimizer &IROptimizer::reduceEmptyCodeBlock() {
+    IRFunctionOptimizer &IRFunctionOptimizer::reduceEmptyCodeBlock() {
         const auto originalSize = targetFunction->codeBlock.size();
         if (originalSize == 0) {
             return *this;
@@ -2148,7 +2149,7 @@ namespace yoi {
         return false;
     }
 
-    AnalysisState IROptimizer::analyzeBlock(indexT blockIndex, const AnalysisState &inState) {
+    AnalysisState IRFunctionOptimizer::analyzeBlock(indexT blockIndex, const AnalysisState &inState) {
         AnalysisState currentState = inState;
         simulationStack = currentState.stack;
         variablesExtraInfo = currentState.variableStates;
@@ -2182,7 +2183,7 @@ namespace yoi {
             const auto &item1 = s1.stack.items[i];
             const auto &item2 = s2.stack.items[i];
 
-            auto mergedItem = IROptimizer::SimulationStack::Item{
+            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
                 item1.type, false, {}, item1.contributedInstructions + item2.contributedInstructions};
 
             if (item1.hasPossibleValue && item2.hasPossibleValue) {
@@ -2214,7 +2215,7 @@ namespace yoi {
                 const auto &v2 = it2->second;
 
                 // Default to an unknown value
-                auto mergedInfo = IROptimizer::VariablesExtraInfo{false, true, {}};
+                auto mergedInfo = IRFunctionOptimizer::VariablesExtraInfo{false, true, {}};
 
                 if (v1.hasPossibleValue && v2.hasPossibleValue) {
                     // If known and identical, preserve value
@@ -2233,7 +2234,7 @@ namespace yoi {
         return mergedState;
     }
 
-    void IROptimizer::transformBlock(indexT blockIndex, const AnalysisState &inState) {
+    void IRFunctionOptimizer::transformBlock(indexT blockIndex, const AnalysisState &inState) {
         simulationStack = inState.stack;
         variablesExtraInfo = inState.variableStates;
         currentCodeBlockIndex = blockIndex;
@@ -2246,7 +2247,7 @@ namespace yoi {
     // ==                             Nullable Check Pass                             ==
     // ===================================================================================
 
-    IROptimizer &IROptimizer::performNullableCheck() {
+    bool IRFunctionOptimizer::performNullableCheck() {
         std::map<indexT, std::vector<indexT>> successors;
         std::map<indexT, std::vector<indexT>> predecessors;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
@@ -2289,12 +2290,14 @@ namespace yoi {
         std::map<indexT, AnalysisState> blockInStates;
         std::map<indexT, AnalysisState> blockOutStates;
         std::queue<indexT> worklist;
+        bool canReturnNull = false;
         
         AnalysisState entryState;
         // Rule 3: Function parameters are nullable
         for(yoi::indexT i = 0; i < targetFunction->argumentTypes.size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
-            varType->addAttribute(IRValueType::ValueAttr::Nullable);
+            if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
+                varType->addAttribute(IRValueType::ValueAttr::Nullable);
             entryState.variableStates[i] = {false, true, {varType, false, {}}};
         }
 
@@ -2326,6 +2329,24 @@ namespace yoi {
             }
         }
 
+        for (indexT blockIdx = 0; blockIdx < targetFunction->codeBlock.size(); ++blockIdx) {
+            if (targetFunction->codeBlock[blockIdx]->getIRArray().empty()) continue;
+            const auto& lastIns = targetFunction->codeBlock[blockIdx]->getIRArray().back();
+            if (lastIns.opcode == IR::Opcode::ret) {
+                if (blockOutStates.count(blockIdx)) {
+                    auto& finalStack = blockOutStates.at(blockIdx).stack;
+                    if (!finalStack.items.empty()) {
+                        const auto& returnValue = finalStack.items.back();
+                        if (returnValue.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
+                            canReturnNull = true;
+                        }
+                        // consume the return value
+                        finalStack.pop();
+                    }
+                }
+            }
+        }
+        
         // Apply results
         for(const auto& [varIndex, varType] : targetFunction->variableTable.getReversedVariableNameMap()) {
             bool isNullable = false;
@@ -2340,10 +2361,10 @@ namespace yoi {
             }
         }
         
-        return *this;
+        return canReturnNull;
     }
     
-    AnalysisState IROptimizer::analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState) {
+    AnalysisState IRFunctionOptimizer::analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState) {
         simulationStack = inState.stack;
         variablesExtraInfo.clear();
         for(const auto& [idx, state] : inState.variableStates) {
@@ -2356,6 +2377,15 @@ namespace yoi {
                 variablesExtraInfo[varIndex] = {false, true, {std::make_shared<IRValueType>(*originalType), false, {}}};
             }
             return variablesExtraInfo.at(varIndex).possibleValue.type;
+        };
+
+        auto terminatorFound = [&] () {
+            AnalysisState outState;
+            outState.stack = simulationStack;
+            for(const auto& [idx, state] : variablesExtraInfo) {
+                outState.variableStates[idx] = {false, true, state.possibleValue};
+            }
+            return outState;
         };
 
         for (const auto &ins : targetFunction->codeBlock[blockIndex]->getIRArray()) {
@@ -2429,10 +2459,19 @@ namespace yoi {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto funcIndex = ins.operands[1].value.symbolIndex;
                     auto func = compilerCtx->getImportedModule(moduleIndex)->functionTable[funcIndex];
+
                     for(size_t i = 0; i < func->argumentTypes.size(); ++i) simulationStack.pop();
+                    
                     auto returnType = std::make_shared<IRValueType>(*func->returnType);
                     if (returnType->type != IRValueType::valueType::none) {
-                        returnType->addAttribute(IRValueType::ValueAttr::Nullable);
+                        // Use the globally computed analysis result for the callee.
+                        CallGraph::FuncIdentifier calleeId{moduleIndex, funcIndex};
+                        if (globalAnalysisResults.count(calleeId) && globalAnalysisResults.at(calleeId).isReturnValueNullable) {
+                            returnType->addAttribute(IRValueType::ValueAttr::Nullable);
+                        } else if (!globalAnalysisResults.count(calleeId)) {
+                            // If for some reason it's not in the map (e.g., external function), be conservative.
+                            returnType->addAttribute(IRValueType::ValueAttr::Nullable);
+                        }
                     }
                     simulationStack.push(returnType, {});
                     break;
@@ -2571,10 +2610,8 @@ namespace yoi {
                     simulationStack.push(resultType, {});
                     break;
                 } 
-                // Instructions that just pop
-                case IR::Opcode::pop: case IR::Opcode::ret: case IR::Opcode::jump_if_true: case IR::Opcode::jump_if_false: {
-                    if (!simulationStack.items.empty()) simulationStack.pop();
-                    break;
+                case IR::Opcode::ret: {
+                    return terminatorFound();
                 }
                 // Instructions with no stack effect
                 case IR::Opcode::jump: case IR::Opcode::ret_none: case IR::Opcode::nop:
@@ -2602,17 +2639,11 @@ namespace yoi {
                     handleInstruction(ins, 0, currentCodeBlockIndex);
             }
         }
-        
-        AnalysisState outState;
-        outState.stack = simulationStack;
-        for(const auto& [idx, state] : variablesExtraInfo) {
-            outState.variableStates[idx] = {false, true, state.possibleValue};
-        }
-        return outState;
+        return terminatorFound();
     }
 
 
-    AnalysisState IROptimizer::mergeStatesForNullable(const AnalysisState &s1, const AnalysisState &s2) {
+    AnalysisState IRFunctionOptimizer::mergeStatesForNullable(const AnalysisState &s1, const AnalysisState &s2) {
         if (s1.variableStates.empty()) return s2;
         if (s2.variableStates.empty()) return s1;
         
@@ -2626,7 +2657,7 @@ namespace yoi {
             const auto &item1 = s1.stack.items[i];
             const auto &item2 = s2.stack.items[i];
 
-            auto mergedItem = IROptimizer::SimulationStack::Item{
+            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
                 item1.type, false, {}, {}};
             
             if (item1.type->hasAttribute(IRValueType::ValueAttr::Nullable) || item2.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
@@ -2663,7 +2694,7 @@ namespace yoi {
     // ==                               Raw Check Pass                                ==
     // ===================================================================================
 
-    IROptimizer &IROptimizer::performRawCheck() {
+    bool IRFunctionOptimizer::performRawCheck() {
         std::map<indexT, std::vector<indexT>> successors;
         std::map<indexT, std::vector<indexT>> predecessors;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
@@ -2706,12 +2737,18 @@ namespace yoi {
         std::map<indexT, AnalysisState> blockInStates;
         std::map<indexT, AnalysisState> blockOutStates;
         std::queue<indexT> worklist;
+        bool isAlwaysRaw = targetFunction->returnType->isBasicType();
+        bool hasReturnInstruction = false;
+
         
         // Rule 5: Parameters are not raw
         AnalysisState entryState;
         for(yoi::indexT i = 0; i < targetFunction->argumentTypes.size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
-            varType->removeAttribute(IRValueType::ValueAttr::Raw);
+            if (varType->isBasicType() && !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
+                varType->addAttribute(IRValueType::ValueAttr::Raw);
+            else
+                varType->removeAttribute(IRValueType::ValueAttr::Raw);
             entryState.variableStates[i] = {false, true, {varType, false, {}}};
         }
 
@@ -2743,6 +2780,31 @@ namespace yoi {
             }
         }
 
+        for (indexT blockIdx = 0; blockIdx < targetFunction->codeBlock.size(); ++blockIdx) {
+            if (targetFunction->codeBlock[blockIdx]->getIRArray().empty()) continue;
+            
+            const auto& lastIns = targetFunction->codeBlock[blockIdx]->getIRArray().back();
+            if (lastIns.opcode == IR::Opcode::ret) {
+                hasReturnInstruction = true;
+                if (blockOutStates.count(blockIdx)) {
+                    auto& finalStack = blockOutStates.at(blockIdx).stack;
+                    if (!finalStack.items.empty()) {
+                        const auto& returnValue = finalStack.items.back();
+                        if (!returnValue.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            isAlwaysRaw = false; // if any return path is not raw, the result is not raw.
+                        }
+                        // consume the return value from the stack
+                        finalStack.pop();
+                    } else {
+                        isAlwaysRaw = false; // should not happen with a valid ret
+                    }
+                } else {
+                    // unreachable block, doesn't affect the outcome
+                }
+            }
+        }
+
+
         // Apply results
         for(const auto& [varIndex, varType] : targetFunction->variableTable.getReversedVariableNameMap()) {
             bool isRaw = true; // Assume raw unless proven otherwise
@@ -2754,17 +2816,18 @@ namespace yoi {
                     break;
                 }
             }
-            if(isRaw) {
+
+            if(isRaw && targetFunction->variableTable.get(varIndex)->isBasicType()) {
                  targetFunction->variableTable.get(varIndex)->addAttribute(IRValueType::ValueAttr::Raw);
             } else {
                  targetFunction->variableTable.get(varIndex)->removeAttribute(IRValueType::ValueAttr::Raw);
             }
         }
 
-        return *this;
+        return isAlwaysRaw;
     }
 
-    AnalysisState IROptimizer::analyzeBlockForRaw(indexT blockIndex, const AnalysisState &inState) {
+    AnalysisState IRFunctionOptimizer::analyzeBlockForRaw(indexT blockIndex, const AnalysisState &inState) {
         simulationStack = inState.stack;
         variablesExtraInfo.clear();
         for(const auto& [idx, state] : inState.variableStates) {
@@ -2777,6 +2840,15 @@ namespace yoi {
                 variablesExtraInfo[varIndex] = {false, true, {std::make_shared<IRValueType>(*originalType), false, {}}};
             }
             return variablesExtraInfo.at(varIndex).possibleValue.type;
+        };
+
+        auto terminatorFound = [&]() {
+            AnalysisState outState;
+            outState.stack = simulationStack;
+            for(const auto& [idx, state] : variablesExtraInfo) {
+                outState.variableStates[idx] = {false, true, state.possibleValue};
+            }
+            return outState;
         };
 
         for (const auto &ins : targetFunction->codeBlock[blockIndex]->getIRArray()) {
@@ -2871,13 +2943,25 @@ namespace yoi {
                     simulationStack.pop(); // array
                     break;
                 }
+                case IR::Opcode::ret: {
+                    return terminatorFound();
+                }
                 case IR::Opcode::invoke: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto funcIndex = ins.operands[1].value.symbolIndex;
                     auto func = compilerCtx->getImportedModule(moduleIndex)->functionTable[funcIndex];
+
                     for(size_t i = 0; i < func->argumentTypes.size(); ++i) simulationStack.pop();
+                    
                     auto returnType = std::make_shared<IRValueType>(*func->returnType);
-                    returnType->removeAttribute(IRValueType::ValueAttr::Raw);
+                    
+                    // use the globally computed analysis result for the callee.
+                    CallGraph::FuncIdentifier calleeId{moduleIndex, funcIndex};
+                    if (globalAnalysisResults.count(calleeId) && globalAnalysisResults.at(calleeId).isReturnValueRaw) {
+                        returnType->addAttribute(IRValueType::ValueAttr::Raw);
+                    } else {
+                        returnType->removeAttribute(IRValueType::ValueAttr::Raw);
+                    }
                     simulationStack.push(returnType, {});
                     break;
                 }
@@ -2932,15 +3016,11 @@ namespace yoi {
                 }
             }
         }
-        AnalysisState outState;
-        outState.stack = simulationStack;
-        for(const auto& [idx, state] : variablesExtraInfo) {
-            outState.variableStates[idx] = {false, true, state.possibleValue};
-        }
-        return outState;
+        
+        return terminatorFound();
     }
 
-    AnalysisState IROptimizer::mergeStatesForRaw(const AnalysisState &s1, const AnalysisState &s2) {
+    AnalysisState IRFunctionOptimizer::mergeStatesForRaw(const AnalysisState &s1, const AnalysisState &s2) {
         if (s1.variableStates.empty()) return s2;
         if (s2.variableStates.empty()) return s1;
 
@@ -2954,7 +3034,7 @@ namespace yoi {
             const auto &item1 = s1.stack.items[i];
             const auto &item2 = s2.stack.items[i];
 
-            auto mergedItem = IROptimizer::SimulationStack::Item{
+            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
                 item1.type, false, {}, {}};
             
             if (item1.type->hasAttribute(IRValueType::ValueAttr::Raw) && item2.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
@@ -2989,7 +3069,7 @@ namespace yoi {
         return mergedState;
     }
 
-    void IROptimizer::handleInstruction(const IR &ins, yoi::indexT insIndex, yoi::indexT currentCodeBlockIndex) {
+    void IRFunctionOptimizer::handleInstruction(const IR &ins, yoi::indexT insIndex, yoi::indexT currentCodeBlockIndex) {
         switch (ins.opcode) {
             case IR::Opcode::push_boolean: {
                 simulationStack.push(compilerCtx->getBoolObjectType(),
@@ -3860,5 +3940,171 @@ namespace yoi {
                 break;
             }
         }
+    }
+
+    IROptimizer::IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx, yoi::indexT entryModuleIndex)
+        : compilerCtx(compilerCtx), entryModuleIndex(entryModuleIndex) {}
+
+    void CallGraph::addCall(FuncIdentifier caller, FuncIdentifier callee) {
+        callGraph[caller].insert(callee);
+        callerGraph[callee].insert(caller);
+    }
+
+    void IROptimizer::buildCallGraph() {
+        callGraph.entryModuleIndex = entryModuleIndex;
+        std::set<CallGraph::FuncIdentifier> visitedFunctions;
+        std::queue<CallGraph::FuncIdentifier> q;
+
+        // build function set
+        for (auto &module : compilerCtx->getCompiledModules()) {
+            for (yoi::indexT i = 0; i < module.second->functionTable.size(); i++) {
+                callGraph.functions.insert(CallGraph::FuncIdentifier{module.first, i});
+                if (compilerCtx->getImportedModule(module.first)->functionTable[i]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve))
+                    q.emplace(module.first, i);
+            }
+        }
+
+        for (auto &exportedFunction : compilerCtx->getIRFFITable()->exportedFunctionTable) {
+            q.emplace(std::get<0>(exportedFunction.second), std::get<1>(exportedFunction.second));
+            // add Preserve attribute to exported functions
+            auto &func = compilerCtx->getImportedModule(std::get<0>(exportedFunction.second))->functionTable[std::get<1>(exportedFunction.second)];
+            func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+            func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+        }
+
+        if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
+            try {
+                q.emplace(
+                    entryModuleIndex,
+                    compilerCtx->getImportedModule(entryModuleIndex)->functionTable.getIndex(L"main#")
+                );
+                // add Preserve attribute to main function
+                auto &func = compilerCtx->getImportedModule(entryModuleIndex)->functionTable[compilerCtx->getImportedModule(entryModuleIndex)->functionTable.getIndex(L"main#")];
+                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+            } catch (const std::out_of_range &) {
+                panic(0, 0, "IROptimizer::buildCallGraph(): entry point not found");
+            }
+        }
+
+        while (!q.empty()) {
+            auto function = q.front();
+            q.pop();
+
+            if (visitedFunctions.contains(function))
+                continue;
+            
+            for (auto &i : compilerCtx->getImportedModule(function.first)->functionTable[function.second]->codeBlock) {
+                for (auto &ins : i->getIRArray()) {
+                    if (ins.opcode == IR::Opcode::invoke) {
+                        CallGraph::FuncIdentifier callee{ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex};
+                        callGraph.addCall(function, callee);
+                        q.push(callee);
+                    }
+                }
+            }
+
+            visitedFunctions.insert(function);
+        }
+
+        callGraph.traverseGraph();
+    }
+
+    void CallGraph::traverseGraph() {
+        for (const auto &function : functions) {
+            if (callerGraph[function].size() == 0) {
+                // no predecessors
+                if (callGraph[function].size() == 0) {
+                    unreachableFunctions.insert(function);
+                } else {
+                    entryPoints.insert(function);
+                }
+            }
+        }
+    }
+
+    void IROptimizer::optimize() {
+        std::queue<CallGraph::FuncIdentifier> worklist;
+        for (const auto& funcId : callGraph.functions) {
+            functionAnalysisResults[funcId] = FunctionAnalysisInfo{}; 
+            worklist.push(funcId);
+        }
+
+        while (!worklist.empty()) {
+            auto funcId = worklist.front();
+            worklist.pop();
+
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto& func = targetedModule->functionTable[funcId.second];
+
+            // skip unreachable functions during analysis phase, unless they are preserved.
+            if (callGraph.unreachableFunctions.count(funcId) && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
+                continue;
+            }
+
+            IRFunctionOptimizer analyzer{compilerCtx, targetedModule, functionAnalysisResults};
+            analyzer.setTargetFunction(func);
+
+            // Re-analyze the function to get its new properties
+            bool newIsNullable = analyzer.performNullableCheck();
+            bool newIsRaw = analyzer.performRawCheck();
+
+            FunctionAnalysisInfo& currentInfo = functionAnalysisResults.at(funcId);
+            if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw) {
+                // update the global results
+                currentInfo.isReturnValueNullable = newIsNullable;
+                currentInfo.isReturnValueRaw = newIsRaw;
+
+                // if they changed, add all CALLERS of this function back to the worklist
+                // because their analysis might now be incorrect.
+                if (callGraph.callerGraph.count(funcId)) {
+                    for (const auto& callerId : callGraph.callerGraph.at(funcId)) {
+                        worklist.push(callerId);
+                    }
+                }
+            }
+        }
+
+        for (const auto& [funcId, analysisInfo] : functionAnalysisResults) {
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto& func = targetedModule->functionTable[funcId.second];
+
+            // get a mutable reference to the function's return type
+            auto returnType = func->returnType;
+
+            // synchronize the Nullable attribute
+            if (analysisInfo.isReturnValueNullable && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
+                returnType->addAttribute(IRValueType::ValueAttr::Nullable);
+            } else {
+                // crucially, remove the attribute if the analysis proved non-nullability.
+                returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
+            }
+
+            // synchronize the Raw attribute
+            if (analysisInfo.isReturnValueRaw && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
+                returnType->addAttribute(IRValueType::ValueAttr::Raw);
+            } else {
+                returnType->removeAttribute(IRValueType::ValueAttr::Raw);
+            }
+        }
+
+        for (const auto& funcId : callGraph.functions) {
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto& func = targetedModule->functionTable[funcId.second];
+
+            // skip unreachable/dead functions from being optimized, or just clear their bodies.
+            if (callGraph.unreachableFunctions.count(funcId) && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
+                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Unreachable);
+                func->codeBlock.clear();
+                continue;
+            }
+
+            set_current_file_path(func->debugInfo.sourceFile);
+            IRFunctionOptimizer optimizer{compilerCtx, targetedModule, functionAnalysisResults};
+            optimizer.setTargetFunction(func).doOptimizationForCurrentFunction();
+        }
+    }
+
+    bool FunctionAnalysisInfo::operator!=(const FunctionAnalysisInfo &other) const {
+        return isReturnValueNullable != other.isReturnValueNullable || isReturnValueRaw != other.isReturnValueRaw;
     }
 } // namespace yoi

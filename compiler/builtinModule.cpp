@@ -93,7 +93,7 @@ namespace yoi {
 
 
         for (auto &sharedValue : sharedValueType) {
-            if (sharedValue.second->isForeignBasicType())
+            if (sharedValue.second->isForeignBasicType() || sharedValue.second->type == IRValueType::valueType::none)
                 continue;
             auto nullInterface = std::make_pair(HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0);
             auto nullImplName = L"interfaceImpl#" + std::to_wstring(HOSHI_COMPILER_CTX_GLOB_ID_CONST) + L"#0#" + sharedValue.second->to_string();

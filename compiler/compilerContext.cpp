@@ -193,14 +193,9 @@ namespace yoi {
     }
 
     void compilerContext::runOptimizer() {
-        for (auto &[modIndex, irMod] : moduleImported) {
-            for (auto &i : irMod->functionTable) {
-                // printf("%s\n", wstring2string(i.second->to_string()).c_str());
-                set_current_file_path(i.second->debugInfo.sourceFile);
-                IROptimizer optimizer{shared_from_this(), irMod};
-                optimizer.setTargetFunction(i.second).doOptimizationForCurrentFunction();
-            }
-        }
+        IROptimizer opt{shared_from_this(), 0};
+        opt.buildCallGraph();
+        opt.optimize();
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getPointerType() {

@@ -36,6 +36,8 @@ TEST_CASES = {
     "string": {"type": "executable", "return_code": 0},
     "rich-digit": {"type": "executable", "return_code": 0},
     "lambda": {"type": "executable", "return_code": 0},
+    "vector": {"type": "executable", "return_code": 0},
+    "fib": {"type": "executable", "return_code": 0},
 }
 
 

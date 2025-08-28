@@ -180,45 +180,7 @@ namespace yoi {
         // --- Handle 'none' type as a special singleton object ---
         auto noneYoiType = compilerCtx->getNoneObjectType();
         auto noneKey = std::make_tuple(noneYoiType->type, noneYoiType->typeAffiliateModule, noneYoiType->typeIndex);
-        auto* noneStructType = llvm::StructType::create(*TheContext, {Builder->getInt64Ty()}, "yoi.basic.none");
-        structTypeMap[noneKey] = noneStructType;
         foreignTypeMap[noneKey] = llvm::Type::getVoidTy(*TheContext);
-
-        // Create the global singleton instance for noneObject
-        auto* noneInitializer = llvm::ConstantStruct::get(noneStructType, {
-            llvm::ConstantInt::get(Builder->getInt64Ty(), -1) // Special refcount, never collected
-        });
-        noneObjectSingleton = new llvm::GlobalVariable(
-            *TheModule,
-            noneStructType,
-            true, // isConstant
-            llvm::GlobalValue::InternalLinkage,
-            noneInitializer,
-            "YoiNoneObject"
-        );
-
-        // --- Generate GC Functions for 'none' type (no-ops) ---
-        {
-            auto* llvmStructPtrType = llvm::PointerType::get(noneStructType, 0);
-            // Increase
-            auto incFuncName = "basic_none_gc_refcount_increase";
-            auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
-            incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
-            functionMap[string2wstring(incFuncName)] = incFunction;
-            auto* incBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
-            Builder->SetInsertPoint(incBlock);
-            Builder->CreateRetVoid();
-            // Decrease
-            auto decFuncName = "basic_none_gc_refcount_decrease";
-            auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
-            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
-            functionMap[string2wstring(decFuncName)] = decFunction;
-            auto* decBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
-            Builder->SetInsertPoint(decBlock);
-            Builder->CreateRetVoid();
-        }
 
         // --- Generate GC Functions for Other Basic Types ---
         for (const auto& pair : basicTypes) {
@@ -348,6 +310,9 @@ namespace yoi {
 
     void LLVMCodegen::generateFunctionDeclarations() {
         for (auto& funcPair : yoiModule->functionTable) {
+            if (funcPair.second->hasAttribute(IRFunctionDefinition::FunctionAttrs::Unreachable))
+                continue;
+
             auto funcDef = funcPair.second;
             auto funcName = wstring2string(funcDef->name);
             auto* funcType = getFunctionType(funcDef);
@@ -638,6 +603,9 @@ namespace yoi {
 
     void LLVMCodegen::generateFunctionImplementations() {
         for (auto& funcPair : yoiModule->functionTable) {
+            if (funcPair.second->hasAttribute(IRFunctionDefinition::FunctionAttrs::Unreachable))
+                continue;
+            
             if (!funcPair.second->codeBlock.empty()) {
                 currentFunctionDef = funcPair.second;
                 generateFunction(*funcPair.second);
@@ -1165,14 +1133,18 @@ namespace yoi {
                 generateFunctionExitCleanup();
                 auto retVal = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
                 // The caller receives ownership, so we don't decrease the ref count here.
-                auto object = ensureObject(retVal.yoiType, retVal.llvmValue);
-                Builder->CreateRet(object.second);
+                if (currentFunctionDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                    Builder->CreateRet(unboxValue(retVal.llvmValue, retVal.yoiType));
+                } else {
+                    auto object = ensureObject(retVal.yoiType, retVal.llvmValue);
+                    Builder->CreateRet(object.second);
+                }
                 break;
             }
             case IR::Opcode::ret_none: {
                 generateFunctionExitCleanup();
                 // Return the global singleton none object
-                Builder->CreateRet(noneObjectSingleton);
+                Builder->CreateRetVoid();
                 break;
             }
             // Functions
@@ -1188,17 +1160,20 @@ namespace yoi {
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
-                    args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
+
+                    if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                        args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
+                    } else {
+                        args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
+                    }
+                    
                     // Callee will retain, so we release the stack's reference
                     // callGcFunction(arg.llvmValue, arg.yoiType, false);
                 }
                 std::reverse(args.begin(), args.end());
 
                 if (funcDef->returnType->type == IRValueType::valueType::none) {
-                    auto* call = Builder->CreateCall(function, args, "calltmp");
-                    // The returned value is the singleton, but we still put it on the stack.
-                    // It doesn't need a ref count increase.
-                    valueStackMap[fromBlock][toBlock].push_back({call, funcDef->returnType});
+                    Builder->CreateCall(function, args);
                 } else {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value comes with a reference count for us to own.
@@ -1245,10 +1220,7 @@ namespace yoi {
                 std::reverse(args.begin(), args.end());
 
                 if (funcDef->returnType->type == IRValueType::valueType::none) {
-                    auto* call = Builder->CreateCall(function, args, "calltmp");
-                    // The returned value is the singleton, but we still put it on the stack.
-                    // It doesn't need a ref count increase.
-                    valueStackMap[fromBlock][toBlock].push_back({call, managedPtr(compilerCtx->normalizeForeignBasicType(funcDef->returnType))});
+                    Builder->CreateCall(function, args);
                 } else {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value comes with a reference count for us to own.
@@ -1406,8 +1378,13 @@ namespace yoi {
                     // callGcFunction(arg.llvmValue, arg.yoiType, false); // Arguments are consumed by the call
                 }
 
-                llvm::CallInst* call = Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs, "virtcall");
-                valueStackMap[fromBlock][toBlock].push_back({call, methodDef->returnType});
+                if (methodDef->returnType->type == IRValueType::valueType::none) {
+                    Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs);
+                } else {
+                    llvm::CallInst* call = Builder->CreateCall(virtualFuncType, funcPtrToCall, finalArgs, "virtcall");
+                    valueStackMap[fromBlock][toBlock].push_back({call, methodDef->returnType});
+                }
+                
 
                 callGcFunction(interfaceShellVal.llvmValue, interfaceShellVal.yoiType, false);
                 break;
@@ -1599,12 +1576,9 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::pop: {
+                if (valueStackMap[fromBlock][toBlock].empty())
+                    break;
                 auto val = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
-                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-                    auto globalStrConst = llvm::ConstantDataArray::getString(*TheContext, "Popped value: " + val.llvmValue->getName().str(), true);
-                    auto globalStr = new llvm::GlobalVariable(*TheModule, globalStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, globalStrConst, "popped_value_str");
-                    Builder->CreateCall(runtimeDebugPrintFunc, {globalStr});
-                }
                 callGcFunction(val.llvmValue, val.yoiType, false);
                 break;
             }
@@ -1946,6 +1920,8 @@ namespace yoi {
                 return Builder->getFloatTy();
             case IRValueType::valueType::foreignInt32Type:
                 return Builder->getInt32Ty();
+            case IRValueType::valueType::none:
+                return Builder->getVoidTy();
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
@@ -1954,14 +1930,11 @@ namespace yoi {
     }
 
     llvm::FunctionType* LLVMCodegen::getFunctionType(const std::shared_ptr<IRFunctionDefinition>& funcDef) {
-        auto* returnType = yoiTypeToLLVMType(funcDef->returnType);
-        if (funcDef->returnType->type == IRValueType::valueType::none && returnType->isVoidTy()) {
-            panic(0,0, "Function returning none should not map to void return type.");
-        }
+        auto* returnType = yoiTypeToLLVMType(funcDef->returnType, funcDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw));
 
         std::vector<llvm::Type*> argTypes;
         for (const auto& argType : funcDef->argumentTypes) {
-            argTypes.push_back(yoiTypeToLLVMType(argType));
+            argTypes.push_back(yoiTypeToLLVMType(argType, argType->hasAttribute(IRValueType::ValueAttr::Raw)));
         }
         return llvm::FunctionType::get(returnType, argTypes, false);
     }
@@ -2516,8 +2489,7 @@ namespace yoi {
                     }
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
-                        Builder->CreateCall(externFuncDecl, args);
-                        Builder->CreateRet(noneObjectSingleton);
+                        Builder->CreateRetVoid();
                     } else {
                         auto result = Builder->CreateCall(externFuncDecl, args, "result");
 

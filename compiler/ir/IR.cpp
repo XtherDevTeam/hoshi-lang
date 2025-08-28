@@ -258,6 +258,8 @@ namespace yoi {
     }
 
     void IRBuilder::jumpOp(yoi::indexT target) {
+        if (hasTerminated())
+            return;
         insert(IR(IR::Opcode::jump, {IROperand(IROperand::operandType::codeBlock, target)}, currentDebugInfo));
     }
 
@@ -265,6 +267,8 @@ namespace yoi {
         // fetch condition from tempVarStack
         auto condition = tempVarStack.back();
         tempVarStack.pop_back();
+        if (hasTerminated())
+            return;
         yoi_assert(
             condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
         // insert jumpIf operation
@@ -407,11 +411,15 @@ namespace yoi {
     void IRBuilder::retOp(bool returnWithNone) {
         // fetch return value from tempVarStack
         if (returnWithNone) {
+            if (hasTerminated())
+                return;
             insert(IR(IR::Opcode::ret_none, {}, currentDebugInfo));
             return;
         }
         auto retValue = tempVarStack.back();
         tempVarStack.pop_back();
+        if (hasTerminated())
+            return;
         insert(IR(IR::Opcode::ret, {}, currentDebugInfo));
     }
 
@@ -485,11 +493,11 @@ namespace yoi {
         r += yoi::wstr(indent, L' ') + L"func " + name + L"(";
         if (!argumentTypes.empty()) {
             for (auto it = argumentTypes.begin(); it != argumentTypes.end() - 1; ++it) {
-                r += (*it)->to_string() + L", ";
+                r += (*it)->to_string(true) + L", ";
             }
-            r += argumentTypes.back()->to_string();
+            r += argumentTypes.back()->to_string(true);
         }
-        r += L") : " + returnType->to_string() + L" {\n";
+        r += L") : " + returnType->to_string(true) + L" {\n";
         r += variableTable.to_string(indent + 4);
         for (auto idx = 0; idx < codeBlock.size(); ++idx) {
             r += yoi::wstr(indent + 4, L' ') + L"block#" + std::to_wstring(idx) + L":\n";
@@ -1436,5 +1444,19 @@ namespace yoi {
         while (codeBlockInsertionStates.size() > stateIndex) {
             discardState();
         }
+    }
+    
+    bool IRBuilder::hasTerminated() {
+        if (!codeBlocks[currentCodeBlockIndex]->getIRArray().empty()) {
+            switch (codeBlocks[currentCodeBlockIndex]->getIRArray().back().opcode) {
+                case IR::Opcode::ret:
+                case IR::Opcode::ret_none:
+                case IR::Opcode::jump:
+                    return true;
+                default:
+                    break;
+            }
+        }
+        return false;
     }
 } // namespace yoi
