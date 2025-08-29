@@ -1,6 +1,5 @@
 # TODO List
 
-- [ ] 异常抛出、捕获的设计和实现
 - [x] dyn_cast 关键字实现
 - [x] 支持 基本类型 实现 interface
 - [x] 加入 `null`

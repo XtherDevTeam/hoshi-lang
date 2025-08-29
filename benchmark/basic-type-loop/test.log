@@ -1,0 +1,15 @@
+❯ clang++ benchmark/basic-type-loop/loop.cpp -o loop
+❯ time ./loop
+./loop  0.54s user 0.01s system 60% cpu 0.898 total
+❯ time python benchmark/basic-type-loop/loop.py
+7051.571197642306
+python benchmark/basic-type-loop/loop.py  9.53s user 0.03s system 99% cpu 9.609 total
+❯ ./cmake-build-release/hoshi_lang benchmark/basic-type-loop/loop.hoshi -o loop --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 
+Linking final darwin executable...
+Compilation successful!
+❯ ./loop
+❯ time ./loop
+./loop  0.35s user 0.00s system 99% cpu 0.352 total
