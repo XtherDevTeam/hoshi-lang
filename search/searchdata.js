@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "12345678_abcdefghijklmnoprstuvwxy~和复实属接的直语",
   1: "abcdefghilmnoprstuvwy",
   2: "my",
-  3: "abcdilmnoprstuvw",
+  3: "abcdfilmnoprstuvw",
   4: "abcdefghijlmnoprstuvwxy~",
   5: "_abcdefghiklmnoprstuvwy",
   6: "cdefinprtuvw",

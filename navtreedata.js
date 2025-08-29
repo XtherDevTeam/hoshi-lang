@@ -182,13 +182,13 @@ var NAVTREEINDEX =
 "classyoi_1_1letAssignmentPair.html#a530100090e106d34f62aae98fc0ef200",
 "classyoi_1_1structDefInnerPair.html#a62ccf4d62fc00543e3fe117e78831807",
 "classyoi_1_1visitor.html#a690b648fe3ab0a80c36f6c8a60bcaddb",
-"functions_vars_u.html",
-"memory_8h.html#a77e252460b25bfcbcb0745e81860a2ec",
-"namespaceyoi.html#a8f43718feda8ae338b496cac3a709be4",
-"runtime_8cpp.html#aa0417a71c55e8edf37c8f1be6e1be4c5",
-"structyoi_1_1IRFunctionDefinition_1_1Builder.html#a11ea29649c52a300ccc326831b8bf9b2",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a35130bbee286ecb2905a1eacbddb309d",
-"unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb"
+"functions_vars_n.html",
+"memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220",
+"namespaceyoi.html#a807c90715ad772fafda4bd579c1e959e",
+"runtime_2string_2string_8cpp.html",
+"structyoi_1_1IRDebugInfo.html",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a24913b1abeac61926c5e25a068f518ac",
+"unionyoi_1_1IROperand_1_1operandValue.html#acc27ee0dd1c490cd660915990e9b35c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
