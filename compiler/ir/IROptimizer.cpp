@@ -4000,12 +4000,7 @@ namespace yoi {
     void CallGraph::traverseGraph() {
         for (const auto &function : functions) {
             if (callerGraph[function].size() == 0) {
-                // no predecessors
-                if (callGraph[function].size() == 0) {
-                    unreachableFunctions.insert(function);
-                } else {
-                    entryPoints.insert(function);
-                }
+                unreachableFunctions.insert(function);
             }
         }
     }
