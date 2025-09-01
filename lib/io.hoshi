@@ -1,0 +1,81 @@
+use file "file"
+use runtime "runtime"
+
+struct ArrayBuffer {
+    buf: char[],
+    current_pos: int,
+    constructor(size: int),
+    constructor(buf: char[])
+}
+
+impl ArrayBuffer {
+    constructor(size: int) {
+        self.buf = new char[size]
+        self.current_pos = 0
+    }
+    constructor(buf: char[]) {
+        self.buf = buf
+        self.current_pos = 0
+    }
+}
+
+impl ArrayBuffer : file.AbstractFile {
+    read(size: int) : char[] {
+        if (size > this.buf.length - this.current_pos) {
+            size = this.buf.length - this.current_pos
+            let result = new char[size]
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size);
+            this.current_pos = this.buf.length
+            return result
+        } else {
+            let result = new char[size]
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size);
+            this.current_pos += size
+            return result
+        }
+    },
+    write(buf: char[]) : int {
+        let size = buf.length
+        if (size > this.buf.length - this.current_pos) {
+            size = this.buf.length - this.current_pos
+        }
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size);
+        this.current_pos += size
+        return size
+    },
+    seek(offset: int, whence: int) : int {
+        if (whence == 0) {
+            this.current_pos = offset
+        } else if (whence == 1) {
+            this.current_pos += offset
+        } else if (whence == 2) {
+            this.current_pos = this.buf.length + offset
+        }
+        return this.current_pos
+    },
+    tell() : int {
+        return this.current_pos
+    },
+    flush() : void {
+    },
+    close() : void {
+    },
+    is_eof() : bool {
+        return this.current_pos >= this.buf.length
+    },
+    size() : int {
+        return this.buf.length
+    },
+    is_seekable() : bool {
+        return true
+    },
+    is_readable() : bool {
+        return true
+    },
+    is_writable() : bool {
+        return true
+    },
+    is_closed() : bool {
+        return false
+    }
+}

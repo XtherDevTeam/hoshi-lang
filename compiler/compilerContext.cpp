@@ -47,10 +47,14 @@ namespace yoi {
             for (auto &prep : buildConfig->searchPaths) {
                 std::filesystem::path final = prep / std::filesystem::path(filepath);
                 rFilepath = realpath(final.wstring());
-                if(std::filesystem::exists(rFilepath))
+                if (std::filesystem::exists(rFilepath) && std::filesystem::is_regular_file(rFilepath)) {
                     break;
-                else
+                } else if (std::filesystem::exists(rFilepath + L".hoshi") && std::filesystem::is_regular_file(rFilepath + L".hoshi")) {
+                    rFilepath += L".hoshi";
+                    break;
+                } else {
                     continue;
+                }
             }
         } else {
             return HOSHI_COMPILER_CTX_GLOB_ID_CONST;

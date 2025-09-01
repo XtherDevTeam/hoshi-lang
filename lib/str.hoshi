@@ -1,12 +1,6 @@
 use lang "builtin"
 use math "math"
-
-import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
-import strlen(str: ptr) : unsigned from "builtin"
-import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
-import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
-import puts(str: ptr) : int32 from "builtin"
-import runtime_debug_print_int_1(value: int) : none from "builtin"
+use runtime "runtime"
 
 struct Str {
     data: char[],
@@ -52,10 +46,10 @@ struct Str {
 
 impl Str {
     constructor(literal: string) {
-        this.length = strlen(literal)
+        this.length = runtime.strlen(literal)
         this.capacity = this.length + 1
         this.data = new char[this.capacity]()
-        memcpy(runtime_get_string_array_data_pointer(this.data), literal, this.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.data), literal, this.length)
         this.data[this.length] = '\0'
     },
     constructor(arr: char[]) {
@@ -83,7 +77,7 @@ impl Str {
             return
         }
         let new_data = new char[new_capacity]()
-        memcpy(runtime_get_string_array_data_pointer(new_data), runtime_get_string_array_data_pointer(this.data), this.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_data), runtime.runtime_get_string_array_data_pointer(this.data), this.length)
         this.data = new_data
         this.capacity = new_capacity
     },
@@ -114,7 +108,7 @@ impl Str {
             return
         }
         let new_data = new char[this.length + 1u]()
-        memcpy(runtime_get_string_array_data_pointer(new_data), runtime_get_string_array_data_pointer(this.data), this.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_data), runtime.runtime_get_string_array_data_pointer(this.data), this.length)
         this.data = new_data
         this.capacity = this.length + 1
     },
@@ -122,73 +116,73 @@ impl Str {
         if (prefix.length > this.length) {
             return false
         }
-        return memcmp(runtime_get_string_array_data_pointer(this.data), runtime_get_string_array_data_pointer(prefix.data), prefix.length) == 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(this.data), runtime.runtime_get_string_array_data_pointer(prefix.data), prefix.length) == 0
     },
     endswith(suffix: Str) : bool {
         if (suffix.length > this.length) {
             return false
         }
-        return memcmp(runtime_get_string_array_data_pointer(this.data) + this.length - suffix.length, runtime_get_string_array_data_pointer(suffix.data), suffix.length) == 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(this.data) + this.length - suffix.length, runtime.runtime_get_string_array_data_pointer(suffix.data), suffix.length) == 0
     },
     static operator+(a: Str, b: Str) : Str {
         let new_str = Str(a.length + b.length)
-        memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(a.data), a.length)
-        memcpy(runtime_get_string_array_data_pointer(new_str.data) + a.length, runtime_get_string_array_data_pointer(b.data), b.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(a.data), a.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + a.length, runtime.runtime_get_string_array_data_pointer(b.data), b.length)
         new_str.data[a.length + b.length] = '\0'
         new_str.length = a.length + b.length
         return new_str
     },
     static operator+(a: Str, b: string) : Str {
-        let new_str = Str(a.length + strlen(b))
-        memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(a.data), a.length)
-        memcpy(runtime_get_string_array_data_pointer(new_str.data) + a.length, b, strlen(b))
-        new_str.data[a.length + strlen(b)] = '\0'
-        new_str.length = a.length + strlen(b)
+        let new_str = Str(a.length + runtime.strlen(b))
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(a.data), a.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + a.length, b, runtime.strlen(b))
+        new_str.data[a.length + runtime.strlen(b)] = '\0'
+        new_str.length = a.length + runtime.strlen(b)
         return new_str
     },
     static operator+(a: string, b: Str) : Str {
-        let new_str = Str(strlen(a) + b.length)
-        memcpy(runtime_get_string_array_data_pointer(new_str.data), a, strlen(a))
-        memcpy(runtime_get_string_array_data_pointer(new_str.data) + strlen(a), runtime_get_string_array_data_pointer(b.data), b.length)
-        new_str.data[strlen(a) + b.length] = '\0'
-        new_str.length = strlen(a) + b.length
+        let new_str = Str(runtime.strlen(a) + b.length)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), a, runtime.strlen(a))
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + runtime.strlen(a), runtime.runtime_get_string_array_data_pointer(b.data), b.length)
+        new_str.data[runtime.strlen(a) + b.length] = '\0'
+        new_str.length = runtime.strlen(a) + b.length
         return new_str
     },
     static operator==(a: Str, b: Str) : bool {
         if (a.length != b.length) {
             return false
         }
-        return memcmp(runtime_get_string_array_data_pointer(a.data), runtime_get_string_array_data_pointer(b.data), a.length) == 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), runtime.runtime_get_string_array_data_pointer(b.data), a.length) == 0
     },
     static operator==(a: Str, b: string) : bool {
-        if (a.length != strlen(b)) {
+        if (a.length != runtime.strlen(b)) {
             return false
         }
-        return memcmp(runtime_get_string_array_data_pointer(a.data), b, a.length) == 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), b, a.length) == 0
     },
     static operator==(a: string, b: Str) : bool {
-        if (strlen(a) != b.length) {
+        if (runtime.strlen(a) != b.length) {
             return false
         }
-        return memcmp(a, runtime_get_string_array_data_pointer(b.data), b.length) == 0
+        return runtime.memcmp(a, runtime.runtime_get_string_array_data_pointer(b.data), b.length) == 0
     },
     static operator!=(a: Str, b: Str) : bool {
         if (a.length != b.length) {
             return true
         }
-        return memcmp(runtime_get_string_array_data_pointer(a.data), runtime_get_string_array_data_pointer(b.data), a.length) != 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), runtime.runtime_get_string_array_data_pointer(b.data), a.length) != 0
     },
     static operator!=(a: Str, b: string) : bool {
-        if (a.length != strlen(b)) {
+        if (a.length != runtime.strlen(b)) {
             return true
         }
-        return memcmp(runtime_get_string_array_data_pointer(a.data), b, a.length) != 0
+        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), b, a.length) != 0
     },
     static operator!=(a: string, b: Str) : bool {
-        if (strlen(a) != b.length) {
+        if (runtime.strlen(a) != b.length) {
             return true
         }
-        return memcmp(a, runtime_get_string_array_data_pointer(b.data), b.length) != 0
+        return runtime.memcmp(a, runtime.runtime_get_string_array_data_pointer(b.data), b.length) != 0
     },
     static operator[](self: Str, index: int) : char {
         if (index < 0 || index >= self.length) {
@@ -203,7 +197,7 @@ impl Str {
         self.data[index] = value
     },
     c_str() : int {
-        return runtime_get_string_array_data_pointer(this.data)
+        return runtime.runtime_get_string_array_data_pointer(this.data)
     },
     find(pattern: Str, start: int) : int {
         if (pattern.length > this.length) {
@@ -264,7 +258,7 @@ impl Str {
     },
     substring(start: unsigned, end: unsigned) : Str {
         let new_str = Str(end - start)
-        memcpy(runtime_get_string_array_data_pointer(new_str.data), runtime_get_string_array_data_pointer(this.data) + start, end - start)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(this.data) + start, end - start)
         new_str.data[end - start] = '\0'
         new_str.length = end - start
         return new_str
@@ -280,7 +274,7 @@ impl Str {
         let new_str = Str(total_length)
         let offset = 0
         for (let i = 0; i < strs.length; i += 1) {
-            memcpy(runtime_get_string_array_data_pointer(new_str.data) + offset, runtime_get_string_array_data_pointer(strs[i].data), strs[i].length)
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + offset, runtime.runtime_get_string_array_data_pointer(strs[i].data), strs[i].length)
             offset += strs[i].length
         }
         new_str.data[total_length] = '\0'
@@ -320,22 +314,22 @@ impl Str {
         let index_after_last_pattern = 0u // fuck it, while 0 become 0u, it tell me index not exist
         let offset = 0u // the current offset in res.data
 
-        let res_data_ptr = runtime_get_string_array_data_pointer(res.data)
-        let this_data_ptr = runtime_get_string_array_data_pointer(this.data)
-        let value_data_ptr = runtime_get_string_array_data_pointer(value.data)
+        let res_data_ptr = runtime.runtime_get_string_array_data_pointer(res.data)
+        let this_data_ptr = runtime.runtime_get_string_array_data_pointer(this.data)
+        let value_data_ptr = runtime.runtime_get_string_array_data_pointer(value.data)
 
         while (index != -1) {
             // copy the part before the pattern
-            memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
+            runtime.memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
             offset += index - index_after_last_pattern
             // copy the value
-            memcpy(res_data_ptr + offset, value_data_ptr, value.length)
+            runtime.memcpy(res_data_ptr + offset, value_data_ptr, value.length)
             offset += value.length
             index_after_last_pattern = index + pattern.length
             index = this.find(pattern, index_after_last_pattern as int)
         }
         // copy the part after the last pattern
-        memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, this.length - index_after_last_pattern)
+        runtime.memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, this.length - index_after_last_pattern)
         res.length = this.length - pattern.length * occur + value.length * occur
         res.data[res.length] = '\0'
         return res
@@ -425,7 +419,6 @@ impl string : Stringable {
 func format(fmt: Str, args: Stringable[]) : Str {
     let occur = fmt.find_all(Str("{}"))
     if (occur == 0u) {
-        runtime_debug_print_int_1(occur)
         return fmt
     }
     let strs = new Str[args.length]()
@@ -438,23 +431,23 @@ func format(fmt: Str, args: Stringable[]) : Str {
     let index = 0u
     let offset = 0u
     let res = Str(fmt.length + total_strs_length - occur as unsigned * 2u)
-    let res_data_ptr = runtime_get_string_array_data_pointer(res.data)
-    let fmt_data_ptr = runtime_get_string_array_data_pointer(fmt.data)
+    let res_data_ptr = runtime.runtime_get_string_array_data_pointer(res.data)
+    let fmt_data_ptr = runtime.runtime_get_string_array_data_pointer(fmt.data)
     let current_arg = 0u
     
     while (index != -1) {
         // copy the part before the pattern
-        memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
+        runtime.memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
         offset += index - index_after_last_pattern
         index_after_last_pattern = index + 2u
         index = fmt.find(Str("{}"), index_after_last_pattern as int)
         // copy the value
-        memcpy(res_data_ptr + offset, runtime_get_string_array_data_pointer(strs[current_arg].data), strs[current_arg].length)
+        runtime.memcpy(res_data_ptr + offset, runtime.runtime_get_string_array_data_pointer(strs[current_arg].data), strs[current_arg].length)
         offset += strs[current_arg].length
         current_arg += 1
     }
     // copy the part after the last pattern
-    memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, fmt.length - index_after_last_pattern)
+    runtime.memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, fmt.length - index_after_last_pattern)
     res.length = fmt.length + total_strs_length - occur * 2u
     res.data[res.length] = '\0'
     return res

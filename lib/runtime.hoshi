@@ -1,0 +1,6 @@
+import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
+import strlen(str: ptr) : unsigned from "builtin"
+import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
+import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
+import puts(str: ptr) : int32 from "builtin"
+import runtime_debug_print_int_1(value: int) : none from "builtin"
