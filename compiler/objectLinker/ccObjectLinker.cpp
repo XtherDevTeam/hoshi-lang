@@ -100,6 +100,7 @@ namespace yoi {
             command += " -shared"; // build a shared library
         }
 #ifdef _WIN32
+        command += " -mconsole"; // fuck argc, argv
         replace_all(command, std::string("\""), std::string("\\\""));
         command = "powershell.exe -Command \"&" + command + "\""; // fuck win32 command line
 #endif

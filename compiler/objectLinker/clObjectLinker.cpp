@@ -1,11 +1,11 @@
 #include "clObjectLinker.h"
 #include "share/def.hpp"
+#include <cstdlib>
+#include <filesystem>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <cstdlib>
-#include <filesystem>
 
 namespace yoi {
 
@@ -20,7 +20,7 @@ namespace yoi {
 
         // 1. Check PATH environment variable
         // _wgetenv returns a pointer to a wide-character string (read-only)
-        const char* path_env = std::getenv("PATH");
+        const char *path_env = std::getenv("PATH");
         if (path_env) {
             std::wstring path_env_str = yoi::string2wstring(path_env);
             size_t current_pos = 0;
@@ -56,42 +56,65 @@ namespace yoi {
             L"C:/Program Files (x86)/Microsoft Visual Studio/", // For older VS or 32-bit components
             L"C:/Program Files/Microsoft Visual Studio/"        // For newer VS or 64-bit components
         };
+        // Windows Kits
+        std::vector<std::filesystem::path> windows_kit_install_bases = {L"C:/Program Files (x86)/Windows Kits/10/Lib",
+                                                                        L"C:/Program Files/Windows Kits/10/Lib"};
 
-        for (const auto& base_path : vs_install_bases) {
+        for (const auto &base_path : vs_install_bases) {
             if (!std::filesystem::exists(base_path) || !std::filesystem::is_directory(base_path)) {
                 continue;
             }
-            for (const auto& year_entry : std::filesystem::directory_iterator(base_path)) {
-                if (!year_entry.is_directory()) continue;
+            for (const auto &year_entry : std::filesystem::directory_iterator(base_path)) {
+                if (!year_entry.is_directory())
+                    continue;
 
-                for (const auto& component_entry : std::filesystem::directory_iterator(year_entry.path())) {
-                    if (!component_entry.is_directory()) continue;
+                for (const auto &component_entry : std::filesystem::directory_iterator(year_entry.path())) {
+                    if (!component_entry.is_directory())
+                        continue;
 
                     std::filesystem::path vc_tools_msvc_path = component_entry.path() / L"VC" / L"Tools" / L"MSVC";
 
-                    if (!std::filesystem::exists(vc_tools_msvc_path) || !std::filesystem::is_directory(vc_tools_msvc_path)) {
+                    if (!std::filesystem::exists(vc_tools_msvc_path) ||
+                        !std::filesystem::is_directory(vc_tools_msvc_path)) {
                         continue;
                     }
 
                     // Iterate through specific MSVC toolchain versions (e.g., "14.37.32822")
-                    for (const auto& msvc_version_entry : std::filesystem::directory_iterator(vc_tools_msvc_path)) {
-                        if (!msvc_version_entry.is_directory()) continue;
+                    for (const auto &msvc_version_entry : std::filesystem::directory_iterator(vc_tools_msvc_path)) {
+                        if (!msvc_version_entry.is_directory())
+                            continue;
 
                         // Common bin paths relative to MSVC version folder (prefer x64 host/target)
                         std::vector<std::filesystem::path> bin_sub_paths = {
-                            L"bin/Hostx64/x64",  // Preferred: 64-bit host, 64-bit target
-                            L"bin/Hostx86/x64",  // 32-bit host, 64-bit target (e.g., when run from VS dev cmd x86)
-                            L"bin/Hostx64/x86",  // 64-bit host, 32-bit target
-                            L"bin/Hostx86/x86"   // 32-bit host, 32-bit target
+                            L"bin/Hostx64/x64", // Preferred: 64-bit host, 64-bit target
+                            L"bin/Hostx86/x64", // 32-bit host, 64-bit target (e.g., when run from VS dev cmd x86)
+                            L"bin/Hostx64/x86", // 64-bit host, 32-bit target
+                            L"bin/Hostx86/x86"  // 32-bit host, 32-bit target
                         };
+                        // Library paths contain the runtime library (e.g., "lib/x64")
+                        std::vector<std::filesystem::path> lib_sub_paths = {L"lib/x64", L"lib/x86"};
 
-                        for (const auto& bin_sub_path : bin_sub_paths) {
-                            std::filesystem::path potential_cl_path = msvc_version_entry.path() / bin_sub_path / cl_exe_name;
-                            if (std::filesystem::exists(potential_cl_path) && std::filesystem::is_regular_file(potential_cl_path)) {
+                        for (const auto &bin_sub_path : bin_sub_paths) {
+                            std::filesystem::path potential_cl_path =
+                                msvc_version_entry.path() / bin_sub_path / cl_exe_name;
+                            if (std::filesystem::exists(potential_cl_path) &&
+                                std::filesystem::is_regular_file(potential_cl_path)) {
                                 found_path = potential_cl_path;
                                 setLinkerPath(found_path.wstring());
-                                std::wcout << L"clObjectLinker: Found cl.exe by searching VS installs: " << getLinkerPath() << std::endl;
-                                return *this;
+                                std::wcout << L"clObjectLinker: Found cl.exe by searching VS installs: "
+                                           << getLinkerPath() << std::endl;
+                                // return *this;
+                                break;
+                            }
+                        }
+                        for (const auto &lib_sub_path : lib_sub_paths) {
+                            std::filesystem::path lib_path = msvc_version_entry.path() / lib_sub_path;
+                            // check whether the runtime library dir exists
+                            if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
+                                vsRuntimePath.emplace_back(lib_path);
+                                std::wcout << L"clObjectLinker: Found c runtime library by searching VS installs: "
+                                           << getElysiaRuntimePath() << std::endl;
+                                break;
                             }
                         }
                     }
@@ -99,7 +122,43 @@ namespace yoi {
             }
         }
 
-        throw std::runtime_error("cl.exe linker not found. Please ensure Visual Studio Build Tools are installed and configured, or add cl.exe to your system PATH.");
+        for (const auto &base_path : windows_kit_install_bases) {
+            if (!std::filesystem::exists(base_path) || !std::filesystem::is_directory(base_path)) {
+                continue;
+            }
+            for (const auto &version_entry : std::filesystem::directory_iterator(base_path)) {
+                if (!version_entry.is_directory())
+                    continue;
+                // UM Paths
+                std::vector<std::filesystem::path> um_sub_paths = {L"um/x64", L"um/x86"};
+                // Ucrt
+                std::vector<std::filesystem::path> ucrt_sub_paths = {L"ucrt/x64", L"ucrt/x86"};
+                for (const auto &um_sub_path : um_sub_paths) {
+                    std::filesystem::path lib_path = version_entry.path() / um_sub_path;
+                    // check whether the runtime library dir exists
+                    if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
+                        vsRuntimePath.emplace_back(lib_path);
+                        std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
+                                   << getElysiaRuntimePath() << std::endl;
+                        break;
+                    }
+                }
+
+                for (const auto &ucrt_sub_path : ucrt_sub_paths) {
+                    std::filesystem::path lib_path = version_entry.path() / ucrt_sub_path;
+                    // check whether the runtime library dir exists
+                    if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
+                        vsRuntimePath.emplace_back(lib_path);
+                        std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
+                                   << getElysiaRuntimePath() << std::endl;
+                        return *this;
+                    }
+                }
+            }
+        }
+
+        throw std::runtime_error("cl.exe linker not found. Please ensure Visual Studio Build Tools are installed and "
+                                 "configured, or add cl.exe to your system PATH.");
     }
 
     ObjectLinker &clObjectLinker::link(const yoi::wstr &outputPath) {
@@ -116,7 +175,7 @@ namespace yoi {
 
         std::wstring command = L"\"" + getLinkerPath() + L"\"";
         command += L" \"" + object_fs_path.wstring() + L"\"";
-        
+
         // add additional linking files
         for (const auto &file : this->getConfig()->additionalLinkingFiles) {
             command += L" \"" + file + L"\"";
@@ -132,10 +191,18 @@ namespace yoi {
         } else {
             warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.");
         }
+        // also link against libcmt.lib
+        // command += L" /LIBPATH:\"" + vsRuntimePath + L"\"";
+        for (auto &path : vsRuntimePath) {
+            command += L" /LIBPATH:\"" + path + L"\"";
+        }
+        command += L" libcmt.lib kernel32.lib";
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
             command += L" /LD"; // Build a shared library
         }
+
+        command += L" /SUBSYSTEM:CONSOLE"; // fuck argc, argv
 
 #if defined(_WIN32)
         replace_all(command, std::wstring(L"\""), std::wstring(L"\\\""));
@@ -145,7 +212,8 @@ namespace yoi {
         int result = system(yoi::wstring2string(command).c_str());
 
         if (result != 0) {
-            std::string error_msg = "Linking failed. cl.exe returned error code: " + std::to_string(result) + "\nCommand: " + yoi::wstring2string(command);
+            std::string error_msg = "Linking failed. cl.exe returned error code: " + std::to_string(result) +
+                                    "\nCommand: " + yoi::wstring2string(command);
             throw std::runtime_error(error_msg);
         }
 
@@ -153,4 +221,4 @@ namespace yoi {
         return *this;
     }
 
-} // namespace yoi```
+} // namespace yoi

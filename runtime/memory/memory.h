@@ -19,6 +19,7 @@ struct YoiObjectArray {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     unsigned long long length;
+    void *data;
 };
 
 struct YoiIntegerObject {

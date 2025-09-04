@@ -2424,6 +2424,23 @@ namespace yoi {
             auto argc = it++;
             auto argv = it++;
 
+            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                // print starting message
+                std::string startMsg = "Starting yoi-lang program...\n";
+                auto* startStrConst = llvm::ConstantDataArray::getString(*TheContext, startMsg, true);
+                auto* startStrGlobal = new llvm::GlobalVariable(*TheModule, startStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, startStrConst, "start_str");
+                auto startArgs = std::array<llvm::Value*, 1>{ startStrGlobal };
+                Builder->CreateCall(runtimeDebugPrintFunc, llvm::ArrayRef<llvm::Value*>(startArgs));
+                // print argc and argv by runtime_print_int and runtime_print_address
+                // i32 to i64
+                auto argc_i64 = Builder->CreateSExt(argc, Builder->getInt64Ty(), "argc_i64");
+                // print argc
+                auto argcArgs = std::array<llvm::Value*, 1>{ argc_i64 };
+                Builder->CreateCall(runtimeDebugPrintIntFunc, llvm::ArrayRef<llvm::Value*>(argcArgs));
+                auto argvArgs = std::array<llvm::Value*, 1>{ argv };
+                Builder->CreateCall(runtimeDebugPrintAddressFunc, llvm::ArrayRef<llvm::Value*>(argvArgs));
+            }
+
             // invoke elysia_main
             auto res = Builder->CreateCall(elysiaMain, {argc, argv}, "result");
 

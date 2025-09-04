@@ -32,9 +32,9 @@ int elysia_main(int argc, char *argv[]) {
 YoiObjectArray *runtime_get_argv() {
     auto *argv = (YoiObjectArray *)runtime_object_alloc(sizeof(YoiObjectArray) + yoi_argc * sizeof(char *));
     argv->gc_refcount = 1;
-    argv->type_id = 9;
+    argv->type_id = 11;
     argv->length = yoi_argc;
-    auto **argv_start = (const char **)((char *)argv + sizeof(YoiObjectArray));
+    auto **argv_start = (const char **)((char *)&argv->data);
     for (int i = 0; i < yoi_argc; i++) {
         argv_start[i] = yoi_argv[i];
     }

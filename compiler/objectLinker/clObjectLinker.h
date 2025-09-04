@@ -9,6 +9,7 @@
 
 namespace yoi {
     class clObjectLinker : public ObjectLinker {
+        yoi::vec<yoi::wstr> vsRuntimePath;
     public:
         explicit clObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config);
 
