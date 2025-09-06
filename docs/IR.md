@@ -184,7 +184,7 @@ These instructions pop one or two values, unbox them, perform the operation, and
 Its primary goals are:
 *   **Decoupling:** To separate the language's frontend (parsing, semantic analysis) from its backend (code generation), allowing different backends to be targeted in the future.
 *   **Simplicity:** To represent program logic in a simple, linear, and easy-to-analyze format.
-*   **High-Level Abstraction:** To retain high-level concepts from `yoi-lang` like objects, methods, and reference counting, making it easier to reason about and optimize than low-level IR.
+*   **High-Level Abstraction:** To retain high-level concepts from `hoshi-lang` like objects, methods, and reference counting, making it easier to reason about and optimize than low-level IR.
 
 ### 1.2. Execution Model
 
@@ -198,7 +198,7 @@ Yoi IR is designed to be interpreted by a **stack-based virtual machine**. Each 
 
 ### 2.1. `IRModule`
 
-An `IRModule` is the top-level container for a compiled `yoi-lang` source file. It contains all the necessary information to represent that module:
+An `IRModule` is the top-level container for a compiled `hoshi-lang` source file. It contains all the necessary information to represent that module:
 
 *   `functionTable`: A table of all functions defined within the module.
 *   `structTable`: Definitions for all `struct` types.
@@ -223,7 +223,7 @@ A code block is a sequence of IR instructions that are executed linearly. It is 
 
 ### 2.4. `IRValueType`
 
-The IR has its own type system to represent `yoi-lang` types. All of these (except `Raw` types) represent heap-allocated objects.
+The IR has its own type system to represent `hoshi-lang` types. All of these (except `Raw` types) represent heap-allocated objects.
 
 | Type Enum               | Description                                                               |
 | ----------------------- | ------------------------------------------------------------------------- |

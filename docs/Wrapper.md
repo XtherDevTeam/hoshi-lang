@@ -10,11 +10,11 @@ func test(a: int, b: int) : int {
 
 在经过编译后，所生成的函数签名应为 `YoiIntegerObject* 0_test#int#int(YoiIntegerObject *a, YoiIntegerObject *b)`。显而易见，经过了 `name mangling` 函数名称显然不能直接被外部库使用 `extern "C"` 直接使用，更不用提 `Everything is object` 设计理念之下参数和返回值是 `YoiIntegerObject` 指针这种问题了。
 
-如何使 yoi-lang 程序被外界的动态库以一种更友好的方式，在不要求外部程序主动使用 yoi-lang 对象管理逻辑的情况下调用 yoi-lang 接口呢？这时候就要用到 `export` 关键字了。
+如何使 hoshi-lang 程序被外界的动态库以一种更友好的方式，在不要求外部程序主动使用 hoshi-lang 对象管理逻辑的情况下调用 hoshi-lang 接口呢？这时候就要用到 `export` 关键字了。
 
 ### What is export wrapper?
 
-`export-as` 是用于实现 `yoi-lang` 导出函数的关键字。它接受一个 普通函数、实例化模板函数、普通结构体、实例化结构体 作为输入，然后在 llvmCodegen 过程中将输入转换为 `cdecl` 标准的函数或结构体。
+`export-as` 是用于实现 `hoshi-lang` 导出函数的关键字。它接受一个 普通函数、实例化模板函数、普通结构体、实例化结构体 作为输入，然后在 llvmCodegen 过程中将输入转换为 `cdecl` 标准的函数或结构体。
 
 假设我有如下代码
 
@@ -30,7 +30,7 @@ export test as test
 
 ### When there's a `export wrapper`, there must be a `import wrapper`
 
-与 `export wrapper` 相反，yoi-lang 也存在用于声明外部函数的 wrapper，此即 `import wrapper`。
+与 `export wrapper` 相反，hoshi-lang 也存在用于声明外部函数的 wrapper，此即 `import wrapper`。
 
 假设我有如下静态库 `libfoobar.so` 中的如下函数签名
 
@@ -44,11 +44,11 @@ FILE* fopen(const char* path, const char *flags)
 import fopen(path: str, flags: str) : int from "libfoobar.so"
 ```
 
-其中由于 yoi-lang 不存在指针的语言设计，FILE* 被替换为了等长的 `int` 也就是 `i64`。
+其中由于 hoshi-lang 不存在指针的语言设计，FILE* 被替换为了等长的 `int` 也就是 `i64`。
 
 ### 复杂类型的 export 和 import
 
-对于基础类型，yoi-lang 会自动进行 wrapper 的生成，对于复杂类型如 structObject 需要用户声明 export struct 后才会进行对应 cdecl 的 struct wrapper 创建。
+对于基础类型，hoshi-lang 会自动进行 wrapper 的生成，对于复杂类型如 structObject 需要用户声明 export struct 后才会进行对应 cdecl 的 struct wrapper 创建。
 
 如下
 

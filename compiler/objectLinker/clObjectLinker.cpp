@@ -19,7 +19,6 @@ namespace yoi {
         std::filesystem::path found_path;
 
         // 1. Check PATH environment variable
-        // _wgetenv returns a pointer to a wide-character string (read-only)
         const char *path_env = std::getenv("PATH");
         if (path_env) {
             std::wstring path_env_str = yoi::string2wstring(path_env);
@@ -49,6 +48,8 @@ namespace yoi {
             setLinkerPath(found_path.wstring());
             return *this;
         }
+
+        bool isResolved{false};
 
         // 2. Search common Visual Studio installation paths
         // This search can be extensive and slow. Limiting to common patterns and x64 host/target.
@@ -103,20 +104,29 @@ namespace yoi {
                                 setLinkerPath(found_path.wstring());
                                 std::wcout << L"clObjectLinker: Found cl.exe by searching VS installs: "
                                            << getLinkerPath() << std::endl;
-                                // return *this;
+                                isResolved = true;
                                 break;
                             }
                         }
+
+                        yoi_assert(isResolved, 0, 0, "Unable to find cl.exe. Please ensure Visual Studio Build Tools are installed.");
+                        isResolved = false;
+
                         for (const auto &lib_sub_path : lib_sub_paths) {
                             std::filesystem::path lib_path = msvc_version_entry.path() / lib_sub_path;
                             // check whether the runtime library dir exists
                             if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
                                 vsRuntimePath.emplace_back(string2wstring(lib_path.string()));
                                 std::wcout << L"clObjectLinker: Found c runtime library by searching VS installs: "
-                                           << getElysiaRuntimePath() << std::endl;
+                                           << string2wstring(lib_path.string()) << std::endl;
+                                isResolved = true;
                                 break;
                             }
                         }
+
+                        yoi_assert(isResolved, 0, 0, "Unable to find C runtime library. Please ensure Visual Studio Build Tools are installed.");
+                        isResolved = false;
+                        break;
                     }
                 }
             }
@@ -138,22 +148,30 @@ namespace yoi {
                     // check whether the runtime library dir exists
                     if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
                         vsRuntimePath.emplace_back(string2wstring(lib_path));
-                        std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
-                                   << getElysiaRuntimePath() << std::endl;
+                        std::wcout << L"clObjectLinker: Found UM library by searching Windows Kits: "
+                                   << string2wstring(lib_path) << std::endl;
+                        isResolved = true;  
                         break;
                     }
                 }
+
+                yoi_assert(isResolved, 0, 0, "Unable to find UM library. Please ensure Windows Kits are installed.");
+                isResolved = false;
 
                 for (const auto &ucrt_sub_path : ucrt_sub_paths) {
                     std::filesystem::path lib_path = version_entry.path() / ucrt_sub_path;
                     // check whether the runtime library dir exists
                     if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
                         vsRuntimePath.emplace_back(string2wstring(lib_path.string()));
-                        std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
-                                   << getElysiaRuntimePath() << std::endl;
-                        return *this;
+                        std::wcout << L"clObjectLinker: Found UCRT library by searching Windows Kits: "
+                                   << string2wstring(lib_path.string()) << std::endl;
+                        isResolved = true;
+                        break;
                     }
                 }
+
+                yoi_assert(isResolved, 0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
+                isResolved = false;
             }
         }
 

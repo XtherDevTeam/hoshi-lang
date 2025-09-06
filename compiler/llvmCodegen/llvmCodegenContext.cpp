@@ -181,10 +181,6 @@ namespace yoi {
         auto noneYoiType = compilerCtx->getNoneObjectType();
         auto noneKey = std::make_tuple(noneYoiType->type, noneYoiType->typeAffiliateModule, noneYoiType->typeIndex);
         foreignTypeMap[noneKey] = llvm::Type::getVoidTy(*TheContext);
-        // Handle String Literal Type
-        auto strLiteralKey = std::make_tuple(IRValueType::valueType::stringLiteral, static_cast<yoi::indexT>(0), static_cast<yoi::indexT>(0));
-        auto strLiteralType = llvm::PointerType::get(Builder->getInt8Ty(), 0);
-        foreignTypeMap[strLiteralKey] = strLiteralType;
 
         // --- Generate GC Functions for Other Basic Types ---
         for (const auto& pair : basicTypes) {
@@ -811,8 +807,7 @@ namespace yoi {
                 // Create a global string literal for this string
                 auto *literal = llvm::ConstantDataArray::getString(*TheContext, yoi::wstring2string(str), true);
                 auto *globalStr = Builder->CreateGlobalString(wstring2string(str), "global_string_literal");
-                auto objPtr = createBasicObject(compilerCtx->getStrObjectType(), globalStr);
-                valueStackMap[fromBlock][toBlock].push_back({objPtr, compilerCtx->getStrObjectType()});
+                valueStackMap[fromBlock][toBlock].push_back({globalStr, managedPtr(compilerCtx->getStrObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::push_character: {
@@ -2076,10 +2071,6 @@ namespace yoi {
 
     llvm::Value* LLVMCodegen::unboxValue(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType) {
         if (yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
-            // if i8 bitcast to i64, check it
-            if (objectPtr->getType()->isIntegerTy(8) && yoiTypeToLLVMType(yoiType, true)->isIntegerTy(64)) {
-                printf("crashed");
-            }
             auto bitCastedValue = Builder->CreateBitCast(objectPtr, yoiTypeToLLVMType(yoiType, true), "bitcast_val");
             return bitCastedValue;
         }
@@ -2129,7 +2120,7 @@ namespace yoi {
 
     void LLVMCodegen::generateDescription() {
         auto* descStr = llvm::ConstantDataArray::getString(*TheContext,
-            std::string("yoi-lang-")
+            std::string("hoshi-lang-")
             + yoi::wstring2string(compilerCtx->getBuildConfig()->buildPlatform)
             + "-"
             + yoi::wstring2string(compilerCtx->getBuildConfig()->buildArch),
@@ -2164,7 +2155,7 @@ namespace yoi {
             SubFeatures.AddFeature(F.first(), F.second);
         }
         auto Features = SubFeatures.getString();
-        printf("Target triple %s, using CPU %s with features %s\n", TargetTriple.c_str(), CPU.str().c_str(), Features.c_str());
+        printf("Target triple %s, using CPU %s with features %s\n", TargetTriple.c_str(), CPU.str().c_str(), !Features.empty() ? Features.c_str() : "N/A");
 
         llvm::TargetOptions Opt;
         auto RM = std::optional<llvm::Reloc::Model>(llvm::Reloc::PIC_);
@@ -2432,7 +2423,7 @@ namespace yoi {
 
             if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
                 // print starting message
-                std::string startMsg = "Starting yoi-lang program...\n";
+                std::string startMsg = "Starting hoshi-lang program...\n";
                 auto* startStrConst = llvm::ConstantDataArray::getString(*TheContext, startMsg, true);
                 auto* startStrGlobal = new llvm::GlobalVariable(*TheModule, startStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, startStrConst, "start_str");
                 auto startArgs = std::array<llvm::Value*, 1>{ startStrGlobal };

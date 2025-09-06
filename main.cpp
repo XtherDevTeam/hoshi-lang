@@ -34,7 +34,7 @@ std::string getOutputExtension(yoi::IRBuildConfig::BuildType type,
 
 
 void printUsage(const char* programName) {
-    std::cerr << "yoi-lang compiler\n";
+    std::cerr << "hoshi-lang compiler\n";
     std::cout << "Made with love by Jerry Chou (This project is licensed under the MIT license.)\n";
     std::cerr << "Usage: " << programName << " [options] <input_file>\n"
               << "Options:\n"

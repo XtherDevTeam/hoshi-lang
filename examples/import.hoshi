@@ -6,7 +6,7 @@
 import puts(str : ptr) : int32 from "builtin"
 
 func main() : int {
-    puts("Hello, C-style world! This is main() from yoi-lang!")
+    puts("Hello, C-style world! This is main() from hoshi-lang!")
     puts("FFI validation completed.")
     return 233
 }

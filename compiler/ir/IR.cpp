@@ -1388,8 +1388,6 @@ namespace yoi {
                 break;
             case valueType::stringObject:
                 result.type = IRValueType::valueType::stringLiteral;
-                result.typeAffiliateModule = 0;
-                result.typeIndex = 0;
                 break;
             default:
                 break;
@@ -1411,6 +1409,8 @@ namespace yoi {
                 return {IRValueType::valueType::shortObject, typeAffiliateModule, typeIndex, dimensions};
             case IRValueType::valueType::unsignedRaw:
                 return {IRValueType::valueType::unsignedObject, typeAffiliateModule, typeIndex, dimensions};
+            case valueType::stringLiteral:
+                return {valueType::stringObject, typeAffiliateModule, typeIndex, dimensions};
             default:
                 return {type, typeAffiliateModule, typeIndex, dimensions};
         }
