@@ -127,7 +127,6 @@ var NAVTREE =
       [ "Interface Templates", "md_docs_2Template.html#autotoc_md80", null ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
-    [ "test", "md_test.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
       [ "Known issues", "md_TODO.html#autotoc_md109", null ]
@@ -184,12 +183,12 @@ var NAVTREEINDEX =
 "classyoi_1_1structDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d",
 "classyoi_1_1visitor.html#a674147925de519e90ee6f0616d0b130c",
 "functions_vars_l.html",
-"memory_8cpp.html#a747e44f50e566cf59e5023cb7508fad5",
-"namespaceyoi.html#a774ab9590e79332760376ed248af507c",
-"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aed9ea5b4d20c5145dcfb4ddd34ddd56a",
-"structyoi_1_1IRBuildConfig_1_1Builder.html#adbd43886cf10972430844322dc8f4bf9",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e",
-"unionyoi_1_1IROperand_1_1operandValue.html#ac18ff0b30fcc5be8bd1789539bf8f8ea"
+"memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec",
+"namespaceyoi.html#a7ab5fc93d3c5f47611fd3d87b5883d20",
+"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aedd89ad75143be2d595cde6f27ecc915",
+"structyoi_1_1IRBuildConfig_1_1Builder.html#aefb6a8b5bcc92590094c48743377d845",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a234b41cc8342dc898d9100f4ca35098d",
+"unionyoi_1_1IROperand_1_1operandValue.html#ac3755b8dda9e50f3ac71d7eadb55bc5a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
