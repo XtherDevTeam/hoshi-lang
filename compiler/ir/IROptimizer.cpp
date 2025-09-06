@@ -2732,7 +2732,7 @@ namespace yoi {
         AnalysisState entryState;
         for(yoi::indexT i = 0; i < targetFunction->argumentTypes.size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
-            if (varType->isBasicType() && !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
+            if (varType->isBasicType() && !varType->isArrayType() && !varType->isDynamicArrayType() && !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
                 varType->addAttribute(IRValueType::ValueAttr::Raw);
             else
                 varType->removeAttribute(IRValueType::ValueAttr::Raw);

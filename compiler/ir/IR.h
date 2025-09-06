@@ -65,7 +65,8 @@ namespace yoi {
       public:
         enum class ValueAttr : yoi::indexT {
             Nullable,
-            Raw
+            Raw,
+            Transient,
         };
         enum class valueType : yoi::indexT {
             integerRaw = 0,
@@ -145,9 +146,9 @@ namespace yoi {
 
         bool operator==(const yoi::IRValueType &rhs) const;
 
-        void addAttribute(ValueAttr attr);
+        IRValueType & addAttribute(ValueAttr attr);
 
-        void removeAttribute(ValueAttr attr);
+        IRValueType & removeAttribute(ValueAttr attr);
 
         bool hasAttribute(ValueAttr attr) const;
     };
@@ -553,11 +554,12 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
-        IRInterfaceImplementationDefinition(const yoi::wstr &name,
-                                            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
-                                            yoi::indexT implInterfaceIndex,
-                                            const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
-                                            const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
+        IRInterfaceImplementationDefinition(
+            const yoi::wstr &name,
+            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
+            yoi::indexT implInterfaceIndex,
+            const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
+            const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -625,7 +627,7 @@ namespace yoi {
         };
 
         IRInterfaceInstanceTemplate(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition,
-                            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+                                    const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
     };
 
     class IRInterfaceImplementationTemplate {
@@ -640,7 +642,8 @@ namespace yoi {
 
             Builder() = default;
 
-            Builder &setTemplateDefinition(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition);
+            Builder &
+            setTemplateDefinition(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition);
 
             std::shared_ptr<IRInterfaceImplementationTemplate> yield();
         };
@@ -879,7 +882,8 @@ namespace yoi {
             ImportLibrary(const yoi::wstr &libraryPath);
         };
 
-        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>> exportedFunctionTable;
+        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>>
+            exportedFunctionTable;
 
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> foreignTypeTable;
 
@@ -900,7 +904,10 @@ namespace yoi {
          * @param attrs The attributes of the function.
          * @throws std::out_of_range If the export name already exists in the FFI table.
          */
-        void addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex, const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs);
+        void addExportedFunction(const yoi::wstr &exportName,
+                                 yoi::indexT moduleIndex,
+                                 yoi::indexT functionIndex,
+                                 const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs);
     };
 } // namespace yoi
 

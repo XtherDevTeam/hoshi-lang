@@ -1345,12 +1345,14 @@ namespace yoi {
         return attributes.count(attr) > 0;
     }
 
-    void IRValueType::removeAttribute(ValueAttr attr) {
+    IRValueType &IRValueType::removeAttribute(ValueAttr attr) {
         attributes.erase(attr);
+        return *this;
     }
 
-    void IRValueType::addAttribute(ValueAttr attr) {
+    IRValueType &IRValueType::addAttribute(ValueAttr attr) {
         attributes.insert(attr);
+        return *this;
     }
     
     IRValueType::IRValueType(valueType type,

@@ -24,6 +24,9 @@
 - [x] 加入 lambda
 - [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
 - [ ] 改造 `new struct` 的逻辑
+- [ ] 有限范围内推断虚函数调用变为正常函数优化
+    - [ ] IRValueType改造，支持附加信息
+- [ ] 加入左值对象和将亡对象判断和处理逻辑
 
 # Known issues
 
