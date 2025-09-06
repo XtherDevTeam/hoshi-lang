@@ -284,7 +284,7 @@ $(document).ready(function(){initNavTree('md_docs_2IR.html',''); initResizable()
 <p>Its primary goals are:</p><ul>
 <li><b>Decoupling:</b> To separate the language's frontend (parsing, semantic analysis) from its backend (code generation), allowing different backends to be targeted in the future.</li>
 <li><b>Simplicity:</b> To represent program logic in a simple, linear, and easy-to-analyze format.</li>
-<li><b>High-Level Abstraction:</b> To retain high-level concepts from <code>yoi-lang</code> like objects, methods, and reference counting, making it easier to reason about and optimize than low-level IR.</li>
+<li><b>High-Level Abstraction:</b> To retain high-level concepts from <code>hoshi-lang</code> like objects, methods, and reference counting, making it easier to reason about and optimize than low-level IR.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md32"></a>
 1.2. Execution Model</h2>
@@ -298,7 +298,7 @@ $(document).ready(function(){initNavTree('md_docs_2IR.html',''); initResizable()
 2. Core Concepts</h1>
 <h2><a class="anchor" id="autotoc_md34"></a>
 2.1. &lt;tt&gt;IRModule&lt;/tt&gt;</h2>
-<p>An <code>IRModule</code> is the top-level container for a compiled <code>yoi-lang</code> source file. It contains all the necessary information to represent that module:</p>
+<p>An <code>IRModule</code> is the top-level container for a compiled <code>hoshi-lang</code> source file. It contains all the necessary information to represent that module:</p>
 <ul>
 <li><code>functionTable</code>: A table of all functions defined within the module.</li>
 <li><code>structTable</code>: Definitions for all <code>struct</code> types.</li>
@@ -322,7 +322,7 @@ $(document).ready(function(){initNavTree('md_docs_2IR.html',''); initResizable()
 <p>A code block is a sequence of IR instructions that are executed linearly. It is analogous to a "basic block" in other compilers. All control flow is achieved by jumping between these blocks.</p>
 <h2><a class="anchor" id="autotoc_md37"></a>
 2.4. &lt;tt&gt;IRValueType&lt;/tt&gt;</h2>
-<p>The IR has its own type system to represent <code>yoi-lang</code> types. All of these (except <code>Raw</code> types) represent heap-allocated objects.</p>
+<p>The IR has its own type system to represent <code>hoshi-lang</code> types. All of these (except <code>Raw</code> types) represent heap-allocated objects.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Type Enum   </th><th class="markdownTableHeadNone">Description    </th></tr>
