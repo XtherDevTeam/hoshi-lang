@@ -147,9 +147,9 @@ namespace yoi {
                     std::filesystem::path lib_path = version_entry.path() / um_sub_path;
                     // check whether the runtime library dir exists
                     if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
-                        vsRuntimePath.emplace_back(string2wstring(lib_path));
+                        vsRuntimePath.emplace_back(string2wstring(lib_path.string()));
                         std::wcout << L"clObjectLinker: Found UM library by searching Windows Kits: "
-                                   << string2wstring(lib_path) << std::endl;
+                                   << string2wstring(lib_path.string()) << std::endl;
                         isResolved = true;  
                         break;
                     }
@@ -170,10 +170,12 @@ namespace yoi {
                     }
                 }
 
-                yoi_assert(isResolved, 0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
-                isResolved = false;
             }
         }
+
+        yoi_assert(isResolved, 0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
+        if (isResolved)
+            return *this;
 
         throw std::runtime_error("cl.exe linker not found. Please ensure Visual Studio Build Tools are installed and "
                                  "configured, or add cl.exe to your system PATH.");

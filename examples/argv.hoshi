@@ -1,10 +1,15 @@
 use lang "builtin"
+use str "str"
 import puts(str: ptr) : int32 from "builtin"
 
 func main() : int {
     let x = lang.argv()
+    let n = new str.Str[x.length]()
     for (let i = 0;i < x.length; i += 1) {
-        puts(x[i])
+        n[i] = str.Str(x[i])
+    }
+    for (let i = 0;i < n.length; i += 1) {
+        puts(n[i].c_str())
     }
     return 0
 }
