@@ -1362,7 +1362,7 @@ namespace yoi {
 
     bool IRValueType::isBasicRawType() const {
         return type == valueType::integerRaw || type == valueType::decimalRaw || type == valueType::booleanRaw ||
-               type == valueType::charRaw || type == IRValueType::valueType::shortRaw || type == IRValueType::valueType::unsignedRaw;
+               type == valueType::charRaw || type == IRValueType::valueType::shortRaw || type == IRValueType::valueType::unsignedRaw || type == valueType::stringLiteral;
     }
     
     IRValueType IRValueType::getBasicRawType() const {
@@ -1385,6 +1385,11 @@ namespace yoi {
                 break;
             case IRValueType::valueType::unsignedObject:
                 result.type = IRValueType::valueType::unsignedRaw;
+                break;
+            case valueType::stringObject:
+                result.type = IRValueType::valueType::stringLiteral;
+                result.typeAffiliateModule = 0;
+                result.typeIndex = 0;
                 break;
             default:
                 break;

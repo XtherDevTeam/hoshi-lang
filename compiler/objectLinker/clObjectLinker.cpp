@@ -111,7 +111,7 @@ namespace yoi {
                             std::filesystem::path lib_path = msvc_version_entry.path() / lib_sub_path;
                             // check whether the runtime library dir exists
                             if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
-                                vsRuntimePath.emplace_back(lib_path);
+                                vsRuntimePath.emplace_back(string2wstring(lib_path.string()));
                                 std::wcout << L"clObjectLinker: Found c runtime library by searching VS installs: "
                                            << getElysiaRuntimePath() << std::endl;
                                 break;
@@ -137,7 +137,7 @@ namespace yoi {
                     std::filesystem::path lib_path = version_entry.path() / um_sub_path;
                     // check whether the runtime library dir exists
                     if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
-                        vsRuntimePath.emplace_back(lib_path);
+                        vsRuntimePath.emplace_back(string2wstring(lib_path));
                         std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
                                    << getElysiaRuntimePath() << std::endl;
                         break;
@@ -148,7 +148,7 @@ namespace yoi {
                     std::filesystem::path lib_path = version_entry.path() / ucrt_sub_path;
                     // check whether the runtime library dir exists
                     if (std::filesystem::exists(lib_path) && std::filesystem::is_directory(lib_path)) {
-                        vsRuntimePath.emplace_back(lib_path);
+                        vsRuntimePath.emplace_back(string2wstring(lib_path.string()));
                         std::wcout << L"clObjectLinker: Found Windows SDK library by searching Windows Kits: "
                                    << getElysiaRuntimePath() << std::endl;
                         return *this;

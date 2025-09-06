@@ -181,6 +181,10 @@ namespace yoi {
         auto noneYoiType = compilerCtx->getNoneObjectType();
         auto noneKey = std::make_tuple(noneYoiType->type, noneYoiType->typeAffiliateModule, noneYoiType->typeIndex);
         foreignTypeMap[noneKey] = llvm::Type::getVoidTy(*TheContext);
+        // Handle String Literal Type
+        auto strLiteralKey = std::make_tuple(IRValueType::valueType::stringLiteral, static_cast<yoi::indexT>(0), static_cast<yoi::indexT>(0));
+        auto strLiteralType = llvm::PointerType::get(Builder->getInt8Ty(), 0);
+        foreignTypeMap[strLiteralKey] = strLiteralType;
 
         // --- Generate GC Functions for Other Basic Types ---
         for (const auto& pair : basicTypes) {
@@ -1205,7 +1209,7 @@ namespace yoi {
                     
                     if ((arg.yoiType->isBasicType() || arg.yoiType->isBasicRawType()) && !noffi) {
                         auto *param = unboxValue(arg.llvmValue, arg.yoiType);
-                        if (arg.yoiType->type == IRValueType::valueType::stringObject) {
+                        if (arg.yoiType->type == IRValueType::valueType::stringObject || arg.yoiType->type == IRValueType::valueType::stringLiteral) {
                             // the only fucking pointer that needs special handling here
                             // we convert it to a int64 while passing it to the imported function
                             param = Builder->CreatePtrToInt(param, llvm::Type::getInt64Ty(*TheContext), "string_to_int");
@@ -1925,6 +1929,8 @@ namespace yoi {
                 return Builder->getInt32Ty();
             case IRValueType::valueType::none:
                 return Builder->getVoidTy();
+            case IRValueType::valueType::stringLiteral:
+                return llvm::PointerType::get(Builder->getInt8Ty(), 0);
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
