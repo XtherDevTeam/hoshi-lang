@@ -2,7 +2,8 @@ var classyoi_1_1IRValueType =
 [
     [ "ValueAttr", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f", [
       [ "Nullable", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6", null ],
-      [ "Raw", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00", null ]
+      [ "Raw", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00", null ],
+      [ "Transient", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fab1f023eff9a6b5308d6024e4c6b3d475", null ]
     ] ],
     [ "valueType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85", [
       [ "integerRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d", null ],
@@ -35,7 +36,7 @@ var classyoi_1_1IRValueType =
     [ "IRValueType", "classyoi_1_1IRValueType.html#a5fb044c24e285e0a20f836afd03d145b", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#acff9d58b8437afee7de1aa5b49ad0e47", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a0a8161a9919991b3b5d4199f96536c29", null ],
-    [ "addAttribute", "classyoi_1_1IRValueType.html#ab7b792b6f6026011c471c03f24f181c6", null ],
+    [ "addAttribute", "classyoi_1_1IRValueType.html#ae7365b3474d1261d1f650848fb3b61ae", null ],
     [ "getArrayType", "classyoi_1_1IRValueType.html#a2de748b29cbc22e987c06acf975d332d", null ],
     [ "getBasicObjectType", "classyoi_1_1IRValueType.html#ab18b33867fcbdc188340e5773519a560", null ],
     [ "getBasicRawType", "classyoi_1_1IRValueType.html#a2ff0cd5f22ebfe149bebca1e86e7840c", null ],
@@ -50,7 +51,7 @@ var classyoi_1_1IRValueType =
     [ "isDynamicArrayType", "classyoi_1_1IRValueType.html#a9f5fad726c9a4f4fd5efb67be4746220", null ],
     [ "isForeignBasicType", "classyoi_1_1IRValueType.html#a3b4cbf12d006e4a2513ee03d50649f0c", null ],
     [ "operator==", "classyoi_1_1IRValueType.html#aecb7556b13ff55795d574f14582b205d", null ],
-    [ "removeAttribute", "classyoi_1_1IRValueType.html#ab9a2928d6579d116a11b3aa643944244", null ],
+    [ "removeAttribute", "classyoi_1_1IRValueType.html#a48efc36adaebd0f66216e1b1bfbbf50c", null ],
     [ "to_string", "classyoi_1_1IRValueType.html#abbc2f435f7550779b490ed781d3c2222", null ],
     [ "attributes", "classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84", null ],
     [ "dimensions", "classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73", null ],

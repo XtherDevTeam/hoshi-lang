@@ -6,7 +6,7 @@ var searchData=
   ['add_3',['add',['../classyoi_1_1IRFunctionOptimizer.html#a38927882d1afd477f192e15f26f4f86c',1,'yoi::IRFunctionOptimizer::add()'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332',1,'yoi::IR::add']]],
   ['addargument_4',['addArgument',['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#aa3de8ea8cda0e2c99a64c165aaf99727',1,'yoi::IRFunctionDefinition::Builder']]],
   ['addattr_5',['addAttr',['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#acf5c7ad03ee58817810b7b700cc59194',1,'yoi::IRFunctionDefinition::Builder']]],
-  ['addattribute_6',['addAttribute',['../classyoi_1_1IRValueType.html#ab7b792b6f6026011c471c03f24f181c6',1,'yoi::IRValueType']]],
+  ['addattribute_6',['addAttribute',['../classyoi_1_1IRValueType.html#ae7365b3474d1261d1f650848fb3b61ae',1,'yoi::IRValueType']]],
   ['addcall_7',['addCall',['../structyoi_1_1CallGraph.html#a6c608d0782ac71b58de7aecbeacf8bdb',1,'yoi::CallGraph']]],
   ['addexportedfunction_8',['addExportedFunction',['../classyoi_1_1IRFFITable.html#a98aa4386a5704453af091d889e32d6e8',1,'yoi::IRFFITable']]],
   ['addexpr_9',['addExpr',['../classyoi_1_1addExpr.html',1,'yoi']]],
