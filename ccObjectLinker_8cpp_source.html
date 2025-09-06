@@ -207,20 +207,21 @@ $(document).ready(function(){initNavTree('ccObjectLinker_8cpp_source.html',''); 
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            command += <span class="stringliteral">&quot; -shared&quot;</span>; <span class="comment">// build a shared library</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <a class="code hl_function" href="namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7">replace_all</a>(command, std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>), std::string(<span class="stringliteral">&quot;\\\&quot;&quot;</span>));</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        command = <span class="stringliteral">&quot;powershell.exe -Command \&quot;&amp;&quot;</span> + command + <span class="stringliteral">&quot;\&quot;&quot;</span>; <span class="comment">// fuck win32 command line</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> (result != 0) {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Linker command failed with exit code &quot;</span> + std::to_string(result) + <span class="stringliteral">&quot;. Command: &quot;</span> + command;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        command += <span class="stringliteral">&quot; -mconsole&quot;</span>; <span class="comment">// fuck argc, argv</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <a class="code hl_function" href="namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7">replace_all</a>(command, std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>), std::string(<span class="stringliteral">&quot;\\\&quot;&quot;</span>));</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        command = <span class="stringliteral">&quot;powershell.exe -Command \&quot;&amp;&quot;</span> + command + <span class="stringliteral">&quot;\&quot;&quot;</span>; <span class="comment">// fuck win32 command line</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordtype">int</span> result = std::system(command.c_str());</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">if</span> (result != 0) {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            std::string error_msg = <span class="stringliteral">&quot;ccObjectLinker: Linker command failed with exit code &quot;</span> + std::to_string(result) + <span class="stringliteral">&quot;. Command: &quot;</span> + command;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="keywordflow">throw</span> std::runtime_error(error_msg);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    }</div>
 </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>} <span class="comment">// namespace yoi</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>} <span class="comment">// namespace yoi</span></div>
 <div class="ttc" id="aIR_8h_html"><div class="ttname"><a href="IR_8h.html">IR.h</a></div></div>
 <div class="ttc" id="accObjectLinker_8h_html"><div class="ttname"><a href="ccObjectLinker_8h.html">ccObjectLinker.h</a></div></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a></div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00013">objectLinker.h:13</a></div></div>

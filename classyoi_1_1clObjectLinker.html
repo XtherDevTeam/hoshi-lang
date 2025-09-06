@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('classyoi_1_1clObjectLinker.html',''); 
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classyoi_1_1clObjectLinker-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">clObjectLinker Class Reference</div></div>
 </div><!--header-->
@@ -148,6 +149,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a827e8525695536d557f854edffadbf58 inherit pub_methods_classyoi_1_1ObjectLinker"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8bb88fde0d42dca5b036215e4bcabc6 inherit pub_methods_classyoi_1_1ObjectLinker" id="r_aa8bb88fde0d42dca5b036215e4bcabc6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1ObjectLinker.html#aa8bb88fde0d42dca5b036215e4bcabc6">~ObjectLinker</a> ()=default</td></tr>
 <tr class="separator:aa8bb88fde0d42dca5b036215e4bcabc6 inherit pub_methods_classyoi_1_1ObjectLinker"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab1bc2294433b7d30f032e3d229686c1c" id="r_ab1bc2294433b7d30f032e3d229686c1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1clObjectLinker.html#ab1bc2294433b7d30f032e3d229686c1c">vsRuntimePath</a></td></tr>
+<tr class="separator:ab1bc2294433b7d30f032e3d229686c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -218,9 +224,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classyoi_1_1ObjectLinker.html#abf3eeb00b9123177fee9bf0cd8dacf26">ObjectLinker</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="clObjectLinker_8cpp_source.html#l00105">105</a> of file <a class="el" href="clObjectLinker_8cpp_source.html">clObjectLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="clObjectLinker_8cpp_source.html#l00164">164</a> of file <a class="el" href="clObjectLinker_8cpp_source.html">clObjectLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="objectLinker_8cpp_source.html#l00032">ObjectLinker::getConfig()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00025">ObjectLinker::getElysiaRuntimePath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00011">ObjectLinker::getLinkerPath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00022">ObjectLinker::getObjectPath()</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85ad521f765a49c72507257a2620612ee96">IRBuildConfig::library</a>, <a class="el" href="def_8hpp_source.html#l00341">yoi::replace_all()</a>, <a class="el" href="def_8cpp_source.html#l00100">yoi::warning()</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="objectLinker_8cpp_source.html#l00032">ObjectLinker::getConfig()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00025">ObjectLinker::getElysiaRuntimePath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00011">ObjectLinker::getLinkerPath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00022">ObjectLinker::getObjectPath()</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85ad521f765a49c72507257a2620612ee96">IRBuildConfig::library</a>, <a class="el" href="def_8hpp_source.html#l00341">yoi::replace_all()</a>, <a class="el" href="clObjectLinker_8h_source.html#l00012">clObjectLinker::vsRuntimePath</a>, <a class="el" href="def_8cpp_source.html#l00100">yoi::warning()</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -276,25 +282,54 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="clObjectLinker_8cpp_source.html#l00017">17</a> of file <a class="el" href="clObjectLinker_8cpp_source.html">clObjectLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="objectLinker_8cpp_source.html#l00011">ObjectLinker::getLinkerPath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00014">ObjectLinker::setLinkerPath()</a>, and <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>.</p>
+<p class="reference">References <a class="el" href="objectLinker_8cpp_source.html#l00025">ObjectLinker::getElysiaRuntimePath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00011">ObjectLinker::getLinkerPath()</a>, <a class="el" href="objectLinker_8cpp_source.html#l00014">ObjectLinker::setLinkerPath()</a>, <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>, and <a class="el" href="clObjectLinker_8h_source.html#l00012">clObjectLinker::vsRuntimePath</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1clObjectLinker_ac1e7eb2f6a34c92c5a81b6d706625200_cgraph.png" border="0" usemap="#aclassyoi_1_1clObjectLinker_ac1e7eb2f6a34c92c5a81b6d706625200_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1clObjectLinker_ac1e7eb2f6a34c92c5a81b6d706625200_cgraph" id="aclassyoi_1_1clObjectLinker_ac1e7eb2f6a34c92c5a81b6d706625200_cgraph">
-<area shape="rect" title=" " alt="" coords="5,77,172,102"/>
-<area shape="rect" href="classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3" title=" " alt="" coords="222,5,361,45"/>
-<area shape="poly" title=" " alt="" coords="129,74,213,47,215,52,131,79"/>
-<area shape="rect" href="classyoi_1_1ObjectLinker.html#a71946d413fbba14e2d9c236837ca465b" title=" " alt="" coords="222,69,361,109"/>
-<area shape="poly" title=" " alt="" coords="173,87,208,87,208,92,173,92"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="220,134,363,159"/>
-<area shape="poly" title=" " alt="" coords="135,99,234,128,232,133,134,105"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="411,134,613,159"/>
-<area shape="poly" title=" " alt="" coords="363,144,397,144,397,149,363,149"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="661,134,852,159"/>
-<area shape="poly" title=" " alt="" coords="614,144,647,144,647,149,614,149"/>
+<area shape="rect" title=" " alt="" coords="5,109,172,134"/>
+<area shape="rect" href="classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089" title=" " alt="" coords="220,5,385,45"/>
+<area shape="poly" title=" " alt="" coords="113,106,219,55,235,48,237,53,221,60,116,111"/>
+<area shape="rect" href="classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3" title=" " alt="" coords="233,69,372,109"/>
+<area shape="poly" title=" " alt="" coords="172,106,219,99,220,104,173,112"/>
+<area shape="rect" href="classyoi_1_1ObjectLinker.html#a71946d413fbba14e2d9c236837ca465b" title=" " alt="" coords="233,133,372,173"/>
+<area shape="poly" title=" " alt="" coords="173,131,220,138,219,144,172,136"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="231,198,374,223"/>
+<area shape="poly" title=" " alt="" coords="114,132,163,157,221,183,244,191,242,196,219,188,160,161,112,136"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="433,198,636,223"/>
+<area shape="poly" title=" " alt="" coords="374,208,420,208,420,213,374,213"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="684,198,875,223"/>
+<area shape="poly" title=" " alt="" coords="636,208,670,208,670,213,636,213"/>
 </map>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ab1bc2294433b7d30f032e3d229686c1c" name="ab1bc2294433b7d30f032e3d229686c1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1bc2294433b7d30f032e3d229686c1c">&#9670;&#160;</a></span>vsRuntimePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt;<a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>&gt; vsRuntimePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="clObjectLinker_8h_source.html#l00012">12</a> of file <a class="el" href="clObjectLinker_8h_source.html">clObjectLinker.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="clObjectLinker_8cpp_source.html#l00164">clObjectLinker::link()</a>, and <a class="el" href="clObjectLinker_8cpp_source.html#l00017">clObjectLinker::searchAndSetupLinker()</a>.</p>
 
 </div>
 </div>

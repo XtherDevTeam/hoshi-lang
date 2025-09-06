@@ -19,5 +19,6 @@ var searchData=
   ['virtualmethodindexmap_16',['virtualmethodindexmap',['../classyoi_1_1IRInterfaceImplementationDefinition.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::virtualMethodIndexMap'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#adce3b4c9628343d653e3048ac082d3a8',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethodIndexMap']]],
   ['virtualmethods_17',['virtualmethods',['../classyoi_1_1IRInterfaceImplementationDefinition.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::virtualMethods'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#afc5fb27a9f430591ac34b051d41dc326',1,'yoi::IRInterfaceImplementationDefinition::Builder::virtualMethods']]],
   ['vshort_18',['vShort',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a4c4ee34a24d33067423078ea59d4e5e0',1,'yoi::lexer::token::vBasicValue']]],
-  ['vuint_19',['vUint',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a6eb2a02a0c9dc7191f12c86ca7b7f32c',1,'yoi::lexer::token::vBasicValue']]]
+  ['vsruntimepath_19',['vsRuntimePath',['../classyoi_1_1clObjectLinker.html#ab1bc2294433b7d30f032e3d229686c1c',1,'yoi::clObjectLinker']]],
+  ['vuint_20',['vUint',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a6eb2a02a0c9dc7191f12c86ca7b7f32c',1,'yoi::lexer::token::vBasicValue']]]
 ];

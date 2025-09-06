@@ -127,6 +127,7 @@ var NAVTREE =
       [ "Interface Templates", "md_docs_2Template.html#autotoc_md80", null ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
+    [ "test", "md_test.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
       [ "Known issues", "md_TODO.html#autotoc_md109", null ]
@@ -177,18 +178,18 @@ var NAVTREEINDEX =
 "classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659",
 "classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73",
 "classyoi_1_1ObjectLinker.html#adbdd9f654975fb7d020094f275c05cce",
-"classyoi_1_1equalityExpr.html#a3669d085cc0e222e672524f6d509dc72",
-"classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eac34522e8fb773ea3e6cac8f0149b01ea",
-"classyoi_1_1letAssignmentPair.html#a530100090e106d34f62aae98fc0ef200",
-"classyoi_1_1structDefInnerPair.html#a62ccf4d62fc00543e3fe117e78831807",
-"classyoi_1_1visitor.html#a690b648fe3ab0a80c36f6c8a60bcaddb",
-"functions_vars_n.html",
-"memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220",
-"namespaceyoi.html#a807c90715ad772fafda4bd579c1e959e",
-"runtime_2string_2string_8cpp.html",
-"structyoi_1_1IRDebugInfo.html",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a24913b1abeac61926c5e25a068f518ac",
-"unionyoi_1_1IROperand_1_1operandValue.html#acc27ee0dd1c490cd660915990e9b35c8"
+"classyoi_1_1equalityExpr.html#a10aae14f59803731461402131c0559de",
+"classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea9c7f1419b92e397caf445a6c53793eb9",
+"classyoi_1_1letAssignmentPair.html#a4a20cb1e019ffccb871258534d85d880",
+"classyoi_1_1structDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d",
+"classyoi_1_1visitor.html#a674147925de519e90ee6f0616d0b130c",
+"functions_vars_l.html",
+"memory_8cpp.html#a747e44f50e566cf59e5023cb7508fad5",
+"namespaceyoi.html#a774ab9590e79332760376ed248af507c",
+"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aed9ea5b4d20c5145dcfb4ddd34ddd56a",
+"structyoi_1_1IRBuildConfig_1_1Builder.html#adbd43886cf10972430844322dc8f4bf9",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e",
+"unionyoi_1_1IROperand_1_1operandValue.html#ac18ff0b30fcc5be8bd1789539bf8f8ea"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
