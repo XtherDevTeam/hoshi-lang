@@ -66,7 +66,7 @@ namespace yoi {
         enum class ValueAttr : yoi::indexT {
             Nullable,
             Raw,
-            Transient,
+            PermanentInCurrentScope,
         };
         enum class valueType : yoi::indexT {
             integerRaw = 0,

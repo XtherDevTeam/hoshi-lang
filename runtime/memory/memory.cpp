@@ -59,7 +59,7 @@ extern "C" void runtime_finalize_object_report(YoiObject *object) {
     runtime_object_allocated --;
 
     for (AllocatedMemoryList *node = allocated_memory_list; node!= nullptr; node = node->next) {
-        if (node->memory == object) {
+        if (node->memory && node->memory == object) {
             if (node->prev != nullptr) {
                 node->prev->next = node->next;
             } else {
