@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('memory_8cpp_source.html',''); initResi
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    runtime_object_allocated --;</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">for</span> (<a class="code hl_struct" href="structAllocatedMemoryList.html">AllocatedMemoryList</a> *node = allocated_memory_list; node!= <span class="keyword">nullptr</span>; node = node-&gt;<a class="code hl_variable" href="structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1">next</a>) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">if</span> (node-&gt;memory == <span class="keywordtype">object</span>) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">if</span> (node-&gt;memory &amp;&amp; node-&gt;memory == <span class="keywordtype">object</span>) {</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">if</span> (node-&gt;prev != <span class="keyword">nullptr</span>) {</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                node-&gt;prev-&gt;next = node-&gt;next;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            } <span class="keywordflow">else</span> {</div>

@@ -3,7 +3,7 @@ var classyoi_1_1IRValueType =
     [ "ValueAttr", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f", [
       [ "Nullable", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6", null ],
       [ "Raw", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00", null ],
-      [ "Transient", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fab1f023eff9a6b5308d6024e4c6b3d475", null ]
+      [ "PermanentInCurrentScope", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc", null ]
     ] ],
     [ "valueType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85", [
       [ "integerRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d", null ],

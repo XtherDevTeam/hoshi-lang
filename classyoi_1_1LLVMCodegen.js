@@ -3,7 +3,7 @@ var classyoi_1_1LLVMCodegen =
     [ "ControlFlowAnalysis", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis" ],
     [ "StackValue", "structyoi_1_1LLVMCodegen_1_1StackValue.html", "structyoi_1_1LLVMCodegen_1_1StackValue" ],
     [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html#a5c5646663a62398e861a40c59bd90f06", null ],
-    [ "callGcFunction", "classyoi_1_1LLVMCodegen.html#a1d5e7628ee3977840e1bf9f3c17fb561", null ],
+    [ "callGcFunction", "classyoi_1_1LLVMCodegen.html#a637c06755b7b0b2dee9c73f4b819d387", null ],
     [ "createArrayObject", "classyoi_1_1LLVMCodegen.html#a288b911c945986486fe361f1ab3295b5", null ],
     [ "createBasicObject", "classyoi_1_1LLVMCodegen.html#ab1d663f047e687ccfe75f7a1f34da43b", null ],
     [ "createDynamicArrayObject", "classyoi_1_1LLVMCodegen.html#a83dad9a08329282b8c8324a051842a47", null ],

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['callgcfunction_0',['callGcFunction',['../classyoi_1_1LLVMCodegen.html#a1d5e7628ee3977840e1bf9f3c17fb561',1,'yoi::LLVMCodegen']]],
+  ['callgcfunction_0',['callGcFunction',['../classyoi_1_1LLVMCodegen.html#a637c06755b7b0b2dee9c73f4b819d387',1,'yoi::LLVMCodegen']]],
   ['callgraph_1',['CallGraph',['../structyoi_1_1CallGraph.html#a23aec676c98668a928b7fc73732cd768',1,'yoi::CallGraph']]],
   ['cbegin_2',['cbegin',['../classyoi_1_1enum__range.html#a3febdcdbc55a786f5afd0112aec7380a',1,'yoi::enum_range']]],
   ['ccobjectlinker_3',['ccObjectLinker',['../classyoi_1_1ccObjectLinker.html#afdf2fc160dd3f140a3acee456df307ac',1,'yoi::ccObjectLinker']]],

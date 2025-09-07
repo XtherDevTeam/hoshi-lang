@@ -8,7 +8,7 @@ var searchData=
   ['callable_20objects_20operator_5',['Callable Objects (operator())',['../md_docs_2Operator_01Overloading.html#autotoc_md59',1,'']]],
   ['callableexpression_6',['callableExpression',['../classyoi_1_1callableExpression.html',1,'yoi']]],
   ['callergraph_7',['callerGraph',['../structyoi_1_1CallGraph.html#acf0c66c885378a7289ccad534f70d2c3',1,'yoi::CallGraph']]],
-  ['callgcfunction_8',['callGcFunction',['../classyoi_1_1LLVMCodegen.html#a1d5e7628ee3977840e1bf9f3c17fb561',1,'yoi::LLVMCodegen']]],
+  ['callgcfunction_8',['callGcFunction',['../classyoi_1_1LLVMCodegen.html#a637c06755b7b0b2dee9c73f4b819d387',1,'yoi::LLVMCodegen']]],
   ['callgraph_9',['callgraph',['../structyoi_1_1CallGraph.html#a23aec676c98668a928b7fc73732cd768',1,'yoi::CallGraph::CallGraph()'],['../classyoi_1_1IROptimizer.html#afcb3f6e01c4e84a3f2c62bec88c509a0',1,'yoi::IROptimizer::callGraph'],['../structyoi_1_1CallGraph.html#a059b3f33c0416b8fd6dcb57d0cc98905',1,'yoi::CallGraph::callGraph'],['../structyoi_1_1CallGraph.html',1,'CallGraph']]],
   ['calls_10',['calls',['../md_docs_2IR.html#autotoc_md45',1,'3.5. Function and Method Calls'],['../md_docs_2IR.html#autotoc_md31',1,'3.6. Function and Method Calls']]],
   ['captures_11',['captures',['../classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f',1,'yoi::lambdaExpr']]],
