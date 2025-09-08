@@ -389,28 +389,29 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        }</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Compilation successful!\n&quot;</span>;</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;e) {</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        exitCode = 1; </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    }<span class="comment">/* catch (const std::exception&amp; e) {</span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    }<span class="comment">/* catch (const std::runtime_error &amp;e) {</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="comment">        std::cerr &lt;&lt; &quot;Error: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment">        exitCode = 1; </span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">    }*/</span><span class="comment">/* catch (const std::exception&amp; e) {</span></div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment">        std::cerr &lt;&lt; &quot;An unexpected error occurred: &quot; &lt;&lt; e.what() &lt;&lt; std::endl;</span></div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment">        exitCode = 1; </span></div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment">    }*/</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    </div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keywordflow">if</span> (!preserveIntermediateFiles &amp;&amp; exitCode == 0) {</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : intermediateFilesToClean) {</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            std::error_code ec_remove;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            fs::remove(file, ec_remove);</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="keywordflow">if</span> (ec_remove) {</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Could not remove intermediate file &#39;&quot;</span> &lt;&lt; file.string() &lt;&lt; <span class="stringliteral">&quot;&#39;: &quot;</span> &lt;&lt; ec_remove.message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            }</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        }</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (preserveIntermediateFiles) {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Intermediate files preserved.\n&quot;</span>;</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    }</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keywordflow">return</span> exitCode;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>}</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment">    }*/</span> <span class="keywordflow">catch</span> (<span class="keywordtype">int</span> e) {</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    </div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    <span class="keywordflow">if</span> (!preserveIntermediateFiles &amp;&amp; exitCode == 0) {</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; file : intermediateFilesToClean) {</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            std::error_code ec_remove;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            fs::remove(file, ec_remove);</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            <span class="keywordflow">if</span> (ec_remove) {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Could not remove intermediate file &#39;&quot;</span> &lt;&lt; file.string() &lt;&lt; <span class="stringliteral">&quot;&#39;: &quot;</span> &lt;&lt; ec_remove.message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        }</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (preserveIntermediateFiles) {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Intermediate files preserved.\n&quot;</span>;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    }</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keywordflow">return</span> exitCode;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}</div>
 </div>
 <div class="ttc" id="aIRLinker_8hpp_html"><div class="ttname"><a href="IRLinker_8hpp.html">IRLinker.hpp</a></div></div>
 <div class="ttc" id="aIR_8h_html"><div class="ttname"><a href="IR_8h.html">IR.h</a></div></div>
@@ -420,7 +421,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="ttc" id="aclassyoi_1_1IRLinker_html"><div class="ttname"><a href="classyoi_1_1IRLinker.html">yoi::IRLinker</a></div><div class="ttdef"><b>Definition</b> <a href="IRLinker_8hpp_source.html#l00016">IRLinker.hpp:16</a></div></div>
 <div class="ttc" id="aclassyoi_1_1IRLinker_html_a85d12b46568af8240d98793975258055"><div class="ttname"><a href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055">yoi::IRLinker::link</a></div><div class="ttdeci">std::shared_ptr&lt; IRObjectFile &gt; link(const std::shared_ptr&lt; compilerContext &gt; &amp;context, indexT entryModuleId)</div><div class="ttdoc">Links all compiled modules from the context into a single IRObjectFile.</div><div class="ttdef"><b>Definition</b> <a href="IRLinker_8cpp_source.html#l00015">IRLinker.cpp:15</a></div></div>
 <div class="ttc" id="aclassyoi_1_1LLVMCodegen_html"><div class="ttname"><a href="classyoi_1_1LLVMCodegen.html">yoi::LLVMCodegen</a></div><div class="ttdef"><b>Definition</b> <a href="llvmCodegenContext_8hpp_source.html#l00030">llvmCodegenContext.hpp:30</a></div></div>
-<div class="ttc" id="aclassyoi_1_1LLVMCodegen_html_a315b8b94459da326dd92b690aab44f6a"><div class="ttname"><a href="classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a">yoi::LLVMCodegen::generateTargetObjectCode</a></div><div class="ttdeci">void generateTargetObjectCode(const yoi::wstr &amp;pathToOutput)</div><div class="ttdef"><b>Definition</b> <a href="llvmCodegenContext_8cpp_source.html#l02176">llvmCodegenContext.cpp:2176</a></div></div>
+<div class="ttc" id="aclassyoi_1_1LLVMCodegen_html_a315b8b94459da326dd92b690aab44f6a"><div class="ttname"><a href="classyoi_1_1LLVMCodegen.html#a315b8b94459da326dd92b690aab44f6a">yoi::LLVMCodegen::generateTargetObjectCode</a></div><div class="ttdeci">void generateTargetObjectCode(const yoi::wstr &amp;pathToOutput)</div><div class="ttdef"><b>Definition</b> <a href="llvmCodegenContext_8cpp_source.html#l02193">llvmCodegenContext.cpp:2193</a></div></div>
 <div class="ttc" id="aclassyoi_1_1LLVMCodegen_html_a31fecbe7a01dbfa60f245b1dfbc64276"><div class="ttname"><a href="classyoi_1_1LLVMCodegen.html#a31fecbe7a01dbfa60f245b1dfbc64276">yoi::LLVMCodegen::getModule</a></div><div class="ttdeci">llvm::Module * getModule()</div><div class="ttdef"><b>Definition</b> <a href="llvmCodegenContext_8cpp_source.html#l00152">llvmCodegenContext.cpp:152</a></div></div>
 <div class="ttc" id="aclassyoi_1_1LLVMCodegen_html_a3c01631a4116e8810c6c1021d7110ab7"><div class="ttname"><a href="classyoi_1_1LLVMCodegen.html#a3c01631a4116e8810c6c1021d7110ab7">yoi::LLVMCodegen::generate</a></div><div class="ttdeci">void generate()</div><div class="ttdef"><b>Definition</b> <a href="llvmCodegenContext_8cpp_source.html#l00136">llvmCodegenContext.cpp:136</a></div></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a></div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00013">objectLinker.h:13</a></div></div>

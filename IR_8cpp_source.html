@@ -1364,7 +1364,7 @@ $(document).ready(function(){initNavTree('IR_8cpp_source.html',''); initResizabl
 <div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>        <span class="keywordflow">for</span> (<a class="code hl_typedef" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> i = 0; i &lt; funcArgsCount; ++i) {</div>
 <div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>            tempVarStack.pop_back();</div>
 <div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>        }</div>
-<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>        tempVarStack.push_back(returnType);</div>
+<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>        tempVarStack.push_back(<a class="code hl_function" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd">managedPtr</a>(compilerCtx-&gt;normalizeForeignBasicType(returnType)));</div>
 <div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span> </div>
 <div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>        <span class="comment">// insert(IR{IR::Opcode::invoke_imported, {IROperand(IROperand::operandType::index, externIndex),</span></div>
 <div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>        <span class="comment">// IROperand(IROperand::operandType::index, funcArgsCount)}});</span></div>
