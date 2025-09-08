@@ -1,0 +1,68 @@
+use file "file"
+use str "str"
+use runtime "runtime"
+use lang "builtin"
+
+struct OSFile {
+    fp: unsigned,
+    path: str.Str,
+    constructor(fp: unsigned, path: str.Str)
+}
+
+impl OSFile {
+    constructor(fp: unsigned, path: str.Str) {
+        this.fp = fp
+        this.path = path
+    }
+}
+
+impl OSFile : file.AbstractFile {
+    read(size: int): char[] {
+        let buffer = new char[size]()
+        let bytes_read = runtime.fread(runtime.runtime_get_string_array_data_pointer(buffer), 1, size, this.fp)
+        return buffer
+    },
+    write(data: char[]) : int {
+        runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, data.length, this.fp)
+        return data.length
+    },
+    close() : none {
+        runtime.fclose(this.fp)
+    },
+    seek(offset: int, whence: int) : int {
+        return runtime.fseek(this.fp, offset, whence)
+    },
+    tell() : int {
+        return runtime.ftell(this.fp)
+    },
+    flush() : none {
+        runtime.fflush(this.fp)
+    },
+    is_eof() : bool {
+        return runtime.feof(this.fp)
+    },
+    size() : int {
+        lang.runtime_panic("not implemented")
+        return 0
+    },
+    is_seekable() : bool {
+        return true
+    },
+    is_readable() : bool {
+        return true
+    },
+    is_writable() : bool {
+        return true
+    },
+    is_closed() : bool {
+        return runtime.fclose(this.fp) == 0
+    }
+}
+
+func open(path: str.Str, mode: str.Str) : lang.Result<OSFile, str.Str> {
+    let fp = runtime.fopen(path.c_str(), mode.c_str())
+    if (fp == 0) {
+        return lang.Result<OSFile, str.Str>.err(str.Str("failed to open file"))
+    }
+    return lang.Result<OSFile, str.Str>.ok(OSFile(fp, path))
+}

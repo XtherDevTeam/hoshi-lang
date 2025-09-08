@@ -1035,7 +1035,7 @@ namespace yoi {
         for (yoi::indexT i = 0; i < funcArgsCount; ++i) {
             tempVarStack.pop_back();
         }
-        tempVarStack.push_back(returnType);
+        tempVarStack.push_back(managedPtr(compilerCtx->normalizeForeignBasicType(returnType)));
 
         // insert(IR{IR::Opcode::invoke_imported, {IROperand(IROperand::operandType::index, externIndex),
         // IROperand(IROperand::operandType::index, funcArgsCount)}});

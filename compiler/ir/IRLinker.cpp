@@ -69,19 +69,39 @@ namespace yoi {
                 indexT oldIdx = srcModule->structTable.getIndex(structPair.first);
                 auto newName = mangleName(modId, structPair.second->name);
                 // Just copy the definition, field types will be patched later if needed
-                indexT newIdx = finalModule->structTable.put_create(newName, structPair.second);
+                auto newIndex = finalModule->structTable.put_create(newName, structPair.second);
+                structRemapping[modId][oldIdx] = newIndex;
+            }
+
+            for (const auto& ifacePair : srcModule->interfaceTable) {
+                indexT oldIdx = srcModule->interfaceTable.getIndex(ifacePair.first);
+                auto newName = mangleName(modId, ifacePair.second->name);
+                // Just copy the definition, method types will be patched later if needed
+                finalModule->interfaceTable.put_create(newName, ifacePair.second);
+                auto newIndex = finalModule->interfaceTable.getIndex(newName);
+                interfaceRemapping[modId][oldIdx] = newIndex;
+            }
+        }
+
+        for (const auto& modPair : compilerCtx->getCompiledModules()) {
+            indexT modId = modPair.first;
+            const auto& srcModule = modPair.second;
+            
+            for (const auto& structPair : srcModule->structTable) {
+                indexT oldIdx = srcModule->structTable.getIndex(structPair.first);
+                auto newName = mangleName(modId, structPair.second->name);
+                indexT newIdx = finalModule->structTable.getIndex(newName);
                 finalModule->structTable[newIdx]->name = newName;
                 for (auto &type : finalModule->structTable[newIdx]->fieldTypes) {
                     *type = *patchType(type);
                 }
-                structRemapping[modId][oldIdx] = newIdx;
             }
 
             // Link Interfaces
             for (const auto& ifacePair : srcModule->interfaceTable) {
                 indexT oldIdx = srcModule->interfaceTable.getIndex(ifacePair.first);
                 auto newName = mangleName(modId, ifacePair.second->name);
-                indexT newIdx = finalModule->interfaceTable.put_create(newName, ifacePair.second);
+                indexT newIdx = finalModule->interfaceTable.getIndex(newName);
                 finalModule->interfaceTable[newIdx]->name = newName;
 
                 for (auto &method : finalModule->interfaceTable[newIdx]->methodMap) {

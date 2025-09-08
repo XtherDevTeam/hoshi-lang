@@ -1,0 +1,17 @@
+use file "file"
+use fs "fs"
+use str "str"
+use runtime "runtime"
+
+func main() : int {
+    let path = str.Str("test.txt")
+    let content = str.Str("Hello, world!")
+    let f = fs.open(path, str.Str("w+")).unwrap() as file.AbstractFile
+    f.write(content.data)
+    f.close()
+    let f = fs.open(path, str.Str("r")).unwrap() as file.AbstractFile
+    let content = str.Str(f.read(14))
+    f.close()
+    runtime.puts(content.c_str())
+    return 0
+}
