@@ -120,6 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a018974377dbe893144969b5a486fe294"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbd43886cf10972430844322dc8f4bf9" id="r_adbd43886cf10972430844322dc8f4bf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html">Builder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#adbd43886cf10972430844322dc8f4bf9">setSearchPaths</a> (const <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &gt; &amp;<a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#ad377858d628ceb6a9d78f47158131a55">searchPaths</a>)</td></tr>
 <tr class="separator:adbd43886cf10972430844322dc8f4bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f113e34c5f45fd161edb552688d24c" id="r_ae2f113e34c5f45fd161edb552688d24c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html">Builder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#ae2f113e34c5f45fd161edb552688d24c">setMarco</a> (const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;name, const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;value)</td></tr>
+<tr class="separator:ae2f113e34c5f45fd161edb552688d24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2209e6b0997839bdd10821c6abe11117" id="r_a2209e6b0997839bdd10821c6abe11117"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structyoi_1_1IRBuildConfig.html">IRBuildConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117">yield</a> ()</td></tr>
 <tr class="separator:a2209e6b0997839bdd10821c6abe11117"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -141,10 +143,12 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ad377858d628ceb6a9d78f47158131a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b94b4a3fe10af4660ed5c0ce6f93b5d" id="r_a1b94b4a3fe10af4660ed5c0ce6f93b5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#a1b94b4a3fe10af4660ed5c0ce6f93b5d">additionalLinkingFiles</a></td></tr>
 <tr class="separator:a1b94b4a3fe10af4660ed5c0ce6f93b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92616faabf3a5b7737e69f0237ec2772" id="r_a92616faabf3a5b7737e69f0237ec2772"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html#a92616faabf3a5b7737e69f0237ec2772">marcos</a></td></tr>
+<tr class="separator:a92616faabf3a5b7737e69f0237ec2772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00026">26</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00027">27</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a127ac7aab5c87bd7df242644885320ac" name="a127ac7aab5c87bd7df242644885320ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a127ac7aab5c87bd7df242644885320ac">&#9670;&#160;</a></span>Builder()</h2>
@@ -188,7 +192,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01026">1026</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01027">1027</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 </div>
 </div>
@@ -230,7 +234,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00863">863</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00864">864</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a">IRBuildConfig::buildMode</a>.</p>
 
@@ -276,7 +280,39 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00837">837</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00027">IRBuildConfig::Builder::buildType</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00028">IRBuildConfig::Builder::buildType</a>.</p>
+
+</div>
+</div>
+<a id="ae2f113e34c5f45fd161edb552688d24c" name="ae2f113e34c5f45fd161edb552688d24c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2f113e34c5f45fd161edb552688d24c">&#9670;&#160;</a></span>setMarco()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structyoi_1_1IRBuildConfig_1_1Builder.html">IRBuildConfig::Builder</a> &amp; setMarco </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01470">1470</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="classyoi_1_1IROperand.html#a9b0557aa06e37fe958938745c2254cd2">IROperand::value</a>.</p>
 
 </div>
 </div>
@@ -296,7 +332,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00873">873</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00874">874</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00022">IRBuildConfig::preserveIntermediateFiles</a>.</p>
 
@@ -318,7 +354,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01021">1021</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01022">1022</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +374,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00868">868</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00869">869</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66">IRBuildConfig::useObjectLinker</a>.</p>
 
@@ -361,7 +397,7 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00852">852</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00024">IRBuildConfig::additionalLinkingFiles</a>, <a class="el" href="IR_8h_source.html#l00021">IRBuildConfig::buildArch</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a">IRBuildConfig::buildMode</a>, <a class="el" href="IR_8h_source.html#l00020">IRBuildConfig::buildPlatform</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71">IRBuildConfig::buildType</a>, <a class="el" href="def_8hpp_source.html#l00297">yoi::managedPtr()</a>, <a class="el" href="IR_8h_source.html#l00022">IRBuildConfig::preserveIntermediateFiles</a>, <a class="el" href="IR_8h_source.html#l00023">IRBuildConfig::searchPaths</a>, and <a class="el" href="structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66">IRBuildConfig::useObjectLinker</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00024">IRBuildConfig::additionalLinkingFiles</a>, <a class="el" href="IR_8h_source.html#l00021">IRBuildConfig::buildArch</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a">IRBuildConfig::buildMode</a>, <a class="el" href="IR_8h_source.html#l00020">IRBuildConfig::buildPlatform</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71">IRBuildConfig::buildType</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8h_source.html#l00025">IRBuildConfig::marcos</a>, <a class="el" href="IR_8h_source.html#l00022">IRBuildConfig::preserveIntermediateFiles</a>, <a class="el" href="IR_8h_source.html#l00023">IRBuildConfig::searchPaths</a>, and <a class="el" href="structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66">IRBuildConfig::useObjectLinker</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -388,7 +424,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00034">34</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00035">35</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -404,7 +440,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00031">31</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00032">32</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -420,7 +456,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00028">28</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00029">29</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -436,7 +472,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00030">30</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00031">31</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -452,9 +488,25 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00027">27</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00028">28</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00837">IRBuildConfig::Builder::setBuildType()</a>.</p>
+
+</div>
+</div>
+<a id="a92616faabf3a5b7737e69f0237ec2772" name="a92616faabf3a5b7737e69f0237ec2772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92616faabf3a5b7737e69f0237ec2772">&#9670;&#160;</a></span>marcos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;<a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>&gt; marcos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00036">36</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -470,7 +522,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00032">32</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00033">33</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +538,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00033">33</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00034">34</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -502,7 +554,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00029">29</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00030">30</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>

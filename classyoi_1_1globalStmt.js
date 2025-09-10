@@ -14,5 +14,6 @@ var classyoi_1_1globalStmt =
     [ "getKind", "classyoi_1_1globalStmt.html#a8d4dd3d00c7b4c344059f4a8f873edd5", null ],
     [ "getValue", "classyoi_1_1globalStmt.html#a7f2607e2d216a88d2f9ea60d6fa3d341", null ],
     [ "kind", "classyoi_1_1globalStmt.html#ad38547a24d0bb38586a3e75ef26cb715", null ],
+    [ "marco", "classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1", null ],
     [ "value", "classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2", null ]
 ];

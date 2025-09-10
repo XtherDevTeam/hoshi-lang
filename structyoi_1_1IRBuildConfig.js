@@ -19,6 +19,7 @@ var structyoi_1_1IRBuildConfig =
     [ "buildMode", "structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a", null ],
     [ "buildPlatform", "structyoi_1_1IRBuildConfig.html#ab5581c9fd0b7cdfb797b3067628ee026", null ],
     [ "buildType", "structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71", null ],
+    [ "marcos", "structyoi_1_1IRBuildConfig.html#a92616faabf3a5b7737e69f0237ec2772", null ],
     [ "preserveIntermediateFiles", "structyoi_1_1IRBuildConfig.html#a1a4a88a36dafa67834472e12d3d32b23", null ],
     [ "searchPaths", "structyoi_1_1IRBuildConfig.html#ad377858d628ceb6a9d78f47158131a55", null ],
     [ "useObjectLinker", "structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66", null ]

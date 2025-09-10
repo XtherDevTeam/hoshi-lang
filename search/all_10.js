@@ -27,6 +27,8 @@ var searchData=
   ['hoshi_20lang_20language_20specification_24',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
   ['hoshi_20lang_20programming_20language_25',['The Hoshi-lang Programming Language',['../index.html',1,'']]],
   ['hoshi_5fcompiler_5fctx_5fglob_5fid_5fconst_26',['HOSHI_COMPILER_CTX_GLOB_ID_CONST',['../builtinModule_8hpp.html#a5129f23ef269f231d45c7ac410630140',1,'builtinModule.hpp']]],
-  ['hoshi_5flang_5fsdk_5fversion_27',['HOSHI_LANG_SDK_VERSION',['../build__config_8h.html#a6971dff27c70670fe52aeea69fbdc0cc',1,'build_config.h']]],
-  ['hoshimodule_28',['hoshiModule',['../classyoi_1_1hoshiModule.html',1,'yoi']]]
+  ['hoshi_5flang_5fgit_5fcommit_5fhash_27',['HOSHI_LANG_GIT_COMMIT_HASH',['../defines_8h.html#ac979ac3493d346de2d200de8f4fd020c',1,'defines.h']]],
+  ['hoshi_5flang_5fsdk_5fversion_28',['HOSHI_LANG_SDK_VERSION',['../build__config_8h.html#a6971dff27c70670fe52aeea69fbdc0cc',1,'build_config.h']]],
+  ['hoshi_5flang_5fversion_29',['HOSHI_LANG_VERSION',['../defines_8h.html#a8cd7d19d3fe7b9b36bb651da9a7d6e0e',1,'defines.h']]],
+  ['hoshimodule_30',['hoshiModule',['../classyoi_1_1hoshiModule.html',1,'yoi']]]
 ];

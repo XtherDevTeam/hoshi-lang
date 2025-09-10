@@ -18,5 +18,6 @@ var classyoi_1_1inCodeBlockStmt =
     [ "getKind", "classyoi_1_1inCodeBlockStmt.html#a4cd86c482e3b1e5d5242551d7c334f9d", null ],
     [ "getValue", "classyoi_1_1inCodeBlockStmt.html#adfe20aa2ddab7294f2689fe47375bf52", null ],
     [ "kind", "classyoi_1_1inCodeBlockStmt.html#a99d4d4fc7c5692ecc16680880819f591", null ],
+    [ "marco", "classyoi_1_1inCodeBlockStmt.html#ade670788993aac3544d4123d723d0af1", null ],
     [ "value", "classyoi_1_1inCodeBlockStmt.html#a3ec8530b5ffd8cb3cae73eb30c0fd9c8", null ]
 ];

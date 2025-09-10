@@ -120,6 +120,8 @@ var annotated_dup =
       [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html", "classyoi_1_1LLVMCodegen" ],
       [ "logicalAndExpr", "classyoi_1_1logicalAndExpr.html", "classyoi_1_1logicalAndExpr" ],
       [ "logicalOrExpr", "classyoi_1_1logicalOrExpr.html", "classyoi_1_1logicalOrExpr" ],
+      [ "marcoDescriptor", "classyoi_1_1marcoDescriptor.html", "classyoi_1_1marcoDescriptor" ],
+      [ "marcoPair", "classyoi_1_1marcoPair.html", "classyoi_1_1marcoPair" ],
       [ "memberExpr", "classyoi_1_1memberExpr.html", "classyoi_1_1memberExpr" ],
       [ "moduleContext", "classyoi_1_1moduleContext.html", "classyoi_1_1moduleContext" ],
       [ "mulExpr", "classyoi_1_1mulExpr.html", "classyoi_1_1mulExpr" ],

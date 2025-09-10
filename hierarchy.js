@@ -52,6 +52,8 @@ var hierarchy =
       [ "letStmt", "classyoi_1_1letStmt.html", null ],
       [ "logicalAndExpr", "classyoi_1_1logicalAndExpr.html", null ],
       [ "logicalOrExpr", "classyoi_1_1logicalOrExpr.html", null ],
+      [ "marcoDescriptor", "classyoi_1_1marcoDescriptor.html", null ],
+      [ "marcoPair", "classyoi_1_1marcoPair.html", null ],
       [ "memberExpr", "classyoi_1_1memberExpr.html", null ],
       [ "mulExpr", "classyoi_1_1mulExpr.html", null ],
       [ "newExpression", "classyoi_1_1newExpression.html", null ],
