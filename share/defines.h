@@ -1,0 +1,8 @@
+
+#ifndef HOSHI_LANG_DEFINES_H
+#define HOSHI_LANG_DEFINES_H
+
+#define HOSHI_LANG_VERSION "0"
+#define HOSHI_LANG_GIT_COMMIT_HASH "6d67d0"
+
+#endif

@@ -174,6 +174,22 @@ namespace yoi {
 
     class callableExpression;
 
+    class marcoPair;
+
+    class marcoDescriptor;
+
+    class marcoPair : public AST {
+    public:
+        lexer::token identifier;
+        lexer::token constraint;
+        lexer::token rhs;
+    };
+
+    class marcoDescriptor : public AST {
+    public:
+        yoi::vec<marcoPair *> pairs;
+    };
+
     class callableExpression : public AST {
         public:
          rExpr *expr;
@@ -686,6 +702,8 @@ namespace yoi {
             exportDecl,
         } kind;
 
+        marcoDescriptor *marco;
+
         union vValue {
             useStmt *useStmtVal;
             interfaceDefStmt *interfaceDefStmtVal;
@@ -800,6 +818,8 @@ namespace yoi {
             throwStmt,
             rExpr,
         } kind;
+
+        marcoDescriptor *marco;
 
         union vValue {
             ifStmt *ifStmtVal;
@@ -1086,6 +1106,10 @@ namespace yoi {
     void finalizeAST(unnamedDefinitionArguments *ptr);
 
     void finalizeAST(callableExpression *ptr);
+
+    void finalizeAST(marcoPair *ptr);
+
+    void finalizeAST(marcoDescriptor *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

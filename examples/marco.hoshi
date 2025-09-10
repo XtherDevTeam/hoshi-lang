@@ -1,0 +1,7 @@
+use runtime "runtime"
+
+func main() : int {
+    [[platform == "darwin"]] runtime.puts("Hello, world from macOS!")
+    [[platform == "linux"]] runtime.puts("Hello, world from Linux!")
+    return 0
+}

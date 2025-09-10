@@ -1,0 +1,16 @@
+use str "str"
+use vec "vec"
+use runtime "runtime"
+
+func main() : int {
+    runtime.puts("Binary Size Optimization Test 2")
+    let v = vec.Vec<int>()
+    v.push(1)
+    v.push(2)
+    v.push(3)
+    v.pop()
+    if (v.size() == 2) {
+        runtime.puts("Test 2 Finished")
+    }
+    return 0
+}

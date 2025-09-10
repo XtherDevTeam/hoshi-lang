@@ -1,3 +1,4 @@
+#include "share/defines.h"
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
 #include <compiler/frontend/lexer.hpp>
@@ -48,6 +49,7 @@ void printUsage(const char* programName) {
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
               << "                                  Default: do not preserve intermediate files.\n"
               << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
+              << "  -D <k> <v>, --define <k> <v>     Add a macro definition.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
               << "  -h, --help                      Display this help message.\n";
 }
@@ -63,6 +65,7 @@ int main(int argc, const char **argv) {
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
+    yoi::vec<std::pair<yoi::wstr, yoi::wstr>> macroDefs;
     bool preserveIntermediateFiles = false; 
 
     for (int i = 1; i < argc; ++i) {
@@ -132,6 +135,16 @@ int main(int argc, const char **argv) {
         } else if (arg == "--help" || arg == "-h") {
             printUsage(argv[0]);
             return 0; 
+        } else if (arg == "-D" || arg == "--define") {
+            if (i + 2 < argc) {
+                yoi::wstr key = yoi::string2wstring(argv[++i]);
+                yoi::wstr value = yoi::string2wstring(argv[++i]);
+                macroDefs.emplace_back(key, value);
+            } else {
+                std::cerr << "Error: " << arg << " requires two arguments.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
         } else if (inputFile.empty()) { 
             inputFile = arg;
         } else {
@@ -218,6 +231,10 @@ int main(int argc, const char **argv) {
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 
                                         .setSearchPaths(includeDirs)
+                                        .setMarco(L"platform", yoi::string2wstring(YOI_PLATFORM))
+                                        .setMarco(L"arch", yoi::string2wstring(YOI_ARCH))
+                                        .setMarco(L"hoshi_feature_version", yoi::string2wstring(HOSHI_LANG_VERSION))
+                                        .setMarco(L"hoshi_lang_commit", yoi::string2wstring(HOSHI_LANG_GIT_COMMIT_HASH))
                                         .yield());
 
         yoi::wstr input = yoi::string2wstring(inputFile);

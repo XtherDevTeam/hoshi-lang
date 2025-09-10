@@ -16,6 +16,7 @@
 #include <exception>
 #include <iterator>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <tuple>
@@ -985,6 +986,10 @@ namespace yoi {
 
     void visitor::visit(yoi::inCodeBlockStmt *inCodeBlockStmt) {
         moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, inCodeBlockStmt->getLine(), inCodeBlockStmt->getColumn()});
+
+        if (!checkMarcoSatisfaction(inCodeBlockStmt->marco))
+            return;
+
         switch (inCodeBlockStmt->getKind()) {
             case inCodeBlockStmt::vKind::ifStmt:
                 visit(inCodeBlockStmt->getValue().ifStmtVal);
@@ -1891,6 +1896,8 @@ namespace yoi {
     }
 
     void visitor::visit(yoi::globalStmt *globalStmt) {
+        if (!checkMarcoSatisfaction(globalStmt->marco))
+            return;
         switch (globalStmt->kind) {
             case globalStmt::vKind::useStmt: {
                 visit(globalStmt->value.useStmtVal);
@@ -3930,5 +3937,113 @@ namespace yoi {
         auto callableType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         // unfinished
         return -1;
+    }
+
+    bool visitor::checkMarcoSatisfaction(yoi::marcoDescriptor *desc) {
+        if (!desc)
+            return true;
+        bool satisfied = true;
+
+        auto convertToSameType = [](lexer::token &lhs, lexer::token &rhs) -> std::pair<lexer::token, lexer::token> {
+            switch (lhs.kind) {
+                case lexer::token::tokenKind::integer:
+                    switch (rhs.kind) {
+                        case lexer::token::tokenKind::integer: return {lhs, rhs};
+                        case lexer::token::tokenKind::decimal: return {lexer::token{0, 0, lexer::token::tokenKind::decimal, static_cast<double>(lhs.basicVal.vDeci)}, rhs};
+                        default: panic(lhs.line, lhs.col, "Cannot convert marco value to comparable type.");
+                    }
+                case lexer::token::tokenKind::decimal:
+                    switch (rhs.kind) {
+                        case lexer::token::tokenKind::integer: return {lhs, lexer::token{0, 0, lexer::token::tokenKind::decimal, static_cast<double>(rhs.basicVal.vUint)}};
+                        case lexer::token::tokenKind::decimal: return {lhs, rhs};
+                        default: panic(lhs.line, lhs.col, "Cannot convert marco value to comparable type.");
+                    }
+                case lexer::token::tokenKind::string:
+                    switch (rhs.kind) {
+                        case lexer::token::tokenKind::string: return {lhs, rhs};
+                        case lexer::token::tokenKind::boolean: return {lexer::token{0, 0, lexer::token::tokenKind::integer, static_cast<uint64_t>(lhs.strVal == rhs.strVal)}, rhs};
+                        default: panic(lhs.line, lhs.col, "Cannot convert marco value to comparable type.");
+                    }
+                case lexer::token::tokenKind::boolean:
+                    switch (rhs.kind) {
+                        case lexer::token::tokenKind::string: return {lexer::token{0, 0, lexer::token::tokenKind::integer, static_cast<uint64_t>(lhs.strVal == rhs.strVal)}, rhs};
+                        case lexer::token::tokenKind::boolean: return {lhs, rhs};
+                        default: panic(lhs.line, lhs.col, "Cannot convert marco value to comparable type.");
+                    }
+                default:;
+            }
+            return {lhs, rhs};
+        };
+        auto compare = [&](lexer::token &lhs, lexer::token &rhs, lexer::token::tokenKind op) {
+            auto [lhsTok, rhsTok] = convertToSameType(lhs, rhs);
+            switch (op) {
+                case lexer::token::tokenKind::equal: return lhsTok.basicVal.vUint == rhsTok.basicVal.vUint && lhsTok.strVal == rhsTok.strVal;
+                case lexer::token::tokenKind::notEqual: return lhsTok.basicVal.vUint != rhsTok.basicVal.vUint || lhsTok.strVal != rhsTok.strVal;
+                case lexer::token::tokenKind::greaterThan:
+                    switch (lhsTok.kind) {
+                        case lexer::token::tokenKind::integer: return lhsTok.basicVal.vUint > rhsTok.basicVal.vUint;
+                        case lexer::token::tokenKind::decimal: return lhsTok.basicVal.vDeci > rhsTok.basicVal.vDeci;
+                        default: panic(lhs.line, lhs.col, "Cannot compare marco value.");
+                    }
+                case lexer::token::tokenKind::greaterEqual:
+                    switch (lhsTok.kind) {
+                        case lexer::token::tokenKind::integer: return lhsTok.basicVal.vUint >= rhsTok.basicVal.vUint;
+                        case lexer::token::tokenKind::decimal: return lhsTok.basicVal.vDeci >= rhsTok.basicVal.vDeci;
+                        default: panic(lhs.line, lhs.col, "Cannot compare marco value.");
+                    }
+                case lexer::token::tokenKind::lessThan:
+                    switch (lhsTok.kind) {
+                        case lexer::token::tokenKind::integer: return lhsTok.basicVal.vUint < rhsTok.basicVal.vUint;
+                        case lexer::token::tokenKind::decimal: return lhsTok.basicVal.vDeci < rhsTok.basicVal.vDeci;
+                        default: panic(lhs.line, lhs.col, "Cannot compare marco value.");
+                    }
+                case lexer::token::tokenKind::lessEqual:
+                    switch (lhsTok.kind) {
+                        case lexer::token::tokenKind::integer: return lhsTok.basicVal.vUint <= rhsTok.basicVal.vUint;
+                        case lexer::token::tokenKind::decimal: return lhsTok.basicVal.vDeci <= rhsTok.basicVal.vDeci;
+                        default: panic(lhs.line, lhs.col, "Cannot compare marco value.");
+                    }
+                default:;
+            }
+            return false;
+        };
+
+        auto &marcos = moduleContext->getCompilerContext()->getBuildConfig()->marcos;
+        for (auto &i : desc->pairs) {
+            bool currentSatisfied = false;
+            auto &marco = i->identifier.strVal;
+            yoi_assert(marcos.contains(marco), desc->getLine(), desc->getColumn(), "Undefined marco: " + yoi::wstring2string(marco));
+            auto &value = marcos[marco];
+            auto tok = lexer(std::wstringstream(value)).scan();
+            tok.kind = tok.kind == lexer::token::tokenKind::identifier ? lexer::token::tokenKind::string : tok.kind; 
+
+            auto &targetValue = i->rhs;
+            switch (i->constraint.kind) {
+                case lexer::token::tokenKind::equal: {
+                    currentSatisfied = tok.basicVal.vUint == targetValue.basicVal.vUint && tok.strVal == targetValue.strVal;
+                    break;
+                }
+                case lexer::token::tokenKind::notEqual: {
+                    currentSatisfied = tok.basicVal.vUint != targetValue.basicVal.vUint || tok.strVal != targetValue.strVal;
+                    break;
+                }
+                case lexer::token::tokenKind::greaterThan:
+                case lexer::token::tokenKind::greaterEqual:
+                case lexer::token::tokenKind::lessThan:
+                case lexer::token::tokenKind::lessEqual: {
+                    currentSatisfied = compare(tok, targetValue, i->constraint.kind);
+                    break;
+                }
+                default: {
+                    panic(desc->getLine(), desc->getColumn(), "Unsupported marco constraint kind: " + std::string{magic_enum::enum_name(i->constraint.kind)});
+                    break;
+                }
+            }
+            if (!currentSatisfied) {
+                satisfied = false;
+                break;
+            }
+        }
+        return satisfied; 
     }
 } // namespace yoi

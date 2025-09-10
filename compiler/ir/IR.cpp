@@ -857,7 +857,8 @@ namespace yoi {
                                         buildArch,
                                         preserveIntermediateFiles,
                                         searchPaths,
-                                        additionalLinkingFiles});
+                                        additionalLinkingFiles,
+                                        marcos});
     }
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
@@ -1465,5 +1466,9 @@ namespace yoi {
             }
         }
         return false;
+    }
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setMarco(const yoi::wstr &name, const yoi::wstr &value) {
+        marcos[name] = value;
+        return *this;
     }
 } // namespace yoi

@@ -1,6 +1,7 @@
 #ifndef HOSHI_DEF_HPP
 #define HOSHI_DEF_HPP
 
+#include <share/defines.h>
 #include <cstdint>
 #include <iterator>
 #include <map>

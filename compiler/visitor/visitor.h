@@ -344,6 +344,8 @@ namespace yoi {
                                                           yoi::indexT moduleIndex);
 
         yoi::indexT createLambdaUnnamedStruct(yoi::lambdaExpr *lambdaExpr);
+
+        bool checkMarcoSatisfaction(yoi::marcoDescriptor *desc);
     };
 
 } // namespace yoi

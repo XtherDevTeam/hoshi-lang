@@ -765,6 +765,8 @@ namespace yoi {
     }
 
     void finalizeAST(globalStmt *ptr) {
+        if (ptr->marco)
+            delete ptr->marco;
         switch (ptr->kind) {
             case globalStmt::vKind::useStmt:
                 finalizeAST(ptr->value.useStmtVal);
@@ -833,6 +835,8 @@ namespace yoi {
     }
 
     void finalizeAST(inCodeBlockStmt *ptr) {
+        if (ptr->marco)
+            delete ptr->marco;
         switch (ptr->kind) {
             case inCodeBlockStmt::vKind::ifStmt:
                 finalizeAST(ptr->value.ifStmtVal);
@@ -1111,6 +1115,17 @@ namespace yoi {
     
     void finalizeAST(callableExpression *ptr) {
         finalizeAST(ptr->expr);
+        delete ptr;
+    }
+    
+    void finalizeAST(marcoDescriptor *ptr) {
+        for (auto &i : ptr->pairs) {
+            delete i;
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(marcoPair *ptr) {
         delete ptr;
     }
 } // namespace yoi

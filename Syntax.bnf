@@ -67,7 +67,7 @@ implStmt ::= "impl" externModuleAccessExpression implInner
            | "impl" externModuleAccessExpression ":" identifierWithDefTemplateArg implInner
 letAssignmentPair ::= identifier "=" rExpr
 letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
-globalStmt ::= useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
+globalStmt ::= marcoDescriptor useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
 hoshiModule ::= { globalStmt }
 ifStmt ::= "if" "(" rExpr ")" codeBlock [ "elif" codeBlock ] [ "else" codeBlock ]
 whileStmt ::= "while" "(" rExpr ")" codeBlock
@@ -76,10 +76,12 @@ forEachStmt ::= "forEach" "(" identifier ":" rExpr ")" codeBlock
 returnStmt ::= "return" rExpr
 continueStmt ::= "continue"
 breakStmt ::= "break"
-inCodeBlockStmt ::= ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt | breakStmt | letStmt | codeBlock | rExpr
+inCodeBlockStmt ::= marcoDescriptor ifStmt | whileStmt | forEachStmt | returnStmt | continueStmt | breakStmt | letStmt | codeBlock | rExpr
 codeBlock ::= "{" { inCodeBlockStmt } "}"
 exportDecl ::= "export" externModuleAccessExpression "as" identifier
 importDecl ::= "import" innerMethodDecl "from" TOK_string
 catchParam ::= "(" typeSpec identifier ")"
 tryCatchStmt ::= "try" codeBlock "catch" catchParam { "catch" catchParam } ( "finally" codeBlock )
 throwStmt ::= "throw" rExpr
+marcoPair ::= identifier (">" | "<" | "==" | "!=" | "<=" | ">=") basicLiterals
+marcoDescriptor ::= "[[" [ {marcoPair "," } marcoPair ] "]]"

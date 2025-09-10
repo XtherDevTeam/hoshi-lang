@@ -374,19 +374,23 @@ namespace yoi {
 
     void parse(subscript *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+            lex.saveState();
             lexer::token node_start_token = lex.curToken;
             lex.scan();
             rExpr *r = nullptr;
             parse(r, lex);
             if (!r) {
-                panic(lex.line, lex.col, "expected rightValueExpr in subscript");
+                // panic(lex.line, lex.col, "expected rightValueExpr in subscript");
+                lex.returnState();
                 o = nullptr;
                 return;
             }
             if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                lex.dropState();
                 lex.scan();
                 o = new subscript{node_start_token, r};
             } else {
+                lex.dropState();
                 finalizeAST(r);
                 panic(lex.line, lex.col, "expected `]` to close a subscript");
                 o = nullptr;
@@ -1222,6 +1226,7 @@ namespace yoi {
 
     void parse(globalStmt *&o, lexer &lex) {
         // Initialize all pointers to nullptr to avoid uninitialized checks
+        marcoDescriptor *marco = nullptr;
         useStmt *a = nullptr;
         interfaceDefStmt *b = nullptr;
         structDefStmt *c = nullptr;
@@ -1233,53 +1238,58 @@ namespace yoi {
         
         lexer::token node_start_token = lex.curToken;
 
+        parse(marco, lex);
+
         parse(a, lex);
         if (a) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::useStmt, {a}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::useStmt, marco, {a}};
             return;
         }
 
         parse(b, lex);
         if (b) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::interfaceDefStmt, {b}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::interfaceDefStmt, marco, {b}};
             return;
         }
 
         parse(c, lex);
         if (c) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::structDefStmt, {c}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::structDefStmt, marco, {c}};
             return;
         }
 
         parse(d, lex);
         if (d) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::implStmt, {d}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::implStmt, marco, {d}};
             return;
         }
 
         parse(e, lex);
         if (e) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::letStmt, {e}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::letStmt, marco, {e}};
             return;
         }
 
         parse(f, lex);
         if (f) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::funcDefStmt, {f}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::funcDefStmt, marco, {f}};
             return;
         }
 
         parse(g, lex);
         if (g) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::exportDecl, {g}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::exportDecl, marco, {g}};
             return;
         }
 
         parse(h, lex);
         if (h) {
-            o = new globalStmt{node_start_token, globalStmt::vKind::importDecl, {h}};
+            o = new globalStmt{node_start_token, globalStmt::vKind::importDecl, marco, {h}};
             return;
         }
+
+        if (marco)
+            finalizeAST(marco);
         o = nullptr; // No global statement matched
     }
 
@@ -1603,6 +1613,7 @@ namespace yoi {
 
     void parse(inCodeBlockStmt *&o, lexer &lex) {
         // Initialize all potential children to nullptr before trying to parse
+        marcoDescriptor *marco = nullptr;
         letStmt *letStmtVal = nullptr;
         ifStmt *ifStmtVal = nullptr;
         breakStmt *breakStmtVal = nullptr;
@@ -1618,76 +1629,80 @@ namespace yoi {
         
         lexer::token node_start_token = lex.curToken;
 
+        parse(marco, lex);
+
         // Try parsing each type, and if successful, create the inCodeBlockStmt and return.
         // This avoids creating the inCodeBlockStmt node until a successful child parse.
 
         parse(letStmtVal, lex);
         if (letStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::letStmt, {letStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::letStmt, marco, {letStmtVal}};
             return;
         }
         parse(ifStmtVal, lex);
         if (ifStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::ifStmt, {ifStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::ifStmt, marco, {ifStmtVal}};
             return;
         }
         parse(breakStmtVal, lex);
         if (breakStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::breakStmt, {breakStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::breakStmt, marco, {breakStmtVal}};
             return;
         }
         parse(continueStmtVal, lex);
         if (continueStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::continueStmt, {continueStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::continueStmt, marco, {continueStmtVal}};
             return;
         }
         parse(returnStmtVal, lex);
         if (returnStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::returnStmt, {returnStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::returnStmt, marco, {returnStmtVal}};
             return;
         }
         parse(forEachStmtVal, lex); // Only parse once
         if (forEachStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forEachStmt, {forEachStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forEachStmt, marco, {forEachStmtVal}};
             return;
         }
         parse(whileStmtVal, lex);
         if (whileStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::whileStmt, {whileStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::whileStmt, marco, {whileStmtVal}};
             return;
         }
 
         parse(forStmtVal, lex);
         if (forStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forStmt, {forStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::forStmt, marco, {forStmtVal}};
             return;
         }
 
         parse(tryCatchStmtVal, lex);
         if (tryCatchStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::tryCatchStmt, {tryCatchStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::tryCatchStmt, marco, {tryCatchStmtVal}};
             return;
         }
 
         parse(throwStmtVal, lex);
         if (throwStmtVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::throwStmt, {throwStmtVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::throwStmt, marco, {throwStmtVal}};
             return;
         }
         
         parse(codeBlockVal, lex);
         if (codeBlockVal) {
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, {codeBlockVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, marco, {codeBlockVal}};
             return;
         }
 
         // rExpr should typically be last, as it's the most general expression statement.
         parse(rExprVal, lex);
         if (rExprVal) { 
-            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::rExpr, {rExprVal}};
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::rExpr, marco, {rExprVal}};
             return;
         }
 
+        if (marco)
+            finalizeAST(marco);
         o = nullptr; // If no statement type matched
     }
 
@@ -2287,6 +2302,92 @@ namespace yoi {
         }
         lex.scan();
         o = new callableExpression{node_start_token, expr};
+    }
+
+    void parse(marcoPair *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        lex.saveState();
+        lexer::token lhs, constraint, rhs;
+        if (lex.curToken.kind == lexer::token::tokenKind::identifier) {
+            lhs = lex.curToken;
+        } else {
+            lex.returnState();
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        switch (lex.curToken.kind) {
+            case lexer::token::tokenKind::equal:
+            case lexer::token::tokenKind::lessEqual:
+            case lexer::token::tokenKind::greaterEqual:
+            case lexer::token::tokenKind::greaterThan:
+            case lexer::token::tokenKind::lessThan: {
+                constraint = lex.curToken;
+                break;
+            }
+            default: {
+                lex.returnState();
+                o = nullptr;
+                return;
+            }
+        }
+        lex.scan();
+        switch (lex.curToken.kind) {
+            case lexer::token::tokenKind::identifier:
+            case lexer::token::tokenKind::integer:
+            case lexer::token::tokenKind::decimal:
+            case lexer::token::tokenKind::string: {
+                rhs = lex.curToken;
+                break;
+            }
+            default: {
+                lex.returnState();
+                o = nullptr;
+                return;
+            }
+        }
+        lex.scan();
+        lex.dropState();
+        o = new marcoPair{node_start_token, lhs, constraint, rhs};
+    }
+
+    void parse(marcoDescriptor *&o, lexer &lex) {
+        lexer::token current_token = lex.curToken;
+        lex.saveState();
+        if (current_token.kind != lexer::token::tokenKind::leftBracket) {
+            lex.returnState();
+            o = new marcoDescriptor{current_token, {}};
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftBracket) {
+            lex.returnState();
+            o = new marcoDescriptor{current_token, {}};
+            return;
+        }
+        lex.scan();
+        vec<marcoPair *> pairs;
+        marcoPair *pair = nullptr;
+        parse(pair, lex);
+        while (pair) {
+            pairs.push_back(pair);
+            pair = nullptr;
+            parse(pair, lex);
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
+            o = nullptr;
+            for (auto p : pairs) finalizeAST(p);
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
+            o = nullptr;
+            for (auto p : pairs) finalizeAST(p);
+            return;
+        }
+        lex.scan();
+        lex.dropState();
+        o = new marcoDescriptor{current_token, pairs};
     }
 } // namespace yoi
 

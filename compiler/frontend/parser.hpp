@@ -154,6 +154,10 @@ namespace yoi {
     void parse(lambdaExpr *&o, lexer &lex);
 
     void parse(callableExpression *&o, lexer &lex);
+
+    void parse(marcoPair *&o, lexer &lex);
+
+    void parse(marcoDescriptor *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

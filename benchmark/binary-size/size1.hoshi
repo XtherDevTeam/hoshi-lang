@@ -1,0 +1,8 @@
+use str "str"
+use vec "vec"
+use runtime "runtime"
+
+func main() : int {
+    runtime.puts("Binary Size Optimization Test 1")
+    return 0
+}

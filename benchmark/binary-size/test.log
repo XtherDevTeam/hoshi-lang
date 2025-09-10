@@ -1,0 +1,60 @@
+❯ pwd
+/Volumes/Jerry Chou/project/hoshi-lang
+❯ git log HEAD...HEAD^ | cat
+commit d44ca13e4e92aae0ee0b60005fec6f32eb6c755f
+Author: xiaokang00010 <zhouyongkang4321@gmail.com>
+Date:   Fri Aug 29 21:37:51 2025 +0800
+
+    chores: update some benchmark code and results
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size1.hoshi -o b1 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 
+Linking final darwin executable...
+Compilation successful!
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size2.hoshi -o b2 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 
+Linking final darwin executable...
+Compilation successful!
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size3.hoshi -o b3 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 
+Linking final darwin executable...
+Compilation successful!
+❯ ls -la b1 b2 b3
+-rwxr-xr-x@ 1 chou  staff   54927 Sep  8 17:24 b1
+-rwxr-xr-x@ 1 chou  staff   55263 Sep  8 17:30 b2
+-rwxr-xr-x@ 1 chou  staff  106991 Sep  8 17:25 b3
+❯ pwd
+/Users/chou/Desktop/project/hoshi-lang
+❯ git log HEAD...HEAD^ | cat
+commit 6d67d0a523b2ec91dda4766652a846e1b4012b70
+Author: xiaokang00010 <zhouyongkang4321@gmail.com>
+Date:   Mon Sep 8 17:05:45 2025 +0800
+
+    feat: add `fs.open()` and `file.AbstractFile`
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size1.hoshi -o b1 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features N/A
+Linking final darwin executable...
+Compilation successful!
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size2.hoshi -o b2 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features N/A
+Linking final darwin executable...
+Compilation successful!
+❯ ./cmake-build-release/hoshi_lang benchmark/binary-size/size3.hoshi -o b3 --build-mode release
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features N/A
+Linking final darwin executable...
+Compilation successful!
+❯ ls -la b1 b2 b3
+-rwxr-xr-x@ 1 chou  staff  39087 Sep  8 17:21 b1
+-rwxr-xr-x@ 1 chou  staff  39407 Sep  8 17:31 b2
+-rwxr-xr-x@ 1 chou  staff  58207 Sep  8 17:22 b3

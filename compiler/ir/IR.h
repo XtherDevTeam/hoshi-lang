@@ -22,6 +22,7 @@ namespace yoi {
         bool preserveIntermediateFiles;
         yoi::vec<yoi::wstr> searchPaths;
         yoi::vec<yoi::wstr> additionalLinkingFiles;
+        std::map<yoi::wstr, yoi::wstr> marcos;
 
         struct Builder {
             BuildType buildType{BuildType::executable};
@@ -32,6 +33,7 @@ namespace yoi {
             bool preserveIntermediateFiles{false};
             yoi::vec<yoi::wstr> searchPaths{L""};
             yoi::vec<yoi::wstr> additionalLinkingFiles;
+            std::map<yoi::wstr, yoi::wstr> marcos;
 
             Builder() = default;
 
@@ -50,6 +52,8 @@ namespace yoi {
             Builder &addSearchPath(const yoi::wstr &searchPath);
 
             Builder &setSearchPaths(const yoi::vec<yoi::wstr> &searchPaths);
+
+            Builder &setMarco(const yoi::wstr &name, const yoi::wstr &value);
 
             std::shared_ptr<IRBuildConfig> yield();
         };
