@@ -41,6 +41,7 @@ TEST_CASES = {
     "result": {"type": "executable", "return_code": 1},
     "borrow": {"type": "executable", "return_code": 116},
     "os-file": {"type": "executable", "return_code": 0},
+    "thread": {"type": "executable", "return_code": 0},
 }
 
 

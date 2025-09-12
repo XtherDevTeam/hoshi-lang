@@ -7,6 +7,7 @@
 
 #include "runtime/memory/memory.h"
 #include <pthread.h>
+#include <signal.h>
 
 struct YoiVoidCallableInterface {
     unsigned long long gc_refcount;
