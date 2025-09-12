@@ -1,4 +1,5 @@
 import os
+import pathlib
 import sys
 
 language_version = "0"
@@ -17,5 +18,9 @@ header = f"""
 """
 
 if __name__ == "__main__":
-    with open("share/defines.h", "w") as f:
-        f.write(header)
+    src_content = pathlib.Path("share/defines.h").read_text()
+    if get_first_6_digit_of_git_commit_hash() in src_content:
+        print("defines.h is already up-to-date.")
+        sys.exit(0)
+        
+    pathlib.Path("share/defines.h").write_text(header)

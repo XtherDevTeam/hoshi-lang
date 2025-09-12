@@ -71,6 +71,8 @@ namespace yoi {
             Nullable,
             Raw,
             PermanentInCurrentScope,
+            Borrow,
+            NoBorrow
         };
         enum class valueType : yoi::indexT {
             integerRaw = 0,
@@ -386,7 +388,10 @@ namespace yoi {
         yoi::wstr to_string(yoi::indexT indent = 0);
 
         yoi::vec<std::shared_ptr<IRValueType>> &getVariables();
+
         const std::map<yoi::indexT, yoi::wstr> &getReversedVariableNameMap() const;
+
+        yoi::indexT scopeIndex(yoi::indexT varIndex);
     };
 
     class IRFunctionDefinition {

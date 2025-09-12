@@ -38,7 +38,9 @@ TEST_CASES = {
     "lambda": {"type": "executable", "return_code": 0},
     "vector": {"type": "executable", "return_code": 0},
     "fib": {"type": "executable", "return_code": 0},
-    "result": {"type": "executable", "return_code": 1}
+    "result": {"type": "executable", "return_code": 1},
+    "borrow": {"type": "executable", "return_code": 116},
+    "os-file": {"type": "executable", "return_code": 0},
 }
 
 

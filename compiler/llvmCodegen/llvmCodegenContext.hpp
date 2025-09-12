@@ -162,7 +162,7 @@ namespace yoi {
         llvm::Value *unboxValue(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType);
         llvm::Value *
         loadArrayElement(const std::shared_ptr<IRValueType> &type, llvm::Value *arrayPtr, llvm::Value *index);
-        void callGcFunction(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease, bool force = false);
+        void callGcFunction(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease, bool forceForPermanent = false, bool forceForBorrow = false);
         llvm::Value *
         handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign = false);
         llvm::Value *handleForeignTypeConv(llvm::Value *val,

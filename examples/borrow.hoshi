@@ -1,0 +1,25 @@
+struct A {
+    x: int,
+    constructor(x: int),
+    static operator+(lhs: A, rhs: A) : A
+}
+
+impl A {
+    constructor(x: int) {
+        this.x = x
+    },
+    static operator+(lhs: A, rhs: A) : A {
+        return A(lhs.x + rhs.x)
+    }
+}
+
+func test(a: A, b: A) : A {
+    let res = a + b
+    return res
+}
+
+func main() : int {
+    let x = A(114), y = A(514)
+    let sum = test(x, y)
+    return sum.x
+}

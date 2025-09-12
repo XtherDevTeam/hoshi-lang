@@ -229,8 +229,9 @@ namespace yoi {
 
         bool performNullableCheck();
         bool performRawCheck();
+        bool performParamBorrowCheck();
 
-    private:
+      private:
         AnalysisState analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState);
         AnalysisState analyzeBlockForRaw(indexT blockIndex, const AnalysisState &inState);
         AnalysisState mergeStatesForNullable(const AnalysisState &s1, const AnalysisState &s2);

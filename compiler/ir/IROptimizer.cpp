@@ -1436,7 +1436,7 @@ namespace yoi {
                     // in case of which this got optimized in tempVar reduction, we set optimizable flag to false
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto function = compilerCtx->getImportedModule(moduleIndex)->functionTable[ins.operands[1].value.symbolIndex];
-                    auto returnType = function->returnType;
+                    auto returnType = managedPtr((*function->returnType).removeAttribute(IRValueType::ValueAttr::Borrow));
                     auto argTypes = function->argumentTypes;
                     auto argCount = function->argumentTypes.size();
                     SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}, false};
@@ -1468,6 +1468,7 @@ namespace yoi {
                         ->interfaceTable[ins.operands[1].value.symbolIndex]
                         ->methodMap[ins.operands[2].value.symbolIndex]
                         ->returnType;
+                    returnType = managedPtr((*returnType).removeAttribute(IRValueType::ValueAttr::Borrow));
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
@@ -2012,7 +2013,7 @@ namespace yoi {
         }
         
         this->reduceRedundantNop().reduceRedundantJump().controlFlowOptimization().reduceEmptyCodeBlock();
-        
+        this->performParamBorrowCheck();
         this->performNullableCheck();
         this->performRawCheck();
         return *this;
@@ -4089,5 +4090,20 @@ namespace yoi {
 
     bool FunctionAnalysisInfo::operator!=(const FunctionAnalysisInfo &other) const {
         return isReturnValueNullable != other.isReturnValueNullable || isReturnValueRaw != other.isReturnValueRaw;
+    }
+
+    bool IRFunctionOptimizer::performParamBorrowCheck() {
+        auto &varTable = targetFunction->variableTable.getVariables();
+        if (targetFunction->argumentTypes.size()) {
+            for (yoi::indexT paramIdx = 0; paramIdx < targetFunction->argumentTypes.size(); paramIdx++) {
+                // capture the first scope which is full of parameters
+                if (targetFunction->getVariableTable().scopeIndex(paramIdx) > 0)
+                    break;
+                auto &param = varTable[paramIdx];
+                if (!param->hasAttribute(IRValueType::ValueAttr::NoBorrow) && (!targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Variadic) || paramIdx != targetFunction->argumentTypes.size() - 1))
+                    param->addAttribute(IRValueType::ValueAttr::Borrow);
+            }
+        }
+        return true;
     }
 } // namespace yoi

@@ -1467,8 +1467,13 @@ namespace yoi {
         }
         return false;
     }
+    
     IRBuildConfig::Builder &IRBuildConfig::Builder::setMarco(const yoi::wstr &name, const yoi::wstr &value) {
         marcos[name] = value;
         return *this;
+    }
+
+    yoi::indexT IRVariableTable::scopeIndex(yoi::indexT varIndex) {
+        return variableScopeMap[varIndex];
     }
 } // namespace yoi

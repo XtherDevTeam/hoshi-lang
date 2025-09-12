@@ -23,7 +23,8 @@ impl Point : Addable {
 
 func add_inv<T impl Addable>(a: T) : int {
     let addable = Addable(a)
-    return addable.add()
+    let res = addable.add()
+    return res
 }
 
 func main() : int {

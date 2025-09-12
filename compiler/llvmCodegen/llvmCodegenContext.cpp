@@ -30,7 +30,6 @@
 #include <llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h>
 #include <llvm/ExecutionEngine/SectionMemoryManager.h>
 #include <memory>
-#include <queue>
 #include <string>
 #include <tuple>
 
@@ -1037,7 +1036,7 @@ namespace yoi {
                 } else {
                     auto object = ensureObject(valToStore.yoiType, valToStore.llvmValue);
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(object.second, valToStore.yoiType, true, true);
+                        callGcFunction(object.second, valToStore.yoiType, true, true, true);
                     Builder->CreateStore(object.second, alloca);
                 }
                 
@@ -1071,7 +1070,7 @@ namespace yoi {
 
                 auto object = ensureObject(valToStore.yoiType, valToStore.llvmValue);
                 if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(object.second, valToStore.yoiType, true, true);
+                    callGcFunction(object.second, valToStore.yoiType, true, true, true);
 
                 Builder->CreateStore(object.second, global);
                 break;
@@ -1125,7 +1124,7 @@ namespace yoi {
 
                 auto object = ensureObject(valueToStore.yoiType, valueToStore.llvmValue);
                 if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                    callGcFunction(object.second, valueToStore.yoiType, true, true);
+                    callGcFunction(object.second, valueToStore.yoiType, true, true, true);
 
                 Builder->CreateStore(object.second, gep);
 
@@ -1168,7 +1167,7 @@ namespace yoi {
                 } else {
                     auto object = ensureObject(retVal.yoiType, retVal.llvmValue);
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(object.second, retVal.yoiType, true, true);
+                        callGcFunction(object.second, retVal.yoiType, true, true, true);
                     generateFunctionExitCleanup();
                     Builder->CreateRet(object.second);
                 }
@@ -1190,6 +1189,8 @@ namespace yoi {
                 auto* function = functionMap.at(funcDef->name);
 
                 std::vector<llvm::Value*> args;
+                std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
+
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackMap[fromBlock][toBlock].back();
                     valueStackMap[fromBlock][toBlock].pop_back();
@@ -1197,6 +1198,11 @@ namespace yoi {
                     if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
                         callGcFunction(arg.llvmValue, arg.yoiType, false);
+                    } else if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        args.push_back(object.second);
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                        else postCleanup.push_back(object);
                     } else {
                         args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
                         if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
@@ -1211,6 +1217,10 @@ namespace yoi {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value comes with a reference count for us to own.
                     valueStackMap[fromBlock][toBlock].push_back({call, funcDef->returnType});
+                }
+
+                for (auto &i : postCleanup) {
+                    callGcFunction(i.second, i.first, false);
                 }
                 break;
             }
@@ -1248,7 +1258,7 @@ namespace yoi {
                     } else {
                         postCleanup.emplace_back(ensureObject(arg.yoiType, arg.llvmValue));
                         if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && noffi) // retain the value for no ffi calls to prevent being destoryed
-                            callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                            callGcFunction(arg.llvmValue, arg.yoiType, true, true, true);
                         args.push_back(postCleanup.back().second);
                     }
                     // Callee will retain, so we release the stack's reference
@@ -1336,7 +1346,7 @@ namespace yoi {
                 Builder->CreateStore(castedStructPtr, thisPtrField);
                 // The interface now holds a reference to the struct.
                 if (structInstanceVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                    callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true, true);
+                    callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true, true, true);
 
                 // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
                 auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
@@ -1369,6 +1379,8 @@ namespace yoi {
                 auto userArgCount = instr.operands[3].value.symbolIndex;
 
                 std::vector<StackValue> userArgs;
+                std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
+
                 for (size_t i = 0; i < userArgCount - 1; ++i) { // userArgCount includes 'this'
                     userArgs.push_back(valueStackMap[fromBlock][toBlock].back());
                     valueStackMap[fromBlock][toBlock].pop_back();
@@ -1387,7 +1399,8 @@ namespace yoi {
                 auto* bitcastedPointer = Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(Builder->getInt64Ty(), 0), "casted_this");
                 // increase the reference count of this pointer, so that when leaving the function, it won't be collected
                 // Builder->CreateStore(Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1)), bitcastedPointer);
-                Builder->CreateAtomicRMW(llvm::AtomicRMWInst::BinOp::Add, bitcastedPointer, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
+                // Builder->CreateAtomicRMW(llvm::AtomicRMWInst::BinOp::Add, bitcastedPointer, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
+                // for now, we pass the value by borrow, this stmt is no longer needed.
 
                 // btw, we have increased the refcount of the interface as well before, so when we finish the invoking, we need to decrease it.
 
@@ -1412,10 +1425,12 @@ namespace yoi {
                 std::vector<llvm::Value*> finalArgs;
                 finalArgs.push_back(concreteThisPtrRaw);
                 for(const auto& arg : userArgs) {
-                    finalArgs.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
-                    // callGcFunction(arg.llvmValue, arg.yoiType, false); // Arguments are consumed by the call
-                    if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                    auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                    finalArgs.push_back(object.second);
+                    // default to borrow
+                    if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                        // callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                    else postCleanup.emplace_back(object);
                 }
 
                 if (methodDef->returnType->type == IRValueType::valueType::none) {
@@ -1425,6 +1440,9 @@ namespace yoi {
                     valueStackMap[fromBlock][toBlock].push_back({call, methodDef->returnType});
                 }
                 
+                for (auto &i : postCleanup) {
+                    callGcFunction(i.second, i.first, false);
+                }
 
                 callGcFunction(interfaceShellVal.llvmValue, interfaceShellVal.yoiType, false);
                 break;
@@ -1502,7 +1520,7 @@ namespace yoi {
                 for (yoi::indexT i = 0; i < size; ++i) {
                     auto value = valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i];
                     if (value.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(value.llvmValue, value.yoiType, true, true);
+                        callGcFunction(value.llvmValue, value.yoiType, true, true, true);
                     dimensionsVal.push_back(value);
                 }
 
@@ -1591,7 +1609,7 @@ namespace yoi {
                 for (yoi::indexT i = 0; i < size; ++i) {
                     auto value = valueStackMap[fromBlock][toBlock][valueStackMap[fromBlock][toBlock].size() - size + i];
                     if (value.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                        callGcFunction(value.llvmValue, value.yoiType, true, true);
+                        callGcFunction(value.llvmValue, value.yoiType, true, true, true);
                     valuesToStore.push_back(value);
                 }
 
@@ -1857,7 +1875,7 @@ namespace yoi {
                 // unbox index
                 auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
                 if (rhs.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !lhs.yoiType->isBasicType())
-                    callGcFunction(rhs.llvmValue, rhs.yoiType, true, true);
+                    callGcFunction(rhs.llvmValue, rhs.yoiType, true, true, true);
                 storeArrayElement(lhs.yoiType, rhs.yoiType, lhs.llvmValue, indexValue, rhs.llvmValue);
 
                 // release resource
@@ -2137,14 +2155,16 @@ namespace yoi {
         return Builder->CreateLoad(objType->getElementType(2), valuePtr, "unboxed_val");
     }
 
-    void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease, bool force) {
+    void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease, bool forceForPermanent, bool forceForBorrow) {
         // No GC for the none object singleton
         if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
             return;
         }
-        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !force) {
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !forceForPermanent) {
             return;
         }
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
+            return;
 
         std::string funcNameBase;
         if (yoiType->isArrayType() || yoiType->isDynamicArrayType()) {
@@ -2865,7 +2885,7 @@ namespace yoi {
                     elementType->addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope);
                 auto elementLLVMType = yoiTypeToLLVMType(elementType);
                 auto pointerToElement = Builder->CreateGEP(elementLLVMType, arrayPointer, index, "element_ptr");
-                auto *loadedVal = Builder->CreateLoad(yoiTypeToLLVMType(elementType), pointerToElement, "loaded_val");
+                auto *loadedVal = Builder->CreateLoad(yoiTypeToLLVMType(elementType), pointerToElement, "array_element_loaded_val");
                 callGcFunction(loadedVal, elementType, true); // increase ref count
                 return loadedVal;
             }
