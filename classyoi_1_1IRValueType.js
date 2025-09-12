@@ -3,7 +3,9 @@ var classyoi_1_1IRValueType =
     [ "ValueAttr", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f", [
       [ "Nullable", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6", null ],
       [ "Raw", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00", null ],
-      [ "PermanentInCurrentScope", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc", null ]
+      [ "PermanentInCurrentScope", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc", null ],
+      [ "Borrow", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475", null ],
+      [ "NoBorrow", "classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa4626409a6671b3de430e569adaecfb2e", null ]
     ] ],
     [ "valueType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85", [
       [ "integerRaw", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d", null ],

@@ -103,9 +103,14 @@ $(document).ready(function(){initNavTree('classyoi_1_1IRValueType.html',''); ini
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae512a76e6e645da2ab6f9153cba7831f" id="r_ae512a76e6e645da2ab6f9153cba7831f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f">ValueAttr</a> : yoi::indexT { <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">Nullable</a>
+<tr class="memitem:ae512a76e6e645da2ab6f9153cba7831f" id="r_ae512a76e6e645da2ab6f9153cba7831f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831f">ValueAttr</a> : yoi::indexT { <br />
+&#160;&#160;<a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">Nullable</a>
 , <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">Raw</a>
 , <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">PermanentInCurrentScope</a>
+, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">Borrow</a>
+, <br />
+&#160;&#160;<a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa4626409a6671b3de430e569adaecfb2e">NoBorrow</a>
+<br />
  }</td></tr>
 <tr class="separator:ae512a76e6e645da2ab6f9153cba7831f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a54d8929e41805f4a28e13ed08d4e85" id="r_a6a54d8929e41805f4a28e13ed08d4e85"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85">valueType</a> : yoi::indexT { <br />
@@ -229,6 +234,8 @@ Public Attributes</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6" name="ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6"></a>Nullable&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00" name="ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00"></a>Raw&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc" name="ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc"></a>PermanentInCurrentScope&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475" name="ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475"></a>Borrow&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae512a76e6e645da2ab6f9153cba7831fa4626409a6671b3de430e569adaecfb2e" name="ae512a76e6e645da2ab6f9153cba7831fa4626409a6671b3de430e569adaecfb2e"></a>NoBorrow&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00070">70</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
@@ -281,7 +288,7 @@ Public Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a" name="a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a"></a>foreignFloatType&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00075">75</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00077">77</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -475,7 +482,7 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01354">1354</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00633">LLVMCodegen::generateFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00785">LLVMCodegen::generateInstruction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00632">LLVMCodegen::generateFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00784">LLVMCodegen::generateInstruction()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -521,7 +528,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01119">1119</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00105">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00102">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00103">IRValueType::typeIndex</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00107">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00104">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00105">IRValueType::typeIndex</a>.</p>
 
 </div>
 </div>
@@ -542,7 +549,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01401">1401</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aedd89ad75143be2d595cde6f27ecc915">IRValueType::booleanRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab2b4413697d41001f9afad4a0fc515a7">IRValueType::charRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0">IRValueType::decimalRaw</a>, <a class="el" href="IR_8h_source.html#l00105">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7d5ab3eca7037b6577d1fff4098d11ed">IRValueType::shortRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00102">IRValueType::typeAffiliateModule</a>, <a class="el" href="IR_8h_source.html#l00103">IRValueType::typeIndex</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aedd89ad75143be2d595cde6f27ecc915">IRValueType::booleanRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab2b4413697d41001f9afad4a0fc515a7">IRValueType::charRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0">IRValueType::decimalRaw</a>, <a class="el" href="IR_8h_source.html#l00107">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7d5ab3eca7037b6577d1fff4098d11ed">IRValueType::shortRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00104">IRValueType::typeAffiliateModule</a>, <a class="el" href="IR_8h_source.html#l00105">IRValueType::typeIndex</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>.</p>
 
 </div>
 </div>
@@ -603,7 +610,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01063">1063</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00102">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00103">IRValueType::typeIndex</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00104">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00105">IRValueType::typeIndex</a>.</p>
 
 </div>
 </div>
@@ -788,7 +795,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00723">723</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00105">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00102">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00103">IRValueType::typeIndex</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00107">IRValueType::dimensions</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00104">IRValueType::typeAffiliateModule</a>, and <a class="el" href="IR_8h_source.html#l00105">IRValueType::typeIndex</a>.</p>
 
 </div>
 </div>
@@ -830,7 +837,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00641">641</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00107">IRValueType::attributes</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aedd89ad75143be2d595cde6f27ecc915">IRValueType::booleanRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0">IRValueType::decimalRaw</a>, <a class="el" href="IR_8h_source.html#l00105">IRValueType::dimensions</a>, <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37c4a7c49cb62ac501ade9d30774d6f8">IRValueType::incompleteTemplateType</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd">IRValueType::null</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9">IRValueType::pointer</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7d5ab3eca7037b6577d1fff4098d11ed">IRValueType::shortRaw</a>, <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00102">IRValueType::typeAffiliateModule</a>, <a class="el" href="IR_8h_source.html#l00103">IRValueType::typeIndex</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00109">IRValueType::attributes</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aedd89ad75143be2d595cde6f27ecc915">IRValueType::booleanRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a84f79a71b165bab23e1bfe95d54f91a0">IRValueType::decimalRaw</a>, <a class="el" href="IR_8h_source.html#l00107">IRValueType::dimensions</a>, <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37c4a7c49cb62ac501ade9d30774d6f8">IRValueType::incompleteTemplateType</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37a6259cc0c1dae299a7866489dff0bd">IRValueType::null</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9">IRValueType::pointer</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7d5ab3eca7037b6577d1fff4098d11ed">IRValueType::shortRaw</a>, <a class="el" href="def_8cpp_source.html#l00122">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a8a037d4a6631959281655bde81dc2e48">IRValueType::type</a>, <a class="el" href="IR_8h_source.html#l00104">IRValueType::typeAffiliateModule</a>, <a class="el" href="IR_8h_source.html#l00105">IRValueType::typeIndex</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -864,7 +871,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00107">107</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00109">109</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00641">IRValueType::to_string()</a>.</p>
 
@@ -882,7 +889,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00105">105</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00107">107</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l01119">IRValueType::getArrayType()</a>, <a class="el" href="IR_8cpp_source.html#l01401">IRValueType::getBasicObjectType()</a>, <a class="el" href="IR_8cpp_source.html#l00723">IRValueType::operator==()</a>, and <a class="el" href="IR_8cpp_source.html#l00641">IRValueType::to_string()</a>.</p>
 
@@ -916,9 +923,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00102">102</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00104">104</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l01119">IRValueType::getArrayType()</a>, <a class="el" href="IR_8cpp_source.html#l01401">IRValueType::getBasicObjectType()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRValueType::getElementType()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02377">LLVMCodegen::handleForeignTypeConv()</a>, <a class="el" href="IR_8cpp_source.html#l00723">IRValueType::operator==()</a>, and <a class="el" href="IR_8cpp_source.html#l00641">IRValueType::to_string()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l01119">IRValueType::getArrayType()</a>, <a class="el" href="IR_8cpp_source.html#l01401">IRValueType::getBasicObjectType()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRValueType::getElementType()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02397">LLVMCodegen::handleForeignTypeConv()</a>, <a class="el" href="IR_8cpp_source.html#l00723">IRValueType::operator==()</a>, and <a class="el" href="IR_8cpp_source.html#l00641">IRValueType::to_string()</a>.</p>
 
 </div>
 </div>
@@ -934,7 +941,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00103">103</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00105">105</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l01119">IRValueType::getArrayType()</a>, <a class="el" href="IR_8cpp_source.html#l01401">IRValueType::getBasicObjectType()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRValueType::getElementType()</a>, <a class="el" href="IR_8cpp_source.html#l00723">IRValueType::operator==()</a>, and <a class="el" href="IR_8cpp_source.html#l00641">IRValueType::to_string()</a>.</p>
 

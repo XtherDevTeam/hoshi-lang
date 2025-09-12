@@ -30,6 +30,7 @@ var classyoi_1_1IRFunctionOptimizer =
     [ "negate", "classyoi_1_1IRFunctionOptimizer.html#a623d68a3d810f761f59e0fea09eb46d6", null ],
     [ "notEqual", "classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180", null ],
     [ "performNullableCheck", "classyoi_1_1IRFunctionOptimizer.html#a60ec4221487086a4bb1662eeab00988f", null ],
+    [ "performParamBorrowCheck", "classyoi_1_1IRFunctionOptimizer.html#ad73567d0708438f82747b3a9fa7955cc", null ],
     [ "performRawCheck", "classyoi_1_1IRFunctionOptimizer.html#a615d1d144130d412d4aac19047f2432d", null ],
     [ "reduce", "classyoi_1_1IRFunctionOptimizer.html#a1e4acb780286799d75eb5b1c64aa8b1e", null ],
     [ "reduceEmptyCodeBlock", "classyoi_1_1IRFunctionOptimizer.html#a2cd583aab0483eb60ded1aa51247a6ba", null ],

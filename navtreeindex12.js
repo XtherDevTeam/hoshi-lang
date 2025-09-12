@@ -1,5 +1,13 @@
 var NAVTREEINDEX12 =
 {
+"functions_func_r.html":[17,3,1,15],
+"functions_func_s.html":[17,3,1,16],
+"functions_func_t.html":[17,3,1,17],
+"functions_func_u.html":[17,3,1,18],
+"functions_func_v.html":[17,3,1,19],
+"functions_func_x.html":[17,3,1,20],
+"functions_func_y.html":[17,3,1,21],
+"functions_func_~.html":[17,3,1,22],
 "functions_g.html":[17,3,0,6],
 "functions_h.html":[17,3,0,7],
 "functions_i.html":[17,3,0,8],
@@ -241,13 +249,5 @@ var NAVTREEINDEX12 =
 "md_docs_2Null.html":[6],
 "md_docs_2Null.html#autotoc_md49":[6,0],
 "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html":[7],
-"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md51":[7,0],
-"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md52":[7,1],
-"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md53":[7,2],
-"md_docs_2Operator_01Overloading.html":[8],
-"md_docs_2Operator_01Overloading.html#autotoc_md55":[8,0],
-"md_docs_2Operator_01Overloading.html#autotoc_md56":[8,1],
-"md_docs_2Operator_01Overloading.html#autotoc_md57":[8,1,0],
-"md_docs_2Operator_01Overloading.html#autotoc_md58":[8,1,1],
-"md_docs_2Operator_01Overloading.html#autotoc_md59":[8,1,2]
+"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md51":[7,0]
 };

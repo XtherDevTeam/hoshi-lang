@@ -29,7 +29,7 @@ var searchData=
   ['from_26',['from',['../classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4',1,'yoi::exportDecl']]],
   ['from_5fpath_27',['from_path',['../classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299',1,'yoi::importDecl']]],
   ['full_20example_28',['4. Full Example',['../md_docs_2IR.html#autotoc_md47',1,'']]],
-  ['func_29',['func',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::symbol::Func'],['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func']]],
+  ['func_29',['func',['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func'],['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::symbol::Func']]],
   ['func_20tt_20type_30',['1. Callable Objects and &lt;tt&gt;func&lt;/tt&gt; type',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md8',1,'']]],
   ['func_20tt_20type_20syntax_31',['&lt;tt&gt;func&lt;/tt&gt; Type Syntax',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md9',1,'']]],
   ['funcdefstmt_32',['funcdefstmt',['../classyoi_1_1funcDefStmt.html',1,'funcDefStmt'],['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87',1,'yoi::globalStmt::funcDefStmt']]],

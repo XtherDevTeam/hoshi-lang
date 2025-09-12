@@ -19,6 +19,7 @@ var searchData=
   ['boolean_16',['boolean',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a84e2c64f38f78ba3ea5c905ab5a2da27',1,'yoi::lexer::token::boolean'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a84e2c64f38f78ba3ea5c905ab5a2da27',1,'yoi::IROperand::boolean']]],
   ['booleanobject_17',['booleanobject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e',1,'yoi::IRValueType::booleanObject'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ae17322cd63a68d88f678892218a2522e',1,'booleanObject:&#160;rtti.h']]],
   ['booleanraw_18',['booleanraw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aedd89ad75143be2d595cde6f27ecc915',1,'yoi::IRValueType::booleanRaw'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aedd89ad75143be2d595cde6f27ecc915',1,'booleanRaw:&#160;rtti.h']]],
-  ['breakstmt_19',['breakStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea32e8984ffa1fe352558fe04cefd9e1ee',1,'yoi::inCodeBlockStmt']]],
-  ['builtinimplementation_20',['BuiltinImplementation',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f',1,'yoi::IRFunctionDefinition']]]
+  ['borrow_19',['Borrow',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475',1,'yoi::IRValueType']]],
+  ['breakstmt_20',['breakStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea32e8984ffa1fe352558fe04cefd9e1ee',1,'yoi::inCodeBlockStmt']]],
+  ['builtinimplementation_21',['BuiltinImplementation',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f',1,'yoi::IRFunctionDefinition']]]
 ];
