@@ -6,8 +6,18 @@
 #define HOSHI_LANG_THREADING_H
 
 #include "runtime/memory/memory.h"
+
+#ifdef _WIN32
+#include <windows.h>
+#include <process.h>
+typedef HANDLE YoiThreadHandle;
+typedef DWORD YoiThreadId;
+#else
 #include <pthread.h>
 #include <signal.h>
+typedef pthread_t YoiThreadHandle;
+typedef pthread_t YoiThreadId;
+#endif
 
 struct YoiVoidCallableInterface {
     unsigned long long gc_refcount;
@@ -27,10 +37,10 @@ struct YoiResultUnsignedAndIntObject {
 
 extern "C" YoiResultUnsignedAndIntObject *runtime_start_thread(YoiVoidCallableInterface *callable);
 
-extern "C" YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_id);
+extern "C" YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handle);
 
 extern "C" YoiUnsignedObject *runtime_get_thread_id();
 
-extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id);
+extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle);
 
 #endif //HOSHI_LANG_THREADING_H
