@@ -14,7 +14,7 @@ var searchData=
   ['magic_5fenum_5fversion_5fmajor_11',['MAGIC_ENUM_VERSION_MAJOR',['../magic__enum_8h.html#a2b1e2194fd5bc90499887460e8318e30',1,'magic_enum.h']]],
   ['magic_5fenum_5fversion_5fminor_12',['MAGIC_ENUM_VERSION_MINOR',['../magic__enum_8h.html#ae60129f9fd71fa854fd4c84803732e14',1,'magic_enum.h']]],
   ['magic_5fenum_5fversion_5fpatch_13',['MAGIC_ENUM_VERSION_PATCH',['../magic__enum_8h.html#ab1a8c0173da51fc4cd6a763ba9be51bd',1,'magic_enum.h']]],
-  ['main_14',['main',['../benchmark_2string_2string_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;string.cpp'],['../main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp'],['../loop_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;loop.cpp'],['../fib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;fib.cpp']]],
+  ['main_14',['main',['../string_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;string.cpp'],['../main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp'],['../loop_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;loop.cpp'],['../fib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;fib.cpp']]],
   ['main_2ecpp_15',['main.cpp',['../main_8cpp.html',1,'']]],
   ['managedptr_16',['managedPtr',['../namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd',1,'yoi']]],
   ['management_17',['Object Model and Memory Management',['../index.html#autotoc_md89',1,'']]],

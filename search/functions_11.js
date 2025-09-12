@@ -6,7 +6,7 @@ var searchData=
   ['token_3',['token',['../structyoi_1_1lexer_1_1token.html#ad854e194dde5dc5422ee0f3221e48ba5',1,'yoi::lexer::token::token()'],['../structyoi_1_1lexer_1_1token.html#ad87540608167ef7c7ce28df04a6790f8',1,'yoi::lexer::token::token(int64_t line, int64_t col, tokenKind kind, wstr strVal)'],['../structyoi_1_1lexer_1_1token.html#a67d6efa875a3894ce8d7f0a48e6eb917',1,'yoi::lexer::token::token(int64_t line, int64_t col, tokenKind kind, vBasicValue basicVal)'],['../structyoi_1_1lexer_1_1token.html#a299b0927f4f20cfd3c61db75eb1f5cd0',1,'yoi::lexer::token::token(int64_t line, int64_t col, tokenKind kind)']]],
   ['transformblock_4',['transformBlock',['../classyoi_1_1IRFunctionOptimizer.html#a35f75104c0b80b9a58f28db3216ecacf',1,'yoi::IRFunctionOptimizer']]],
   ['traversegraph_5',['traverseGraph',['../structyoi_1_1CallGraph.html#a6b48c59be20b76b1ed08325cd78c5ec3',1,'yoi::CallGraph']]],
-  ['trim_6',['trim',['../benchmark_2string_2string_8cpp.html#a5a01f705cc7b4a7317a57f6bf41aef25',1,'string.cpp']]],
+  ['trim_6',['trim',['../string_8cpp.html#a5a01f705cc7b4a7317a57f6bf41aef25',1,'string.cpp']]],
   ['trycastto_7',['tryCastTo',['../classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1',1,'yoi::visitor']]],
   ['type_5fname_8',['type_name',['../namespacemagic__enum_1_1detail.html#a0e1cc9614698479a137e998ffc983447',1,'magic_enum::detail']]],
   ['typeidop_9',['typeidop',['../classyoi_1_1IRBuilder.html#a656d8a6d7f36f46f8288d127ef98f6c9',1,'yoi::IRBuilder::typeIdOp(const std::shared_ptr&lt; IRValueType &gt; &amp;type)'],['../classyoi_1_1IRBuilder.html#a3acb7b76337708608e9093de0770a418',1,'yoi::IRBuilder::typeIdOp()']]]

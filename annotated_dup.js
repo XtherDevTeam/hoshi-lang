@@ -159,7 +159,10 @@ var annotated_dup =
     [ "YoiIntegerObject", "structYoiIntegerObject.html", "structYoiIntegerObject" ],
     [ "YoiObject", "structYoiObject.html", "structYoiObject" ],
     [ "YoiObjectArray", "structYoiObjectArray.html", "structYoiObjectArray" ],
+    [ "YoiResultUnsignedAndIntObject", "structYoiResultUnsignedAndIntObject.html", "structYoiResultUnsignedAndIntObject" ],
     [ "YoiStringObject", "structYoiStringObject.html", "structYoiStringObject" ],
     [ "YoiTypeInfo", "structYoiTypeInfo.html", "structYoiTypeInfo" ],
-    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", "structYoiTypeInfoObject" ]
+    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", "structYoiTypeInfoObject" ],
+    [ "YoiUnsignedObject", "structYoiUnsignedObject.html", "structYoiUnsignedObject" ],
+    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", "structYoiVoidCallableInterface" ]
 ];

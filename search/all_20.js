@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['yield_0',['yield',['../classyoi_1_1IRBuilder.html#a58c8b2ad0ea491a6642e5e1cbd358c89',1,'yoi::IRBuilder::yield()'],['../classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#ae5b6becce0d8b3443ed9514f4fa22e14',1,'yoi::IRInterfaceImplementationTemplate::Builder::yield()'],['../classyoi_1_1IRInterfaceInstanceTemplate_1_1Builder.html#a329fc91cf92149cfcb9c989732bbaecf',1,'yoi::IRInterfaceInstanceTemplate::Builder::yield()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a2ef77979acf5b336fd6c7f00b218965a',1,'yoi::IRInterfaceInstanceDefinition::Builder::yield()'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a3f10fccf76a77d428ca964d40d432a4f',1,'yoi::IRInterfaceImplementationDefinition::Builder::yield()'],['../classyoi_1_1IRStructTemplate_1_1Builder.html#ad4cfc593d2f93fcb3e7487301cbbae86',1,'yoi::IRStructTemplate::Builder::yield()'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a0fb794c5679205ac08d83e61662068a3',1,'yoi::IRStructDefinition::Builder::yield()'],['../classyoi_1_1IRFunctionTemplate_1_1Builder.html#a16f8d16591aea14fd4383a74aa70128c',1,'yoi::IRFunctionTemplate::Builder::yield()'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117',1,'yoi::IRBuildConfig::Builder::yield()'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d',1,'yoi::IRFunctionDefinition::Builder::yield()']]],
+  ['yield_0',['yield',['../classyoi_1_1IRBuilder.html#a58c8b2ad0ea491a6642e5e1cbd358c89',1,'yoi::IRBuilder::yield()'],['../classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#ae5b6becce0d8b3443ed9514f4fa22e14',1,'yoi::IRInterfaceImplementationTemplate::Builder::yield()'],['../classyoi_1_1IRInterfaceInstanceTemplate_1_1Builder.html#a329fc91cf92149cfcb9c989732bbaecf',1,'yoi::IRInterfaceInstanceTemplate::Builder::yield()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a2ef77979acf5b336fd6c7f00b218965a',1,'yoi::IRInterfaceInstanceDefinition::Builder::yield()'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a3f10fccf76a77d428ca964d40d432a4f',1,'yoi::IRInterfaceImplementationDefinition::Builder::yield()'],['../classyoi_1_1IRStructTemplate_1_1Builder.html#ad4cfc593d2f93fcb3e7487301cbbae86',1,'yoi::IRStructTemplate::Builder::yield()'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a0fb794c5679205ac08d83e61662068a3',1,'yoi::IRStructDefinition::Builder::yield()'],['../classyoi_1_1IRFunctionTemplate_1_1Builder.html#a16f8d16591aea14fd4383a74aa70128c',1,'yoi::IRFunctionTemplate::Builder::yield()'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d',1,'yoi::IRFunctionDefinition::Builder::yield()'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117',1,'yoi::IRBuildConfig::Builder::yield()']]],
   ['yoi_1',['yoi',['../namespaceyoi.html',1,'']]],
   ['yoi_5farch_2',['YOI_ARCH',['../def_8hpp.html#a33f92dd81296c001a9ef7eb731c7920a',1,'def.hpp']]],
-  ['yoi_5fargc_3',['yoi_argc',['../runtime_8h.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.h'],['../runtime_8cpp.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.cpp']]],
+  ['yoi_5fargc_3',['yoi_argc',['../runtime_8cpp.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.cpp'],['../runtime_8h.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.h']]],
   ['yoi_5fargv_4',['yoi_argv',['../runtime_8cpp.html#a94feceb3276d8fc7af31fe14a61f230a',1,'yoi_argv:&#160;runtime.cpp'],['../runtime_8h.html#a94feceb3276d8fc7af31fe14a61f230a',1,'yoi_argv:&#160;runtime.h']]],
   ['yoi_5fassert_5',['yoi_assert',['../namespaceyoi.html#a85b420532ed69057ad764f367d13c152',1,'yoi']]],
   ['yoi_5fbuild_5ftype_6',['yoi_build_type',['../runtime_8h.html#a8506dd167261ce1a75b51555563a23ac',1,'runtime.h']]],
@@ -18,9 +18,12 @@ var searchData=
   ['yoimodule_15',['yoiModule',['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen']]],
   ['yoiobject_16',['YoiObject',['../structYoiObject.html',1,'']]],
   ['yoiobjectarray_17',['YoiObjectArray',['../structYoiObjectArray.html',1,'']]],
-  ['yoistringobject_18',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
-  ['yoitype_19',['yoiType',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValue']]],
-  ['yoitypeinfo_20',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
-  ['yoitypeinfoobject_21',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
-  ['yoitypetollvmtype_22',['yoiTypeToLLVMType',['../classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242',1,'yoi::LLVMCodegen']]]
+  ['yoiresultunsignedandintobject_18',['YoiResultUnsignedAndIntObject',['../structYoiResultUnsignedAndIntObject.html',1,'']]],
+  ['yoistringobject_19',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
+  ['yoitype_20',['yoiType',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValue']]],
+  ['yoitypeinfo_21',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
+  ['yoitypeinfoobject_22',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
+  ['yoitypetollvmtype_23',['yoiTypeToLLVMType',['../classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242',1,'yoi::LLVMCodegen']]],
+  ['yoiunsignedobject_24',['YoiUnsignedObject',['../structYoiUnsignedObject.html',1,'']]],
+  ['yoivoidcallableinterface_25',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]]
 ];

@@ -215,7 +215,10 @@ var hierarchy =
     [ "YoiIntegerObject", "structYoiIntegerObject.html", null ],
     [ "YoiObject", "structYoiObject.html", null ],
     [ "YoiObjectArray", "structYoiObjectArray.html", null ],
+    [ "YoiResultUnsignedAndIntObject", "structYoiResultUnsignedAndIntObject.html", null ],
     [ "YoiStringObject", "structYoiStringObject.html", null ],
     [ "YoiTypeInfo", "structYoiTypeInfo.html", null ],
-    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", null ]
+    [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", null ],
+    [ "YoiUnsignedObject", "structYoiUnsignedObject.html", null ],
+    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", null ]
 ];

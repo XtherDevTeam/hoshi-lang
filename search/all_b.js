@@ -1,7 +1,7 @@
 var searchData=
 [
   ['call_20graph_20building_20and_20raw_20check_0',['Inter-functional call graph building and raw check',['../md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md52',1,'']]],
-  ['callable_1',['callable',['../classyoi_1_1primary.html#a3587990c2de8c8542473e6cecd74a0cf',1,'yoi::primary']]],
+  ['callable_1',['callable',['../classyoi_1_1primary.html#a3587990c2de8c8542473e6cecd74a0cf',1,'yoi::primary::callable'],['../structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c',1,'YoiVoidCallableInterface::callable']]],
   ['callable_20_26_20lambda_2emd_2',['Callable &amp; Lambda.md',['../Callable_01_6_01Lambda_8md.html',1,'']]],
   ['callable_20objects_20and_20tt_20func_20tt_20type_3',['1. Callable Objects and &lt;tt&gt;func&lt;/tt&gt; type',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md8',1,'']]],
   ['callable_20objects_20lambda_20expressions_4',['Callable Objects &amp; Lambda Expressions',['../md_docs_2Callable_01_6_01Lambda.html',1,'']]],
@@ -9,7 +9,7 @@ var searchData=
   ['callableexpression_6',['callableExpression',['../classyoi_1_1callableExpression.html',1,'yoi']]],
   ['callergraph_7',['callerGraph',['../structyoi_1_1CallGraph.html#acf0c66c885378a7289ccad534f70d2c3',1,'yoi::CallGraph']]],
   ['callgcfunction_8',['callGcFunction',['../classyoi_1_1LLVMCodegen.html#ac52a63ff15d37d2741619c9e8ec0871f',1,'yoi::LLVMCodegen']]],
-  ['callgraph_9',['callgraph',['../structyoi_1_1CallGraph.html#a23aec676c98668a928b7fc73732cd768',1,'yoi::CallGraph::CallGraph()'],['../classyoi_1_1IROptimizer.html#afcb3f6e01c4e84a3f2c62bec88c509a0',1,'yoi::IROptimizer::callGraph'],['../structyoi_1_1CallGraph.html#a059b3f33c0416b8fd6dcb57d0cc98905',1,'yoi::CallGraph::callGraph'],['../structyoi_1_1CallGraph.html',1,'CallGraph']]],
+  ['callgraph_9',['callgraph',['../structyoi_1_1CallGraph.html',1,'CallGraph'],['../structyoi_1_1CallGraph.html#a23aec676c98668a928b7fc73732cd768',1,'yoi::CallGraph::CallGraph()=default'],['../structyoi_1_1CallGraph.html#a059b3f33c0416b8fd6dcb57d0cc98905',1,'yoi::CallGraph::callGraph'],['../classyoi_1_1IROptimizer.html#afcb3f6e01c4e84a3f2c62bec88c509a0',1,'yoi::IROptimizer::callGraph']]],
   ['calls_10',['calls',['../md_docs_2IR.html#autotoc_md45',1,'3.5. Function and Method Calls'],['../md_docs_2IR.html#autotoc_md31',1,'3.6. Function and Method Calls']]],
   ['captures_11',['captures',['../classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f',1,'yoi::lambdaExpr']]],
   ['case_5finsensitive_12',['case_insensitive',['../namespacemagic__enum.html#abd3e2cf5a74ee3679f8ee6c71c949b9c',1,'magic_enum::case_insensitive'],['../classmagic__enum_1_1detail_1_1case__insensitive.html',1,'case_insensitive&lt; Op &gt;']]],

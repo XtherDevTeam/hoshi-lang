@@ -6,7 +6,10 @@ var searchData=
   ['yoiintegerobject_3',['YoiIntegerObject',['../structYoiIntegerObject.html',1,'']]],
   ['yoiobject_4',['YoiObject',['../structYoiObject.html',1,'']]],
   ['yoiobjectarray_5',['YoiObjectArray',['../structYoiObjectArray.html',1,'']]],
-  ['yoistringobject_6',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
-  ['yoitypeinfo_7',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
-  ['yoitypeinfoobject_8',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]]
+  ['yoiresultunsignedandintobject_6',['YoiResultUnsignedAndIntObject',['../structYoiResultUnsignedAndIntObject.html',1,'']]],
+  ['yoistringobject_7',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
+  ['yoitypeinfo_8',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
+  ['yoitypeinfoobject_9',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
+  ['yoiunsignedobject_10',['YoiUnsignedObject',['../structYoiUnsignedObject.html',1,'']]],
+  ['yoivoidcallableinterface_11',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]]
 ];
