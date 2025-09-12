@@ -1,7 +1,7 @@
 var searchData=
 [
   ['call_20graph_20building_20and_20raw_20check_0',['Inter-functional call graph building and raw check',['../md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md52',1,'']]],
-  ['callable_1',['callable',['../classyoi_1_1primary.html#a3587990c2de8c8542473e6cecd74a0cf',1,'yoi::primary::callable'],['../structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c',1,'YoiVoidCallableInterface::callable']]],
+  ['callable_1',['callable',['../classyoi_1_1primary.html#a3587990c2de8c8542473e6cecd74a0cf',1,'yoi::primary::callable'],['../structThreadStarterArgs.html#a5fb05cf54cfeb0ed893d532d8c985b00',1,'ThreadStarterArgs::callable'],['../structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c',1,'YoiVoidCallableInterface::callable']]],
   ['callable_20_26_20lambda_2emd_2',['Callable &amp; Lambda.md',['../Callable_01_6_01Lambda_8md.html',1,'']]],
   ['callable_20objects_20and_20tt_20func_20tt_20type_3',['1. Callable Objects and &lt;tt&gt;func&lt;/tt&gt; type',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md8',1,'']]],
   ['callable_20objects_20lambda_20expressions_4',['Callable Objects &amp; Lambda Expressions',['../md_docs_2Callable_01_6_01Lambda.html',1,'']]],

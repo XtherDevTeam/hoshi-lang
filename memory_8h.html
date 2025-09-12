@@ -433,7 +433,7 @@ Functions</h2></td></tr>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00056">runtime_finalize_object_report()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00100">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00008">runtime_start_thread()</a>, and <a class="el" href="threading_8cpp_source.html#l00037">runtime_thread_join()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00100">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00188">runtime_ping_thread()</a>, <a class="el" href="threading_8cpp_source.html#l00166">runtime_thread_join()</a>, and <a class="el" href="threading_8cpp_source.html#l00116">thread_starter_wrapper()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -449,13 +449,17 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph.png" border="0" usemap="#amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph" alt=""/></div>
 <map name="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph" id="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph">
-<area shape="rect" title=" " alt="" coords="212,70,387,95"/>
-<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="9,5,161,45"/>
-<area shape="poly" title=" " alt="" coords="237,69,159,48,161,43,239,64"/>
-<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,70,164,95"/>
-<area shape="poly" title=" " alt="" coords="198,85,164,85,164,80,198,80"/>
-<area shape="rect" href="threading_8cpp.html#a23d32f8caf2eb1ed0ba961bc73fca018" title=" " alt="" coords="8,119,161,145"/>
-<area shape="poly" title=" " alt="" coords="231,101,141,122,140,117,229,96"/>
+<area shape="rect" title=" " alt="" coords="435,95,609,121"/>
+<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="223,5,375,45"/>
+<area shape="poly" title=" " alt="" coords="473,93,386,60,354,48,356,43,388,55,475,88"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="221,70,378,95"/>
+<area shape="poly" title=" " alt="" coords="420,99,378,94,378,89,421,94"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="223,119,376,145"/>
+<area shape="poly" title=" " alt="" coords="421,122,376,126,376,121,420,116"/>
+<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="212,169,387,194"/>
+<area shape="poly" title=" " alt="" coords="475,128,387,159,347,171,345,166,386,153,473,123"/>
+<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,169,164,194"/>
+<area shape="poly" title=" " alt="" coords="198,184,164,184,164,179,198,179"/>
 </map>
 </div>
 
@@ -487,15 +491,19 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph.png" border="0" usemap="#amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" alt=""/></div>
 <map name="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" id="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph">
-<area shape="rect" title=" " alt="" coords="435,63,609,103"/>
-<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="212,70,387,95"/>
-<area shape="poly" title=" " alt="" coords="421,85,387,85,387,80,421,80"/>
-<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="9,5,161,45"/>
-<area shape="poly" title=" " alt="" coords="237,69,159,48,161,43,239,64"/>
-<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,70,164,95"/>
-<area shape="poly" title=" " alt="" coords="198,85,164,85,164,80,198,80"/>
-<area shape="rect" href="threading_8cpp.html#a23d32f8caf2eb1ed0ba961bc73fca018" title=" " alt="" coords="8,119,161,145"/>
-<area shape="poly" title=" " alt="" coords="231,101,141,122,140,117,229,96"/>
+<area shape="rect" title=" " alt="" coords="657,88,832,128"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="435,95,609,121"/>
+<area shape="poly" title=" " alt="" coords="644,111,609,111,609,105,644,105"/>
+<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="223,5,375,45"/>
+<area shape="poly" title=" " alt="" coords="473,93,386,60,354,48,356,43,388,55,475,88"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="221,70,378,95"/>
+<area shape="poly" title=" " alt="" coords="420,99,378,94,378,89,421,94"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="223,119,376,145"/>
+<area shape="poly" title=" " alt="" coords="421,122,376,126,376,121,420,116"/>
+<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="212,169,387,194"/>
+<area shape="poly" title=" " alt="" coords="475,128,387,159,347,171,345,166,386,153,473,123"/>
+<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,169,164,194"/>
+<area shape="poly" title=" " alt="" coords="198,184,164,184,164,179,198,179"/>
 </map>
 </div>
 
@@ -559,7 +567,7 @@ Here is the call graph for this function:</div>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00031">runtime_object_alloc_report()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="rtti_8cpp_source.html#l00005">rtti_object_alloc()</a>, <a class="el" href="runtime_8cpp_source.html#l00033">runtime_get_argv()</a>, <a class="el" href="memory_8cpp_source.html#l00100">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00047">runtime_get_thread_id()</a>, <a class="el" href="threading_8cpp_source.html#l00056">runtime_ping_thread()</a>, <a class="el" href="threading_8cpp_source.html#l00008">runtime_start_thread()</a>, and <a class="el" href="threading_8cpp_source.html#l00037">runtime_thread_join()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="rtti_8cpp_source.html#l00005">rtti_object_alloc()</a>, <a class="el" href="runtime_8cpp_source.html#l00033">runtime_get_argv()</a>, <a class="el" href="memory_8cpp_source.html#l00100">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00179">runtime_get_thread_id()</a>, <a class="el" href="threading_8cpp_source.html#l00188">runtime_ping_thread()</a>, <a class="el" href="threading_8cpp_source.html#l00135">runtime_start_thread()</a>, and <a class="el" href="threading_8cpp_source.html#l00166">runtime_thread_join()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -584,11 +592,11 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="240,168,164,147,165,142,242,163"/>
 <area shape="rect" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc" title=" " alt="" coords="5,169,175,195"/>
 <area shape="poly" title=" " alt="" coords="209,185,175,185,175,179,209,179"/>
-<area shape="rect" href="threading_8cpp.html#a8fccb572ebee3a72515135c3b912bbdd" title=" " alt="" coords="11,219,169,244"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="11,219,169,244"/>
 <area shape="poly" title=" " alt="" coords="234,200,146,221,145,216,233,195"/>
 <area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="11,268,169,293"/>
 <area shape="poly" title=" " alt="" coords="272,204,227,232,176,258,141,270,139,265,174,253,225,227,269,200"/>
-<area shape="rect" href="threading_8cpp.html#a23d32f8caf2eb1ed0ba961bc73fca018" title=" " alt="" coords="13,317,167,343"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="13,317,167,343"/>
 <area shape="poly" title=" " alt="" coords="285,207,239,257,209,284,176,307,148,320,146,315,173,302,206,280,235,254,281,204"/>
 </map>
 </div>
@@ -642,11 +650,11 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="240,168,164,147,165,142,242,163"/>
 <area shape="rect" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc" title=" " alt="" coords="5,169,175,195"/>
 <area shape="poly" title=" " alt="" coords="209,185,175,185,175,179,209,179"/>
-<area shape="rect" href="threading_8cpp.html#a8fccb572ebee3a72515135c3b912bbdd" title=" " alt="" coords="11,219,169,244"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="11,219,169,244"/>
 <area shape="poly" title=" " alt="" coords="234,200,146,221,145,216,233,195"/>
 <area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="11,268,169,293"/>
 <area shape="poly" title=" " alt="" coords="272,204,227,232,176,258,141,270,139,265,174,253,225,227,269,200"/>
-<area shape="rect" href="threading_8cpp.html#a23d32f8caf2eb1ed0ba961bc73fca018" title=" " alt="" coords="13,317,167,343"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="13,317,167,343"/>
 <area shape="poly" title=" " alt="" coords="285,207,239,257,209,284,176,307,148,320,146,315,173,302,206,280,235,254,281,204"/>
 </map>
 </div>

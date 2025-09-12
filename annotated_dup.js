@@ -152,6 +152,7 @@ var annotated_dup =
       [ "whileStmt", "classyoi_1_1whileStmt.html", "classyoi_1_1whileStmt" ]
     ] ],
     [ "AllocatedMemoryList", "structAllocatedMemoryList.html", "structAllocatedMemoryList" ],
+    [ "ThreadStarterArgs", "structThreadStarterArgs.html", "structThreadStarterArgs" ],
     [ "utf8Unicode", "classutf8Unicode.html", "classutf8Unicode" ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", "structYoiBooleanObject" ],
     [ "YoiCharObject", "structYoiCharObject.html", "structYoiCharObject" ],

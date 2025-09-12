@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md53":[7,2],
 "md_docs_2Operator_01Overloading.html":[8],
 "md_docs_2Operator_01Overloading.html#autotoc_md55":[8,0],
 "md_docs_2Operator_01Overloading.html#autotoc_md56":[8,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "namespaceyoi.html#a47115387be28c9419497e9da7a2f1d82":[16,0,1,214],
 "namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023":[16,0,1,280],
 "namespaceyoi.html#a4a59d5413d6da04facbe9ac48e2f7fff":[16,0,1,277],
-"namespaceyoi.html#a4b3d708e6e43dd3c1a4acbc0f671ef45":[16,0,1,192],
-"namespaceyoi.html#a4c7470fb1228d09fef4e841dcb074c4c":[16,0,1,190]
+"namespaceyoi.html#a4b3d708e6e43dd3c1a4acbc0f671ef45":[16,0,1,192]
 };

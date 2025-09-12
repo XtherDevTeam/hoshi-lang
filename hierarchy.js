@@ -195,6 +195,7 @@ var hierarchy =
     [ "str_view", "structmagic__enum_1_1detail_1_1str__view.html", null ],
     [ "symbol", "classyoi_1_1symbol.html", null ],
     [ "symbolTable", "classyoi_1_1symbolTable.html", null ],
+    [ "ThreadStarterArgs", "structThreadStarterArgs.html", null ],
     [ "token", "structyoi_1_1lexer_1_1token.html", null ],
     [ "underlying_type< T, bool >", "structmagic__enum_1_1detail_1_1underlying__type.html", [
       [ "underlying_type< T >", "structmagic__enum_1_1underlying__type.html", null ]

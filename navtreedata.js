@@ -161,6 +161,7 @@ var NAVTREE =
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
@@ -183,12 +184,12 @@ var NAVTREEINDEX =
 "classyoi_1_1returnStmt.html#a2ff862ac765b8a35c4bbec03030003e7",
 "classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254",
 "functions_func_t.html",
-"md_docs_2Operator_01Overloading.html",
-"namespaceyoi.html#a4ca34fd416c2b4640aa019ed16026010",
-"parser_8hpp.html#ad36c647b0695dda56ddc3eacbfbecdda",
-"structyoi_1_1IRBuildConfig.html#a92616faabf3a5b7737e69f0237ec2772",
-"structyoi_1_1LLVMCodegen_1_1StackValue.html",
-"threading_8cpp.html#a444dba8591942ff8168348fad7a218fc"
+"md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md53",
+"namespaceyoi.html#a4c7470fb1228d09fef4e841dcb074c4c",
+"parser_8hpp.html#ad18cd7dc20ba62f0c0d9e86364e6e101",
+"structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593a123fead50246387983ee340507115ef4",
+"structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html#a67f659ed95598ac4ee5eeb3b87037262",
+"symbolTable_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

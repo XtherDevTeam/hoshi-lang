@@ -91,22 +91,31 @@ $(document).ready(function(){initNavTree('threading_8cpp.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">threading.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&quot;</code><br />
-<code>#include &lt;<a class="el" href="threading_8h_source.html">runtime/threading/threading.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="threading_8h_source.html">runtime/threading/threading.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&quot;</code><br />
+<code>#include &lt;errno.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for threading.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="threading_8cpp__incl.png" border="0" usemap="#aruntime_2threading_2threading_8cpp" alt=""/></div>
 <map name="aruntime_2threading_2threading_8cpp" id="aruntime_2threading_2threading_8cpp">
-<area shape="rect" title=" " alt="" coords="92,5,324,31"/>
-<area shape="rect" href="memory_8h.html" title=" " alt="" coords="25,152,226,177"/>
-<area shape="poly" title=" " alt="" coords="201,32,168,80,138,140,133,138,163,77,197,29"/>
+<area shape="rect" title=" " alt="" coords="171,5,403,31"/>
 <area shape="rect" href="threading_8h.html" title=" " alt="" coords="178,79,395,104"/>
-<area shape="poly" title=" " alt="" coords="222,29,266,68,262,71,219,33"/>
+<area shape="poly" title=" " alt="" coords="289,31,289,65,284,65,284,31"/>
+<area shape="rect" href="memory_8h.html" title=" " alt="" coords="25,152,226,177"/>
+<area shape="poly" title=" " alt="" coords="249,33,206,52,167,81,147,109,135,139,130,137,142,107,163,77,204,47,246,28"/>
+<area shape="rect" title=" " alt="" coords="419,79,487,104"/>
+<area shape="poly" title=" " alt="" coords="314,28,414,71,412,76,312,33"/>
+<area shape="poly" title=" " alt="" coords="262,106,165,149,163,144,260,102"/>
+<area shape="rect" title=" " alt="" coords="250,152,334,177"/>
+<area shape="poly" title=" " alt="" coords="290,104,293,138,287,139,285,105"/>
+<area shape="rect" title=" " alt="" coords="358,152,431,177"/>
+<area shape="poly" title=" " alt="" coords="305,102,367,142,364,147,302,106"/>
 <area shape="rect" title=" " alt="" coords="97,299,164,324"/>
 <area shape="poly" title=" " alt="" coords="85,180,53,192,25,208,10,228,8,238,13,249,27,266,45,279,85,297,83,302,42,284,23,270,8,252,3,238,5,225,22,204,51,187,83,175"/>
 <area shape="rect" title=" " alt="" coords="23,225,89,251"/>
@@ -118,26 +127,28 @@ Include dependency graph for threading.cpp:</div>
 <area shape="poly" title=" " alt="" coords="332,253,178,299,177,294,330,248"/>
 <area shape="rect" title=" " alt="" coords="334,299,405,324"/>
 <area shape="poly" title=" " alt="" coords="372,251,372,285,367,285,367,251"/>
-<area shape="poly" title=" " alt="" coords="262,106,165,149,163,144,260,102"/>
-<area shape="rect" title=" " alt="" coords="250,152,334,177"/>
-<area shape="poly" title=" " alt="" coords="290,104,293,138,287,139,285,105"/>
-<area shape="rect" title=" " alt="" coords="358,152,431,177"/>
-<area shape="poly" title=" " alt="" coords="305,102,367,142,364,147,302,106"/>
 </map>
 </div>
 </div>
 <p><a href="threading_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structThreadStarterArgs.html">ThreadStarterArgs</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4e3aa11ce37849e7544c074a43bf6854" id="r_a4e3aa11ce37849e7544c074a43bf6854"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a> (void *args)</td></tr>
+<tr class="separator:a4e3aa11ce37849e7544c074a43bf6854"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a524018bbcc3335e63d3f0b7057a23c98" id="r_a524018bbcc3335e63d3f0b7057a23c98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">runtime_start_thread</a> (<a class="el" href="structYoiVoidCallableInterface.html">YoiVoidCallableInterface</a> *callable)</td></tr>
 <tr class="separator:a524018bbcc3335e63d3f0b7057a23c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23d32f8caf2eb1ed0ba961bc73fca018" id="r_a23d32f8caf2eb1ed0ba961bc73fca018"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a23d32f8caf2eb1ed0ba961bc73fca018">runtime_thread_join</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id)</td></tr>
-<tr class="separator:a23d32f8caf2eb1ed0ba961bc73fca018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05e877ccdd9015f0515a5925085584b5" id="r_a05e877ccdd9015f0515a5925085584b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">runtime_thread_join</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj)</td></tr>
+<tr class="separator:a05e877ccdd9015f0515a5925085584b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a444dba8591942ff8168348fad7a218fc" id="r_a444dba8591942ff8168348fad7a218fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">runtime_get_thread_id</a> ()</td></tr>
 <tr class="separator:a444dba8591942ff8168348fad7a218fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fccb572ebee3a72515135c3b912bbdd" id="r_a8fccb572ebee3a72515135c3b912bbdd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a8fccb572ebee3a72515135c3b912bbdd">runtime_ping_thread</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id)</td></tr>
-<tr class="separator:a8fccb572ebee3a72515135c3b912bbdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d2015cc45ad286767cf3c05ed4e8ad5" id="r_a4d2015cc45ad286767cf3c05ed4e8ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">runtime_ping_thread</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj)</td></tr>
+<tr class="separator:a4d2015cc45ad286767cf3c05ed4e8ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a444dba8591942ff8168348fad7a218fc" name="a444dba8591942ff8168348fad7a218fc"></a>
@@ -155,7 +166,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00047">47</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00179">179</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>.</p>
 <div class="dynheader">
@@ -173,8 +184,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a8fccb572ebee3a72515135c3b912bbdd" name="a8fccb572ebee3a72515135c3b912bbdd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fccb572ebee3a72515135c3b912bbdd">&#9670;&#160;</a></span>runtime_ping_thread()</h2>
+<a id="a4d2015cc45ad286767cf3c05ed4e8ad5" name="a4d2015cc45ad286767cf3c05ed4e8ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d2015cc45ad286767cf3c05ed4e8ad5">&#9670;&#160;</a></span>runtime_ping_thread()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,25 +194,29 @@ Here is the call graph for this function:</div>
           <td class="memname"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> * runtime_ping_thread </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
-          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td class="paramname"><em>thread_id_obj</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00056">56</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00188">188</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="threading_8cpp_a8fccb572ebee3a72515135c3b912bbdd_cgraph.png" border="0" usemap="#athreading_8cpp_a8fccb572ebee3a72515135c3b912bbdd_cgraph" alt=""/></div>
-<map name="athreading_8cpp_a8fccb572ebee3a72515135c3b912bbdd_cgraph" id="athreading_8cpp_a8fccb572ebee3a72515135c3b912bbdd_cgraph">
-<area shape="rect" title=" " alt="" coords="5,13,163,38"/>
-<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="211,13,369,38"/>
-<area shape="poly" title=" " alt="" coords="163,23,197,23,197,28,163,28"/>
-<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="417,5,576,45"/>
-<area shape="poly" title=" " alt="" coords="370,23,404,23,404,28,370,28"/>
+<div class="center"><img src="threading_8cpp_a4d2015cc45ad286767cf3c05ed4e8ad5_cgraph.png" border="0" usemap="#athreading_8cpp_a4d2015cc45ad286767cf3c05ed4e8ad5_cgraph" alt=""/></div>
+<map name="athreading_8cpp_a4d2015cc45ad286767cf3c05ed4e8ad5_cgraph" id="athreading_8cpp_a4d2015cc45ad286767cf3c05ed4e8ad5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,46,163,71"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="211,17,385,42"/>
+<area shape="poly" title=" " alt="" coords="162,45,197,41,198,46,163,51"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="219,70,377,95"/>
+<area shape="poly" title=" " alt="" coords="163,65,205,70,205,75,163,70"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="433,5,608,45"/>
+<area shape="poly" title=" " alt="" coords="386,25,420,24,420,30,386,30"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="441,69,600,109"/>
+<area shape="poly" title=" " alt="" coords="378,82,427,84,427,89,377,88"/>
 </map>
 </div>
 
@@ -223,30 +238,32 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00008">8</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00135">135</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="threading_8h_source.html#l00018">YoiVoidCallableInterface::callable</a>, <a class="el" href="threading_8h_source.html#l00017">YoiVoidCallableInterface::gc_dec_func</a>, <a class="el" href="threading_8h_source.html#l00013">YoiVoidCallableInterface::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="threading_8h_source.html#l00015">YoiVoidCallableInterface::this_ptr</a>.</p>
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="threading_8cpp_source.html#l00116">thread_starter_wrapper()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="threading_8cpp_a524018bbcc3335e63d3f0b7057a23c98_cgraph.png" border="0" usemap="#athreading_8cpp_a524018bbcc3335e63d3f0b7057a23c98_cgraph" alt=""/></div>
 <map name="athreading_8cpp_a524018bbcc3335e63d3f0b7057a23c98_cgraph" id="athreading_8cpp_a524018bbcc3335e63d3f0b7057a23c98_cgraph">
-<area shape="rect" title=" " alt="" coords="5,46,164,71"/>
-<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="212,17,387,42"/>
-<area shape="poly" title=" " alt="" coords="164,45,198,40,199,46,165,50"/>
-<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="220,70,379,95"/>
-<area shape="poly" title=" " alt="" coords="165,65,207,70,206,75,164,70"/>
-<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="435,5,609,45"/>
-<area shape="poly" title=" " alt="" coords="387,25,421,24,421,30,387,30"/>
-<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="443,69,601,109"/>
-<area shape="poly" title=" " alt="" coords="379,82,429,84,429,89,379,88"/>
+<area shape="rect" title=" " alt="" coords="5,42,164,67"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="220,15,379,41"/>
+<area shape="poly" title=" " alt="" coords="164,42,206,37,207,42,165,47"/>
+<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="212,66,387,91"/>
+<area shape="poly" title=" " alt="" coords="165,61,199,65,198,70,164,66"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="443,5,601,45"/>
+<area shape="poly" title=" " alt="" coords="379,24,429,24,429,29,379,30"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="435,70,609,95"/>
+<area shape="poly" title=" " alt="" coords="387,78,421,78,421,84,387,83"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="657,63,832,103"/>
+<area shape="poly" title=" " alt="" coords="610,80,644,80,644,85,610,85"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a23d32f8caf2eb1ed0ba961bc73fca018" name="a23d32f8caf2eb1ed0ba961bc73fca018"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23d32f8caf2eb1ed0ba961bc73fca018">&#9670;&#160;</a></span>runtime_thread_join()</h2>
+<a id="a05e877ccdd9015f0515a5925085584b5" name="a05e877ccdd9015f0515a5925085584b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05e877ccdd9015f0515a5925085584b5">&#9670;&#160;</a></span>runtime_thread_join()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -255,20 +272,20 @@ Here is the call graph for this function:</div>
           <td class="memname"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> * runtime_thread_join </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
-          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td class="paramname"><em>thread_id_obj</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00037">37</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00166">166</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="threading_8cpp_a23d32f8caf2eb1ed0ba961bc73fca018_cgraph.png" border="0" usemap="#athreading_8cpp_a23d32f8caf2eb1ed0ba961bc73fca018_cgraph" alt=""/></div>
-<map name="athreading_8cpp_a23d32f8caf2eb1ed0ba961bc73fca018_cgraph" id="athreading_8cpp_a23d32f8caf2eb1ed0ba961bc73fca018_cgraph">
+<div class="center"><img src="threading_8cpp_a05e877ccdd9015f0515a5925085584b5_cgraph.png" border="0" usemap="#athreading_8cpp_a05e877ccdd9015f0515a5925085584b5_cgraph" alt=""/></div>
+<map name="athreading_8cpp_a05e877ccdd9015f0515a5925085584b5_cgraph" id="athreading_8cpp_a05e877ccdd9015f0515a5925085584b5_cgraph">
 <area shape="rect" title=" " alt="" coords="5,46,159,71"/>
 <area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="207,17,381,42"/>
 <area shape="poly" title=" " alt="" coords="159,45,193,41,193,46,159,51"/>
@@ -278,6 +295,52 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="382,25,416,24,416,30,382,30"/>
 <area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="437,69,596,109"/>
 <area shape="poly" title=" " alt="" coords="374,82,423,84,423,89,373,88"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4e3aa11ce37849e7544c074a43bf6854" name="a4e3aa11ce37849e7544c074a43bf6854"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e3aa11ce37849e7544c074a43bf6854">&#9670;&#160;</a></span>thread_starter_wrapper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * thread_starter_wrapper </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00116">116</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="threading_8h_source.html#l00028">YoiVoidCallableInterface::callable</a>, <a class="el" href="threading_8h_source.html#l00027">YoiVoidCallableInterface::gc_dec_func</a>, <a class="el" href="threading_8h_source.html#l00023">YoiVoidCallableInterface::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="threading_8h_source.html#l00025">YoiVoidCallableInterface::this_ptr</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="threading_8cpp_source.html#l00135">runtime_start_thread()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_cgraph.png" border="0" usemap="#athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_cgraph" alt=""/></div>
+<map name="athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_cgraph" id="athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,180,38"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="228,13,403,38"/>
+<area shape="poly" title=" " alt="" coords="180,23,214,23,214,28,180,28"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="451,5,625,45"/>
+<area shape="poly" title=" " alt="" coords="403,23,437,23,437,28,403,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_icgraph.png" border="0" usemap="#athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_icgraph" alt=""/></div>
+<map name="athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_icgraph" id="athreading_8cpp_a4e3aa11ce37849e7544c074a43bf6854_icgraph">
+<area shape="rect" title=" " alt="" coords="212,5,387,31"/>
+<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,5,164,31"/>
+<area shape="poly" title=" " alt="" coords="198,21,164,21,164,15,198,15"/>
 </map>
 </div>
 
