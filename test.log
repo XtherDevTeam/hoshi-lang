@@ -1,456 +1,616 @@
-use lang "builtin"
-use math "math"
-use runtime "runtime"
+python tools/generate_defines.py
+defines.h is already up-to-date.
+cmake . -B cmake-build-debug  -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=DEBUG -G "Unix Makefiles"
+-- Found LLVM 20.1.8
+-- Using LLVMConfig.cmake in: /opt/homebrew/opt/llvm/lib/cmake/llvm
+-- LLVM_INCLUDE_DIRS: /opt/homebrew/opt/llvm/include
+-- Using llvm-config executable: /opt/homebrew/opt/llvm/bin/llvm-config
+-- LLVM libdir: /opt/homebrew/Cellar/llvm/20.1.8/lib
+-- LLVM components: -lLLVM-20
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/chou/Desktop/project/hoshi-lang/cmake-build-debug
+cd cmake-build-debug; make all -j
+[ 24%] Built target elysia_runtime
+[100%] Built target hoshi_lang
+./cmake-build-debug/hoshi_lang examples/thread.hoshi -o build/thread --build-mode debug --preserve-intermediate
 
-struct Str {
-    data: char[],
-    length: unsigned,
-    capacity: unsigned,
-    push(ch: char) : none,
-    pop() : none,
-    size() : int,
-    clear() : none,
-    capacity_resize(new_capacity: unsigned) : none,
-    shrink_to_fit() : none,
-    startswith(prefix: Str) : bool,
-    endswith(suffix: Str) : bool,
-    c_str() : int,
-    find(pattern: Str, start: int) : int,
-    always_inline find(pattern: Str) : int,
-    substring(start: unsigned, end: unsigned) : Str,
-    trim() : Str,
-    replace(pattern: Str, value: Str) : Str,
-    split(sep: Str) : Str[],
-    split(sep: string) : Str[],
-    find_all(pattern: Str) : int,
-    reverse() : none,
-    always_inline substring(start: int, end: int) : Str,
-    static join(strs: Str[]) : Str,
-    static join(args: ...) : Str,
-    constructor(literal: string),
-    constructor(arr: char[]),
-    constructor(capacity: unsigned),
-    constructor(),
-    static operator+(a: Str, b: Str) : Str,
-    static operator+(a: Str, b: string) : Str,
-    static operator+(a: string, b: Str) : Str,
-    static operator==(a: Str, b: Str) : bool,
-    static operator==(a: Str, b: string) : bool,
-    static operator==(a: string, b: Str) : bool,
-    static operator!=(a: Str, b: Str) : bool,
-    static operator!=(a: Str, b: string) : bool,
-    static operator!=(a: string, b: Str) : bool,
-    static operator[](self: Str, index: int) : char,
-    static operator[](value: char, self: Str, index: int) : none
-}
 
-impl Str {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    constructor(callableObject: func () : none) {
+        ^
+        this.id = 0
+        ^
+        this.callableObject = callableObject
+        ^
+    start() : lang.Result<unsigned, int> {
+        ^
+        let result = runtime.runtime_start_thread(this.callableObject)
+        ^
+        if (result.is_ok()) {
+            ^
+            this.id = result.unwrap()
+            ^
+        }
+        ^
+    join() : none {
+        ^
+    ping() : int {
+        ^
+func current_tid() : unsigned {
+    ^
+func always_inline isnan(a : deci) : bool {
+    ^
     constructor(literal: string) {
+        ^
         this.length = runtime.strlen(literal)
+        ^
         this.capacity = this.length + 1
+        ^
         this.data = new char[this.capacity]()
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.data), literal, this.length)
-        this.data[this.length] = '\0'
-    },
+        ^
     constructor(arr: char[]) {
+        ^
         this.length = arr.length
+        ^
         this.data = arr
-        this.capacity = this.length + 1
-    },
+        ^
     constructor(capacity: unsigned) {
+        ^
         if (capacity < 1u) {
-            capacity = 1u
+            ^
         }
+        ^
         this.length = 0u
+        ^
         this.capacity = capacity
+        ^
         this.data = new char[capacity]()
-        this.data[0] = '\0'
-    },
+        ^
     constructor() {
+        ^
         this.length = 0u
+        ^
         this.capacity = 1u
+        ^
         this.data = new char[1]()
-        this.data[0] = '\0'
-    },
+        ^
     capacity_resize(new_capacity: unsigned) : none {
+        ^
         if (new_capacity <= this.capacity) {
-            return
+            ^
         }
+        ^
         let new_data = new char[new_capacity]()
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_data), runtime.runtime_get_string_array_data_pointer(this.data), this.length)
+        ^
         this.data = new_data
-        this.capacity = new_capacity
-    },
+        ^
     push(ch: char) : none {
+        ^
         if (this.length == this.capacity) {
-            this.capacity_resize(this.capacity * 2u)
+            ^
         }
+        ^
         this.data[this.length] = ch
+        ^
         this.length += 1
-        this.data[this.length] = '\0'
-    },
+        ^
     pop() : none {
+        ^
         if (this.length == 0u) {
-            return
+            ^
         }
+        ^
         this.length -= 1u
-        this.data[this.length] = '\0'
-    },
+        ^
     size() : int {
-        return this.length
-    },
+        ^
     clear() : none {
+        ^
         this.length = 0u
-        this.data[0] = '\0'
-    },
+        ^
     shrink_to_fit() : none {
+        ^
         if (this.length == this.capacity) {
-            return
+            ^
         }
+        ^
         let new_data = new char[this.length + 1u]()
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_data), runtime.runtime_get_string_array_data_pointer(this.data), this.length)
+        ^
         this.data = new_data
-        this.capacity = this.length + 1
-    },
+        ^
     startswith(prefix: Str) : bool {
+        ^
         if (prefix.length > this.length) {
-            return false
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(this.data), runtime.runtime_get_string_array_data_pointer(prefix.data), prefix.length) == 0
-    },
+        ^
     endswith(suffix: Str) : bool {
+        ^
         if (suffix.length > this.length) {
-            return false
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(this.data) + this.length - suffix.length, runtime.runtime_get_string_array_data_pointer(suffix.data), suffix.length) == 0
-    },
+        ^
     static operator+(a: Str, b: Str) : Str {
+        ^
         let new_str = Str(a.length + b.length)
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(a.data), a.length)
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + a.length, runtime.runtime_get_string_array_data_pointer(b.data), b.length)
+        ^
         new_str.data[a.length + b.length] = '\0'
+        ^
         new_str.length = a.length + b.length
-        return new_str
-    },
+        ^
     static operator+(a: Str, b: string) : Str {
+        ^
         let new_str = Str(a.length + runtime.strlen(b))
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(a.data), a.length)
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + a.length, b, runtime.strlen(b))
+        ^
         new_str.data[a.length + runtime.strlen(b)] = '\0'
+        ^
         new_str.length = a.length + runtime.strlen(b)
-        return new_str
-    },
+        ^
     static operator+(a: string, b: Str) : Str {
+        ^
         let new_str = Str(runtime.strlen(a) + b.length)
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), a, runtime.strlen(a))
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + runtime.strlen(a), runtime.runtime_get_string_array_data_pointer(b.data), b.length)
+        ^
         new_str.data[runtime.strlen(a) + b.length] = '\0'
+        ^
         new_str.length = runtime.strlen(a) + b.length
-        return new_str
-    },
+        ^
     static operator==(a: Str, b: Str) : bool {
+        ^
         if (a.length != b.length) {
-            return false
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), runtime.runtime_get_string_array_data_pointer(b.data), a.length) == 0
-    },
+        ^
     static operator==(a: Str, b: string) : bool {
+        ^
         if (a.length != runtime.strlen(b)) {
-            return false
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), b, a.length) == 0
-    },
+        ^
     static operator==(a: string, b: Str) : bool {
+        ^
         if (runtime.strlen(a) != b.length) {
-            return false
+            ^
         }
-        return runtime.memcmp(a, runtime.runtime_get_string_array_data_pointer(b.data), b.length) == 0
-    },
+        ^
     static operator!=(a: Str, b: Str) : bool {
+        ^
         if (a.length != b.length) {
-            return true
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), runtime.runtime_get_string_array_data_pointer(b.data), a.length) != 0
-    },
+        ^
     static operator!=(a: Str, b: string) : bool {
+        ^
         if (a.length != runtime.strlen(b)) {
-            return true
+            ^
         }
-        return runtime.memcmp(runtime.runtime_get_string_array_data_pointer(a.data), b, a.length) != 0
-    },
+        ^
     static operator!=(a: string, b: Str) : bool {
+        ^
         if (runtime.strlen(a) != b.length) {
-            return true
+            ^
         }
-        return runtime.memcmp(a, runtime.runtime_get_string_array_data_pointer(b.data), b.length) != 0
-    },
+        ^
     static operator[](self: Str, index: int) : char {
+        ^
         if (index < 0 || index >= self.length) {
-            return '\0'
+            ^
         }
-        return self.data[index]
-    },
+        ^
     static operator[](value: char, self: Str, index: int) : none {
+        ^
         if (index < 0 || index >= self.length) {
-            return
+            ^
         }
-        self.data[index] = value
-    },
+        ^
     c_str() : int {
-        return runtime.runtime_get_string_array_data_pointer(this.data)
-    },
+        ^
     find(pattern: Str, start: int) : int {
+        ^
         if (pattern.length > this.length) {
-            return -1
-        }
-        // a simple implementation of Knuth-Morris-Pratt algorithm
+            ^
         // build next array
+        ^
         let next = new int[pattern.length](0)
+        ^
         let prefix_length = 0
+        ^
         let i = 1
+        ^
         while (i < pattern.length) {
+            ^
             if (pattern[i] == pattern[prefix_length]) {
+                ^
                 prefix_length += 1
+                ^
                 next[i] = prefix_length
-                i += 1
+                ^
             } else {
+                ^
                 if (prefix_length == 0) {
+                    ^
                     next[i] = 0
-                    i += 1
+                    ^
                 } else {
-                    prefix_length = next[prefix_length - 1]
-                }
-            }
-        }
+                    ^
         // search
+        ^
         i = start
+        ^
         let j = 0
+        ^
         while (i < this.length) {
+            ^
             if (this[i] == pattern[j]) {
+                ^
                 i += 1
-                j += 1
+                ^
             } elif (j > 0) {
-                j = next[j - 1]
+                ^
             } else {
-                i += 1
+                ^
             }
+            ^
             if (j == pattern.length) {
-                return i - j
-            }
+                ^
         }
-        return -1
-    },
+        ^
     find_all(pattern: Str) : int {
+        ^
         let occurences = 0
+        ^
         let index = 0
+        ^
         let index_after_last_sep = 0
+        ^
         while (index != -1) {
+            ^
             index = this.find(pattern, index_after_last_sep)
+            ^
             if (index != -1) {
+                ^
                 occurences += 1
-                index_after_last_sep = index + pattern.length
-            }
+                ^
         }
-        return occurences
-    },
+        ^
     always_inline find(pattern: Str) : int {
-        return this.find(pattern, 0)
-    },
+        ^
     substring(start: unsigned, end: unsigned) : Str {
+        ^
         let new_str = Str(end - start)
+        ^
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(this.data) + start, end - start)
+        ^
         new_str.data[end - start] = '\0'
+        ^
         new_str.length = end - start
-        return new_str
-    },
+        ^
     always_inline substring(start: int, end: int) : Str {
-        return this.substring(start as unsigned, end as unsigned)
-    },
+        ^
     join(strs: Str[]) : Str {
+        ^
         let total_length = 0u
+        ^
+        let total_length = 0u
+             ^
         for (let i = 0; i < strs.length; i += 1) {
-            total_length += strs[i].length
+            ^
+        let total_length = 0u
+                                         ^
         }
+        ^
         let new_str = Str(total_length)
+        ^
         let offset = 0
+        ^
+        let offset = 0
+             ^
         for (let i = 0; i < strs.length; i += 1) {
+            ^
             runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + offset, runtime.runtime_get_string_array_data_pointer(strs[i].data), strs[i].length)
-            offset += strs[i].length
+            ^
+        let offset = 0
+                                         ^
         }
+        ^
         new_str.data[total_length] = '\0'
+        ^
         new_str.length = total_length
-        return new_str
-    },
+        ^
     join(args: ...) : Str {
+        ^
         let strs = new Str[args.length]()
+        ^
+        let strs = new Str[args.length]()
+             ^
         for (let i = 0; i < args.length; i += 1) {
+            ^
             if (args[i] interfaceof Str) {
-                strs[i] = dyn_cast<Str>(args[i])
+                ^
             } elif (args[i] interfaceof string) {
-                strs[i] = Str(dyn_cast<string>(args[i]))
-            }
+                ^
+        let strs = new Str[args.length]()
+                                         ^
         }
-        return Str.join(strs)
-    },
+        ^
     trim() : Str {
+        ^
         let start = 0u
+        ^
         let end = this.length
+        ^
         while (start < end && this.data[start] <= ' ') {
-            start += 1
+            ^
         }
+        ^
         while (end > start && this.data[end - 1] <= ' ') {
-            end -= 1
+            ^
         }
-        return this.substring(start, end)
-    },
+        ^
     replace(pattern: Str, value: Str) : Str {
+        ^
         let occur = this.find_all(pattern) as unsigned
+        ^
         if (occur == 0u) {
-            return this
-        }
+            ^
 
+        ^
         let res = Str(this.length - pattern.length * occur + value.length * occur)
+        ^
         let index = this.find(pattern) as unsigned // the index of occurrence of pattern
+        ^
         let index_after_last_pattern = 0u // fuck it, while 0 become 0u, it tell me index not exist
-        let offset = 0u // the current offset in res.data
+        ^
 
+        ^
         let res_data_ptr = runtime.runtime_get_string_array_data_pointer(res.data)
+        ^
         let this_data_ptr = runtime.runtime_get_string_array_data_pointer(this.data)
-        let value_data_ptr = runtime.runtime_get_string_array_data_pointer(value.data)
+        ^
 
-        while (index != -1) {
+        ^
             // copy the part before the pattern
+            ^
             runtime.memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
-            offset += index - index_after_last_pattern
+            ^
             // copy the value
+            ^
             runtime.memcpy(res_data_ptr + offset, value_data_ptr, value.length)
+            ^
             offset += value.length
+            ^
             index_after_last_pattern = index + pattern.length
-            index = this.find(pattern, index_after_last_pattern as int)
-        }
+            ^
         // copy the part after the last pattern
+        ^
         runtime.memcpy(res_data_ptr + offset, this_data_ptr + index_after_last_pattern, this.length - index_after_last_pattern)
+        ^
         res.length = this.length - pattern.length * occur + value.length * occur
+        ^
         res.data[res.length] = '\0'
-        return res
-    },
+        ^
     split(sep: Str) : Str[] {
+        ^
         let occurences = this.find_all(sep) + 1
+        ^
         let res = new Str[occurences]()
+        ^
         let index = 0u
+        ^
         let index_after_last_sep = 0u
+        ^
         let offset = 0u
+        ^
+        let offset = 0u
+             ^
         for (let i = 0; i < occurences + 1; i += 1) {
+            ^
             index = this.find(sep, index_after_last_sep + 1)
+            ^
             if (index != -1) {
+                ^
                 res[i] = this.substring(offset, index)
+                ^
                 offset = index + sep.length
-                index_after_last_sep = index
+                ^
             } else {
-                res[i] = this.substring(offset, this.length)
-            }
+                ^
+        let offset = 0u
+                                            ^
         }
-        return res
-    },
+        ^
     split(sep: string) : Str[] {
-        return this.split(Str(sep))
-    },
+        ^
     reverse() : none {
+        ^
         let left = 0u
+        ^
         let right = this.length - 1u
+        ^
         while (left < right) {
+            ^
             let temp = this.data[left]
+            ^
             this.data[left] = this.data[right]
+            ^
             this.data[right] = temp
+            ^
             left += 1
-            right -= 1
-        }
-    }
-}
-
-impl Str : lang.Hashable {
+            ^
     hash() : int {
+        ^
         let res = 0
+        ^
+        let res = 0
+             ^
         for (let i = 0; i < this.length; i += 1) {
-            res = (res * 31 + this[i]) & 0xffffffff
+            ^
+        let res = 0
+                                         ^
         }
-        return res
-    }
-}
-
-interface Stringable {
-    to_string() : Str
-}
-
-impl int : Stringable {
+        ^
     to_string() : Str {
+        ^
+func always_inline abs<T>(a: T) : T {
+    ^
+    if (a < 0) {
+        ^
+    } else {
+        ^
         let x = math.abs(this)
+        ^
         let res = Str(24u)
+        ^
         let is_negative = this < 0
+        ^
         while (x > 0) {
+            ^
             let digit = (x % 10) as char
+            ^
             res.push(digit + '0')
-            x /= 10
+            ^
         }
+        ^
         if (is_negative) {
-            res.push('-')
+            ^
         }
+        ^
         res.reverse()
-        return res
-    }
-}
-
-impl bool : Stringable {
+        ^
     to_string() : Str {
+        ^
         if (this) {
-            return Str("true")
+            ^
         } else {
-            return Str("false")
-        }
-    }
-}
-
-impl string : Stringable {
+            ^
     to_string() : Str {
-        return Str(this)
-    }
-}
-
+        ^
 func format(fmt: Str, args: Stringable[]) : Str {
+    ^
     let occur = fmt.find_all(Str("{}"))
+    ^
     if (occur == 0u) {
-        return fmt
+        ^
     }
+    ^
     let strs = new Str[args.length]()
+    ^
     let total_strs_length = 0u
+    ^
+    let total_strs_length = 0u
+         ^
     for (let i = 0; i < args.length; i += 1) {
+        ^
         strs[i] = args[i].to_string()
-        total_strs_length += strs[i].length
+        ^
+    let total_strs_length = 0u
+                                     ^
     }
+    ^
     let index_after_last_pattern = 0u
-    let index = fmt.find(Str("{}"), index_after_last_pattern as int)
+    ^
+    let index = 0u
+    ^
     let offset = 0u
+    ^
     let res = Str(fmt.length + total_strs_length - occur as unsigned * 2u)
+    ^
     let res_data_ptr = runtime.runtime_get_string_array_data_pointer(res.data)
+    ^
     let fmt_data_ptr = runtime.runtime_get_string_array_data_pointer(fmt.data)
-
-    for (let current_arg = 0u; current_arg < occur && current_arg < args.length; current_arg += 1) {
+    ^
+    
+    ^
         // copy the part before the pattern
+        ^
         runtime.memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, index - index_after_last_pattern)
+        ^
         offset += index - index_after_last_pattern
+        ^
         index_after_last_pattern = index + 2u
-        index = fmt.find(Str("{}"), index_after_last_pattern as int)
+        ^
         // copy the value
+        ^
+        let current_param_length = strs[current_arg].length
+        ^
+        runtime.runtime_debug_print_int_1(current_arg)
+        ^
+        runtime.runtime_debug_print_int_1(current_param_length)
+        ^
+        runtime.puts("---")
+        ^
         runtime.memcpy(res_data_ptr + offset, runtime.runtime_get_string_array_data_pointer(strs[current_arg].data), strs[current_arg].length)
+        ^
         offset += strs[current_arg].length
-    }
+        ^
     // copy the part after the last pattern
+    ^
     runtime.memcpy(res_data_ptr + offset, fmt_data_ptr + index_after_last_pattern, fmt.length - index_after_last_pattern)
+    ^
     res.length = fmt.length + total_strs_length - occur * 2u
+    ^
     res.data[res.length] = '\0'
-    return res
-}
-
+    ^
 func always_inline format(fmt: string, args: Stringable[]) : Str {
-    return format(Str(fmt), args)
-}
+    ^
+    }*/
+    ^
+    let cnt = str.Str("Hello from worker thread! {} {}!").find_all(str.Str("{}"))
+    ^
+    if (cnt != 2) {
+        ^
+    }
+    ^
+    runtime.puts("Thread validation passed")*/
+    ^
+    worker()
+    ^
+Linking Yoi IR modules...
+Generating target object code...
+Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features N/A
+Linking final darwin executable...
+Compilation successful!
+Intermediate files preserved.

@@ -1,4 +1,9 @@
+use lang "builtin"
+
+/* memory management functions */
 import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
+
+/* C runtime functions */
 import strlen(str: ptr) : unsigned from "builtin"
 import memcmp(a: ptr, b: ptr, n: int) : int32 from "builtin"
 import memcpy(dest: ptr, src: ptr, n: int) : ptr from "builtin"
@@ -12,3 +17,8 @@ import ftell(stream: ptr) : int32 from "builtin"
 import fflush(stream: ptr) : int32 from "builtin"
 import fwrite(ptr: ptr, size: int, nmemb: int, stream: ptr) : unsigned from "builtin"
 import feof(stream: ptr) : int32 from "builtin"
+
+import noffi runtime_start_thread(f: func () : none) : lang.Result<unsigned, int> from "builtin"
+import noffi runtime_thread_join(thread_id: unsigned) : int from "builtin"
+import noffi runtime_get_thread_id() : unsigned from "builtin"
+import noffi runtime_ping_thread(thread_id: unsigned) : int from "builtin"

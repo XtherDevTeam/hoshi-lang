@@ -2260,7 +2260,7 @@ namespace yoi {
             parse(type, lex);
             if (!type) {
                 o = nullptr;
-                panic(lex.line, lex.col, "expected typeSpec in unnamed definition arguments");
+                break;
             }
             types.push_back(type);
             if (lex.curToken.kind != lexer::token::tokenKind::comma) {

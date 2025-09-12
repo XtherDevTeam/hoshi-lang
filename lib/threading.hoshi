@@ -1,0 +1,38 @@
+use lang "builtin"
+use runtime "runtime"
+
+struct Thread {
+    id: unsigned,
+    callableObject: func () : none,
+    stat: unsigned,
+    constructor(callableObject: func () : none),
+    start() : lang.Result<unsigned, int>,
+    join() : none,
+    ping() : int,
+}
+
+impl Thread {
+    constructor(callableObject: func () : none) {
+        this.id = 0
+        this.callableObject = callableObject
+        this.stat = 0 // not running
+    },
+    start() : lang.Result<unsigned, int> {
+        let result = runtime.runtime_start_thread(this.callableObject)
+        if (result.is_ok()) {
+            this.id = result.unwrap()
+            this.stat = 1 // running
+        }
+        return result
+    },
+    join() : none {
+        runtime.runtime_thread_join(this.id)
+    },
+    ping() : int {
+        return runtime.runtime_ping_thread(this.id)
+    }
+}
+
+func current_tid() : unsigned {
+    return runtime.runtime_get_thread_id()
+}

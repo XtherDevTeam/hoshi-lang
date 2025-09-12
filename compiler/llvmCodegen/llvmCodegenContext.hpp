@@ -130,9 +130,11 @@ namespace yoi {
 
         void generateImplementations();
         void generateStructImplementations();
-        void generateStructGCFunctions();
+        void generateStructGCFunctionDeclarations();
+        void generateStructGCFunctionImplementations();
         void generateInterfaceImplementationGCFunctions();
-        void generateInterfaceObjectGCFunctions();
+        void generateInterfaceObjectGCFunctionDeclarations();
+        void generateInterfaceObjectGCFunctionImplementations();
         void generateForeignStructTypes();
         void generateExportFunctionDecls();
         void generateImportFunctionImplementations();

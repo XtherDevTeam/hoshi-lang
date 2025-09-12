@@ -1,0 +1,26 @@
+use threading "threading"
+use runtime "runtime"
+use str "str"
+use lang "builtin"
+
+func worker() : none {
+    let s = str.format(
+        "Hello from worker thread! (tid: {})",
+        new str.Stringable[1](threading.current_tid() as int)
+    )
+    for (let i = 0;i < 10;i += 1) {
+        runtime.puts(s.c_str())
+    }
+}
+
+func main() : int {
+    let th = threading.Thread(func[] () : none {
+        worker()
+    })
+    runtime.puts("Hello from main thread!")
+    th.start()
+    th.join()
+    runtime.puts("Worker thread has finished")
+    runtime.puts("Thread validation passed")
+    return 0
+}

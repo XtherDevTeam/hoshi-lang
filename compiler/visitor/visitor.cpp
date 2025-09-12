@@ -2459,6 +2459,9 @@ namespace yoi {
             case IRValueType::valueType::pointerObject: 
                 res = L"pointerObject";
                 break;
+            case IRValueType::valueType::none:
+                res = L"none";
+                break;
             default:
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Invalid type");
                 break;
@@ -3888,6 +3891,8 @@ namespace yoi {
             moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, IROperand::operandValue{static_cast<yoi::indexT>(0)}}, structType);
             moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, i});
         }
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::localVar, IROperand::operandValue{static_cast<yoi::indexT>(0)}}, structType);
+        moduleContext->getIRBuilder().retOp();
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
 

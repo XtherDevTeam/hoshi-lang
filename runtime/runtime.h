@@ -10,6 +10,7 @@
 #include <runtime/build_config.h>
 #include <runtime/debug/debug.h>
 #include <runtime/rtti/rtti.h>
+#include <runtime/threading/threading.h>
 
 extern "C" const char ** yoi_argv;
 

@@ -65,6 +65,7 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/memory/*.cpp
         runtime/string/*.cpp
         runtime/debug/*.cpp
+        runtime/threading/*.cpp
         runtime/rtti/*.cpp
 )
 

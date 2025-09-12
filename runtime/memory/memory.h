@@ -28,6 +28,12 @@ struct YoiIntegerObject {
     long long value;
 };
 
+struct YoiUnsignedObject {
+    unsigned long long gc_refcount;
+    unsigned long long type_id;
+    unsigned long long value;
+};
+
 struct YoiStringObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;

@@ -329,8 +329,10 @@ namespace yoi {
 
     void LLVMCodegen::generateImplementations() {
         generateStructImplementations();
-        generateStructGCFunctions();
-        generateInterfaceObjectGCFunctions();
+        generateStructGCFunctionDeclarations();
+        generateInterfaceObjectGCFunctionDeclarations();
+        generateStructGCFunctionImplementations();
+        generateInterfaceObjectGCFunctionImplementations();
         generateInterfaceImplementationGCFunctions(); // Generates wrappers for specific interface implementations
         generateRTTIDeclaration();
         generateFunctionImplementations();
@@ -387,7 +389,7 @@ namespace yoi {
         }
     }
 
-    void LLVMCodegen::generateStructGCFunctions() {
+    void LLVMCodegen::generateStructGCFunctionDeclarations() {
         for (auto& structDefPair : yoiModule->structTable) {
             auto structDef = structDefPair.second;
             auto structIdx = yoiModule->structTable.getIndex(structDef->name);
@@ -410,7 +412,9 @@ namespace yoi {
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(decFuncName)] = decFunction;
         }
+    }
 
+    void LLVMCodegen::generateStructGCFunctionImplementations() {
         for (auto& structDefPair : yoiModule->structTable) {
             auto structDef = structDefPair.second;
             auto structIdx = yoiModule->structTable.getIndex(structDef->name);
@@ -525,7 +529,7 @@ namespace yoi {
         }
     }
 
-    void LLVMCodegen::generateInterfaceObjectGCFunctions() {
+    void LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations() {
         // These are the top-level GC wrappers for the interface objects themselves.
         // They manage the interface object's own refcount and dispatch to the interfaceImpl wrappers.
         for (const auto& interfaceDefPair : yoiModule->interfaceTable) {
@@ -539,14 +543,34 @@ namespace yoi {
             auto* gcFuncTypeForDispatch = llvm::FunctionType::get(Builder->getVoidTy(), { i8PtrTy }, false);
             auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(gcFuncTypeForDispatch, 0);
 
-
-            // --- Generate interface_X_gc_refcount_increase ---
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::InternalLinkage, incFuncName, TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             functionMap[string2wstring(incFuncName)] = incFunction;
 
+            auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
+            auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
+            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+            functionMap[string2wstring(decFuncName)] = decFunction;
+        }
+    }
+
+    void LLVMCodegen::generateInterfaceObjectGCFunctionImplementations() {
+        for (const auto& interfaceDefPair : yoiModule->interfaceTable) {
+            auto interfaceDef = interfaceDefPair.second;
+            auto interfaceIdx = yoiModule->interfaceTable.getIndex(interfaceDef->name);
+            auto moduleID = yoiModule->identifier;
+            auto key = std::make_tuple(IRValueType::valueType::interfaceObject, moduleID, interfaceIdx);
+            auto* llvmInterfaceType = structTypeMap.at(key);
+            auto* llvmInterfacePtrType = llvm::PointerType::get(llvmInterfaceType, 0);
+            auto* i8PtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
+            auto* gcFuncTypeForDispatch = llvm::FunctionType::get(Builder->getVoidTy(), { i8PtrTy }, false);
+            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(gcFuncTypeForDispatch, 0);
+
+            auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
+            auto incFunction = functionMap[string2wstring(incFuncName)];
 
             auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
             auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incFunction);
@@ -567,11 +591,8 @@ namespace yoi {
             auto beforeInc = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Add, incRefCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
             Builder->CreateRetVoid();
 
-
             auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
-            auto* decFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {llvmInterfacePtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::InternalLinkage, decFuncName, TheModule.get());
-            decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+            auto decFunction = functionMap[string2wstring(decFuncName)];
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
@@ -2948,7 +2969,7 @@ namespace yoi {
                     dimensions.push_back(DBuilder->getOrCreateSubrange(0, i));
                 }
             } else {
-                dimensions.push_back(DBuilder->getOrCreateSubrange(0, 1));
+                dimensions.push_back(DBuilder->getOrCreateSubrange(0, static_cast<int64_t>(0)));
             }
             
             auto arrayKey = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex, type->isArrayType() ? size : static_cast<yoi::indexT>(-1));
