@@ -3841,8 +3841,8 @@ namespace yoi {
         for (auto &i : lambdaExpr->captures) {
             visit(i);
             auto capturedVar = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            argTypes.push_back(capturedVar);
-            builder.addField(i->node.strVal, capturedVar);
+            argTypes.push_back(managedPtr(*capturedVar));
+            builder.addField(i->node.strVal, managedPtr(*capturedVar));
         }
         // add the constructor method
         IRFunctionDefinition::Builder constructorBuilder;

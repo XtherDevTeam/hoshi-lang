@@ -1405,7 +1405,7 @@ namespace yoi {
                     auto targetModule = compilerCtx->getImportedModule(value.type->typeAffiliateModule);
                     auto structDef = targetModule->structTable[type];
                     auto memberIndex = ins.operands[0].value.symbolIndex;
-                    auto memberDef = structDef->fieldTypes[memberIndex];
+                    auto memberDef = managedPtr(*structDef->fieldTypes[memberIndex]);
                     simulationStack.pop();
                     simulationStack.push(memberDef, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
                     break;
@@ -2357,7 +2357,8 @@ namespace yoi {
                     break;
                 }
             }
-            if(isNullable) {
+            targetFunction->variableTable.get(varIndex) = managedPtr(*targetFunction->variableTable.get(varIndex));
+            if(isNullable && !targetFunction->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Raw)) {
                 targetFunction->variableTable.get(varIndex)->addAttribute(IRValueType::ValueAttr::Nullable);
             }
         }
@@ -2483,11 +2484,11 @@ namespace yoi {
                     for (int i = 0; i < argCount - 1; i++) {
                         simulationStack.pop();
                     }
-                    auto returnType = compilerCtx
+                    auto returnType = managedPtr(*compilerCtx
                         ->getImportedModule(ins.operands[0].value.symbolIndex)
                         ->interfaceTable[ins.operands[1].value.symbolIndex]
                         ->methodMap[ins.operands[2].value.symbolIndex]
-                        ->returnType;
+                        ->returnType);
                     returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
@@ -2645,12 +2646,13 @@ namespace yoi {
             const auto &item1 = s1.stack.items[i];
             const auto &item2 = s2.stack.items[i];
 
-            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
-                item1.type, false, {}, {}};
-            
+            auto mergedType = std::make_shared<IRValueType>(*item1.type);
             if (item1.type->hasAttribute(IRValueType::ValueAttr::Nullable) || item2.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
-                mergedItem.type->addAttribute(IRValueType::ValueAttr::Nullable);
+                mergedType->addAttribute(IRValueType::ValueAttr::Nullable);
             }
+            
+            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
+                mergedType, false, {}, {}};
             mergedState.stack.push(mergedItem);
         }
 
@@ -2805,6 +2807,7 @@ namespace yoi {
                 }
             }
 
+            targetFunction->variableTable.get(varIndex) = managedPtr(*targetFunction->variableTable.get(varIndex));
             if(isRaw && targetFunction->variableTable.get(varIndex)->isBasicType()) {
                  targetFunction->variableTable.get(varIndex)->addAttribute(IRValueType::ValueAttr::Raw);
             } else {
@@ -3022,12 +3025,15 @@ namespace yoi {
             const auto &item1 = s1.stack.items[i];
             const auto &item2 = s2.stack.items[i];
 
-            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
-                item1.type, false, {}, {}};
-            
+            auto mergedType = std::make_shared<IRValueType>(*item1.type);
             if (item1.type->hasAttribute(IRValueType::ValueAttr::Raw) && item2.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                mergedItem.type->addAttribute(IRValueType::ValueAttr::Raw);
+                mergedType->addAttribute(IRValueType::ValueAttr::Raw);
+            } else {
+                mergedType->removeAttribute(IRValueType::ValueAttr::Raw);
             }
+
+            auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
+                mergedType, false, {}, {}};
             mergedState.stack.push(mergedItem);
         }
 
@@ -3539,7 +3545,7 @@ namespace yoi {
                 auto targetModule = compilerCtx->getImportedModule(value.type->typeAffiliateModule);
                 auto structDef = targetModule->structTable[type];
                 auto memberIndex = ins.operands[0].value.symbolIndex;
-                auto memberDef = structDef->fieldTypes[memberIndex];
+                auto memberDef = managedPtr(*structDef->fieldTypes[memberIndex]);
                 simulationStack.pop();
                 simulationStack.push(memberDef,
                                      value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{
@@ -4053,7 +4059,7 @@ namespace yoi {
             auto& func = targetedModule->functionTable[funcId.second];
 
             // get a mutable reference to the function's return type
-            auto returnType = func->returnType;
+            auto returnType = managedPtr(*func->returnType);
 
             // synchronize the Nullable attribute
             if (analysisInfo.isReturnValueNullable && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
@@ -4069,6 +4075,8 @@ namespace yoi {
             } else {
                 returnType->removeAttribute(IRValueType::ValueAttr::Raw);
             }
+
+            func->returnType = returnType;
         }
 
         for (const auto& funcId : callGraph.functions) {
@@ -4099,9 +4107,11 @@ namespace yoi {
                 // capture the first scope which is full of parameters
                 if (targetFunction->getVariableTable().scopeIndex(paramIdx) > 0)
                     break;
-                auto &param = varTable[paramIdx];
-                if (!param->hasAttribute(IRValueType::ValueAttr::NoBorrow) && (!targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Variadic) || paramIdx != targetFunction->argumentTypes.size() - 1))
-                    param->addAttribute(IRValueType::ValueAttr::Borrow);
+                auto copied = managedPtr(*varTable[paramIdx]);
+                if (!copied->hasAttribute(IRValueType::ValueAttr::NoBorrow) && (!targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Variadic) || paramIdx != targetFunction->argumentTypes.size() - 1) && !copied->hasAttribute(IRValueType::ValueAttr::Raw))
+                    copied->addAttribute(IRValueType::ValueAttr::Borrow);
+                targetFunction->argumentTypes[paramIdx] = copied;
+                varTable[paramIdx] = copied;
             }
         }
         return true;

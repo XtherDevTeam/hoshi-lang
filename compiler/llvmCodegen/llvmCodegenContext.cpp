@@ -1109,6 +1109,7 @@ namespace yoi {
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
                 if (structVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                     memberYoiType = managedPtr(IRValueType{*memberYoiType}.addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw);
 
                 llvm::Type* loadedType = yoiTypeToLLVMType(memberYoiType);
                 auto* loadedMember = Builder->CreateLoad(loadedType, gep, "loadmember");
@@ -1144,7 +1145,7 @@ namespace yoi {
                 callGcFunction(oldMemberPtr, memberYoiType, false, true);
 
                 auto object = ensureObject(valueToStore.yoiType, valueToStore.llvmValue);
-                if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
+                if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
                     callGcFunction(object.second, valueToStore.yoiType, true, true, true);
 
                 Builder->CreateStore(object.second, gep);
@@ -1222,12 +1223,14 @@ namespace yoi {
                     } else if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
                         auto object = ensureObject(arg.yoiType, arg.llvmValue);
                         args.push_back(object.second);
-                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
                         else postCleanup.push_back(object);
                     } else {
-                        args.push_back(ensureObject(arg.yoiType, arg.llvmValue).second);
-                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        args.push_back(object.second);
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
                             callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                        else;
                     }
                 }
                 std::reverse(args.begin(), args.end());
@@ -1277,7 +1280,8 @@ namespace yoi {
                         callGcFunction(arg.llvmValue, arg.yoiType, false);
                         args.push_back(param);
                     } else {
-                        postCleanup.emplace_back(ensureObject(arg.yoiType, arg.llvmValue));
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        postCleanup.push_back(object);
                         if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && noffi) // retain the value for no ffi calls to prevent being destoryed
                             callGcFunction(arg.llvmValue, arg.yoiType, true, true, true);
                         args.push_back(postCleanup.back().second);
@@ -1449,7 +1453,7 @@ namespace yoi {
                     auto object = ensureObject(arg.yoiType, arg.llvmValue);
                     finalArgs.push_back(object.second);
                     // default to borrow
-                    if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                    if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
                         // callGcFunction(arg.llvmValue, arg.yoiType, true, true);
                     else postCleanup.emplace_back(object);
                 }

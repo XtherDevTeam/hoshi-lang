@@ -76,7 +76,8 @@ YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handle_obj) {
         yoi_result->value = GetLastError();
     }
     
-    runtime_finalize_object((YoiObject *)thread_handle_obj);
+    if (--thread_handle_obj->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)thread_handle_obj);
     return yoi_result;
 }
 
@@ -107,7 +108,8 @@ YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle_obj) {
         yoi_result->value = ESRCH;
     }
     
-    runtime_finalize_object((YoiObject *)thread_handle_obj);
+    if (--thread_handle_obj->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)thread_handle_obj);
     return yoi_result;
 }
 
@@ -172,7 +174,8 @@ YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_id_obj) {
     yoi_result->type_id = 0;
     yoi_result->value = result;
 
-    runtime_finalize_object((YoiObject *)thread_id_obj);
+    if (--thread_id_obj->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)thread_id_obj);
     return yoi_result;
 }
 
@@ -192,7 +195,8 @@ YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj) {
     yoi_result->type_id = 0;
     yoi_result->value = result;
     
-    runtime_finalize_object((YoiObject *) thread_id_obj);
+    if (--thread_id_obj->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *) thread_id_obj);
     return yoi_result;
 }
 
