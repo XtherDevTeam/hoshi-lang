@@ -753,7 +753,7 @@ namespace yoi {
         }
 
         generateCodeBlock(*funcDef.codeBlock[0], 0, 0);
-
+        DBuilder->finalize();
         if (llvm::verifyFunction(*currentFunction, &llvm::errs())) {
             TheModule->print(llvm::errs(), nullptr);
             panic(0, 0, "LLVM function verification failed for: " + wstring2string(funcDef.name));
@@ -2025,7 +2025,7 @@ namespace yoi {
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
         }
-
+        panic(0, 0, "No LLVM type available for yoiTypeToLLVMType yet: " + yoi::wstring2string(type->to_string()));
     }
 
     llvm::FunctionType* LLVMCodegen::getFunctionType(const std::shared_ptr<IRFunctionDefinition>& funcDef) {
@@ -3054,11 +3054,23 @@ namespace yoi {
             }
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (structTypeDIMap.count(key)) {
+                // printf("Existing Type Identifier: %lld %lld %lld, leave.\n", type->type, type->typeAffiliateModule, type->typeIndex);
                 return structTypeDIMap[key];
             }
-            llvm::DIType* resultDIType = nullptr;
+            // printf("Current Type Identifier: %lld %lld %lld\n", type->type, type->typeAffiliateModule, type->typeIndex);
 
             std::string typeName = "yoi." + wstring2string(type->to_string());
+
+            llvm::DICompositeType *diFwdDecl = DBuilder->createReplaceableCompositeType(
+                llvm::dwarf::DW_TAG_structure_type,
+                typeName,
+                compileUnits[L"<default>"],
+                compileUnits[L"<default>"]->getFile(),
+                1 // Line number
+            );
+
+            auto* resultDIType = DBuilder->createPointerType(diFwdDecl, 64);
+            structTypeDIMap[key] = resultDIType;
 
             // An array to hold the DITypes of the struct members.
             llvm::SmallVector<llvm::Metadata*, 8> MemberTypes;
@@ -3173,11 +3185,11 @@ namespace yoi {
                 DBuilder->getOrCreateArray(MemberTypes)
             );
 
-            // 4. Since all our variables are POINTERS to these objects, wrap the struct DIType in a pointer.
-            resultDIType = DBuilder->createPointerType(diStruct, 64);
+            auto node = llvm::TempMDNode(diFwdDecl);
+            DBuilder->replaceTemporary(std::move(node), diStruct);
+            // diFwdDecl->replaceAllUsesWith(diStruct);
+            // llvm::errs() << "  [" << typeName << "] replaceTemporary returned FinalNode: " << finalNode << "\n";
 
-            // 5. Cache and return the result.
-            structTypeDIMap[key] = resultDIType;
             return resultDIType;
         }
     }
