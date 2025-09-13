@@ -65,7 +65,7 @@ implInnerPair ::= identifierWithDefTemplateArg definitionArguments ":" typeSpec 
 implInner ::= "{" [ implInnerPair { "," implInnerPair } ] "}"
 implStmt ::= "impl" externModuleAccessExpression implInner
            | "impl" externModuleAccessExpression ":" identifierWithDefTemplateArg implInner
-letAssignmentPair ::= identifier "=" rExpr
+letAssignmentPair ::= identifier (":" typeSpec) "=" rExpr
 letStmt ::= "let" letAssignmentPair { "," letAssignmentPair }
 globalStmt ::= marcoDescriptor useStmt | interfaceDefStmt | structDefStmt | implStmt | letStmt
 hoshiModule ::= { globalStmt }

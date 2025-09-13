@@ -1161,6 +1161,7 @@ namespace yoi {
 
     void parse(letAssignmentPair *&o, lexer &lex) {
         identifier *lhs = nullptr;
+        typeSpec *type = nullptr;
         rExpr *rhs = nullptr;
         lexer::token node_start_token = lex.curToken;
 
@@ -1169,6 +1170,15 @@ namespace yoi {
             panic(lex.line, lex.col, "expected left-hand-side in letAssignmentPair");
             o = nullptr;
             return;
+        }
+        if (lex.curToken.kind == lexer::token::tokenKind::colon) {
+            lex.scan();
+            parse(type, lex);
+            if (!type) {
+                panic(lex.line, lex.col, "expected typeSpec after `:` in letAssignmentPair");
+                o = nullptr;
+                return;
+            }
         }
         if (lex.curToken.kind == lexer::token::tokenKind::assignSign) {
             lex.scan();
@@ -1185,7 +1195,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new letAssignmentPair{node_start_token, lhs, rhs};
+        o = new letAssignmentPair{node_start_token, lhs, type, rhs};
     }
 
     void parse(letStmt *&o, lexer &lex) {

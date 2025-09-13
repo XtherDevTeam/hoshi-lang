@@ -1878,14 +1878,16 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::letStmt *letStmt) {
         for (auto &i : letStmt->terms) {
             visit(i->rhs);
-            auto type = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            auto type = i->type ? managedPtr(parseTypeSpec(i->type)) : moduleContext->getIRBuilder().getRhsFromTempVarStack();
             if (isVisitingGlobalScope()) {
                 // global variable
+                tryCastTo(type);
                 auto index = irModule->globalVariables.put(i->lhs->node.strVal, type);
                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
                                                       {IROperand::operandType::globalVar, index});
 
             } else {
+                tryCastTo(type);
                 auto index =
                     moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->node.strVal, type);
                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,

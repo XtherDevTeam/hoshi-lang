@@ -675,6 +675,7 @@ namespace yoi {
     class letAssignmentPair : public AST {
     public:
         identifier *lhs;
+        typeSpec *type;
         rExpr *rhs;
 
         identifier &getLhs();
