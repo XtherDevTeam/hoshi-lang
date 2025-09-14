@@ -99,9 +99,9 @@ namespace yoi {
 
     void warning(yoi::indexT line, yoi::indexT col, const std::string& msg) {
         if (!__current_file_path.empty())
-            std::cerr << "[Yoi-lang warning] " << msg << " near " << yoi::wstring2string(__current_file_path) << ":" << line + 1 << ":" << col + 1 << std::endl;
+            std::cerr << "[hoshi-lang warning] " << msg << " near " << yoi::wstring2string(__current_file_path) << ":" << line + 1 << ":" << col + 1 << std::endl;
         else
-            std::cerr << "[Yoi-lang warning] " << msg << " near line " << line << " col " << col << std::endl;
+            std::cerr << "[hoshi-lang warning] " << msg << " near line " << line << " col " << col << std::endl;
     }
 
     /**

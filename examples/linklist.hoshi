@@ -1,0 +1,49 @@
+// A simple node for our linked list.
+struct LinkNode {
+    value: int,
+    next: LinkNode, // A reference to the next node.
+    constructor(value: int)
+}
+
+impl LinkNode {
+    constructor(value: int) {
+        this.value = value
+    }
+}
+
+// The main function to demonstrate the leak.
+func main() : int {
+    // Step 1: Create an array to act as our "buckets", holding the heads of lists.
+    // Initialize it with null. This is analogous to `this.buckets` in the HashMap.
+    let buckets = LinkNode[1](null)
+
+    // Step 2: Create the first node and place it in our bucket.
+    // This node will be the one whose reference count is not properly decremented.
+    let old_head = LinkNode(10)
+    buckets[0] = old_head
+    // At this point, old_head's refcount is 2 (one from the `old_head` variable, one from `buckets[0]`).
+
+    // Step 3: Create a new node that we will insert at the head of the list.
+    let new_head = LinkNode(20)
+    // new_head's refcount is 1 (from the `new_head` variable).
+
+    // Step 4: Link the new node to the old head.
+    new_head.next = buckets[0]
+    // This correctly increases old_head's refcount to 3.
+
+    // Step 5: **This is the operation that causes the leak.**
+    // We overwrite the reference in the array. The runtime should see that the
+    // reference from `buckets[0]` to `old_head` is being destroyed and should
+    // decrement old_head's refcount. The bug is that this decrement does not happen.
+    buckets[0] = new_head
+    // After this:
+    // - `new_head`'s refcount becomes 2 (correct).
+    // - `old_head`'s refcount remains 3 (INCORRECT, should be 2).
+
+    // When the function ends, local variables `old_head` and `new_head` go out of scope,
+    // decrementing their respective object reference counts by one.
+    // - `new_head`'s final refcount will be 1 (held by `buckets[0]`).
+    // - `old_head`'s final refcount will be 2 (held by `new_head.next`, plus the leaked reference).
+    // Since their refcounts are not zero, they (and the array) will be leaked.
+    return 0
+}

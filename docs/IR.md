@@ -379,7 +379,7 @@ These instructions pop one or two values, unbox them, perform the operation, and
 
 ## 4. Full Example
 
-**Yoi-lang Code:**
+**hoshi-lang Code:**
 ```rust
 func add(a: int, b: int) : int {
     return a + b

@@ -187,6 +187,10 @@ namespace yoi {
 
         std::pair<std::shared_ptr<IRValueType>, llvm::Value *> ensureObject(const std::shared_ptr<IRValueType> &type,
                                                                             llvm::Value *val);
+
+        void generateIfTargetNotNull(llvm::Value *objectPtr,
+                                     const std::shared_ptr<IRValueType> &yoiType,
+                                     const std::function<void()> &func, bool enforced = false);
     };
 
 } // namespace yoi

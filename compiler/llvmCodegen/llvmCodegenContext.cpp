@@ -223,20 +223,12 @@ namespace yoi {
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
-            auto* returnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction); // New block
-            auto* continueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction); // New block
             auto* finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
             auto* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
 
             Builder->SetInsertPoint(entryBlock);
             thisPtr = decFunction->arg_begin();
-            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmStructPtrType), "is_null");
-            Builder->CreateCondBr(isNull, returnEarlyBlock, continueDecrementBlock); // Conditional branch
-
-            Builder->SetInsertPoint(returnEarlyBlock);
-            Builder->CreateRetVoid(); // Return early for null
-
-            Builder->SetInsertPoint(continueDecrementBlock); // Continue with existing logic here
+            
             if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
                 std::string debugStr = "Decreasing refcount of " + typeName + " object";
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
@@ -439,20 +431,12 @@ namespace yoi {
             auto decFunction = functionMap[string2wstring(decFuncName)];
 
             auto* entryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
-            auto* returnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction); // New block
-            auto* continueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction); // New block
             auto* finalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
             auto* continueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
 
             Builder->SetInsertPoint(entryBlock);
             thisPtr = decFunction->arg_begin();
-            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmStructPtrType), "is_null");
-            Builder->CreateCondBr(isNull, returnEarlyBlock, continueDecrementBlock); // Conditional branch
 
-            Builder->SetInsertPoint(returnEarlyBlock);
-            Builder->CreateRetVoid(); // Return early for null
-
-            Builder->SetInsertPoint(continueDecrementBlock); // Continue with existing logic here
             refCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             auto beforeDec = Builder->CreateAtomicRMW(llvm::AtomicRMWInst::Sub, refCountPtr, llvm::ConstantInt::get(Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
 
@@ -573,18 +557,9 @@ namespace yoi {
             auto incFunction = functionMap[string2wstring(incFuncName)];
 
             auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incFunction);
-            auto* incReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", incFunction);
-            auto* incContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue_wrapper", incFunction);
 
             Builder->SetInsertPoint(incEntryBlock);
             llvm::Value* thisPtr = incFunction->arg_begin();
-            llvm::Value* isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmInterfacePtrType), "is_null");
-            Builder->CreateCondBr(isNull, incReturnEarlyBlock, incContinueBlock);
-
-            Builder->SetInsertPoint(incReturnEarlyBlock);
-            Builder->CreateRetVoid();
-
-            Builder->SetInsertPoint(incContinueBlock);
 
             llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
             // llvm::Value* incOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), incRefCountPtr, "old_refcount");
@@ -596,20 +571,11 @@ namespace yoi {
             functionMap[string2wstring(decFuncName)] = decFunction;
 
             auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decFunction);
-            auto* decReturnEarlyBlock = llvm::BasicBlock::Create(*TheContext, "return_early", decFunction);
-            auto* decContinueDecrementBlock = llvm::BasicBlock::Create(*TheContext, "continue_decrement", decFunction);
             auto* decFinalizeBlock = llvm::BasicBlock::Create(*TheContext, "finalize", decFunction);
             auto* decContinueBlock = llvm::BasicBlock::Create(*TheContext, "continue", decFunction);
 
             Builder->SetInsertPoint(decEntryBlock);
             thisPtr = decFunction->arg_begin();
-            isNull = Builder->CreateICmpEQ(thisPtr, llvm::ConstantPointerNull::get(llvmInterfacePtrType), "is_null");
-            Builder->CreateCondBr(isNull, decReturnEarlyBlock, decContinueDecrementBlock);
-
-            Builder->SetInsertPoint(decReturnEarlyBlock);
-            Builder->CreateRetVoid();
-
-            Builder->SetInsertPoint(decContinueDecrementBlock);
 
             llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 0, "refcount_ptr");
             // llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
@@ -770,7 +736,12 @@ namespace yoi {
             auto* objPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "cleanup_load");
 
             // Decrease its reference count
-            callGcFunction(objPtr, varYoiType, false, true);
+            if (varYoiType->hasAttribute(IRValueType::ValueAttr::Nullable))
+                callGcFunction(objPtr, varYoiType, false, true);
+            else
+                generateIfTargetNotNull(objPtr, varYoiType, [&] () {
+                    callGcFunction(objPtr, varYoiType, false, true);
+                }, true);
         }
     }
 
@@ -1024,20 +995,7 @@ namespace yoi {
                 auto* alloca = namedValues.at(varIndex);
                 auto yoiType = currentFunctionDef->variableTable.get(varIndex);
                 auto loadedPtr = Builder->CreateLoad(yoiTypeToLLVMType(yoiType, yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)), alloca, "loadtmp");
-                if (currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Nullable)) {
-                    // check if the loaded value is null
-                    auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
-                    auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
-                    auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
-                    Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                    // if not null, increase its reference count
-                    Builder->SetInsertPoint(notNullBB);
-                    callGcFunction(loadedPtr, yoiType, true); // Loading creates a new reference
-                    Builder->CreateBr(continueBB);
-                    Builder->SetInsertPoint(continueBB);
-                } else {
-                    callGcFunction(loadedPtr, yoiType, true);
-                }
+                callGcFunction(loadedPtr, yoiType, true);
                 valueStackMap[fromBlock][toBlock].push_back({loadedPtr, yoiType});
                 break;
             }
@@ -1049,7 +1007,12 @@ namespace yoi {
 
                 // Release old value
                 auto* oldPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "old_ptr_for_store");
-                callGcFunction(oldPtr, yoiType, false, true);
+                if (yoiType->hasAttribute(IRValueType::ValueAttr::Nullable))
+                    callGcFunction(oldPtr, yoiType, false, true);
+                else
+                    generateIfTargetNotNull(oldPtr, yoiType, [&] () {
+                        callGcFunction(oldPtr, yoiType, false, true);
+                    }, true);
                 // Store new value
                 if (currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     auto unboxedVal = unboxValue(valToStore.llvmValue, valToStore.yoiType);
@@ -1067,16 +1030,9 @@ namespace yoi {
                 auto varIndex = instr.operands[0].value.symbolIndex;
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule ->globalVariables[varIndex];
+                yoiType->addAttribute(IRValueType::ValueAttr::Nullable);
                 auto loadedPtr = Builder->CreateLoad(global->getValueType(), global, "loadglobaltmp");
-                auto* isNull = Builder->CreateIsNull(loadedPtr, "is_null_load");
-                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
-                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(loadedPtr, yoiType, true);
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
                 valueStackMap[fromBlock][toBlock].push_back({loadedPtr, yoiType});
                 break;
             }
@@ -1085,6 +1041,8 @@ namespace yoi {
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto valToStore = valueStackMap[fromBlock][toBlock].back(); valueStackMap[fromBlock][toBlock].pop_back();
+
+                yoiType->addAttribute(IRValueType::ValueAttr::Nullable);
 
                 auto* oldPtr = Builder->CreateLoad(global->getValueType(), global, "old_global_ptr");
                 callGcFunction(oldPtr, yoiType, false, true);
@@ -1109,19 +1067,12 @@ namespace yoi {
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
                 if (structVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                     memberYoiType = managedPtr(IRValueType{*memberYoiType}.addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
-                memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw);
+                memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
+                memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw); // workaround for incorrect optimization labelling
 
                 llvm::Type* loadedType = yoiTypeToLLVMType(memberYoiType);
                 auto* loadedMember = Builder->CreateLoad(loadedType, gep, "loadmember");
-                auto* isNull = Builder->CreateIsNull(loadedMember, "is_null_load");
-                auto* continueBB = llvm::BasicBlock::Create(*TheContext, "continue_load", currentFunction);
-                auto* notNullBB = llvm::BasicBlock::Create(*TheContext, "not_null_load", currentFunction);
-                Builder->CreateCondBr(isNull, continueBB, notNullBB);
-                // if not null, increase its reference count
-                Builder->SetInsertPoint(notNullBB);
                 callGcFunction(loadedMember, memberYoiType, true); // Create new reference for the loaded member
-                Builder->CreateBr(continueBB);
-                Builder->SetInsertPoint(continueBB);
                 valueStackMap[fromBlock][toBlock].push_back({loadedMember, memberYoiType});
 
                 callGcFunction(structVal.llvmValue, structVal.yoiType, false); // Consume the struct reference from the stack
@@ -1140,6 +1091,7 @@ namespace yoi {
 
                 auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
+                memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
 
                 auto* oldMemberPtr = Builder->CreateLoad(yoiTypeToLLVMType(memberYoiType), gep, "old_member_ptr");
                 callGcFunction(oldMemberPtr, memberYoiType, false, true);
@@ -1661,9 +1613,9 @@ namespace yoi {
                 if (arrayType->isBasicType()) {
                     elementType = managedPtr(arrayType->getElementType().getBasicRawType());
                 } else if (arrayType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope)) {
-                    elementType = managedPtr(arrayType->getElementType().addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                    elementType = managedPtr(arrayType->getElementType().addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope).addAttribute(IRValueType::ValueAttr::Nullable));
                 } else {
-                    elementType = managedPtr(arrayType->getElementType());
+                    elementType = managedPtr(arrayType->getElementType().addAttribute(IRValueType::ValueAttr::Nullable));
                 }
                 auto unboxedIndexVal = unboxValue(indexVal.llvmValue, indexVal.yoiType);
                 auto result = loadArrayElement(arrayType, arrayVal.llvmValue, unboxedIndexVal);
@@ -2218,8 +2170,11 @@ namespace yoi {
         auto funcName = funcNameBase + (isIncrease ? "_gc_refcount_increase" : "_gc_refcount_decrease");
         auto* gcFunc = functionMap.at(string2wstring(funcName));
 
-        auto* ptrArg = Builder->CreateBitCast(objectPtr, gcFunc->getFunctionType()->getParamType(0));
-        Builder->CreateCall(gcFunc, ptrArg);
+        auto f = [&]() {
+            auto* ptrArg = Builder->CreateBitCast(objectPtr, gcFunc->getFunctionType()->getParamType(0));
+            Builder->CreateCall(gcFunc, ptrArg);
+        };
+        generateIfTargetNotNull(objectPtr, yoiType, f);
     }
 
     void LLVMCodegen::generateDescription() {
@@ -2908,6 +2863,7 @@ namespace yoi {
                 auto elementType = managedPtr(type->getElementType());
                 if (type->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                     elementType->addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope);
+                elementType->addAttribute(IRValueType::ValueAttr::Nullable);
                 auto elementLLVMType = yoiTypeToLLVMType(elementType);
                 auto pointerToElement = Builder->CreateGEP(elementLLVMType, arrayPointer, index, "element_ptr");
                 auto *loadedVal = Builder->CreateLoad(yoiTypeToLLVMType(elementType), pointerToElement, "array_element_loaded_val");
@@ -3433,9 +3389,12 @@ namespace yoi {
             // otherwise, store the pointer directly
             auto basePointer = Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
             auto elementPointer = Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
+            auto loadedPointer = Builder->CreateLoad(llvm::PointerType::get(yoiTypeToLLVMType(managedPtr(type->getElementType())), 0), elementPointer, "loaded_pointer");
+            callGcFunction(loadedPointer, managedPtr(type->getElementType().addAttribute(IRValueType::ValueAttr::Nullable)), false);
+
             Builder->CreateStore(value, elementPointer);
             // increase the ref count of the object
-            callGcFunction(value, managedPtr(type->getElementType()), true);
+            callGcFunction(value, valueToStoreType, true);
         }
     }
 
@@ -3560,7 +3519,7 @@ namespace yoi {
                     Builder->CreateLoad(llvm::PointerType::get(llvm::Type::getInt64Ty(*TheContext), 0),
                                         elementPointer,
                                         "element_ptr_val"); // just too lazy, so I use int64*
-                callGcFunction(elementPointerVal, managedPtr(type->getElementType()), false);
+                callGcFunction(elementPointerVal, managedPtr(type->getElementType().addAttribute(IRValueType::ValueAttr::Nullable)), false);
                 auto nextIndex = Builder->CreateLoad(llvm::Type::getInt64Ty(*TheContext), currentIndex, "next_index");
                 auto nextIndexVal = Builder->CreateAdd(
                     nextIndex, llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true), "next_index_val");
@@ -3584,5 +3543,23 @@ namespace yoi {
         } else {
             return {type, val};
         }
+    }
+
+    void LLVMCodegen::generateIfTargetNotNull(llvm::Value *objectPtr,
+                                              const std::shared_ptr<IRValueType> &yoiType,
+                                              const std::function<void()> &func, bool enforced) {
+        if (!yoiType->hasAttribute(IRValueType::ValueAttr::Nullable) && !enforced) {
+            func();
+            return;
+        }
+        auto f = Builder->GetInsertBlock()->getParent();
+        auto continueBlock = llvm::BasicBlock::Create(*TheContext, "if_continue", f);
+        auto notNullBlock = llvm::BasicBlock::Create(*TheContext, "if_not_null", f);
+        auto comparsion = Builder->CreateIsNotNull(objectPtr);
+        Builder->CreateCondBr(comparsion, notNullBlock, continueBlock);
+        Builder->SetInsertPoint(notNullBlock);
+        func();
+        Builder->CreateBr(continueBlock);
+        Builder->SetInsertPoint(continueBlock);
     }
 } // namespace yoi

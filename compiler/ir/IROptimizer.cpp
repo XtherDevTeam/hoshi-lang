@@ -1357,7 +1357,7 @@ namespace yoi {
                         *value.type = compilerCtx->normalizeForeignBasicType(value.type);
                     }
 
-                    if(*definitionType != *value.type) {
+                    if(*definitionType != *value.type && value.type->type == IRValueType::valueType::null) {
                         // type mismatch, panic
                         panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_local: type mismatch");
                     }
@@ -4094,6 +4094,8 @@ namespace yoi {
             IRFunctionOptimizer optimizer{compilerCtx, targetedModule, functionAnalysisResults};
             optimizer.setTargetFunction(func).doOptimizationForCurrentFunction();
         }
+
+        performStructNullablePass();
     }
 
     bool FunctionAnalysisInfo::operator!=(const FunctionAnalysisInfo &other) const {
@@ -4112,6 +4114,18 @@ namespace yoi {
                     copied->addAttribute(IRValueType::ValueAttr::Borrow);
                 targetFunction->argumentTypes[paramIdx] = copied;
                 varTable[paramIdx] = copied;
+            }
+        }
+        return true;
+    }
+
+    bool IROptimizer::performStructNullablePass() {
+        for (auto &[_, irModule] : compilerCtx->getCompiledModules()) {
+            for (auto &struct_type : irModule->structTable) {
+                for (auto &field : struct_type.second->fieldTypes) {
+                    field = managedPtr(*field);
+                    field->addAttribute(IRValueType::ValueAttr::Nullable);
+                }
             }
         }
         return true;

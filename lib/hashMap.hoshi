@@ -1,0 +1,144 @@
+use lang "builtin"
+
+struct HashMapNode<K, V> {
+    key: K,
+    value: V,
+    next: HashMapNode<K, V>,
+    constructor(key: K, value: V)
+}
+
+impl HashMapNode<> {
+    constructor(key: K, value: V) {
+        this.key = key
+        this.value = value
+    }
+}
+
+struct HashMap<K, V> {
+    buckets: HashMapNode<K, V>[],
+    size: int,
+    constructor(),
+    static operator[](this: HashMap<K, V>, key: K) : V,
+    static operator[](value: V, this: HashMap<K, V>, key: K) : none,
+    size() : int,
+    clear() : none,
+    keys() : K[],
+    values() : V[],
+    contains(key: K) : bool,
+    remove(key: K) : none,
+    capacity_resize(new_capacity: int) : none,
+}
+
+impl HashMap<> {
+    constructor() {
+        this.buckets = new HashMapNode<K, V>[64]()
+        this.size = 0
+    },
+    static operator[](this: HashMap<K, V>, key: K) : V {
+        let index = lang.Hashable(key).hash() % this.buckets.length
+        let node = this.buckets[index]
+        while (node != null) {
+            if (node.key == key) {
+                return node.value
+            }
+            node = node.next
+        }
+        return null
+    },
+    static operator[](value: V, this: HashMap<K, V>, key: K) : none {
+        let index = lang.Hashable(key).hash() % this.buckets.length
+        let node = this.buckets[index]
+        while (node != null) {
+            if (node.key == key) {
+                node.value = value
+                return
+            }
+            node = node.next
+        }
+        let new_node = HashMapNode<K, V>(key, value)
+        new_node.next = this.buckets[index]
+        this.buckets[index] = new_node
+        this.size += 1
+        if (this.size > this.buckets.length * 0.75) {
+            this.capacity_resize(this.buckets.length * 2)
+        }
+    },
+    size() : int {
+        return this.size
+    },
+    clear() : none {
+        for (let i = 0; i < this.buckets.length; i += 1) {
+            this.buckets[i] = null
+        }
+        this.size = 0
+    },
+    keys() : K[] {
+        let keys = new K[this.size]()
+        let index = 0
+        for (let i = 0; i < this.buckets.length; i += 1) {
+            let node = this.buckets[i]
+            while (node != null) {
+                keys[index] = node.key
+                index += 1
+                node = node.next
+            }
+        }
+        return keys
+    },
+    values() : V[] {
+        let values = new V[this.size]()
+        let index = 0
+        for (let i = 0; i < this.buckets.length; i += 1) {
+            let node = this.buckets[i]
+            while (node != null) {
+                values[index] = node.value
+                index += 1
+                node = node.next
+            }
+        }
+        return values
+    },
+    contains(key: K) : bool {
+        let index = lang.Hashable(key).hash() % this.buckets.length
+        let node = this.buckets[index]
+        while (node != null) {
+            if (node.key == key) {
+                return true
+            }
+            node = node.next
+        }
+        return false
+    },
+    remove(key: K) : none {
+        let index = lang.Hashable(key).hash() % this.buckets.length
+        let prev : HashMapNode<K, V> = null
+        let node = this.buckets[index]
+        while (node != null) {
+            if (node.key == key) {
+                if (prev == null) {
+                    this.buckets[index] = node.next
+                } else {
+                    prev.next = node.next
+                }
+                this.size -= 1
+                return
+            }
+            prev = node
+            node = node.next
+        }
+    },
+    capacity_resize(new_capacity: int) : none {
+        let old_buckets = this.buckets
+        this.buckets = new HashMapNode<K, V>[new_capacity]()
+        for (let i = 0; i < old_buckets.length; i += 1) {
+            let node = old_buckets[i]
+            while (node != null) {
+                let index = lang.Hashable(node.key).hash() % this.buckets.length
+                let new_node = HashMapNode<K, V>(node.key, node.value)
+                new_node.next = this.buckets[index]
+                this.buckets[index] = new_node
+                node = node.next
+            }
+        }
+    }
+}

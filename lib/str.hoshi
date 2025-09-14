@@ -372,7 +372,7 @@ impl Str : lang.Hashable {
     hash() : int {
         let res = 0
         for (let i = 0; i < this.length; i += 1) {
-            res = (res * 31 + this[i]) & 0xffffffff
+            res = (res * 31 + this.data[i]) & 0xffffffff
         }
         return res
     }
