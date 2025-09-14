@@ -23,6 +23,7 @@ var classyoi_1_1LLVMCodegen =
     [ "generateFunctionExitCleanup", "classyoi_1_1LLVMCodegen.html#afe6b75e4da6a2cf0c572495d25fe5ccf", null ],
     [ "generateFunctionImplementations", "classyoi_1_1LLVMCodegen.html#ac08709404cb7cdce59eb620ea795fe29", null ],
     [ "generateGlobalDeclarations", "classyoi_1_1LLVMCodegen.html#a75db48edcf151d8a0ad9a7bb2470a776", null ],
+    [ "generateIfTargetNotNull", "classyoi_1_1LLVMCodegen.html#a50448105ba1d534e209ffe3e8afafbb8", null ],
     [ "generateImplementations", "classyoi_1_1LLVMCodegen.html#afd75fb1a30a58a634348edc1145f21ee", null ],
     [ "generateImportFunctionDeclarations", "classyoi_1_1LLVMCodegen.html#ac4fcc73d3a56e8637f7b9eafd8dd1a3d", null ],
     [ "generateImportFunctionImplementations", "classyoi_1_1LLVMCodegen.html#a139ffc09df4150e384efab519d88b094", null ],
