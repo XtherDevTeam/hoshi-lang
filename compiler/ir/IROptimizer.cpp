@@ -2513,9 +2513,7 @@ namespace yoi {
                     auto r = simulationStack.peek(0); simulationStack.pop();
                     auto l = simulationStack.peek(0); simulationStack.pop();
                     auto resultType = std::make_shared<IRValueType>(*l.type);
-                    if (l.type->hasAttribute(IRValueType::ValueAttr::Nullable) || r.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
-                        resultType->addAttribute(IRValueType::ValueAttr::Nullable);
-                    }
+                    resultType->removeAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.push(resultType, {});
                     break;
                 }
@@ -2542,9 +2540,7 @@ namespace yoi {
                     else targetType = compilerCtx->getCharObjectType();
                     
                     auto resultType = std::make_shared<IRValueType>(*targetType);
-                    if (val.type->hasAttribute(IRValueType::ValueAttr::Nullable)) {
-                        resultType->addAttribute(IRValueType::ValueAttr::Nullable);
-                    }
+                    resultType->removeAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.push(resultType, {});
                     break;
                 }
