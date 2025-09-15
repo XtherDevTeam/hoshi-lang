@@ -68,8 +68,7 @@ impl char : Hashable {
 struct Result<T, E> {
     value: T,
     error: E,
-    constructor(error: E),
-    constructor(value: T),
+    constructor(),
     is_ok() : bool,
     is_err() : bool,
     unwrap() : T,
@@ -79,11 +78,8 @@ struct Result<T, E> {
 }
 
 impl Result<> {
-    constructor(error: E) {
-        this.error = error
-    },
-    constructor(value: T) {
-        this.value = value
+    constructor() {
+        return this
     },
     is_ok() : bool {
         return this.error == null
@@ -108,9 +104,13 @@ impl Result<> {
         }
     },
     static ok(value: T) : Result<T, E> {
-        return Result<T, E>(value)
+        let res = Result<T, E>()
+        res.value = value
+        return res
     },
     static err(error: E) : Result<T, E> {
-        return Result<T, E>(error)
+        let res = Result<T, E>()
+        res.error = error
+        return res
     }
 })"

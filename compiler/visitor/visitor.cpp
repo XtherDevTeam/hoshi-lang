@@ -1530,6 +1530,7 @@ namespace yoi {
         }
 
         auto &interfaceName = interfaceDefStmt->id->getId().get().strVal;
+        auto interfaceIndex = irModule->interfaceTable.put(interfaceName, {});
 
         IRInterfaceInstanceDefinition::Builder builder;
         builder.setName(interfaceName);
@@ -1569,7 +1570,7 @@ namespace yoi {
             builder.addMethod(methodName + uniq, func);
         }
         auto interfaceType = builder.yield();
-        irModule->interfaceTable.put(interfaceName, interfaceType);
+        irModule->interfaceTable[interfaceIndex] = interfaceType;
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -2869,7 +2870,7 @@ namespace yoi {
                 true);
         } catch (std::exception &e) {
             set_current_file_path(moduleContextStack.top().first->getIRBuilder().getCurrentDebugInfo().sourceFile);
-            panic(moduleContextStack.top().first->getIRBuilder().getCurrentDebugInfo().line, moduleContextStack.top().first->getIRBuilder().getCurrentDebugInfo().column, std::string("Exception occurred while specializing method: ") + e.what() + "\n");
+            panic(moduleContextStack.top().first->getIRBuilder().getCurrentDebugInfo().line, moduleContextStack.top().first->getIRBuilder().getCurrentDebugInfo().column, std::string("Exception occurred while specializing method: ") + yoi::wstring2string(specializedMethodName) + ": " + e.what() + "\n");
         }
 
         moduleContext->getIRBuilder().yield();

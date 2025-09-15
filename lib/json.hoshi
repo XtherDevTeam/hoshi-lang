@@ -1,0 +1,239 @@
+use str "str"
+use hashMap "hashMap"
+use file "file"
+use lang "builtin"
+
+interface JSONValue {
+    to_string(): str.Str,
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str>
+    // construct(s: str.Str, start: int) : lang.Result<JSONValue, str.Str>
+}
+
+interface JSONSerializable {
+    to_json() : JSONValue
+}
+
+interface JSONDeserializable {
+    from_json(json: JSONValue) : lang.Result<JSONValue, str.Str>
+}
+
+struct Numeric {
+    type: unsigned, /* 0 = int, 1 = decimal */
+    data: str.Str,
+    getInt() : int,
+    getDecimal() : deci,
+    constructor(type: unsigned, data: str.Str)
+}
+
+impl Numeric {
+    constructor(type: unsigned, data: str.Str) {
+        this.type = type
+        this.data = data
+    },
+    getInt() : int {
+        /*TODO: implement*/
+        return 0
+    },
+    getDecimal() : deci {
+        /*TODO: implement*/
+        return 0
+    }
+}
+
+impl str.Str : JSONValue {
+    to_string() : str.Str {
+        /*TODO: implement escape characters*/
+        return str.Str("\"" + this.data + "\"")
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        let start_pos = stream.tell()
+        if (stream.getch() == '"') {
+            let content_pos = stream.tell()
+            let ch = stream.getch()
+            while (ch && ch != '"') {
+                if (ch == '\\') {
+                    ch = stream.getch() // consume escaped character
+                }
+                ch = stream.getch()
+            }
+            if (ch == '"') {
+                let end_pos = stream.tell()
+                stream.seek(content_pos, 0)
+                let buffer = stream.read(end_pos - content_pos - 1)
+                // TODO: handle un-escaping characters from buffer
+                this.data = buffer
+                this.length = buffer.length
+                this.capacity = buffer.length
+                return lang.Result<JSONValue, str.Str>.ok(this)
+            } else {
+                stream.seek(start_pos, 0)
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected EOF while parsing string"))
+            }
+        } else {
+            stream.seek(start_pos, 0)
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected '\"' at the beginning of a string"))
+        }
+    }
+}
+
+impl Numeric : JSONValue {
+    to_string() : str.Str {
+        return this.data
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        let start_pos = stream.tell()
+        let ch = stream.getch()
+        let type = 0 // default to int
+        
+        // optional leading minus sign
+        if (ch == '-') {
+            ch = stream.getch()
+        }
+
+        if (ch < '0' || ch > '9') {
+             stream.seek(start_pos, 0)
+             return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Invalid number format"))
+        }
+        
+        while (ch >= '0' && ch <= '9') {
+            ch = stream.getch()
+        }
+
+        if (ch == '.') {
+            type = 1 // decimal
+            ch = stream.getch()
+            if (ch < '0' || ch > '9') {
+                stream.seek(start_pos, 0)
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected digit after decimal point"))
+            }
+            while (ch >= '0' && ch <= '9') {
+                ch = stream.getch()
+            }
+        }
+        
+        // TODO: Add support for scientific notation 'e' or 'E'
+
+        let end_pos = stream.tell()
+        // the loop reads one character past the end of the number, so go back one.
+        stream.seek(end_pos - 1, 0) 
+        
+        let read_len = stream.tell() - start_pos
+        stream.seek(start_pos, 0)
+        let buffer = stream.read(read_len)
+        
+        this.data = buffer
+        this.type = type
+        return lang.Result<JSONValue, str.Str>.ok(this)
+    }
+}
+
+impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
+    to_string() : str.Str {
+        let s = str.Str("{")
+        let keys_arr = this.keys()
+        for (let i = 0; i < keys_arr.length; i += 1) {
+            let key = keys_arr[i]
+            let value = this[key]
+            s.append(key.to_string()) // str.to_string() adds quotes
+            s.append(":")
+            s.append(value.to_string())
+            if (i < keys_arr.length - 1) {
+                s.append(",")
+            }
+        }
+        s.append("}")
+        return s
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        // helper function to skip whitespace characters
+        let skip_whitespace = func[] (s: file.AbstractFile) : none {
+            let pos = s.tell()
+            let ch = s.getch()
+            while (ch && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
+                pos = s.tell()
+                ch = s.getch()
+            }
+            if (ch) { s.seek(pos, 0) }
+        }
+
+        skip_whitespace(stream)
+        
+        if (stream.getch() != '{') {
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected '{' at beginning of object"))
+        }
+        
+        this.clear()
+        
+        skip_whitespace(stream)
+        
+        // handle empty object {}
+        let pos = stream.tell()
+        if (stream.getch() == '}') {
+            return lang.Result<JSONValue, str.Str>.ok(this)
+        }
+        stream.seek(pos, 0)
+        
+        // loop for key-value pairs
+        while (true) {
+            skip_whitespace(stream)
+            
+            // parse key (must be a string)
+            let key = str.Str()
+            let key_result = key.construct(stream)
+            if (key_result.is_err()) {
+                return lang.Result<JSONValue, str.Str>.err(key_result.get_err())
+            }
+            
+            skip_whitespace(stream)
+            
+            // 2. Parse colon
+            if (stream.getch() != ':') {
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected ':' after key in object"))
+            }
+            
+            skip_whitespace(stream)
+            
+            // parse value by peeking at the next character
+            let value_pos = stream.tell()
+            let peek_ch = stream.getch()
+            stream.seek(value_pos, 0)
+            
+            let value : JSONValue = null
+            
+            if (peek_ch == '"') {
+                let s_val = str.Str()
+                let result = s_val.construct(stream)
+                if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
+                value = s_val as JSONValue
+            } elif (peek_ch == '{') {
+                let h_val = hashMap.HashMap<str.Str, JSONValue>()
+                let result = h_val.construct(stream) // Recursive call
+                if (result.is_err()) { return result }
+                value = result.unwrap()
+            } elif ((peek_ch >= '0' && peek_ch <= '9') || peek_ch == '-') {
+                let n_val = Numeric()
+                let result = n_val.construct(stream)
+                if (result.is_err()) { return lang.Result.err(result.get_err()) }
+                value = n_val as JSONValue
+            } else {
+                // future support for arrays, booleans, null would go here
+                return lang.Result.err(str.Str("JSON: Unexpected token while parsing value"))
+            }
+            
+            this[key] = value
+            
+            skip_whitespace(stream)
+            
+            // parse separator (comma or closing brace)
+            let separator = stream.getch()
+            if (separator == '}') {
+                break // End of object
+            }
+            if (separator != ',') {
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected ',' or '}' after value in object"))
+            }
+        }
+        
+        return lang.Result<JSONValue, str.Str>.ok(this)
+    }
+}

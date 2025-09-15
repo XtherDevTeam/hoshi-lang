@@ -2,7 +2,7 @@
 #ifndef HOSHI_LANG_DEFINES_H
 #define HOSHI_LANG_DEFINES_H
 
-#define HOSHI_LANG_VERSION "2"
-#define HOSHI_LANG_GIT_COMMIT_HASH "118efd"
+#define HOSHI_LANG_VERSION "1"
+#define HOSHI_LANG_GIT_COMMIT_HASH "b1ec0a"
 
 #endif

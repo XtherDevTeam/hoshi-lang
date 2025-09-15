@@ -34,6 +34,7 @@ struct Str {
     static operator+(a: Str, b: Str) : Str,
     static operator+(a: Str, b: string) : Str,
     static operator+(a: string, b: Str) : Str,
+    static operator+(a: Str, b: char) : Str,
     static operator==(a: Str, b: Str) : bool,
     static operator==(a: Str, b: string) : bool,
     static operator==(a: string, b: Str) : bool,
@@ -138,6 +139,14 @@ impl Str {
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data) + a.length, b, runtime.strlen(b))
         new_str.data[a.length + runtime.strlen(b)] = '\0'
         new_str.length = a.length + runtime.strlen(b)
+        return new_str
+    },
+    static operator+(a: Str, b: char) : Str {
+        let new_str = Str(a.length + 1u)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(new_str.data), runtime.runtime_get_string_array_data_pointer(a.data), a.length)
+        new_str.data[a.length] = b
+        new_str.data[a.length + 1] = '\0'
+        new_str.length = a.length + 1
         return new_str
     },
     static operator+(a: string, b: Str) : Str {

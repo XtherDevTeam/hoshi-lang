@@ -56,6 +56,9 @@ impl OSFile : file.AbstractFile {
     },
     is_closed() : bool {
         return runtime.fclose(this.fp) == 0
+    },
+    getch() : char {
+        return runtime.fgetc(this.fp)
     }
 }
 

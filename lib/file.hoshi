@@ -2,13 +2,14 @@ interface AbstractFile {
     read(size: int): char[],
     write(data: char[]) : int,
     close() : none,
-    seek(offset: int, whence: int) : int,
-    tell() : int,
+    seek(offset: int, whence: int) : int, /* whence: 0 for start, 1 for current, 2 for end */
+    tell() : int, /* tell current position */
     flush() : none,
     is_eof() : bool,
     size() : int,
     is_seekable() : bool,
     is_readable() : bool,
     is_writable() : bool,
-    is_closed() : bool
+    is_closed() : bool,
+    getch() : char,
 }
