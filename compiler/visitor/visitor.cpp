@@ -3842,6 +3842,8 @@ namespace yoi {
         for (auto &i : lambdaExpr->captures) {
             visit(i);
             auto capturedVar = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            // i guess the IRValueType here is referenceable.
+            capturedVar->addAttribute(IRValueType::ValueAttr::Nullable);
             argTypes.push_back(managedPtr(*capturedVar));
             builder.addField(i->node.strVal, managedPtr(*capturedVar));
         }

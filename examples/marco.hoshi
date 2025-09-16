@@ -3,5 +3,6 @@ use runtime "runtime"
 func main() : int {
     [[platform == "darwin"]] runtime.puts("Hello, world from macOS!")
     [[platform == "linux"]] runtime.puts("Hello, world from Linux!")
+    [[platform == "win32"]] runtime.puts("Hello, world from Windows!")
     return 0
 }
