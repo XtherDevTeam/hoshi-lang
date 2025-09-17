@@ -22,13 +22,17 @@ struct Numeric {
     data: str.Str,
     getInt() : int,
     getDecimal() : deci,
-    constructor(type: unsigned, data: str.Str)
+    constructor(type: unsigned, data: str.Str),
+    constructor()
 }
 
 impl Numeric {
     constructor(type: unsigned, data: str.Str) {
         this.type = type
         this.data = data
+    },
+    constructor() {
+        return this
     },
     getInt() : int {
         /*TODO: implement*/
@@ -43,14 +47,14 @@ impl Numeric {
 impl str.Str : JSONValue {
     to_string() : str.Str {
         /*TODO: implement escape characters*/
-        return str.Str("\"" + this.data + "\"")
+        return str.format("\"{}\"", new str.Stringable[1](this))
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         let start_pos = stream.tell()
         if (stream.getch() == '"') {
             let content_pos = stream.tell()
             let ch = stream.getch()
-            while (ch && ch != '"') {
+            while (ch != '\0' && ch != '"') {
                 if (ch == '\\') {
                     ch = stream.getch() // consume escaped character
                 }
@@ -64,7 +68,7 @@ impl str.Str : JSONValue {
                 this.data = buffer
                 this.length = buffer.length
                 this.capacity = buffer.length
-                return lang.Result<JSONValue, str.Str>.ok(this)
+                return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
             } else {
                 stream.seek(start_pos, 0)
                 return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected EOF while parsing string"))
@@ -121,9 +125,9 @@ impl Numeric : JSONValue {
         stream.seek(start_pos, 0)
         let buffer = stream.read(read_len)
         
-        this.data = buffer
+        this.data := str.Str(buffer)
         this.type = type
-        return lang.Result<JSONValue, str.Str>.ok(this)
+        return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
 }
 
@@ -134,14 +138,15 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         for (let i = 0; i < keys_arr.length; i += 1) {
             let key = keys_arr[i]
             let value = this[key]
-            s.append(key.to_string()) // str.to_string() adds quotes
-            s.append(":")
-            s.append(value.to_string())
+            // s += key
+            // s += ":"
+            // s.append(value.to_string())
+            s = s + str.format("\"{}\":{}", new str.Stringable[2](key, value.to_string()))
             if (i < keys_arr.length - 1) {
-                s.append(",")
+                s = s + ","
             }
         }
-        s.append("}")
+        s = s + "}"
         return s
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
@@ -149,11 +154,11 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         let skip_whitespace = func[] (s: file.AbstractFile) : none {
             let pos = s.tell()
             let ch = s.getch()
-            while (ch && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
+            while (ch != '\0' && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
                 pos = s.tell()
                 ch = s.getch()
             }
-            if (ch) { s.seek(pos, 0) }
+            if (ch != '\0') { s.seek(pos, 0) }
         }
 
         skip_whitespace(stream)
@@ -169,7 +174,7 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         // handle empty object {}
         let pos = stream.tell()
         if (stream.getch() == '}') {
-            return lang.Result<JSONValue, str.Str>.ok(this)
+            return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
         }
         stream.seek(pos, 0)
         
@@ -177,11 +182,11 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         while (true) {
             skip_whitespace(stream)
             
-            // parse key (must be a string)
             let key = str.Str()
-            let key_result = key.construct(stream)
+            let key_interface = key as JSONValue
+            let key_result = key_interface.construct(stream)
             if (key_result.is_err()) {
-                return lang.Result<JSONValue, str.Str>.err(key_result.get_err())
+                return lang.Result<JSONValue, str.Str>.err(key_result.unwrap_err())
             }
             
             skip_whitespace(stream)
@@ -202,22 +207,25 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
             
             if (peek_ch == '"') {
                 let s_val = str.Str()
-                let result = s_val.construct(stream)
+                let s_val_interface = s_val as JSONValue
+                let result = s_val_interface.construct(stream)
                 if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
-                value = s_val as JSONValue
+                value = result.unwrap()
             } elif (peek_ch == '{') {
                 let h_val = hashMap.HashMap<str.Str, JSONValue>()
-                let result = h_val.construct(stream) // Recursive call
+                let h_val_interface = h_val as JSONValue
+                let result = h_val_interface.construct(stream) // Recursive call
                 if (result.is_err()) { return result }
                 value = result.unwrap()
             } elif ((peek_ch >= '0' && peek_ch <= '9') || peek_ch == '-') {
                 let n_val = Numeric()
-                let result = n_val.construct(stream)
-                if (result.is_err()) { return lang.Result.err(result.get_err()) }
+                let n_val_interface = n_val as JSONValue
+                let result = n_val_interface.construct(stream)
+                if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
                 value = n_val as JSONValue
             } else {
                 // future support for arrays, booleans, null would go here
-                return lang.Result.err(str.Str("JSON: Unexpected token while parsing value"))
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))
             }
             
             this[key] = value
@@ -234,6 +242,6 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
             }
         }
         
-        return lang.Result<JSONValue, str.Str>.ok(this)
+        return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
 }

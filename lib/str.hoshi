@@ -425,6 +425,12 @@ impl string : Stringable {
     }
 }
 
+impl Str : Stringable {
+    to_string() : Str {
+        return this
+    }
+}
+
 func format(fmt: Str, args: Stringable[]) : Str {
     let occur = fmt.find_all(Str("{}"))
     if (occur == 0u) {
