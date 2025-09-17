@@ -2489,8 +2489,10 @@ namespace yoi {
                         ->interfaceTable[ins.operands[1].value.symbolIndex]
                         ->methodMap[ins.operands[2].value.symbolIndex]
                         ->returnType);
-                    returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
                     simulationStack.pop();
+                    if (returnType->type != IRValueType::valueType::none) {
+                        returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
+                    }
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }

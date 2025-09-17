@@ -3,6 +3,6 @@
 #define HOSHI_LANG_DEFINES_H
 
 #define HOSHI_LANG_VERSION "1"
-#define HOSHI_LANG_GIT_COMMIT_HASH "b1ec0a"
+#define HOSHI_LANG_GIT_COMMIT_HASH "551da5"
 
 #endif

@@ -1799,7 +1799,7 @@ namespace yoi {
                 }
                 auto uniq = getFuncUniqueNameStr(argTypes);
                 methodBuilder.setReturnType(managedPtr(parseTypeSpec(i->getMethod().resultType)));
-                methodBuilder.setName(structBaseName + L"::" + methodName + uniq);
+                methodBuilder.setName(structBaseName + L"::" + methodName + uniq + L"interfaceImpl#" + interfaceImplName);
 
                 auto func = methodBuilder.yield();
                 auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
@@ -3032,6 +3032,9 @@ namespace yoi {
             return; // two type of array is ABI compatible
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
             emitBasicCastTo(toType);
+        } else if (rhs->type == IRValueType::valueType::pointerObject) {
+            // no cast needed for pointer type
+            return;
         } else if (toType->type == IRValueType::valueType::interfaceObject) {
             // check implemented interfaces
             try {
@@ -3050,9 +3053,6 @@ namespace yoi {
             if (structType->nameIndexMap.contains(constructorName)) {
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
             }
-        } else if (rhs->type == IRValueType::valueType::pointerObject) {
-            // no cast needed for pointer type
-            return;
         } else {
             panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
         }
@@ -3519,12 +3519,14 @@ namespace yoi {
                                                 const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT targetModule) {
         
         yoi_assert(implAst->isImplForStmt(), implAst->getLine(), implAst->getColumn(), "Expected 'impl for' AST node for interface implementation specialization.");
-        
-        pushModuleContext(targetModule);
+
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
 
         // The active specialization context (from specializeStructTemplate) resolves types like `T` to concrete types.
         auto concreteInterfaceType = managedPtr(parseTypeSpec(implAst->interfaceName));
         yoi_assert(concreteInterfaceType->type == IRValueType::valueType::interfaceObject, implAst->getLine(), implAst->getColumn(), "Expected an interface type.");
+
+        // pushModuleContext(targetModule);
 
         auto interfaceSrcPair = std::make_pair(concreteInterfaceType->typeAffiliateModule, concreteInterfaceType->typeIndex);
 
@@ -3539,7 +3541,7 @@ namespace yoi {
             return; // Already specialized and created.
         }
 
-        auto implIndex = irModule->interfaceImplementationTable.put_create(implName, nullptr);
+        auto implIndex = targetedModule->interfaceImplementationTable.put_create(implName, nullptr);
 
         IRInterfaceImplementationDefinition::Builder builder;
         builder.setName(implName);
@@ -3588,9 +3590,9 @@ namespace yoi {
             moduleContext->popIRBuilder();
         }
         
-        popModuleContext();
+        // popModuleContext();
 
-        irModule->interfaceImplementationTable[implIndex] = builder.yield();
+        targetedModule->interfaceImplementationTable[implIndex] = builder.yield();
     }
 
     visitor::OverloadResult
@@ -3753,6 +3755,8 @@ namespace yoi {
 
                 moduleContext->getIRBuilder().invokeMethodOp(
                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
+
+                moduleContext->getIRBuilder().popOp();
             } else {
                 visit(currentTerm->expr);
                 handleBinaryOperatorOverload(L"operator[]");
