@@ -1748,7 +1748,8 @@ namespace yoi {
                     implStmt->getLine(), implStmt->getColumn(), "Undefined struct: " + wstring2string(structBaseName));
                 return {};
             }
-            moduleContext->getCompilerContext()->getImportedModule(interfaceName.first.first)->interfaceTable[interfaceName.first.second]->implementations.emplace_back(
+            auto targetInterface = moduleContext->getCompilerContext()->getImportedModule(interfaceName.first.first)->interfaceTable[interfaceName.first.second];
+            targetInterface->implementations.emplace_back(
                 srcType->type, srcType->typeAffiliateModule, srcType->typeIndex
             );
             auto interfaceImplName =
@@ -1759,6 +1760,8 @@ namespace yoi {
             builder.setName(interfaceImplName);
             builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
             builder.setImplInterfaceIndex(interfaceName.first.second);
+
+            std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
             for (auto &i : implStmt->getInner().getInner()) {
                 yoi_assert(!i->isConstructor(),
@@ -1803,9 +1806,11 @@ namespace yoi {
 
                 auto func = methodBuilder.yield();
                 auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
-                builder.addVirtualMethod(
+                /*builder.addVirtualMethod(
                     methodName + uniq,
-                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));
+                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));*/
+
+                virtualMethodMap[methodName + getFuncUniqueNameStr(argTypes, true)] = {methodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex})};
 
                 moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
                 moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
@@ -1814,6 +1819,12 @@ namespace yoi {
                 moduleContext->getIRBuilder().yield();
                 moduleContext->popIRBuilder();
             }
+            
+            for (auto &method: targetInterface->methodMap) {
+                yoi_assert(virtualMethodMap.contains(method.first), implStmt->getLine(), implStmt->getColumn(), "Method '" + wstring2string(method.first) + "' not implemented for interface '" + wstring2string(targetInterface->name) + "'");
+                builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
+            }
+            
             targetedModule->interfaceImplementationTable[interfaceImplIndex] = builder.yield();
         } else {
             indexT structIndex;
@@ -3516,11 +3527,12 @@ namespace yoi {
 
         auto interfaceSrcPair = std::make_pair(concreteInterfaceType->typeAffiliateModule, concreteInterfaceType->typeIndex);
 
-        moduleContext->getCompilerContext()->getImportedModule(interfaceSrcPair.first)
-            ->interfaceTable[interfaceSrcPair.second]
-            ->implementations.emplace_back(
-                concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex
-            );
+        auto targetInterface = moduleContext->getCompilerContext()->getImportedModule(interfaceSrcPair.first)
+            ->interfaceTable[interfaceSrcPair.second];
+
+        targetInterface->implementations.emplace_back(
+            concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex
+        );
         
         auto implName = getInterfaceImplName(interfaceSrcPair, concreteStructType);
         if (irModule->interfaceImplementationTable.contains(implName)) {
@@ -3533,6 +3545,8 @@ namespace yoi {
         builder.setName(implName);
         builder.setImplStructIndex({concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex});
         builder.setImplInterfaceIndex(interfaceSrcPair.second);
+
+        std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
         for (auto &methodNode : implAst->getInner().getInner()) {
             yoi_assert(!methodNode->isConstructor(), methodNode->getLine(), methodNode->getColumn(), "Only methods are allowed in interface implementations.");
@@ -3564,9 +3578,6 @@ namespace yoi {
 
             auto func = methodBuilder.yield();
             auto funcIndex = irModule->functionTable.put_create(func->name, func);
-            builder.addVirtualMethod(
-                baseMethodName + uniq,
-                managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex}));
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
             moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
@@ -3574,6 +3585,11 @@ namespace yoi {
             visit(methodAst.block, true);
             moduleContext->getIRBuilder().yield();
             moduleContext->popIRBuilder();
+            virtualMethodMap[baseMethodName + getFuncUniqueNameStr(specializedArgTypes, true)] = {baseMethodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex})};
+        }
+        for (auto &method : targetInterface->methodMap) {
+            yoi_assert(virtualMethodMap.contains(method.first), implAst->getLine(), implAst->getColumn(), "Interface method not found in implementation: " + wstring2string(method.first));
+            builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
         }
         
         // popModuleContext();
