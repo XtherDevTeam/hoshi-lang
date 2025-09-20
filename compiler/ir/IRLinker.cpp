@@ -248,6 +248,7 @@ namespace yoi {
                         break;
                     default: break;
                 }
+                break;
             }
             case IR::Opcode::typeid_object_non_stack:
             case IR::Opcode::dyn_cast_any: {

@@ -1771,7 +1771,7 @@ namespace yoi {
                 auto methodName = i->getMethod().getName().get().strVal;
                 IRFunctionDefinition::Builder methodBuilder;
 
-                methodBuilder.setDebugInfo({targetedModule->modulePath, i->getLine(), i->getColumn()});
+                methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                 methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
                 methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
                 methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
@@ -2005,16 +2005,9 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, whileBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
         moduleContext->getIRBuilder().switchCodeBlock(whileBlock);
+        moduleContext->getIRBuilder().pushLoopContext(outBlock, condBlock);
         visit(whileStmt->block, true);
-
-        // replace dummy_break and dummy_continue with jump to the cond block
-        for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
-            if (i.opcode == IR::Opcode::dummy_break) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
-            } else if (i.opcode == IR::Opcode::dummy_continue) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, condBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
-            }
-        }
+        moduleContext->getIRBuilder().popLoopContext();
 
         moduleContext->getIRBuilder().jumpOp(condBlock);
         moduleContext->getIRBuilder().switchCodeBlock(outBlock);
@@ -2047,16 +2040,9 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, codeBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
         moduleContext->getIRBuilder().switchCodeBlock(codeBlock);
+        moduleContext->getIRBuilder().pushLoopContext(outBlock, condBlock);
         visit(forStmt->block, true);
-
-        // replace dummy_break and dummy_continue with jump to the cond block
-        for (auto &i : moduleContext->getIRBuilder().getCurrentCodeBlock().getIRArray()) {
-            if (i.opcode == IR::Opcode::dummy_break) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, outBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
-            } else if (i.opcode == IR::Opcode::dummy_continue) {
-                i = {IR::Opcode::jump, {{IROperand::operandType::index, codeBlock}}, moduleContext->getIRBuilder().getCurrentDebugInfo()};
-            }
-        }
+        moduleContext->getIRBuilder().popLoopContext();
 
         moduleContext->getIRBuilder().jumpOp(afterBlock);
         moduleContext->getIRBuilder().switchCodeBlock(afterBlock);
@@ -2090,12 +2076,12 @@ namespace yoi {
     }
 
     yoi::indexT visitor::visit(yoi::continueStmt *continueStmt) {
-        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_continue, {}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
+        moduleContext->getIRBuilder().continueOp();
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
     yoi::indexT visitor::visit(yoi::breakStmt *breakStmt) {
-        moduleContext->getIRBuilder().insert({IR::Opcode::dummy_break, {}, moduleContext->getIRBuilder().getCurrentDebugInfo()});
+        moduleContext->getIRBuilder().breakOp();
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 

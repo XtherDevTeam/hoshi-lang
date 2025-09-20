@@ -254,8 +254,6 @@ namespace yoi {
             jump_if_false,
             load_member,
             load_global,
-            dummy_break,
-            dummy_continue,
             ret,
             ret_none,
             push_integer,
@@ -718,6 +716,10 @@ namespace yoi {
     };
 
     class IRBuilder {
+        struct LoopContext {
+            yoi::indexT breakTarget;
+            yoi::indexT continueTarget;
+        };
         std::shared_ptr<compilerContext> compilerCtx;
         std::shared_ptr<IRModule> currentModule;
         std::shared_ptr<IRFunctionDefinition> currentFunction;
@@ -725,9 +727,10 @@ namespace yoi {
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
         yoi::vec<std::pair<yoi::indexT, yoi::indexT>> codeBlockInsertionStates;
-        std::vector<IR> tempStateCodeBlock;
-        std::vector<std::shared_ptr<yoi::IRValueType>> tempStateTempVarStack;
+        yoi::vec<IR> tempStateCodeBlock;
+        yoi::vec<std::shared_ptr<yoi::IRValueType>> tempStateTempVarStack;
         IRDebugInfo currentDebugInfo;
+        yoi::vec<LoopContext> loopContext;
 
       public:
         IRBuilder() = delete;
@@ -739,6 +742,10 @@ namespace yoi {
         void setDebugInfo(const IRDebugInfo &debugInfo);
 
         const IRDebugInfo &getCurrentDebugInfo();
+
+        void pushLoopContext(yoi::indexT breakTarget, yoi::indexT continueTarget);
+
+        void popLoopContext();
 
         yoi::indexT saveState();
 
@@ -866,6 +873,10 @@ namespace yoi {
         void dynCastOp(const std::shared_ptr<IRValueType> &type);
 
         void pointerCastOp();
+
+        void breakOp();
+
+        void continueOp();
 
         yoi::indexT getCurrentInsertionPoint();
 

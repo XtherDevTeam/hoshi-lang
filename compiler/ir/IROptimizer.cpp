@@ -2302,7 +2302,8 @@ namespace yoi {
             entryState.variableStates[i] = {false, true, {varType, false, {}}};
         }
 
-        worklist.push(0);
+        if (!targetFunction->codeBlock.empty())
+            worklist.push(0);
         blockInStates[0] = entryState;
 
         while (!worklist.empty()) {
@@ -2740,7 +2741,8 @@ namespace yoi {
             entryState.variableStates[i] = {false, true, {varType, false, {}}};
         }
 
-        worklist.push(0);
+        if (!targetFunction->codeBlock.empty())
+            worklist.push(0);
         blockInStates[0] = entryState;
 
         while (!worklist.empty()) {

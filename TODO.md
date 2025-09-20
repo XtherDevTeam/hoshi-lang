@@ -36,3 +36,4 @@
 - [x] 小对象分配和释放占用大量CPU时间，而传参过程中参数均为小对象，考虑允许对函数参数添加 Raw 属性优化函数调用性能
     - [x] 前置任务：函数间控制流分析
 - [x] 改造 Nullable 判断条件，在二元计算式，drop掉结果的Nullable标签
+- [x] dummy_break, dummy_continue在while for block存在多个block时无法完成替换。

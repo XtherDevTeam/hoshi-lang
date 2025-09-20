@@ -1476,4 +1476,28 @@ namespace yoi {
     yoi::indexT IRVariableTable::scopeIndex(yoi::indexT varIndex) {
         return variableScopeMap[varIndex];
     }
+
+    void IRBuilder::popLoopContext() {
+        loopContext.pop_back();
+    }
+
+    void IRBuilder::breakOp() {
+        yoi_assert(!loopContext.empty(),
+                   currentDebugInfo.line,
+                   currentDebugInfo.column,
+                   "break statement outside a `while` or `for` loop");
+        jumpOp(loopContext.back().breakTarget);
+    }
+
+    void IRBuilder::continueOp() {
+        yoi_assert(!loopContext.empty(),
+                   currentDebugInfo.line,
+                   currentDebugInfo.column,
+                   "continue statement outside a `while` or `for` loop");
+        jumpOp(loopContext.back().continueTarget);
+    }
+
+    void IRBuilder::pushLoopContext(yoi::indexT breakTarget, yoi::indexT continueTarget) {
+        loopContext.push_back({breakTarget, continueTarget});
+    }
 } // namespace yoi

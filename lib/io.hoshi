@@ -10,12 +10,12 @@ struct ArrayBuffer {
 
 impl ArrayBuffer {
     constructor(size: int) {
-        self.buf = new char[size]
-        self.current_pos = 0
-    }
+        this.buf = new char[size]()
+        this.current_pos = 0
+    },
     constructor(buf: char[]) {
-        self.buf = buf
-        self.current_pos = 0
+        this.buf = buf
+        this.current_pos = 0
     }
 }
 
@@ -23,13 +23,13 @@ impl ArrayBuffer : file.AbstractFile {
     read(size: int) : char[] {
         if (size > this.buf.length - this.current_pos) {
             size = this.buf.length - this.current_pos
-            let result = new char[size]
-            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size);
+            let result = new char[size]()
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size)
             this.current_pos = this.buf.length
             return result
         } else {
-            let result = new char[size]
-            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size);
+            let result = new char[size]()
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size)
             this.current_pos += size
             return result
         }
@@ -39,16 +39,16 @@ impl ArrayBuffer : file.AbstractFile {
         if (size > this.buf.length - this.current_pos) {
             size = this.buf.length - this.current_pos
         }
-        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size);
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size)
         this.current_pos += size
         return size
     },
     seek(offset: int, whence: int) : int {
         if (whence == 0) {
             this.current_pos = offset
-        } else if (whence == 1) {
+        } elif (whence == 1) {
             this.current_pos += offset
-        } else if (whence == 2) {
+        } elif (whence == 2) {
             this.current_pos = this.buf.length + offset
         }
         return this.current_pos
@@ -56,9 +56,11 @@ impl ArrayBuffer : file.AbstractFile {
     tell() : int {
         return this.current_pos
     },
-    flush() : void {
+    flush() : none {
+        return
     },
-    close() : void {
+    close() : none {
+        return
     },
     is_eof() : bool {
         return this.current_pos >= this.buf.length
@@ -77,5 +79,13 @@ impl ArrayBuffer : file.AbstractFile {
     },
     is_closed() : bool {
         return false
+    },
+    getch() : char {
+        if (this.current_pos >= this.buf.length) {
+            return -1
+        }
+        let result = this.buf[this.current_pos]
+        this.current_pos += 1
+        return result
     }
 }
