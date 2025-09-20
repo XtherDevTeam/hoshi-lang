@@ -176,6 +176,7 @@ var hierarchy =
     [ "lexer", "classyoi_1_1lexer.html", null ],
     [ "lexerState", "structyoi_1_1lexer_1_1lexerState.html", null ],
     [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html", null ],
+    [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", null ],
     [ "moduleContext", "classyoi_1_1moduleContext.html", null ],
     [ "nameInfo", "structyoi_1_1IRStructDefinition_1_1nameInfo.html", null ],
     [ "ObjectLinker", "classyoi_1_1ObjectLinker.html", [

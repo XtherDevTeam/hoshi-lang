@@ -1,12 +1,15 @@
 var classyoi_1_1IRBuilder =
 [
+    [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", "structyoi_1_1IRBuilder_1_1LoopContext" ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#ab4093e8cfecbe1cc54ea82886d9fa39b", null ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#a8c8800de44b86dbde01c19a95f81e93c", null ],
     [ "arithmeticOp", "classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377", null ],
     [ "arrayLengthOp", "classyoi_1_1IRBuilder.html#a9ff21cff0357fc8a642e10b87b01e67e", null ],
     [ "basicCast", "classyoi_1_1IRBuilder.html#a4640ca7c6de1ffc27cba9ceff03eabb1", null ],
+    [ "breakOp", "classyoi_1_1IRBuilder.html#a4be680d91488e329759d4ad7b30b4e15", null ],
     [ "commitState", "classyoi_1_1IRBuilder.html#aa83db99c3ef75b579fef7a194c935026", null ],
     [ "constructInterfaceImplOp", "classyoi_1_1IRBuilder.html#a3ba8d27fa6cbf8ade068f158c74f7d0a", null ],
+    [ "continueOp", "classyoi_1_1IRBuilder.html#a0d5ca27688978024b8045c7bf16f188b", null ],
     [ "createCodeBlock", "classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9", null ],
     [ "createLocalVar", "classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e", null ],
     [ "discardState", "classyoi_1_1IRBuilder.html#a74b54cdec7f9c8eb15faef3eb21728ac", null ],
@@ -38,7 +41,9 @@ var classyoi_1_1IRBuilder =
     [ "newStructOp", "classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5", null ],
     [ "pointerCastOp", "classyoi_1_1IRBuilder.html#a92707e557062d8cb56359619b8560c51", null ],
     [ "popFromTempVarStack", "classyoi_1_1IRBuilder.html#ae5f54c0f3d96bf3470645b215d9ce83a", null ],
+    [ "popLoopContext", "classyoi_1_1IRBuilder.html#aa3ef34b45b6c8b084d0f1a2bbc145070", null ],
     [ "popOp", "classyoi_1_1IRBuilder.html#a273a2de867a705486918f6f5583f0263", null ],
+    [ "pushLoopContext", "classyoi_1_1IRBuilder.html#a017f59e4d419ec42667d5ed1319f090e", null ],
     [ "pushOp", "classyoi_1_1IRBuilder.html#a2c0487a0411af457d2a23859b8344375", null ],
     [ "pushTempVar", "classyoi_1_1IRBuilder.html#a5c6490327c7e0b69f3b22d5586c7adb1", null ],
     [ "restoreState", "classyoi_1_1IRBuilder.html#ac205579c212bafefc499b71790a05fa9", null ],
@@ -60,7 +65,8 @@ var classyoi_1_1IRBuilder =
     [ "currentDebugInfo", "classyoi_1_1IRBuilder.html#abd96a261aa50fbf2bdee7f6a000fd7df", null ],
     [ "currentFunction", "classyoi_1_1IRBuilder.html#a271e3e56e1fe9916201957557e1faf85", null ],
     [ "currentModule", "classyoi_1_1IRBuilder.html#a0e82125bac8069a5ee90e607478781a0", null ],
-    [ "tempStateCodeBlock", "classyoi_1_1IRBuilder.html#a3926b60f89b111f1c9627a35e90fd73b", null ],
-    [ "tempStateTempVarStack", "classyoi_1_1IRBuilder.html#af187e41dd93b44b6070668357da5fff9", null ],
+    [ "loopContext", "classyoi_1_1IRBuilder.html#afc771a9c6455c58ff3661bde56e9355f", null ],
+    [ "tempStateCodeBlock", "classyoi_1_1IRBuilder.html#a827b6767db146408e724fe2631a45358", null ],
+    [ "tempStateTempVarStack", "classyoi_1_1IRBuilder.html#a270fa5e5d3b2ef9bb7a38c00356b9228", null ],
     [ "tempVarStack", "classyoi_1_1IRBuilder.html#adc9537da5e4582d1102048b4f1d809ee", null ]
 ];

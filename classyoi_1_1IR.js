@@ -29,8 +29,6 @@ var classyoi_1_1IR =
       [ "jump_if_false", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d", null ],
       [ "load_member", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313", null ],
       [ "load_global", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5", null ],
-      [ "dummy_break", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af1d60dfb506a7016f93ce3bd20a4eff5", null ],
-      [ "dummy_continue", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae993ca208002c12466593a3adf1c6b8f", null ],
       [ "ret", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c", null ],
       [ "ret_none", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc", null ],
       [ "push_integer", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f", null ],

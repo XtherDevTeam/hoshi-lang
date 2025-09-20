@@ -32,6 +32,7 @@ var IR_8h =
     [ "IRExternEntry", "classyoi_1_1IRExternEntry.html", "classyoi_1_1IRExternEntry" ],
     [ "IRModule", "classyoi_1_1IRModule.html", "classyoi_1_1IRModule" ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html", "classyoi_1_1IRBuilder" ],
+    [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", "structyoi_1_1IRBuilder_1_1LoopContext" ],
     [ "IRObjectFile", "classyoi_1_1IRObjectFile.html", "classyoi_1_1IRObjectFile" ],
     [ "IRFFITable", "classyoi_1_1IRFFITable.html", "classyoi_1_1IRFFITable" ],
     [ "ImportLibrary", "classyoi_1_1IRFFITable_1_1ImportLibrary.html", "classyoi_1_1IRFFITable_1_1ImportLibrary" ]

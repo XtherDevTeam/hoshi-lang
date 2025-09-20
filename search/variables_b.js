@@ -9,5 +9,6 @@ var searchData=
   ['linkerpath_6',['linkerPath',['../classyoi_1_1ObjectLinker.html#aeeda7521030dccb7a160b24a68e4aa72',1,'yoi::ObjectLinker']]],
   ['literals_7',['literals',['../classyoi_1_1primary.html#aac8d6171663a5c7c56b813d33e1aa196',1,'yoi::primary']]],
   ['llvmvalue_8',['llvmValue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#a4aecd6896ac1b6503a4e0a19dec00928',1,'yoi::LLVMCodegen::StackValue']]],
-  ['lvaluetype_9',['lvalueType',['../classyoi_1_1IROperand.html#a8282ada68a6957a3eed4f69da8c63bed',1,'yoi::IROperand']]]
+  ['loopcontext_9',['loopContext',['../classyoi_1_1IRBuilder.html#afc771a9c6455c58ff3661bde56e9355f',1,'yoi::IRBuilder']]],
+  ['lvaluetype_10',['lvalueType',['../classyoi_1_1IROperand.html#a8282ada68a6957a3eed4f69da8c63bed',1,'yoi::IROperand']]]
 ];

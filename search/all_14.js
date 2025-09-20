@@ -29,11 +29,11 @@ var searchData=
   ['lessthanorequal_26',['lessThanOrEqual',['../classyoi_1_1IRFunctionOptimizer.html#a0c205cbb52cfd5f38fc18b817fb17af1',1,'yoi::IRFunctionOptimizer']]],
   ['letassignmentpair_27',['letAssignmentPair',['../classyoi_1_1letAssignmentPair.html',1,'yoi']]],
   ['letstmt_28',['letstmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::globalStmt::letStmt'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::inCodeBlockStmt::letStmt'],['../classyoi_1_1letStmt.html',1,'letStmt']]],
-  ['letstmtval_29',['letstmtval',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::inCodeBlockStmt::vValue::letStmtVal'],['../unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::globalStmt::vValue::letStmtVal']]],
+  ['letstmtval_29',['letstmtval',['../unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::globalStmt::vValue::letStmtVal'],['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::inCodeBlockStmt::vValue::letStmtVal']]],
   ['lexer_30',['lexer',['../classyoi_1_1lexer.html#a3e70362cee7281a81eeda9cf15c431b9',1,'yoi::lexer::lexer()'],['../classyoi_1_1lexer.html',1,'lexer']]],
   ['lexer_2ecpp_31',['lexer.cpp',['../lexer_8cpp.html',1,'']]],
   ['lexer_2ehpp_32',['lexer.hpp',['../lexer_8hpp.html',1,'']]],
-  ['lexerstate_33',['lexerstate',['../structyoi_1_1lexer_1_1lexerState.html',1,'lexer::lexerState'],['../structyoi_1_1lexer_1_1lexerState.html#a2523d6aa620784df882eccca379ab6f7',1,'yoi::lexer::lexerState::lexerState(int64_t line, int64_t col, std::istream::pos_type pos, wchar curCh, lexer::token curToken)'],['../structyoi_1_1lexer_1_1lexerState.html#a4310b1342800b0d4d15fbfd9c42f1b9c',1,'yoi::lexer::lexerState::lexerState()']]],
+  ['lexerstate_33',['lexerstate',['../structyoi_1_1lexer_1_1lexerState.html',1,'lexer::lexerState'],['../structyoi_1_1lexer_1_1lexerState.html#a4310b1342800b0d4d15fbfd9c42f1b9c',1,'yoi::lexer::lexerState::lexerState()'],['../structyoi_1_1lexer_1_1lexerState.html#a2523d6aa620784df882eccca379ab6f7',1,'yoi::lexer::lexerState::lexerState(int64_t line, int64_t col, std::istream::pos_type pos, wchar curCh, lexer::token curToken)']]],
   ['lexical_20structure_34',['1. Lexical Structure',['../md_docs_2Spec.html#autotoc_md62',1,'']]],
   ['lhs_35',['lhs',['../classyoi_1_1letAssignmentPair.html#a2f65960b5273f0daf01567d56fd5f37c',1,'yoi::letAssignmentPair::lhs'],['../classyoi_1_1leftExpr.html#a7c99e7c0b65e9066111b7623c4c8b6aa',1,'yoi::leftExpr::lhs'],['../classyoi_1_1uniqueExpr.html#ac485117f5866ff463acba2ce4e224ac7',1,'yoi::uniqueExpr::lhs'],['../classyoi_1_1abstractExpr.html#a7aad19c0a89254b9cb2bddc83836f08d',1,'yoi::abstractExpr::lhs']]],
   ['library_36',['library',['../md_docs_2Spec.html#autotoc_md72',1,'8. Standard Library'],['../structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85ad521f765a49c72507257a2620612ee96',1,'yoi::IRBuildConfig::library'],['../md_docs_2Standard_01Library.html',1,'Standard Library'],['../index.html#autotoc_md96',1,'Standard Library']]],
@@ -72,5 +72,6 @@ var searchData=
   ['lookup_69',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
   ['lookupname_70',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]],
   ['loop_2ecpp_71',['loop.cpp',['../loop_8cpp.html',1,'']]],
-  ['lvaluetype_72',['lvalueType',['../classyoi_1_1IROperand.html#a8282ada68a6957a3eed4f69da8c63bed',1,'yoi::IROperand']]]
+  ['loopcontext_72',['loopcontext',['../classyoi_1_1IRBuilder.html#afc771a9c6455c58ff3661bde56e9355f',1,'yoi::IRBuilder::loopContext'],['../structyoi_1_1IRBuilder_1_1LoopContext.html',1,'IRBuilder::LoopContext']]],
+  ['lvaluetype_73',['lvalueType',['../classyoi_1_1IROperand.html#a8282ada68a6957a3eed4f69da8c63bed',1,'yoi::IROperand']]]
 ];
