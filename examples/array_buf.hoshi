@@ -1,0 +1,14 @@
+use io "io"
+use str "str"
+use file "file"
+use runtime "runtime"
+
+func main() : int {
+    let s = str.Str("Hello, world!")
+    let i = io.ArrayBuffer(1024) as file.AbstractFile
+    i.write(s.data)
+    let cursor = i.tell()
+    runtime.runtime_debug_print_int_1(cursor)
+    i.close()
+    return 0
+}

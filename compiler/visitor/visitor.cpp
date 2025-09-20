@@ -208,6 +208,7 @@ namespace yoi {
 
                 }
             } else if (abstractExpr->op.kind == lexer::token::tokenKind::kAs) {
+                moduleContext->getIRBuilder().discardState();
                 auto typeSpec = managedPtr(rhs);
                 tryCastTo(typeSpec);
             }
@@ -1819,7 +1820,7 @@ namespace yoi {
                 moduleContext->getIRBuilder().yield();
                 moduleContext->popIRBuilder();
             }
-            
+
             for (auto &method: targetInterface->methodMap) {
                 yoi_assert(virtualMethodMap.contains(method.first), implStmt->getLine(), implStmt->getColumn(), "Method '" + wstring2string(method.first) + "' not implemented for interface '" + wstring2string(targetInterface->name) + "'");
                 builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);

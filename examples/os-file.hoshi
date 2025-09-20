@@ -8,6 +8,7 @@ func main() : int {
     let content = str.Str("Hello, world!")
     let f = fs.open(path, str.Str("w+")).unwrap() as file.AbstractFile
     f.write(content.data)
+    let cursor = f.tell()
     f.close()
     let f = fs.open(path, str.Str("r")).unwrap() as file.AbstractFile
     let content = str.Str(f.read(14))

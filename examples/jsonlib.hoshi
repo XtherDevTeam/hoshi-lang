@@ -1,0 +1,15 @@
+use json "json"
+use str "str"
+use io "io"
+use file "file"
+
+func main() : int {
+    let s = str.Str("\"Hello, world!\"")
+    let test = io.ArrayBuffer(s.data) as file.AbstractFile
+
+    let target = str.Str()
+    let jsValue = json.JSONValue(target)
+    jsValue.construct(test).unwrap()
+
+    return 0
+}
