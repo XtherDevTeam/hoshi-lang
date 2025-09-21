@@ -9,6 +9,11 @@ func main() : int {
     i.write(s.data)
     let cursor = i.tell()
     runtime.runtime_debug_print_int_1(cursor)
+    i.seek(0, 0)
+    let end_pos = 4
+    let start_pos = 0
+    let buf = i.read(end_pos - start_pos + 1)
+    runtime.puts(runtime.runtime_get_string_array_data_pointer(buf))
     i.close()
     return 0
 }

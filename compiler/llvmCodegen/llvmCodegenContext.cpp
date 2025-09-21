@@ -1405,7 +1405,7 @@ namespace yoi {
                     auto object = ensureObject(arg.yoiType, arg.llvmValue);
                     finalArgs.push_back(object.second);
                     // default to borrow
-                    if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
+                    if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !object.first->hasAttribute(IRValueType::ValueAttr::Raw));
                         // callGcFunction(arg.llvmValue, arg.yoiType, true, true);
                     else postCleanup.emplace_back(object);
                 }
