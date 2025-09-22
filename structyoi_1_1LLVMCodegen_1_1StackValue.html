@@ -96,6 +96,9 @@ $(document).ready(function(){initNavTree('structyoi_1_1LLVMCodegen_1_1StackValue
   <div class="headertitle"><div class="title">LLVMCodegen::StackValue Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Stack Value struct exposed to original code base for compatibility.  
+ <a href="structyoi_1_1LLVMCodegen_1_1StackValue.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -105,8 +108,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:adb8cb6e2c96d78accc69d49343f886d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00074">74</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<div class="textblock"><p>Stack Value struct exposed to original code base for compatibility. </p>
+<dl class="section note"><dt>Note</dt><dd>value stack receives a <a class="el" href="structyoi_1_1LLVMCodegen_1_1StackValue.html" title="Stack Value struct exposed to original code base for compatibility.">StackValue</a> and convert it into a phi node onto the stack, so it gets a phi node when acquiring, wherea for the block who has only one predecessor or no predecessor, it won't be preprocessed. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00085">85</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a4aecd6896ac1b6503a4e0a19dec00928" name="a4aecd6896ac1b6503a4e0a19dec00928"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4aecd6896ac1b6503a4e0a19dec00928">&#9670;&#160;</a></span>llvmValue</h2>
@@ -120,7 +125,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00075">75</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00086">86</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00783">LLVMCodegen::generateInstruction()</a>.</p>
 
 </div>
 </div>
@@ -136,7 +143,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00076">76</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00087">87</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00783">LLVMCodegen::generateInstruction()</a>.</p>
 
 </div>
 </div>

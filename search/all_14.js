@@ -53,7 +53,7 @@ var searchData=
   ['llvmcodegen_50',['llvmcodegen',['../classyoi_1_1LLVMCodegen.html',1,'LLVMCodegen'],['../classyoi_1_1LLVMCodegen.html#a5c5646663a62398e861a40c59bd90f06',1,'yoi::LLVMCodegen::LLVMCodegen()']]],
   ['llvmcodegencontext_2ecpp_51',['llvmCodegenContext.cpp',['../llvmCodegenContext_8cpp.html',1,'']]],
   ['llvmcodegencontext_2ehpp_52',['llvmCodegenContext.hpp',['../llvmCodegenContext_8hpp.html',1,'']]],
-  ['llvmvalue_53',['llvmValue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#a4aecd6896ac1b6503a4e0a19dec00928',1,'yoi::LLVMCodegen::StackValue']]],
+  ['llvmvalue_53',['llvmvalue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#a4aecd6896ac1b6503a4e0a19dec00928',1,'yoi::LLVMCodegen::StackValue::llvmValue'],['../structyoi_1_1LLVMCodegen_1_1StackValuePhi.html#a64a0384a8f153b16965112435e2a8e45',1,'yoi::LLVMCodegen::StackValuePhi::llvmValue']]],
   ['load_5felement_54',['load_element',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348',1,'yoi::IR']]],
   ['load_5fglobal_55',['load_global',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5',1,'yoi::IR']]],
   ['load_5flocal_56',['load_local',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78',1,'yoi::IR']]],

@@ -2,6 +2,8 @@ var classyoi_1_1LLVMCodegen =
 [
     [ "ControlFlowAnalysis", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis" ],
     [ "StackValue", "structyoi_1_1LLVMCodegen_1_1StackValue.html", "structyoi_1_1LLVMCodegen_1_1StackValue" ],
+    [ "StackValuePhi", "structyoi_1_1LLVMCodegen_1_1StackValuePhi.html", "structyoi_1_1LLVMCodegen_1_1StackValuePhi" ],
+    [ "ValueStackWithPhi", "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html", "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi" ],
     [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html#a5c5646663a62398e861a40c59bd90f06", null ],
     [ "callGcFunction", "classyoi_1_1LLVMCodegen.html#ac52a63ff15d37d2741619c9e8ec0871f", null ],
     [ "createArrayObject", "classyoi_1_1LLVMCodegen.html#a288b911c945986486fe361f1ab3295b5", null ],
@@ -57,8 +59,8 @@ var classyoi_1_1LLVMCodegen =
     [ "arrayToGenerateImplementations", "classyoi_1_1LLVMCodegen.html#a52d825b5aeaa7283b9b13ea3055a87fc", null ],
     [ "arrayTypeDIMap", "classyoi_1_1LLVMCodegen.html#ace32b6d8fae5f03431b356f018c582ac", null ],
     [ "arrayTypeMap", "classyoi_1_1LLVMCodegen.html#aea4b67ab5b7e7033f4deb399da0b4443", null ],
-    [ "basicBlockMap", "classyoi_1_1LLVMCodegen.html#a4ff2fd0f179819699e8f9864c94c429c", null ],
-    [ "basicBlockVisited", "classyoi_1_1LLVMCodegen.html#a385ee26f67b8d2c9ee371932e55651ca", null ],
+    [ "basicBlockMap", "classyoi_1_1LLVMCodegen.html#a80dac3cc99df07791e1d925de8814ed2", null ],
+    [ "basicBlockVisited", "classyoi_1_1LLVMCodegen.html#ab9660fe5bd7fdebab343363e40bd7345", null ],
     [ "Builder", "classyoi_1_1LLVMCodegen.html#a8a540edd6c6be1f119a8f3bcdf0e2dad", null ],
     [ "compilerCtx", "classyoi_1_1LLVMCodegen.html#ada29ba25420ceac96b59dbb9944a1ea2", null ],
     [ "compileUnits", "classyoi_1_1LLVMCodegen.html#a7962ae4f9ffd0ce4448a40f37b735edd", null ],
@@ -90,6 +92,6 @@ var classyoi_1_1LLVMCodegen =
     [ "TheContext", "classyoi_1_1LLVMCodegen.html#a76a92e41626d174b8af6101b3bf63b55", null ],
     [ "TheModule", "classyoi_1_1LLVMCodegen.html#aa9866a79b57423c67ddb9f48aae54adb", null ],
     [ "typeIDMap", "classyoi_1_1LLVMCodegen.html#a0c017c5dc194706b7d92d35c281a61a5", null ],
-    [ "valueStackMap", "classyoi_1_1LLVMCodegen.html#a9a30716324783c7bb8a2eae69fad76f4", null ],
+    [ "valueStackPhi", "classyoi_1_1LLVMCodegen.html#a6c90ce443313201a385498cff1cf81c3", null ],
     [ "yoiModule", "classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10", null ]
 ];
