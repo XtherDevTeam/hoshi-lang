@@ -42,6 +42,19 @@ TEST_CASES = {
     "borrow": {"type": "executable", "return_code": 116},
     "os-file": {"type": "executable", "return_code": 0},
     "thread": {"type": "executable", "return_code": 0},
+    "short-circuit-2": {"type": "executable", "return_code": 0},
+    "always-inline": {"type": "executable", "return_code": 116},
+    "argv": {"type": "executable", "return_code": 0},
+    "array_buf": {"type": "executable", "return_code": 0},
+    "array-type-spec": {"type": "executable", "return_code": 0},
+    "basic-type-null-interface": {"type": "executable", "return_code": 0},
+    "callable": {"type": "executable", "return_code": 0},
+    "hashmap": {"type": "executable", "return_code": 0},
+    "linklist": {"type": "executable", "return_code": 0},
+    "marco": {"type": "executable", "return_code": 0},
+    "new-types": {"type": "executable", "return_code": 0},
+    "type_id": {"type": "executable", "return_code": 0},
+    "ultimate": {"type": "executable", "return_code": 0},
 }
 
 

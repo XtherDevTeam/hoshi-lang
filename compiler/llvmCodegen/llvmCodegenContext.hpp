@@ -71,11 +71,6 @@ namespace yoi {
         llvm::GlobalVariable *RTTITable = nullptr;
         llvm::StructType *RTTIEntryType = nullptr;
 
-        struct StackValue {
-            llvm::Value *llvmValue;
-            std::shared_ptr<IRValueType> yoiType;
-        };
-
         struct ControlFlowAnalysis {
             std::map<yoi::indexT, std::vector<indexT>> G;        // graph
             std::map<yoi::indexT, std::vector<indexT>> reverseG; // record the predecessors of each block
@@ -83,14 +78,69 @@ namespace yoi {
             ControlFlowAnalysis(const std::vector<std::shared_ptr<IRCodeBlock>> &blocks);
         } controlFlowAnalysis;
 
+        /**
+         * @brief Stack Value struct exposed to original code base for compatibility.
+         * @note value stack receives a StackValue and convert it into a phi node onto the stack, so it gets a phi node when acquiring, wherea for the block who has only one predecessor or no predecessor, it won't be preprocessed.
+         */
+        struct StackValue {
+            llvm::Value *llvmValue;
+            std::shared_ptr<IRValueType> yoiType;
+        };
+
+        /**
+         * @brief Stack Value Phi struct which presents the actual phi node on the stack.
+         * @note when dfs encountered the same block node again, it won't generate a new block, but reuse the existing phi node.
+         */
+        struct StackValuePhi {
+            llvm::PHINode *llvmValue;
+            std::shared_ptr<IRValueType> yoiType;
+        };
+
+        struct ValueStackWithPhi {
+            std::map<yoi::indexT, yoi::vec<StackValue>> valueStackStateIn;
+            std::map<yoi::indexT, yoi::vec<StackValue>> valueStackStateOut;
+            std::map<yoi::indexT, yoi::vec<llvm::PHINode *>> phiNodes;
+            enum class StackState {
+                Finalized,
+                InEvaluation
+            } stackState;
+            const ControlFlowAnalysis &cfa;
+            yoi::indexT currentState;
+            llvm::IRBuilder<> *builder;
+
+            ValueStackWithPhi(const ControlFlowAnalysis &cfa, llvm::IRBuilder<> *builder);
+
+            void enterNode(yoi::indexT currentState,
+                           yoi::indexT fromState,
+                           llvm::BasicBlock *currentBlock,
+                           llvm::BasicBlock *fromBlock);
+
+            void enterNode(yoi::indexT currentState, llvm::BasicBlock *currentBlock);
+
+            void finalizeNode();
+
+            void push_back(const StackValue &value);
+
+            StackValue &back();
+
+            void pop_back();
+
+            void clear();
+
+            StackValue &operator[](yoi::indexT index);
+
+            yoi::indexT size() const;
+
+            bool empty() const;
+        };
+
         // Codegen state
-        std::map<yoi::indexT, std::map<yoi::indexT, yoi::vec<StackValue>>> valueStackMap;
+        ValueStackWithPhi valueStackPhi;
         llvm::Function *currentFunction = nullptr;
         std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
         std::map<yoi::indexT, llvm::AllocaInst *> namedValues; // Maps local var index to AllocaInst
-        std::map<yoi::indexT, std::map<yoi::indexT, llvm::BasicBlock *>>
-            basicBlockMap; // [from_block, to_block] => target basic block
-        std::map<yoi::indexT, std::map<yoi::indexT, bool>> basicBlockVisited;
+        std::map<yoi::indexT, llvm::BasicBlock *> basicBlockMap; // [from_block, to_block] => target basic block
+        std::map<yoi::indexT, bool> basicBlockVisited;
 
         // Mappings from yoi IR to LLVM IR
         std::map<yoi::indexT, llvm::GlobalVariable *> globalValues; // Maps global var index to GlobalVariable

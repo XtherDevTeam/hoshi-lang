@@ -2,11 +2,30 @@ use str "str"
 use hashMap "hashMap"
 use file "file"
 use lang "builtin"
+use io "io"
+use runtime "runtime"
+
+func always_inline skip_whitespace(s: file.AbstractFile) : none {
+    let pos = s.tell()
+    let ch = s.getch()
+    while (ch != '\0' && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
+        runtime.puts("Skipping whitespace: ")
+        runtime.runtime_debug_print_int_1(ch as int)
+        pos = s.tell()
+        ch = s.getch()
+    }
+    runtime.puts("Skipping whitespace to position: ")
+    runtime.runtime_debug_print_int_1(pos)
+    if (ch != '\0') {
+        runtime.puts("Rewinding to position: ")
+        runtime.runtime_debug_print_int_1(pos)
+        s.seek(pos, 0)
+    }
+}
 
 interface JSONValue {
     to_string(): str.Str,
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str>
-    // construct(s: str.Str, start: int) : lang.Result<JSONValue, str.Str>
 }
 
 interface JSONSerializable {
@@ -150,17 +169,6 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         return s
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
-        // helper function to skip whitespace characters
-        let skip_whitespace = func[] (s: file.AbstractFile) : none {
-            let pos = s.tell()
-            let ch = s.getch()
-            while (ch != '\0' && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
-                pos = s.tell()
-                ch = s.getch()
-            }
-            if (ch != '\0') { s.seek(pos, 0) }
-        }
-
         skip_whitespace(stream)
         
         if (stream.getch() != '{') {
@@ -244,4 +252,36 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
         
         return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
+}
+
+func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+    // evaluate the start of type to determine the type of JSON constructor to be used
+    skip_whitespace(filelike)
+    let pos = filelike.tell()
+    let ch = filelike.getch()
+    if (ch == '{') {
+        let h = hashMap.HashMap<str.Str, JSONValue>()
+        let h_interface = h as JSONValue
+        filelike.seek(pos, 0)
+        return h_interface.construct(filelike)
+    } elif (ch == '"') {
+        let s = str.Str()
+        let s_interface = s as JSONValue
+        filelike.seek(pos, 0)
+        return s_interface.construct(filelike)
+    } elif ((ch >= '0' && ch <= '9') || ch == '-') {
+        let n = Numeric()
+        let n_interface = n as JSONValue
+        filelike.seek(pos, 0)
+        return n_interface.construct(filelike)
+    } else {
+        // future support for arrays, booleans, null would go here
+        return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))
+    }
+}
+
+func parse(s: str.Str) : lang.Result<JSONValue, str.Str> {
+    let buffer = io.ArrayBuffer(s.data) as file.AbstractFile
+    buffer.seek(0, 0)
+    return parse(buffer)
 }

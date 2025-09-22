@@ -2,14 +2,20 @@ use json "json"
 use str "str"
 use io "io"
 use file "file"
+use runtime "runtime"
 
 func main() : int {
     let s = str.Str("\"Hello, world!\"")
-    let test = io.ArrayBuffer(s.data) as file.AbstractFile
 
-    let target = str.Str()
-    let jsValue = json.JSONValue(target)
-    jsValue.construct(test).unwrap()
-
+    let js = json.parse(s)
+    if (js.is_err()) {
+        runtime.puts(js.unwrap_err().c_str())
+        return 1
+    }
+    if (js.unwrap() interfaceof str.Str) {
+        let val = js.unwrap()
+        let s2 = dyn_cast<str.Str>(val)
+        runtime.puts(s2.c_str())
+    }
     return 0
 }

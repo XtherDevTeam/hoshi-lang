@@ -38,3 +38,4 @@
 - [x] 改造 Nullable 判断条件，在二元计算式，drop掉结果的Nullable标签
 - [x] dummy_break, dummy_continue在while for block存在多个block时无法完成替换。
 - [x] invoke_virtual由于ensureObject后仍使用arg的属性来判断是否post cleanup导致的memory leak
+- [ ] dyn_cast 匹配到错误typeid

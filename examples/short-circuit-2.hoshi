@@ -1,0 +1,13 @@
+use runtime "runtime"
+
+func main() : int {
+    runtime.puts("Minimal Reproducible Example")
+    let x = '"'
+    if (x != '\0' && (x == ' ' || x == '\n')) {
+        runtime.puts("mre: failed")
+        return 1
+    } else {
+        runtime.puts("mre: success")
+    }
+    return 0
+}

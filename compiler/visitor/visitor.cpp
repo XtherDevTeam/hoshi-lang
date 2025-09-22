@@ -703,6 +703,7 @@ namespace yoi {
 
         // Loop through chained operators, e.g., a || b || c
         for (; op != logicalOrExpr->getOp().end(); ++op) {
+            auto nextConditionBlock = moduleContext->getIRBuilder().createCodeBlock();
             auto exitWithTrueBlock = moduleContext->getIRBuilder().createCodeBlock();
             auto exitWithFalseBlock = moduleContext->getIRBuilder().createCodeBlock();
             auto exitBlock = moduleContext->getIRBuilder().createCodeBlock();
@@ -732,6 +733,8 @@ namespace yoi {
 
                     // Short-circuit if the LHS (or intermediate result) is true
                     moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, exitWithTrueBlock);
+                    moduleContext->getIRBuilder().jumpOp(nextConditionBlock);
+                    moduleContext->getIRBuilder().switchCodeBlock(nextConditionBlock);
 
                     // If not short-circuited, evaluate the RHS
                     auto rhs = visit(*++term);
