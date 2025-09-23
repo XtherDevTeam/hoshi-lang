@@ -3,9 +3,10 @@ use str "str"
 use io "io"
 use file "file"
 use runtime "runtime"
+use hashMap "hashMap"
 
 func main() : int {
-    let s = str.Str("\"Hello, world!\"")
+    let s = str.Str("{\"a\": \"Hello, world!\"}")
 
     let js = json.parse(s)
     if (js.is_err()) {
@@ -13,9 +14,12 @@ func main() : int {
         return 1
     }
     if (js.unwrap() interfaceof str.Str) {
-        let val = js.unwrap()
-        let s2 = dyn_cast<str.Str>(val)
+        let s2 = dyn_cast<str.Str>(js.unwrap())
         runtime.puts(s2.c_str())
+    } elif (js.unwrap() interfaceof hashMap.HashMap<str.Str, json.JSONValue>) {
+        let object = dyn_cast<hashMap.HashMap<str.Str, json.JSONValue> >(js.unwrap())
+        let s = dyn_cast<str.Str>(object[str.Str("a")])
+        runtime.puts(s.c_str())
     }
     return 0
 }

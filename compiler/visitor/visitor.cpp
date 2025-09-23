@@ -1161,8 +1161,9 @@ namespace yoi {
                         yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
                         moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
                         auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, argTypes[0]);
-                        auto interfaceImplIndex = irModule->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex);
+                        auto targetModule = moduleContext->getCompilerContext()->getImportedModule(argTypes[0]->typeAffiliateModule);
+                        auto interfaceImplIndex = targetModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, true, targetModule->identifier);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
                     } catch (const std::exception &) {

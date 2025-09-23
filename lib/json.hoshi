@@ -9,16 +9,10 @@ func always_inline skip_whitespace(s: file.AbstractFile) : none {
     let pos = s.tell()
     let ch = s.getch()
     while (ch != '\0' && (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')) {
-        runtime.puts("Skipping whitespace: ")
-        runtime.runtime_debug_print_int_1(ch as int)
         pos = s.tell()
         ch = s.getch()
     }
-    runtime.puts("Skipping whitespace to position: ")
-    runtime.runtime_debug_print_int_1(pos)
     if (ch != '\0') {
-        runtime.puts("Rewinding to position: ")
-        runtime.runtime_debug_print_int_1(pos)
         s.seek(pos, 0)
     }
 }
@@ -87,6 +81,8 @@ impl str.Str : JSONValue {
                 this.data = buffer
                 this.length = buffer.length
                 this.capacity = buffer.length
+                // read ahead to skip \"
+                stream.getch()
                 return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
             } else {
                 stream.seek(start_pos, 0)
@@ -191,8 +187,7 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
             skip_whitespace(stream)
             
             let key = str.Str()
-            let key_interface = key as JSONValue
-            let key_result = key_interface.construct(stream)
+            let key_result = JSONValue(key).construct(stream)
             if (key_result.is_err()) {
                 return lang.Result<JSONValue, str.Str>.err(key_result.unwrap_err())
             }
@@ -215,20 +210,17 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
             
             if (peek_ch == '"') {
                 let s_val = str.Str()
-                let s_val_interface = s_val as JSONValue
-                let result = s_val_interface.construct(stream)
+                let result = JSONValue(s_val).construct(stream)
                 if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
                 value = result.unwrap()
             } elif (peek_ch == '{') {
                 let h_val = hashMap.HashMap<str.Str, JSONValue>()
-                let h_val_interface = h_val as JSONValue
-                let result = h_val_interface.construct(stream) // Recursive call
+                let result = JSONValue(h_val).construct(stream) // Recursive call
                 if (result.is_err()) { return result }
                 value = result.unwrap()
             } elif ((peek_ch >= '0' && peek_ch <= '9') || peek_ch == '-') {
                 let n_val = Numeric()
-                let n_val_interface = n_val as JSONValue
-                let result = n_val_interface.construct(stream)
+                let result = JSONValue(n_val).construct(stream)
                 if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
                 value = n_val as JSONValue
             } else {
@@ -261,19 +253,16 @@ func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
     let ch = filelike.getch()
     if (ch == '{') {
         let h = hashMap.HashMap<str.Str, JSONValue>()
-        let h_interface = h as JSONValue
         filelike.seek(pos, 0)
-        return h_interface.construct(filelike)
+        return JSONValue(h).construct(filelike)
     } elif (ch == '"') {
         let s = str.Str()
-        let s_interface = s as JSONValue
         filelike.seek(pos, 0)
-        return s_interface.construct(filelike)
+        return JSONValue(s).construct(filelike)
     } elif ((ch >= '0' && ch <= '9') || ch == '-') {
         let n = Numeric()
-        let n_interface = n as JSONValue
         filelike.seek(pos, 0)
-        return n_interface.construct(filelike)
+        return JSONValue(n).construct(filelike)
     } else {
         // future support for arrays, booleans, null would go here
         return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))

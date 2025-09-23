@@ -21,8 +21,6 @@ impl ArrayBuffer {
 
 impl ArrayBuffer : file.AbstractFile {
     read(size: int) : char[] {
-        runtime.puts("reading from offset: ")
-        runtime.runtime_debug_print_int_1(this.current_pos)
         if (size > this.buf.length - this.current_pos) {
             size = this.buf.length - this.current_pos
             let result = new char[size]()
@@ -46,8 +44,6 @@ impl ArrayBuffer : file.AbstractFile {
         return size
     },
     seek(offset: int, whence: int) : int {
-        runtime.puts("seeking to offset: ")
-        runtime.runtime_debug_print_int_1(offset)
         if (whence == 0) {
             this.current_pos = offset
         } elif (whence == 1) {
@@ -85,8 +81,6 @@ impl ArrayBuffer : file.AbstractFile {
         return false
     },
     getch() : char {
-        runtime.puts("reading from offset: ")
-        runtime.runtime_debug_print_int_1(this.current_pos)
         if (this.current_pos >= this.buf.length) {
             return -1
         }
