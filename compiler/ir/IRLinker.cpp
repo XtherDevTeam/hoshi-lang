@@ -235,6 +235,7 @@ namespace yoi {
                     case IR::Opcode::new_struct:
                     case IR::Opcode::new_array_struct:
                     case IR::Opcode::new_dynamic_array_struct:
+                    case IR::Opcode::dyn_cast_struct:
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::new_interface:
