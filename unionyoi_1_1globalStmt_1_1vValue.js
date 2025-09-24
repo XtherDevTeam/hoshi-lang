@@ -9,5 +9,6 @@ var unionyoi_1_1globalStmt_1_1vValue =
     [ "letStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb", null ],
     [ "ptr", "unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba", null ],
     [ "structDefStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#ad4c685cda5e13fdbc4e358861f6fae92", null ],
+    [ "typeAliasStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#ac56456d70cd9e6fcfedcf84ce3abd164", null ],
     [ "useStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#a185f486108c6b985a09070078a604451", null ]
 ];

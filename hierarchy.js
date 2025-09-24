@@ -71,6 +71,7 @@ var hierarchy =
       [ "templateArgSpec", "classyoi_1_1templateArgSpec.html", null ],
       [ "throwStmt", "classyoi_1_1throwStmt.html", null ],
       [ "tryCatchStmt", "classyoi_1_1tryCatchStmt.html", null ],
+      [ "typeAliasStmt", "classyoi_1_1typeAliasStmt.html", null ],
       [ "typeIdExpression", "classyoi_1_1typeIdExpression.html", null ],
       [ "typeSpec", "classyoi_1_1typeSpec.html", null ],
       [ "uniqueExpr", "classyoi_1_1uniqueExpr.html", null ],
@@ -166,6 +167,7 @@ var hierarchy =
       [ "Builder", "classyoi_1_1IRInterfaceInstanceTemplate_1_1Builder.html", null ],
       [ "Builder", "classyoi_1_1IRStructTemplate_1_1Builder.html", null ]
     ] ],
+    [ "IRTypeAlias", "classyoi_1_1IRTypeAlias.html", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html", null ],
     [ "IRVariableTable", "classyoi_1_1IRVariableTable.html", null ],
     [ "Item", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html", null ],

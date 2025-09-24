@@ -6,6 +6,7 @@ var searchData=
   ['throwstmt_3',['throwStmt',['../classyoi_1_1throwStmt.html',1,'yoi']]],
   ['token_4',['token',['../structyoi_1_1lexer_1_1token.html',1,'yoi::lexer']]],
   ['trycatchstmt_5',['tryCatchStmt',['../classyoi_1_1tryCatchStmt.html',1,'yoi']]],
-  ['typeidexpression_6',['typeIdExpression',['../classyoi_1_1typeIdExpression.html',1,'yoi']]],
-  ['typespec_7',['typeSpec',['../classyoi_1_1typeSpec.html',1,'yoi']]]
+  ['typealiasstmt_6',['typeAliasStmt',['../classyoi_1_1typeAliasStmt.html',1,'yoi']]],
+  ['typeidexpression_7',['typeIdExpression',['../classyoi_1_1typeIdExpression.html',1,'yoi']]],
+  ['typespec_8',['typeSpec',['../classyoi_1_1typeSpec.html',1,'yoi']]]
 ];

@@ -58,13 +58,14 @@ var searchData=
   ['irstructdefinition_55',['IRStructDefinition',['../classyoi_1_1IRStructDefinition.html',1,'yoi']]],
   ['irstructtemplate_56',['IRStructTemplate',['../classyoi_1_1IRStructTemplate.html',1,'yoi']]],
   ['irtemplatebuilder_57',['IRTemplateBuilder',['../classyoi_1_1IRTemplateBuilder.html',1,'yoi']]],
-  ['irvaluetype_58',['IRValueType',['../classyoi_1_1IRValueType.html',1,'yoi']]],
-  ['irvariabletable_59',['IRVariableTable',['../classyoi_1_1IRVariableTable.html',1,'yoi']]],
-  ['is_5freflected_60',['is_reflected',['../structmagic__enum_1_1detail_1_1is__reflected.html',1,'magic_enum::detail']]],
-  ['is_5fscoped_5fenum_61',['is_scoped_enum',['../structmagic__enum_1_1detail_1_1is__scoped__enum.html',1,'is_scoped_enum&lt; T, bool &gt;'],['../structmagic__enum_1_1is__scoped__enum.html',1,'is_scoped_enum&lt; T &gt;']]],
-  ['is_5fscoped_5fenum_3c_20t_2c_20true_20_3e_62',['is_scoped_enum&lt; T, true &gt;',['../structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html',1,'magic_enum::detail']]],
-  ['is_5funscoped_5fenum_63',['is_unscoped_enum',['../structmagic__enum_1_1detail_1_1is__unscoped__enum.html',1,'is_unscoped_enum&lt; T, bool &gt;'],['../structmagic__enum_1_1is__unscoped__enum.html',1,'is_unscoped_enum&lt; T &gt;']]],
-  ['is_5funscoped_5fenum_3c_20t_2c_20true_20_3e_64',['is_unscoped_enum&lt; T, true &gt;',['../structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html',1,'magic_enum::detail']]],
-  ['item_65',['Item',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html',1,'yoi::IRFunctionOptimizer::SimulationStack']]],
-  ['iterator_66',['iterator',['../classyoi_1_1enum__range_1_1iterator.html',1,'enum_range&lt; enumT, TSize &gt;::iterator'],['../classyoi_1_1indexTable_1_1iterator.html',1,'indexTable&lt; A, B &gt;::iterator'],['../classyoi_1_1indexTableDeprecated_1_1iterator.html',1,'indexTableDeprecated&lt; A, B &gt;::iterator'],['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html',1,'IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator']]]
+  ['irtypealias_58',['IRTypeAlias',['../classyoi_1_1IRTypeAlias.html',1,'yoi']]],
+  ['irvaluetype_59',['IRValueType',['../classyoi_1_1IRValueType.html',1,'yoi']]],
+  ['irvariabletable_60',['IRVariableTable',['../classyoi_1_1IRVariableTable.html',1,'yoi']]],
+  ['is_5freflected_61',['is_reflected',['../structmagic__enum_1_1detail_1_1is__reflected.html',1,'magic_enum::detail']]],
+  ['is_5fscoped_5fenum_62',['is_scoped_enum',['../structmagic__enum_1_1detail_1_1is__scoped__enum.html',1,'is_scoped_enum&lt; T, bool &gt;'],['../structmagic__enum_1_1is__scoped__enum.html',1,'is_scoped_enum&lt; T &gt;']]],
+  ['is_5fscoped_5fenum_3c_20t_2c_20true_20_3e_63',['is_scoped_enum&lt; T, true &gt;',['../structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html',1,'magic_enum::detail']]],
+  ['is_5funscoped_5fenum_64',['is_unscoped_enum',['../structmagic__enum_1_1detail_1_1is__unscoped__enum.html',1,'is_unscoped_enum&lt; T, bool &gt;'],['../structmagic__enum_1_1is__unscoped__enum.html',1,'is_unscoped_enum&lt; T &gt;']]],
+  ['is_5funscoped_5fenum_3c_20t_2c_20true_20_3e_65',['is_unscoped_enum&lt; T, true &gt;',['../structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html',1,'magic_enum::detail']]],
+  ['item_66',['Item',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html',1,'yoi::IRFunctionOptimizer::SimulationStack']]],
+  ['iterator_67',['iterator',['../classyoi_1_1enum__range_1_1iterator.html',1,'enum_range&lt; enumT, TSize &gt;::iterator'],['../classyoi_1_1indexTable_1_1iterator.html',1,'indexTable&lt; A, B &gt;::iterator'],['../classyoi_1_1indexTableDeprecated_1_1iterator.html',1,'indexTableDeprecated&lt; A, B &gt;::iterator'],['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html',1,'IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::Iterator']]]
 ];

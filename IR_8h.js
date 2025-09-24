@@ -7,6 +7,7 @@ var IR_8h =
     [ "IROperand", "classyoi_1_1IROperand.html", "classyoi_1_1IROperand" ],
     [ "operandValue", "unionyoi_1_1IROperand_1_1operandValue.html", "unionyoi_1_1IROperand_1_1operandValue" ],
     [ "IR", "classyoi_1_1IR.html", "classyoi_1_1IR" ],
+    [ "IRTypeAlias", "classyoi_1_1IRTypeAlias.html", "classyoi_1_1IRTypeAlias" ],
     [ "IRCodeBlock", "classyoi_1_1IRCodeBlock.html", "classyoi_1_1IRCodeBlock" ],
     [ "IRVariableTable", "classyoi_1_1IRVariableTable.html", "classyoi_1_1IRVariableTable" ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html", "classyoi_1_1IRFunctionDefinition" ],

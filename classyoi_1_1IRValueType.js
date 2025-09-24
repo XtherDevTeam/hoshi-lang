@@ -33,6 +33,7 @@ var classyoi_1_1IRValueType =
       [ "foreignInt32Type", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc", null ],
       [ "foreignFloatType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a", null ]
     ] ],
+    [ "IRValueType", "classyoi_1_1IRValueType.html#a6d7221323dc3b6b044bb6d83741fd032", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a2351ecb8c77551226cb2c4bf95de4d04", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a14d684bc00d9849aa7bdab09175d1113", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a5fb044c24e285e0a20f836afd03d145b", null ],

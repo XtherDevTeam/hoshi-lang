@@ -16,5 +16,7 @@ var classyoi_1_1IRModule =
     [ "structTemplateAsts", "classyoi_1_1IRModule.html#a257f8970d5f4221d78b4e493cb6ce659", null ],
     [ "templateImplAsts", "classyoi_1_1IRModule.html#a1395f8069405ee7f5006cf9de8671a35", null ],
     [ "templateInterfaceAsts", "classyoi_1_1IRModule.html#a7f3aaba3b95be6fb0441fc5e593f792f", null ],
-    [ "templateInterfaceImplAsts", "classyoi_1_1IRModule.html#a532c177d55c45a446000a6c59bab1a56", null ]
+    [ "templateInterfaceImplAsts", "classyoi_1_1IRModule.html#a532c177d55c45a446000a6c59bab1a56", null ],
+    [ "typeAliases", "classyoi_1_1IRModule.html#abfae7ef6bd56756f7c3693c64119499a", null ],
+    [ "typeAliasTemplateAsts", "classyoi_1_1IRModule.html#ac51183e902504be6a1d97bdb74a47563", null ]
 ];
