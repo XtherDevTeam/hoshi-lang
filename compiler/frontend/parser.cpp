@@ -1245,6 +1245,7 @@ namespace yoi {
         funcDefStmt *f = nullptr;
         exportDecl *g = nullptr;
         importDecl *h = nullptr;
+        typeAliasStmt *i = nullptr;
         
         lexer::token node_start_token = lex.curToken;
 
@@ -1295,6 +1296,12 @@ namespace yoi {
         parse(h, lex);
         if (h) {
             o = new globalStmt{node_start_token, globalStmt::vKind::importDecl, marco, {h}};
+            return;
+        }
+
+        parse(i, lex);
+        if (i) {
+            o = new globalStmt{node_start_token, globalStmt::vKind::typeAliasStmt, marco, {i}};
             return;
         }
 
@@ -2398,6 +2405,38 @@ namespace yoi {
         lex.scan();
         lex.dropState();
         o = new marcoDescriptor{current_token, pairs};
+    }
+
+    void parse(typeAliasStmt *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kAlias) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        identifierWithDefTemplateArg *lhs;
+        parse(lhs, lex);
+        if (!lhs) {
+            panic(lex.line, lex.col, "expected identifier with definition template arguments in type alias statement");
+            o = nullptr;
+            return;
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::assignSign) {
+            o = nullptr;
+            finalizeAST(lhs);
+            panic(lex.line, lex.col, "expected `=` after identifier in type alias statement");
+            return;
+        }
+        lex.scan();
+        typeSpec *rhs = nullptr;
+        parse(rhs, lex);
+        if (!rhs) {
+            o = nullptr;
+            finalizeAST(lhs);
+            panic(lex.line, lex.col, "expected typeSpec after `=` in type alias statement");
+            return;
+        }
+        o = new typeAliasStmt{node_start_token, lhs, rhs};
     }
 } // namespace yoi
 

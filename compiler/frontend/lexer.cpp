@@ -173,6 +173,8 @@ namespace yoi {
             tok.kind = token::tokenKind::kStatic;
         } else if (tempStr == L"callable") {
             tok.kind = token::tokenKind::kCallable;
+        } else if (tempStr == L"alias") {
+            tok.kind = token::tokenKind::kAlias;
         } else if (tempStr == L"operator") {
             scan();
             return operatorStart();

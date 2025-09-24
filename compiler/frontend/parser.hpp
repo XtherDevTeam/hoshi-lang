@@ -158,6 +158,8 @@ namespace yoi {
     void parse(marcoPair *&o, lexer &lex);
 
     void parse(marcoDescriptor *&o, lexer &lex);
+
+    void parse(typeAliasStmt *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

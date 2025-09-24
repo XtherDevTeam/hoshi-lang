@@ -274,3 +274,5 @@ func parse(s: str.Str) : lang.Result<JSONValue, str.Str> {
     buffer.seek(0, 0)
     return parse(buffer)
 }
+
+alias JSONDict = hashMap.HashMap<str.Str, JSONValue>

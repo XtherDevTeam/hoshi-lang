@@ -1200,6 +1200,43 @@ namespace yoi {
                 }
             }
 
+            // Attempt 5: type alias
+            if (auto it = irModule->typeAliases.find(baseName); it != irModule->typeAliases.end()) {
+                if (it->second.type == IRValueType::valueType::structObject) {
+                    auto targetModule = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
+                    auto structIndex = it->second.typeIndex;
+                    auto structType = targetModule->structTable[structIndex];
+                    moduleContext->getIRBuilder().newStructOp(structIndex, true, targetModule->identifier);
+                    auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (handleInvocationExtern(L"constructor", args, targetModule->identifier, rhs)) {
+                        resolved = true;
+                        moduleContext->getIRBuilder().discardState();
+                    } else {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not resolve constructor for struct '" + wstring2string(baseName) + "'.");
+                    }
+                } else if (it->second.type == IRValueType::valueType::interfaceObject) {
+                    auto targetModuleForInterface = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
+                    moduleContext->getIRBuilder().saveState();
+                    try {
+                        // auto interfaceIndex = targetModuleForInterface->interfaceTable.getIndex(baseName);
+                        auto interfaceIndex = it->second.typeIndex;
+                        auto argTypes = evaluateArguments(args);
+                        yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
+                        moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex, true, targetModuleForInterface->identifier);
+                        auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, argTypes[0]);
+                        auto targetModule = moduleContext->getCompilerContext()->getImportedModule(argTypes[0]->typeAffiliateModule);
+                        auto interfaceImplIndex = targetModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, true, targetModule->identifier);
+                        resolved = true;
+                        moduleContext->getIRBuilder().discardState();
+                    } catch (const std::exception &) {
+                        moduleContext->getIRBuilder().restoreState();
+                    }
+                } else {
+                    panic(first_term->getLine(), first_term->getColumn(), "invalid type alias type");
+                }
+            }
+
             if (!resolved) {
                 panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not resolve call to '" + wstring2string(baseName) + "'. No matching function, constructor, or template found for the given arguments.");
             }
@@ -1427,6 +1464,11 @@ namespace yoi {
 
     IRValueType visitor::parseTypeSpec(yoi::identifier *identifier) {
         auto &typeName = identifier->node.strVal;
+        try {
+            return irModule->typeAliases.at(typeName);
+        } catch (std::out_of_range &e) {
+            // let it go
+        }
         try {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{
@@ -1950,6 +1992,10 @@ namespace yoi {
                 visit(globalStmt->value.exportDeclVal);
                 break;
             }
+            case globalStmt::vKind::typeAliasStmt: {
+                visit(globalStmt->value.typeAliasStmtVal);
+                break;
+            }
             default: {
                 panic(globalStmt->getLine(), globalStmt->getColumn(), "Unsupported global statement type");
             }
@@ -2147,6 +2193,9 @@ namespace yoi {
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule) {
         auto mod = moduleContext->getCompilerContext()->getImportedModule(targetModule);
+        if (auto it = mod->typeAliases.find(identifier->get().strVal); it != mod->typeAliases.end()) {
+            return it->second;
+        }
         auto ex = getExternEntry(targetModule, identifier->node.strVal);
         if (ex.type == IRExternEntry::externType::structType)
             return {IRValueType::valueType::structObject, ex.affiliateModule, ex.itemIndex};
@@ -4066,5 +4115,19 @@ namespace yoi {
             }
         }
         return satisfied; 
+    }
+
+    void visitor::visit(yoi::typeAliasStmt *typeAlias) {
+        if (typeAlias->lhs->hasDefTemplateArg()) {
+            panic(typeAlias->getLine(), typeAlias->getColumn(), "type alias template not implemented yet");
+        } else {
+            auto aliasName = typeAlias->lhs->getId().node.strVal;
+            auto rhs = parseTypeSpec(typeAlias->rhs);
+            if (irModule->typeAliases.contains(aliasName)) {
+                panic(typeAlias->getLine(), typeAlias->getColumn(), "Redefinition of type alias: " + yoi::wstring2string(aliasName));
+            } else {
+                irModule->typeAliases[aliasName] = rhs;
+            }
+        }
     }
 } // namespace yoi

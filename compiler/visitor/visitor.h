@@ -246,6 +246,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::importDecl *importDecl);
 
+        void visit(yoi::typeAliasStmt *typeAlias);
+
         void visit(yoi::globalStmt *globalStmt);
 
         yoi::indexT visit(yoi::ifStmt *ifStmt);

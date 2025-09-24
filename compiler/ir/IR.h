@@ -108,6 +108,8 @@ namespace yoi {
 
         std::set<ValueAttr> attributes;
 
+        IRValueType();
+
         IRValueType(valueType type);
 
         IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex);
@@ -340,6 +342,12 @@ namespace yoi {
         IR(Opcode opcode, const yoi::vec<IROperand> &operands, IRDebugInfo debugInfo);
 
         yoi::wstr to_string() const;
+    };
+
+    class IRTypeAlias {
+        public:
+        yoi::wstr name;
+        std::shared_ptr<IRValueType> type;
     };
 
     class IRCodeBlock {
@@ -709,6 +717,8 @@ namespace yoi {
         std::map<yoi::wstr, yoi::interfaceDefStmt *> templateInterfaceAsts;
         std::map<yoi::wstr, yoi::implStmt *> templateImplAsts; // Maps struct template name to its impl block
         std::map<yoi::wstr, yoi::vec<yoi::implStmt *>> templateInterfaceImplAsts;
+        std::map<yoi::wstr, yoi::typeAliasStmt *> typeAliasTemplateAsts;
+        std::map<yoi::wstr, IRValueType> typeAliases;
 
         IRStringLiteralPool stringLiteralPool;
 

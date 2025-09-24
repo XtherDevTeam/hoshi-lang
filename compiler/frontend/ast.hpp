@@ -178,6 +178,14 @@ namespace yoi {
 
     class marcoDescriptor;
 
+    class typeAliasStmt;
+
+    class typeAliasStmt : public AST {
+        public:
+        yoi::identifierWithDefTemplateArg *lhs{};
+        yoi::typeSpec *rhs{};
+    };
+
     class marcoPair : public AST {
     public:
         lexer::token identifier;
@@ -701,6 +709,7 @@ namespace yoi {
             letStmt,
             importDecl,
             exportDecl,
+            typeAliasStmt
         } kind;
 
         marcoDescriptor *marco;
@@ -714,6 +723,7 @@ namespace yoi {
             funcDefStmt *funcDefStmtVal;
             importDecl *importDeclVal;
             exportDecl *exportDeclVal;
+            typeAliasStmt *typeAliasStmtVal;
             void *ptr;
 
             template<typename T>
@@ -1111,6 +1121,8 @@ namespace yoi {
     void finalizeAST(marcoPair *ptr);
 
     void finalizeAST(marcoDescriptor *ptr);
+
+    void finalizeAST(typeAliasStmt *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

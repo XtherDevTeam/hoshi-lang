@@ -105,6 +105,7 @@ namespace yoi {
                 kCallable,
                 kThreeDots,
                 kInterfaceOf,
+                kAlias,
                 eof,
             } kind;
 

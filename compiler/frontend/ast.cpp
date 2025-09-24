@@ -1128,4 +1128,9 @@ namespace yoi {
     void finalizeAST(marcoPair *ptr) {
         delete ptr;
     }
+
+    void finalizeAST(typeAliasStmt *ptr) {
+        delete ptr->lhs;
+        delete ptr->rhs;
+    }
 } // namespace yoi

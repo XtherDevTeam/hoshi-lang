@@ -1500,4 +1500,6 @@ namespace yoi {
     void IRBuilder::pushLoopContext(yoi::indexT breakTarget, yoi::indexT continueTarget) {
         loopContext.push_back({breakTarget, continueTarget});
     }
+    
+    IRValueType::IRValueType() : type(valueType::none), typeAffiliateModule(0), typeIndex(0), dimensions() {}
 } // namespace yoi

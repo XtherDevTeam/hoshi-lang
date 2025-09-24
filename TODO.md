@@ -28,6 +28,7 @@
     - [ ] IRValueType改造，支持附加信息
 - [x] 加入左值对象和将亡对象判断和处理逻辑
 - [ ] 在json库加入对 list 和 null 的处理
+- [ ] 为type alias加入模板
 
 # Known issues
 
