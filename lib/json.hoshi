@@ -4,6 +4,7 @@ use file "file"
 use lang "builtin"
 use io "io"
 use runtime "runtime"
+use vec "vec"
 
 func always_inline skip_whitespace(s: file.AbstractFile) : none {
     let pos = s.tell()
@@ -28,6 +29,24 @@ interface JSONSerializable {
 
 interface JSONDeserializable {
     from_json(json: JSONValue) : lang.Result<JSONValue, str.Str>
+}
+
+alias JSONDict = hashMap.HashMap<str.Str, JSONValue>
+
+alias JSONList = vec.Vec<JSONValue>
+
+struct JSONNull {
+    to_string() : str.Str,
+    constructor()
+}
+
+impl JSONNull {
+    constructor() {
+        return this
+    },
+    to_string() : str.Str {
+        return str.Str("null")
+    }
 }
 
 struct Numeric {
@@ -56,6 +75,43 @@ impl Numeric {
         return 0
     }
 }
+
+/* forward-declaration */
+
+impl str.Str : JSONValue
+impl Numeric : JSONValue
+impl JSONNull : JSONValue
+impl JSONDict : JSONValue
+impl JSONList : JSONValue
+
+func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+    // evaluate the start of type to determine the type of JSON constructor to be used
+    skip_whitespace(filelike)
+    let pos = filelike.tell()
+    let ch = filelike.getch()
+    if (ch == '{') {
+        filelike.seek(pos, 0)
+        return JSONValue(JSONDict()).construct(filelike)
+    } elif (ch == '"') {
+        filelike.seek(pos, 0)
+        return JSONValue(str.Str()).construct(filelike)
+    } elif ((ch >= '0' && ch <= '9') || ch == '-') {
+        filelike.seek(pos, 0)
+        return JSONValue(Numeric()).construct(filelike)
+    } elif (ch == '[') {
+        filelike.seek(pos, 0)
+        return JSONValue(JSONList()).construct(filelike)
+    } elif (ch == 'n') {
+        // null
+        filelike.seek(pos, 0)
+        return JSONValue(JSONNull()).construct(filelike)
+    } else {
+        // future support for arrays, booleans, null would go here
+        return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))
+    }
+}
+
+/* actual implementation */
 
 impl str.Str : JSONValue {
     to_string() : str.Str {
@@ -140,13 +196,30 @@ impl Numeric : JSONValue {
         stream.seek(start_pos, 0)
         let buffer = stream.read(read_len)
         
-        this.data := str.Str(buffer)
+        this.data = str.Str(buffer)
         this.type = type
         return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
 }
 
-impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
+impl JSONNull : JSONValue {
+    to_string() : str.Str {
+        return str.Str("JSONValue")
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        if (stream.getch() != 'n') {
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'n' at beginning of null"))
+        }
+        let next3Char = stream.read(3)
+        if (str.Str(next3Char) != "ull") {
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'ull' after 'n' in null"))
+        }
+        // unget one ch
+        return lang.Result<JSONValue, str.Str>.ok(JSONNull() as JSONValue)
+    }
+}
+
+impl JSONDict : JSONValue {
     to_string() : str.Str {
         let s = str.Str("{")
         let keys_arr = this.keys()
@@ -202,33 +275,12 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
             skip_whitespace(stream)
             
             // parse value by peeking at the next character
-            let value_pos = stream.tell()
-            let peek_ch = stream.getch()
-            stream.seek(value_pos, 0)
             
-            let value : JSONValue = null
-            
-            if (peek_ch == '"') {
-                let s_val = str.Str()
-                let result = JSONValue(s_val).construct(stream)
-                if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
-                value = result.unwrap()
-            } elif (peek_ch == '{') {
-                let h_val = hashMap.HashMap<str.Str, JSONValue>()
-                let result = JSONValue(h_val).construct(stream) // Recursive call
-                if (result.is_err()) { return result }
-                value = result.unwrap()
-            } elif ((peek_ch >= '0' && peek_ch <= '9') || peek_ch == '-') {
-                let n_val = Numeric()
-                let result = JSONValue(n_val).construct(stream)
-                if (result.is_err()) { return lang.Result<JSONValue, str.Str>.err(result.unwrap_err()) }
-                value = n_val as JSONValue
-            } else {
-                // future support for arrays, booleans, null would go here
-                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))
+            let resultValue = parse(stream)
+            if (resultValue.is_err()) {
+                return resultValue
             }
-            
-            this[key] = value
+            this[key] = resultValue.unwrap()
             
             skip_whitespace(stream)
             
@@ -246,26 +298,46 @@ impl hashMap.HashMap<str.Str, JSONValue> : JSONValue {
     }
 }
 
-func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
-    // evaluate the start of type to determine the type of JSON constructor to be used
-    skip_whitespace(filelike)
-    let pos = filelike.tell()
-    let ch = filelike.getch()
-    if (ch == '{') {
-        let h = hashMap.HashMap<str.Str, JSONValue>()
-        filelike.seek(pos, 0)
-        return JSONValue(h).construct(filelike)
-    } elif (ch == '"') {
-        let s = str.Str()
-        filelike.seek(pos, 0)
-        return JSONValue(s).construct(filelike)
-    } elif ((ch >= '0' && ch <= '9') || ch == '-') {
-        let n = Numeric()
-        filelike.seek(pos, 0)
-        return JSONValue(n).construct(filelike)
-    } else {
-        // future support for arrays, booleans, null would go here
-        return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))
+impl JSONList : JSONValue {
+    to_string() : str.Str {
+        /*not implemented*/
+        return str.Str("JSONValue")
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        skip_whitespace(stream)
+        if (stream.getch() != '[') {
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected '[' at beginning of array"))
+        }
+        this.clear()
+        skip_whitespace(stream)
+        // handle empty array []
+        let pos = stream.tell()
+        if (stream.getch() == ']') {
+            return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
+        }
+        stream.seek(pos, 0)
+        // loop for values
+        while (true) {
+            skip_whitespace(stream)
+            let value_pos = stream.tell()
+            let peek_ch = stream.getch()
+            stream.seek(value_pos, 0)
+            let resultValue = parse(stream)
+            if (resultValue.is_err()) {
+                return resultValue
+            }
+            
+            this.push(resultValue.unwrap())
+            skip_whitespace(stream)
+            let separator = stream.getch()
+            if (separator == ']') {
+                break // End of array
+            }
+            if (separator != ',') {
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected ',' or ']' after value in array"))
+            }
+        }
+        return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
 }
 
@@ -274,5 +346,3 @@ func parse(s: str.Str) : lang.Result<JSONValue, str.Str> {
     buffer.seek(0, 0)
     return parse(buffer)
 }
-
-alias JSONDict = hashMap.HashMap<str.Str, JSONValue>

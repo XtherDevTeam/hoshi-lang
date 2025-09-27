@@ -1145,13 +1145,7 @@ namespace yoi {
         // Now parse the inner block
         parse(inner, lex);
         if (!inner) {
-           
-            if (first) finalizeAST(first);
-            finalizeAST(second);
-            // Drop the state from the beginning as parsing failed to complete the 'impl' rule
-            lex.dropState();
-            panic(lex.line, lex.col, "expected implInner after interface or struct name");
-            o = nullptr;
+            o = new implStmt{node_start_token, first, second, nullptr};
             return;
         }
 

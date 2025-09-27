@@ -6,7 +6,7 @@ use runtime "runtime"
 use hashMap "hashMap"
 
 func main() : int {
-    let s = str.Str("{\"a\": \"Hello, world!\"}")
+    let s = str.Str("{\"a\": \"Hello, world!\", \"b\": [1, 2, 3], \"c\": null}")
 
     let js = json.parse(s)
     if (js.is_err()) {
@@ -20,6 +20,15 @@ func main() : int {
         let object = dyn_cast<json.JSONDict>(js.unwrap())
         let s = dyn_cast<str.Str>(object[str.Str("a")])
         runtime.puts(s.c_str())
+        let l = dyn_cast<json.JSONList>(object[str.Str("b")])
+        for (let i = 0; i < l.length; i += 1) {
+            let ss = dyn_cast<json.Numeric>(l[i])
+            runtime.puts(ss.data.c_str())
+        }
+        let n = dyn_cast<json.JSONNull>(object[str.Str("c")])
+        if (n != null) {
+            runtime.puts("c is null")
+        }
     }
     return 0
 }

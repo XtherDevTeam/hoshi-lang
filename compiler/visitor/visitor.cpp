@@ -1802,77 +1802,93 @@ namespace yoi {
             auto interfaceImplName =
                 getInterfaceImplName(interfaceName.first, srcType);
 
-            auto interfaceImplIndex = targetedModule->interfaceImplementationTable.put(interfaceImplName, {});
-            IRInterfaceImplementationDefinition::Builder builder;
-            builder.setName(interfaceImplName);
-            builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
-            builder.setImplInterfaceIndex(interfaceName.first.second);
+            
+            yoi::indexT interfaceImplIndex{};
+            try {
+                interfaceImplIndex = targetedModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                if (targetedModule->interfaceImplementationTable[interfaceImplIndex]) {
+                    panic(
+                        implStmt->getLine(),
+                        implStmt->getColumn(),
+                        "Redefinition of interface implementation: " + wstring2string(interfaceImplName));
+                }
+            } catch (std::out_of_range &e) {
+                interfaceImplIndex = targetedModule->interfaceImplementationTable.put(interfaceImplName, {});
+            }
+            if (implStmt->inner) {
+                IRInterfaceImplementationDefinition::Builder builder;
+                builder.setName(interfaceImplName);
+                builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
+                builder.setImplInterfaceIndex(interfaceName.first.second);
 
-            std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
+                std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
-            for (auto &i : implStmt->getInner().getInner()) {
-                yoi_assert(!i->isConstructor(),
-                           i->getLine(),
-                           i->getColumn(),
-                           "Constructor cannot be implemented for interface");
+                for (auto &i : implStmt->getInner().getInner()) {
+                    yoi_assert(!i->isConstructor(),
+                            i->getLine(),
+                            i->getColumn(),
+                            "Constructor cannot be implemented for interface");
 
-                bool isVaridic = false;
+                    bool isVaridic = false;
 
-                auto methodName = i->getMethod().getName().get().strVal;
-                IRFunctionDefinition::Builder methodBuilder;
+                    auto methodName = i->getMethod().getName().get().strVal;
+                    IRFunctionDefinition::Builder methodBuilder;
 
-                methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
-                methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
-                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+                    methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+                    methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
+                    methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                    methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
 
-                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                    yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
-                const auto& thisType = srcType;
-                if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end())
-                    methodBuilder.addArgument(L"this", thisType);
+                    const auto& thisType = srcType;
+                    if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end())
+                        methodBuilder.addArgument(L"this", thisType);
 
-                for (auto &arg : i->getMethod().getArgs().get()) {
-                    if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
-                        isVaridic = true;
-                        methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
-                        auto argName = arg->getId().node.strVal;
-                        auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                    for (auto &arg : i->getMethod().getArgs().get()) {
+                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            isVaridic = true;
+                            methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
+                            auto argName = arg->getId().node.strVal;
+                            auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                            methodBuilder.addArgument(argName, argType);
+                            argTypes.push_back(argType);
+                            break;
+                        }
+                        auto argName = arg->getId().get().strVal;
+                        auto argType = managedPtr(parseTypeSpec(arg->spec));
                         methodBuilder.addArgument(argName, argType);
                         argTypes.push_back(argType);
-                        break;
                     }
-                    auto argName = arg->getId().get().strVal;
-                    auto argType = managedPtr(parseTypeSpec(arg->spec));
-                    methodBuilder.addArgument(argName, argType);
-                    argTypes.push_back(argType);
+                    auto uniq = getFuncUniqueNameStr(argTypes);
+                    methodBuilder.setReturnType(managedPtr(parseTypeSpec(i->getMethod().resultType)));
+                    methodBuilder.setName(structBaseName + L"::" + methodName + uniq + L"interfaceImpl#" + interfaceImplName);
+
+                    auto func = methodBuilder.yield();
+                    auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
+                    /*builder.addVirtualMethod(
+                        methodName + uniq,
+                        managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));*/
+
+                    virtualMethodMap[methodName + getFuncUniqueNameStr(argTypes, true)] = {methodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex})};
+
+                    moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
+                    moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+                    moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                    visit(i->getMethod().block, true);
+                    moduleContext->getIRBuilder().yield();
+                    moduleContext->popIRBuilder();
                 }
-                auto uniq = getFuncUniqueNameStr(argTypes);
-                methodBuilder.setReturnType(managedPtr(parseTypeSpec(i->getMethod().resultType)));
-                methodBuilder.setName(structBaseName + L"::" + methodName + uniq + L"interfaceImpl#" + interfaceImplName);
 
-                auto func = methodBuilder.yield();
-                auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
-                /*builder.addVirtualMethod(
-                    methodName + uniq,
-                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));*/
-
-                virtualMethodMap[methodName + getFuncUniqueNameStr(argTypes, true)] = {methodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex})};
-
-                moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
-                moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
-                moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-                visit(i->getMethod().block, true);
-                moduleContext->getIRBuilder().yield();
-                moduleContext->popIRBuilder();
+                for (auto &method: targetInterface->methodMap) {
+                    yoi_assert(virtualMethodMap.contains(method.first), implStmt->getLine(), implStmt->getColumn(), "Method '" + wstring2string(method.first) + "' not implemented for interface '" + wstring2string(targetInterface->name) + "'");
+                    builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
+                }
+                
+                targetedModule->interfaceImplementationTable[interfaceImplIndex] = builder.yield();
+            } else {
+                // forward-declaration
             }
-
-            for (auto &method: targetInterface->methodMap) {
-                yoi_assert(virtualMethodMap.contains(method.first), implStmt->getLine(), implStmt->getColumn(), "Method '" + wstring2string(method.first) + "' not implemented for interface '" + wstring2string(targetInterface->name) + "'");
-                builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
-            }
-            
-            targetedModule->interfaceImplementationTable[interfaceImplIndex] = builder.yield();
         } else {
             indexT structIndex;
             try {
@@ -3593,62 +3609,74 @@ namespace yoi {
             return; // Already specialized and created.
         }
 
-        auto implIndex = targetedModule->interfaceImplementationTable.put_create(implName, nullptr);
-
-        IRInterfaceImplementationDefinition::Builder builder;
-        builder.setName(implName);
-        builder.setImplStructIndex({concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex});
-        builder.setImplInterfaceIndex(interfaceSrcPair.second);
-
-        std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
-
-        for (auto &methodNode : implAst->getInner().getInner()) {
-            yoi_assert(!methodNode->isConstructor(), methodNode->getLine(), methodNode->getColumn(), "Only methods are allowed in interface implementations.");
-            auto &methodAst = methodNode->getMethod();
-
-            IRFunctionDefinition::Builder methodBuilder;
-            methodBuilder.setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
-            methodBuilder.attrs = getFunctionAttributes(methodAst.attrs);
-            methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-            methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
-            
-            yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
-            
-            if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end()) {
-                methodBuilder.addArgument(L"this", concreteStructType);
+        yoi::indexT implIndex{};
+        try {
+            implIndex = targetedModule->interfaceImplementationTable.getIndex(implName);
+            if (targetedModule->interfaceImplementationTable[implIndex]) {
+                panic(implAst->getLine(), implAst->getColumn(), "Redefinition of interface implementation: " + yoi::wstring2string(implName));
             }
+        } catch (std::out_of_range &e) {
+            implIndex = targetedModule->interfaceImplementationTable.put_create(implName, nullptr);
+        }
 
-            for (auto &arg : methodAst.getArgs().get()) {
-                auto specializedArgType = managedPtr(parseTypeSpec(arg->spec));
-                methodBuilder.addArgument(arg->getId().get().strVal, specializedArgType);
-                specializedArgTypes.push_back(specializedArgType);
+        if (implAst->inner) {
+            IRInterfaceImplementationDefinition::Builder builder;
+            builder.setName(implName);
+            builder.setImplStructIndex({concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex});
+            builder.setImplInterfaceIndex(interfaceSrcPair.second);
+
+            std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
+
+            for (auto &methodNode : implAst->getInner().getInner()) {
+                yoi_assert(!methodNode->isConstructor(), methodNode->getLine(), methodNode->getColumn(), "Only methods are allowed in interface implementations.");
+                auto &methodAst = methodNode->getMethod();
+
+                IRFunctionDefinition::Builder methodBuilder;
+                methodBuilder.setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
+                methodBuilder.attrs = getFunctionAttributes(methodAst.attrs);
+                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+                
+                yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
+                
+                if (std::find(methodBuilder.attrs.begin(), methodBuilder.attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) == methodBuilder.attrs.end()) {
+                    methodBuilder.addArgument(L"this", concreteStructType);
+                }
+
+                for (auto &arg : methodAst.getArgs().get()) {
+                    auto specializedArgType = managedPtr(parseTypeSpec(arg->spec));
+                    methodBuilder.addArgument(arg->getId().get().strVal, specializedArgType);
+                    specializedArgTypes.push_back(specializedArgType);
+                }
+                
+                auto uniq = getFuncUniqueNameStr(specializedArgTypes);
+                auto baseMethodName = methodAst.getName().get().strVal;
+                
+                methodBuilder.setReturnType(managedPtr(parseTypeSpec(methodAst.resultType)));
+                methodBuilder.setName(specializedStructName + L"::" + baseMethodName + uniq);
+
+                auto func = methodBuilder.yield();
+                auto funcIndex = irModule->functionTable.put_create(func->name, func);
+
+                moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+                moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
+                moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+                visit(methodAst.block, true);
+                moduleContext->getIRBuilder().yield();
+                moduleContext->popIRBuilder();
+                virtualMethodMap[baseMethodName + getFuncUniqueNameStr(specializedArgTypes, true)] = {baseMethodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex})};
+            }
+            for (auto &method : targetInterface->methodMap) {
+                yoi_assert(virtualMethodMap.contains(method.first), implAst->getLine(), implAst->getColumn(), "Interface method not found in implementation: " + wstring2string(method.first));
+                builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
             }
             
-            auto uniq = getFuncUniqueNameStr(specializedArgTypes);
-            auto baseMethodName = methodAst.getName().get().strVal;
-            
-            methodBuilder.setReturnType(managedPtr(parseTypeSpec(methodAst.resultType)));
-            methodBuilder.setName(specializedStructName + L"::" + baseMethodName + uniq);
+            // popModuleContext();
 
-            auto func = methodBuilder.yield();
-            auto funcIndex = irModule->functionTable.put_create(func->name, func);
-
-            moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
-            moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
-            moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-            visit(methodAst.block, true);
-            moduleContext->getIRBuilder().yield();
-            moduleContext->popIRBuilder();
-            virtualMethodMap[baseMethodName + getFuncUniqueNameStr(specializedArgTypes, true)] = {baseMethodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, currentModuleIndex, funcIndex})};
+            targetedModule->interfaceImplementationTable[implIndex] = builder.yield();
+        } else {
+            // forward-declaration
         }
-        for (auto &method : targetInterface->methodMap) {
-            yoi_assert(virtualMethodMap.contains(method.first), implAst->getLine(), implAst->getColumn(), "Interface method not found in implementation: " + wstring2string(method.first));
-            builder.addVirtualMethod(virtualMethodMap[method.first].first, virtualMethodMap[method.first].second);
-        }
-        
-        // popModuleContext();
-
-        targetedModule->interfaceImplementationTable[implIndex] = builder.yield();
     }
 
     visitor::OverloadResult
