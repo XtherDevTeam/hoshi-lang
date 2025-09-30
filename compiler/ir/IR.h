@@ -719,6 +719,7 @@ namespace yoi {
         std::map<yoi::wstr, yoi::vec<yoi::implStmt *>> templateInterfaceImplAsts;
         std::map<yoi::wstr, yoi::typeAliasStmt *> typeAliasTemplateAsts;
         std::map<yoi::wstr, IRValueType> typeAliases;
+        std::map<yoi::wstr, yoi::vec<yoi::indexT>> functionOverloadIndexies;
 
         IRStringLiteralPool stringLiteralPool;
 

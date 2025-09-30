@@ -1555,7 +1555,8 @@ namespace yoi {
 
             auto func = builder.yield();
 
-            irModule->functionTable.put(builder.name, func);
+            auto funcIndex = irModule->functionTable.put(builder.name, func);
+            irModule->functionOverloadIndexies[funcName.getId().node.strVal].push_back(funcIndex);
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
             moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
@@ -1674,7 +1675,9 @@ namespace yoi {
                         constructorBuilder.setName(structName + L"::" + mangledName);
 
                         auto func = constructorBuilder.yield();
-                        builder.addMethod(mangledName, irModule->functionTable.put_create(func->name, func));
+                        auto funcIndex = irModule->functionTable.put_create(func->name, func);
+                        builder.addMethod(mangledName, funcIndex);
+                        irModule->functionOverloadIndexies[structName + L"::constructor"].push_back(funcIndex);
                         break;
                     }
                     case 2: {
@@ -1715,7 +1718,9 @@ namespace yoi {
                         auto mangledName = methodName + uniq;
                         methodBuilder.setName(structName + L"::" + mangledName);
                         auto func = methodBuilder.yield();
-                        builder.addMethod(mangledName, irModule->functionTable.put_create(func->name, func));
+                        auto funcIndex = irModule->functionTable.put_create(func->name, func);
+                        builder.addMethod(mangledName, funcIndex);
+                        irModule->functionOverloadIndexies[structName + L"::" + methodName].push_back(funcIndex);
                         break;
                     }
                 }
@@ -1866,10 +1871,10 @@ namespace yoi {
 
                     auto func = methodBuilder.yield();
                     auto funcIndex = targetedModule->functionTable.put_create(func->name, func);
+                    targetedModule->functionOverloadIndexies[structBaseName + L"::" + methodName + L"interfaceImpl#" + interfaceImplName].push_back(funcIndex);
                     /*builder.addVirtualMethod(
                         methodName + uniq,
                         managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex}));*/
-
                     virtualMethodMap[methodName + getFuncUniqueNameStr(argTypes, true)] = {methodName + uniq, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, targetModule, funcIndex})};
 
                     moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), irModule, func});
@@ -2659,7 +2664,6 @@ namespace yoi {
         IRFunctionDefinition::Builder builder;
 
         builder.setDebugInfo({targetedModule->modulePath, astNode->getLine(), astNode->getColumn()});
-        builder.setName(specializedName);
 
         // Create specialization context
         IRTemplateBuilder specializationContext;
@@ -2673,15 +2677,19 @@ namespace yoi {
         moduleContext->pushTemplateBuilder(specializationContext);
 
         // Specialize arguments and return type
+        yoi::vec<std::shared_ptr<IRValueType>> paramTypes;
         for (const auto &argPair : astNode->getArgs().get()) {
             auto argName = argPair->getId().get().strVal;
             auto argType = managedPtr(parseTypeSpec(&argPair->getSpec()));
             builder.addArgument(argName, argType);
+            paramTypes.push_back(argType);
         }
+        builder.setName(specializedName + getFuncUniqueNameStr(paramTypes));
         builder.setReturnType(managedPtr(parseTypeSpec(&astNode->getResultType())));
 
         auto specializedFunc = builder.yield();
-        auto funcIndex = targetedModule->functionTable.put_create(specializedName, specializedFunc);
+        auto funcIndex = targetedModule->functionTable.put_create(specializedName + getFuncUniqueNameStr(paramTypes), specializedFunc);
+        targetedModule->functionOverloadIndexies[specializedName].push_back(funcIndex);
 
         // Visit the body to generate IR
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), targetedModule, specializedFunc});
@@ -2852,11 +2860,12 @@ namespace yoi {
         }
 
         yoi::wstr specializedMethodName =
-            specializedStructName + L"::" + baseMethodName + getFuncUniqueNameStr(specializedArgTypes);
-        funcBuilder.setName(specializedMethodName);
+            specializedStructName + L"::" + baseMethodName;
+        funcBuilder.setName(specializedMethodName + getFuncUniqueNameStr(specializedArgTypes));
 
         auto specializedFunc = funcBuilder.yield();
-        auto funcIndex = targetedModule->functionTable.put_create(specializedMethodName, specializedFunc);
+        auto funcIndex = targetedModule->functionTable.put_create(specializedMethodName + getFuncUniqueNameStr(specializedArgTypes), specializedFunc);
+        targetedModule->functionOverloadIndexies[specializedMethodName].push_back(funcIndex);
 
         moduleContext->popTemplateBuilder();
         return {funcIndex, baseMethodName + getFuncUniqueNameStr(specializedArgTypes)};
@@ -3292,7 +3301,8 @@ namespace yoi {
         };
 
         yoi::wstr prefix = structContext ? structContext->name + L"::" + baseName : baseName;
-        for (const auto &[key, value] : targetedModule->functionTable) {
+        for (const auto it : targetedModule->functionOverloadIndexies[prefix]) {
+            const auto &key = targetedModule->functionTable.getKey(it);
             if (key.starts_with(prefix)) {
                 if (findVariadicMatch(key, structContext != nullptr))
                     return result;
@@ -3657,6 +3667,7 @@ namespace yoi {
 
                 auto func = methodBuilder.yield();
                 auto funcIndex = irModule->functionTable.put_create(func->name, func);
+                irModule->functionOverloadIndexies[specializedStructName + L"::" + baseMethodName].emplace_back(funcIndex);
 
                 moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
                 moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
@@ -3731,7 +3742,8 @@ namespace yoi {
             return false;
         };
 
-        for (const auto &[key, value] : targetedModule->functionTable) {
+        for (const auto it : targetedModule->functionOverloadIndexies[baseName]) {
+            const auto &key = targetedModule->functionTable.getKey(it);
             if (key.starts_with(baseName)) {
                 if (findVariadicMatch(key))
                     return result;
@@ -3920,6 +3932,7 @@ namespace yoi {
         callableBuilder.setName(structName + L"::operator()" + getFuncUniqueNameStr(argTypes));
         auto callableFunc = callableBuilder.yield();
         auto callableFuncIndex = irModule->functionTable.put_create(callableFunc->name, callableFunc);
+        irModule->functionOverloadIndexies[structName + L"::operator()"].push_back(callableFuncIndex);
         builder.addMethod(L"operator()" + getFuncUniqueNameStr(argTypes), callableFuncIndex);
         
         // add captured variables as fields
@@ -3948,6 +3961,7 @@ namespace yoi {
         constructorBuilder.setName(structName + L"::constructor" + getFuncUniqueNameStr(argTypes));
         auto constructorFunc = constructorBuilder.yield();
         auto constructorFuncIndex = irModule->functionTable.put_create(constructorFunc->name, constructorFunc);
+        irModule->functionOverloadIndexies[structName + L"::constructor"].push_back(constructorFuncIndex);
         builder.addMethod(L"constructor" + getFuncUniqueNameStr(argTypes), constructorFuncIndex);
 
         // now we add the struct to the module
