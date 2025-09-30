@@ -1,5 +1,7 @@
 var NAVTREEINDEX13 =
 {
+"md_docs_2Callable_01_6_01Lambda.html#autotoc_md12":[2,1,1],
+"md_docs_2Callable_01_6_01Lambda.html#autotoc_md13":[2,2],
 "md_docs_2Callable_01_6_01Lambda.html#autotoc_md8":[2,0],
 "md_docs_2Callable_01_6_01Lambda.html#autotoc_md9":[2,0,0],
 "md_docs_2Direct_01Assignment.html":[3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "namespaceyoi.html#a091b106e7d8a560a9ebce468e0d7586e":[16,0,1,165],
 "namespaceyoi.html#a0b2ef8e68d038ee3fa1314c428a16399":[16,0,1,141],
 "namespaceyoi.html#a0dae1c7c6f5a6f2893134e06ba2f6808":[16,0,1,143],
-"namespaceyoi.html#a0e820800c4ca90258ce64bea7bcbe5f3":[16,0,1,239],
-"namespaceyoi.html#a0f18b1f65be512f512f24b847704ba55":[16,0,1,176],
-"namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd":[16,0,1,201]
+"namespaceyoi.html#a0e820800c4ca90258ce64bea7bcbe5f3":[16,0,1,239]
 };
