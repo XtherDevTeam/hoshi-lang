@@ -1,5 +1,7 @@
 var NAVTREEINDEX19 =
 {
+"unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#acf5e9e3964380dd92ca4dd1939a22b9a":[17,0,1,84,1,0,8],
+"unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#acf5e9e3964380dd92ca4dd1939a22b9a":[16,0,1,84,1,0,8],
 "unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#adddb5c5c544cb46b2b0513da93eee2f5":[16,0,1,84,1,0,1],
 "unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#adddb5c5c544cb46b2b0513da93eee2f5":[17,0,1,84,1,0,1],
 "utfutils_8hpp.html":[18,0,4,4],

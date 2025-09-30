@@ -4,6 +4,7 @@ var classyoi_1_1IRModule =
     [ "compiled", "classyoi_1_1IRModule.html#aea0f7db75b1a951e55a41705d88c694e", null ],
     [ "externTable", "classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d", null ],
     [ "funcTemplateAsts", "classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899", null ],
+    [ "functionOverloadIndexies", "classyoi_1_1IRModule.html#a1871de3e1c36c3f5f0314c119e143acc", null ],
     [ "functionTable", "classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f", null ],
     [ "globalVariables", "classyoi_1_1IRModule.html#a5ff575527eac5139bb55573da0f2869b", null ],
     [ "identifier", "classyoi_1_1IRModule.html#aafeee226f22bbc24a207d3378738842b", null ],

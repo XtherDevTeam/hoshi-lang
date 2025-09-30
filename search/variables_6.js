@@ -17,7 +17,8 @@ var searchData=
   ['functionanalysisresults_14',['functionAnalysisResults',['../classyoi_1_1IROptimizer.html#aea48e1a66d27e022bfe09a0fe307add2',1,'yoi::IROptimizer']]],
   ['functionindex_15',['functionIndex',['../structyoi_1_1visitor_1_1OverloadResult.html#a05e7652888e03bb99c12b7df039a59d4',1,'yoi::visitor::OverloadResult']]],
   ['functionmap_16',['functionMap',['../classyoi_1_1LLVMCodegen.html#a56a60014fed123cda714f6f5210be904',1,'yoi::LLVMCodegen']]],
-  ['functionremapping_17',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
-  ['functions_18',['functions',['../structyoi_1_1CallGraph.html#a6fe9d59ef1e6243b8f380ae40bb69eb3',1,'yoi::CallGraph']]],
-  ['functiontable_19',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]]
+  ['functionoverloadindexies_17',['functionOverloadIndexies',['../classyoi_1_1IRModule.html#a1871de3e1c36c3f5f0314c119e143acc',1,'yoi::IRModule']]],
+  ['functionremapping_18',['functionRemapping',['../classyoi_1_1IRLinker.html#ae62dff29be8ab0e0a9574ddb37e17a74',1,'yoi::IRLinker']]],
+  ['functions_19',['functions',['../structyoi_1_1CallGraph.html#a6fe9d59ef1e6243b8f380ae40bb69eb3',1,'yoi::CallGraph']]],
+  ['functiontable_20',['functionTable',['../classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f',1,'yoi::IRModule']]]
 ];
