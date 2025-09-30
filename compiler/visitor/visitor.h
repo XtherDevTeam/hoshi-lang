@@ -135,6 +135,8 @@ namespace yoi {
 
         void tryCastTo(const std::shared_ptr<IRValueType> &toType);
 
+        bool canCastTo(const std::shared_ptr<IRValueType> &fromType, const std::shared_ptr<IRValueType> &toType);
+
         yoi::vec<IRFunctionDefinition::FunctionAttrs> getFunctionAttributes(const yoi::vec<lexer::token> &attrs);
 
         yoi::indexT generateNullInterfaceImplementation(const std::shared_ptr<IRValueType> &structType);

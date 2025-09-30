@@ -721,7 +721,7 @@ namespace yoi {
     }
 
     bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
-        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule && dimensions == rhs.dimensions;
+        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule && dimensions.size() == rhs.dimensions.size();
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name,

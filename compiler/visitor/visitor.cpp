@@ -3104,8 +3104,6 @@ namespace yoi {
 
         if (*rhs == *toType) {
             return;
-        } else if (rhs->isArrayType() && toType->isDynamicArrayType()) {
-            return; // two type of array is ABI compatible
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
             emitBasicCastTo(toType);
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
@@ -3125,12 +3123,46 @@ namespace yoi {
         } else if (toType->type == IRValueType::valueType::structObject) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
-            auto constructorName = L"constructor" + getFuncUniqueNameStr({rhs});
-            if (structType->nameIndexMap.contains(constructorName)) {
-                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to struct " + yoi::wstring2string((toType->to_string())) + ": target type contains a constructor with corresponding params but inexplicit conversion is not allowed.");
+            auto result = resolveOverloadExtern(structType->name + L"::constructor", {rhs}, toType->typeAffiliateModule, structType);
+            if (result.found()) {
+                // TODO: Call invoke_dangling to handle the post-this stack structure
+                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": not implemented yet.");
+            } else {
+                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
             }
         } else {
             panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
+        }
+    }
+
+    bool visitor::canCastTo(const std::shared_ptr<IRValueType> &fromType, const std::shared_ptr<IRValueType> &toType) {
+        auto rhs = fromType;
+        if (fromType->isForeignBasicType()) {
+            rhs = managedPtr(rhs->getNormalizedForeignBasicType());
+        }
+        if (*rhs == *toType) {
+            return true;
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
+            return true;
+        } else if (rhs->type == IRValueType::valueType::pointerObject) {
+            // no cast needed for pointer type
+            return true;
+        } else if (toType->type == IRValueType::valueType::interfaceObject) {
+            // check implemented interfaces
+            try {
+                auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, rhs);
+                auto implIndex = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceImplementationTable.getIndex(implName);
+                return true;
+            } catch (std::out_of_range &e) {
+                return false;
+            }
+        } else if (toType->type == IRValueType::valueType::structObject) {
+            // check whether owns the constructor
+            auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
+            auto result = resolveOverloadExtern(structType->name + L"::constructor", {rhs}, toType->typeAffiliateModule, structType);
+            return result.found();
+        } else {
+            return false;
         }
     }
 
