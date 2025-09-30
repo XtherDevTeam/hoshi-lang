@@ -67,12 +67,10 @@ impl Numeric {
         return this
     },
     getInt() : int {
-        /*TODO: implement*/
-        return 0
+        return str.toInt(this.data)
     },
     getDecimal() : deci {
-        /*TODO: implement*/
-        return 0
+        return str.toDeci(this.data)
     }
 }
 

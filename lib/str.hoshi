@@ -469,3 +469,71 @@ func format(fmt: Str, args: Stringable[]) : Str {
 func always_inline format(fmt: string, args: Stringable[]) : Str {
     return format(Str(fmt), args)
 }
+
+func always_inline toInt(s: Str) : int {
+    let res = 0
+    let is_negative = false
+    let start = 0
+    if (s.length == 0) {
+        return 0
+    }
+    if (s[0] == '-') {
+        is_negative = true
+        start = 1
+    }
+    for (let i = start; i < s.length; i += 1) {
+        if (s[i] < '0' || s[i] > '9') {
+            return 0
+        }
+        res = res * 10 + (s[i] - '0')
+    }
+    if (is_negative) {
+        res = -res
+    }
+    return res
+}
+
+func always_inline toInt(s: string) : int {
+    return toInt(Str(s))
+}
+
+func always_inline toDeci(s: Str) : deci {
+    let res = 0.0
+    let is_negative = false
+    let start = 0
+    let decimal_point_found = false
+    let decimal_place = 1.0
+
+    if (s.length == 0) {
+        return 0.0
+    }
+
+    if (s[0] == '-') {
+        is_negative = true
+        start = 1
+    }
+
+    for (let i = start; i < s.length; i += 1) {
+        if (s[i] >= '0' && s[i] <= '9') {
+            if (decimal_point_found) {
+                decimal_place /= 10.0
+                res += (s[i] - '0') * decimal_place
+            } else {
+                res = res * 10.0 + (s[i] - '0')
+            }
+        } elif (s[i] == '.' && decimal_point_found == false) {
+            decimal_point_found = true
+        } else {
+            return 0.0 // Invalid character
+        }
+    }
+
+    if (is_negative) {
+        res = -res
+    }
+    return res
+}
+
+func always_inline toDeci(s: string) : deci {
+    return toDeci(Str(s))
+}

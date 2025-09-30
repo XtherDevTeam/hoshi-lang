@@ -1,0 +1,129 @@
+
+use str "str"
+use io "io"
+use runtime "runtime"
+
+func main() : int {
+    let passed_tests = 0
+    let failed_tests = 0
+
+    // Test toInt
+    let s1 = str.Str("123")
+    if (str.toInt(s1) == 123) {
+        runtime.puts("atoi: toInt positive: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt positive: failed")
+        failed_tests += 1
+    }
+
+    let s2 = str.Str("-456")
+    if (str.toInt(s2) == -456) {
+        runtime.puts("atoi: toInt negative: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt negative: failed")
+        failed_tests += 1
+    }
+
+    let s3 = str.Str("0")
+    if (str.toInt(s3) == 0) {
+        runtime.puts("atoi: toInt zero: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt zero: failed")
+        failed_tests += 1
+    }
+
+    let s4 = str.Str("")
+    if (str.toInt(s4) == 0) {
+        runtime.puts("atoi: toInt empty: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt empty: failed")
+        failed_tests += 1
+    }
+
+    let s5 = str.Str("12a3")
+    if (str.toInt(s5) == 0) {
+        runtime.puts("atoi: toInt invalid char: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt invalid char: failed")
+        failed_tests += 1
+    }
+
+    // Test toDeci
+    let d1 = str.Str("123.45")
+    if (str.toDeci(d1) == 123.45) {
+        runtime.puts("atoi: toDeci positive: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci positive: failed")
+        failed_tests += 1
+    }
+
+    let d2 = str.Str("-67.89")
+    if (str.toDeci(d2) == -67.89) {
+        runtime.puts("atoi: toDeci negative: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci negative: failed")
+        failed_tests += 1
+    }
+
+    let d3 = str.Str("123.")
+    if (str.toDeci(d3) == 123.0) {
+        runtime.puts("atoi: toDeci trailing point: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci trailing point: failed")
+        failed_tests += 1
+    }
+
+    let d4 = str.Str(".45")
+    if (str.toDeci(d4) == 0.45) {
+        runtime.puts("atoi: toDeci leading point: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci leading point: failed")
+        failed_tests += 1
+    }
+
+    let d5 = str.Str("0.0")
+    if (str.toDeci(d5) == 0.0) {
+        runtime.puts("atoi: toDeci zero: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci zero: failed")
+        failed_tests += 1
+    }
+
+    let d6 = str.Str("")
+    if (str.toDeci(d6) == 0.0) {
+        runtime.puts("atoi: toDeci empty: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci empty: failed")
+        failed_tests += 1
+    }
+
+    let d7 = str.Str("12.a3")
+    if (str.toDeci(d7) == 0.0) {
+        runtime.puts("atoi: toDeci invalid char: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toDeci invalid char: failed")
+        failed_tests += 1
+    }
+
+    let total_tests = passed_tests + failed_tests
+    
+    if (failed_tests == 0) {
+        runtime.puts("atoi: all tests passed")
+    } else {
+        runtime.puts("atoi: some tests failed")
+    }
+
+    return failed_tests
+}

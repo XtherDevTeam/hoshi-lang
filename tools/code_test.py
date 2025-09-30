@@ -55,6 +55,7 @@ TEST_CASES = {
     "new-types": {"type": "executable", "return_code": 0},
     "type_id": {"type": "executable", "return_code": 0},
     "ultimate": {"type": "executable", "return_code": 0},
+    "atoi": {"type": "executable", "return_code": 0},
 }
 
 

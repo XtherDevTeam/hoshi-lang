@@ -971,8 +971,7 @@ namespace yoi {
             case IR::Opcode::negate: {
                 auto val = valueStackPhi.back(); valueStackPhi.pop_back();
                 auto* rawVal = unboxValue(val.llvmValue, val.yoiType);
-                auto* negatedRaw = Builder->CreateNeg(rawVal, "negtmp");
-                // auto* resultObj = createBasicObject(val.yoiType, negatedRaw);
+                auto* negatedRaw = rawVal->getType()->isDoubleTy() ? Builder->CreateFNeg(rawVal, "negtmp") : Builder->CreateNeg(rawVal, "negtmp");
                 // valueStackPhi.push_back({resultObj, val.yoiType});
                 valueStackPhi.push_back({negatedRaw, managedPtr(val.yoiType->getBasicRawType())});
                 callGcFunction(val.llvmValue, val.yoiType, false); // Consume operand
