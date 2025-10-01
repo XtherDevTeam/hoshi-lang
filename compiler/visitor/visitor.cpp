@@ -3307,14 +3307,14 @@ namespace yoi {
         // Pass 2: Look for a compatible variadic match in the target module.
         auto findVariadicMatch = [&](const yoi::wstr &funcKey, bool skipFirstParam = false) {
             auto func = targetedModule->functionTable[funcKey];
+            const auto &paramTypes = func->argumentTypes;
+            size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam && paramTypes.size() > 1 ? 1 : 0);
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) !=
                 func->attrs.end()) {
-                const auto &paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1 - (skipFirstParam && paramTypes.size() > 1 ? 1 : 0);
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
                     for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
-                        if (*paramTypes[i] != *argTypes[i]) {
+                        if (!canCastTo(argTypes[i], paramTypes[i])) {
                             fixedMatch = false;
                             break;
                         }
@@ -3328,6 +3328,23 @@ namespace yoi {
                         return true;
                     }
                 }
+            } else {
+                if (argTypes.size() != fixedParamCount + 1) // balance the variadic argument
+                    return false;
+
+                for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
+                    if (!canCastTo(argTypes[i], paramTypes[i])) {
+                        return false;
+                    }
+                }
+
+                result.functionIndex = targetedModule->functionTable.getIndex(funcKey);
+                result.isVariadic = false;
+                result.fixedArgCount = fixedParamCount;
+                result.function = func;
+                result.isCastRequired = true;
+
+                return true;
             }
             return false;
         };
@@ -3336,7 +3353,7 @@ namespace yoi {
         for (const auto it : targetedModule->functionOverloadIndexies[prefix]) {
             const auto &key = targetedModule->functionTable.getKey(it);
             if (key.starts_with(prefix)) {
-                if (findVariadicMatch(key, structContext != nullptr))
+                if (findVariadicMatch(key, structContext != nullptr && !targetedModule->functionTable[it]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Static)))
                     return result;
             }
         }
@@ -3407,11 +3424,13 @@ namespace yoi {
         }
 
         auto fullMangledName = overload.function->name;
+        bool skipFirstParam = structContext != nullptr;
 
         if (overload.isVariadic) {
             moduleContext->getIRBuilder().restoreState();
             for (size_t i = 0; i < overload.fixedArgCount; ++i) {
                 visit(args->get()[i]);
+                tryCastTo(overload.function->argumentTypes[i + skipFirstParam]);
             }
             auto variadicArgCount = argTypes.size() - overload.fixedArgCount;
             if (variadicArgCount > 0) {
@@ -3423,6 +3442,12 @@ namespace yoi {
                                                          {static_cast<yoi::indexT>(variadicArgCount)});
             } else {
                 moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {0});
+            }
+        } else if (overload.isCastRequired) {
+            moduleContext->getIRBuilder().restoreState();
+            for (size_t i = 0; i < overload.fixedArgCount + 1; ++i) { // balanced for interface
+                visit(args->get()[i]);
+                tryCastTo(overload.function->argumentTypes[i + skipFirstParam]);
             }
         } else {
             moduleContext->getIRBuilder().discardState();
@@ -3748,10 +3773,10 @@ namespace yoi {
 
         auto findVariadicMatch = [&](const yoi::wstr &funcKey) {
             auto func = interfaceContext->methodMap[funcKey];
+            const auto &paramTypes = func->argumentTypes;
+            size_t fixedParamCount = paramTypes.size() - 1;
             if (std::find(func->attrs.begin(), func->attrs.end(), IRFunctionDefinition::FunctionAttrs::Variadic) !=
                 func->attrs.end()) {
-                const auto &paramTypes = func->argumentTypes;
-                size_t fixedParamCount = paramTypes.size() - 1;
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
                     for (size_t i = 0; i < fixedParamCount; ++i) {
@@ -3770,14 +3795,30 @@ namespace yoi {
                         return true;
                     }
                 }
+            } else {
+                if (argTypes.size() != fixedParamCount + 1) // balance the variadic argument
+                    return false;
+
+                for (size_t i = 0; i < fixedParamCount; ++i) {
+                    if (!canCastTo(argTypes[i], paramTypes[i])) {
+                        return false;
+                    }
+                }
+
+                result.functionIndex = interfaceContext->methodMap.getIndex(funcKey);
+                result.isVariadic = false;
+                result.fixedArgCount = fixedParamCount;
+                result.function = func;
+                result.isCastRequired = true;
+
+                return true;
             }
             return false;
         };
 
-        for (const auto it : targetedModule->functionOverloadIndexies[baseName]) {
-            const auto &key = targetedModule->functionTable.getKey(it);
-            if (key.starts_with(baseName)) {
-                if (findVariadicMatch(key))
+        for (const auto &it : interfaceContext->methodMap) {
+            if (it.second->name.starts_with(baseName)) {
+                if (findVariadicMatch(it.first))
                     return result;
             }
         }
@@ -3880,6 +3921,12 @@ namespace yoi {
                            currentTerm->getLine(),
                            currentTerm->getColumn(),
                            "Variadic operator[] overloading is not supported.");
+                yoi_assert(!overload.isCastRequired,
+                           currentTerm->getLine(),
+                           currentTerm->getColumn(),
+                           "A viable operator[] overload is found but cannot cast the param type.");
+
+                // FIXME: 前面value已经被运算了而且没有保存状态，不知道要怎么搞了，除非每次入栈的时候顺便记录一下当前insertion point
 
                 moduleContext->getIRBuilder().invokeMethodOp(
                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);

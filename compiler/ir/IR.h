@@ -283,6 +283,7 @@ namespace yoi {
             construct_interface_impl,
             invoke_virtual,
             invoke_imported,
+            invoke_dangling,
             store_element,
             load_element,
             new_array_int,
@@ -840,6 +841,21 @@ namespace yoi {
                       const std::shared_ptr<IRValueType> &returnType,
                       bool externalInvocation = false,
                       yoi::indexT moduleIndex = -1);
+
+        /**
+         * @brief invoke a function with the given arguments, but the last param will be taken as the first param.
+         * 
+         * @param funcIndex The index of function in irModule->functionTable
+         * @param funcArgsCount The number of arguments of invocation.
+         * @param returnType The return type of the function. Need for push the return value type to tempVarStack.
+         * @param externalInvocation If true, the function is invoked from an external module.
+         * @param moduleIndex The index of the module that the function is imported from.
+         */
+        void invokeDanglingOp(yoi::indexT funcIndex,
+                              yoi::indexT funcArgsCount,
+                              const std::shared_ptr<IRValueType> &returnType,
+                              bool externalInvocation = false,
+                              yoi::indexT moduleIndex = -1);
 
         void invokeMethodOp(yoi::indexT funcIndex,
                             yoi::indexT methodArgsCount,

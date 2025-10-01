@@ -56,6 +56,7 @@ TEST_CASES = {
     "type_id": {"type": "executable", "return_code": 0},
     "ultimate": {"type": "executable", "return_code": 0},
     "atoi": {"type": "executable", "return_code": 0},
+    "basic-implicit-call": {"type": "executable", "return_code": 0}
 }
 
 

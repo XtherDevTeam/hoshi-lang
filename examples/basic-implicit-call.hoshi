@@ -1,0 +1,39 @@
+use runtime "runtime"
+
+func test1(a: int, b: int) : int {
+    return a + b
+}
+
+struct T {
+    a: int,
+    constructor(a: int),
+    static operator[](v: int, this: T, k: int) : none
+}
+
+impl T {
+    constructor(a: int) {
+        this.a = a
+    },
+    static operator[](v: int, this: T, k: int) : none {
+        this.a = v + k
+    }
+}
+
+func main() : int {
+    let res = test1(114, 0.514)
+    if (res == 114) {
+        runtime.puts("basic-implicit-call: func validation passed")
+    } else {
+        runtime.puts("basic-implicit-call: func validation failed")
+        return 1
+    }
+
+    /*let triaryOperatorTest = T(114)
+    triaryOperatorTest[514.00] = 114
+    if (triaryOperatorTest.a == 628) {
+        runtime.puts("basic-implicit-call: triary operator validation passed")
+    } else {
+        runtime.puts("basic-implicit-call: triary operator validation failed")
+    }*/
+    return 0
+}

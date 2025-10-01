@@ -1431,6 +1431,7 @@ namespace yoi {
                     simulationStack.pop();
                     break;
                 }
+                case IR::Opcode::invoke_dangling:
                 case IR::Opcode::invoke: {
                     // we can't optimize it
                     // in case of which this got optimized in tempVar reduction, we set optimizable flag to false
@@ -2459,6 +2460,7 @@ namespace yoi {
                     break;
                 }
                 // External control flow rules
+                case IR::Opcode::invoke_dangling:
                 case IR::Opcode::invoke: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto funcIndex = ins.operands[1].value.symbolIndex;
@@ -2937,6 +2939,7 @@ namespace yoi {
                 case IR::Opcode::ret: {
                     return terminatorFound();
                 }
+                case IR::Opcode::invoke_dangling:
                 case IR::Opcode::invoke: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto funcIndex = ins.operands[1].value.symbolIndex;
@@ -3573,6 +3576,7 @@ namespace yoi {
                 simulationStack.pop();
                 break;
             }
+            case IR::Opcode::invoke_dangling:
             case IR::Opcode::invoke: {
                 // we can't optimize it
                 // in case of which this got optimized in tempVar reduction, we set optimizable flag to false

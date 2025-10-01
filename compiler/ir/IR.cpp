@@ -1502,4 +1502,16 @@ namespace yoi {
     }
     
     IRValueType::IRValueType() : type(valueType::none), typeAffiliateModule(0), typeIndex(0), dimensions() {}
+
+    void IRBuilder::invokeDanglingOp(yoi::indexT funcIndex,
+                                     yoi::indexT funcArgsCount,
+                                     const std::shared_ptr<IRValueType> &returnType,
+                                     bool externalInvocation,
+                                     yoi::indexT moduleIndex) {
+        for (yoi::indexT i = 0; i < funcArgsCount; i++) {
+            tempVarStack.pop_back();
+        }
+        tempVarStack.push_back(returnType);
+        insert(IR{IR::Opcode::invoke_dangling, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo});
+    }
 } // namespace yoi

@@ -211,6 +211,7 @@ namespace yoi {
             }
             case IR::Opcode::invoke:
             case IR::Opcode::invoke_virtual:
+            case IR::Opcode::invoke_dangling:
             case IR::Opcode::load_global:
             case IR::Opcode::new_struct:
             case IR::Opcode::new_interface:

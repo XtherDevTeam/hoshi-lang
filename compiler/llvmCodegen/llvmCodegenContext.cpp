@@ -1206,6 +1206,55 @@ namespace yoi {
                 }
                 break;
             }
+            case IR::Opcode::invoke_dangling: {
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto funcIndex = instr.operands[1].value.symbolIndex;
+                auto argCount = instr.operands[2].value.symbolIndex;
+
+                yoi_assert(argCount, instr.debugInfo.line, instr.debugInfo.column, "invoke_dangling with no arguments");
+
+                auto funcDef = yoiModule->functionTable[funcIndex];
+                auto* function = functionMap.at(funcDef->name);
+
+                std::vector<llvm::Value*> args;
+                std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
+
+                for(size_t i = 0; i < argCount; ++i) {
+                    auto arg = valueStackPhi.back();
+                    valueStackPhi.pop_back();
+
+                    if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                        args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
+                        callGcFunction(arg.llvmValue, arg.yoiType, false);
+                    } else if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        args.push_back(object.second);
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
+                        else postCleanup.push_back(object);
+                    } else {
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        args.push_back(object.second);
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
+                            callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                        else;
+                    }
+                }
+                std::reverse(args.begin(), args.end());
+                std::swap(*args.begin(), *(args.end() - 1));
+
+                if (funcDef->returnType->type == IRValueType::valueType::none) {
+                    Builder->CreateCall(function, args);
+                } else {
+                    auto* call = Builder->CreateCall(function, args, "calltmp");
+                    // The returned value comes with a reference count for us to own.
+                    valueStackPhi.push_back({call, funcDef->returnType});
+                }
+
+                for (auto &i : postCleanup) {
+                    callGcFunction(i.second, i.first, false);
+                }
+                break;
+            }
             case IR::Opcode::invoke_imported: {
                 auto libIndex = instr.operands[0].value.symbolIndex;
                 auto funcIndex = instr.operands[1].value.symbolIndex;

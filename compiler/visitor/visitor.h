@@ -23,6 +23,7 @@ namespace yoi {
             yoi::indexT functionIndex = -1;
             bool isVariadic = false;
             bool isVirtual = false;
+            bool isCastRequired = false;
             yoi::indexT fixedArgCount = 0;
             std::shared_ptr<IRValueType> variadicElementType = nullptr;
             std::shared_ptr<IRFunctionDefinition> function = nullptr;
