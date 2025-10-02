@@ -22,7 +22,7 @@ var classyoi_1_1visitor =
     [ "getSpecializedMangledMethodName", "classyoi_1_1visitor.html#acd9b722865f36acebf527e25ece76a8d", null ],
     [ "getTemplateArgs", "classyoi_1_1visitor.html#a09735c2ec508155ec874db915f653b98", null ],
     [ "getTypeSpecUniqueNameStr", "classyoi_1_1visitor.html#a1373e305b6c738d4580bb63d8031b7a8", null ],
-    [ "handleBinaryOperatorOverload", "classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c", null ],
+    [ "handleBinaryOperatorOverload", "classyoi_1_1visitor.html#a027fbc7de87978eea4c23d96f9374829", null ],
     [ "handleInvocationExtern", "classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da", null ],
     [ "handleSubscript", "classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d", null ],
     [ "handleUnaryOperatorOverload", "classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816", null ],

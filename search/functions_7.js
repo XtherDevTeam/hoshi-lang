@@ -1,7 +1,7 @@
 var searchData=
 [
   ['handlebinaryop_0',['handleBinaryOp',['../classyoi_1_1LLVMCodegen.html#ab831ee0db5ff27f6e64c08db17ab7c42',1,'yoi::LLVMCodegen']]],
-  ['handlebinaryoperatoroverload_1',['handleBinaryOperatorOverload',['../classyoi_1_1visitor.html#a9b34d6fa30e3001944e88eca2ebfc12c',1,'yoi::visitor']]],
+  ['handlebinaryoperatoroverload_1',['handleBinaryOperatorOverload',['../classyoi_1_1visitor.html#a027fbc7de87978eea4c23d96f9374829',1,'yoi::visitor']]],
   ['handlecomparison_2',['handleComparison',['../classyoi_1_1LLVMCodegen.html#afca9d4a2daf7898f37a12b1c2079fce6',1,'yoi::LLVMCodegen']]],
   ['handleforeigntypeconv_3',['handleforeigntypeconv',['../classyoi_1_1LLVMCodegen.html#a3767428a09aaa4e50145ae1615083854',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign=false)'],['../classyoi_1_1LLVMCodegen.html#a7ffc2d88378f6a1270662c1be20f7db0',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, const std::shared_ptr&lt; IRValueType &gt; &amp;foreignType, bool convertToForeign=false)']]],
   ['handleinstruction_4',['handleInstruction',['../classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba',1,'yoi::IRFunctionOptimizer']]],
