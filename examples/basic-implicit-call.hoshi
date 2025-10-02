@@ -7,7 +7,8 @@ func test1(a: int, b: int) : int {
 struct T {
     a: int,
     constructor(a: int),
-    static operator[](v: int, this: T, k: int) : none
+    static operator[](v: int, this: T, k: int) : none,
+    static operator[](this: T, v: int) : int
 }
 
 impl T {
@@ -16,6 +17,9 @@ impl T {
     },
     static operator[](v: int, this: T, k: int) : none {
         this.a = v + k
+    },
+    static operator[](this: T, v: int) : int {
+        return this.a
     }
 }
 
@@ -28,12 +32,12 @@ func main() : int {
         return 1
     }
 
-    /*let triaryOperatorTest = T(114)
+    let triaryOperatorTest = T(114)
     triaryOperatorTest[514.00] = 114
     if (triaryOperatorTest.a == 628) {
         runtime.puts("basic-implicit-call: triary operator validation passed")
     } else {
         runtime.puts("basic-implicit-call: triary operator validation failed")
-    }*/
+    }
     return 0
 }

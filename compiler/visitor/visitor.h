@@ -319,10 +319,12 @@ namespace yoi {
          * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator method.
          * 
          * @param overloadName the name of the operator overload method
+         * @param rhsAST the right hand side AST expression, will be used when the cast is required when resolving overload method
          * @return yoi::indexT current insertion point after the invocation
          * @note Make sure the builder state is saved before calling this helper function.
          */
-        yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName);
+        template <typename T>
+        yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName, T *rhsAST);
 
         /**
          * @brief Handles unary operator overload function when the operand owns a appropriate overloaded operator method.

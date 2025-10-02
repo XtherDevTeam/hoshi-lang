@@ -295,6 +295,7 @@ namespace yoi {
                 }
                 case lexer::token::tokenKind::additionAssignment: {
                     auto lhsPos = visit(leftExpr->lhs);
+                    moduleContext->getIRBuilder().saveState();
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -304,13 +305,15 @@ namespace yoi {
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::add);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
+                        moduleContext->getIRBuilder().discardState();
                     } else {
-                        handleBinaryOperatorOverload(L"operator+=");
+                        handleBinaryOperatorOverload(L"operator+=", leftExpr->rhs);
                     }
                     break;
                 }
                 case lexer::token::tokenKind::subtractionAssignment: {
                     auto lhsPos = visit(leftExpr->lhs);
+                    moduleContext->getIRBuilder().saveState();
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -319,13 +322,15 @@ namespace yoi {
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
+                        moduleContext->getIRBuilder().discardState();
                     } else {
-                        handleBinaryOperatorOverload(L"operator-=");
+                        handleBinaryOperatorOverload(L"operator-=", leftExpr->rhs);
                     }
                     break;
                 }
                 case lexer::token::tokenKind::multiplicationAssignment: {
                     auto lhsPos = visit(leftExpr->lhs);
+                    moduleContext->getIRBuilder().saveState();
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -334,13 +339,15 @@ namespace yoi {
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mul);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
+                        moduleContext->getIRBuilder().discardState();
                     } else {
-                        handleBinaryOperatorOverload(L"operator*=");
+                        handleBinaryOperatorOverload(L"operator*=", leftExpr->rhs);
                     }
                     break;
                 }
                 case lexer::token::tokenKind::divisionAssignment: {
                     auto lhsPos = visit(leftExpr->lhs);
+                    moduleContext->getIRBuilder().saveState();
                     auto rhsPos = visit(leftExpr->rhs);
                     auto &lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                     auto &rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -349,8 +356,9 @@ namespace yoi {
                         moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::div);
                         visit(leftExpr->lhs, true);
                         visit(leftExpr->lhs);
+                        moduleContext->getIRBuilder().discardState();
                     } else {
-                        handleBinaryOperatorOverload(L"operator/=");
+                        handleBinaryOperatorOverload(L"operator/=", leftExpr->rhs);
                     }
                     break;
                 }
@@ -372,6 +380,7 @@ namespace yoi {
         auto op = mulExpr->getOp().begin();
         auto lhsPos = visit(*term); // lhs
         for (; op != mulExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhsPos = visit(*++term); // rhs
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -383,11 +392,12 @@ namespace yoi {
                     case lexer::token::tokenKind::percentSign: moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::mod); break;                    
                     default: panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
-                    case lexer::token::tokenKind::asterisk: handleBinaryOperatorOverload(L"operator*"); break;
-                    case lexer::token::tokenKind::slash: handleBinaryOperatorOverload(L"operator/"); break;
-                    case lexer::token::tokenKind::percentSign: handleBinaryOperatorOverload(L"operator%"); break;
+                    case lexer::token::tokenKind::asterisk: handleBinaryOperatorOverload(L"operator*", *term); break;
+                    case lexer::token::tokenKind::slash: handleBinaryOperatorOverload(L"operator/", *term); break;
+                    case lexer::token::tokenKind::percentSign: handleBinaryOperatorOverload(L"operator%", *term); break;
                     default: panic(op->line, op->col, "Unexpected multiplication expression operator");
                 }
             }
@@ -402,6 +412,7 @@ namespace yoi {
         auto op = addExpr->getOp().begin();
         auto lhsPos = visit(*term);
         for (; op != addExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -412,10 +423,11 @@ namespace yoi {
                     case lexer::token::tokenKind::minus: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::sub); break;
                     default: panic(op->line, op->col, "Unexpected addition expression operator");
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
-                    case lexer::token::tokenKind::plus: handleBinaryOperatorOverload(L"operator+"); break;
-                    case lexer::token::tokenKind::minus: handleBinaryOperatorOverload(L"operator-"); break;
+                    case lexer::token::tokenKind::plus: handleBinaryOperatorOverload(L"operator+", *term); break;
+                    case lexer::token::tokenKind::minus: handleBinaryOperatorOverload(L"operator-", *term); break;
                     default: panic(op->line, op->col, "Unexpected addition expression operator");
                 }
             }
@@ -429,6 +441,7 @@ namespace yoi {
         auto op = shiftExpr->getOp().begin();
         visit(*term);
         for (; op != shiftExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -439,10 +452,11 @@ namespace yoi {
                     case lexer::token::tokenKind::binaryShiftRight: moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::right_shift); break;
                     default:  panic(op->line, op->col, "Unexpected shift expression operator"); break;
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
-                    case lexer::token::tokenKind::binaryShiftLeft: handleBinaryOperatorOverload(L"operator<<"); break;
-                    case lexer::token::tokenKind::binaryShiftRight: handleBinaryOperatorOverload(L"operator>>"); break;
+                    case lexer::token::tokenKind::binaryShiftLeft: handleBinaryOperatorOverload(L"operator<<", *term); break;
+                    case lexer::token::tokenKind::binaryShiftRight: handleBinaryOperatorOverload(L"operator>>", *term); break;
                     default:  panic(op->line, op->col, "Unexpected shift expression operator"); break;
                 }
             }
@@ -456,6 +470,7 @@ namespace yoi {
         auto op = relationalExpr->getOp().begin();
         auto lhsPos = visit(*term);
         for (; op != relationalExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhsPos = visit(*++term);
             auto lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -468,12 +483,13 @@ namespace yoi {
                     case lexer::token::tokenKind::greaterEqual: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::greater_equal); break;
                     default: panic(op->line, op->col, "Unexpected relational expression operator");
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
-                    case lexer::token::tokenKind::lessThan: handleBinaryOperatorOverload(L"operator<"); break;
-                    case lexer::token::tokenKind::greaterThan: handleBinaryOperatorOverload(L"operator>"); break;
-                    case lexer::token::tokenKind::lessEqual: handleBinaryOperatorOverload(L"operator<="); break;
-                    case lexer::token::tokenKind::greaterEqual: handleBinaryOperatorOverload(L"operator>="); break;
+                    case lexer::token::tokenKind::lessThan: handleBinaryOperatorOverload(L"operator<", *term); break;
+                    case lexer::token::tokenKind::greaterThan: handleBinaryOperatorOverload(L"operator>", *term); break;
+                    case lexer::token::tokenKind::lessEqual: handleBinaryOperatorOverload(L"operator<=", *term); break;
+                    case lexer::token::tokenKind::greaterEqual: handleBinaryOperatorOverload(L"operator>=", *term); break;
                     default: panic(op->line, op->col, "Unexpected relational expression operator");
                 }
             }
@@ -488,6 +504,7 @@ namespace yoi {
         auto op = equalityExpr->getOp().begin();
         auto lhsPos = visit(*term);
         for (; op != equalityExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -498,10 +515,11 @@ namespace yoi {
                     case lexer::token::tokenKind::notEqual: emitBasicCastInBasicArithOpByLhsAndRhs(lhsPos, rhsPos); moduleContext->getIRBuilder().arithmeticOp(IR::Opcode::not_equal); break;
                     default: panic(op->line, op->col, "Unexpected equality expression operator"); return {};
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
-                    case lexer::token::tokenKind::equal: handleBinaryOperatorOverload(L"operator=="); break;
-                    case lexer::token::tokenKind::notEqual: handleBinaryOperatorOverload(L"operator!="); break;
+                    case lexer::token::tokenKind::equal: handleBinaryOperatorOverload(L"operator==", *term); break;
+                    case lexer::token::tokenKind::notEqual: handleBinaryOperatorOverload(L"operator!=", *term); break;
                     default: panic(op->line, op->col, "Unexpected equality expression operator"); return {};
                 }
             }
@@ -515,6 +533,7 @@ namespace yoi {
         auto op = andExpr->getOp().begin();
         auto lhsPos = visit(*term);
         for (; op != andExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhsPos = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -539,10 +558,11 @@ namespace yoi {
                         return {};
                     }
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
                     case lexer::token::tokenKind::binaryAnd: {
-                        handleBinaryOperatorOverload(L"operator&");
+                        handleBinaryOperatorOverload(L"operator&", *term);
                         break;
                     }
                     default: {
@@ -562,6 +582,7 @@ namespace yoi {
         auto op = exclusiveExpr->getOp().begin();
         auto lhs = visit(*term);
         for (; op != exclusiveExpr->getOp().end(); ++op) {
+            moduleContext->getIRBuilder().saveState();
             auto rhs = visit(*++term);
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -586,10 +607,11 @@ namespace yoi {
                         return {};
                     }
                 }
+                moduleContext->getIRBuilder().discardState();
             } else {
                 switch (op->kind) {
                     case lexer::token::tokenKind::binaryXor: {
-                        handleBinaryOperatorOverload(L"operator^");
+                        handleBinaryOperatorOverload(L"operator^", *term);
                         break;
                     }
                     default: {
@@ -634,7 +656,7 @@ namespace yoi {
             } else {
                 switch (op->kind) {
                     case lexer::token::tokenKind::binaryOr: {
-                        handleBinaryOperatorOverload(L"operator|");
+                        handleBinaryOperatorOverload(L"operator|", *term);
                         break;
                     }
                     default: {
@@ -975,8 +997,9 @@ namespace yoi {
                                 moduleContext->getIRBuilder().invokeMethodOp(
                                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
                             } else {
+                                moduleContext->getIRBuilder().saveState();
                                 visit(sub->expr);
-                                handleBinaryOperatorOverload(L"operator[]");
+                                handleBinaryOperatorOverload(L"operator[]", sub->expr);
                             }
                         }
                     }
@@ -3491,7 +3514,8 @@ namespace yoi {
         return true;
     }
 
-    yoi::indexT visitor::handleBinaryOperatorOverload(const yoi::wstr &overloadName) {
+    template <typename T>
+    yoi::indexT visitor::handleBinaryOperatorOverload(const yoi::wstr &overloadName, T *rhsAST) {
         auto lhs = moduleContext->getIRBuilder().getLhsFromTempVarStack();
         auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
         bool isResolved = false;
@@ -3501,6 +3525,15 @@ namespace yoi {
             if (resolved.found()) {
                 yoi_assert(resolved.isVariadic == false, 0, 0, "Binary operator overloading with variadic functions is not supported.");
                 yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with non-static functions is not supported.");
+
+                if (resolved.isCastRequired) {
+                    moduleContext->getIRBuilder().restoreState();
+                    tryCastTo(resolved.function->argumentTypes.front());
+                    visit(rhsAST);
+                    tryCastTo(resolved.function->argumentTypes.back());
+                } else {
+                    moduleContext->getIRBuilder().discardState();
+                }
 
                 // same as below
                 moduleContext->getIRBuilder().invokeMethodOp(
@@ -3514,6 +3547,15 @@ namespace yoi {
                 yoi_assert(resolved.isVariadic == false, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with variadic functions is not supported.");
                 yoi_assert(std::find(resolved.function->attrs.begin(), resolved.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != resolved.function->attrs.end(), moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading with non-static functions is not supported.");
 
+                if (resolved.isCastRequired) {
+                    moduleContext->getIRBuilder().restoreState();
+                    tryCastTo(resolved.function->argumentTypes.front());
+                    visit(rhsAST);
+                    tryCastTo(resolved.function->argumentTypes.back());
+                } else {
+                    moduleContext->getIRBuilder().discardState();
+                }
+
                 // trick here: since when we set isStatic to true, we need 3 elements on the stack, which this ptr should also be present.
                 // however, we only have 2 elements on the stack which is lhs and rhs, so, we set isStatic to false here.
                 // to trick the invoke method op into generating the correct code
@@ -3522,30 +3564,33 @@ namespace yoi {
                     resolved.functionIndex, 1, resolved.function->returnType, false, true, rhs->typeAffiliateModule);
                 isResolved = true;
             }
-        } 
+        }
+
         if (!isResolved && lhs->type == IRValueType::valueType::interfaceObject) {
             const auto& baseName = overloadName;
             auto mangledName = getFuncUniqueNameStr({rhs});
 
-            try {
-                auto methodIdx = moduleContext->getCompilerContext()
-                                    ->getImportedModule(lhs->typeAffiliateModule)
-                                    ->interfaceTable[lhs->typeIndex]
-                                    ->methodMap.getIndex(baseName + mangledName);
-                auto method = moduleContext->getCompilerContext()
-                                ->getImportedModule(lhs->typeAffiliateModule)
-                                ->interfaceTable[lhs->typeIndex]
-                                ->methodMap[methodIdx];
-                yoi_assert(method->argumentTypes.size() == 1,
-                        moduleContext->getIRBuilder().getCurrentDebugInfo().line,
-                        moduleContext->getIRBuilder().getCurrentDebugInfo().column,
-                        "Argument count does not match");
-                moduleContext->getIRBuilder().invokeVirtualOp(methodIdx, lhs->typeIndex, 1, method->returnType, true, lhs->typeAffiliateModule);
-                isResolved = true;
-            } catch (const std::out_of_range &) {
+            auto resolved = resolveOverloadInterface(baseName, {lhs, rhs}, lhs->typeAffiliateModule, moduleContext->getCompilerContext()->getImportedModule(lhs->typeAffiliateModule)->interfaceTable[lhs->typeIndex]);
 
+            if (resolved.found()) {
+                if (resolved.isCastRequired) {
+                    moduleContext->getIRBuilder().restoreState();
+                    tryCastTo(resolved.function->argumentTypes.front());
+                    visit(rhsAST);
+                    tryCastTo(resolved.function->argumentTypes.back());
+                } else {
+                    moduleContext->getIRBuilder().discardState();
+                }
+
+                moduleContext->getIRBuilder().invokeVirtualOp(resolved.functionIndex, lhs->typeIndex, 1, resolved.function->returnType, true, lhs->typeAffiliateModule);
+                isResolved = true;
             }
         }
+
+        if (!isResolved) {
+            moduleContext->getIRBuilder().restoreState();
+        }
+
         yoi_assert(isResolved, moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Binary operator overloading not found for " + yoi::wstring2string(overloadName));
 
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
@@ -3897,6 +3942,7 @@ namespace yoi {
                 // current stack: [..., value, array, index]
                 auto value = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                 auto array = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                moduleContext->getIRBuilder().saveState();
                 visit(currentTerm->expr);
                 auto index = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
@@ -3921,20 +3967,24 @@ namespace yoi {
                            currentTerm->getLine(),
                            currentTerm->getColumn(),
                            "Variadic operator[] overloading is not supported.");
-                yoi_assert(!overload.isCastRequired,
-                           currentTerm->getLine(),
-                           currentTerm->getColumn(),
-                           "A viable operator[] overload is found but cannot cast the param type.");
 
                 // FIXME: 前面value已经被运算了而且没有保存状态，不知道要怎么搞了，除非每次入栈的时候顺便记录一下当前insertion point
+                if (overload.isCastRequired) {
+                    moduleContext->getIRBuilder().restoreState();
+                    visit(currentTerm->expr);
+                    tryCastTo(overload.function->argumentTypes.back());
+                } else {
+                    moduleContext->getIRBuilder().discardState();
+                }
 
                 moduleContext->getIRBuilder().invokeMethodOp(
                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
 
                 moduleContext->getIRBuilder().popOp();
             } else {
+                moduleContext->getIRBuilder().saveState();
                 visit(currentTerm->expr);
-                handleBinaryOperatorOverload(L"operator[]");
+                handleBinaryOperatorOverload(L"operator[]", currentTerm->expr);
             }
         }
         return false;
