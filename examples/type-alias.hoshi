@@ -6,7 +6,7 @@ alias Map = hashMap.HashMap<str.Str, int>
 
 func main() : int {
     let m : Map = Map()
-    m[str.Str("Hello")] = 0xe1751aff
-    runtime.runtime_debug_print_int_1(m[str.Str("Hello")])
+    m["Hello"] = 0xe1751aff
+    runtime.runtime_debug_print_int_1(m["Hello"])
     return 0
 }

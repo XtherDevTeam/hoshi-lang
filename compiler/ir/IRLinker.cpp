@@ -227,6 +227,7 @@ namespace yoi {
                 auto symbolIndex = instr.operands[1].value.symbolIndex;
                 newInstr.operands[0].value.symbolIndex = ENTRY_MODULE_ID_CONST;
                 switch (instr.opcode) {
+                    case IR::Opcode::invoke_dangling:
                     case IR::Opcode::invoke:
                         newInstr.operands[1].value.symbolIndex = functionRemapping.at(moduleId).at(symbolIndex);
                         break;

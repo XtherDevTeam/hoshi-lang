@@ -18,14 +18,14 @@ func main() : int {
         runtime.puts(s2.c_str())
     } elif (js.unwrap() interfaceof json.JSONDict) {
         let object = dyn_cast<json.JSONDict>(js.unwrap())
-        let s = dyn_cast<str.Str>(object[str.Str("a")])
+        let s = dyn_cast<str.Str>(object["a"])
         runtime.puts(s.c_str())
-        let l = dyn_cast<json.JSONList>(object[str.Str("b")])
+        let l = dyn_cast<json.JSONList>(object["b"])
         for (let i = 0; i < l.length; i += 1) {
             let ss = dyn_cast<json.Numeric>(l[i])
             runtime.puts(ss.data.c_str())
         }
-        let n = dyn_cast<json.JSONNull>(object[str.Str("c")])
+        let n = dyn_cast<json.JSONNull>(object["c"])
         if (n != null) {
             runtime.puts("c is null")
         }

@@ -1,0 +1,43 @@
+use runtime "runtime"
+
+struct K {
+    b: int,
+    constructor(b: int)
+}
+
+impl K {
+    constructor(b: int) {
+        this.b = b
+    }
+}
+
+struct T {
+    a: int,
+    static operator[](v: int, this: T, k: K) : none,
+    static operator[](this: T, k: K) : int,
+    constructor(k: K)
+}
+
+impl T {
+    static operator[](this: T, k: K) : int {
+        return this.a
+    },
+    static operator[](v: int, this: T, k: K) : none {
+        this.a = v
+    },
+    constructor(k: K) {
+        this.a = k.b
+    }
+}
+
+
+func main() : int {
+    let x : T = K(233)
+    if (x.a == 233) {
+        runtime.puts("struct-type-implicit-call: constructor validation passed")
+    } else {
+        runtime.puts("struct-type-implicit-call: constructor validation failed")
+        return 1
+    }
+    return 0
+}

@@ -1219,14 +1219,36 @@ namespace yoi {
                 std::vector<llvm::Value*> args;
                 std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
 
-                for(size_t i = 0; i < argCount; ++i) {
+                llvm::Value *postponed = nullptr;
+                {
                     auto arg = valueStackPhi.back();
                     valueStackPhi.pop_back();
 
-                    if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                    if (funcDef->argumentTypes[0]->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                        postponed = unboxValue(arg.llvmValue, arg.yoiType);
+                        callGcFunction(arg.llvmValue, arg.yoiType, false);
+                    } else if (funcDef->argumentTypes[0]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        postponed = object.second;
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
+                        else postCleanup.push_back(object);
+                    } else {
+                        auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                        postponed = object.second;
+                        if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
+                            callGcFunction(arg.llvmValue, arg.yoiType, true, true);
+                        else;
+                    }
+                }
+
+                for(size_t i = 1; i < argCount; ++i) {
+                    auto arg = valueStackPhi.back();
+                    valueStackPhi.pop_back();
+
+                    if (funcDef->argumentTypes[argCount - i]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
                         callGcFunction(arg.llvmValue, arg.yoiType, false);
-                    } else if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
+                    } else if (funcDef->argumentTypes[argCount - i]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
                         auto object = ensureObject(arg.yoiType, arg.llvmValue);
                         args.push_back(object.second);
                         if (arg.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !arg.yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
@@ -1239,8 +1261,10 @@ namespace yoi {
                         else;
                     }
                 }
+
+                args.push_back(postponed);
+
                 std::reverse(args.begin(), args.end());
-                std::swap(*args.begin(), *(args.end() - 1));
 
                 if (funcDef->returnType->type == IRValueType::valueType::none) {
                     Builder->CreateCall(function, args);

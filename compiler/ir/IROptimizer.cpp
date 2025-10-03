@@ -3994,7 +3994,7 @@ namespace yoi {
             
             for (auto &i : compilerCtx->getImportedModule(function.first)->functionTable[function.second]->codeBlock) {
                 for (auto &ins : i->getIRArray()) {
-                    if (ins.opcode == IR::Opcode::invoke) {
+                    if (ins.opcode == IR::Opcode::invoke || ins.opcode == IR::Opcode::invoke_dangling) {
                         CallGraph::FuncIdentifier callee{ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex};
                         callGraph.addCall(function, callee);
                         q.push(callee);

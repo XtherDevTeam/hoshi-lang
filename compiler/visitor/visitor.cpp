@@ -3146,10 +3146,13 @@ namespace yoi {
         } else if (toType->type == IRValueType::valueType::structObject) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
-            auto result = resolveOverloadExtern(structType->name + L"::constructor", {rhs}, toType->typeAffiliateModule, structType);
+            auto result = resolveOverloadExtern(L"constructor", {rhs}, toType->typeAffiliateModule, structType);
             if (result.found()) {
-                // TODO: Call invoke_dangling to handle the post-this stack structure
-                panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": not implemented yet.");
+                if (result.isCastRequired) {
+                    tryCastTo(result.function->argumentTypes.back());
+                }
+                moduleContext->getIRBuilder().newStructOp(toType->typeIndex, true, toType->typeAffiliateModule);
+                moduleContext->getIRBuilder().invokeDanglingOp(result.functionIndex, 2, result.function->returnType, true, toType->typeAffiliateModule);
             } else {
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to " + yoi::wstring2string((toType->to_string())) + ": no viable conversion found.");
             }

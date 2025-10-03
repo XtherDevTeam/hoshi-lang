@@ -4,15 +4,15 @@ use runtime "runtime"
 
 func main() : int {
     let map = hashMap.HashMap<str.Str, int>()
-    map[str.Str("Hello")] = 0xe1751a
-    map[str.Str("World")] = 0x2233ff
-    map[str.Str("Hoshi")] = 0x112233
-    map[str.Str("Language")] = 0x445566
+    map["Hello"] = 0xe1751a
+    map["World"] = 0x2233ff
+    map["Hoshi"] = 0x112233
+    map["Language"] = 0x445566
     if (map.size() != 4) {
         runtime.puts("HashMap validation failed: size is not 4")
         return 1
     }
-    if (map[str.Str("Hello")] != 0xe1751a) {
+    if (map["Hello"] != 0xe1751a) {
         runtime.puts("HashMap validation failed: value of 'Hello' is not 0xe1751a")
         return 1
     }
