@@ -1018,7 +1018,7 @@ namespace yoi {
                 else
                     generateIfTargetNotNull(oldPtr, yoiType, [&] () {
                         callGcFunction(oldPtr, yoiType, false, true);
-                    }, true);
+                    }, !yoiType->hasAttribute(IRValueType::ValueAttr::Raw));
                 // Store new value
                 if (currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     auto unboxedVal = unboxValue(valToStore.llvmValue, valToStore.yoiType);

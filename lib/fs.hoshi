@@ -5,13 +5,15 @@ use lang "builtin"
 
 struct OSFile {
     fp: unsigned,
+    isText: bool,
     path: str.Str,
-    constructor(fp: unsigned, path: str.Str)
+    constructor(fp: unsigned, isText: bool, path: str.Str)
 }
 
 impl OSFile {
-    constructor(fp: unsigned, path: str.Str) {
+    constructor(fp: unsigned, isText: bool, path: str.Str) {
         this.fp = fp
+        this.isText = isText
         this.path = path
     }
 }
@@ -23,7 +25,7 @@ impl OSFile : file.AbstractFile {
         return buffer
     },
     write(data: char[]) : int {
-        runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, data.length, this.fp)
+        runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, data.length - this.isText, this.fp)
         return data.length
     },
     close() : none {
@@ -67,5 +69,18 @@ func open(path: str.Str, mode: str.Str) : lang.Result<OSFile, str.Str> {
     if (fp == 0) {
         return lang.Result<OSFile, str.Str>.err(str.Str("failed to open file"))
     }
-    return lang.Result<OSFile, str.Str>.ok(OSFile(fp, path))
+    let isText = mode.find('b') == -1
+    return lang.Result<OSFile, str.Str>.ok(OSFile(fp, isText, path))
+}
+
+func stdin() : OSFile {
+    return OSFile(runtime.runtime_get_stdin_fp(), true, str.Str("stdin"))
+}
+
+func stdout() : OSFile {
+    return OSFile(runtime.runtime_get_stdout_fp(), true, str.Str("stdout"))
+}
+
+func stderr() : OSFile {
+    return OSFile(runtime.runtime_get_stderr_fp(), true, str.Str("stderr"))
 }

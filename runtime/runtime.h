@@ -28,4 +28,10 @@ extern "C" void runtime_panic(char *message);
 
 extern "C" int elysia_main(int argc, char *argv[]);
 
+extern "C" void *runtime_get_stdin_fp();
+
+extern "C" void *runtime_get_stdout_fp();
+
+extern "C" void *runtime_get_stderr_fp();
+
 #endif // HOSHI_LANG_RUNTIME_RUNTIME_H

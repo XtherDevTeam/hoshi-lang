@@ -46,3 +46,15 @@ void runtime_panic(char *message) {
     fprintf(stderr, "%s\n", message);
     exit(1);
 }
+
+void *runtime_get_stdin_fp() {
+    return stdin;
+}
+
+void *runtime_get_stdout_fp() {
+    return stdout;
+}
+
+void *runtime_get_stderr_fp() {
+    return stderr;
+}

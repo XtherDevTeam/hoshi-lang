@@ -23,3 +23,8 @@ import noffi runtime_start_thread(f: func () : none) : lang.Result<unsigned, int
 import noffi runtime_thread_join(thread_id: unsigned) : int from "builtin"
 import noffi runtime_get_thread_id() : unsigned from "builtin"
 import noffi runtime_ping_thread(thread_id: unsigned) : int from "builtin"
+
+/* stdin/stdout/stderr */
+import runtime_get_stdin_fp() : ptr from "builtin"
+import runtime_get_stdout_fp() : ptr from "builtin"
+import runtime_get_stderr_fp() : ptr from "builtin"

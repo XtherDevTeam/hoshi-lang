@@ -16,6 +16,8 @@ struct Str {
     endswith(suffix: Str) : bool,
     c_str() : int,
     find(pattern: Str, start: int) : int,
+    find(ch: char, start: int) : int,
+    always_inline find(ch: char) : int,
     always_inline find(pattern: Str) : int,
     substring(start: unsigned, end: unsigned) : Str,
     trim() : Str,
@@ -374,7 +376,18 @@ impl Str {
             left += 1
             right -= 1
         }
-    }
+    },
+    find(ch: char, start: int) : int {
+        for (let i = start; i < this.length; i += 1) {
+            if (this.data[i] == ch) {
+                return i
+            }
+        }
+        return -1
+    },
+    always_inline find(ch: char) : int {
+        return this.find(ch, 0)
+    },
 }
 
 impl Str : lang.Hashable {

@@ -3004,6 +3004,72 @@ namespace yoi {
                     simulationStack.push(resultType, {});
                     break;
                 }
+                case IR::Opcode::less_than: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = lessThan(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::greater_than: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThan(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::less_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThanOrEqual(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::greater_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = greaterThanOrEqual(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = equal(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
+                case IR::Opcode::not_equal: {
+                    auto right = simulationStack.peek(0);
+                    auto left = simulationStack.peek(1);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    // simulate
+                    auto result = notEqual(left, right);
+                    result.type->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(result);
+                    break;
+                }
                 default: {
                     handleInstruction(ins, 0, blockIndex);
                     break;

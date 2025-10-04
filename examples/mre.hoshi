@@ -1,0 +1,9 @@
+func external() : int {
+    let y = 233
+    return -1
+}
+
+func main() : int {
+    let x = external() != -1
+    return x
+}
