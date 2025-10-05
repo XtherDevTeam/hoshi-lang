@@ -60,6 +60,7 @@ TEST_CASES = {
     "struct-type-implicit-call": {"type": "executable", "return_code": 0},
     "print": {"type": "executable", "return_code": 0},
     # "input": {"type": "executable", "return_code": 0},
+    "finalizer": {"type": "executable", "return_code": 0},
 }
 
 

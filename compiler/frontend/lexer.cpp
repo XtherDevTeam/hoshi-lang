@@ -135,6 +135,8 @@ namespace yoi {
             tok.kind = token::tokenKind::kInterface;
         } else if (tempStr == L"constructor") {
             tok.kind = token::tokenKind::kConstructor;
+        } else if (tempStr == L"finalizer") {
+            tok.kind = token::tokenKind::kFinalizer;
         } else if (tempStr == L"struct") {
             tok.kind = token::tokenKind::kStruct;
         } else if (tempStr == L"impl") {

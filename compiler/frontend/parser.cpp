@@ -901,21 +901,27 @@ namespace yoi {
         identifierWithTypeSpec *var = nullptr;
         innerMethodDecl *method = nullptr;
         constructorDecl *con = nullptr;
+        finalizerDecl *fin = nullptr;
         lexer::token node_start_token = lex.curToken;
 
         parse(con, lex);
         if (con) {
-            o = new structDefInnerPair{node_start_token, 1, nullptr, con, nullptr};
+            o = new structDefInnerPair{node_start_token, 1, nullptr, con, nullptr, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new structDefInnerPair{node_start_token, 2, nullptr, nullptr, method};
+            o = new structDefInnerPair{node_start_token, 2, nullptr, nullptr, method, nullptr};
+            return;
+        }
+        parse(fin, lex);
+        if (fin) {
+            o = new structDefInnerPair{node_start_token, 3, nullptr, nullptr, nullptr, fin};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new structDefInnerPair{node_start_token, 0, var, nullptr, nullptr};
+            o = new structDefInnerPair{node_start_token, 0, var, nullptr, nullptr, nullptr};
             return;
         }
         o = nullptr;
@@ -924,16 +930,22 @@ namespace yoi {
     void parse(implInnerPair *&o, lexer &lex) {
         innerMethodDef *method = nullptr;
         constructorDef *con = nullptr;
+        finalizerDef *fin = nullptr;
         lexer::token node_start_token = lex.curToken;
 
         parse(con, lex);
         if (con) {
-            o = new implInnerPair{node_start_token, con, nullptr};
+            o = new implInnerPair{node_start_token, con, nullptr, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new implInnerPair{node_start_token, nullptr, method};
+            o = new implInnerPair{node_start_token, nullptr, method, nullptr};
+            return;
+        }
+        parse(fin, lex);
+        if (fin) {
+            o = new implInnerPair{node_start_token, nullptr, nullptr, fin};
             return;
         }
         o = nullptr;
@@ -2431,6 +2443,53 @@ namespace yoi {
             return;
         }
         o = new typeAliasStmt{node_start_token, lhs, rhs};
+    }
+
+    void parse(finalizerDecl *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kFinalizer) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `(` after `finalizer` in finalizer declaration");
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `)` after `finalizer` in finalizer declaration");
+        }
+        lex.scan();
+        o = new finalizerDecl{node_start_token};
+    }
+
+    void parse(finalizerDef *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kFinalizer) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `(` after `finalizer` in finalizer definition");
+        }
+        lex.scan();
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected `)` after `finalizer` in finalizer definition");
+        }
+        lex.scan();
+        codeBlock *block = nullptr;
+        parse(block, lex);
+        if (!block) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected codeBlock after `finalizer` declaration");
+            return;
+        }
+        o = new finalizerDef{node_start_token, block};
     }
 } // namespace yoi
 

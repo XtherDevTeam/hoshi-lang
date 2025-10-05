@@ -73,6 +73,7 @@ namespace yoi {
                 kFunc,
                 kInterface,
                 kConstructor,
+                kFinalizer,
                 kStruct,
                 kImpl,
                 kLet,

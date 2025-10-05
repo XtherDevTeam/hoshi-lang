@@ -27,10 +27,11 @@
 - [ ] 有限范围内推断虚函数调用变为正常函数优化
     - [ ] IRValueType改造，支持附加信息
 - [x] 加入左值对象和将亡对象判断和处理逻辑
-- [ ] 在json库加入对 list 和 null 的处理
+- [x] 在json库加入对 list 和 null 的处理
 - [ ] 为type alias加入模板
-- [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化
-- [ ] 完善 RAII 加入 finalizer
+<!-- - [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化 (dismissed) -->
+- [x] 完善 RAII 加入 finalizer
+- [ ] 加入 `threading.Mutex`
 
 # Known issues
 

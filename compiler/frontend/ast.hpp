@@ -180,6 +180,10 @@ namespace yoi {
 
     class typeAliasStmt;
 
+    class finalizerDef;
+    
+    class finalizerDecl;
+
     class typeAliasStmt : public AST {
         public:
         yoi::identifierWithDefTemplateArg *lhs{};
@@ -611,7 +615,7 @@ namespace yoi {
 
     class structDefInnerPair : public AST {
     public:
-        // 0 is member 1 is constructor 2 is method
+        // 0 is member 1 is constructor 2 is method, 3 is finalizer
         int8_t kind;
         // member var
         identifierWithTypeSpec *var;
@@ -619,12 +623,16 @@ namespace yoi {
         constructorDecl *con;
         // method
         innerMethodDecl *method;
+        // finalizer
+        finalizerDecl *finalizer;
 
         identifierWithTypeSpec &getVar();
 
         constructorDecl &getConstructor();
 
         innerMethodDecl &getMethod();
+
+        finalizerDecl &getFinalizer();
     };
 
     class structDefInner : public AST {
@@ -650,12 +658,20 @@ namespace yoi {
         constructorDef *con;
         // method
         innerMethodDef *met;
+        // finalizer
+        finalizerDef *finalizer;
 
         constructorDef &getConstructor();
 
         innerMethodDef &getMethod();
 
+        finalizerDef &getFinalizer();
+
         bool isConstructor() const;
+
+        bool isFinalizer() const;
+
+        bool isMethod() const;
     };
 
     class implInner : public AST {
@@ -892,12 +908,23 @@ namespace yoi {
         definitionArguments &getArgs();
     };
 
+    class finalizerDecl : public AST {
+    public:
+    };
+
     class constructorDef : public AST {
     public:
         definitionArguments *args;
         codeBlock *block;
 
         definitionArguments &getArgs();
+
+        codeBlock &getBlock();
+    };
+
+    class finalizerDef : public AST {
+    public:
+        codeBlock *block;
 
         codeBlock &getBlock();
     };
@@ -1123,6 +1150,10 @@ namespace yoi {
     void finalizeAST(marcoDescriptor *ptr);
 
     void finalizeAST(typeAliasStmt *ptr);
+
+    void finalizeAST(finalizerDef *ptr);
+
+    void finalizeAST(finalizerDecl *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

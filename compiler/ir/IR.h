@@ -410,6 +410,7 @@ namespace yoi {
             Variadic,
             Static,
             Constructor,
+            Finalizer,
             Unreachable,
             Preserve,
             NoRawAndNullOptimization,

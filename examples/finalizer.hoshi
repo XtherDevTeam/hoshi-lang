@@ -1,0 +1,22 @@
+use runtime "runtime"
+
+struct T {
+    a: int,
+    constructor(a: int),
+    finalizer()
+}
+
+impl T {
+    constructor(a: int) {
+        this.a = a
+        runtime.puts("I'm definitely gonna be the bestest Valkyrie ever, Aunt Himeko!")
+    },
+    finalizer() {
+        runtime.puts("Live, Kiana... That's my final lesson for you...")
+    }
+}
+
+func main() : int {
+    let t = T(10)
+    return 0
+}

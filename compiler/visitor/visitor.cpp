@@ -1746,6 +1746,23 @@ namespace yoi {
                         irModule->functionOverloadIndexies[structName + L"::" + methodName].push_back(funcIndex);
                         break;
                     }
+                    case 3: {
+                        // finalizer
+                        IRFunctionDefinition::Builder finalizerBuilder;
+                        finalizerBuilder.setName(structName + L"::finalizer");
+                        finalizerBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
+                        finalizerBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Finalizer);
+                        finalizerBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
+                        auto thisType = managedPtr(
+                            IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
+                        finalizerBuilder.setReturnType(moduleContext->getCompilerContext()->getNoneObjectType());
+                        finalizerBuilder.addArgument(L"this", thisType);
+                        auto func = finalizerBuilder.yield();
+                        auto funcIndex = irModule->functionTable.put_create(structName + L"::finalizer", func);
+                        builder.addMethod(L"finalizer", funcIndex);
+                        // no need to prepare for manual calling, it is not legal.
+                        break;
+                    }
                 }
             }
             auto structType = builder.yield();
@@ -1852,10 +1869,10 @@ namespace yoi {
                 std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
                 for (auto &i : implStmt->getInner().getInner()) {
-                    yoi_assert(!i->isConstructor(),
+                    yoi_assert(i->isMethod(),
                             i->getLine(),
                             i->getColumn(),
-                            "Constructor cannot be implemented for interface");
+                            "impl-for statement only allows method definition, not constructor or finalizer");
 
                     bool isVaridic = false;
 
@@ -1928,6 +1945,7 @@ namespace yoi {
 
             for (auto &i : implStmt->getInner().getInner()) {
                 yoi::wstr mangledName;
+                yoi::codeBlock *block{};
                 if (i->isConstructor()) {
                     bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
@@ -1941,6 +1959,10 @@ namespace yoi {
                         argTypes.push_back(managedPtr(parseTypeSpec(arg->spec)));
                     }
                     mangledName = structBaseName + L"::constructor" + getFuncUniqueNameStr(argTypes);
+                    block = i->getConstructor().block;
+                } else if (i->isFinalizer()) {
+                    mangledName = structBaseName + L"::finalizer";
+                    block = i->getFinalizer().block;
                 } else {
                     // whole bunch of shit doin' here is to get the mangled name of the method, no actual modification of original func def here.
                     bool isVaridic = false;
@@ -1956,6 +1978,7 @@ namespace yoi {
                     }
                     mangledName =
                         structBaseName + L"::" + i->getMethod().getName().get().strVal + getFuncUniqueNameStr(argTypes);
+                    block = i->getMethod().block;
                 }
 
                 try {
@@ -1964,7 +1987,7 @@ namespace yoi {
                     moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
                     moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                     moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-                    visit(i->isConstructor() ? i->getConstructor().block : i->getMethod().block, true);
+                    visit(block, true);
                     moduleContext->getIRBuilder().yield();
                     moduleContext->popIRBuilder();
                 } catch (std::out_of_range &e) {
@@ -2839,6 +2862,10 @@ namespace yoi {
                 genericArgTypes.push_back(managedPtr(parseTypeSpec(&arg->getSpec())));
             }
             genericMethodKey = baseMethodName + getFuncUniqueNameStr(genericArgTypes);
+        } else if (methodAstNode->kind == 3) {
+            // finalizer
+            baseMethodName = L"finalizer";
+            genericMethodKey = baseMethodName;
         }
 
         moduleContext->popTemplateBuilder(); // Done with generic context
@@ -2880,6 +2907,12 @@ namespace yoi {
                 specializedArgTypes.push_back(specializedType);
             }
             funcBuilder.setReturnType(managedPtr(parseTypeSpec(&methodAstNode->getMethod().getResultType())));
+        } else if (methodAstNode->kind == 3) {
+            funcBuilder.setName(specializedStructName + L"::finalizer");
+            funcBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Finalizer);
+            funcBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
+            funcBuilder.addArgument(L"this", selfType); // Specialized 'this'
+            funcBuilder.setReturnType(moduleContext->getCompilerContext()->getNoneObjectType());
         }
 
         yoi::wstr specializedMethodName =
@@ -2920,6 +2953,12 @@ namespace yoi {
                 genericArgTypes.push_back(managedPtr(parseTypeSpec(&arg->getSpec())));
             }
             genericMethodKey = baseMethodName + getFuncUniqueNameStr(genericArgTypes);
+        } else if (methodAstNode->isFinalizer()) {
+            baseMethodName = L"finalizer";
+            for (auto &arg : methodAstNode->getConstructor().getArgs().get()) {
+                genericArgTypes.push_back(managedPtr(parseTypeSpec(&arg->getSpec())));
+            }
+            genericMethodKey = baseMethodName + getFuncUniqueNameStr(genericArgTypes);
         } else {
             baseMethodName = methodAstNode->getMethod().getName().get().strVal;
             for (auto &arg : methodAstNode->getMethod().getArgs().get()) {
@@ -2948,6 +2987,8 @@ namespace yoi {
                 auto specializedType = managedPtr(parseTypeSpec(&arg->getSpec()));
                 specializedArgTypes.push_back(specializedType);
             }
+        } else if (methodAstNode->isFinalizer()) {
+            // no args
         } else {
             for (auto &arg : methodAstNode->getMethod().getArgs().get()) {
                 auto specializedType = managedPtr(parseTypeSpec(&arg->getSpec()));

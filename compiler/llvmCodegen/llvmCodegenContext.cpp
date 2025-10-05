@@ -446,6 +446,10 @@ namespace yoi {
 
             Builder->SetInsertPoint(finalizeBlock);
             llvm::Value* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
+            // if any finalizer presents, call it
+            if (auto funcName = structDef->name + L"::finalizer"; functionMap[funcName] != nullptr && yoiModule->functionTable[funcName]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Finalizer)) {
+                Builder->CreateCall(functionMap[funcName], {castedPtr});
+            }
             // call dec for inner object (if any)
             for (yoi::indexT innerIdx = 0; innerIdx < structDef->fieldTypes.size(); ++innerIdx) {
                 // create gep

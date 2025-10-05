@@ -713,6 +713,9 @@ namespace yoi {
             case 2:
                 finalizeAST(ptr->method);
                 break;
+            case 3:
+                finalizeAST(ptr->finalizer);
+                break;
         }
         delete ptr;
     }
@@ -732,6 +735,8 @@ namespace yoi {
     void finalizeAST(implInnerPair *ptr) {
         if (ptr->isConstructor()) {
             finalizeAST(ptr->con);
+        } else if (ptr->isFinalizer()) {
+            finalizeAST(ptr->finalizer);
         } else {
             finalizeAST(ptr->met);
         }
@@ -1132,5 +1137,32 @@ namespace yoi {
     void finalizeAST(typeAliasStmt *ptr) {
         delete ptr->lhs;
         delete ptr->rhs;
+    }
+
+    codeBlock &finalizerDef::getBlock() {
+        return *block;
+    }
+
+    finalizerDecl &structDefInnerPair::getFinalizer() {
+        return *finalizer;
+    }
+
+    bool implInnerPair::isMethod() const {
+        return !isConstructor() && !isFinalizer();
+    }
+
+    bool implInnerPair::isFinalizer() const {
+        return finalizer;
+    }
+
+    finalizerDef &implInnerPair::getFinalizer() {
+        return *finalizer;
+    }
+    void finalizeAST(finalizerDecl *ptr) {
+        delete ptr;
+    }
+    void finalizeAST(finalizerDef *ptr) {
+        finalizeAST(ptr->block);
+        delete ptr;
     }
 } // namespace yoi

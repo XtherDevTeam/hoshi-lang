@@ -99,6 +99,10 @@ namespace yoi {
 
     void parse(implStmt *&o, lexer &lex);
 
+    void parse(finalizerDecl *&o, lexer &lex);
+
+    void parse(finalizerDef *&o, lexer &lex);
+
     void parse(letAssignmentPair *&o, lexer &lex);
 
     void parse(letStmt *&o, lexer &lex);
