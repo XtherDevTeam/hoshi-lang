@@ -6,7 +6,6 @@ var classyoi_1_1IRFunctionDefinition =
       [ "BuiltinImplementation", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af05160095e65215d86f82da76440574f", null ],
       [ "NoFFI", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a", null ],
       [ "Variadic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b", null ],
-      [ "Instrinsic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a5d6882bdff26772c29fdf52b5db72f8a", null ],
       [ "Static", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a84a8921b25f505d0d2077aeb5db4bc16", null ],
       [ "Constructor", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a678d0a4421b60dc59999ac02837496a6", null ],
       [ "Unreachable", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a", null ],
