@@ -3,6 +3,7 @@
 //
 
 #include "IR.h"
+#include "compiler/moduleContext.h"
 #include "share/def.hpp"
 #include "share/magic_enum.h"
 #include <memory>
@@ -165,41 +166,41 @@ namespace yoi {
     }
 
     void IRBuilder::basicCast(const std::shared_ptr<IRValueType> &valType, yoi::indexT insertionPoint, bool lhs) {
+        auto &target = tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1);
         switch (valType->type) {
             case IRValueType::valueType::integerObject:
+                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_int, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getIntObjectType();
+                target = compilerCtx->getIntObjectType();
                 break;
             case IRValueType::valueType::decimalObject:
+            yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_deci, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getDeciObjectType();
+                target = compilerCtx->getDeciObjectType();
                 break;
             case IRValueType::valueType::characterObject:
+                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_char, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getCharObjectType();
+                target = compilerCtx->getCharObjectType();
                 break;
             case IRValueType::valueType::booleanObject:
+                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_bool, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getBoolObjectType();
+                target = compilerCtx->getBoolObjectType();
                 break;
             case IRValueType::valueType::pointerObject:
                 insert({IR::Opcode::pointer_cast, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    managedPtr(IRValueType{IRValueType::valueType::pointerObject});
+                target = managedPtr(IRValueType{IRValueType::valueType::pointerObject});
                 break;
             case IRValueType::valueType::shortObject:
+                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_short, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getShortObjectType();
+                target = compilerCtx->getShortObjectType();
                 break;
             case IRValueType::valueType::unsignedObject:
+                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_unsigned, {}, currentDebugInfo}, insertionPoint);
-                tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1) =
-                    compilerCtx->getUnsignedObjectType();
+                target = compilerCtx->getUnsignedObjectType();
                 break;
             default: {
                 panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast");

@@ -3127,7 +3127,7 @@ namespace yoi {
 
         if (*rhs == *toType) {
             return;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             emitBasicCastTo(toType);
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
             // no cast needed for pointer type
@@ -3168,7 +3168,7 @@ namespace yoi {
         }
         if (*rhs == *toType) {
             return true;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType()) {
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             return true;
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
             // no cast needed for pointer type
@@ -3185,7 +3185,7 @@ namespace yoi {
         } else if (toType->type == IRValueType::valueType::structObject) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
-            auto result = resolveOverloadExtern(structType->name + L"::constructor", {rhs}, toType->typeAffiliateModule, structType);
+            auto result = resolveOverloadExtern(L"constructor", {rhs}, toType->typeAffiliateModule, structType);
             return result.found();
         } else {
             return false;
@@ -3339,8 +3339,8 @@ namespace yoi {
                 func->attrs.end()) {
                 if (argTypes.size() >= fixedParamCount) {
                     bool fixedMatch = true;
-                    for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
-                        if (!canCastTo(argTypes[i], paramTypes[i])) {
+                    for (size_t i = 0; i < fixedParamCount; ++i) {
+                        if (!canCastTo(argTypes[i], paramTypes[i + skipFirstParam])) {
                             fixedMatch = false;
                             break;
                         }
@@ -3358,8 +3358,8 @@ namespace yoi {
                 if (argTypes.size() != fixedParamCount + 1) // balance the variadic argument
                     return false;
 
-                for (size_t i = skipFirstParam ? 1 : 0; i < fixedParamCount; ++i) {
-                    if (!canCastTo(argTypes[i], paramTypes[i])) {
+                for (size_t i = 0; i < fixedParamCount + 1; ++i) {
+                    if (!canCastTo(argTypes[i], paramTypes[i + skipFirstParam])) {
                         return false;
                     }
                 }

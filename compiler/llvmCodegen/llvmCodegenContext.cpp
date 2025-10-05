@@ -668,8 +668,8 @@ namespace yoi {
         Builder->SetInsertPoint(entryBlock);
 
         // invoke runtime_debug_report_current_function
+        set_current_file_path(funcDef.debugInfo.sourceFile);
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug){
-            set_current_file_path(funcDef.debugInfo.sourceFile);
             Builder->SetCurrentDebugLocation({llvm::DILocation::get(*TheContext, funcDef.debugInfo.line + 1, funcDef.debugInfo.column + 1, currentFunction->getSubprogram())});
             std::string funcName = wstring2string(funcDef.name);
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
@@ -846,7 +846,7 @@ namespace yoi {
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char (no-op)
                     castedVal = rawVal;
                 } else {
-                    panic(0, 0, "LLVM Codegen: Unsupported type for basic_cast_char");
+                    panic(instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: Unsupported type for basic_cast_char");
                 }
 
                 valueStackPhi.push_back({castedVal, managedPtr(compilerCtx->getCharObjectType()->getBasicRawType())});

@@ -5,22 +5,22 @@ import puts(str: ptr) : int32 from "builtin"
 func main() : int {
     let a = str.Str.join("Hello, ", "world!")
     puts("string validation passed: operator+")
-    if (a.startswith(str.Str("Hello")) == false) {
+    if (a.startswith("Hello") == false) {
         puts("string valiation failed: startswith 'Hello'")
         return 1
     }
     puts("string valiation passed: startswith 'Hello'")
-    if (a.endswith(str.Str("!")) == false) {
+    if (a.endswith("!") == false) {
         puts("string valiation failed: endswith '!'")
         return 1
     }
     puts("string valiation passed: endswith '!'")
-    if (a.substring(0, 5) != str.Str("Hello")) {
+    if (a.substring(0, 5) != "Hello") {
         puts("string valiation failed: substring(0, 5) == 'Hello'")
         return 1
     }
     puts("string valiation passed: substring(0, 5) == 'Hello'")
-    if (a.find(str.Str("llo")) != 2) {
+    if (a.find("llo") != 2) {
         puts("string valiation failed: find('llo') == 2")
         return 1
     }
@@ -28,7 +28,7 @@ func main() : int {
     puts(a.c_str())
     
     let b = str.Str("  May all the beauty be blessed.  ").trim()
-    if (b != str.Str("May all the beauty be blessed.")) {
+    if (b != "May all the beauty be blessed.") {
         puts("string valiation failed: trim()")
         return 1
     }
@@ -36,13 +36,13 @@ func main() : int {
 
     let c = str.Str("K423 & Raiden Mei & K423")
 
-    if (c.find_all(str.Str("Raiden")) != 1 || c.find_all(str.Str("K423")) != 2) {
+    if (c.find_all("Raiden") != 1 || c.find_all("K423") != 2) {
         puts("string valiation failed: find_all('Raiden') == 1 && find_all('K423') == 2")
         return 1
     }
     puts("string valiation passed: find_all('Raiden') == 1 && find_all('K423') == 2")
 
-    c = c.replace(str.Str("K423"), str.Str("Kiana Kaslana"))
+    c = c.replace("K423", "Kiana Kaslana")
     
     if (c != str.Str("Kiana Kaslana & Raiden Mei & Kiana Kaslana")) {
         puts("string valiation failed: replace('K423', 'Kiana Kaslana')")
