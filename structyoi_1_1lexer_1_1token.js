@@ -56,6 +56,7 @@ var structyoi_1_1lexer_1_1token =
       [ "kFunc", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a65a4d7dac148b85f7865b4df5267461e", null ],
       [ "kInterface", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a14cac91973cdf5d0947c2d40c421c6c6", null ],
       [ "kConstructor", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aabd2d9fe8746b83f7e3c224be63c9251", null ],
+      [ "kFinalizer", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae294531810913866a6d34da08df5c3f7", null ],
       [ "kStruct", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a37d24e1221658f0e0333a512fdbcd2f0", null ],
       [ "kImpl", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a7b6c608b7d4cdaa504239ce9ec36acbf", null ],
       [ "kLet", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af8fdca8637b6b0964d5c47c7df466c14", null ],

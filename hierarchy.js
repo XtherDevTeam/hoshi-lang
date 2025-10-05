@@ -23,6 +23,8 @@ var hierarchy =
       [ "exclusiveExpr", "classyoi_1_1exclusiveExpr.html", null ],
       [ "exportDecl", "classyoi_1_1exportDecl.html", null ],
       [ "externModuleAccessExpression", "classyoi_1_1externModuleAccessExpression.html", null ],
+      [ "finalizerDecl", "classyoi_1_1finalizerDecl.html", null ],
+      [ "finalizerDef", "classyoi_1_1finalizerDef.html", null ],
       [ "forEachStmt", "classyoi_1_1forEachStmt.html", null ],
       [ "forStmt", "classyoi_1_1forStmt.html", null ],
       [ "funcDefStmt", "classyoi_1_1funcDefStmt.html", null ],

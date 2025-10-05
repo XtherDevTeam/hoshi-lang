@@ -60,6 +60,8 @@ var annotated_dup =
       [ "exclusiveExpr", "classyoi_1_1exclusiveExpr.html", "classyoi_1_1exclusiveExpr" ],
       [ "exportDecl", "classyoi_1_1exportDecl.html", "classyoi_1_1exportDecl" ],
       [ "externModuleAccessExpression", "classyoi_1_1externModuleAccessExpression.html", "classyoi_1_1externModuleAccessExpression" ],
+      [ "finalizerDecl", "classyoi_1_1finalizerDecl.html", null ],
+      [ "finalizerDef", "classyoi_1_1finalizerDef.html", "classyoi_1_1finalizerDef" ],
       [ "forEachStmt", "classyoi_1_1forEachStmt.html", "classyoi_1_1forEachStmt" ],
       [ "forStmt", "classyoi_1_1forStmt.html", "classyoi_1_1forStmt" ],
       [ "funcDefStmt", "classyoi_1_1funcDefStmt.html", "classyoi_1_1funcDefStmt" ],

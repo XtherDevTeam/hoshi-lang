@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['foreachstmt_0',['forEachStmt',['../classyoi_1_1forEachStmt.html',1,'yoi']]],
-  ['forstmt_1',['forStmt',['../classyoi_1_1forStmt.html',1,'yoi']]],
-  ['funcdefstmt_2',['funcDefStmt',['../classyoi_1_1funcDefStmt.html',1,'yoi']]],
-  ['functionanalysisinfo_3',['FunctionAnalysisInfo',['../structyoi_1_1FunctionAnalysisInfo.html',1,'yoi']]],
-  ['functypespec_4',['funcTypeSpec',['../classyoi_1_1funcTypeSpec.html',1,'yoi']]]
+  ['finalizerdecl_0',['finalizerDecl',['../classyoi_1_1finalizerDecl.html',1,'yoi']]],
+  ['finalizerdef_1',['finalizerDef',['../classyoi_1_1finalizerDef.html',1,'yoi']]],
+  ['foreachstmt_2',['forEachStmt',['../classyoi_1_1forEachStmt.html',1,'yoi']]],
+  ['forstmt_3',['forStmt',['../classyoi_1_1forStmt.html',1,'yoi']]],
+  ['funcdefstmt_4',['funcDefStmt',['../classyoi_1_1funcDefStmt.html',1,'yoi']]],
+  ['functionanalysisinfo_5',['FunctionAnalysisInfo',['../structyoi_1_1FunctionAnalysisInfo.html',1,'yoi']]],
+  ['functypespec_6',['funcTypeSpec',['../classyoi_1_1funcTypeSpec.html',1,'yoi']]]
 ];

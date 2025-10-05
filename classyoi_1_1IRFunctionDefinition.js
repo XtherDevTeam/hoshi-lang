@@ -8,6 +8,7 @@ var classyoi_1_1IRFunctionDefinition =
       [ "Variadic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b", null ],
       [ "Static", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a84a8921b25f505d0d2077aeb5db4bc16", null ],
       [ "Constructor", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a678d0a4421b60dc59999ac02837496a6", null ],
+      [ "Finalizer", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb", null ],
       [ "Unreachable", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a", null ],
       [ "Preserve", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919", null ],
       [ "NoRawAndNullOptimization", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9", null ]
