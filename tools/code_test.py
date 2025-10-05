@@ -57,7 +57,8 @@ TEST_CASES = {
     "ultimate": {"type": "executable", "return_code": 0},
     "atoi": {"type": "executable", "return_code": 0},
     "basic-implicit-call": {"type": "executable", "return_code": 0},
-    "struct-type-implicit-call": {"type": "executable", "return_code": 0}
+    "struct-type-implicit-call": {"type": "executable", "return_code": 0},
+    "print": {"type": "executable", "return_code": 0}
 }
 
 

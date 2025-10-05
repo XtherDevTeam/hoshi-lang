@@ -1,0 +1,28 @@
+use file "file"
+use fs "fs"
+use str "str"
+use runtime "runtime"
+
+func print(s: str.Str) : none {
+    let stdout = fs.stdout() as file.AbstractFile
+    stdout.write(s.data)
+}
+
+func input() : str.Str {
+    let stdin = fs.stdin() as file.AbstractFile
+    let buffer = str.Str("")
+    let ch : char = 0
+    while (ch == '\r' || ch == '\n') {
+        ch = stdin.getch()
+    }
+    while (ch != '\n' && ch != '\r') {
+        buffer.push(ch)
+        ch = stdin.getch()
+    }
+    return buffer
+}
+
+func input(s: str.Str) : str.Str {
+    print(s)
+    return input()
+}

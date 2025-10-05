@@ -29,6 +29,8 @@
 - [x] 加入左值对象和将亡对象判断和处理逻辑
 - [ ] 在json库加入对 list 和 null 的处理
 - [ ] 为type alias加入模板
+- [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化
+- [ ] 完善 RAII 加入 finalizer
 
 # Known issues
 

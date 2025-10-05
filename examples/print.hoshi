@@ -1,0 +1,6 @@
+use console "console"
+
+func main() : int {
+    console.print("Hello, world!\n")
+    return 0
+}
