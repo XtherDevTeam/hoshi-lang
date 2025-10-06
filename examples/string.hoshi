@@ -61,7 +61,7 @@ func main() : int {
 
     let f = str.format(
         "{}: RESPOND ME! {}!\n{}: {} {}, {}, {}~",
-        new str.Stringable[7]("Raiden Mei", "ELYSIA", "Elysia", "Can you hear me? 1, 2, 3~", 1, 2, 3))
+        "Raiden Mei", "ELYSIA", "Elysia", "Can you hear me? 1, 2, 3~", 1, 2, 3)
 
     if (f != "Raiden Mei: RESPOND ME! ELYSIA!\nElysia: Can you hear me? 1, 2, 3~ 1, 2, 3~") {
         puts(f.c_str())

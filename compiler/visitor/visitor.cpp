@@ -1562,7 +1562,11 @@ namespace yoi {
                     isVaridic = true;
                     builder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = i->getId().node.strVal;
-                    auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                    auto argType = managedPtr(
+                        i->spec->elipsis
+                        ? parseTypeSpec(i->spec->elipsis).getDynamicArrayType()
+                        : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                    );
                     builder.addArgument(argName, argType);
                     argTypes.push_back(argType);
                     break;
@@ -1622,7 +1626,11 @@ namespace yoi {
                     isVaridic = true;
                     methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = arg->getId().node.strVal;
-                    auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                    auto argType = managedPtr(
+                        arg->spec->elipsis
+                        ? parseTypeSpec(arg->spec->elipsis).getDynamicArrayType()
+                        : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                    );
                     methodBuilder.addArgument(argName, argType);
                     argTypes.push_back(argType);
                     break;
@@ -1683,7 +1691,11 @@ namespace yoi {
                                 isVaridic = true;
                                 constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                                 auto argName = arg->getId().node.strVal;
-                                auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                                auto argType = managedPtr(
+                                    arg->spec->elipsis
+                                    ? parseTypeSpec(arg->spec->elipsis).getDynamicArrayType()
+                                    : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                                );
                                 constructorBuilder.addArgument(argName, argType);
                                 argTypes.push_back(argType);
                                 break;
@@ -1726,7 +1738,11 @@ namespace yoi {
                                 isVaridic = true;
                                 methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                                 auto argName = arg->getId().node.strVal;
-                                auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                                auto argType = managedPtr(
+                                    arg->spec->elipsis
+                                    ? parseTypeSpec(arg->spec->elipsis).getDynamicArrayType()
+                                    : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                                );
                                 methodBuilder.addArgument(argName, argType);
                                 argTypes.push_back(argType);
                                 break;
@@ -1895,7 +1911,11 @@ namespace yoi {
                             isVaridic = true;
                             methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                             auto argName = arg->getId().node.strVal;
-                            auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                            auto argType = managedPtr(
+                                arg->spec->elipsis
+                                    ? parseTypeSpec(arg->spec->elipsis).getDynamicArrayType()
+                                    : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                            );
                             methodBuilder.addArgument(argName, argType);
                             argTypes.push_back(argType);
                             break;
@@ -3713,7 +3733,11 @@ namespace yoi {
                     isVaridic = true;
                     methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = arg->getId().node.strVal;
-                    auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                    auto argType = managedPtr(
+                        arg->spec->elipsis
+                        ? parseTypeSpec(arg->spec->elipsis).getDynamicArrayType()
+                        : moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType()
+                    );
                     methodBuilder.addArgument(argName, argType);
                     argTypes.push_back(argType);
                     break;

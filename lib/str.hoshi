@@ -444,7 +444,7 @@ impl Str : Stringable {
     }
 }
 
-func format(fmt: Str, args: Stringable[]) : Str {
+func format(fmt: Str, args: ...Stringable[]) : Str {
     let occur = fmt.find_all(Str("{}"))
     if (occur == 0u) {
         return fmt
@@ -458,7 +458,7 @@ func format(fmt: Str, args: Stringable[]) : Str {
     let index_after_last_pattern = 0u
     let index = fmt.find(Str("{}"), index_after_last_pattern as int)
     let offset = 0u
-    let res = Str(fmt.length + total_strs_length - occur as unsigned * 2u)
+    let res = Str(fmt.length + total_strs_length - occur as unsigned * 2u + 1u)
     let res_data_ptr = runtime.runtime_get_string_array_data_pointer(res.data)
     let fmt_data_ptr = runtime.runtime_get_string_array_data_pointer(fmt.data)
 
@@ -477,10 +477,6 @@ func format(fmt: Str, args: Stringable[]) : Str {
     res.length = fmt.length + total_strs_length - occur * 2u
     res.data[res.length] = '\0'
     return res
-}
-
-func always_inline format(fmt: string, args: Stringable[]) : Str {
-    return format(Str(fmt), args)
 }
 
 func always_inline toInt(s: Str) : int {

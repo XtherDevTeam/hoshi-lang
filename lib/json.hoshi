@@ -114,7 +114,7 @@ func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
 impl str.Str : JSONValue {
     to_string() : str.Str {
         /*TODO: implement escape characters*/
-        return str.format("\"{}\"", new str.Stringable[1](this))
+        return str.format("\"{}\"", this)
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         let start_pos = stream.tell()
@@ -227,7 +227,7 @@ impl JSONDict : JSONValue {
             // s += key
             // s += ":"
             // s.append(value.to_string())
-            s = s + str.format("\"{}\":{}", new str.Stringable[2](key, value.to_string()))
+            s = s + str.format("\"{}\":{}", key, value.to_string())
             if (i < keys_arr.length - 1) {
                 s = s + ","
             }

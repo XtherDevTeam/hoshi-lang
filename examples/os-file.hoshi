@@ -11,7 +11,7 @@ func main() : int {
     let cursor = f.tell()
     f.close()
     let f = fs.open(path, str.Str("r")).unwrap() as file.AbstractFile
-    let content = str.Str(f.read(14))
+    let content = str.Str(f.read(13))
     f.close()
     runtime.puts(content.c_str())
     return 0

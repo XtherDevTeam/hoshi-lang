@@ -44,7 +44,7 @@ impl OSFile : file.AbstractFile {
         return runtime.feof(this.fp)
     },
     size() : int {
-        lang.runtime_panic("not implemented")
+        lang.runtime_panic("OSFile::size(): not implemented")
         return 0
     },
     is_seekable() : bool {

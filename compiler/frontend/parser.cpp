@@ -326,11 +326,22 @@ namespace yoi {
 
         if (lex.curToken.kind == lexer::token::tokenKind::kNull) {
             lex.scan();
-            o = new typeSpec{node_start_token, 2, nullptr, nullptr, true};
+            o = new typeSpec{node_start_token, 2, nullptr, nullptr, nullptr, true};
             return;
         } else if (lex.curToken.kind == lexer::token::tokenKind::kThreeDots) {
             lex.scan();
-            o = new typeSpec{node_start_token, 3, nullptr, nullptr, false, false};
+            typeSpec *t = nullptr;
+            parse(t, lex);
+            if (!t) {
+                o = new typeSpec{node_start_token, 3, nullptr, nullptr, nullptr, false, false};
+            } else {
+                if (t->kind == 3) {
+                    finalizeAST(t);
+                    o = nullptr;
+                    panic(lex.line, lex.col, "expected typeSpec after `...`");
+                }
+                o = new typeSpec{node_start_token, 3, nullptr, nullptr, t, false, false};
+            }
             return;
         }
         parse(spec, lex);
@@ -339,7 +350,7 @@ namespace yoi {
                 lex.scan();
                 if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
                     lex.scan();
-                    o = new typeSpec{node_start_token, 1, nullptr, spec, false, true};
+                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, true};
                     return;
                 } else {
                     panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
@@ -348,7 +359,7 @@ namespace yoi {
                     return;
                 }
             }
-            o = new typeSpec{node_start_token, 1, nullptr, spec, false, true};
+            o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, true};
             return;
         }
         parse(expr, lex);
@@ -357,7 +368,7 @@ namespace yoi {
                 lex.scan();
                 if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
                     lex.scan();
-                    o = new typeSpec{node_start_token, 0, expr, nullptr, false, true};
+                    o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, true};
                     return;
                 } else {
                     panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
@@ -366,7 +377,7 @@ namespace yoi {
                     return;
                 }
             }
-            o = new typeSpec{node_start_token, 0, expr, nullptr, false};
+            o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false};
             return;
         }
         o = nullptr;

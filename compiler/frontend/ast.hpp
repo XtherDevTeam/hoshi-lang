@@ -300,6 +300,7 @@ namespace yoi {
         int16_t kind; // 0 is member 1 is func 2 is null, 3 is elipsis
         externModuleAccessExpression *member;
         funcTypeSpec *func;
+        typeSpec *elipsis;
         bool isNull;
         bool hasArrayTypeSpec;
 

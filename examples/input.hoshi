@@ -4,7 +4,7 @@ use str "str"
 func main() : int {
     console.print("Hello, world!\n")
     let whoami = console.input("What is your name? ")
-    let concated = str.format("Hello, {}! Have a nice day!\n", new str.Stringable[1](whoami))
+    let concated = str.format("Hello, {}! Have a nice day!\n", whoami)
     console.print(concated)
     return 0
 }

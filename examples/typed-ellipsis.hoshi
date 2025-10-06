@@ -1,0 +1,13 @@
+use runtime "runtime"
+
+func typed(pre: string, v: ...string) : none {
+    runtime.puts(pre)
+    for (let i = 0;i < v.length; i += 1) {
+        runtime.puts(v[i])
+    }
+}
+
+func main() : int {
+    typed("hello", "world", "!")
+    return 0
+}

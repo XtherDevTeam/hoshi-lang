@@ -61,6 +61,7 @@ TEST_CASES = {
     "print": {"type": "executable", "return_code": 0},
     # "input": {"type": "executable", "return_code": 0},
     "finalizer": {"type": "executable", "return_code": 0},
+    "typed-ellipsis": {"type": "executable", "return_code": 0},
 }
 
 

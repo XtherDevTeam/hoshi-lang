@@ -1,6 +1,9 @@
 use console "console"
+use str "str"
+use fs "fs"
+use file "file"
 
 func main() : int {
-    console.print("Hello, world!\n")
+    console.print(str.format("Hello, world! Love from {} a.k.a player000{}!\n", "Traveller", 10))
     return 0
 }
