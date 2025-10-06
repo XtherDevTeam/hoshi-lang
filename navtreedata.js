@@ -182,15 +182,15 @@ var NAVTREEINDEX =
 "classyoi_1_1implInner.html",
 "classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4",
 "classyoi_1_1mulExpr.html#aa09fae0adde5710bb55bc919a1fdabd2",
-"classyoi_1_1visitor.html#a029bf6f1f9cafd22b9bfe5f482bca6ce",
-"def_8hpp.html#a33f92dd81296c001a9ef7eb731c7920a",
-"magic__enum_8h.html#ae60129f9fd71fa854fd4c84803732e14",
-"namespacemembers_func_y.html",
-"parser_8cpp.html#ad18cd7dc20ba62f0c0d9e86364e6e101",
-"structmagic__enum_1_1detail_1_1range__max.html",
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a8aa475141fc42d8b6c87bfbe45b0affb",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a720f63dfecf9a5cd01f7c1c3bc29cc03",
-"unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd"
+"classyoi_1_1visitor.html#a027fbc7de87978eea4c23d96f9374829",
+"def_8hpp.html#a1a472f9b454d139c84efb5ab01cbf684",
+"magic__enum_8h.html#adfc25efbc82ccaba8466fbb898f4c927",
+"namespacemembers_func_v.html",
+"parser_8cpp.html#accf33a7d30ba308274e91133b57e4c41",
+"structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html",
+"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a710b1a5c9f835b20b87a76ce12e4f305",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a6d86bbcbc6646e952e3b0b2829ad6a23",
+"unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

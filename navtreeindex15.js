@@ -1,5 +1,7 @@
 var NAVTREEINDEX15 =
 {
+"parser_8cpp.html#accf33a7d30ba308274e91133b57e4c41":[18,0,1,0,4,45],
+"parser_8cpp.html#ad07e5d720a8b32c5f6bc9e6d41a31252":[18,0,1,0,4,14],
 "parser_8cpp.html#ad18cd7dc20ba62f0c0d9e86364e6e101":[18,0,1,0,4,53],
 "parser_8cpp.html#ad36c647b0695dda56ddc3eacbfbecdda":[18,0,1,0,4,55],
 "parser_8cpp.html#ad6bed038de518d556d4d6d26fffe1075":[18,0,1,0,4,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX15 =
 "structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html":[16,0,0,2,7],
 "structmagic__enum_1_1detail_1_1is__unscoped__enum.html":[17,0,0,1,8],
 "structmagic__enum_1_1detail_1_1is__unscoped__enum.html":[16,0,0,2,8],
-"structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html":[17,0,0,1,9],
-"structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html":[16,0,0,2,9],
-"structmagic__enum_1_1detail_1_1range__max.html":[17,0,0,1,10]
+"structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html":[17,0,0,1,9]
 };
