@@ -1118,11 +1118,6 @@ namespace yoi {
         delete ptr;
     }
     
-    void finalizeAST(callableExpression *ptr) {
-        finalizeAST(ptr->expr);
-        delete ptr;
-    }
-    
     void finalizeAST(marcoDescriptor *ptr) {
         for (auto &i : ptr->pairs) {
             delete i;
@@ -1158,11 +1153,19 @@ namespace yoi {
     finalizerDef &implInnerPair::getFinalizer() {
         return *finalizer;
     }
+
     void finalizeAST(finalizerDecl *ptr) {
         delete ptr;
     }
+
     void finalizeAST(finalizerDef *ptr) {
         finalizeAST(ptr->block);
+        delete ptr;
+    }
+
+    void finalizeAST(funcExpr *ptr) {
+        finalizeAST(ptr->args);
+        finalizeAST(ptr->name);
         delete ptr;
     }
 } // namespace yoi

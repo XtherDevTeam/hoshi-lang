@@ -4241,13 +4241,6 @@ namespace yoi {
         return {implIndex, interfaceSrc};
     }
 
-    yoi::indexT visitor::visit(yoi::callableExpression *callableExpression) {
-        visit(callableExpression->expr);
-        auto callableType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-        // unfinished
-        return -1;
-    }
-
     bool visitor::checkMarcoSatisfaction(yoi::marcoDescriptor *desc) {
         if (!desc)
             return true;

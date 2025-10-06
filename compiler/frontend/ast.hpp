@@ -172,8 +172,6 @@ namespace yoi {
 
     class unnamedDefinitionArguments;
 
-    class callableExpression;
-
     class marcoPair;
 
     class marcoDescriptor;
@@ -183,6 +181,8 @@ namespace yoi {
     class finalizerDef;
     
     class finalizerDecl;
+
+    class funcExpr;
 
     class typeAliasStmt : public AST {
         public:
@@ -202,17 +202,18 @@ namespace yoi {
         yoi::vec<marcoPair *> pairs;
     };
 
-    class callableExpression : public AST {
-        public:
-         rExpr *expr;
-    };
-
     class lambdaExpr : public AST {
     public:
         vec<yoi::identifier *> captures;
         definitionArguments *args;
         typeSpec *resultType;
         codeBlock *block;
+    };
+
+    class funcExpr : public AST {
+    public:
+        externModuleAccessExpression *name{};
+        unnamedDefinitionArguments *args{};
     };
 
     class basicLiterals : public AST {
@@ -371,7 +372,7 @@ namespace yoi {
 
     class primary : public AST {
     public:
-        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is callableExpression
+        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
@@ -379,7 +380,7 @@ namespace yoi {
         dynCastExpression *dynCast;
         newExpression *newExpr;
         lambdaExpr *lambda;
-        callableExpression *callable;
+        funcExpr *func;
 
         memberExpr &getMemberExpr() const;
 
@@ -1144,8 +1145,6 @@ namespace yoi {
 
     void finalizeAST(unnamedDefinitionArguments *ptr);
 
-    void finalizeAST(callableExpression *ptr);
-
     void finalizeAST(marcoPair *ptr);
 
     void finalizeAST(marcoDescriptor *ptr);
@@ -1155,6 +1154,8 @@ namespace yoi {
     void finalizeAST(finalizerDef *ptr);
 
     void finalizeAST(finalizerDecl *ptr);
+
+    void finalizeAST(funcExpr *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

@@ -31,7 +31,8 @@
 - [ ] 为type alias加入模板
 <!-- - [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化 (dismissed) -->
 - [x] 完善 RAII 加入 finalizer
-- [ ] 加入 `threading.Mutex`
+- [x] 加入 `threading.Mutex`
+- [ ] 为普通函数实现 callable
 
 # Known issues
 

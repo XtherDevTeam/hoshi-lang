@@ -269,7 +269,7 @@ namespace yoi {
 
         void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
 
-        yoi::indexT visit(yoi::callableExpression *callableExpression);
+        yoi::indexT visit(yoi::funcExpr *func);
 
         /**
         * @brief Visits a list of argument expressions and returns their types.

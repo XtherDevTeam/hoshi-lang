@@ -585,7 +585,7 @@ namespace yoi {
         dynCastExpression *e = nullptr;
         newExpression *f = nullptr;
         lambdaExpr *g = nullptr;
-        callableExpression *h = nullptr;
+        funcExpr *h = nullptr;
         rExpr *c = nullptr;
 
         lexer::token node_start_token = lex.curToken;
@@ -2225,10 +2225,12 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        lex.saveState();
         lex.scan();
         if (lex.curToken.kind != lexer::token::tokenKind::leftBracket) {
             o = nullptr;
-            panic(lex.line, lex.col, "expected `[` after `func` in lambda expression");
+            lex.returnState();
+            return;
         }
         lex.scan();
         vec<yoi::identifier *> captures;
@@ -2278,6 +2280,7 @@ namespace yoi {
             finalizeAST(resultType);
             panic(lex.line, lex.col, "expected codeBlock after `:` in lambda expression");
         }
+        lex.dropState();
         o = new lambdaExpr{node_start_token, captures, args, resultType, block};
     }
 
@@ -2309,33 +2312,6 @@ namespace yoi {
         }
         lex.scan();
         o = new unnamedDefinitionArguments{node_start_token, types};
-    }
-
-    void parse(callableExpression *&o, lexer &lex) {
-        lexer::token node_start_token = lex.curToken;
-        if (lex.curToken.kind != lexer::token::tokenKind::kCallable) {
-            o = nullptr;
-            return;
-        }
-        lex.scan();
-        if (lex.curToken.kind != lexer::token::tokenKind::leftParentheses) {
-            o = nullptr;
-            return;
-        }
-        lex.scan();
-        rExpr *expr = nullptr;
-        parse(expr, lex);
-        if (!expr) {
-            o = nullptr;
-            panic(lex.line, lex.col, "expected expression in callable expression");
-        }
-        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
-            o = nullptr;
-            finalizeAST(expr);
-            panic(lex.line, lex.col, "expected `)` after expression in callable expression");
-        }
-        lex.scan();
-        o = new callableExpression{node_start_token, expr};
     }
 
     void parse(marcoPair *&o, lexer &lex) {
@@ -2501,6 +2477,31 @@ namespace yoi {
             return;
         }
         o = new finalizerDef{node_start_token, block};
+    }
+
+    void parse(funcExpr *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kFunc) {
+            o = nullptr;
+            return;
+        }
+        lex.saveState();
+        lex.scan();
+        externModuleAccessExpression *name = nullptr;
+        parse(name, lex);
+        if (!name) {
+            o = nullptr;
+            lex.returnState();
+            return;
+        }
+        lex.dropState();
+        unnamedDefinitionArguments *args = nullptr;
+        parse(args, lex);
+        if (!args) {
+            o = new funcExpr{node_start_token, name, nullptr};
+            return;
+        }
+        o = new funcExpr{node_start_token, name, args};
     }
 } // namespace yoi
 

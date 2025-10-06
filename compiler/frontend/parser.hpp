@@ -157,7 +157,7 @@ namespace yoi {
 
     void parse(lambdaExpr *&o, lexer &lex);
 
-    void parse(callableExpression *&o, lexer &lex);
+    void parse(funcExpr *&o, lexer &lex);
 
     void parse(marcoPair *&o, lexer &lex);
 
