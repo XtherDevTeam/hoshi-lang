@@ -41,6 +41,16 @@ extern "C" YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handl
 
 extern "C" YoiUnsignedObject *runtime_get_thread_id();
 
-extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle);
+extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj);
+
+extern "C" YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock();
+
+extern "C" void runtime_thread_finalize_mutex_lock(YoiUnsignedObject *handle);
+
+extern "C" void runtime_thread_mutex_lock(YoiUnsignedObject *mutex_handle);
+
+extern "C" void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle);
+
+extern "C" YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle);
 
 #endif //HOSHI_LANG_THREADING_H

@@ -19,10 +19,16 @@ import fwrite(ptr: ptr, size: int, nmemb: int, stream: ptr) : unsigned from "bui
 import feof(stream: ptr) : int32 from "builtin"
 import fgetc(stream: ptr) : int32 from "builtin"
 
+/* runtime thread library */
 import noffi runtime_start_thread(f: func () : none) : lang.Result<unsigned, int> from "builtin"
 import noffi runtime_thread_join(thread_id: unsigned) : int from "builtin"
 import noffi runtime_get_thread_id() : unsigned from "builtin"
 import noffi runtime_ping_thread(thread_id: unsigned) : int from "builtin"
+import noffi runtime_thread_new_mutex_lock() : lang.Result<unsigned, int> from "builtin"
+import noffi runtime_thread_mutex_lock(mutex_id: unsigned) : none from "builtin"
+import noffi runtime_thread_mutex_unlock(mutex_id: unsigned) : none from "builtin"
+import noffi runtime_thread_finalize_mutex_lock(mutex_id: unsigned) : none from "builtin"
+import noffi runtime_thread_mutex_try_lock(mutex_id: unsigned) : int from "builtin"
 
 /* stdin/stdout/stderr */
 import runtime_get_stdin_fp() : ptr from "builtin"

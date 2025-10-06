@@ -8,6 +8,8 @@ struct ThreadStarterArgs {
 
 #ifdef _WIN32 // Windows Implementation
 
+#include <windows.h>
+
 unsigned __stdcall thread_starter_wrapper(void* args) {
     auto* starter_args = (ThreadStarterArgs*)args;
     YoiVoidCallableInterface* callable = starter_args->callable;
@@ -113,7 +115,77 @@ YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle_obj) {
     return yoi_result;
 }
 
+YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock() {
+    auto* cs = (CRITICAL_SECTION*) malloc(sizeof(CRITICAL_SECTION));
+    if (!cs) {
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->ok = nullptr;
+        
+        yoi_result_obj->err = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+        yoi_result_obj->err->gc_refcount = 1;
+        yoi_result_obj->err->type_id = 0;
+        yoi_result_obj->err->value = ENOMEM;
+        return yoi_result_obj;
+    }
+
+    InitializeCriticalSection(cs);
+
+    auto yoi_result = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
+    yoi_result->gc_refcount = 1;
+    yoi_result->type_id = 0;
+    yoi_result->value = (unsigned long long)cs;
+
+    auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+    yoi_result_obj->gc_refcount = 1;
+    yoi_result_obj->type_id = 16;
+    yoi_result_obj->err = nullptr;
+    yoi_result_obj->ok = yoi_result;
+
+    return yoi_result_obj;
+}
+
+void runtime_thread_finalize_mutex_lock(YoiUnsignedObject *handle) {
+    auto *cs = (CRITICAL_SECTION *)handle->value;
+    DeleteCriticalSection(cs);
+    free(cs);
+
+    if (--handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)handle);
+}
+
+void runtime_thread_mutex_lock(YoiUnsignedObject *mutex_handle) {
+    EnterCriticalSection((CRITICAL_SECTION *)mutex_handle->value);
+    
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle) {
+    LeaveCriticalSection((CRITICAL_SECTION *)mutex_handle->value);
+
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle) {
+    BOOL res = TryEnterCriticalSection((CRITICAL_SECTION *)mutex_handle->value);
+    
+    auto yoi_result = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+    yoi_result->gc_refcount = 1;
+    yoi_result->type_id = 0;
+    yoi_result->value = res ? 0 : EBUSY;
+
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+    
+    return yoi_result;
+}
+
 #else // POSIX (-nix) Implementation
+
+#include <pthread.h>
 
 void* thread_starter_wrapper(void* args) {
     auto* starter_args = (ThreadStarterArgs*)args;
@@ -200,4 +272,71 @@ YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj) {
     return yoi_result;
 }
 
+YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock() {
+    auto mutex = (pthread_mutex_t*) malloc(sizeof(pthread_mutex_t));
+    auto result = pthread_mutex_init(mutex, nullptr);
+
+    if (result == 0) {
+        auto yoi_result = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
+        yoi_result->gc_refcount = 1;
+        yoi_result->type_id = 0;
+        yoi_result->value = (unsigned long long)mutex;
+
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->err = nullptr;
+        yoi_result_obj->ok = yoi_result;
+        return yoi_result_obj;
+    } else {
+        auto yoi_result = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+        yoi_result->gc_refcount = 1;
+        yoi_result->type_id = 0;
+        yoi_result->value = 0;
+
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->err = yoi_result;
+        yoi_result_obj->ok = nullptr;
+
+        return yoi_result_obj;
+    }
+    
+}
+
+void runtime_thread_finalize_mutex_lock(YoiUnsignedObject *handle) {
+    auto *mutex = (pthread_mutex_t *)handle->value;
+    pthread_mutex_destroy(mutex);
+
+    if (--handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)handle);
+}
+
+void runtime_thread_mutex_lock(YoiUnsignedObject *mutex_handle) {
+    pthread_mutex_lock((pthread_mutex_t *)mutex_handle->value);
+    
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle) {
+    pthread_mutex_unlock((pthread_mutex_t *)mutex_handle->value);
+
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle) {
+    auto res = pthread_mutex_trylock((pthread_mutex_t *)mutex_handle->value);
+    auto yoi_result = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+    yoi_result->gc_refcount = 1;
+    yoi_result->type_id = 0;
+    yoi_result->value = res;
+
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+    
+    return yoi_result;
+}
 #endif // _WIN32

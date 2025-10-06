@@ -36,3 +36,33 @@ impl Thread {
 func current_tid() : unsigned {
     return runtime.runtime_get_thread_id()
 }
+
+struct Mutex {
+    mutex_handle: unsigned,
+    constructor(),
+    lock() : none,
+    unlock() : none,
+    try_lock() : bool,
+    finalizer()
+}
+
+impl Mutex {
+    constructor() {
+        this.mutex_handle = runtime.runtime_thread_new_mutex_lock().unwrap()
+    },
+    lock() : none {
+        runtime.runtime_thread_mutex_lock(this.mutex_handle)
+    },
+    unlock() : none {
+        runtime.runtime_thread_mutex_unlock(this.mutex_handle)
+    },
+    try_lock() : bool {
+        let result = runtime.runtime_thread_mutex_try_lock(this.mutex_handle)
+        return result == 0
+    },
+    finalizer() {
+        if (this.mutex_handle != 0) {
+            runtime.runtime_thread_finalize_mutex_lock(this.mutex_handle)
+        }
+    }
+}
