@@ -11,7 +11,7 @@ var searchData=
   ['forstmtval_8',['forStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a34ad018dbaf263f8c11bfac5317aeb8b',1,'yoi::inCodeBlockStmt::vValue']]],
   ['from_9',['from',['../classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4',1,'yoi::exportDecl']]],
   ['from_5fpath_10',['from_path',['../classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299',1,'yoi::importDecl']]],
-  ['func_11',['func',['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec']]],
+  ['func_11',['func',['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func'],['../classyoi_1_1primary.html#a419f7a5d3a7f40d75326ac74d842a9f7',1,'yoi::primary::func']]],
   ['funcdefstmtval_12',['funcDefStmtVal',['../unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd',1,'yoi::globalStmt::vValue']]],
   ['functemplateasts_13',['funcTemplateAsts',['../classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899',1,'yoi::IRModule']]],
   ['function_14',['function',['../structyoi_1_1visitor_1_1OverloadResult.html#a3b447aef27cab2fa1c2ed4ddec87b5b2',1,'yoi::visitor::OverloadResult']]],

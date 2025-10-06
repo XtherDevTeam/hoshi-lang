@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['callable_0',['callable',['../structThreadStarterArgs.html#a5fb05cf54cfeb0ed893d532d8c985b00',1,'ThreadStarterArgs::callable'],['../structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c',1,'YoiVoidCallableInterface::callable'],['../classyoi_1_1primary.html#a3587990c2de8c8542473e6cecd74a0cf',1,'yoi::primary::callable']]],
+  ['callable_0',['callable',['../structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c',1,'YoiVoidCallableInterface::callable'],['../structThreadStarterArgs.html#a5fb05cf54cfeb0ed893d532d8c985b00',1,'ThreadStarterArgs::callable']]],
   ['callergraph_1',['callerGraph',['../structyoi_1_1CallGraph.html#acf0c66c885378a7289ccad534f70d2c3',1,'yoi::CallGraph']]],
   ['callgraph_2',['callgraph',['../structyoi_1_1CallGraph.html#a059b3f33c0416b8fd6dcb57d0cc98905',1,'yoi::CallGraph::callGraph'],['../classyoi_1_1IROptimizer.html#afcb3f6e01c4e84a3f2c62bec88c509a0',1,'yoi::IROptimizer::callGraph']]],
   ['captures_3',['captures',['../classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f',1,'yoi::lambdaExpr']]],
@@ -11,7 +11,7 @@ var searchData=
   ['chars_5f_8',['chars_',['../classmagic__enum_1_1detail_1_1static__str.html#a0b310d5870b45d95c9923161dba85165',1,'magic_enum::detail::static_str']]],
   ['charvalue_9',['charValue',['../unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#a01105ae44d17bd613d5b961cfc24af57',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::PossibleValue']]],
   ['codeblock_10',['codeblock',['../classyoi_1_1IRCodeBlock.html#ad5a6014c179bddff4bac6865b8eb381d',1,'yoi::IRCodeBlock::codeBlock'],['../classyoi_1_1IRFunctionDefinition.html#a7816a05aba34a5bf72f22bfc1905ff95',1,'yoi::IRFunctionDefinition::codeBlock']]],
-  ['codeblockindex_11',['codeblockindex',['../unionyoi_1_1IROperand_1_1operandValue.html#a981ff374b45263ef10610604b8b12bef',1,'yoi::IROperand::operandValue::codeBlockIndex'],['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a981ff374b45263ef10610604b8b12bef',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::codeBlockIndex']]],
+  ['codeblockindex_11',['codeblockindex',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a981ff374b45263ef10610604b8b12bef',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet::codeBlockIndex'],['../unionyoi_1_1IROperand_1_1operandValue.html#a981ff374b45263ef10610604b8b12bef',1,'yoi::IROperand::operandValue::codeBlockIndex']]],
   ['codeblockinsertionstates_12',['codeBlockInsertionStates',['../classyoi_1_1IRBuilder.html#a00118c48659ff2a5556c537ab8c60445',1,'yoi::IRBuilder']]],
   ['codeblocks_13',['codeBlocks',['../classyoi_1_1IRBuilder.html#a026aaed52b3529d916bef8c85e1c626f',1,'yoi::IRBuilder']]],
   ['codeblockval_14',['codeBlockVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#aee85d0fe71e1f6893d2492521b7f2e14',1,'yoi::inCodeBlockStmt::vValue']]],
