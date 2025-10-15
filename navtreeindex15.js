@@ -1,5 +1,17 @@
 var NAVTREEINDEX15 =
 {
+"parser_8cpp.html#a8162a293864d33f6df103754942452d7":[18,0,1,0,4,14],
+"parser_8cpp.html#a83dda98187b49736d8c0e3fe0f1c1647":[18,0,1,0,4,35],
+"parser_8cpp.html#a85930150373b5070a43cabf5798095a5":[18,0,1,0,4,6],
+"parser_8cpp.html#a85a5c3fdeea1b1b7bf09f0f79fa1bf4d":[18,0,1,0,4,19],
+"parser_8cpp.html#a9014b53324263d8bcc49e45e40d902e6":[18,0,1,0,4,36],
+"parser_8cpp.html#a90fcbe37b6353fee38e846a527a1805a":[18,0,1,0,4,43],
+"parser_8cpp.html#a9beeb41ff1a58cdc83d2e66d651c0cee":[18,0,1,0,4,0],
+"parser_8cpp.html#aa79128cf4ff6fc6c9de80886cd24cc3c":[18,0,1,0,4,24],
+"parser_8cpp.html#aae29ed4276b5599030faac228b9a06ae":[18,0,1,0,4,25],
+"parser_8cpp.html#ab100ab7bfbe0ce991bb714bc020de30a":[18,0,1,0,4,63],
+"parser_8cpp.html#abb81eeeb360b95fd38513a5592dd0f11":[18,0,1,0,4,9],
+"parser_8cpp.html#abdf61793a2f93319458e9f95a94a7bc9":[18,0,1,0,4,66],
 "parser_8cpp.html#abf345d6e9ab275a51836702b5f23bca1":[18,0,1,0,4,39],
 "parser_8cpp.html#ac098e1f2b2559f4cf6515d8971d7b62c":[18,0,1,0,4,49],
 "parser_8cpp.html#accf33a7d30ba308274e91133b57e4c41":[18,0,1,0,4,45],
@@ -237,17 +249,5 @@ var NAVTREEINDEX15 =
 "structmagic__enum_1_1detail_1_1enable__if__enum.html":[17,0,0,1,1],
 "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html":[16,0,0,2,2],
 "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html":[17,0,0,1,2],
-"structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a":[16,0,0,2,2,0],
-"structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a":[17,0,0,1,2,0],
-"structmagic__enum_1_1detail_1_1has__is__flags.html":[17,0,0,1,3],
-"structmagic__enum_1_1detail_1_1has__is__flags.html":[16,0,0,2,3],
-"structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[17,0,0,1,4],
-"structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[16,0,0,2,4],
-"structmagic__enum_1_1detail_1_1is__reflected.html":[16,0,0,2,5],
-"structmagic__enum_1_1detail_1_1is__reflected.html":[17,0,0,1,5],
-"structmagic__enum_1_1detail_1_1is__scoped__enum.html":[16,0,0,2,6],
-"structmagic__enum_1_1detail_1_1is__scoped__enum.html":[17,0,0,1,6],
-"structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html":[17,0,0,1,7],
-"structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html":[16,0,0,2,7],
-"structmagic__enum_1_1detail_1_1is__unscoped__enum.html":[17,0,0,1,8]
+"structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a":[16,0,0,2,2,0]
 };

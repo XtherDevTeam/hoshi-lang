@@ -23,5 +23,6 @@ var searchData=
   ['invoke_20',['invoke',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536',1,'yoi::IR']]],
   ['invoke_5fdangling_21',['invoke_dangling',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db',1,'yoi::IR']]],
   ['invoke_5fimported_22',['invoke_imported',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1',1,'yoi::IR']]],
-  ['invoke_5fvirtual_23',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]]
+  ['invoke_5fvirtual_23',['invoke_virtual',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3',1,'yoi::IR']]],
+  ['invoke_5fvirtual_5f1_24',['invoke_virtual_1',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7c59ff558927bb091ec58b0c872f1de5',1,'yoi::IR']]]
 ];

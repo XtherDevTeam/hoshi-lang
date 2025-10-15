@@ -8,7 +8,7 @@ var classyoi_1_1IRBuilder =
     [ "basicCast", "classyoi_1_1IRBuilder.html#a4640ca7c6de1ffc27cba9ceff03eabb1", null ],
     [ "breakOp", "classyoi_1_1IRBuilder.html#a4be680d91488e329759d4ad7b30b4e15", null ],
     [ "commitState", "classyoi_1_1IRBuilder.html#aa83db99c3ef75b579fef7a194c935026", null ],
-    [ "constructInterfaceImplOp", "classyoi_1_1IRBuilder.html#a3ba8d27fa6cbf8ade068f158c74f7d0a", null ],
+    [ "constructInterfaceImplOp", "classyoi_1_1IRBuilder.html#a574dbaced194790fae5cad1837fae133", null ],
     [ "continueOp", "classyoi_1_1IRBuilder.html#a0d5ca27688978024b8045c7bf16f188b", null ],
     [ "createCodeBlock", "classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9", null ],
     [ "createLocalVar", "classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e", null ],
