@@ -3,6 +3,8 @@
 //
 
 #include "IR.h"
+
+#include "compiler/builtinModule.hpp"
 #include "compiler/moduleContext.h"
 #include "share/def.hpp"
 #include "share/magic_enum.h"
@@ -84,7 +86,7 @@ namespace yoi {
     IRInterfaceImplementationDefinition::IRInterfaceImplementationDefinition(
         const yoi::wstr &name,
         std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
-        yoi::indexT implInterfaceIndex,
+        const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
         const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
         const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap)
         : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods),
@@ -432,22 +434,12 @@ namespace yoi {
             IRValueType::valueType::structObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
     }
 
-    void IRBuilder::newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal, yoi::indexT moduleIndex) {
-        insert(IR{IR::Opcode::new_interface,
-                  {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
-                   IROperand(IROperand::operandType::index, interfaceIndex)}, currentDebugInfo});
-        tempVarStack.emplace_back(managedPtr(IRValueType{IRValueType::valueType::interfaceObject,
-                                                         isExternal ? moduleIndex : this->currentModule->identifier,
-                                                         interfaceIndex}));
-    }
-
-    void IRBuilder::constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal, yoi::indexT moduleIndex) {
-        auto rhs = tempVarStack.back();
-        this->tempVarStack.pop_back(); // remove interfaceObject from tempVarStack
+    void IRBuilder::constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId, yoi::indexT interfaceImplIndex, bool isExternal, yoi::indexT moduleIndex) {
+        auto rhs = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, interfaceId.first, interfaceId.second});
         this->tempVarStack.pop_back(); // remove structObject from tempVarStack
         tempVarStack.push_back(rhs);
         insert(IR{IR::Opcode::construct_interface_impl,
-                  {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
+                  {IROperand(IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex),
                    IROperand(IROperand::operandType::index, interfaceImplIndex)}, currentDebugInfo});
     }
 
@@ -526,7 +518,7 @@ namespace yoi {
     }
 
     IRInterfaceImplementationDefinition::Builder &
-    IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex(yoi::indexT implInterfaceIndex) {
+    IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex(const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex) {
         this->implInterfaceIndex = implInterfaceIndex;
         return *this;
     }
@@ -717,6 +709,9 @@ namespace yoi {
 
         if (showAttributes)
             for (auto &i : attributes) res += L" @" + string2wstring(std::string{magic_enum::enum_name(i)});
+
+        if (showAttributes)
+            for (auto &i : metadata) res += L" @" + i.first;
 
         return res;
     }
@@ -1514,5 +1509,13 @@ namespace yoi {
         }
         tempVarStack.push_back(returnType);
         insert(IR{IR::Opcode::invoke_dangling, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo});
+    }
+    
+    bool IRValueType::hasMetadata(const yoi::wstr &key) const {
+        return metadata.find(key) != metadata.end();
+    }
+
+    void IRValueType::eraseMetadata(const yoi::wstr &key) {
+        metadata.erase(key);
     }
 } // namespace yoi

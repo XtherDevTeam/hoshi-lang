@@ -102,7 +102,7 @@ namespace yoi {
             auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{
                 nullImplName, 
                 {sharedValue.second->type, sharedValue.second->typeAffiliateModule, sharedValue.second->typeIndex},
-                0,
+                {HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0},
                 {},
                 {}});
             module->interfaceImplementationTable.put_create(nullImplName, nullImpl);

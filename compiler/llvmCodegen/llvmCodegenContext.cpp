@@ -1366,10 +1366,13 @@ namespace yoi {
                 valueStackPhi.push_back({bitcast, yoiType});
                 break;
             }
-            case IR::Opcode::new_interface: {
-                auto moduleIndex = instr.operands[0].value.symbolIndex;
-                auto interfaceIndex = instr.operands[1].value.symbolIndex;
-                auto key = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, interfaceIndex);
+            case IR::Opcode::construct_interface_impl: {
+                auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
+                auto implDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
+
+                auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject, implDef->implInterfaceIndex.first, implDef->implInterfaceIndex.second);
+                
+                auto key = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second);
                 auto* interfaceLLVMType = structTypeMap.at(key);
 
                 auto size = TheModule->getDataLayout().getTypeAllocSize(interfaceLLVMType);
@@ -1382,22 +1385,13 @@ namespace yoi {
                 Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), 1), refCountPtr);
 
                 auto* typeIdPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 1, "typeid_ptr");
-                auto typeIdKey = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, interfaceIndex, 0);
+                auto typeIdKey = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second, 0);
                 Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), typeIDMap[typeIdKey]), typeIdPtr);
 
-                auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::interfaceObject, yoiModule->identifier, interfaceIndex);
-                valueStackPhi.push_back({bitcast, yoiType});
-                break;
-            }
-            case IR::Opcode::construct_interface_impl: {
-                auto interfaceShellVal = valueStackPhi.back(); valueStackPhi.pop_back();
+                auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::interfaceObject, implDef->implInterfaceIndex.first, implDef->implInterfaceIndex.second);
+
+                auto interfaceShellVal = StackValue{bitcast, yoiType};
                 auto structInstanceVal = valueStackPhi.back(); valueStackPhi.pop_back();
-
-                auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
-                auto implDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
-
-                auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject, interfaceShellVal.yoiType->typeAffiliateModule, interfaceShellVal.yoiType->typeIndex);
-                auto* interfaceLLVMType = structTypeMap.at(interfaceKey);
 
                 // Store `this` pointer at index 1
                 auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
@@ -1434,6 +1428,7 @@ namespace yoi {
                 valueStackPhi.push_back(interfaceShellVal); // Put the constructed interface back
                 break;
             }
+            case IR::Opcode::invoke_virtual_1:
             case IR::Opcode::invoke_virtual: {
                 auto methodVTableIndex = instr.operands[2].value.symbolIndex;
                 auto userArgCount = instr.operands[3].value.symbolIndex;
@@ -2017,7 +2012,7 @@ namespace yoi {
             if (type->isArrayType()) {
                 // TODO
             }
-            auto [typeEnum, typeModule, typeIndex, dim, attr] = type->isBasicRawType() ? type->getBasicObjectType() : *type;
+            auto [typeEnum, typeModule, typeIndex, dim, attr, _] = type->isBasicRawType() ? type->getBasicObjectType() : *type;
             auto key = std::make_tuple(typeEnum, typeModule, typeIndex);
             if (foreignTypeMap.count(key)) {
                 return foreignTypeMap.at(key);

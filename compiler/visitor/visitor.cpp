@@ -160,8 +160,8 @@ namespace yoi {
             case 6: {
                 auto lambdaStructIndex = createLambdaUnnamedStruct(primary->lambda);
                 auto [lambdaCallableIndex, callableInterface] = createCallableImplementationForLambda(irModule->structTable[lambdaStructIndex], lambdaStructIndex, currentModuleIndex);
-                moduleContext->getIRBuilder().newInterfaceOp(callableInterface.second, true, callableInterface.first);
-                moduleContext->getIRBuilder().constructInterfaceImplOp(lambdaCallableIndex);
+                // moduleContext->getIRBuilder().newInterfaceOp(callableInterface.second, true, callableInterface.first);
+                moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterface, lambdaCallableIndex);
                 break;
             }
             default: {
@@ -1182,11 +1182,11 @@ namespace yoi {
                         auto interfaceIndex = irModule->interfaceTable.getIndex(baseName);
                         auto argTypes = evaluateArguments(args);
                         yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
-                        moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
+                        // moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex);
                         auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, argTypes[0]);
                         auto targetModule = moduleContext->getCompilerContext()->getImportedModule(argTypes[0]->typeAffiliateModule);
                         auto interfaceImplIndex = targetModule->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, true, targetModule->identifier);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp({currentModuleIndex, interfaceIndex}, interfaceImplIndex, true, targetModule->identifier);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
                     } catch (const std::exception &) {
@@ -1245,11 +1245,11 @@ namespace yoi {
                         auto interfaceIndex = it->second.typeIndex;
                         auto argTypes = evaluateArguments(args);
                         yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
-                        moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex, true, targetModuleForInterface->identifier);
+                        // moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex, true, targetModuleForInterface->identifier);
                         auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, argTypes[0]);
                         auto targetModule = moduleContext->getCompilerContext()->getImportedModule(argTypes[0]->typeAffiliateModule);
                         auto interfaceImplIndex = targetModule->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, true, targetModule->identifier);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp({currentModuleIndex, interfaceIndex}, interfaceImplIndex, true, targetModule->identifier);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
                     } catch (const std::exception &) {
@@ -1402,11 +1402,11 @@ namespace yoi {
                         auto concreteThis = moduleContext->getIRBuilder().getRhsFromTempVarStack();
                         
                         auto externInterface = getExternEntry(targetModule, baseName);
-                        moduleContext->getIRBuilder().newInterfaceOp(externInterface.itemIndex, true, externInterface.affiliateModule);
+                        // moduleContext->getIRBuilder().newInterfaceOp(externInterface.itemIndex, true, externInterface.affiliateModule);
 
                         auto interfaceImplName = getInterfaceImplName({externInterface.affiliateModule, externInterface.itemIndex}, argTypes[0]);
                         auto interfaceImplIndex = moduleContext->getCompilerContext()->getImportedModule(concreteThis->typeAffiliateModule)->interfaceImplementationTable.getIndex(interfaceImplName);
-                        moduleContext->getIRBuilder().constructInterfaceImplOp(interfaceImplIndex, concreteThis->typeAffiliateModule != currentModuleIndex, concreteThis->typeAffiliateModule);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp({externInterface.affiliateModule, externInterface.itemIndex}, interfaceImplIndex, concreteThis->typeAffiliateModule != currentModuleIndex, concreteThis->typeAffiliateModule);
                         
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
@@ -1880,7 +1880,7 @@ namespace yoi {
                 IRInterfaceImplementationDefinition::Builder builder;
                 builder.setName(interfaceImplName);
                 builder.setImplStructIndex({srcType->type, srcType->typeAffiliateModule, srcType->typeIndex});
-                builder.setImplInterfaceIndex(interfaceName.first.second);
+                builder.setImplInterfaceIndex(interfaceName.first);
 
                 std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
@@ -3199,8 +3199,8 @@ namespace yoi {
                 auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, rhs);
                 auto implIndex = moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceImplementationTable.getIndex(implName);
                 // construct interface object
-                moduleContext->getIRBuilder().newInterfaceOp(toType->typeIndex, toType->typeAffiliateModule != currentModuleIndex, toType->typeAffiliateModule);
-                moduleContext->getIRBuilder().constructInterfaceImplOp(implIndex, rhs->typeAffiliateModule != currentModuleIndex, rhs->typeAffiliateModule);
+                // moduleContext->getIRBuilder().newInterfaceOp(toType->typeIndex, toType->typeAffiliateModule != currentModuleIndex, toType->typeAffiliateModule);
+                moduleContext->getIRBuilder().constructInterfaceImplOp({toType->typeAffiliateModule, toType->typeIndex}, implIndex, rhs->typeAffiliateModule != currentModuleIndex, rhs->typeAffiliateModule);
             } catch (std::out_of_range &e) {
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
             }
@@ -3291,7 +3291,7 @@ namespace yoi {
         } catch (std::out_of_range &e) {
             moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->interfaceTable[0]->implementations.emplace_back(
                 structType->type, structType->typeAffiliateModule, structType->typeIndex);
-            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, {structType->type, structType->typeAffiliateModule, structType->typeIndex}, 0, {}, {}});
+            auto nullImpl = managedPtr(IRInterfaceImplementationDefinition{nullImplName, {structType->type, structType->typeAffiliateModule, structType->typeIndex}, {HOSHI_COMPILER_CTX_GLOB_ID_CONST, 0}, {}, {}});
             return moduleContext->getCompilerContext()->getImportedModule(structType->typeAffiliateModule)->interfaceImplementationTable.put_create(nullImplName, nullImpl);
         }
     }
@@ -3803,7 +3803,7 @@ namespace yoi {
             IRInterfaceImplementationDefinition::Builder builder;
             builder.setName(implName);
             builder.setImplStructIndex({concreteStructType->type, concreteStructType->typeAffiliateModule, concreteStructType->typeIndex});
-            builder.setImplInterfaceIndex(interfaceSrcPair.second);
+            builder.setImplInterfaceIndex(interfaceSrcPair);
 
             std::map<yoi::wstr, std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> virtualMethodMap;
 
@@ -4228,7 +4228,7 @@ namespace yoi {
 
 
         IRInterfaceImplementationDefinition::Builder builder;
-        builder.setImplInterfaceIndex(interfaceSrc.second)
+        builder.setImplInterfaceIndex(interfaceSrc)
                .setImplStructIndex({IRValueType::valueType::structObject, moduleIndex, lambdaStructIndex})
                .setName(interfaceImpl)
                .addVirtualMethod(callableName, managedPtr(IRValueType{

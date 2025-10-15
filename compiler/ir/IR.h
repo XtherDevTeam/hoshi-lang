@@ -6,6 +6,7 @@
 #define HOSHI_LANG_IR_H
 
 #include "share/def.hpp"
+#include <any>
 #include <compiler/compilerContext.h>
 #include <compiler/frontend/ast.hpp>
 #include <map>
@@ -108,6 +109,8 @@ namespace yoi {
 
         std::set<ValueAttr> attributes;
 
+        std::map<yoi::wstr, std::any> metadata;
+
         IRValueType();
 
         IRValueType(valueType type);
@@ -159,6 +162,18 @@ namespace yoi {
         IRValueType & removeAttribute(ValueAttr attr);
 
         bool hasAttribute(ValueAttr attr) const;
+
+        bool hasMetadata(const yoi::wstr &key) const;
+
+        template<typename T> T & getMetadata(const yoi::wstr &key) {
+            return *std::any_cast<T>(&metadata.at(key));
+        }
+
+        template<typename T> void setMetadata(const yoi::wstr &key, const T &value) {
+            metadata[key] = value;
+        }
+
+        void eraseMetadata(const yoi::wstr &key);
     };
 
     class IROperand {
@@ -279,9 +294,9 @@ namespace yoi {
             store_member,
             invoke,
             new_struct,
-            new_interface,
             construct_interface_impl,
             invoke_virtual,
+            invoke_virtual_1, // for known interface implementation, we directly call at the function, no need to call the function pointer from vtable
             invoke_imported,
             invoke_dangling,
             store_element,
@@ -567,14 +582,14 @@ namespace yoi {
       public:
         yoi::wstr name;
         std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex;
-        yoi::indexT implInterfaceIndex;
+        std::pair<yoi::indexT, yoi::indexT> implInterfaceIndex;
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
         IRInterfaceImplementationDefinition(
             const yoi::wstr &name,
             std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
-            yoi::indexT implInterfaceIndex,
+            const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
             const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
             const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
 
@@ -583,7 +598,8 @@ namespace yoi {
         struct Builder {
             yoi::wstr name;
             std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex;
-            yoi::indexT implInterfaceIndex;
+            std::pair<yoi::indexT, yoi::indexT> implInterfaceIndex;
+
             yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
             std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
@@ -593,7 +609,7 @@ namespace yoi {
 
             Builder &setImplStructIndex(std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex);
 
-            Builder &setImplInterfaceIndex(yoi::indexT implInterfaceIndex);
+            Builder &setImplInterfaceIndex(const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex);
 
             Builder &addVirtualMethod(const yoi::wstr &methodName, const std::shared_ptr<IRValueType> &methodType);
 
@@ -884,7 +900,7 @@ namespace yoi {
         void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
         void
-        constructInterfaceImplOp(yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+        constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId, yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
         void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
 

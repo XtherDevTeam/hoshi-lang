@@ -2,7 +2,7 @@ import os
 import pathlib
 import sys
 
-language_version = 6
+language_version = 7
 
 def get_first_6_digit_of_git_commit_hash():
     return os.popen('git rev-parse --short HEAD').read().strip()[:6]

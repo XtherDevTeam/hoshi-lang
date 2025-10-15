@@ -1480,17 +1480,10 @@ namespace yoi {
                     simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
-                case IR::Opcode::new_interface: {
-                    auto moduleIndex = ins.operands[0].value.symbolIndex;
-                    auto interfaceDef = compilerCtx->getImportedModule(moduleIndex)->interfaceTable[ins.operands[1].value.symbolIndex];
-                    simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject, moduleIndex, ins.operands[1].value.symbolIndex}), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
                 case IR::Opcode::construct_interface_impl: {
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
                     auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
-                    auto returnType = simulationStack.peek(0).type;
-                    simulationStack.pop();
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, interfaceImplDef->implInterfaceIndex.first, interfaceImplDef->implInterfaceIndex.second});
                     simulationStack.pop();
                     simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                     break;
@@ -3698,22 +3691,11 @@ namespace yoi {
                                      {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
-            case IR::Opcode::new_interface: {
-                auto moduleIndex = ins.operands[0].value.symbolIndex;
-                auto interfaceDef =
-                    compilerCtx->getImportedModule(moduleIndex)->interfaceTable[ins.operands[1].value.symbolIndex];
-                simulationStack.push(managedPtr(IRValueType{IRValueType::valueType::interfaceObject,
-                                                            moduleIndex,
-                                                            ins.operands[1].value.symbolIndex}),
-                                     {currentCodeBlockIndex, {insIndex}, false});
-                break;
-            }
             case IR::Opcode::construct_interface_impl: {
                 auto moduleIndex = ins.operands[0].value.symbolIndex;
                 auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)
                                             ->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
-                auto returnType = simulationStack.peek(0).type;
-                simulationStack.pop();
+                auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, interfaceImplDef->implInterfaceIndex.first, interfaceImplDef->implInterfaceIndex.second});
                 simulationStack.pop();
                 simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
                 break;

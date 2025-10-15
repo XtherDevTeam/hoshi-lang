@@ -343,16 +343,55 @@ namespace yoi {
                              bool isStoreOp,
                              bool isLastTerm);
 
+        /**
+         * @brief Create a Callable Interface object and return its index in the module's interface table.
+         * 
+         * @param parameterTypes The parameter types of the callable interface.
+         * @param returnType The return type of the callable interface.
+         * @return yoi::indexT The index of the created callable interface in the module's interface table.
+         */
         yoi::indexT createCallableInterface(const yoi::vec<std::shared_ptr<IRValueType>> &parameterTypes,
                                             const std::shared_ptr<IRValueType> &returnType);
 
+        /**
+         * @brief Create a Callable Implementation For Lambda object also create a struct for the lambda and return its callable implementation index in the module's implementation table.
+         * 
+         * @param lambda The lambda struct definition.
+         * @param lambdaStructIndex The index of the lambda struct in the module's struct table.
+         * @param moduleIndex The index of the module where the implementation will be created.
+         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> The index of the created callable implementation in the module's implementation table and callable interface index.
+         */
         std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForLambda(const std::shared_ptr<IRStructDefinition> &lambda,
                                                           yoi::indexT lambdaStructIndex,
                                                           yoi::indexT moduleIndex);
 
+        /**
+         * @brief Create a Lambda Unnamed Struct object
+         * 
+         * @param lambdaExpr The lambda expression.
+         * @return yoi::indexT The index of the created lambda unnamed struct in the module's struct table.
+         */
         yoi::indexT createLambdaUnnamedStruct(yoi::lambdaExpr *lambdaExpr);
 
+        /**
+         * @brief Check whether the marco satisfies the condition
+         * 
+         * @param desc The marco descriptor
+         * @return true The marco satisfies the condition
+         * @return false The marco doesn't satisfy the condition
+         */
         bool checkMarcoSatisfaction(yoi::marcoDescriptor *desc);
+
+        /**
+         * @brief Create a Callable Implementation For Function object also create a function for the function and return its callable implementation index in the module's implementation table.
+         * 
+         * @param func function definition
+         * @param funcIndex the index of the function in the module's function table.
+         * @param moduleIndex the index of the module where the implementation will be created.
+         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> The index of the created callable implementation in the module's implementation table and callable interface index.
+         */
+        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForFunction(
+            const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
     };
 
 } // namespace yoi
