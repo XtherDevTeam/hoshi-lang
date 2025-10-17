@@ -61,7 +61,7 @@ var searchData=
   ['specification_58',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
   ['stack_59',['stack',['../structyoi_1_1AnalysisState.html#a1b86f7d0813ac28a4d129132996e2cbd',1,'yoi::AnalysisState']]],
   ['stack_20and_20memory_20operations_60',['stack and memory operations',['../md_docs_2IR.html#autotoc_md26',1,'3.1. Stack and Memory Operations'],['../md_docs_2IR.html#autotoc_md41',1,'3.1. Stack and Memory Operations']]],
-  ['stackstate_61',['stackstate',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4',1,'yoi::LLVMCodegen::ValueStackWithPhi::StackState'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa',1,'yoi::LLVMCodegen::ValueStackWithPhi::stackState']]],
+  ['stackstate_61',['stackstate',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa',1,'yoi::LLVMCodegen::ValueStackWithPhi::stackState'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4',1,'yoi::LLVMCodegen::ValueStackWithPhi::StackState']]],
   ['stackvalue_62',['StackValue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html',1,'yoi::LLVMCodegen']]],
   ['stackvaluephi_63',['StackValuePhi',['../structyoi_1_1LLVMCodegen_1_1StackValuePhi.html',1,'yoi::LLVMCodegen']]],
   ['standard_20library_64',['standard library',['../md_docs_2Spec.html#autotoc_md72',1,'8. Standard Library'],['../md_docs_2Standard_01Library.html',1,'Standard Library'],['../index.html#autotoc_md96',1,'Standard Library']]],

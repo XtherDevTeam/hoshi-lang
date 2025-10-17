@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['identifier_0',['identifier',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af393f3f5e496869a15bc72cbfd56f541',1,'yoi::lexer::token']]],
+  ['identifier_0',['identifier',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af393f3f5e496869a15bc72cbfd56f541',1,'yoi::lexer::token::identifier'],['../classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9eaf393f3f5e496869a15bc72cbfd56f541',1,'yoi::letAssignmentPairLHS::identifier']]],
   ['ifstmt_1',['ifStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea91aa50363ade61a0b8b7968513783c65',1,'yoi::inCodeBlockStmt']]],
   ['implstmt_2',['implStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200',1,'yoi::globalStmt']]],
   ['importdecl_3',['importDecl',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5',1,'yoi::globalStmt']]],

@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('classyoi_1_1IRBuilder.html',''); initR
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classyoi_1_1IRBuilder-members.html">List of all members</a>  </div>
@@ -115,6 +116,14 @@ Collaboration diagram for IRBuilder:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structyoi_1_1IRBuilder_1_1LoopContext.html">LoopContext</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a630666ab8e4dc4ba222eab85698b44c6" id="r_a630666ab8e4dc4ba222eab85698b44c6"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a> { <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6ab1c94ca2fbc3e78fc30069c8d0f01680">All</a>
+, <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6a7fb55ed0b7a30342ba6da306428cae04">First</a>
+, <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6ad55b30607c2a9a2616347d6edb789f6b">Last</a>
+ }</td></tr>
+<tr class="separator:a630666ab8e4dc4ba222eab85698b44c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -232,6 +241,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4be680d91488e329759d4ad7b30b4e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d5ca27688978024b8045c7bf16f188b" id="r_a0d5ca27688978024b8045c7bf16f188b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#a0d5ca27688978024b8045c7bf16f188b">continueOp</a> ()</td></tr>
 <tr class="separator:a0d5ca27688978024b8045c7bf16f188b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d4686e70fc131a676ccf18698b789f" id="r_a78d4686e70fc131a676ccf18698b789f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#a78d4686e70fc131a676ccf18698b789f">bindElementsOp</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> extractElementCount, <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a> extractType)</td></tr>
+<tr class="separator:a78d4686e70fc131a676ccf18698b789f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ae3b798804c79c301d472f9d064206" id="r_ac0ae3b798804c79c301d472f9d064206"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#ac0ae3b798804c79c301d472f9d064206">bindFieldsOp</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> extractFieldCount, <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a> extractType)</td></tr>
+<tr class="separator:ac0ae3b798804c79c301d472f9d064206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfdb375fd4ca7e14b73fdbc64ff8ef6b" id="r_acfdb375fd4ca7e14b73fdbc64ff8ef6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#acfdb375fd4ca7e14b73fdbc64ff8ef6b">getCurrentInsertionPoint</a> ()</td></tr>
 <tr class="separator:acfdb375fd4ca7e14b73fdbc64ff8ef6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5f54c0f3d96bf3470645b215d9ce83a" id="r_ae5f54c0f3d96bf3470645b215d9ce83a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRBuilder.html#ae5f54c0f3d96bf3470645b215d9ce83a">popFromTempVarStack</a> ()</td></tr>
@@ -264,8 +277,38 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00747">747</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00751">751</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a630666ab8e4dc4ba222eab85698b44c6" name="a630666ab8e4dc4ba222eab85698b44c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630666ab8e4dc4ba222eab85698b44c6">&#9670;&#160;</a></span>ExtractType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a630666ab8e4dc4ba222eab85698b44c6ab1c94ca2fbc3e78fc30069c8d0f01680" name="a630666ab8e4dc4ba222eab85698b44c6ab1c94ca2fbc3e78fc30069c8d0f01680"></a>All&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a630666ab8e4dc4ba222eab85698b44c6a7fb55ed0b7a30342ba6da306428cae04" name="a630666ab8e4dc4ba222eab85698b44c6a7fb55ed0b7a30342ba6da306428cae04"></a>First&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a630666ab8e4dc4ba222eab85698b44c6ad55b30607c2a9a2616347d6edb789f6b" name="a630666ab8e4dc4ba222eab85698b44c6ad55b30607c2a9a2616347d6edb789f6b"></a>Last&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00929">929</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab4093e8cfecbe1cc54ea82886d9fa39b" name="ab4093e8cfecbe1cc54ea82886d9fa39b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab4093e8cfecbe1cc54ea82886d9fa39b">&#9670;&#160;</a></span>IRBuilder() <span class="overload">[1/2]</span></h2>
 
@@ -346,9 +389,9 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00223">223</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332">IR::add</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a90cd923ab195168c5bc80f6f3e03ea">IR::bitwise_and</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa628ff492c9a550656b1a177a82a6274">IR::bitwise_not</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad823bdc16fb140683e3c274c5c13de20">IR::bitwise_or</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a320ca8207163cd63fc60307c388dd01c">IR::bitwise_xor</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00752">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a">IR::div</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f">IR::equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2">IR::greater_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af9001e5685fe6f7cb467dc66269470b2">IR::greater_than</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50628fab62b5a54a5f0a7e7c7b4f157b">IR::left_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77932225fb35fc4b74dc8fabf0992dac">IR::less_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7875e44acb1bebecb46c929deb43cef4">IR::less_than</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5">IR::mod</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253">IR::mul</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e">IR::not_equal</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0">IR::right_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140">IR::sub</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332">IR::add</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a90cd923ab195168c5bc80f6f3e03ea">IR::bitwise_and</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa628ff492c9a550656b1a177a82a6274">IR::bitwise_not</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad823bdc16fb140683e3c274c5c13de20">IR::bitwise_or</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a320ca8207163cd63fc60307c388dd01c">IR::bitwise_xor</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a">IR::div</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f">IR::equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2">IR::greater_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af9001e5685fe6f7cb467dc66269470b2">IR::greater_than</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50628fab62b5a54a5f0a7e7c7b4f157b">IR::left_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77932225fb35fc4b74dc8fabf0992dac">IR::less_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7875e44acb1bebecb46c929deb43cef4">IR::less_than</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5">IR::mod</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253">IR::mul</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e">IR::not_equal</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0">IR::right_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140">IR::sub</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -480,9 +523,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00170">170</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a92c9834916b8549d937b52c9328c9d0b">IR::basic_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba2787e1cdc508060eba1fa78e3bbb7c">IR::basic_cast_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a412c0d4d2a182f4c13b6cbb0f2c8649d">IR::basic_cast_unsigned</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00752">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442">IR::pointer_cast</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a92c9834916b8549d937b52c9328c9d0b">IR::basic_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba2787e1cdc508060eba1fa78e3bbb7c">IR::basic_cast_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a412c0d4d2a182f4c13b6cbb0f2c8649d">IR::basic_cast_unsigned</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442">IR::pointer_cast</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02492">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02546">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02543">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02597">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -542,6 +585,118 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a78d4686e70fc131a676ccf18698b789f" name="a78d4686e70fc131a676ccf18698b789f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78d4686e70fc131a676ccf18698b789f">&#9670;&#160;</a></span>bindElementsOp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bindElementsOp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>extractElementCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a>&#160;</td>
+          <td class="paramname"><em>extractType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Extract elements from an array or a dynamic array, push them to the temp var stack, and dereference the array object. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">extractElementCount</td><td>The number of elements to extract. </td></tr>
+    <tr><td class="paramname">extractType</td><td>The type of extraction, either all, first, or last. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01496">1496</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a298597d0a5f6963e687b2c070026f371">IR::bind_elements_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1043c9ebedc7d77ef407eb0d5c70d93">IR::bind_elements_pred</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, and <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_cgraph.png" border="0" usemap="#aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_cgraph" id="aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,135,31"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="183,5,312,31"/>
+<area shape="poly" title=" " alt="" coords="135,15,169,15,169,21,135,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_icgraph.png" border="0" usemap="#aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_icgraph" id="aclassyoi_1_1IRBuilder_a78d4686e70fc131a676ccf18698b789f_icgraph">
+<area shape="rect" title=" " alt="" coords="180,5,309,31"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a22560c4340ac4dade215406386c15cd3" title=" " alt="" coords="5,5,132,31"/>
+<area shape="poly" title=" " alt="" coords="166,21,132,21,132,15,166,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac0ae3b798804c79c301d472f9d064206" name="ac0ae3b798804c79c301d472f9d064206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0ae3b798804c79c301d472f9d064206">&#9670;&#160;</a></span>bindFieldsOp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bindFieldsOp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>extractFieldCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6">ExtractType</a>&#160;</td>
+          <td class="paramname"><em>extractType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Extract fields from a struct, push them to the temp var stack, and dereference the struct object. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">extractFieldCount</td><td>The number of fields to extract. </td></tr>
+    <tr><td class="paramname">extractType</td><td>The type of extraction, either all, first, or last. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01506">1506</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5183e0489c74034884eebd6775521377">IR::bind_fields_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a405631db2e1dd53c4f562a311e325ec8">IR::bind_fields_pred</a>, and <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IRBuilder_ac0ae3b798804c79c301d472f9d064206_icgraph.png" border="0" usemap="#aclassyoi_1_1IRBuilder_ac0ae3b798804c79c301d472f9d064206_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IRBuilder_ac0ae3b798804c79c301d472f9d064206_icgraph" id="aclassyoi_1_1IRBuilder_ac0ae3b798804c79c301d472f9d064206_icgraph">
+<area shape="rect" title=" " alt="" coords="180,5,287,31"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a22560c4340ac4dade215406386c15cd3" title=" " alt="" coords="5,5,132,31"/>
+<area shape="poly" title=" " alt="" coords="166,21,132,21,132,15,166,15"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a4be680d91488e329759d4ad7b30b4e15" name="a4be680d91488e329759d4ad7b30b4e15"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4be680d91488e329759d4ad7b30b4e15">&#9670;&#160;</a></span>breakOp()</h2>
 
@@ -561,7 +716,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02232">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02283">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -673,9 +828,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00437">437</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03183">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00137">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03234">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00137">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -730,7 +885,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02227">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02278">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -786,9 +941,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00124">124</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02717">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03763">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02950">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02768">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03814">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03001">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -861,7 +1016,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00143">143</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00754">IRBuilder::currentFunction</a>, and <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a117f9156b705724b662c761eee711103">IROperand::localVar</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00758">IRBuilder::currentFunction</a>, and <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a117f9156b705724b662c761eee711103">IROperand::localVar</a>.</p>
 
 </div>
 </div>
@@ -882,9 +1037,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01124">1124</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00758">IRBuilder::codeBlockInsertionStates</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00762">IRBuilder::codeBlockInsertionStates</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -978,7 +1133,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942">IR::dyn_cast_any</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5">IR::dyn_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1">IR::dyn_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de">IR::dyn_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae">IR::dyn_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02">IR::dyn_cast_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be">IR::dyn_cast_struct</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03270">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03321">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1010,7 +1165,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00129">129</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>.</p>
 <div class="dynheader">
@@ -1043,7 +1198,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00139">139</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>, and <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentCodeBlockIndex</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>, and <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentCodeBlockIndex</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, and <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>.</p>
 <div class="dynheader">
@@ -1287,7 +1442,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00460">460</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentCodeBlockIndex</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentCodeBlockIndex</a>.</p>
 
 </div>
 </div>
@@ -1308,9 +1463,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01148">1148</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02560">visitor::getTypeSpecUniqueNameStr()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03663">visitor::handleUnaryOperatorOverload()</a>, and <a class="el" href="visitor_8cpp_source.html#l03183">visitor::tryCastTo()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02611">visitor::getTypeSpecUniqueNameStr()</a>, <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03714">visitor::handleUnaryOperatorOverload()</a>, and <a class="el" href="visitor_8cpp_source.html#l03234">visitor::tryCastTo()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1349,7 +1504,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00139">IRBuilder::getCurrentCodeBlock()</a>, and <a class="el" href="IR_8cpp_source.html#l00480">IRCodeBlock::getIRArray()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02546">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03663">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00053">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02232">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02227">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03270">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03055">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03132">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01598">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03319">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00137">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02213">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01656">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03256">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00221">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01482">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02639">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02597">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03714">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00053">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02283">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02278">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03321">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03106">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03183">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01598">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03370">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00137">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02264">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01656">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03307">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00221">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01482">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02690">visitor::visitExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1470,9 +1625,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00160">160</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02492">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02543">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1570,9 +1725,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00165">165</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04206">visitor::createCallableImplementationForLambda()</a>, <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02492">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02546">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03360">visitor::evaluateArguments()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03663">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03183">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03270">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03256">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00221">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04257">visitor::createCallableImplementationForLambda()</a>, <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02543">visitor::emitBasicCastInBasicArithOpByLhsAndRhs()</a>, <a class="el" href="visitor_8cpp_source.html#l02597">visitor::emitBasicCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l03411">visitor::evaluateArguments()</a>, <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03714">visitor::handleUnaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03234">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03321">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00627">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03307">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00221">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1768,7 +1923,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00139">IRBuilder::getCurrentCodeBlock()</a>, and <a class="el" href="IR_8cpp_source.html#l00480">IRCodeBlock::getIRArray()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01502">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01523">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2038,11 +2193,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01502">1502</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01523">1523</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03183">visitor::tryCastTo()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03234">visitor::tryCastTo()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2190,9 +2345,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00376">376</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03663">visitor::handleUnaryOperatorOverload()</a>, and <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l03714">visitor::handleUnaryOperatorOverload()</a>, and <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2287,9 +2442,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00361">361</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, and <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, and <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2375,9 +2530,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00397">397</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l03663">visitor::handleUnaryOperatorOverload()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, and <a class="el" href="visitor_8cpp_source.html#l03714">visitor::handleUnaryOperatorOverload()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2426,9 +2581,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00464">464</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00754">IRBuilder::currentFunction</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00758">IRBuilder::currentFunction</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02488">visitor::isVisitingGlobalScope()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02213">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02539">visitor::isVisitingGlobalScope()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02264">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2480,9 +2635,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00269">269</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aff6bdb31a97ea58712d35004a9ec0fea">IROperand::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aff6bdb31a97ea58712d35004a9ec0fea">IROperand::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2555,9 +2710,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00263">263</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aff6bdb31a97ea58712d35004a9ec0fea">IROperand::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, and <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aff6bdb31a97ea58712d35004a9ec0fea">IROperand::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, and <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2625,7 +2780,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00325">325</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>.</p>
 <div class="dynheader">
@@ -2695,9 +2850,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00307">307</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02639">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02690">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2761,9 +2916,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01063">1063</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949">IR::new_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907">IR::new_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556">IR::new_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a78d674ed24fc76fa43fbb172e8625e4c">IR::new_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca">IR::new_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a842d088526a5e27a8afbd409c6155578">IR::new_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a97d3d8a264513c5d4199375b420e157f">IR::new_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706">IR::new_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad95df2a3a865323d3bbe76e62f2cb1c1">IR::new_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949">IR::new_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907">IR::new_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556">IR::new_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a78d674ed24fc76fa43fbb172e8625e4c">IR::new_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca">IR::new_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a842d088526a5e27a8afbd409c6155578">IR::new_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a97d3d8a264513c5d4199375b420e157f">IR::new_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706">IR::new_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad95df2a3a865323d3bbe76e62f2cb1c1">IR::new_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2843,7 +2998,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a01000b33f2706d842172fad74e2cf3d2">IR::new_dynamic_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af196fe5188bbef3e23f9fd76b7d2cc00">IR::new_dynamic_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acba3a0d3d47318c308a3fd16514b79cf">IR::new_dynamic_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a238952302f1acb076da196aeaa5e6483">IR::new_dynamic_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a397993da3d34d815b7910f49199f2852">IR::new_dynamic_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2b6a61f739675fea86d44704ed25d0df">IR::new_dynamic_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4d3cef520c2bea2897f1deb53f2a5bb4">IR::new_dynamic_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a592d3746fb432d2bfc8cb9cbf9afeaf4">IR::new_dynamic_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a71ab5edc09af7946aa49a9f4dbaa247c">IR::new_dynamic_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03319">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03370">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2951,9 +3106,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00429">429</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03183">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l03234">visitor::tryCastTo()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3037,7 +3192,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00450">450</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
@@ -3072,7 +3227,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01476">1476</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3105,9 +3260,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01138">1138</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, and <a class="el" href="visitor_8cpp_source.html#l01014">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, and <a class="el" href="visitor_8cpp_source.html#l01014">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3163,9 +3318,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01496">1496</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01517">1517</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3209,9 +3364,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00281">281</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a84e2c64f38f78ba3ea5c905ab5a2da27">IROperand::boolean</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aa956161a69928cd130a889b88082fb6e">IROperand::character</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00752">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00753">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f">IROperand::decimal</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a157db7df530023575515d366c9b672e8">IROperand::integer</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206ada78de4127377591c515888bad472367">IROperand::shortInt</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a424010b6c68d2de44a625dfb16c5b516">IROperand::stringLiteral</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IROperand.html#a4a40e73e307c9abf8e682827d1f9acc3">IROperand::type</a>, and <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e">IROperand::unsignedInt</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a84e2c64f38f78ba3ea5c905ab5a2da27">IROperand::boolean</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aa956161a69928cd130a889b88082fb6e">IROperand::character</a>, <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00756">IRBuilder::compilerCtx</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentModule</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206abdaa3c20a3e3851599514f7c6be5f62f">IROperand::decimal</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a157db7df530023575515d366c9b672e8">IROperand::integer</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206ada78de4127377591c515888bad472367">IROperand::shortInt</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a424010b6c68d2de44a625dfb16c5b516">IROperand::stringLiteral</a>, <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>, <a class="el" href="classyoi_1_1IROperand.html#a4a40e73e307c9abf8e682827d1f9acc3">IROperand::type</a>, and <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e">IROperand::unsignedInt</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00053">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00053">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3284,7 +3439,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01134">1134</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>.</p>
 <div class="dynheader">
@@ -3319,9 +3474,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01128">1128</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00758">IRBuilder::codeBlockInsertionStates</a>, <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentCodeBlockIndex</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00762">IRBuilder::codeBlockInsertionStates</a>, <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentCodeBlockIndex</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03582">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03256">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03633">visitor::handleBinaryOperatorOverload()</a>, <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03307">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3396,9 +3551,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00414">414</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l01453">IRBuilder::hasTerminated()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02213">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02264">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3456,9 +3611,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01119">1119</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00758">IRBuilder::codeBlockInsertionStates</a>, <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>, <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentCodeBlockIndex</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00762">IRBuilder::codeBlockInsertionStates</a>, <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentCodeBlockIndex</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03491">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03256">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03542">visitor::handleInvocationExtern()</a>, <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00410">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00531">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00502">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00580">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00276">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00378">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00468">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00439">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01056">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l03307">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01299">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3518,9 +3673,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l01143">1143</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="def_8cpp_source.html#l00070">yoi::set_current_file_path()</a>, and <a class="el" href="IR_8h_source.html#l00064">IRDebugInfo::sourceFile</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="def_8cpp_source.html#l00070">yoi::set_current_file_path()</a>, and <a class="el" href="IR_8h_source.html#l00064">IRDebugInfo::sourceFile</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02717">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03763">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02950">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01014">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02768">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03814">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03001">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01014">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3577,9 +3732,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00354">354</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, and <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, and <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3643,9 +3798,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00331">331</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a921e717133b1ab22c6838e4378d9172e">IR::store_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00066">IRDebugInfo::column</a>, <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="IR_8h_source.html#l00065">IRDebugInfo::line</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a921e717133b1ab22c6838e4378d9172e">IR::store_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l03956">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02639">visitor::visitExtern()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l04007">visitor::handleSubscript()</a>, <a class="el" href="visitor_8cpp_source.html#l00103">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02024">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00812">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02690">visitor::visitExtern()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3721,9 +3876,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00454">454</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00757">IRBuilder::currentCodeBlockIndex</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentCodeBlockIndex</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02717">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03763">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02950">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02167">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02092">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02139">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02768">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03814">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03001">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00799">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02218">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l02143">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00674">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l00719">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l02190">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3807,7 +3962,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a6a992d5529f459a44fee58c733255e86">IROperand::index</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, and <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0">IR::typeid_object_non_stack</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l03256">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00175">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l03307">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3851,7 +4006,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00214">214</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00761">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, and <a class="el" href="IR_8h_source.html#l00756">IRBuilder::tempVarStack</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00765">IRBuilder::currentDebugInfo</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, and <a class="el" href="IR_8h_source.html#l00760">IRBuilder::tempVarStack</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="visitor_8cpp_source.html#l00221">visitor::visit()</a>.</p>
 <div class="dynheader">
@@ -3898,9 +4053,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00133">133</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00370">IRCodeBlock::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00755">IRBuilder::codeBlocks</a>, and <a class="el" href="IR_8h_source.html#l00754">IRBuilder::currentFunction</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00374">IRCodeBlock::codeBlock</a>, <a class="el" href="IR_8h_source.html#l00759">IRBuilder::codeBlocks</a>, and <a class="el" href="IR_8h_source.html#l00758">IRBuilder::currentFunction</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04106">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02717">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03763">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l02950">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="visitor_8cpp_source.html#l04157">visitor::createLambdaUnnamedStruct()</a>, <a class="el" href="visitor_8cpp_source.html#l02768">visitor::specializeFunctionTemplate()</a>, <a class="el" href="visitor_8cpp_source.html#l03814">visitor::specializeInterfaceImplementation()</a>, <a class="el" href="visitor_8cpp_source.html#l03001">visitor::specializeStructMethodDefinition()</a>, <a class="el" href="visitor_8cpp_source.html#l00032">visitor::visit()</a>, <a class="el" href="visitor_8cpp_source.html#l01542">visitor::visit()</a>, and <a class="el" href="visitor_8cpp_source.html#l01790">visitor::visit()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3954,7 +4109,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00758">758</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00762">762</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l01124">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, and <a class="el" href="IR_8cpp_source.html#l01119">IRBuilder::saveState()</a>.</p>
 
@@ -3980,7 +4135,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00755">755</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00759">759</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00129">IRBuilder::getCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00139">IRBuilder::getCurrentCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01119">IRBuilder::saveState()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 
@@ -4006,7 +4161,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00752">752</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00756">756</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, and <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>.</p>
 
@@ -4032,7 +4187,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00757">757</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00761">761</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00139">IRBuilder::getCurrentCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00460">IRBuilder::getCurrentCodeBlockIndex()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01119">IRBuilder::saveState()</a>, and <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>.</p>
 
@@ -4058,9 +4213,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00761">761</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00765">765</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01148">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01502">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01143">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01148">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01523">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01143">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>.</p>
 
 </div>
 </div>
@@ -4084,7 +4239,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00754">754</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00758">758</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00143">IRBuilder::createLocalVar()</a>, <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 
@@ -4110,9 +4265,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00753">753</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00757">757</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01502">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01523">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>.</p>
 
 </div>
 </div>
@@ -4136,7 +4291,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00762">762</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00766">766</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -4160,7 +4315,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00759">759</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00763">763</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -4184,7 +4339,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00760">760</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00764">764</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -4208,9 +4363,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00756">756</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00760">760</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01502">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l00450">IRBuilder::popFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01134">IRBuilder::pushTempVar()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01119">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01523">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="IR_8cpp_source.html#l01063">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="IR_8cpp_source.html#l00450">IRBuilder::popFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01138">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01134">IRBuilder::pushTempVar()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01119">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>.</p>
 
 </div>
 </div>

@@ -118,6 +118,7 @@ var annotated_dup =
       [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", "classyoi_1_1lambdaExpr" ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", "classyoi_1_1leftExpr" ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", "classyoi_1_1letAssignmentPair" ],
+      [ "letAssignmentPairLHS", "classyoi_1_1letAssignmentPairLHS.html", "classyoi_1_1letAssignmentPairLHS" ],
       [ "letStmt", "classyoi_1_1letStmt.html", "classyoi_1_1letStmt" ],
       [ "lexer", "classyoi_1_1lexer.html", "classyoi_1_1lexer" ],
       [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html", "classyoi_1_1LLVMCodegen" ],

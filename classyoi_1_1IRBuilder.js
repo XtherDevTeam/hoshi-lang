@@ -1,11 +1,18 @@
 var classyoi_1_1IRBuilder =
 [
     [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", "structyoi_1_1IRBuilder_1_1LoopContext" ],
+    [ "ExtractType", "classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6", [
+      [ "All", "classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6ab1c94ca2fbc3e78fc30069c8d0f01680", null ],
+      [ "First", "classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6a7fb55ed0b7a30342ba6da306428cae04", null ],
+      [ "Last", "classyoi_1_1IRBuilder.html#a630666ab8e4dc4ba222eab85698b44c6ad55b30607c2a9a2616347d6edb789f6b", null ]
+    ] ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#ab4093e8cfecbe1cc54ea82886d9fa39b", null ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html#a8c8800de44b86dbde01c19a95f81e93c", null ],
     [ "arithmeticOp", "classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377", null ],
     [ "arrayLengthOp", "classyoi_1_1IRBuilder.html#a9ff21cff0357fc8a642e10b87b01e67e", null ],
     [ "basicCast", "classyoi_1_1IRBuilder.html#a4640ca7c6de1ffc27cba9ceff03eabb1", null ],
+    [ "bindElementsOp", "classyoi_1_1IRBuilder.html#a78d4686e70fc131a676ccf18698b789f", null ],
+    [ "bindFieldsOp", "classyoi_1_1IRBuilder.html#ac0ae3b798804c79c301d472f9d064206", null ],
     [ "breakOp", "classyoi_1_1IRBuilder.html#a4be680d91488e329759d4ad7b30b4e15", null ],
     [ "commitState", "classyoi_1_1IRBuilder.html#aa83db99c3ef75b579fef7a194c935026", null ],
     [ "constructInterfaceImplOp", "classyoi_1_1IRBuilder.html#a574dbaced194790fae5cad1837fae133", null ],

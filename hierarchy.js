@@ -51,6 +51,7 @@ var hierarchy =
       [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", null ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", null ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", null ],
+      [ "letAssignmentPairLHS", "classyoi_1_1letAssignmentPairLHS.html", null ],
       [ "letStmt", "classyoi_1_1letStmt.html", null ],
       [ "logicalAndExpr", "classyoi_1_1logicalAndExpr.html", null ],
       [ "logicalOrExpr", "classyoi_1_1logicalOrExpr.html", null ],
