@@ -1493,6 +1493,27 @@ namespace yoi {
         jumpOp(loopContext.back().continueTarget);
     }
 
+    void IRBuilder::bindElementsOp(yoi::indexT extractElementCount, ExtractType extractType) {
+        auto rhs = tempVarStack.back();
+        tempVarStack.pop_back();
+        for (yoi::indexT i = 0; i < extractElementCount; i++) {
+            tempVarStack.push_back(managedPtr(rhs->getElementType()));
+        }
+
+        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_elements_post : IR::Opcode::bind_elements_pred, {{IROperand::operandType::index, extractElementCount}}, currentDebugInfo});
+    }
+
+    void IRBuilder::bindFieldsOp(yoi::indexT extractFieldCount, ExtractType extractType) {
+        auto rhs = tempVarStack.back();
+        auto structDef = compilerCtx->getImportedModule(rhs->typeAffiliateModule)->structTable[rhs->typeIndex];
+        yoi::indexT startPos = (extractType == ExtractType::First ? 0 : structDef->fieldTypes.size() - extractFieldCount);
+
+        for (auto curPos = startPos; curPos < startPos + extractFieldCount; curPos++) {
+            tempVarStack.push_back(structDef->fieldTypes[curPos]);
+        }
+        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_fields_post : IR::Opcode::bind_fields_pred, {{IROperand::operandType::index, extractFieldCount}}, currentDebugInfo});
+    }
+
     void IRBuilder::pushLoopContext(yoi::indexT breakTarget, yoi::indexT continueTarget) {
         loopContext.push_back({breakTarget, continueTarget});
     }

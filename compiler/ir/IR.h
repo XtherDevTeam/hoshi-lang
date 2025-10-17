@@ -271,6 +271,10 @@ namespace yoi {
             jump_if_false,
             load_member,
             load_global,
+            bind_elements_pred,
+            bind_elements_post,
+            bind_fields_pred,
+            bind_fields_post,
             ret,
             ret_none,
             push_integer,
@@ -921,6 +925,22 @@ namespace yoi {
         void breakOp();
 
         void continueOp();
+
+        enum class ExtractType {All, First, Last};
+
+        /**
+         * Extract elements from an array or a dynamic array, push them to the temp var stack, and dereference the array object.
+         * @param extractElementCount The number of elements to extract.
+         * @param extractType The type of extraction, either all, first, or last.
+         */
+        void bindElementsOp(yoi::indexT extractElementCount, ExtractType extractType);
+
+        /**
+         * Extract fields from a struct, push them to the temp var stack, and dereference the struct object.
+         * @param extractFieldCount The number of fields to extract.
+         * @param extractType The type of extraction, either all, first, or last.
+         */
+        void bindFieldsOp(yoi::indexT extractFieldCount, ExtractType extractType);
 
         yoi::indexT getCurrentInsertionPoint();
 

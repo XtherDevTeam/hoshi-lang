@@ -1428,6 +1428,69 @@ namespace yoi {
                 valueStackPhi.push_back(interfaceShellVal); // Put the constructed interface back
                 break;
             }
+            case IR::Opcode::bind_elements_post:
+            case IR::Opcode::bind_elements_pred: {
+                auto array = valueStackPhi.back();
+                valueStackPhi.pop_back();
+                
+                yoi_assert(array.yoiType->isArrayType() || array.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "Expected array type for bind_elements");
+
+                auto arrayLLVMType = getArrayLLVMType(array.yoiType);
+                // gep index 2
+                auto *arrayLen = Builder->CreateStructGEP(arrayLLVMType, array.llvmValue, 2, "array_len");
+                auto *loadedArrayLen = Builder->CreateLoad(Builder->getInt64Ty(), arrayLen, "loaded_array_len");
+
+                auto startPos = instr.opcode == IR::Opcode::bind_elements_post ? Builder->getInt64(0) : Builder->CreateSub(loadedArrayLen, Builder->getInt64(instr.operands[0].value.symbolIndex), "start_pos");
+
+                for (yoi::indexT i = 0;i < instr.operands[0].value.symbolIndex;i++) {
+                    auto currentPos = Builder->CreateAdd(startPos, Builder->getInt64(i), "current_pos");
+                    auto currentValue = loadArrayElement(array.yoiType, array.llvmValue, currentPos);
+                    std::shared_ptr<IRValueType> elementType;
+                    if (array.yoiType->isBasicType()) {
+                        elementType = managedPtr(array.yoiType->getElementType().getBasicRawType());
+                    } else if (array.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope)) {
+                        elementType = managedPtr(array.yoiType->getElementType().addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope).addAttribute(IRValueType::ValueAttr::Nullable));
+                    } else {
+                        elementType = managedPtr(array.yoiType->getElementType().addAttribute(IRValueType::ValueAttr::Nullable));
+                    }
+                    valueStackPhi.push_back({currentValue, elementType});
+                }
+
+                callGcFunction(array.llvmValue, array.yoiType, false); // Release the reference to the array
+                break;
+            }
+            case IR::Opcode::bind_fields_post:
+            case IR::Opcode::bind_fields_pred: {
+                auto structVal = valueStackPhi.back();
+                valueStackPhi.pop_back();
+                
+                yoi_assert(structVal.yoiType->type == IRValueType::valueType::structObject, instr.debugInfo.line, instr.debugInfo.column, "Expected struct type for bind_values");
+                auto structDef = yoiModule->structTable[structVal.yoiType->typeIndex];
+
+                auto startPos = instr.opcode == IR::Opcode::bind_elements_post ? 0 : structDef->fieldTypes.size() - instr.operands[0].value.symbolIndex;
+                for (yoi::indexT memberIndex = startPos; memberIndex < startPos + instr.operands[0].value.symbolIndex; memberIndex++) {
+                    auto llvmMemberIndex = memberIndex + 2; // +2 to skip gc_refcount header and type index
+
+                    auto key = std::make_tuple(IRValueType::valueType::structObject, structVal.yoiType->typeAffiliateModule, structVal.yoiType->typeIndex);
+                    auto* llvmStructType = structTypeMap.at(key);
+                    auto* gep = Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
+
+                    auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
+                    auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
+                    if (structVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
+                        memberYoiType = managedPtr(IRValueType{*memberYoiType}.addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
+                    memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
+                    memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw); // workaround for incorrect optimization labelling
+
+                    llvm::Type* loadedType = yoiTypeToLLVMType(memberYoiType);
+                    auto* loadedMember = Builder->CreateLoad(loadedType, gep, "loadmember");
+                    callGcFunction(loadedMember, memberYoiType, true); // Create new reference for the loaded member
+                    valueStackPhi.push_back({loadedMember, memberYoiType});
+                }
+
+                callGcFunction(structVal.llvmValue, structVal.yoiType, false); // Release the reference to the struct
+                break;
+            }
             case IR::Opcode::invoke_virtual_1:
             case IR::Opcode::invoke_virtual: {
                 auto methodVTableIndex = instr.operands[2].value.symbolIndex;

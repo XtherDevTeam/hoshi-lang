@@ -1799,7 +1799,7 @@ namespace yoi {
                     break;
                 }
                 default: {
-                    // pass
+                    handleInstruction(ins, insIndex, currentCodeBlockIndex);
                     break;
                 }
             }
@@ -3363,6 +3363,28 @@ namespace yoi {
                                          value.contributedInstructions +
                                              SimulationStack::Item::ContributedInstructionSet{
                                                  currentCodeBlockIndex, std::set{yoi::indexT{insIndex}}});
+                }
+                break;
+            }
+            case IR::Opcode::bind_elements_pred:
+            case IR::Opcode::bind_elements_post: {
+                auto array = simulationStack.peek(0);
+                simulationStack.pop();
+                for (auto i = 0; i < ins.operands[0].value.symbolIndex; ++i) {
+                    simulationStack.push(managedPtr(array.type->getElementType()), array.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
+                }
+                break;
+            }
+            case IR::Opcode::bind_fields_pred:
+            case IR::Opcode::bind_fields_post: {
+                auto structVal = simulationStack.peek(0);
+                simulationStack.pop();
+                auto structDef = compilerCtx->getImportedModule(structVal.type->typeAffiliateModule)->structTable[structVal.type->typeIndex];
+                yoi::indexT startPos = ins.opcode == IR::Opcode::bind_fields_post ? 0 : structDef->fieldTypes.size() - ins.operands[0].value.symbolIndex;
+                yoi::indexT endPos = startPos + ins.operands[0].value.symbolIndex;
+                for (auto i = startPos; i < endPos; ++i) {
+                    auto fieldType = structDef->fieldTypes[i];
+                    simulationStack.push(fieldType, structVal.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
                 }
                 break;
             }

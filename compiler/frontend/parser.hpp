@@ -105,6 +105,8 @@ namespace yoi {
 
     void parse(letAssignmentPair *&o, lexer &lex);
 
+    void parse(letAssignmentPairLHS *&o, lexer &lex);
+
     void parse(letStmt *&o, lexer &lex);
 
     void parse(globalStmt *&o, lexer &lex);

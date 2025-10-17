@@ -22,8 +22,8 @@
 - [x] 完成 string 的标准库开发
 - [x] 完成 constructor 不强制要求 return this 的语法糖
 - [x] 加入 lambda
-- [ ] 完成 `let [x, y] = depacker()` 的语法设计和实现
-- [ ] 改造 `new struct` 的逻辑
+- [x] 完成 `let [x, y] = depacker()` 的语法设计和实现
+- [x] 改造 `new struct` 的逻辑
 - [ ] 有限范围内推断虚函数调用变为正常函数优化
     - [ ] IRValueType改造，支持附加信息
 - [x] 加入左值对象和将亡对象判断和处理逻辑

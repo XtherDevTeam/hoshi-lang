@@ -1177,7 +1177,7 @@ namespace yoi {
     }
 
     void parse(letAssignmentPair *&o, lexer &lex) {
-        identifier *lhs = nullptr;
+        letAssignmentPairLHS *lhs = nullptr;
         typeSpec *type = nullptr;
         rExpr *rhs = nullptr;
         lexer::token node_start_token = lex.curToken;
@@ -1213,6 +1213,45 @@ namespace yoi {
             return;
         }
         o = new letAssignmentPair{node_start_token, lhs, type, rhs};
+    }
+
+    void parse(letAssignmentPairLHS *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind == lexer::token::tokenKind::identifier) {
+            identifier *id = new identifier{lex.curToken, lex.curToken};
+            lex.scan();
+            o = new letAssignmentPairLHS{node_start_token, letAssignmentPairLHS::vKind::identifier, id};
+        } else if (lex.curToken.kind == lexer::token::tokenKind::leftBracket) {
+            lex.scan();
+            yoi::vec<lexer::token> vecA;
+            while (true) {
+                if (lex.curToken.kind != lexer::token::tokenKind::identifier && lex.curToken.kind != lexer::token::tokenKind::kThreeDots) {
+                    break;
+                }
+                vecA.push_back(lex.curToken);
+                lex.scan();
+                if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                    lex.scan();
+                } else {
+                    break;
+                }
+            }
+            if (lex.curToken.kind == lexer::token::tokenKind::kThreeDots) {
+                vecA.push_back(lex.curToken);
+                lex.scan();
+            }
+            yoi_assert( vecA.empty() || vecA.size() < 2 || (vecA.front().kind != lexer::token::tokenKind::kThreeDots || vecA.back().kind != lexer::token::tokenKind::kThreeDots), lex.line, lex.col, "structured binding cannot have `...` both in the front and in the back of the list");
+            if (vecA.size() > 2) 
+                for (yoi::indexT i = 1;i < vecA.size() - 1;i++) 
+                    yoi_assert(vecA[i].kind != lexer::token::tokenKind::kThreeDots, lex.line, lex.col, "structured binding cannot have `...` in the middle of the list");
+
+            yoi_assert(lex.curToken.kind == lexer::token::tokenKind::rightBracket, lex.curToken.line, lex.curToken.col, "expected `]`");
+            lex.scan();
+            o = new letAssignmentPairLHS{node_start_token, letAssignmentPairLHS::vKind::list, nullptr, vecA};
+        } else {
+            panic(lex.line, lex.col, "expected identifier or `[...]` after `let`");
+            o = nullptr;
+        }
     }
 
     void parse(letStmt *&o, lexer &lex) {

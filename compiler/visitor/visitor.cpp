@@ -2025,19 +2025,70 @@ namespace yoi {
         for (auto &i : letStmt->terms) {
             visit(i->rhs);
             auto type = i->type ? managedPtr(parseTypeSpec(i->type)) : moduleContext->getIRBuilder().getRhsFromTempVarStack();
-            if (isVisitingGlobalScope()) {
-                // global variable
-                tryCastTo(type);
-                auto index = irModule->globalVariables.put(i->lhs->node.strVal, type);
-                moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
-                                                      {IROperand::operandType::globalVar, index});
+            if (i->lhs->kind == letAssignmentPairLHS::vKind::identifier) {
+                if (isVisitingGlobalScope()) {
+                    // global variable
+                    tryCastTo(type);
+                    auto index = irModule->globalVariables.put(i->lhs->id->node.strVal, type);
+                    moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
+                                                          {IROperand::operandType::globalVar, index});
 
-            } else {
-                tryCastTo(type);
-                auto index =
-                    moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->node.strVal, type);
-                moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
-                                                      {IROperand::operandType::localVar, index});
+                } else {
+                    tryCastTo(type);
+                    auto index =
+                        moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->id->node.strVal, type);
+                    moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
+                                                          {IROperand::operandType::localVar, index});
+                }
+            } else if (i->lhs->kind == letAssignmentPairLHS::vKind::list) {
+                // structured binding
+                if (type->isArrayType() || type->isDynamicArrayType()) {
+                    // array binding
+                    IRBuilder::ExtractType extractType{i->lhs->list.back().kind == lexer::token::tokenKind::kThreeDots ? IRBuilder::ExtractType::First : IRBuilder::ExtractType::Last};
+                    bool isFull = i->lhs->list.back().kind != lexer::token::tokenKind::kThreeDots && i->lhs->list.front().kind != lexer::token::tokenKind::kThreeDots;
+                    auto elementCount = i->lhs->list.size() - !isFull;
+                    moduleContext->getIRBuilder().bindElementsOp(elementCount, extractType);
+                    auto bindType = managedPtr(type->getElementType());
+                    for (yoi::indexT curPos = extractType == IRBuilder::ExtractType::First && !isFull;curPos < elementCount; curPos++) {
+                        if (isVisitingGlobalScope()) {
+                            // global variable
+                            auto index = irModule->globalVariables.put(i->lhs->list[i->lhs->list.size() - 1 - curPos].strVal, bindType);
+                            moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
+                                                                  {IROperand::operandType::globalVar, index});
+
+                        } else {
+                            auto index =
+                                moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->list[i->lhs->list.size() - 1 - curPos].strVal, bindType);
+                            moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
+                                                                  {IROperand::operandType::localVar, index});
+                        }
+                    }
+                } else if (type->type == IRValueType::valueType::structObject) {
+                    // struct binding
+                    IRBuilder::ExtractType extractType{i->lhs->list.back().kind == lexer::token::tokenKind::kThreeDots ? IRBuilder::ExtractType::First : IRBuilder::ExtractType::Last};
+                    bool isFull = i->lhs->list.back().kind != lexer::token::tokenKind::kThreeDots && i->lhs->list.front().kind != lexer::token::tokenKind::kThreeDots;
+                    yoi::indexT elementCount = i->lhs->list.size() - !isFull;
+                    yoi::indexT startPos = extractType == IRBuilder::ExtractType::First ? elementCount - 1 : i->lhs->list.size() - 1;
+                    yoi::indexT endPos = extractType == IRBuilder::ExtractType::First ? -1 : 0 - isFull;
+                    moduleContext->getIRBuilder().bindFieldsOp(elementCount, extractType);
+                    for (yoi::indexT curPos = startPos; curPos != endPos; curPos -= 1) {
+                        auto fieldType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                        if (isVisitingGlobalScope()) {
+                            // global variable
+                            auto index = irModule->globalVariables.put(i->lhs->list[curPos].strVal, fieldType);
+                            moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
+                                                                  {IROperand::operandType::globalVar, index});
+
+                        } else {
+                            auto index =
+                                moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->list[curPos].strVal, fieldType);
+                            moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
+                                                                  {IROperand::operandType::localVar, index});
+                        }
+                    }
+                } else {
+                    panic(i->getLine(), i->getColumn(), "Unsupported structured binding");
+                }
             }
         }
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();

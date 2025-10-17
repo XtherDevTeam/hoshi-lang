@@ -13,6 +13,7 @@
 namespace yoi {
     class AST {
         lexer::token token;
+
     public:
         AST();
 
@@ -26,6 +27,7 @@ namespace yoi {
 
         yoi::lexer::token &getToken();
     };
+
     class hoshiModule;
 
     class innerMethodDef;
@@ -179,13 +181,15 @@ namespace yoi {
     class typeAliasStmt;
 
     class finalizerDef;
-    
+
     class finalizerDecl;
 
     class funcExpr;
 
+    class letAssignmentPairLHS;
+
     class typeAliasStmt : public AST {
-        public:
+    public:
         yoi::identifierWithDefTemplateArg *lhs{};
         yoi::typeSpec *rhs{};
     };
@@ -293,7 +297,6 @@ namespace yoi {
         unnamedDefinitionArguments &getArgs() const;
 
         typeSpec &getResultType() const;
-
     };
 
     class typeSpec : public AST {
@@ -372,7 +375,8 @@ namespace yoi {
 
     class primary : public AST {
     public:
-        int8_t kind; // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
+        int8_t kind;
+        // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
@@ -698,13 +702,23 @@ namespace yoi {
         bool isImplForStmt();
     };
 
+    class letAssignmentPairLHS : public AST {
+    public:
+        enum class vKind : int16_t {
+            identifier,
+            list
+        } kind;
+        identifier *id;
+        vec<lexer::token> list; // like [..., a, b, c] [a, b, c, ...], [a, b, c]
+    };
+
     class letAssignmentPair : public AST {
     public:
-        identifier *lhs;
+        letAssignmentPairLHS *lhs;
         typeSpec *type;
         rExpr *rhs;
 
-        identifier &getLhs();
+        letAssignmentPairLHS &getLhs();
 
         rExpr &getRhs();
     };
@@ -745,7 +759,8 @@ namespace yoi {
             void *ptr;
 
             template<typename T>
-            vValue(T *t) : ptr(static_cast<void *>(t)) {}
+            vValue(T *t) : ptr(static_cast<void *>(t)) {
+            }
         } value;
 
         vKind &getKind();
@@ -864,7 +879,8 @@ namespace yoi {
             void *ptr;
 
             template<typename T>
-            vValue(T *t) : ptr((void *) t) {}
+            vValue(T *t) : ptr((void *) t) {
+            }
         } value;
 
         vKind &getKind();
@@ -946,61 +962,61 @@ namespace yoi {
     };
 
     class externModuleAccessExpression : public AST {
-        public:
-            vec<identifierWithTemplateArg *> terms;
+    public:
+        vec<identifierWithTemplateArg *> terms;
 
-            vec<identifierWithTemplateArg *> &getTerms();
+        vec<identifierWithTemplateArg *> &getTerms();
 
-            bool isIdentifier() const;
+        bool isIdentifier() const;
     };
 
     class exportDecl : public AST {
-        public:
-            yoi::vec<lexer::token> attrs;
-            typeSpec *from;
-            identifier *as;
+    public:
+        yoi::vec<lexer::token> attrs;
+        typeSpec *from;
+        identifier *as;
     };
 
     class importDecl : public AST {
-        public:
-            innerMethodDecl *inner;
-            lexer::token from_path;
+    public:
+        innerMethodDecl *inner;
+        lexer::token from_path;
     };
 
     class throwStmt : public AST {
-        public:
-            rExpr *expr;
+    public:
+        rExpr *expr;
     };
 
     class catchParam : public AST {
-        public:
-            typeSpec *type;
-            identifier *name;
-            codeBlock *block;
-    };   
+    public:
+        typeSpec *type;
+        identifier *name;
+        codeBlock *block;
+    };
 
     class tryCatchStmt : public AST {
-        public:
-            codeBlock *tryBlock;
-            vec<catchParam *> catchParams;
-            codeBlock *finallyBlock;
+    public:
+        codeBlock *tryBlock;
+        vec<catchParam *> catchParams;
+        codeBlock *finallyBlock;
     };
 
     class typeIdExpression : public AST {
-        public:
-            typeSpec *type;
-            rExpr *expr;
+    public:
+        typeSpec *type;
+        rExpr *expr;
     };
 
     class dynCastExpression : public AST {
-        public:
-            typeSpec *type;
-            rExpr *expr;
+    public:
+        typeSpec *type;
+        rExpr *expr;
     };
 
     class unnamedDefinitionArguments : public AST {
-        public:
-            vec<typeSpec *> types;
+    public:
+        vec<typeSpec *> types;
     };
 
     void finalizeAST(exportDecl *ptr);
@@ -1156,6 +1172,8 @@ namespace yoi {
     void finalizeAST(finalizerDecl *ptr);
 
     void finalizeAST(funcExpr *ptr);
+
+    void finalizeAST(letAssignmentPairLHS *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

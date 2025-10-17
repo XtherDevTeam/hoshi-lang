@@ -122,7 +122,7 @@ namespace yoi {
                 indexT oldIdx = srcModule->interfaceImplementationTable.getIndex(implPair.first);
                 auto newName = mangleName(modId, implPair.second->name);
                 indexT newIdx = finalModule->interfaceImplementationTable.put_create(newName, implPair.second);
-                printf("remapping interface %lld %lld to %lld %lld\n", implPair.second->implInterfaceIndex.first, implPair.second->implInterfaceIndex.second, ENTRY_MODULE_ID_CONST, interfaceRemapping[implPair.second->implInterfaceIndex.first][implPair.second->implInterfaceIndex.second]);
+                // printf("remapping interface %lld %lld to %lld %lld\n", implPair.second->implInterfaceIndex.first, implPair.second->implInterfaceIndex.second, ENTRY_MODULE_ID_CONST, interfaceRemapping[implPair.second->implInterfaceIndex.first][implPair.second->implInterfaceIndex.second]);
                 finalModule->interfaceImplementationTable[newIdx]->implInterfaceIndex = {ENTRY_MODULE_ID_CONST, interfaceRemapping[implPair.second->implInterfaceIndex.first][implPair.second->implInterfaceIndex.second]};
                 finalModule->interfaceImplementationTable[newIdx]->name = newName;
                 interfaceImplRemapping[modId][oldIdx] = newIdx;

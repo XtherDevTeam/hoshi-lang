@@ -369,7 +369,7 @@ namespace yoi {
         return *inner;
     }
 
-    identifier &letAssignmentPair::getLhs() {
+    letAssignmentPairLHS &letAssignmentPair::getLhs() {
         return *lhs;
     }
 
@@ -1166,6 +1166,17 @@ namespace yoi {
     void finalizeAST(funcExpr *ptr) {
         finalizeAST(ptr->args);
         finalizeAST(ptr->name);
+        delete ptr;
+    }
+
+    void finalizeAST(letAssignmentPairLHS *ptr) {
+        switch (ptr->kind) {
+            case letAssignmentPairLHS::vKind::identifier:
+                finalizeAST(ptr->id);
+                break;
+            case letAssignmentPairLHS::vKind::list:
+                break;
+        }
         delete ptr;
     }
 } // namespace yoi
