@@ -4,7 +4,23 @@
 
 > This is one of my practice during Senior High School period. `hoshi` means both $\mathop{desire}\limits^{欲しい}$ and $\mathop{stars}\limits^{星}$ in Japanese, which also represents my silly wishes: I hope some day I would become the stars I once live up to.
 
-Hoshi-lang is a statically-typed, strong-typed programming language that supports modern programming design patterns like Generic Programming and Object-Oriented Programming.
+Hoshi-lang is a statically-typed, general-purpose programming language with a focus on performance, safety, and modern language features. It is designed to be a simple yet powerful tool for building a wide range of applications.
+
+This project is currently under active development and is a personal exploration into language design and implementation.
+
+## Features
+
+*   **Object-Oriented:** Hoshi-lang's OOP is based on a composition model using `interface`, `struct`, and `impl`.
+*   **Generic Programming:** Supports generic programming with `template`s for both functions and structs.
+*   **Operator Overloading:** Allows for custom behavior for operators like `+`, `-`, `*`, `/`, etc.
+*   **Memory Safety:** Automatic Reference Counting (ARC) for memory management.
+*   **Type Introspection:** Runtime type inspection with `typeid` and `interfaceof`.
+*   **Dynamic Casting:** Safe casting of interface objects back to their concrete `struct` type using `dyn_cast`.
+*   **Modular Programming:** Supports modules with the `use` statement.
+*   **Variadic Arguments:** Functions can accept a variable number of arguments.
+*   **Lambda Expressions:** Concise syntax for creating anonymous functions.
+*   **Threading:** Support for multi-threaded programming.
+*   **Rich Standard Library:** A growing standard library with support for strings, vectors, file I/O, and more.
 
 ## Syntax
 
@@ -27,7 +43,7 @@ impl Person {
   }
 }
 
-impl Greeter for Person {
+impl Person : Greeter {
   say() : none {
     io.println("Hello, " + this.name)
   }
@@ -40,16 +56,6 @@ func main() : int {
   return 0
 }
 ```
-
-Here is an example.
-
-## Object-Oriented Programming
-
-Hoshi-lang's OOP is based on a composition model using three core components: `interface`, `struct`, and `impl`.
-
--   `interface`: Defines an abstract contract with a set of method signatures.
--   `struct`: A concrete data structure that groups fields and methods.
--   `impl`: Implements the methods for a `struct` or an `interface` for a `struct`.
 
 ## Object Model and Memory Management
 
@@ -90,146 +96,85 @@ Memory is managed via **Automatic Reference Counting (ARC)**.
 
 The compiler is responsible for generating calls to the appropriate `_gc_refcount_increase` and `_gc_refcount_decrease` functions for each type at the right places.
 
-## New Features
+### Callable Objects & Lambda Expressions
 
-### Operator Overloading
-
-Hoshi-lang supports operator overloading for `struct` types. This allows you to define custom behavior for operators like `+`, `-`, `*`, `/`, etc.
+Hoshi-lang now supports callable objects and lambda expressions, allowing for more flexible and functional programming styles.
 
 ```rust
-struct MyInt {
-    val: int,
-    constructor(val: int),
-    static operator+(lhs: MyInt, rhs: MyInt) : MyInt,
-    get() : int
+func test_lambda(x: int, y: int, f: func (int, int) : int) : int {
+    return f(x, y)
 }
 
-impl MyInt {
-    constructor(val: int) {
-        this.val = val
-    },
-    static operator+(lhs: MyInt, rhs: MyInt) : MyInt {
-        return MyInt(lhs.val + rhs.val)
-    },
-    get() : int {
-        return this.val
+func main() : int {
+    let salt = 114514
+    let closure = func[salt] (x: int, y: int) : int {
+        return x + y + this.salt
     }
+    let result = test_lambda(2, 3, closure)
+    return result
 }
 ```
 
-### Interface Templates
+### Threading
 
-Hoshi-lang now supports templates for interfaces, allowing for more generic and reusable code.
+Hoshi-lang now has basic support for multi-threading.
 
 ```rust
-interface Result<T> {
-    get() : T
+use threading "threading"
+use runtime "runtime"
+
+func worker() : none {
+    runtime.puts("Hello from worker thread!")
 }
 
-struct TestStruct<T, U> {
-    a: T,
-    b: U,
-    add(): T,
-    constructor(a: T, b: U)
-}
-
-impl TestStruct<> : Result<T> {
-    get(): T {
-        return this.a
-    }
+func main() : int {
+    let th = threading.Thread(func[] () : none {
+        worker()
+    })
+    th.start()
+    th.join()
+    return 0
 }
 ```
 
-### Standard Library
+### Structured Bindings
 
-Hoshi-lang now includes a standard library with `string` and `vector` support.
-
--   **`string`:** A string library with common string operations.
--   **`vector`:** A dynamic array implementation.
-
-### Dynamic Arrays
-
-Hoshi-lang now supports dynamic arrays, which can grow or shrink at runtime.
-
--   **Creation:**
-    ```rust
-    // Create a dynamic array with initial elements
-    let dyn_arr = int[](1, 2, 3)
-
-    // Create a dynamic array with a specific size
-    let dyn_arr2 = string[](10) // An array of 10 null strings
-    ```
--   **Length Property:** The `.length` property can be used to get the current number of elements in any array (fixed or dynamic).
-    ```rust
-    let len = dyn_arr.length // len will be 3
-    ```
-
-### Type Introspection
-
-You can inspect an object's type at runtime using the `typeid` and `interfaceof` operators.
-
--   **`typeid`**: Returns a unique integer ID for a type.
-    ```rust
-    let id = typeid(int)
-    let p = Person("test")
-    let p_id = typeid(p)
-    ```
--   **`interfaceof`**: Checks if an object implements a specific interface.
-    ```rust
-    if (p interfaceof Greeter) {
-      io.println("This object is a Greeter!")
-    }
-    ```
-
-### Dynamic Casting
-
-Safely cast an interface object back to its concrete `struct` type using `dyn_cast`. If the cast fails, it returns `null`.
+You can now de-structure arrays and structs into individual variables.
 
 ```rust
-let g = Greeter(Person("test"))
-
-// Attempt to cast the Greeter back to a Person
-let p = dyn_cast(g, Person)
-
-if (p != null) {
-  io.println("Cast successful: " + p.name)
-} else {
-  io.println("Cast failed.")
-}
+let [x, y] = Point(1, 2)
+let [a, b, c] = int[3](10, 20, 30)
 ```
 
-## Modules
+### Type Aliases
 
-Hoshi-lang supports modular programming using the `use` statement to import other source files.
+The `alias` keyword can be used to create a new name for an existing type.
 
 ```rust
-// Import symbols from "std/io.hoshi" under the alias "io"
-use io "std/io"
-```
+alias Map = hashMap.HashMap<str.Str, int>
 
-## Generic Programming
-
-Hoshi-lang supports Generic Programming via `template`s, which can be applied to both functions and structs.
-
-```rust
-struct Container<T> {
-  item: T,
-}
-
-func print_item<T>(c: Container<T>) {
-  io.println(c.item)
+func main() : int {
+    let m : Map = Map()
+    m["Hello"] = 0xe1751aff
+    return 0
 }
 ```
 
-## Variadic Arguments
+## Standard Library
 
-Variadic arguments are supported in template functions via the `...` keyword, allowing a function to accept a variable number of arguments, which would be converted to `lang.NullInterface[]`
+Hoshi-lang's standard library is growing and currently includes:
 
-```rust
-func my_printf(format: string, args: ...) {
-  // ... implementation ...
-}
-```
+*   `console`: For console input and output.
+*   `file`: An interface for file-like objects.
+*   `fs`: For file system operations.
+*   `hashMap`: A hash map implementation.
+*   `io`: For I/O operations.
+*   `json`: For parsing JSON.
+*   `math`: For mathematical functions.
+*   `runtime`: For runtime-specific functions.
+*   `str`: A string library.
+*   `threading`: For multi-threaded programming.
+*   `vec`: A dynamic array implementation.
 
 ## Build and Run
 
@@ -237,10 +182,8 @@ func my_printf(format: string, args: ...) {
 
 **macOS / Linux:**
 ```shell
-mkdir build
-cd build
-cmake ..
-make
+make cmake_debug
+make build_debug
 make package
 ```
 
@@ -255,13 +198,34 @@ cmake --build . --config Release
 ### Run
 
 ```shell
-./hoshi_lang [filename] -o [output filename]
+./hoshi_lang [options] <input_file>
 ```
 
-## Further Reading
+**Options:**
 
--   [Syntax Definition](/Syntax.bnf)
--   [IR Handbook](/docs/IR.md)
--   [Language Specification](/docs/Spec.md)
--   [Nullable and Raw Check Passes](/docs/Nullable%20Check%20&%20Raw%20Check.md)
--   [TODO List](/TODO.md)
+*   `-o <output_file>`: Specify the output file name.
+*   `-D <key> <value>`: Define a macro.
+
+## Documentation
+
+*   [Syntax Definition](/Syntax.bnf)
+*   [IR Handbook](/docs/IR.md)
+*   [Language Specification](/docs/Spec.md)
+*   [Callable Objects & Lambda Expressions](/docs/Callable%20&%20Lambda.md)
+*   [Console I/O](/docs/Console.md)
+*   [File System](/docs/File%20System.md)
+*   [Finalizers](/docs/Finalizers.md)
+*   [HashMap](/docs/HashMap.md)
+*   [JSON](/docs/JSON.md)
+*   [Macros](/docs/Macros.md)
+*   [Math](/docs/Math.md)
+*   [Nullable and Raw Check Passes](/docs/Nullable%20Check%20&%20Raw%20Check.md)
+*   [Result Type](/docs/Result.md)
+*   [Runtime](/docs/Runtime.md)
+*   [String](/docs/String.md)
+*   [Structured Bindings](/docs/Structured%20Bindings.md)
+*   [Threading](/docs/Threading.md)
+*   [Type Aliases](/docs/Type%20Aliases.md)
+*   [Vector](/docs/Vector.md)
+*   [Wrapper](/docs/Wrapper.md)
+*   [TODO List](/TODO.md)

@@ -12,11 +12,13 @@ Identifiers start with a letter or underscore, followed by any number of letters
 
 The following are reserved keywords and cannot be used as identifiers:
 
-`use`, `interface`, `struct`, `impl`, `func`, `let`, `if`, `else`, `for`, `while`, `return`, `true`, `false`, `null`, `typeid`, `interfaceof`, `dyn_cast`, `template`, `operator`
+`use`, `interface`, `struct`, `impl`, `func`, `let`, `if`, `else`, `for`, `while`, `return`, `true`, `false`, `null`, `typeid`, `interfaceof`, `dyn_cast`, `template`, `operator`, `alias`, `finalizer`, `callable`
 
 ### 1.3. Literals
 
 -   **Integer Literals:** e.g., `123`, `-456`
+-   **Unsigned Integer Literals:** e.g., `123u`
+-   **Short Integer Literals:** e.g., `123s`
 -   **Decimal Literals:** e.g., `3.14`, `-0.01`
 -   **Boolean Literals:** `true`, `false`
 -   **String Literals:** e.g., `"hello"`
@@ -28,6 +30,8 @@ The following are reserved keywords and cannot be used as identifiers:
 Hoshi-lang is a statically-typed language. The following are the built-in types:
 
 -   `int`: A 64-bit signed integer.
+-   `unsigned`: A 64-bit unsigned integer.
+-   `short`: A 16-bit signed integer.
 -   `deci`: A 64-bit floating-point number.
 -   `bool`: A boolean value (`true` or `false`).
 -   `string`: A string of characters.
