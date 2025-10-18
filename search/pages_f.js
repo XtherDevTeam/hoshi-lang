@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['with_20templates_0',['Generic Programming with Templates',['../md_docs_2Template.html',1,'']]],
-  ['wrapper_20实现_20ffi_20的必经之路_1',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]]
+  ['referenced_20third_20party_20codes_0',['Referenced third party codes',['../md_THIRDPARTY.html',1,'']]],
+  ['representation_20ir_20handbook_1',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]],
+  ['result_20type_20in_20hoshi_20lang_2',['Result Type in Hoshi-lang',['../md_docs_2Result.html',1,'']]],
+  ['runtime_20in_20hoshi_20lang_3',['Runtime in Hoshi-lang',['../md_docs_2Runtime.html',1,'']]]
 ];

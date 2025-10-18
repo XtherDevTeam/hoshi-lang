@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['的必经之路_0',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]]
+  ['vector_20in_20hoshi_20lang_0',['Vector in Hoshi-lang',['../md_docs_2Vector.html',1,'']]]
 ];

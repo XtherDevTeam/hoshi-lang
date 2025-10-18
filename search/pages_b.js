@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['party_20codes_0',['Referenced third party codes',['../md_THIRDPARTY.html',1,'']]],
-  ['programming_20language_1',['The Hoshi-lang Programming Language',['../index.html',1,'']]],
-  ['programming_20with_20templates_2',['Generic Programming with Templates',['../md_docs_2Template.html',1,'']]]
+  ['macros_20in_20hoshi_20lang_0',['Macros in Hoshi-lang',['../md_docs_2Macros.html',1,'']]],
+  ['math_20in_20hoshi_20lang_1',['Math in Hoshi-lang',['../md_docs_2Math.html',1,'']]]
 ];

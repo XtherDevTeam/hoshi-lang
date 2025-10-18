@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "12345678_abcdefghijklmnoprstuvwxy~和复实属接的直语",
   1: "abcdefghilmnoprstuvwy",
   2: "my",
-  3: "abcdfilmnoprstuvw",
+  3: "abcdfhijlmnoprstuvw",
   4: "abcdefghijlmnoprstuvwxy~",
   5: "_abcdefghiklmnoprstuvwy",
   6: "cdefinprtuvwy",
@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "abcdefgijklmnprstuvw",
   9: "o",
   10: "eghmpwy",
-  11: "acdefghilnoprstw实接的直"
+  11: "abcdefghijlmnoprstvw实接的直"
 };
 
 var indexSectionNames =

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['ualue_0',['ualue',['../namespacemagic__enum_1_1detail.html#ab2bb2a6f1450b296c4daf15794dcc1c0',1,'magic_enum::detail']]],
-  ['unary_20operators_1',['Unary Operators',['../md_docs_2Operator_01Overloading.html#autotoc_md58',1,'']]],
+  ['unary_20operators_1',['Unary Operators',['../md_docs_2Operator_01Overloading.html#autotoc_md93',1,'']]],
   ['unboxvalue_2',['unboxValue',['../classyoi_1_1LLVMCodegen.html#a5e4d8510114ee30df367dfefeb57b165',1,'yoi::LLVMCodegen']]],
   ['under_20the_20hood_3a_20implementation_20details_3',['3. Under the Hood: Implementation Details',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md13',1,'']]],
   ['underlying_5ftype_4',['underlying_type',['../structmagic__enum_1_1underlying__type.html',1,'underlying_type&lt; T &gt;'],['../structmagic__enum_1_1detail_1_1underlying__type.html',1,'underlying_type&lt; T, bool &gt;']]],
