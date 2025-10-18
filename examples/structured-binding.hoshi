@@ -7,6 +7,21 @@ struct Point {
     constructor(x: int, y: int)
 }
 
+struct B {
+    x: int,
+    y: char,
+    z: bool,
+    constructor(x: int, y: char, z: bool)
+}
+
+impl B {
+    constructor(x: int, y: char, z: bool) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+}
+
 impl Point {
     constructor(x: int, y: int) {
         this.x = x
@@ -18,6 +33,16 @@ func main() : int {
     let [x, y] = Point(1, 2)
     let [..., z] = Point(114, 514)
     let [a, b, c] = int[3](10, 20, 30)
-    console.print(str.format("Structured binding: ({}, {}) (114, {}) [{}, {}, {}]", x, y, z, a, b, c))
+
+    console.print("Structured binding validation:\n")
+    console.print("(x, y):", "(", x, ",", y, ")\n")
+    console.print("(z):", z, "\n")
+    console.print("(a, b, c):", "(", a, ",", b, ",", c, ")\n")
+
+    let structval = B(10, 'a', true)
+    let [d, e, ...] = structval
+    console.print("(d, e):", "(", d, ",", e, ")\n")
+
+    console.print("passed\n")
     return 0
 }

@@ -8,6 +8,16 @@ func print(s: str.Str) : none {
     stdout.write(s.data)
 }
 
+func print(args: ...str.Stringable) : none {
+    let stdout = fs.stdout() as file.AbstractFile
+    let strings = new str.Str[args.length]()
+    for (let i = 0; i < args.length; i += 1) {
+        strings[i] = args[i].to_string()
+    }
+    let s = str.join(" ", strings)
+    stdout.write(s.data)
+}
+
 func input() : str.Str {
     let stdin = fs.stdin() as file.AbstractFile
     let buffer = str.Str("")

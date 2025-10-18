@@ -444,6 +444,15 @@ impl Str : Stringable {
     }
 }
 
+impl char : Stringable {
+    to_string() : Str {
+        let res = Str(2u)
+        res.length = 1u
+        res.data[0] = this
+        return res
+    }
+}
+
 func format(fmt: Str, args: ...Stringable[]) : Str {
     let occur = fmt.find_all(Str("{}"))
     if (occur == 0u) {
@@ -477,6 +486,35 @@ func format(fmt: Str, args: ...Stringable[]) : Str {
     res.length = fmt.length + total_strs_length - occur * 2u
     res.data[res.length] = '\0'
     return res
+}
+
+func join(sep: Str, args: Str[]) : Str {
+    let total_length = 0u
+    for (let i = 0; i < args.length; i += 1) {
+        total_length += args[i].length
+    }
+    total_length += (args.length - 1u) * sep.length
+    let res = Str(total_length + 1u)
+    let offset = 0u
+    for (let i = 0; i < args.length; i += 1) {
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(res.data) + offset, runtime.runtime_get_string_array_data_pointer(args[i].data), args[i].length)
+        offset += args[i].length
+        if (i != args.length - 1u) {
+            runtime.memcpy(runtime.runtime_get_string_array_data_pointer(res.data) + offset, runtime.runtime_get_string_array_data_pointer(sep.data), sep.length)
+            offset += sep.length
+        }
+    }
+    res.data[total_length] = '\0'
+    res.length = total_length
+    return res
+}
+
+func join(sep: Str, args: ...Stringable) : Str {
+    let collected_args = new Str[args.length]()
+    for (let i = 0; i < args.length; i += 1) {
+        collected_args[i] = args[i].to_string()
+    }
+    return join(sep, collected_args)
 }
 
 func always_inline toInt(s: Str) : int {

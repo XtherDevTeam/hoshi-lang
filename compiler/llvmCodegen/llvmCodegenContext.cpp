@@ -1467,7 +1467,7 @@ namespace yoi {
                 yoi_assert(structVal.yoiType->type == IRValueType::valueType::structObject, instr.debugInfo.line, instr.debugInfo.column, "Expected struct type for bind_values");
                 auto structDef = yoiModule->structTable[structVal.yoiType->typeIndex];
 
-                auto startPos = instr.opcode == IR::Opcode::bind_elements_post ? 0 : structDef->fieldTypes.size() - instr.operands[0].value.symbolIndex;
+                auto startPos = instr.opcode == IR::Opcode::bind_fields_post ? 0 : structDef->fieldTypes.size() - instr.operands[0].value.symbolIndex;
                 for (yoi::indexT memberIndex = startPos; memberIndex < startPos + instr.operands[0].value.symbolIndex; memberIndex++) {
                     auto llvmMemberIndex = memberIndex + 2; // +2 to skip gc_refcount header and type index
 

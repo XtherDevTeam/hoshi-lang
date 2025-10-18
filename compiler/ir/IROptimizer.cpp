@@ -1414,7 +1414,7 @@ namespace yoi {
                     // we can't optimize it
                     auto value = simulationStack.peek(1);
                     auto type = simulationStack.peek(0).type->typeIndex;
-                    auto structDef = irModule->structTable[type];
+                    auto structDef = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->structTable[type];
                     auto memberIndex = ins.operands[0].value.symbolIndex;
                     auto memberDef = structDef->fieldTypes[memberIndex];
 
@@ -3640,7 +3640,7 @@ namespace yoi {
                 // we can't optimize it
                 auto value = simulationStack.peek(1);
                 auto type = simulationStack.peek(0).type->typeIndex;
-                auto structDef = irModule->structTable[type];
+                auto structDef = compilerCtx->getImportedModule(simulationStack.peek(0).type->typeAffiliateModule)->structTable[type];
                 auto memberIndex = ins.operands[0].value.symbolIndex;
                 auto memberDef = structDef->fieldTypes[memberIndex];
 
