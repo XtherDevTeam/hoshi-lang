@@ -633,7 +633,7 @@ namespace yoi {
                     llvm::dwarf::DW_LANG_C,
                     DBuilder->createFile(sourceFile.filename().string(), sourceFile.parent_path().string()),
                     "hoshi-lang",
-                    compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release,
+                    false,
                     "",
                     0
                 );

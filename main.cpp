@@ -37,7 +37,7 @@ std::string getOutputExtension(yoi::IRBuildConfig::BuildType type,
 void printUsage(const char* programName) {
     std::cerr << "hoshi-lang compiler\n";
     std::cout << "Made with love by Jerry Chou (This project is licensed under the MIT license.)\n";
-    std::cerr << "Usage: " << programName << " [options] <input_file>\n"
+    std::cerr << "Usage: " << programName << " [options] <input_file> ...\n"
               << "Options:\n"
               << "  -o <path>, --output <path>      Set output file path (e.g., build/my_app).\n"
               << "                                  If <path> is a directory (ends with / or \\), input filename is used.\n"
@@ -49,7 +49,7 @@ void printUsage(const char* programName) {
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
               << "                                  Default: do not preserve intermediate files.\n"
               << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
-              << "  -D <k> <v>, --define <k> <v>     Add a macro definition.\n"
+              << "  -D <k> <v>, --define <k> <v>    Add a macro definition.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
               << "  -h, --help                      Display this help message.\n";
 }
@@ -65,6 +65,7 @@ int main(int argc, const char **argv) {
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
+    yoi::vec<yoi::wstr> additionalLinkingFiles;
     yoi::vec<std::pair<yoi::wstr, yoi::wstr>> macroDefs;
     bool preserveIntermediateFiles = false; 
 
@@ -145,10 +146,18 @@ int main(int argc, const char **argv) {
                 printUsage(argv[0]);
                 return 1;
             }
-        } else if (inputFile.empty()) { 
-            inputFile = arg;
+        } else if (!arg.starts_with("-")) { 
+            if (arg.ends_with(".hoshi") && inputFile.empty())
+                inputFile = arg;
+            else if (arg.ends_with(".hoshi") && !inputFile.empty()) {
+                std::cerr << "Warning: Multiple input files specified: " << inputFile << " and " << arg << "\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+            else
+                additionalLinkingFiles.push_back(yoi::string2wstring(arg));
         } else {
-            std::cerr << "Error: Unknown argument or multiple input files specified: " << arg << "\n";
+            std::cerr << "Error: Unknown argument: " << arg << "\n";
             printUsage(argv[0]);
             return 1;
         }
@@ -235,6 +244,7 @@ int main(int argc, const char **argv) {
                                         .setMarco(L"arch", yoi::string2wstring(YOI_ARCH))
                                         .setMarco(L"hoshi_feature_version", yoi::string2wstring(HOSHI_LANG_VERSION))
                                         .setMarco(L"hoshi_lang_commit", yoi::string2wstring(HOSHI_LANG_GIT_COMMIT_HASH))
+                                        .setAdditionalLinkingFiles(additionalLinkingFiles)
                                         .yield());
 
         yoi::wstr input = yoi::string2wstring(inputFile);

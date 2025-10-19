@@ -56,6 +56,8 @@ namespace yoi {
 
             Builder &setMarco(const yoi::wstr &name, const yoi::wstr &value);
 
+            Builder &setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles);
+
             std::shared_ptr<IRBuildConfig> yield();
         };
     };

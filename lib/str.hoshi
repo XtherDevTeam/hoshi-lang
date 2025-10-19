@@ -32,6 +32,7 @@ struct Str {
     constructor(literal: string),
     constructor(arr: char[]),
     constructor(capacity: unsigned),
+    static from_c_str(c_str: unsigned) : Str,
     constructor(),
     static operator+(a: Str, b: Str) : Str,
     static operator+(a: Str, b: string) : Str,
@@ -388,6 +389,14 @@ impl Str {
     always_inline find(ch: char) : int {
         return this.find(ch, 0)
     },
+    static from_c_str(c_str: unsigned) : Str {
+        let length = runtime.strlen(c_str) as unsigned
+        let res = Str(length + 1u)
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(res.data), c_str, length)
+        res.length = length
+        res.data[length] = '\0'
+        return res
+    }
 }
 
 impl Str : lang.Hashable {

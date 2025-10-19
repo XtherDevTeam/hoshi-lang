@@ -1539,4 +1539,9 @@ namespace yoi {
     void IRValueType::eraseMetadata(const yoi::wstr &key) {
         metadata.erase(key);
     }
+    IRBuildConfig::Builder &
+    IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
+        this->additionalLinkingFiles = additionalLinkingFiles;
+        return *this;
+    }
 } // namespace yoi

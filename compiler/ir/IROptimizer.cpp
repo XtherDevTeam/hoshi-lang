@@ -2923,6 +2923,21 @@ namespace yoi {
                     simulationStack.push(elemType, {});
                     break;
                 }
+                case IR::Opcode::bind_elements_pred:
+                case IR::Opcode::bind_elements_post: {
+                    auto array = simulationStack.peek(0);
+                    auto element_type = managedPtr(array.type->getElementType());
+                    if (array.type->isBasicType() && (array.type->isArrayType() || array.type->isDynamicArrayType())) {
+                        element_type->addAttribute(IRValueType::ValueAttr::Raw);
+                    } else {
+                        element_type->removeAttribute(IRValueType::ValueAttr::Raw);
+                    }
+                    simulationStack.pop();
+                    for (auto i = 0; i < ins.operands[0].value.symbolIndex; ++i) {
+                        simulationStack.push(element_type, {});
+                    }
+                    break;
+                }
                 case IR::Opcode::store_element: {
                     simulationStack.pop(); // value
                     simulationStack.pop(); // index
