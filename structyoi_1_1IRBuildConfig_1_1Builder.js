@@ -2,6 +2,7 @@ var structyoi_1_1IRBuildConfig_1_1Builder =
 [
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac", null ],
     [ "addSearchPath", "structyoi_1_1IRBuildConfig_1_1Builder.html#a018974377dbe893144969b5a486fe294", null ],
+    [ "setAdditionalLinkingFiles", "structyoi_1_1IRBuildConfig_1_1Builder.html#a2a4187f64449346be1cd4481316418d3", null ],
     [ "setBuildArch", "structyoi_1_1IRBuildConfig_1_1Builder.html#a7b76e3dbe10d916d23e94cd6efc5b071", null ],
     [ "setBuildMode", "structyoi_1_1IRBuildConfig_1_1Builder.html#a46dfd232459c9f2ba98015cc3600efd7", null ],
     [ "setBuildPlatform", "structyoi_1_1IRBuildConfig_1_1Builder.html#a4ea47ccc7cc00d6c5fa7deb50382281d", null ],
