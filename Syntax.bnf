@@ -85,3 +85,4 @@ tryCatchStmt ::= "try" codeBlock "catch" catchParam { "catch" catchParam } ( "fi
 throwStmt ::= "throw" rExpr
 marcoPair ::= identifier (">" | "<" | "==" | "!=" | "<=" | ">=") basicLiterals
 marcoDescriptor ::= "[[" [ {marcoPair "," } marcoPair ] "]]"
+enumTypeDefinition ::= "enum" identifier "{"  { identifier "," } identifier "}"

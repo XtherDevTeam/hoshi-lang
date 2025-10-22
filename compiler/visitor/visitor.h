@@ -392,6 +392,8 @@ namespace yoi {
          */
         std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForFunction(
             const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
+
+        std::shared_ptr<IRValueType> mapEnumTypeToBasicType(yoi::indexT targetModule, yoi::indexT targetEnumType);
     };
 
 } // namespace yoi

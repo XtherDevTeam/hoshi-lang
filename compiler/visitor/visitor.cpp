@@ -4413,4 +4413,18 @@ namespace yoi {
             }
         }
     }
+
+    std::shared_ptr<IRValueType> visitor::mapEnumTypeToBasicType(yoi::indexT targetModule, yoi::indexT targetEnumType) {
+        auto enumDef = moduleContext->getCompilerContext()->getImportedModule(targetModule)->enumerationTable[targetEnumType];
+        switch (enumDef->getUnderlyingType()) {
+            case IREnumerationType::UnderlyingType::I8:
+                return moduleContext->getCompilerContext()->getCharObjectType();
+            case IREnumerationType::UnderlyingType::I16:
+                return moduleContext->getCompilerContext()->getShortObjectType();
+            case IREnumerationType::UnderlyingType::I64:
+                return moduleContext->getCompilerContext()->getUnsignedObjectType();
+            default:
+                return nullptr;
+        }
+    }
 } // namespace yoi

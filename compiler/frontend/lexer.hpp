@@ -6,8 +6,6 @@
 #define HOSHI_LANG_LEXER_HPP
 
 #include <cstdint>
-#include <string>
-#include <list>
 #include <istream>
 #include <share/def.hpp>
 

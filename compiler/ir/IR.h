@@ -372,6 +372,33 @@ namespace yoi {
         std::shared_ptr<IRValueType> type;
     };
 
+    class IREnumerationType {
+        public:
+        enum class UnderlyingType : yoi::indexT {
+            I8,
+            I16,
+            I64
+        };
+        yoi::wstr name;
+        yoi::indexTable<yoi::wstr, yoi::indexT> valueToIndexMap;
+
+        IREnumerationType(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap);
+
+        UnderlyingType getUnderlyingType() const;
+
+        class Builder {
+            yoi::wstr name;
+            yoi::indexTable<yoi::wstr, yoi::indexT> valueToIndexMap;
+            public:
+            
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &addValue(const yoi::wstr &valueName, yoi::indexT valueIndex);
+        };
+    };
+
     class IRCodeBlock {
         yoi::vec<IR> codeBlock;
 
@@ -733,6 +760,7 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRExternEntry>> externTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IREnumerationType>> enumerationTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceDefinition>> interfaceTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
 

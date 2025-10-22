@@ -1539,9 +1539,34 @@ namespace yoi {
     void IRValueType::eraseMetadata(const yoi::wstr &key) {
         metadata.erase(key);
     }
+
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
         this->additionalLinkingFiles = additionalLinkingFiles;
+        return *this;
+    }
+
+    IREnumerationType::IREnumerationType(const yoi::wstr &name,
+                                         const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap)
+        : name(name), valueToIndexMap(valueToIndexMap) {}
+
+    IREnumerationType::UnderlyingType IREnumerationType::getUnderlyingType() const {
+        if (valueToIndexMap.size() <= 256)
+            return UnderlyingType::I8;
+        else if (valueToIndexMap.size() <= 65536)
+            return UnderlyingType::I16;
+        else
+            return UnderlyingType::I64;
+    }
+
+    IREnumerationType::Builder &IREnumerationType::Builder::setName(const yoi::wstr &name) {
+        this->name = name;
+        return *this;
+    }
+    
+    IREnumerationType::Builder &IREnumerationType::Builder::addValue(const yoi::wstr &valueName,
+                                                                     yoi::indexT valueIndex) {
+        this->valueToIndexMap.put_create(valueName, valueIndex);
         return *this;
     }
 } // namespace yoi

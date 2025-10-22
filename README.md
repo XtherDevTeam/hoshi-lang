@@ -8,6 +8,8 @@ Hoshi-lang is a statically-typed, general-purpose programming language with a fo
 
 This project is currently under active development and is a personal exploration into language design and implementation.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/XtherDevTeam/hoshi-lang)
+
 ## Features
 
 *   **Object-Oriented:** Hoshi-lang's OOP is based on a composition model using `interface`, `struct`, and `impl`.
