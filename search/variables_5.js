@@ -10,9 +10,10 @@ var searchData=
   ['entrymoduleindex_7',['entrymoduleindex',['../structyoi_1_1CallGraph.html#a900ed3566d0c2f44b4c53d4d00466ce4',1,'yoi::CallGraph::entryModuleIndex'],['../classyoi_1_1IROptimizer.html#a900ed3566d0c2f44b4c53d4d00466ce4',1,'yoi::IROptimizer::entryModuleIndex']]],
   ['entrypoints_8',['entryPoints',['../structyoi_1_1CallGraph.html#a98e832ffe5f1854d5f251593454274da',1,'yoi::CallGraph']]],
   ['enum_5fname_5fv_9',['enum_name_v',['../namespacemagic__enum_1_1detail.html#ac81bf63e9714ebae6454cdf3a3926495',1,'magic_enum::detail']]],
-  ['err_10',['err',['../structYoiResultUnsignedAndIntObject.html#a80fc0bdc03294a89c857602fdacacef4',1,'YoiResultUnsignedAndIntObject']]],
-  ['exportdeclval_11',['exportDeclVal',['../unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870',1,'yoi::globalStmt::vValue']]],
-  ['exportedfunctiontable_12',['exportedFunctionTable',['../classyoi_1_1IRFFITable.html#a1cb90e31a0bf85e58ad69f490d957a4a',1,'yoi::IRFFITable']]],
-  ['expr_13',['expr',['../classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::subscript::expr'],['../classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::primary::expr'],['../classyoi_1_1rExpr.html#a2ab242b67d815840a79da4b9974b6d32',1,'yoi::rExpr::expr'],['../classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::throwStmt::expr'],['../classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::typeIdExpression::expr'],['../classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::dynCastExpression::expr']]],
-  ['externtable_14',['externTable',['../classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d',1,'yoi::IRModule']]]
+  ['enumerationtable_10',['enumerationTable',['../classyoi_1_1IRModule.html#ae124aa6c0bc800d5f654173ea226da88',1,'yoi::IRModule']]],
+  ['err_11',['err',['../structYoiResultUnsignedAndIntObject.html#a80fc0bdc03294a89c857602fdacacef4',1,'YoiResultUnsignedAndIntObject']]],
+  ['exportdeclval_12',['exportDeclVal',['../unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870',1,'yoi::globalStmt::vValue']]],
+  ['exportedfunctiontable_13',['exportedFunctionTable',['../classyoi_1_1IRFFITable.html#a1cb90e31a0bf85e58ad69f490d957a4a',1,'yoi::IRFFITable']]],
+  ['expr_14',['expr',['../classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::subscript::expr'],['../classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::primary::expr'],['../classyoi_1_1rExpr.html#a2ab242b67d815840a79da4b9974b6d32',1,'yoi::rExpr::expr'],['../classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::throwStmt::expr'],['../classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::typeIdExpression::expr'],['../classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742',1,'yoi::dynCastExpression::expr']]],
+  ['externtable_15',['externTable',['../classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d',1,'yoi::IRModule']]]
 ];

@@ -30,6 +30,7 @@ var classyoi_1_1visitor =
     [ "isModuleName", "classyoi_1_1visitor.html#aaacfc67ef4909f5b8f25c1de64dd4b47", null ],
     [ "isModuleName", "classyoi_1_1visitor.html#a4cb995408a6223a44a4b61615a0f8096", null ],
     [ "isVisitingGlobalScope", "classyoi_1_1visitor.html#ac41639181d1520878a6d570857357f8b", null ],
+    [ "mapEnumTypeToBasicType", "classyoi_1_1visitor.html#a1e2d350e0df8fbcb14f98644d9748564", null ],
     [ "parseIdentifierWithTemplateArg", "classyoi_1_1visitor.html#a62208463a8834842051c36a26e871333", null ],
     [ "parseInterfaceName", "classyoi_1_1visitor.html#a9285608858efe130c2c2763dd44f00e2", null ],
     [ "parseTemplateArgs", "classyoi_1_1visitor.html#ad6807ec6ab93684265bf04534419d391", null ],

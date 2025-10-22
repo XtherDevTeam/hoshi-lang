@@ -61,6 +61,7 @@ var namespaceyoi =
     [ "IRBuilder", "classyoi_1_1IRBuilder.html", "classyoi_1_1IRBuilder" ],
     [ "IRCodeBlock", "classyoi_1_1IRCodeBlock.html", "classyoi_1_1IRCodeBlock" ],
     [ "IRDebugInfo", "structyoi_1_1IRDebugInfo.html", "structyoi_1_1IRDebugInfo" ],
+    [ "IREnumerationType", "classyoi_1_1IREnumerationType.html", "classyoi_1_1IREnumerationType" ],
     [ "IRExternEntry", "classyoi_1_1IRExternEntry.html", "classyoi_1_1IRExternEntry" ],
     [ "IRFFITable", "classyoi_1_1IRFFITable.html", "classyoi_1_1IRFFITable" ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html", "classyoi_1_1IRFunctionDefinition" ],
