@@ -3,6 +3,7 @@ var IR_8h =
     [ "IRBuildConfig", "structyoi_1_1IRBuildConfig.html", "structyoi_1_1IRBuildConfig" ],
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html", "structyoi_1_1IRBuildConfig_1_1Builder" ],
     [ "IRDebugInfo", "structyoi_1_1IRDebugInfo.html", "structyoi_1_1IRDebugInfo" ],
+    [ "IRMetadata", "structyoi_1_1IRMetadata.html", "structyoi_1_1IRMetadata" ],
     [ "IRValueType", "classyoi_1_1IRValueType.html", "classyoi_1_1IRValueType" ],
     [ "IROperand", "classyoi_1_1IROperand.html", "classyoi_1_1IROperand" ],
     [ "operandValue", "unionyoi_1_1IROperand_1_1operandValue.html", "unionyoi_1_1IROperand_1_1operandValue" ],

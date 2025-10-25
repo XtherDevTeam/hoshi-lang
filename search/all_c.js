@@ -37,7 +37,7 @@ var searchData=
   ['discardstateuntil_34',['discardStateUntil',['../classyoi_1_1IRBuilder.html#a769ee7597972c1a34ef63332018311b8',1,'yoi::IRBuilder']]],
   ['div_35',['div',['../classyoi_1_1IRFunctionOptimizer.html#a357777ddce050ef6bbbf79cfafc29acd',1,'yoi::IRFunctionOptimizer::div()'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a',1,'yoi::IR::div']]],
   ['divisionassignment_36',['divisionAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a95da522d005dab6fff2c0e2f6d1ce400',1,'yoi::lexer::token']]],
-  ['documentation_37',['Documentation',['../index.html#autotoc_md164',1,'']]],
+  ['documentation_37',['Documentation',['../index.html#autotoc_md165',1,'']]],
   ['dooptimizationforcurrentfunction_38',['doOptimizationForCurrentFunction',['../classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c',1,'yoi::IRFunctionOptimizer']]],
   ['dot_39',['dot',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a69eb76c88557a8211cbfc9beda5fc062',1,'yoi::lexer::token']]],
   ['dotstart_40',['dotStart',['../classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6',1,'yoi::lexer']]],

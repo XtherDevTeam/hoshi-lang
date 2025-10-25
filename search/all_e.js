@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['features_0',['Features',['../index.html#autotoc_md150',1,'']]],
+  ['features_0',['Features',['../index.html#autotoc_md151',1,'']]],
   ['ffi_20的必经之路_1',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]],
   ['fib_2',['fib',['../fib_8cpp.html#a6c43e13f61021e249874b6a7abbf9fa4',1,'fib.cpp']]],
   ['fib_2ecpp_3',['fib.cpp',['../fib_8cpp.html',1,'']]],
@@ -14,7 +14,7 @@ var searchData=
   ['finalizeast_5fvec_11',['finalizeAST_vec',['../namespaceyoi.html#ae8f13fcf89f8c2aab98a389953ee95f2',1,'yoi']]],
   ['finalized_12',['Finalized',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a65457a3fa7904cfb30c890a602332205',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
   ['finalizenode_13',['finalizeNode',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a4e6642764fa367ea8ba3448d573da8ee',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
-  ['finalizer_14',['finalizer',['../classyoi_1_1structDefInnerPair.html#ac7fd0d057faa8aae6bbd922474c7b6e1',1,'yoi::structDefInnerPair::finalizer'],['../classyoi_1_1implInnerPair.html#a39cd50860dcd616b8b933ad301d6f48e',1,'yoi::implInnerPair::finalizer'],['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb',1,'yoi::IRFunctionDefinition::Finalizer']]],
+  ['finalizer_14',['finalizer',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb',1,'yoi::IRFunctionDefinition::Finalizer'],['../classyoi_1_1structDefInnerPair.html#ac7fd0d057faa8aae6bbd922474c7b6e1',1,'yoi::structDefInnerPair::finalizer'],['../classyoi_1_1implInnerPair.html#a39cd50860dcd616b8b933ad301d6f48e',1,'yoi::implInnerPair::finalizer']]],
   ['finalizerdecl_15',['finalizerDecl',['../classyoi_1_1finalizerDecl.html',1,'yoi']]],
   ['finalizerdef_16',['finalizerDef',['../classyoi_1_1finalizerDef.html',1,'yoi']]],
   ['finalizers_20in_20hoshi_20lang_17',['Finalizers in Hoshi-lang',['../md_docs_2Finalizers.html',1,'']]],

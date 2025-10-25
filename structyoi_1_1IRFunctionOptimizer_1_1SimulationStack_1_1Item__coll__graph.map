@@ -1,7 +1,9 @@
 <map id="IRFunctionOptimizer::SimulationStack::Item" name="IRFunctionOptimizer::SimulationStack::Item">
-<area shape="rect" id="Node000001" title=" " alt="" coords="61,93,235,133"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="103,93,278,133"/>
 <area shape="rect" id="Node000002" href="$unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html" title=" " alt="" coords="5,5,117,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,39,132,91,128,95,79,42"/>
-<area shape="rect" id="Node000003" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html" title=" " alt="" coords="142,5,330,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="227,44,209,71,180,95,177,91,205,68,223,41"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,42,92,67,131,91,128,95,89,71,69,45"/>
+<area shape="rect" id="Node000003" href="$structyoi_1_1IRMetadata.html" title=" " alt="" coords="142,5,239,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,44,193,93,188,93,188,44"/>
+<area shape="rect" id="Node000004" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html" title=" " alt="" coords="263,5,451,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="326,40,226,95,223,91,324,35"/>
 </map>

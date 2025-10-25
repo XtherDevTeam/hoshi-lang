@@ -18,12 +18,13 @@ var searchData=
   ['addvirtualmethod_15',['addVirtualMethod',['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a99714b4c55b630851c80e2ee9d57ad8d',1,'yoi::IRInterfaceImplementationDefinition::Builder']]],
   ['alphastart_16',['alphaStart',['../classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc',1,'yoi::lexer']]],
   ['analyzeblock_17',['analyzeBlock',['../classyoi_1_1IRFunctionOptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7',1,'yoi::IRFunctionOptimizer']]],
-  ['analyzeblockfornullable_18',['analyzeBlockForNullable',['../classyoi_1_1IRFunctionOptimizer.html#a8ec09a5063d01d557b49c3201c43c092',1,'yoi::IRFunctionOptimizer']]],
-  ['analyzeblockforraw_19',['analyzeBlockForRaw',['../classyoi_1_1IRFunctionOptimizer.html#a53fe25b9377f6dad0f0399c47a222993',1,'yoi::IRFunctionOptimizer']]],
-  ['andstart_20',['andStart',['../classyoi_1_1lexer.html#a3470a39cb02cb8b1f41fd1c4fe58a707',1,'yoi::lexer']]],
-  ['argument_21',['argument',['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#afd063a6e96586bad9db2a565db39a29d',1,'yoi::IRTemplateBuilder::Argument::Argument(const std::shared_ptr&lt; IRValueType &gt; &amp;templateType, const std::pair&lt; yoi::indexT, yoi::indexT &gt; &amp;interfaceType)'],['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#acb0175c7def3712fbd3be6b83894b2ef',1,'yoi::IRTemplateBuilder::Argument::Argument(const std::shared_ptr&lt; IRValueType &gt; &amp;templateType)']]],
-  ['arithmeticop_22',['arithmeticOp',['../classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377',1,'yoi::IRBuilder']]],
-  ['arraylengthop_23',['arrayLengthOp',['../classyoi_1_1IRBuilder.html#a9ff21cff0357fc8a642e10b87b01e67e',1,'yoi::IRBuilder']]],
-  ['ast_24',['ast',['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()'],['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST(lexer::token token)']]],
-  ['asteriskstart_25',['asteriskStart',['../classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417',1,'yoi::lexer']]]
+  ['analyzeblockforinterfaceallocationreduction_18',['analyzeBlockForInterfaceAllocationReduction',['../classyoi_1_1IRFunctionOptimizer.html#aa2e34fd93019931f139a04029ee7d882',1,'yoi::IRFunctionOptimizer']]],
+  ['analyzeblockfornullable_19',['analyzeBlockForNullable',['../classyoi_1_1IRFunctionOptimizer.html#a8ec09a5063d01d557b49c3201c43c092',1,'yoi::IRFunctionOptimizer']]],
+  ['analyzeblockforraw_20',['analyzeBlockForRaw',['../classyoi_1_1IRFunctionOptimizer.html#a53fe25b9377f6dad0f0399c47a222993',1,'yoi::IRFunctionOptimizer']]],
+  ['andstart_21',['andStart',['../classyoi_1_1lexer.html#a3470a39cb02cb8b1f41fd1c4fe58a707',1,'yoi::lexer']]],
+  ['argument_22',['argument',['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#afd063a6e96586bad9db2a565db39a29d',1,'yoi::IRTemplateBuilder::Argument::Argument(const std::shared_ptr&lt; IRValueType &gt; &amp;templateType, const std::pair&lt; yoi::indexT, yoi::indexT &gt; &amp;interfaceType)'],['../structyoi_1_1IRTemplateBuilder_1_1Argument.html#acb0175c7def3712fbd3be6b83894b2ef',1,'yoi::IRTemplateBuilder::Argument::Argument(const std::shared_ptr&lt; IRValueType &gt; &amp;templateType)']]],
+  ['arithmeticop_23',['arithmeticOp',['../classyoi_1_1IRBuilder.html#aea11563c39f02f141c5a617930042377',1,'yoi::IRBuilder']]],
+  ['arraylengthop_24',['arrayLengthOp',['../classyoi_1_1IRBuilder.html#a9ff21cff0357fc8a642e10b87b01e67e',1,'yoi::IRBuilder']]],
+  ['ast_25',['ast',['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()'],['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST(lexer::token token)']]],
+  ['asteriskstart_26',['asteriskStart',['../classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417',1,'yoi::lexer']]]
 ];

@@ -5,10 +5,11 @@ var searchData=
   ['manglename_2',['mangleName',['../classyoi_1_1IRLinker.html#a55ae202968e470ba3dbcf58c9ea91fba',1,'yoi::IRLinker']]],
   ['mapenumtypetobasictype_3',['mapEnumTypeToBasicType',['../classyoi_1_1visitor.html#a1e2d350e0df8fbcb14f98644d9748564',1,'yoi::visitor']]],
   ['mergestates_4',['mergeStates',['../namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b',1,'yoi']]],
-  ['mergestatesfornullable_5',['mergeStatesForNullable',['../classyoi_1_1IRFunctionOptimizer.html#ab76118251ae1334e527dd712be8a0178',1,'yoi::IRFunctionOptimizer']]],
-  ['mergestatesforraw_6',['mergeStatesForRaw',['../classyoi_1_1IRFunctionOptimizer.html#a732ef2ba483c732f0b6d0f5d22447925',1,'yoi::IRFunctionOptimizer']]],
-  ['minusstart_7',['minusStart',['../classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1',1,'yoi::lexer']]],
-  ['mod_8',['mod',['../classyoi_1_1IRFunctionOptimizer.html#a870501eab1acb81ee141ef27d6c7bb39',1,'yoi::IRFunctionOptimizer']]],
-  ['modulecontext_9',['moduleContext',['../classyoi_1_1moduleContext.html#aef836205cda58b0b2eb84c5a29ce5245',1,'yoi::moduleContext']]],
-  ['mul_10',['mul',['../classyoi_1_1IRFunctionOptimizer.html#a4fcdca49c0bbb4fa4180991a7efae7ce',1,'yoi::IRFunctionOptimizer']]]
+  ['mergestatesforinterfaceallocationreduction_5',['mergeStatesForInterfaceAllocationReduction',['../classyoi_1_1IRFunctionOptimizer.html#a0e32d62823f12be25cf48ca63e03a5a5',1,'yoi::IRFunctionOptimizer']]],
+  ['mergestatesfornullable_6',['mergeStatesForNullable',['../classyoi_1_1IRFunctionOptimizer.html#ab76118251ae1334e527dd712be8a0178',1,'yoi::IRFunctionOptimizer']]],
+  ['mergestatesforraw_7',['mergeStatesForRaw',['../classyoi_1_1IRFunctionOptimizer.html#a732ef2ba483c732f0b6d0f5d22447925',1,'yoi::IRFunctionOptimizer']]],
+  ['minusstart_8',['minusStart',['../classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1',1,'yoi::lexer']]],
+  ['mod_9',['mod',['../classyoi_1_1IRFunctionOptimizer.html#a870501eab1acb81ee141ef27d6c7bb39',1,'yoi::IRFunctionOptimizer']]],
+  ['modulecontext_10',['moduleContext',['../classyoi_1_1moduleContext.html#aef836205cda58b0b2eb84c5a29ce5245',1,'yoi::moduleContext']]],
+  ['mul_11',['mul',['../classyoi_1_1IRFunctionOptimizer.html#a4fcdca49c0bbb4fa4180991a7efae7ce',1,'yoi::IRFunctionOptimizer']]]
 ];

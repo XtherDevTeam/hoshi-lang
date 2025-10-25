@@ -22,7 +22,7 @@ var searchData=
   ['yoistringobject_19',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
   ['yoithreadhandle_20',['YoiThreadHandle',['../threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945',1,'threading.h']]],
   ['yoithreadid_21',['YoiThreadId',['../threading_8h.html#a0db2b7eb0adaec040feb25f24687304a',1,'threading.h']]],
-  ['yoitype_22',['yoitype',['../structyoi_1_1LLVMCodegen_1_1StackValuePhi.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValuePhi::yoiType'],['../structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValue::yoiType']]],
+  ['yoitype_22',['yoiType',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValue']]],
   ['yoitypeinfo_23',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
   ['yoitypeinfoobject_24',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
   ['yoitypetollvmtype_25',['yoiTypeToLLVMType',['../classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242',1,'yoi::LLVMCodegen']]],

@@ -31,7 +31,7 @@ var searchData=
   ['klet_28',['kLet',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af8fdca8637b6b0964d5c47c7df466c14',1,'yoi::lexer::token']]],
   ['knew_29',['kNew',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aaf1adf7ec3673b4f5765cfbc5d43b7dc',1,'yoi::lexer::token']]],
   ['knoffi_30',['kNoFFI',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb',1,'yoi::lexer::token']]],
-  ['known_20issues_31',['Known issues',['../md_TODO.html#autotoc_md167',1,'']]],
+  ['known_20issues_31',['Known issues',['../md_TODO.html#autotoc_md168',1,'']]],
   ['knull_32',['kNull',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af2655c2dee87cb9b0646f678a630394b',1,'yoi::lexer::token']]],
   ['kreturn_33',['kReturn',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad7ec42086e89c1b1ffe3a16edfc12ef3',1,'yoi::lexer::token']]],
   ['kstatic_34',['kStatic',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aeb9af1ba35d0a6f48fd1e6218a4d82c9',1,'yoi::lexer::token']]],

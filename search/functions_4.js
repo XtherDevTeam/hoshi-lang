@@ -23,6 +23,6 @@ var searchData=
   ['enum_5fvalues_20',['enum_values',['../namespacemagic__enum.html#aa1f3704d1aefe4f7c76167f0e8e7a99d',1,'magic_enum']]],
   ['equal_21',['equal',['../classyoi_1_1IRFunctionOptimizer.html#a339d3a0aa61e74ba354ced6bd8725bd0',1,'yoi::IRFunctionOptimizer']]],
   ['equalstart_22',['equalStart',['../classyoi_1_1lexer.html#a1286bad3868e3bb8c18bb74c945261f1',1,'yoi::lexer']]],
-  ['erasemetadata_23',['eraseMetadata',['../classyoi_1_1IRValueType.html#ae259406c4e9c7204bd32658ee2a18e64',1,'yoi::IRValueType']]],
+  ['erasemetadata_23',['eraseMetadata',['../structyoi_1_1IRMetadata.html#ae259406c4e9c7204bd32658ee2a18e64',1,'yoi::IRMetadata']]],
   ['evaluatearguments_24',['evaluateArguments',['../classyoi_1_1visitor.html#ad511cff294f219693d6afa94a4a1175e',1,'yoi::visitor']]]
 ];

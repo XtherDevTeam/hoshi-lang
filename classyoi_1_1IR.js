@@ -58,7 +58,6 @@ var classyoi_1_1IR =
       [ "new_struct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb", null ],
       [ "construct_interface_impl", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b", null ],
       [ "invoke_virtual", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3", null ],
-      [ "invoke_virtual_1", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7c59ff558927bb091ec58b0c872f1de5", null ],
       [ "invoke_imported", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1", null ],
       [ "invoke_dangling", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db", null ],
       [ "store_element", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34", null ],

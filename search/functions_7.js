@@ -11,7 +11,7 @@ var searchData=
   ['hasattribute_8',['hasattribute',['../classyoi_1_1IRValueType.html#ab9ed59507a002d0405a956b171000c15',1,'yoi::IRValueType::hasAttribute()'],['../classyoi_1_1IRFunctionDefinition.html#ae11ef1d0fd94f0034aa77d1664e2006f',1,'yoi::IRFunctionDefinition::hasAttribute()']]],
   ['hasdeftemplatearg_9',['hasDefTemplateArg',['../classyoi_1_1identifierWithDefTemplateArg.html#a7ae4ac7918adf5becb96d2ec1d1d5d53',1,'yoi::identifierWithDefTemplateArg']]],
   ['haselseblock_10',['hasElseBlock',['../classyoi_1_1ifStmt.html#af044ddfd3b04e1d353afb1eb898de444',1,'yoi::ifStmt']]],
-  ['hasmetadata_11',['hasMetadata',['../classyoi_1_1IRValueType.html#ae80267add764084de522688dd0f9d1fe',1,'yoi::IRValueType']]],
+  ['hasmetadata_11',['hasMetadata',['../structyoi_1_1IRMetadata.html#ae80267add764084de522688dd0f9d1fe',1,'yoi::IRMetadata']]],
   ['hasrhs_12',['hasRhs',['../classyoi_1_1leftExpr.html#ad78175f2a69f24b1f0edeba47e9a0ce0',1,'yoi::leftExpr']]],
   ['hastemplatearg_13',['hasTemplateArg',['../classyoi_1_1identifierWithTemplateArg.html#a8fb23ad11b15966c30a23bafa5575453',1,'yoi::identifierWithTemplateArg']]],
   ['hasterminated_14',['hasTerminated',['../classyoi_1_1IRBuilder.html#a09af64578d379fd7719ae0f8ebac8bbf',1,'yoi::IRBuilder']]],

@@ -18,7 +18,7 @@ var searchData=
   ['hashmap_20in_20hoshi_20lang_15',['HashMap in Hoshi-lang',['../md_docs_2HashMap.html',1,'']]],
   ['hashmap_20k_20v_20tt_20struct_16',['&lt;tt&gt;HashMap&lt;K, V&gt;&lt;/tt&gt; Struct',['../md_docs_2HashMap.html#autotoc_md35',1,'']]],
   ['hashmap_2emd_17',['HashMap.md',['../HashMap_8md.html',1,'']]],
-  ['hasmetadata_18',['hasMetadata',['../classyoi_1_1IRValueType.html#ae80267add764084de522688dd0f9d1fe',1,'yoi::IRValueType']]],
+  ['hasmetadata_18',['hasMetadata',['../structyoi_1_1IRMetadata.html#ae80267add764084de522688dd0f9d1fe',1,'yoi::IRMetadata']]],
   ['haspossiblevalue_19',['haspossiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::hasPossibleValue']]],
   ['hasrhs_20',['hasRhs',['../classyoi_1_1leftExpr.html#ad78175f2a69f24b1f0edeba47e9a0ce0',1,'yoi::leftExpr']]],
   ['hastemplatearg_21',['hasTemplateArg',['../classyoi_1_1identifierWithTemplateArg.html#a8fb23ad11b15966c30a23bafa5575453',1,'yoi::identifierWithTemplateArg']]],

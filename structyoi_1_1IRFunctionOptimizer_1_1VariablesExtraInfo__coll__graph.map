@@ -1,9 +1,11 @@
 <map id="IRFunctionOptimizer::VariablesExtraInfo" name="IRFunctionOptimizer::VariablesExtraInfo">
-<area shape="rect" id="Node000001" title=" " alt="" coords="71,181,225,221"/>
-<area shape="rect" id="Node000002" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html" title=" " alt="" coords="122,93,174,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,132,151,181,145,181,145,132"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="113,181,268,221"/>
+<area shape="rect" id="Node000002" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html" title=" " alt="" coords="165,93,217,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,132,193,181,188,181,188,132"/>
 <area shape="rect" id="Node000003" href="$unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html" title=" " alt="" coords="5,5,117,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,39,114,67,138,91,134,95,110,71,81,42"/>
-<area shape="rect" id="Node000004" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html" title=" " alt="" coords="142,5,330,31"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="228,44,209,71,174,96,171,91,205,67,223,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,42,92,67,128,87,165,98,164,103,126,92,89,71,69,45"/>
+<area shape="rect" id="Node000004" href="$structyoi_1_1IRMetadata.html" title=" " alt="" coords="142,5,239,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="193,45,193,93,188,93,188,45"/>
+<area shape="rect" id="Node000005" href="$structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html" title=" " alt="" coords="263,5,451,31"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="326,40,265,72,216,96,214,91,263,67,323,35"/>
 </map>

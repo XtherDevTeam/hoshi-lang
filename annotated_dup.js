@@ -105,6 +105,7 @@ var annotated_dup =
       [ "IRInterfaceInstanceDefinition", "classyoi_1_1IRInterfaceInstanceDefinition.html", "classyoi_1_1IRInterfaceInstanceDefinition" ],
       [ "IRInterfaceInstanceTemplate", "classyoi_1_1IRInterfaceInstanceTemplate.html", "classyoi_1_1IRInterfaceInstanceTemplate" ],
       [ "IRLinker", "classyoi_1_1IRLinker.html", "classyoi_1_1IRLinker" ],
+      [ "IRMetadata", "structyoi_1_1IRMetadata.html", "structyoi_1_1IRMetadata" ],
       [ "IRModule", "classyoi_1_1IRModule.html", "classyoi_1_1IRModule" ],
       [ "IRObjectFile", "classyoi_1_1IRObjectFile.html", "classyoi_1_1IRObjectFile" ],
       [ "IROperand", "classyoi_1_1IROperand.html", "classyoi_1_1IROperand" ],

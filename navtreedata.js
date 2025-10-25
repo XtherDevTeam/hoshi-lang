@@ -192,31 +192,32 @@ var NAVTREE =
       [ "Struct Templates", "md_docs_2Template.html#autotoc_md127", null ],
       [ "Interface Templates", "md_docs_2Template.html#autotoc_md128", null ]
     ] ],
+    [ "The Optimization Strategy of Interface Allocation and Virtual Invocation Reduction 接口分配和虚函数调用消除优化策略", "md_docs_2The_01Optimization_01Strategy_01of_01Interface_01Allocation_01and_01Virtual_01Invocation_01Reduction.html", null ],
     [ "Threading in Hoshi-lang", "md_docs_2Threading.html", [
-      [ "<tt>Thread</tt> Struct", "md_docs_2Threading.html#autotoc_md130", [
-        [ "Methods", "md_docs_2Threading.html#autotoc_md131", null ],
-        [ "Example", "md_docs_2Threading.html#autotoc_md132", null ]
+      [ "<tt>Thread</tt> Struct", "md_docs_2Threading.html#autotoc_md131", [
+        [ "Methods", "md_docs_2Threading.html#autotoc_md132", null ],
+        [ "Example", "md_docs_2Threading.html#autotoc_md133", null ]
       ] ],
-      [ "<tt>Mutex</tt> Struct", "md_docs_2Threading.html#autotoc_md133", [
-        [ "Methods", "md_docs_2Threading.html#autotoc_md134", null ],
-        [ "Example", "md_docs_2Threading.html#autotoc_md135", null ]
+      [ "<tt>Mutex</tt> Struct", "md_docs_2Threading.html#autotoc_md134", [
+        [ "Methods", "md_docs_2Threading.html#autotoc_md135", null ],
+        [ "Example", "md_docs_2Threading.html#autotoc_md136", null ]
       ] ],
-      [ "<tt>current_tid()</tt>", "md_docs_2Threading.html#autotoc_md136", null ]
+      [ "<tt>current_tid()</tt>", "md_docs_2Threading.html#autotoc_md137", null ]
     ] ],
     [ "Type Aliases in Hoshi-lang", "md_docs_2Type_01Aliases.html", [
-      [ "Syntax", "md_docs_2Type_01Aliases.html#autotoc_md138", null ],
-      [ "Example", "md_docs_2Type_01Aliases.html#autotoc_md139", null ]
+      [ "Syntax", "md_docs_2Type_01Aliases.html#autotoc_md139", null ],
+      [ "Example", "md_docs_2Type_01Aliases.html#autotoc_md140", null ]
     ] ],
     [ "Vector in Hoshi-lang", "md_docs_2Vector.html", [
-      [ "<tt>Vec<T></tt> Struct", "md_docs_2Vector.html#autotoc_md141", [
-        [ "Methods", "md_docs_2Vector.html#autotoc_md142", null ],
-        [ "Example", "md_docs_2Vector.html#autotoc_md143", null ]
+      [ "<tt>Vec<T></tt> Struct", "md_docs_2Vector.html#autotoc_md142", [
+        [ "Methods", "md_docs_2Vector.html#autotoc_md143", null ],
+        [ "Example", "md_docs_2Vector.html#autotoc_md144", null ]
       ] ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
-      [ "Known issues", "md_TODO.html#autotoc_md167", null ]
+      [ "Known issues", "md_TODO.html#autotoc_md168", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -260,24 +261,24 @@ var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
 "classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e",
-"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556",
-"classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a809f0d53d1c38ccf8fc891eebe7e2d94",
-"classyoi_1_1IRInterfaceInstanceTemplate.html#ac2821dbb7405311f25a5b578e8e2bef7",
-"classyoi_1_1IRValueType.html#a2351ecb8c77551226cb2c4bf95de4d04",
-"classyoi_1_1LLVMCodegen.html#a7c22d09e16a73bc730a519d4ff15d68a",
-"classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28",
-"classyoi_1_1globalStmt.html#ad38547a24d0bb38586a3e75ef26cb715",
-"classyoi_1_1indexTable_1_1iterator.html#a538d230f8b52d2bc0950e26ce74ec239",
-"classyoi_1_1logicalAndExpr.html#a67b76affb3b5d35fa419ac234144038b",
-"classyoi_1_1templateArg.html#a5ebe343390ac2cd9290ec04e824e2d3e",
-"classyoi_1_1visitor.html#ad6807ec6ab93684265bf04534419d391",
-"magic__enum_8h.html#a07f8012248e0629a203b62661ec6a860",
-"memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8",
-"namespaceyoi.html#a73fb6af8d16854aa326da0a7b0b2223c",
-"rtti_8cpp_source.html",
-"structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a161747ec4dc9f55f1760195593742232",
-"structyoi_1_1LLVMCodegen_1_1StackValue.html#a4aecd6896ac1b6503a4e0a19dec00928",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae392b68fd19c9cbab33708f39b821b7c"
+"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907",
+"classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ac1c425268e68385d1ab5074c17a94f14",
+"classyoi_1_1IRInterfaceInstanceDefinition.html#a7ba1180139ce7d7b69bc45f87eeb5621",
+"classyoi_1_1IRValueType.html#a0a8161a9919991b3b5d4199f96536c29",
+"classyoi_1_1LLVMCodegen.html#a7ffc2d88378f6a1270662c1be20f7db0",
+"classyoi_1_1compilerContext.html#aadfa1ff9bc52b3e274d10c0c929ea7fa",
+"classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1",
+"classyoi_1_1indexTable_1_1iterator.html#a605a99690a67b7400cce5943cb7868ab",
+"classyoi_1_1logicalAndExpr.html#a9e0cf23a22b6af67b8b52a65f27ef7a2",
+"classyoi_1_1templateArgSpec.html",
+"classyoi_1_1visitor.html#ad8cc77d97249d99c80f9d5194dc58135",
+"magic__enum_8h.html#a0e1cc9614698479a137e998ffc983447",
+"memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220",
+"namespaceyoi.html#a74b8801052181bccaf80f0c08e7f561e",
+"rtti_8h.html",
+"structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8",
+"structyoi_1_1IRTemplateBuilder_1_1Argument.html#a60960128d6c4567b98053924e484bc59",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ada78de4127377591c515888bad472367"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
