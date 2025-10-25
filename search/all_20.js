@@ -15,7 +15,7 @@ var searchData=
   ['yoidecimalobject_12',['YoiDecimalObject',['../structYoiDecimalObject.html',1,'']]],
   ['yoiintegerobject_13',['YoiIntegerObject',['../structYoiIntegerObject.html',1,'']]],
   ['yoimiya_5fentry_14',['yoimiya_entry',['../runtime_8h.html#a4519923e43680d275ec2169d1db1705f',1,'runtime.h']]],
-  ['yoimodule_15',['yoiModule',['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen']]],
+  ['yoimodule_15',['yoimodule',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::ValueStackWithPhi::yoiModule'],['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::yoiModule']]],
   ['yoiobject_16',['YoiObject',['../structYoiObject.html',1,'']]],
   ['yoiobjectarray_17',['YoiObjectArray',['../structYoiObjectArray.html',1,'']]],
   ['yoiresultunsignedandintobject_18',['YoiResultUnsignedAndIntObject',['../structYoiResultUnsignedAndIntObject.html',1,'']]],

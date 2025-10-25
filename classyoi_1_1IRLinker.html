@@ -124,6 +124,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a26d595530d9be8841f7525d1b5a790ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68d50e49807a0a7ccd2d3c034ff4ddb" id="r_ae68d50e49807a0a7ccd2d3c034ff4ddb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb">linkFunctions</a> ()</td></tr>
 <tr class="separator:ae68d50e49807a0a7ccd2d3c034ff4ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac80c633b34938139555e30aa01cc5d9a" id="r_ac80c633b34938139555e30aa01cc5d9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a">linkMetadata</a> ()</td></tr>
+<tr class="separator:ac80c633b34938139555e30aa01cc5d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa084af92b6186844440e11da2e2d4331" id="r_aa084af92b6186844440e11da2e2d4331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331">createEntryFunction</a> ()</td></tr>
 <tr class="separator:aa084af92b6186844440e11da2e2d4331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08eae306b69a73cd5042873766d8ae54" id="r_a08eae306b69a73cd5042873766d8ae54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54">patchIRFFITable</a> ()</td></tr>
@@ -211,11 +213,11 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00312">312</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00314">314</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343">IRBuildConfig::executable</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00040">IRLinker::globInitializerIndexes</a>, <a class="el" href="classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a157db7df530023575515d366c9b672e8">IROperand::integer</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01152">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -275,11 +277,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_aa084af92b6186844440e11da2e2d4331_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_aa084af92b6186844440e11da2e2d4331_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_aa084af92b6186844440e11da2e2d4331_icgraph" id="aclassyoi_1_1IRLinker_aa084af92b6186844440e11da2e2d4331_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,355,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,408,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,208,21,208,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -321,31 +326,33 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A shared pointer to the final <a class="el" href="classyoi_1_1IRObjectFile.html">IRObjectFile</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00015">15</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00016">16</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00031">IRLinker::entryModuleId</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00337">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00050">IRLinker::linkStringLiterals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00345">IRLinker::patchIRFFITable()</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8cpp_source.html#l00314">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00031">IRLinker::entryModuleId</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00339">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00389">IRLinker::linkMetadata()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00052">IRLinker::linkStringLiterals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00347">IRLinker::patchIRFFITable()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00057">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00389">IRLinker::linkMetadata()</a>, and <a class="el" href="main_8cpp_source.html#l00057">main()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_cgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_cgraph" id="aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_cgraph">
-<area shape="rect" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="5,674,52,699"/>
+<area shape="rect" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="5,723,52,749"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331" title=" " alt="" coords="131,277,283,302"/>
-<area shape="poly" title=" " alt="" coords="33,673,192,314,197,316,38,675"/>
+<area shape="poly" title=" " alt="" coords="33,722,193,314,198,316,38,724"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="153,575,261,601"/>
-<area shape="poly" title=" " alt="" coords="37,672,62,641,99,611,139,595,141,600,101,616,66,645,41,675"/>
+<area shape="poly" title=" " alt="" coords="31,722,53,668,72,637,98,611,118,600,139,592,141,597,120,605,102,615,77,641,58,671,36,724"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="160,674,255,699"/>
-<area shape="poly" title=" " alt="" coords="52,684,146,684,146,689,52,689"/>
+<area shape="poly" title=" " alt="" coords="52,725,99,709,146,697,147,702,101,715,53,730"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="100,773,315,798"/>
-<area shape="poly" title=" " alt="" coords="40,698,65,729,82,745,101,759,115,766,112,770,99,764,79,750,61,733,36,701"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e" title=" " alt="" coords="141,822,273,847"/>
-<area shape="poly" title=" " alt="" coords="36,699,57,753,76,783,102,809,129,823,127,827,98,813,72,786,53,755,31,701"/>
+<area shape="poly" title=" " alt="" coords="53,742,101,759,132,767,130,772,99,764,52,747"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="153,822,261,847"/>
+<area shape="poly" title=" " alt="" coords="36,747,61,785,80,805,101,820,140,835,139,840,99,825,76,809,57,788,32,750"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e" title=" " alt="" coords="141,871,273,897"/>
+<area shape="poly" title=" " alt="" coords="36,748,57,802,76,832,102,858,129,872,127,877,98,862,72,836,53,804,31,750"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="117,625,298,650"/>
-<area shape="poly" title=" " alt="" coords="52,676,99,660,135,651,136,656,101,665,53,681"/>
+<area shape="poly" title=" " alt="" coords="37,721,62,690,99,660,115,652,118,657,101,665,66,694,41,725"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54" title=" " alt="" coords="145,723,270,749"/>
-<area shape="poly" title=" " alt="" coords="53,693,101,709,132,718,131,723,99,715,52,698"/>
+<area shape="poly" title=" " alt="" coords="52,733,131,733,131,739,52,739"/>
 <area shape="rect" href="classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9" title=" " alt="" coords="363,5,554,45"/>
 <area shape="poly" title=" " alt="" coords="211,276,230,234,261,175,305,111,332,81,361,55,369,50,372,54,364,59,335,85,309,114,266,177,234,236,216,278"/>
 <area shape="rect" href="classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a" title="Invoke a function with the given arguments." alt="" coords="369,119,548,145"/>
@@ -404,6 +411,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="277,770,314,759,373,732,424,704,427,709,376,737,316,764,278,775"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a9f0f76ec5c871cfadc029767e4c2d822" title=" " alt="" coords="395,773,523,798"/>
 <area shape="poly" title=" " alt="" coords="315,783,381,783,381,788,315,788"/>
+<area shape="poly" title=" " alt="" coords="172,825,136,816,99,801,74,782,53,761,57,757,77,778,101,796,137,811,173,819"/>
 <area shape="poly" title=" " alt="" coords="298,635,390,635,390,640,298,640"/>
 <area shape="poly" title=" " alt="" coords="273,647,402,673,401,678,272,653"/>
 <area shape="poly" title=" " alt="" coords="270,721,401,695,402,700,271,726"/>
@@ -414,9 +422,12 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_icgraph" id="aclassyoi_1_1IRLinker_a85d12b46568af8240d98793975258055_icgraph">
-<area shape="rect" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -445,11 +456,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00147">147</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00149">149</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00040">IRLinker::globInitializerIndexes</a>, <a class="el" href="IRLinker_8cpp_source.html#l00040">IRLinker::mangleName()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00040">IRLinker::globInitializerIndexes</a>, <a class="el" href="IRLinker_8cpp_source.html#l00042">IRLinker::mangleName()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -471,11 +482,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_ae68d50e49807a0a7ccd2d3c034ff4ddb_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_ae68d50e49807a0a7ccd2d3c034ff4ddb_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_ae68d50e49807a0a7ccd2d3c034ff4ddb_icgraph" id="aclassyoi_1_1IRLinker_ae68d50e49807a0a7ccd2d3c034ff4ddb_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,311,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,364,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="243,21,208,21,208,15,243,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -504,11 +518,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00133">133</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00135">135</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00037">IRLinker::globalRemapping</a>, <a class="el" href="IRLinker_8cpp_source.html#l00040">IRLinker::mangleName()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00037">IRLinker::globalRemapping</a>, <a class="el" href="IRLinker_8cpp_source.html#l00042">IRLinker::mangleName()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -528,11 +542,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a26d595530d9be8841f7525d1b5a790ef_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a26d595530d9be8841f7525d1b5a790ef_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a26d595530d9be8841f7525d1b5a790ef_icgraph" id="aclassyoi_1_1IRLinker_a26d595530d9be8841f7525d1b5a790ef_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,297,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,351,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,208,21,208,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -561,11 +578,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00337">337</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00339">339</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00366">IRLinker::patchUniqueKey()</a>, and <a class="el" href="rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a4d16c68067bcf187f2e47023d469c194">virtualMethod</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00368">IRLinker::patchUniqueKey()</a>, and <a class="el" href="rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a4d16c68067bcf187f2e47023d469c194">virtualMethod</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -585,9 +602,142 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a20d7184f8379eb2520bf427b79d8fe96_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a20d7184f8379eb2520bf427b79d8fe96_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a20d7184f8379eb2520bf427b79d8fe96_icgraph" id="aclassyoi_1_1IRLinker_a20d7184f8379eb2520bf427b79d8fe96_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,417,31"/>
+<area shape="rect" title=" " alt="" coords="256,5,471,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,208,21,208,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac80c633b34938139555e30aa01cc5d9a" name="ac80c633b34938139555e30aa01cc5d9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac80c633b34938139555e30aa01cc5d9a">&#9670;&#160;</a></span>linkMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void linkMetadata </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00389">389</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00036">IRLinker::interfaceImplRemapping</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_cgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_cgraph" id="aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,674,113,699"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,674,208,699"/>
+<area shape="poly" title=" " alt="" coords="113,693,147,692,147,698,113,698"/>
+<area shape="poly" title=" " alt="" coords="161,682,127,680,127,675,161,677"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331" title=" " alt="" coords="287,277,439,302"/>
+<area shape="poly" title=" " alt="" coords="189,673,348,314,353,316,194,675"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="309,575,417,601"/>
+<area shape="poly" title=" " alt="" coords="193,672,218,641,255,611,295,595,297,600,257,616,222,645,197,675"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="316,674,411,699"/>
+<area shape="poly" title=" " alt="" coords="208,684,302,684,302,689,208,689"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="256,773,471,798"/>
+<area shape="poly" title=" " alt="" coords="196,698,221,729,238,745,257,759,271,766,268,770,255,764,235,750,217,733,192,701"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e" title=" " alt="" coords="297,822,429,847"/>
+<area shape="poly" title=" " alt="" coords="192,699,213,753,232,783,258,809,285,823,283,827,254,813,228,786,209,755,187,701"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="273,625,454,650"/>
+<area shape="poly" title=" " alt="" coords="208,676,255,660,291,651,292,656,257,665,209,681"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54" title=" " alt="" coords="301,723,426,749"/>
+<area shape="poly" title=" " alt="" coords="209,693,257,709,288,718,287,723,255,715,208,698"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9" title=" " alt="" coords="519,5,710,45"/>
+<area shape="poly" title=" " alt="" coords="367,276,386,234,417,175,461,111,488,81,517,55,525,50,528,54,520,59,491,85,465,114,422,177,390,236,372,278"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a" title="Invoke a function with the given arguments." alt="" coords="525,119,704,145"/>
+<area shape="poly" title=" " alt="" coords="374,274,432,217,472,184,517,155,536,147,538,152,520,160,476,188,435,221,378,278"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="823,214,908,239"/>
+<area shape="poly" title=" " alt="" coords="418,274,518,255,676,237,809,227,809,232,677,242,519,260,419,279"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a2c0487a0411af457d2a23859b8344375" title=" " alt="" coords="531,169,698,194"/>
+<area shape="poly" title=" " alt="" coords="387,274,446,244,518,211,558,196,560,201,520,216,448,249,389,279"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#afcf74078272d6268d94b8f6342b31ff5" title=" " alt="" coords="538,70,691,95"/>
+<area shape="poly" title=" " alt="" coords="369,275,390,241,423,194,466,146,517,104,529,98,531,103,520,109,470,149,427,198,395,243,374,278"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#a4de20261a97f2859d9463995d9b20e4a" title=" " alt="" coords="524,269,705,309"/>
+<area shape="poly" title=" " alt="" coords="440,287,510,287,510,292,440,292"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#a8e984024f844af1ac65e850174419871" title=" " alt="" coords="524,333,705,373"/>
+<area shape="poly" title=" " alt="" coords="415,300,523,327,521,332,414,305"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8" title=" " alt="" coords="524,397,705,437"/>
+<area shape="poly" title=" " alt="" coords="384,300,443,340,520,383,536,390,534,395,517,388,440,344,381,304"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a6e0ce7f9d1515206333d1e95104d9c82" title=" " alt="" coords="519,461,711,501"/>
+<area shape="poly" title=" " alt="" coords="376,300,431,370,473,411,520,447,531,453,528,458,517,452,470,415,428,373,371,304"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a58c8b2ad0ea491a6642e5e1cbd358c89" title=" " alt="" coords="540,526,689,551"/>
+<area shape="poly" title=" " alt="" coords="372,301,391,342,422,399,465,460,491,487,520,511,532,518,529,523,517,516,488,491,461,463,417,402,386,345,367,303"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451" title=" " alt="" coords="788,119,943,145"/>
+<area shape="poly" title=" " alt="" coords="704,129,774,129,774,135,704,135"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#aa92b31ff8f2eea49abba0edaca962761" title=" " alt="" coords="1031,76,1218,116"/>
+<area shape="poly" title=" " alt="" coords="943,119,1017,108,1018,113,943,124"/>
+<area shape="rect" href="classyoi_1_1IRCodeBlock.html#a0ce5ce7fd99199287c70c64ae3ae252e" title=" " alt="" coords="1020,141,1229,166"/>
+<area shape="poly" title=" " alt="" coords="943,136,1007,141,1006,146,943,141"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1057,196,1192,236"/>
+<area shape="poly" title=" " alt="" coords="908,222,1043,217,1044,222,909,228"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1277,257,1420,282"/>
+<area shape="poly" title=" " alt="" coords="909,231,1020,245,1263,263,1263,268,1020,251,908,236"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1277,203,1420,229"/>
+<area shape="poly" title=" " alt="" coords="1192,213,1264,213,1264,219,1192,219"/>
+<area shape="poly" title=" " alt="" coords="1193,229,1282,251,1281,256,1192,235"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1468,203,1671,229"/>
+<area shape="poly" title=" " alt="" coords="1420,213,1454,213,1454,219,1420,219"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1719,203,1909,229"/>
+<area shape="poly" title=" " alt="" coords="1671,213,1705,213,1705,219,1671,219"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1468,257,1671,282"/>
+<area shape="poly" title=" " alt="" coords="1420,267,1454,267,1454,272,1420,272"/>
+<area shape="poly" title=" " alt="" coords="679,166,786,145,787,150,680,171"/>
+<area shape="poly" title=" " alt="" coords="686,191,809,214,809,219,685,197"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="801,466,930,491"/>
+<area shape="poly" title=" " alt="" coords="637,192,673,220,713,255,756,308,796,362,852,453,848,455,791,365,752,311,709,259,670,224,634,196"/>
+<area shape="poly" title=" " alt="" coords="680,93,787,114,786,119,679,98"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a09af64578d379fd7719ae0f8ebac8bbf" title=" " alt="" coords="759,70,972,95"/>
+<area shape="poly" title=" " alt="" coords="691,80,745,80,745,85,691,85"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a55ae202968e470ba3dbcf58c9ea91fba" title="Mangles a symbol name with its module ID, unless it&#39;s the main function in the entry module." alt="" coords="559,625,670,650"/>
+<area shape="poly" title=" " alt="" coords="418,596,546,621,545,627,417,601"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ada00d8f91f78c8cb66320ff58edbf52f" title=" " alt="" coords="551,575,678,601"/>
+<area shape="poly" title=" " alt="" coords="417,585,538,585,538,591,417,591"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#aef9b05044c6e22777734038241214575" title=" " alt="" coords="571,674,659,699"/>
+<area shape="poly" title=" " alt="" coords="418,592,446,599,472,611,488,623,497,636,506,649,520,660,558,675,556,680,517,665,502,652,493,639,484,627,469,616,444,604,417,597"/>
+<area shape="poly" title=" " alt="" coords="658,679,684,672,709,660,755,624,794,581,826,538,848,502,852,505,830,541,798,585,758,628,712,665,686,677,659,684"/>
+<area shape="poly" title=" " alt="" coords="410,675,545,648,546,653,411,680"/>
+<area shape="poly" title=" " alt="" coords="411,684,557,684,557,689,411,689"/>
+<area shape="poly" title=" " alt="" coords="433,770,470,759,529,732,580,704,583,709,532,737,472,764,434,775"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a9f0f76ec5c871cfadc029767e4c2d822" title=" " alt="" coords="551,773,679,798"/>
+<area shape="poly" title=" " alt="" coords="471,783,537,783,537,788,471,788"/>
+<area shape="poly" title=" " alt="" coords="454,635,546,635,546,640,454,640"/>
+<area shape="poly" title=" " alt="" coords="429,647,558,673,557,678,428,653"/>
+<area shape="poly" title=" " alt="" coords="426,721,557,695,558,700,427,726"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_icgraph" id="aclassyoi_1_1IRLinker_ac80c633b34938139555e30aa01cc5d9a_icgraph">
+<area shape="rect" title=" " alt="" coords="203,5,311,31"/>
 <area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
+<area shape="poly" title=" " alt="" coords="189,30,155,28,155,22,189,24"/>
+<area shape="poly" title=" " alt="" coords="169,7,203,6,203,12,169,12"/>
 <area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
@@ -618,21 +768,24 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00050">50</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00052">52</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, and <a class="el" href="IRLinker_8hpp_source.html#l00039">IRLinker::stringRemapping</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a3063d4c1a27f7cdaa23f5efd4563900e_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a3063d4c1a27f7cdaa23f5efd4563900e_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a3063d4c1a27f7cdaa23f5efd4563900e_icgraph" id="aclassyoi_1_1IRLinker_a3063d4c1a27f7cdaa23f5efd4563900e_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,335,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,388,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,209,21,209,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -661,11 +814,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00062">62</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00064">64</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00036">IRLinker::interfaceImplRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00035">IRLinker::interfaceRemapping</a>, <a class="el" href="IRLinker_8cpp_source.html#l00040">IRLinker::mangleName()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8hpp_source.html#l00034">IRLinker::structRemapping</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00030">IRLinker::finalModule</a>, <a class="el" href="IRLinker_8hpp_source.html#l00036">IRLinker::interfaceImplRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00035">IRLinker::interfaceRemapping</a>, <a class="el" href="IRLinker_8cpp_source.html#l00042">IRLinker::mangleName()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8hpp_source.html#l00034">IRLinker::structRemapping</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -685,11 +838,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a559cad0c47bafda74cc4655844447752_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a559cad0c47bafda74cc4655844447752_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a559cad0c47bafda74cc4655844447752_icgraph" id="aclassyoi_1_1IRLinker_a559cad0c47bafda74cc4655844447752_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,384,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,437,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,209,21,209,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -731,29 +887,32 @@ Here is the caller graph for this function:</div>
 
 <p>Mangles a symbol name with its module ID, unless it's the main function in the entry module. </p>
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00040">40</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00042">42</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00031">IRLinker::entryModuleId</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a55ae202968e470ba3dbcf58c9ea91fba_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a55ae202968e470ba3dbcf58c9ea91fba_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a55ae202968e470ba3dbcf58c9ea91fba_icgraph" id="aclassyoi_1_1IRLinker_a55ae202968e470ba3dbcf58c9ea91fba_icgraph">
-<area shape="rect" title="Mangles a symbol name with its module ID, unless it&#39;s the main function in the entry module." alt="" coords="432,55,543,80"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="239,5,347,31"/>
-<area shape="poly" title=" " alt="" coords="423,54,344,33,345,28,424,49"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="246,55,341,80"/>
-<area shape="poly" title=" " alt="" coords="418,70,341,70,341,65,418,65"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="203,104,384,129"/>
-<area shape="poly" title=" " alt="" coords="424,86,345,106,344,101,423,81"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,55,155,80"/>
-<area shape="poly" title=" " alt="" coords="229,37,203,45,156,61,154,56,202,39,228,32"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,55,60,80"/>
-<area shape="poly" title=" " alt="" coords="94,70,60,70,60,65,94,65"/>
-<area shape="poly" title=" " alt="" coords="233,70,155,70,155,65,233,65"/>
-<area shape="poly" title=" " alt="" coords="232,103,202,94,154,78,156,73,203,89,233,98"/>
+<area shape="rect" title="Mangles a symbol name with its module ID, unless it&#39;s the main function in the entry module." alt="" coords="485,55,596,80"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="293,5,401,31"/>
+<area shape="poly" title=" " alt="" coords="476,54,397,33,398,28,478,49"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="299,55,394,80"/>
+<area shape="poly" title=" " alt="" coords="472,70,394,70,394,65,472,65"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="256,104,437,129"/>
+<area shape="poly" title=" " alt="" coords="478,86,398,106,397,101,476,81"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,55,208,80"/>
+<area shape="poly" title=" " alt="" coords="282,37,257,45,209,61,208,56,255,39,281,32"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,55,113,80"/>
+<area shape="poly" title=" " alt="" coords="147,78,114,79,114,74,147,73"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,104,87,129"/>
+<area shape="poly" title=" " alt="" coords="149,84,88,109,86,104,147,79"/>
+<area shape="poly" title=" " alt="" coords="127,56,161,58,161,63,127,61"/>
+<area shape="poly" title=" " alt="" coords="286,70,208,70,208,65,286,65"/>
+<area shape="poly" title=" " alt="" coords="285,103,255,94,208,78,209,73,257,89,287,98"/>
 </map>
 </div>
 
@@ -793,23 +952,26 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00204">204</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00206">206</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942">IR::dyn_cast_any</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be">IR::dyn_cast_struct</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00037">IRLinker::globalRemapping</a>, <a class="el" href="IRLinker_8hpp_source.html#l00036">IRLinker::interfaceImplRemapping</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00035">IRLinker::interfaceRemapping</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5">IR::load_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca">IR::new_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706">IR::new_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a397993da3d34d815b7910f49199f2852">IR::new_dynamic_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a592d3746fb432d2bfc8cb9cbf9afeaf4">IR::new_dynamic_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d">IR::opcode</a>, <a class="el" href="IR_8h_source.html#l00367">IR::operands</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b">IR::push_string</a>, <a class="el" href="IRLinker_8hpp_source.html#l00039">IRLinker::stringRemapping</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00034">IRLinker::structRemapping</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e">IR::typeid_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0">IR::typeid_object_non_stack</a>, and <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d">IR::typeid_struct</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_ada00d8f91f78c8cb66320ff58edbf52f_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_ada00d8f91f78c8cb66320ff58edbf52f_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_ada00d8f91f78c8cb66320ff58edbf52f_icgraph" id="aclassyoi_1_1IRLinker_ada00d8f91f78c8cb66320ff58edbf52f_icgraph">
-<area shape="rect" title=" " alt="" coords="359,5,485,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="203,5,311,31"/>
-<area shape="poly" title=" " alt="" coords="345,21,311,21,311,15,345,15"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="412,5,539,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="256,5,364,31"/>
+<area shape="poly" title=" " alt="" coords="398,21,364,21,364,15,398,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="243,21,208,21,208,15,243,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -838,11 +1000,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00345">345</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00347">347</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>.</p>
+<p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00029">IRLinker::compilerCtx</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -860,11 +1022,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a08eae306b69a73cd5042873766d8ae54_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a08eae306b69a73cd5042873766d8ae54_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a08eae306b69a73cd5042873766d8ae54_icgraph" id="aclassyoi_1_1IRLinker_a08eae306b69a73cd5042873766d8ae54_icgraph">
-<area shape="rect" title=" " alt="" coords="203,5,328,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="256,5,381,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,208,21,208,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -894,11 +1059,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00280">280</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00282">282</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00035">IRLinker::interfaceRemapping</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00034">IRLinker::structRemapping</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00337">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00345">IRLinker::patchIRFFITable()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00339">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00347">IRLinker::patchIRFFITable()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -914,25 +1079,28 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_aef9b05044c6e22777734038241214575_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_aef9b05044c6e22777734038241214575_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_aef9b05044c6e22777734038241214575_icgraph" id="aclassyoi_1_1IRLinker_aef9b05044c6e22777734038241214575_icgraph">
-<area shape="rect" title=" " alt="" coords="465,104,553,129"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="256,5,364,31"/>
-<area shape="poly" title=" " alt="" coords="485,96,454,69,416,44,363,27,365,22,418,40,457,65,489,92"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="263,55,357,80"/>
-<area shape="poly" title=" " alt="" coords="451,103,417,94,357,80,358,75,418,89,453,98"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="203,104,417,129"/>
-<area shape="poly" title=" " alt="" coords="452,119,418,119,418,114,452,114"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="219,153,401,179"/>
-<area shape="poly" title=" " alt="" coords="453,134,418,143,366,156,365,151,417,138,451,129"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54" title=" " alt="" coords="247,203,373,228"/>
-<area shape="poly" title=" " alt="" coords="488,141,457,168,418,192,374,208,372,203,416,188,454,164,484,137"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,104,155,129"/>
-<area shape="poly" title=" " alt="" coords="244,29,204,44,185,58,168,74,143,106,139,102,164,71,182,54,201,40,242,24"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,104,60,129"/>
-<area shape="poly" title=" " alt="" coords="94,119,60,119,60,114,94,114"/>
-<area shape="poly" title=" " alt="" coords="250,82,203,94,156,110,154,105,202,89,249,77"/>
-<area shape="poly" title=" " alt="" coords="189,119,155,119,155,114,189,114"/>
-<area shape="poly" title=" " alt="" coords="237,153,202,143,154,128,156,122,203,138,239,148"/>
-<area shape="poly" title=" " alt="" coords="233,206,201,192,165,162,139,131,144,128,168,158,204,188,235,201"/>
+<area shape="rect" title=" " alt="" coords="519,104,607,129"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb" title=" " alt="" coords="309,5,417,31"/>
+<area shape="poly" title=" " alt="" coords="538,96,507,69,470,44,417,27,418,22,472,40,511,65,542,92"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef" title=" " alt="" coords="316,55,411,80"/>
+<area shape="poly" title=" " alt="" coords="505,103,470,94,410,80,411,75,471,89,506,98"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="256,104,471,129"/>
+<area shape="poly" title=" " alt="" coords="505,119,471,119,471,114,505,114"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752" title=" " alt="" coords="273,153,454,179"/>
+<area shape="poly" title=" " alt="" coords="506,134,471,143,420,156,419,151,470,138,505,129"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a08eae306b69a73cd5042873766d8ae54" title=" " alt="" coords="301,203,426,228"/>
+<area shape="poly" title=" " alt="" coords="541,141,510,168,472,192,427,208,425,203,470,188,507,164,538,137"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,104,208,129"/>
+<area shape="poly" title=" " alt="" coords="297,29,257,44,238,58,221,74,196,106,192,102,217,71,235,54,255,40,295,24"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,104,113,129"/>
+<area shape="poly" title=" " alt="" coords="147,128,114,128,114,123,147,122"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,153,87,179"/>
+<area shape="poly" title=" " alt="" coords="149,133,88,158,86,153,147,128"/>
+<area shape="poly" title=" " alt="" coords="127,105,161,107,161,112,127,110"/>
+<area shape="poly" title=" " alt="" coords="303,82,257,94,209,110,208,105,255,89,302,77"/>
+<area shape="poly" title=" " alt="" coords="242,119,208,119,208,114,242,114"/>
+<area shape="poly" title=" " alt="" coords="291,153,255,143,208,128,209,122,257,138,292,148"/>
+<area shape="poly" title=" " alt="" coords="286,206,255,192,218,162,193,131,197,128,222,158,257,188,288,201"/>
 </map>
 </div>
 
@@ -962,23 +1130,26 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00366">366</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IRLinker_8cpp_source.html#l00368">368</a> of file <a class="el" href="IRLinker_8cpp_source.html">IRLinker.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="IRLinker_8hpp_source.html#l00038">IRLinker::functionRemapping</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00035">IRLinker::interfaceRemapping</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="IRLinker_8hpp_source.html#l00034">IRLinker::structRemapping</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00337">IRLinker::linkInterfaceImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00339">IRLinker::linkInterfaceImplementations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRLinker_a9f0f76ec5c871cfadc029767e4c2d822_icgraph.png" border="0" usemap="#aclassyoi_1_1IRLinker_a9f0f76ec5c871cfadc029767e4c2d822_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRLinker_a9f0f76ec5c871cfadc029767e4c2d822_icgraph" id="aclassyoi_1_1IRLinker_a9f0f76ec5c871cfadc029767e4c2d822_icgraph">
-<area shape="rect" title=" " alt="" coords="465,5,593,31"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="203,5,417,31"/>
-<area shape="poly" title=" " alt="" coords="452,21,418,21,418,15,452,15"/>
-<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" title=" " alt="" coords="519,5,647,31"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96" title=" " alt="" coords="256,5,471,31"/>
+<area shape="poly" title=" " alt="" coords="505,21,471,21,471,15,505,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,208,21,208,15,242,15"/>
+<area shape="rect" href="classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>
 </div>
 
@@ -1007,7 +1178,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00029">29</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00050">IRLinker::linkStringLiterals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00345">IRLinker::patchIRFFITable()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00314">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00052">IRLinker::linkStringLiterals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00347">IRLinker::patchIRFFITable()</a>.</p>
 
 </div>
 </div>
@@ -1033,7 +1204,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00031">31</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00040">IRLinker::mangleName()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00042">IRLinker::mangleName()</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1230,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00030">30</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00015">IRLinker::link()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00337">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00050">IRLinker::linkStringLiterals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00314">IRLinker::createEntryFunction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00016">IRLinker::link()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00339">IRLinker::linkInterfaceImplementations()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00389">IRLinker::linkMetadata()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00052">IRLinker::linkStringLiterals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1256,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00038">38</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00345">IRLinker::patchIRFFITable()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00366">IRLinker::patchUniqueKey()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00347">IRLinker::patchIRFFITable()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00368">IRLinker::patchUniqueKey()</a>.</p>
 
 </div>
 </div>
@@ -1111,7 +1282,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00037">37</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00133">IRLinker::linkGlobals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00135">IRLinker::linkGlobals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>.</p>
 
 </div>
 </div>
@@ -1137,7 +1308,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00040">40</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00312">IRLinker::createEntryFunction()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00147">IRLinker::linkFunctions()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00314">IRLinker::createEntryFunction()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00149">IRLinker::linkFunctions()</a>.</p>
 
 </div>
 </div>
@@ -1163,7 +1334,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00036">36</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00389">IRLinker::linkMetadata()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>.</p>
 
 </div>
 </div>
@@ -1189,7 +1360,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00035">35</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00366">IRLinker::patchUniqueKey()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00368">IRLinker::patchUniqueKey()</a>.</p>
 
 </div>
 </div>
@@ -1215,7 +1386,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00039">39</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00050">IRLinker::linkStringLiterals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00052">IRLinker::linkStringLiterals()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>.</p>
 
 </div>
 </div>
@@ -1241,7 +1412,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IRLinker_8hpp_source.html#l00034">34</a> of file <a class="el" href="IRLinker_8hpp_source.html">IRLinker.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00062">IRLinker::linkStructsAndInterfaces()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00204">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00280">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00366">IRLinker::patchUniqueKey()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IRLinker_8cpp_source.html#l00064">IRLinker::linkStructsAndInterfaces()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00206">IRLinker::patchInstruction()</a>, <a class="el" href="IRLinker_8cpp_source.html#l00282">IRLinker::patchType()</a>, and <a class="el" href="IRLinker_8cpp_source.html#l00368">IRLinker::patchUniqueKey()</a>.</p>
 
 </div>
 </div>

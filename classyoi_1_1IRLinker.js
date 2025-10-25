@@ -6,6 +6,7 @@ var classyoi_1_1IRLinker =
     [ "linkFunctions", "classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb", null ],
     [ "linkGlobals", "classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef", null ],
     [ "linkInterfaceImplementations", "classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96", null ],
+    [ "linkMetadata", "classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a", null ],
     [ "linkStringLiterals", "classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e", null ],
     [ "linkStructsAndInterfaces", "classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752", null ],
     [ "mangleName", "classyoi_1_1IRLinker.html#a55ae202968e470ba3dbcf58c9ea91fba", null ],

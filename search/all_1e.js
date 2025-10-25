@@ -15,10 +15,11 @@ var searchData=
   ['whilestmt_12',['whilestmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaf95500e8a7762c39754fbf16df53cb7e',1,'yoi::inCodeBlockStmt::whileStmt'],['../classyoi_1_1whileStmt.html',1,'whileStmt']]],
   ['whilestmtval_13',['whileStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90',1,'yoi::inCodeBlockStmt::vValue']]],
   ['with_20templates_14',['Generic Programming with Templates',['../md_docs_2Template.html',1,'']]],
-  ['wrapper_15',['What is export wrapper?',['../md_docs_2Wrapper.html#autotoc_md146',1,'']]],
-  ['wrapper_20实现_20ffi_20的必经之路_16',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]],
-  ['wrapper_20tt_20there_20must_20be_20a_20tt_20import_20wrapper_20tt_17',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md147',1,'']]],
-  ['wrapper_2emd_18',['Wrapper.md',['../Wrapper_8md.html',1,'']]],
-  ['wstr_19',['wstr',['../namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4',1,'yoi']]],
-  ['wstring2string_20',['wstring2string',['../namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0',1,'yoi']]]
+  ['wrapinterfaceobjectifregressed_15',['wrapInterfaceObjectIfRegressed',['../classyoi_1_1LLVMCodegen.html#aff340d2ce934aa1147d257008528d9a9',1,'yoi::LLVMCodegen']]],
+  ['wrapper_16',['What is export wrapper?',['../md_docs_2Wrapper.html#autotoc_md146',1,'']]],
+  ['wrapper_20实现_20ffi_20的必经之路_17',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]],
+  ['wrapper_20tt_20there_20must_20be_20a_20tt_20import_20wrapper_20tt_18',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md147',1,'']]],
+  ['wrapper_2emd_19',['Wrapper.md',['../Wrapper_8md.html',1,'']]],
+  ['wstr_20',['wstr',['../namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4',1,'yoi']]],
+  ['wstring2string_21',['wstring2string',['../namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0',1,'yoi']]]
 ];

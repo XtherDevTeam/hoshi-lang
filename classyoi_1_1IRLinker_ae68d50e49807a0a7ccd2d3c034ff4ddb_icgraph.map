@@ -1,7 +1,10 @@
 <map id="linkFunctions" name="linkFunctions">
-<area shape="rect" id="Node000001" title=" " alt="" coords="203,5,311,31"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="108,5,155,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,21,155,21,155,15,189,15"/>
-<area shape="rect" id="Node000003" href="$main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="256,5,364,31"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="161,5,208,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="243,21,208,21,208,15,243,15"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="147,29,114,30,114,24,147,24"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="32,55,87,80"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="149,35,88,59,86,54,147,30"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="127,6,161,8,161,14,127,12"/>
 </map>

@@ -120,8 +120,8 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[x] 加入 lambda</li>
 <li>[x] 完成 <code>let [x, y] = depacker()</code> 的语法设计和实现</li>
 <li>[x] 改造 <code>new struct</code> 的逻辑</li>
-<li>[ ] 有限范围内推断虚函数调用变为正常函数优化<ul>
-<li>[ ] IRValueType改造，支持附加信息</li>
+<li>[x] 有限范围内推断虚函数调用变为正常函数优化<ul>
+<li>[x] IRValueType改造，支持附加信息</li>
 </ul>
 </li>
 <li>[x] 加入左值对象和将亡对象判断和处理逻辑</li>
@@ -144,7 +144,8 @@ Known issues</h1>
 <li>[x] 改造 Nullable 判断条件，在二元计算式，drop掉结果的Nullable标签</li>
 <li>[x] dummy_break, dummy_continue在while for block存在多个block时无法完成替换。</li>
 <li>[x] invoke_virtual由于ensureObject后仍使用arg的属性来判断是否post cleanup导致的memory leak</li>
-<li>[x] dyn_cast 匹配到错误typeid </li>
+<li>[x] dyn_cast 匹配到错误typeid</li>
+<li>[ ] 接口优化导致内存泄漏 </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
