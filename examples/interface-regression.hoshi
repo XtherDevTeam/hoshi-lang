@@ -1,0 +1,54 @@
+use runtime "runtime"
+
+interface Bishop {
+    sermon() : none
+}
+
+struct OttoApocalypse {
+    identity : string,
+    constructor(),
+    finalizer()
+}
+
+impl OttoApocalypse {
+    constructor() {
+        this.identity = "Otto Apocalypse"
+    },
+    finalizer() {
+        runtime.puts("Time to leave where I have stood so long, letting you go recover the trace overlapped. Ends, then begins.")
+        runtime.puts("再见了，我的大发明家")
+    }
+}
+
+struct Theresa {
+    identity : string,
+    constructor()
+}
+
+impl Theresa {
+    constructor() {
+        this.identity = "Theresa"
+    }
+}
+
+impl OttoApocalypse : Bishop {
+    sermon() : none {
+        runtime.puts("世界允许意识匹配新的容器，却不允许容器收集消散的意识")
+    }
+}
+
+impl Theresa : Bishop {
+    sermon() : none {
+        runtime.puts("光が強すぎから、忘れてこの星と君を答えて声を枯らして、感情さえ消えた僕に")
+    }
+}
+
+func main() : int {
+    let thisShallRegress = Bishop(OttoApocalypse())
+    let thisShallNotRegress = Bishop(OttoApocalypse())
+    thisShallNotRegress = Theresa()
+    thisShallRegress.sermon()
+    thisShallNotRegress.sermon()
+    runtime.puts("interface-regression: validation passed")
+    return 0
+}

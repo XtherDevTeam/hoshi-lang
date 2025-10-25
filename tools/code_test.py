@@ -62,6 +62,7 @@ TEST_CASES = {
     # "input": {"type": "executable", "return_code": 0},
     "finalizer": {"type": "executable", "return_code": 0},
     "typed-ellipsis": {"type": "executable", "return_code": 0},
+    "interface-regression": {"type": "executable", "return_code": 0},
 }
 
 

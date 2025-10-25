@@ -8,7 +8,7 @@ Hoshi-lang is a statically-typed, general-purpose programming language with a fo
 
 This project is currently under active development and is a personal exploration into language design and implementation.
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/XtherDevTeam/hoshi-lang)
+[![Checkout the Wiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/XtherDevTeam/hoshi-lang)
 
 ## Features
 

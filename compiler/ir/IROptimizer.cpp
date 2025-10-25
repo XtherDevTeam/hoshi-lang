@@ -92,13 +92,13 @@ namespace yoi {
 
     void IRFunctionOptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
                                             const Item::ContributedInstructionSet &contributedInstructions) {
-        items.emplace_back(Item{type, false, {}, contributedInstructions});
+        items.emplace_back(Item{type, false, {}, {}, contributedInstructions});
     }
 
     void IRFunctionOptimizer::SimulationStack::push(const std::shared_ptr<IRValueType> &type,
                                             const Item::ContributedInstructionSet &contributedInstructions,
                                             Item::PossibleValue value) {
-        items.emplace_back(Item{type, true, value, contributedInstructions});
+        items.emplace_back(Item{type, true, value, {}, contributedInstructions});
     }
 
     void IRFunctionOptimizer::SimulationStack::push(const Item &item) {
@@ -163,7 +163,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -172,23 +172,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue - b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue - b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue - b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue - b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue - b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue - b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {a.possibleValue.deciValue - b.possibleValue.deciValue}, {}};
+                    return {a.type, true, {a.possibleValue.deciValue - b.possibleValue.deciValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
                     return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue - b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue - b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -196,7 +196,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -205,23 +205,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue * b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue * b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue * b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue * b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue * b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue * b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {a.possibleValue.deciValue * b.possibleValue.deciValue}, {}};
+                    return {a.type, true, {a.possibleValue.deciValue * b.possibleValue.deciValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : false}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : false}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue * b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue * b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -229,7 +229,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -238,23 +238,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue / b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue / b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue / b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue / b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue / b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue / b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {a.possibleValue.deciValue / b.possibleValue.deciValue}, {}};
+                    return {a.type, true, {a.possibleValue.deciValue / b.possibleValue.deciValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue / b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue / b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -262,7 +262,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -271,23 +271,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue % b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue % b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue % b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue % b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue % b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue % b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {std::fmod(a.possibleValue.deciValue, b.possibleValue.deciValue)}, {}};
+                    return {a.type, true, {std::fmod(a.possibleValue.deciValue, b.possibleValue.deciValue)}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue % b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue % b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -295,7 +295,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -303,23 +303,23 @@ namespace yoi {
         if (a.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {-a.possibleValue.intValue}, {}};
+                    return {a.type, true, {-a.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {static_cast<uint64_t>(-a.possibleValue.unsignedValue)}, {}};
+                    return {a.type, true, {static_cast<uint64_t>(-a.possibleValue.unsignedValue)}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(-a.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(-a.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {-a.possibleValue.deciValue}, {}};
+                    return {a.type, true, {-a.possibleValue.deciValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(-a.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(-a.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -327,7 +327,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions};
         }
     }
 
@@ -335,23 +335,23 @@ namespace yoi {
         if (a.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {~a.possibleValue.intValue}, {}};
+                    return {a.type, true, {~a.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {~a.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {~a.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(~a.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(~a.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {~int64_t(a.possibleValue.deciValue)}, {}};
+                    return {a.type, true, {~int64_t(a.possibleValue.deciValue)}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(~a.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(~a.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -359,7 +359,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions};
         }
     }
 
@@ -368,23 +368,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue & b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue & b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue & b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue & b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue & b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue & b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {int64_t(a.possibleValue.deciValue) & int64_t(b.possibleValue.deciValue)}, {}};
+                    return {a.type, true, {int64_t(a.possibleValue.deciValue) & int64_t(b.possibleValue.deciValue)}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : false}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : false}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue & b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue & b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -392,7 +392,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -401,23 +401,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue | b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue | b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue | b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue | b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue | b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue | b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {int64_t(a.possibleValue.deciValue) | int64_t(b.possibleValue.deciValue)}, {}};
+                    return {a.type, true, {int64_t(a.possibleValue.deciValue) | int64_t(b.possibleValue.deciValue)}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? true : b.possibleValue.boolValue}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? true : b.possibleValue.boolValue}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue | b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue | b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -425,7 +425,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -434,23 +434,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue ^ b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue ^ b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue ^ b.possibleValue.unsignedValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue ^ b.possibleValue.unsignedValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue ^ b.possibleValue.shortValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue ^ b.possibleValue.shortValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {int64_t(a.possibleValue.deciValue) ^ int64_t(b.possibleValue.deciValue)}, {}};
+                    return {a.type, true, {int64_t(a.possibleValue.deciValue) ^ int64_t(b.possibleValue.deciValue)}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? b.possibleValue.boolValue : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue ^ b.possibleValue.charValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue ^ b.possibleValue.charValue)}, {}, {}
                     };
                 }
                 default:
@@ -458,7 +458,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -467,23 +467,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue << b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue << b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue << b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue << b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue << b.possibleValue.intValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue << b.possibleValue.intValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {int64_t(a.possibleValue.deciValue) << b.possibleValue.intValue}, {}};
+                    return {a.type, true, {int64_t(a.possibleValue.deciValue) << b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
-                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
+                    return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue << b.possibleValue.intValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue << b.possibleValue.intValue)}, {}, {}
                     };
                 }
                 default:
@@ -491,7 +491,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -500,23 +500,23 @@ namespace yoi {
         if (a.hasPossibleValue && b.hasPossibleValue) {
             switch (a.type->type) {
                 case IRValueType::valueType::integerObject: {
-                    return {a.type, true, {a.possibleValue.intValue >> b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.intValue >> b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::unsignedObject: {
-                    return {a.type, true, {a.possibleValue.unsignedValue >> b.possibleValue.intValue}, {}};
+                    return {a.type, true, {a.possibleValue.unsignedValue >> b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::shortObject: {
-                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue >> b.possibleValue.intValue)}, {}};
+                    return {a.type, true, {static_cast<short>(a.possibleValue.shortValue >> b.possibleValue.intValue)}, {}, {}};
                 }
                 case IRValueType::valueType::decimalObject: {
-                    return {a.type, true, {int64_t(a.possibleValue.deciValue) >> b.possibleValue.intValue}, {}};
+                    return {a.type, true, {int64_t(a.possibleValue.deciValue) >> b.possibleValue.intValue}, {}, {}};
                 }
                 case IRValueType::valueType::booleanObject: {
                     return {a.type, true, {a.possibleValue.boolValue ? false : true}, {}};
                 }
                 case IRValueType::valueType::characterObject: {
                     return {
-                        a.type, true, char{static_cast<char>(a.possibleValue.charValue >> b.possibleValue.intValue)}, {}
+                        a.type, true, char{static_cast<char>(a.possibleValue.charValue >> b.possibleValue.intValue)}, {}, {}
                     };
                 }
                 default:
@@ -524,7 +524,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {a.type, false, {}, a.contributedInstructions + b.contributedInstructions};
+            return {a.type, false, {}, {}, a.contributedInstructions + b.contributedInstructions};
         }
     }
 
@@ -607,7 +607,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -638,7 +638,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -669,7 +669,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -700,7 +700,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -731,7 +731,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -762,7 +762,7 @@ namespace yoi {
                     return {};
             }
         } else {
-            return {compilerCtx->getBoolObjectType(), false, {}, item.contributedInstructions + right.contributedInstructions};
+            return {compilerCtx->getBoolObjectType(), false, {}, {}, item.contributedInstructions + right.contributedInstructions};
         }
     }
 
@@ -2010,6 +2010,7 @@ namespace yoi {
         this->performParamBorrowCheck();
         this->performNullableCheck();
         this->performRawCheck();
+        this->performInterfaceAllocationReduction();
         return *this;
     }
     
@@ -2179,7 +2180,7 @@ namespace yoi {
             const auto &item2 = s2.stack.items[i];
 
             auto mergedItem = IRFunctionOptimizer::SimulationStack::Item{
-                item1.type, false, {}, item1.contributedInstructions + item2.contributedInstructions};
+                item1.type, false, {}, {}, item1.contributedInstructions + item2.contributedInstructions};
 
             if (item1.hasPossibleValue && item2.hasPossibleValue) {
                 if (item1.type->type == item2.type->type &&
@@ -2243,44 +2244,7 @@ namespace yoi {
     // ===================================================================================
 
     bool IRFunctionOptimizer::performNullableCheck() {
-        std::map<indexT, std::vector<indexT>> successors;
-        std::map<indexT, std::vector<indexT>> predecessors;
-        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
-            if (successors.find(i) == successors.end()) successors[i] = {};
-            if (predecessors.find(i) == predecessors.end()) predecessors[i] = {};
-            if (!targetFunction->codeBlock[i]->getIRArray().empty()) {
-                auto& lastIns = targetFunction->codeBlock[i]->getIRArray().back();
-                bool isTerminator = (lastIns.opcode == IR::Opcode::jump ||
-                                    lastIns.opcode == IR::Opcode::jump_if_false ||
-                                    lastIns.opcode == IR::Opcode::jump_if_true ||
-                                    lastIns.opcode == IR::Opcode::ret ||
-                                    lastIns.opcode == IR::Opcode::ret_none);
-                if (!isTerminator && (i + 1 < targetFunction->codeBlock.size())) {
-                    successors[i].push_back(i + 1);
-                    predecessors[i + 1].push_back(i);
-                }
-            }
-            for (auto &ins : targetFunction->codeBlock[i]->getIRArray()) {
-                 switch (ins.opcode) {
-                    case IR::Opcode::jump: {
-                        indexT target = ins.operands[0].value.codeBlockIndex;
-                        successors[i].push_back(target);
-                        predecessors[target].push_back(i);
-                        break;
-                    }
-                    case IR::Opcode::jump_if_true:
-                    case IR::Opcode::jump_if_false: {
-                        indexT target = ins.operands[0].value.codeBlockIndex;
-                        successors[i].push_back(target);
-                        if (i + 1 < targetFunction->codeBlock.size()) successors[i].push_back(i + 1);
-                        predecessors[target].push_back(i);
-                        if (i + 1 < targetFunction->codeBlock.size()) predecessors[i + 1].push_back(i);
-                        break;
-                    }
-                    default: break;
-                }
-            }
-        }
+        auto [successors, predecessors] = performCFGAnalysis();
     
         std::map<indexT, AnalysisState> blockInStates;
         std::map<indexT, AnalysisState> blockOutStates;
@@ -2679,44 +2643,7 @@ namespace yoi {
     // ===================================================================================
 
     bool IRFunctionOptimizer::performRawCheck() {
-        std::map<indexT, std::vector<indexT>> successors;
-        std::map<indexT, std::vector<indexT>> predecessors;
-        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
-            if (successors.find(i) == successors.end()) successors[i] = {};
-            if (predecessors.find(i) == predecessors.end()) predecessors[i] = {};
-            if (!targetFunction->codeBlock[i]->getIRArray().empty()) {
-                auto& lastIns = targetFunction->codeBlock[i]->getIRArray().back();
-                bool isTerminator = (lastIns.opcode == IR::Opcode::jump ||
-                                    lastIns.opcode == IR::Opcode::jump_if_false ||
-                                    lastIns.opcode == IR::Opcode::jump_if_true ||
-                                    lastIns.opcode == IR::Opcode::ret ||
-                                    lastIns.opcode == IR::Opcode::ret_none);
-                if (!isTerminator && (i + 1 < targetFunction->codeBlock.size())) {
-                    successors[i].push_back(i + 1);
-                    predecessors[i + 1].push_back(i);
-                }
-            }
-            for (auto &ins : targetFunction->codeBlock[i]->getIRArray()) {
-                 switch (ins.opcode) {
-                    case IR::Opcode::jump: {
-                        indexT target = ins.operands[0].value.codeBlockIndex;
-                        successors[i].push_back(target);
-                        predecessors[target].push_back(i);
-                        break;
-                    }
-                    case IR::Opcode::jump_if_true:
-                    case IR::Opcode::jump_if_false: {
-                        indexT target = ins.operands[0].value.codeBlockIndex;
-                        successors[i].push_back(target);
-                        if (i + 1 < targetFunction->codeBlock.size()) successors[i].push_back(i + 1);
-                        predecessors[target].push_back(i);
-                        if (i + 1 < targetFunction->codeBlock.size()) predecessors[i + 1].push_back(i);
-                        break;
-                    }
-                    default: break;
-                }
-            }
-        }
+        auto [successors, predecessors] = performCFGAnalysis();
     
         std::map<indexT, AnalysisState> blockInStates;
         std::map<indexT, AnalysisState> blockOutStates;
@@ -3088,6 +3015,106 @@ namespace yoi {
         return terminatorFound();
     }
 
+    AnalysisState IRFunctionOptimizer::analyzeBlockForInterfaceAllocationReduction(indexT blockIndex,
+        const AnalysisState &inState) {
+        simulationStack = inState.stack;
+        variablesExtraInfo.clear();
+        for(const auto& [idx, state] : inState.variableStates) {
+            variablesExtraInfo[idx] = {false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}}};
+        }
+
+        auto getVarType = [&](indexT varIndex) {
+            if (!variablesExtraInfo.count(varIndex)) {
+                auto originalType = targetFunction->variableTable.get(varIndex);
+                variablesExtraInfo[varIndex] = {false, true, {std::make_shared<IRValueType>(*originalType), false, {}}};
+            }
+            return variablesExtraInfo.at(varIndex).possibleValue.type;
+        };
+
+        auto terminatorFound = [&]() {
+            AnalysisState outState;
+            outState.stack = simulationStack;
+            for(const auto& [idx, state] : variablesExtraInfo) {
+                outState.variableStates[idx] = {false, true, state.possibleValue};
+            }
+            return outState;
+        };
+        
+        auto checkWhetherStackItemIsValidLocalInterfaceObjectAndRecess = [&](yoi::indexT offset = 0) {
+            if (simulationStack.peek(offset).type->type == IRValueType::valueType::interfaceObject && simulationStack.peek(offset).metadata.hasMetadata(L"from_load") && simulationStack.peek(offset).metadata.hasMetadata(L"delayed_interface_impl") && simulationStack.peek(offset).metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl").first != -1) {
+                // valid metadata, optimized local variable, satisify the reverting requirement
+                variablesExtraInfo[simulationStack.peek(offset).metadata.getMetadata<yoi::indexT>(L"from_load")].possibleValue.metadata.setMetadata(L"delayed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{-1, -1});
+            }
+        };
+
+        for (yoi::indexT insIndex = 0; insIndex < targetFunction->codeBlock[blockIndex]->getIRArray().size(); ++insIndex) {
+            const auto &ins = targetFunction->codeBlock[blockIndex]->getIRArray()[insIndex];
+            switch (ins.opcode) {
+                case IR::Opcode::load_local: {
+                    auto varType = getVarType(ins.operands[0].value.symbolIndex);
+                    simulationStack.push(std::make_shared<IRValueType>(*varType), {});
+                    simulationStack.peek(0).metadata = variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata;
+                    simulationStack.peek(0).metadata.setMetadata(L"from_load", ins.operands[0].value.symbolIndex);
+                    break;
+                }
+                case IR::Opcode::store_local: {
+                    auto value = simulationStack.peek(0);
+                    simulationStack.pop();
+                    auto varType = getVarType(ins.operands[0].value.symbolIndex);
+                    // still check incompatible metadatas, if anything go wrong, remove it
+                    if (variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata.hasMetadata(L"delayed_interface_impl") && value.metadata.hasMetadata(L"delayed_interface_impl")) {
+                        auto &impl1 = variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                        auto &impl2 = value.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                        if (impl1 != impl2 || impl2.first == -1) {
+                            impl1 = {-1, -1};
+                        }
+                    } else if (value.metadata.hasMetadata(L"delayed_interface_impl")) {
+                        variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata.setMetadata(L"delayed_interface_impl", value.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl"));
+                    }
+                    varType->attributes = value.type->attributes;
+                    break;
+                }
+                case IR::Opcode::construct_interface_impl: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto interfaceImplDef = compilerCtx->getImportedModule(moduleIndex)
+                                                ->interfaceImplementationTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, interfaceImplDef->implInterfaceIndex.first, interfaceImplDef->implInterfaceIndex.second});
+                    simulationStack.pop();
+                    simulationStack.push(returnType, {currentCodeBlockIndex, {insIndex}, false});
+                    simulationStack.peek(0).metadata.setMetadata(L"delayed_interface_impl", std::pair{moduleIndex, ins.operands[1].value.symbolIndex});
+                    break;
+                }
+                case IR::Opcode::invoke:
+                case IR::Opcode::invoke_dangling: {
+                    auto moduleIndex = ins.operands[0].value.symbolIndex;
+                    auto function = compilerCtx->getImportedModule(moduleIndex)->functionTable[ins.operands[1].value.symbolIndex];
+                    auto returnType = managedPtr((*function->returnType).removeAttribute(IRValueType::ValueAttr::Borrow));
+                    auto argTypes = function->argumentTypes;
+                    auto argCount = function->argumentTypes.size();
+                    SimulationStack::Item::ContributedInstructionSet contributedInstructions = {currentCodeBlockIndex, {insIndex}, false};
+                    for (int i = 0; i < argCount; i++) {
+                        checkWhetherStackItemIsValidLocalInterfaceObjectAndRecess();
+                        contributedInstructions = contributedInstructions + simulationStack.peek(0).contributedInstructions;
+                        simulationStack.pop();
+                    }
+                    simulationStack.push(returnType, contributedInstructions);
+                    break;
+                }
+                case IR::Opcode::ret: {
+                    checkWhetherStackItemIsValidLocalInterfaceObjectAndRecess();
+                    simulationStack.pop();
+                    break;
+                }
+                default: {
+                    handleInstruction(ins, insIndex, currentCodeBlockIndex);
+                    break;
+                }
+            }
+        }
+
+        return terminatorFound();
+    }
+
     AnalysisState IRFunctionOptimizer::mergeStatesForRaw(const AnalysisState &s1, const AnalysisState &s2) {
         if (s1.variableStates.empty()) return s2;
         if (s2.variableStates.empty()) return s1;
@@ -3136,6 +3163,70 @@ namespace yoi {
                 mergedType->removeAttribute(IRValueType::ValueAttr::Raw);
             }
             mergedState.variableStates[key] = {false, true, {mergedType, false, {}}};
+        }
+        return mergedState;
+    }
+
+    AnalysisState IRFunctionOptimizer::mergeStatesForInterfaceAllocationReduction(const AnalysisState &s1,
+        const AnalysisState &s2) {
+        if (s1.variableStates.empty()) return s2;
+        if (s2.variableStates.empty()) return s1;
+
+        if (s1.stack.items.size() != s2.stack.items.size()) {
+            panic(0, 0, "IROptimizer: Incompatible stack depths at merge point.");
+        }
+
+        AnalysisState mergedState;
+
+        for (size_t i = 0; i < s1.stack.items.size(); ++i) {
+            auto &item1 = s1.stack.items[i];
+            auto &item2 = s2.stack.items[i];
+
+            auto mergedItem = item1;
+            if (mergedItem.metadata.hasMetadata(L"delayed_interface_impl") && mergedItem.metadata.hasMetadata(L"delayed_interface_impl")) {
+                auto impl1 = item1.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                auto impl2 = item2.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                if (impl1 == impl2 && impl1.first != -1) {
+                    // same optimized interface implementation
+                    mergedItem.metadata.setMetadata(L"delayed_interface_impl", impl1);
+                } else {
+                    // different implementations or one is not optimized, cannot keep optimization
+                    mergedItem.metadata.setMetadata(L"delayed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{-1, -1});
+                }
+            }
+            mergedState.stack.push(mergedItem);
+        }
+
+        // Merge Variables (Optimistic: must be raw in ALL paths to stay raw)
+        std::set<indexT> allVarKeys;
+        for (const auto &[key, val] : s1.variableStates) allVarKeys.insert(key);
+        for (const auto &[key, val] : s2.variableStates) allVarKeys.insert(key);
+
+        for (const auto &key : allVarKeys) {
+            auto it1 = s1.variableStates.find(key);
+            auto it2 = s2.variableStates.find(key);
+            
+            if (it1 != s1.variableStates.end() && it2 != s2.variableStates.end()) {
+                auto mergedType = std::make_shared<IRValueType>(*it1->second.possibleValue.type);
+                // merge metadata
+                auto mergedMetadata = it1->second.possibleValue.metadata;
+                if (mergedMetadata.hasMetadata(L"delayed_interface_impl") && it2->second.possibleValue.metadata.hasMetadata(L"delayed_interface_impl")) {
+                    auto impl1 = it1->second.possibleValue.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                    auto impl2 = it2->second.possibleValue.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                    if (impl1 == impl2 && impl1.first != -1) {
+                        // same optimized interface implementation
+                        mergedMetadata.setMetadata(L"delayed_interface_impl", impl1);
+                    } else {
+                        // different implementations or one is not optimized, cannot keep optimization
+                        mergedMetadata.setMetadata(L"delayed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{-1, -1});
+                    }
+                }
+                mergedState.variableStates[key] = {false, true, {mergedType, false, {}, mergedMetadata}};
+            } else if (it1 != s1.variableStates.end()) {
+                mergedState.variableStates[key] = it1->second;
+            } else if (it2 != s2.variableStates.end()) {
+                mergedState.variableStates[key] = it2->second;
+            }
         }
         return mergedState;
     }
@@ -4208,6 +4299,72 @@ namespace yoi {
         return true;
     }
 
+    bool IRFunctionOptimizer::performInterfaceAllocationReduction() {
+        auto [successors, predecessors] = performCFGAnalysis();
+    
+        std::map<indexT, AnalysisState> blockInStates;
+        std::map<indexT, AnalysisState> blockOutStates;
+        std::queue<indexT> worklist;
+        
+        AnalysisState entryState;
+
+        if (!targetFunction->codeBlock.empty())
+            worklist.push(0);
+        blockInStates[0] = entryState;
+
+        while (!worklist.empty()) {
+            indexT currentBlockIdx = worklist.front();
+            worklist.pop();
+
+            AnalysisState inState = currentBlockIdx == 0 ? blockInStates[0] : AnalysisState{};
+            if (predecessors.count(currentBlockIdx) > 0) {
+                for (indexT predIdx : predecessors[currentBlockIdx]) {
+                    if (blockOutStates.count(predIdx) > 0)
+                        inState = mergeStatesForInterfaceAllocationReduction(inState, blockOutStates[predIdx]);
+                }
+            }
+            blockInStates[currentBlockIdx] = inState;
+
+            AnalysisState newOutState = analyzeBlockForInterfaceAllocationReduction(currentBlockIdx, inState);
+
+            if (blockOutStates.find(currentBlockIdx) == blockOutStates.end() || blockOutStates[currentBlockIdx] != newOutState) {
+                blockOutStates[currentBlockIdx] = newOutState;
+                if (successors.count(currentBlockIdx) > 0) {
+                    for (indexT succIdx : successors[currentBlockIdx]) {
+                        worklist.push(succIdx);
+                    }
+                }
+            }
+        }
+
+        // Apply results
+        for(const auto& [varIndex, varType] : targetFunction->variableTable.getReversedVariableNameMap()) {
+            bool isDelayedInterfaceImplInfoInitialized = false;
+            std::pair<yoi::indexT, yoi::indexT> delayedInterfaceImplInfo{-1, -1};
+            for(const auto& [blockIndex, outState] : blockOutStates) {
+                if(outState.variableStates.count(varIndex) && outState.variableStates.at(varIndex).possibleValue.metadata.hasMetadata(L"delayed_interface_impl")) {
+                    auto impl = outState.variableStates.at(varIndex).possibleValue.metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                    if (!isDelayedInterfaceImplInfoInitialized) {
+                        delayedInterfaceImplInfo = impl;
+                        isDelayedInterfaceImplInfoInitialized = true;
+                    } else {
+                        if (delayedInterfaceImplInfo != impl || delayedInterfaceImplInfo.first == -1) {
+                            delayedInterfaceImplInfo = {-1, -1};
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            if (delayedInterfaceImplInfo.first != -1) {
+                auto var = targetFunction->variableTable.getVariables()[varIndex];
+                var->metadata.setMetadata(L"regressed_interface_impl", delayedInterfaceImplInfo);
+            }
+        }
+        
+        return true;
+    }
+
     bool IROptimizer::performStructNullablePass() {
         for (auto &[_, irModule] : compilerCtx->getCompiledModules()) {
             for (auto &struct_type : irModule->structTable) {
@@ -4218,5 +4375,52 @@ namespace yoi {
             }
         }
         return true;
+    }
+    std::pair<std::map<indexT, std::vector<indexT>>, std::map<indexT, std::vector<indexT>>>
+    IRFunctionOptimizer::performCFGAnalysis() {
+        std::map<indexT, std::vector<indexT>> successors;
+        std::map<indexT, std::vector<indexT>> predecessors;
+
+        for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
+            if (successors.find(i) == successors.end())
+                successors[i] = {};
+            if (predecessors.find(i) == predecessors.end())
+                predecessors[i] = {};
+            if (!targetFunction->codeBlock[i]->getIRArray().empty()) {
+                auto &lastIns = targetFunction->codeBlock[i]->getIRArray().back();
+                bool isTerminator =
+                    (lastIns.opcode == IR::Opcode::jump || lastIns.opcode == IR::Opcode::jump_if_false ||
+                     lastIns.opcode == IR::Opcode::jump_if_true || lastIns.opcode == IR::Opcode::ret ||
+                     lastIns.opcode == IR::Opcode::ret_none);
+                if (!isTerminator && (i + 1 < targetFunction->codeBlock.size())) {
+                    successors[i].push_back(i + 1);
+                    predecessors[i + 1].push_back(i);
+                }
+            }
+            for (auto &ins : targetFunction->codeBlock[i]->getIRArray()) {
+                switch (ins.opcode) {
+                    case IR::Opcode::jump: {
+                        indexT target = ins.operands[0].value.codeBlockIndex;
+                        successors[i].push_back(target);
+                        predecessors[target].push_back(i);
+                        break;
+                    }
+                    case IR::Opcode::jump_if_true:
+                    case IR::Opcode::jump_if_false: {
+                        indexT target = ins.operands[0].value.codeBlockIndex;
+                        successors[i].push_back(target);
+                        if (i + 1 < targetFunction->codeBlock.size())
+                            successors[i].push_back(i + 1);
+                        predecessors[target].push_back(i);
+                        if (i + 1 < targetFunction->codeBlock.size())
+                            predecessors[i + 1].push_back(i);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+        return std::make_pair(successors, predecessors);
     }
 } // namespace yoi

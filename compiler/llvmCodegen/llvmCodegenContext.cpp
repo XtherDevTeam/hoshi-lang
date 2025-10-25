@@ -11,6 +11,7 @@
 #include <llvm/Passes/PassBuilder.h>
 #include <llvm/Passes/OptimizationLevel.h>
 #include <llvm/MC/TargetRegistry.h>
+#include <llvm/TargetParser/SubtargetFeature.h>
 #include <llvm/TargetParser/Host.h>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/raw_ostream.h>
@@ -23,12 +24,6 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/Error.h>
 #include <llvm/Support/CodeGen.h>
-#include <llvm/ExecutionEngine/ExecutionEngine.h>
-#include <llvm/ExecutionEngine/JITSymbol.h>
-#include <llvm/ExecutionEngine/Orc/Core.h>
-#include <llvm/ExecutionEngine/Orc/LLJIT.h>
-#include <llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h>
-#include <llvm/ExecutionEngine/SectionMemoryManager.h>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -1491,7 +1486,6 @@ namespace yoi {
                 callGcFunction(structVal.llvmValue, structVal.yoiType, false); // Release the reference to the struct
                 break;
             }
-            case IR::Opcode::invoke_virtual_1:
             case IR::Opcode::invoke_virtual: {
                 auto methodVTableIndex = instr.operands[2].value.symbolIndex;
                 auto userArgCount = instr.operands[3].value.symbolIndex;

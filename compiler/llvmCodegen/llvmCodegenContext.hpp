@@ -85,15 +85,7 @@ namespace yoi {
         struct StackValue {
             llvm::Value *llvmValue;
             std::shared_ptr<IRValueType> yoiType;
-        };
-
-        /**
-         * @brief Stack Value Phi struct which presents the actual phi node on the stack.
-         * @note when dfs encountered the same block node again, it won't generate a new block, but reuse the existing phi node.
-         */
-        struct StackValuePhi {
-            llvm::PHINode *llvmValue;
-            std::shared_ptr<IRValueType> yoiType;
+            IRMetadata metadata;
         };
 
         struct ValueStackWithPhi {

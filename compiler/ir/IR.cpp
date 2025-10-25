@@ -711,7 +711,7 @@ namespace yoi {
             for (auto &i : attributes) res += L" @" + string2wstring(std::string{magic_enum::enum_name(i)});
 
         if (showAttributes)
-            for (auto &i : metadata) res += L" @" + i.first;
+            res += L" " + metadata.to_string();
 
         return res;
     }
@@ -1531,14 +1531,6 @@ namespace yoi {
         tempVarStack.push_back(returnType);
         insert(IR{IR::Opcode::invoke_dangling, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo});
     }
-    
-    bool IRValueType::hasMetadata(const yoi::wstr &key) const {
-        return metadata.find(key) != metadata.end();
-    }
-
-    void IRValueType::eraseMetadata(const yoi::wstr &key) {
-        metadata.erase(key);
-    }
 
     IRBuildConfig::Builder &
     IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
@@ -1568,5 +1560,34 @@ namespace yoi {
                                                                      yoi::indexT valueIndex) {
         this->valueToIndexMap.put_create(valueName, valueIndex);
         return *this;
+    }
+    
+    void IRMetadata::eraseMetadata(const yoi::wstr &key) {
+        if (metadata.count(key)) {
+            metadata.erase(key);
+        }
+    }
+
+    bool IRMetadata::hasMetadata(const yoi::wstr &key) const {
+        return metadata.find(key) != metadata.end();
+    }
+
+    yoi::wstr IRMetadata::to_string() const {
+        std::wstringstream ss;
+        for (auto &entry : metadata) {
+            if (entry.first == L"regressed_interface_impl") {
+                auto &implIndex = getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                ss << L"!" << entry.first << "{" << implIndex.first << "," << implIndex.second << "}" << ' ';
+            } else if (entry.first == L"delayed_interface_impl") {
+                auto &implIndex = getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"delayed_interface_impl");
+                ss << L"!" << entry.first << "{" << implIndex.first << "," << implIndex.second << "}" << ' ';
+            } else if (entry.first == L"from_local") {
+                auto localIndex = getMetadata<yoi::indexT>(L"from_local");
+                ss << L"!" << entry.first << "{" << localIndex << "}" << ' ';
+            }
+        }
+        if (!ss.str().empty())
+            ss.unget();
+        return ss.str();
     }
 } // namespace yoi

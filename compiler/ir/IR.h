@@ -68,6 +68,28 @@ namespace yoi {
         yoi::indexT column;
     };
 
+    struct IRMetadata {
+        std::map<yoi::wstr, std::any> metadata;
+
+        template<typename T> T & getMetadata(const yoi::wstr &key) {
+            return *std::any_cast<T>(&metadata.at(key));
+        }
+
+        template<typename T> const T & getMetadata(const yoi::wstr &key) const {
+            return *std::any_cast<T>(&metadata.at(key));
+        }
+
+        template<typename T> void setMetadata(const yoi::wstr &key, const T &value) {
+            metadata[key] = value;
+        }
+
+        void eraseMetadata(const yoi::wstr &key);
+
+        bool hasMetadata(const yoi::wstr &key) const;
+
+        yoi::wstr to_string() const;
+    };
+
     class IRValueType {
       public:
         enum class ValueAttr : yoi::indexT {
@@ -111,7 +133,7 @@ namespace yoi {
 
         std::set<ValueAttr> attributes;
 
-        std::map<yoi::wstr, std::any> metadata;
+        IRMetadata metadata;
 
         IRValueType();
 
@@ -164,18 +186,6 @@ namespace yoi {
         IRValueType & removeAttribute(ValueAttr attr);
 
         bool hasAttribute(ValueAttr attr) const;
-
-        bool hasMetadata(const yoi::wstr &key) const;
-
-        template<typename T> T & getMetadata(const yoi::wstr &key) {
-            return *std::any_cast<T>(&metadata.at(key));
-        }
-
-        template<typename T> void setMetadata(const yoi::wstr &key, const T &value) {
-            metadata[key] = value;
-        }
-
-        void eraseMetadata(const yoi::wstr &key);
     };
 
     class IROperand {
@@ -302,7 +312,6 @@ namespace yoi {
             new_struct,
             construct_interface_impl,
             invoke_virtual,
-            invoke_virtual_1, // for known interface implementation, we directly call at the function, no need to call the function pointer from vtable
             invoke_imported,
             invoke_dangling,
             store_element,

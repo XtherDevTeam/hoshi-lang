@@ -112,6 +112,8 @@ namespace yoi {
 
                     PossibleValue(short shortValue);
                 } possibleValue;
+                
+                IRMetadata metadata;
 
                 ContributedInstructionSet contributedInstructions;
             };
@@ -225,17 +227,23 @@ namespace yoi {
 
         AnalysisState analyzeBlock(indexT blockIndex, const AnalysisState &inState);
 
-        void transformBlock(indexT blockIndex, const AnalysisState &inState);        
+        void transformBlock(indexT blockIndex, const AnalysisState &inState);
+
+        std::pair<std::map<indexT, std::vector<indexT>>, std::map<indexT, std::vector<indexT>>> performCFGAnalysis();
 
         bool performNullableCheck();
         bool performRawCheck();
         bool performParamBorrowCheck();
+        bool performInterfaceAllocationReduction();
 
       private:
         AnalysisState analyzeBlockForNullable(indexT blockIndex, const AnalysisState &inState);
         AnalysisState analyzeBlockForRaw(indexT blockIndex, const AnalysisState &inState);
+        AnalysisState analyzeBlockForInterfaceAllocationReduction(indexT blockIndex, const AnalysisState &inState);
+
         AnalysisState mergeStatesForNullable(const AnalysisState &s1, const AnalysisState &s2);
         AnalysisState mergeStatesForRaw(const AnalysisState &s1, const AnalysisState &s2);
+        AnalysisState mergeStatesForInterfaceAllocationReduction(const AnalysisState &s1, const AnalysisState &s2);
     };
 
     struct AnalysisState {
