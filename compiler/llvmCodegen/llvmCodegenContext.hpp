@@ -29,7 +29,7 @@ namespace yoi {
 
     class LLVMCodegen {
       public:
-        LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, std::shared_ptr<IRModule> yoiModule);
+        LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, const std::shared_ptr<IRModule> & yoiModule);
 
         // Generate the LLVM Module from the yoi::IRModule.
         void generate();
@@ -99,13 +99,15 @@ namespace yoi {
             const ControlFlowAnalysis &cfa;
             yoi::indexT currentState;
             llvm::IRBuilder<> *builder;
+            std::shared_ptr<IRModule> yoiModule;
 
-            ValueStackWithPhi(const ControlFlowAnalysis &cfa, llvm::IRBuilder<> *builder);
+            ValueStackWithPhi(const ControlFlowAnalysis &cfa, llvm::IRBuilder<> *builder, const std::shared_ptr<IRModule> &yoiModule);
 
             void enterNode(yoi::indexT currentState,
                            yoi::indexT fromState,
                            llvm::BasicBlock *currentBlock,
-                           llvm::BasicBlock *fromBlock);
+                           llvm::BasicBlock *fromBlock,
+                           const std::function<StackValue(const std::shared_ptr<IRValueType> &, llvm::Value *, yoi::indexT)> &actualizeFunc);
 
             void enterNode(yoi::indexT currentState, llvm::BasicBlock *currentBlock);
 
@@ -233,6 +235,16 @@ namespace yoi {
         void generateIfTargetNotNull(llvm::Value *objectPtr,
                                      const std::shared_ptr<IRValueType> &yoiType,
                                      const std::function<void()> &func, bool enforced = false);
+
+        StackValue actualizeInterfaceObject(const std::shared_ptr<IRValueType> &type,
+                                            llvm::Value *objectPtr,
+                                            yoi::indexT implIndex);
+
+        StackValue wrapInterfaceObjectIfRegressed(const StackValue &objectVal);
+
+        llvm::Value * unwrapInterfaceObject(const StackValue &objectVal);
+
+        StackValue promiseInterfaceObjectIfInterface(const StackValue &objectVal);
     };
 
 } // namespace yoi

@@ -24,12 +24,12 @@
 - [x] 加入 lambda
 - [x] 完成 `let [x, y] = depacker()` 的语法设计和实现
 - [x] 改造 `new struct` 的逻辑
-- [ ] 有限范围内推断虚函数调用变为正常函数优化
-    - [ ] IRValueType改造，支持附加信息
+- [x] 有限范围内推断虚函数调用变为正常函数优化
+    - [x] IRValueType改造，支持附加信息
 - [x] 加入左值对象和将亡对象判断和处理逻辑
 - [x] 在json库加入对 list 和 null 的处理
 - [ ] 为type alias加入模板
-<!-- - [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化 (dismissed) -->
+<!-- - [ ] 加入 intrinstic 函数关键字及对应 llvmCodegen 优化 (won't fix) -->
 - [x] 完善 RAII 加入 finalizer
 - [x] 加入 `threading.Mutex`
 - [ ] 为普通函数实现 callable
@@ -45,3 +45,4 @@
 - [x] dummy_break, dummy_continue在while for block存在多个block时无法完成替换。
 - [x] invoke_virtual由于ensureObject后仍使用arg的属性来判断是否post cleanup导致的memory leak
 - [x] dyn_cast 匹配到错误typeid
+- [x] 接口优化导致内存泄漏

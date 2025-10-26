@@ -6,6 +6,7 @@
 #include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
+#include "compiler/ir/IRLinker.hpp"
 #include "share/def.hpp"
 #include <algorithm>
 #include <llvm/Passes/PassBuilder.h>
@@ -30,14 +31,14 @@
 
 namespace yoi {
 
-    LLVMCodegen::LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, std::shared_ptr<IRModule> yoiModule)
+    LLVMCodegen::LLVMCodegen(std::shared_ptr<compilerContext> compilerCtx, const std::shared_ptr<IRModule> &yoiModule)
         : TheContext(std::make_unique<llvm::LLVMContext>()),
         Builder(std::make_unique<llvm::IRBuilder<>>(*TheContext)),
         compilerCtx(std::move(compilerCtx)),
-        yoiModule(std::move(yoiModule)),
+        yoiModule(yoiModule),
         controlFlowAnalysis({}),
         nextTypeId(0),
-        valueStackPhi(controlFlowAnalysis, Builder.get()) {
+        valueStackPhi(controlFlowAnalysis, Builder.get(), yoiModule) {
         TheModule = std::make_unique<llvm::Module>("yoi.module", *TheContext);
         TheModule->addModuleFlag(llvm::Module::Warning, "Debug Info Version", llvm::DEBUG_METADATA_VERSION);
         DBuilder = std::make_unique<llvm::DIBuilder>(*TheModule);
@@ -749,7 +750,9 @@ namespace yoi {
         // check whether generated
         if (basicBlockVisited.contains(toBlock) && toBlock != 0) {
             // merge stack values
-            valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock));
+            valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
+                return actualizeInterfaceObject(a, b, c);
+            });
             valueStackPhi.finalizeNode();
             return;
         }
@@ -764,7 +767,9 @@ namespace yoi {
             }
         }
 
-        valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock));
+        valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
+            return actualizeInterfaceObject(a, b, c);
+        });
 
         for (const auto& instr : block.getIRArray()) {
             generateInstruction(instr, fromBlock, toBlock);
@@ -1010,6 +1015,8 @@ namespace yoi {
                 auto yoiType = currentFunctionDef->variableTable.get(varIndex);
                 auto valToStore = valueStackPhi.back(); valueStackPhi.pop_back();
 
+                valToStore = yoiType->metadata.hasMetadata(L"regressed_interface_impl") ? valToStore : promiseInterfaceObjectIfInterface(valToStore);
+
                 // Release old value
                 auto* oldPtr = Builder->CreateLoad(alloca->getAllocatedType(), alloca, "old_ptr_for_store");
                 if (yoiType->hasAttribute(IRValueType::ValueAttr::Nullable))
@@ -1046,6 +1053,8 @@ namespace yoi {
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto valToStore = valueStackPhi.back(); valueStackPhi.pop_back();
+
+                valToStore = promiseInterfaceObjectIfInterface(valToStore);
 
                 yoiType->addAttribute(IRValueType::ValueAttr::Nullable);
 
@@ -1086,6 +1095,8 @@ namespace yoi {
             case IR::Opcode::store_member: {
                 auto structVal = valueStackPhi.back(); valueStackPhi.pop_back();
                 auto valueToStore = valueStackPhi.back(); valueStackPhi.pop_back();
+
+                valueToStore = promiseInterfaceObjectIfInterface(valueToStore);
 
                 auto memberIndex = instr.operands[0].value.symbolIndex;
                 auto llvmMemberIndex = memberIndex + 2; // +2 to skip gc_refcount header and type index
@@ -1136,6 +1147,9 @@ namespace yoi {
 
             case IR::Opcode::ret: {
                 auto retVal = valueStackPhi.back(); valueStackPhi.pop_back();
+
+                retVal = promiseInterfaceObjectIfInterface(retVal);
+
                 // The caller receives ownership, so we don't decrease the ref count here.
                 if (currentFunctionDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     auto res = unboxValue(retVal.llvmValue, retVal.yoiType);
@@ -1173,6 +1187,8 @@ namespace yoi {
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackPhi.back();
                     valueStackPhi.pop_back();
+
+                    arg = promiseInterfaceObjectIfInterface(arg);
 
                     if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
@@ -1223,6 +1239,8 @@ namespace yoi {
                     auto arg = valueStackPhi.back();
                     valueStackPhi.pop_back();
 
+                    arg = promiseInterfaceObjectIfInterface(arg);
+
                     if (funcDef->argumentTypes[0]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         postponed = unboxValue(arg.llvmValue, arg.yoiType);
                         callGcFunction(arg.llvmValue, arg.yoiType, false);
@@ -1243,6 +1261,8 @@ namespace yoi {
                 for(size_t i = 1; i < argCount; ++i) {
                     auto arg = valueStackPhi.back();
                     valueStackPhi.pop_back();
+
+                    arg = promiseInterfaceObjectIfInterface(arg);
 
                     if (funcDef->argumentTypes[argCount - i]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                         args.push_back(unboxValue(arg.llvmValue, arg.yoiType));
@@ -1298,6 +1318,7 @@ namespace yoi {
                 for(size_t i = 0; i < argCount; ++i) {
                     auto arg = valueStackPhi.back();
                     valueStackPhi.pop_back();
+                    arg = promiseInterfaceObjectIfInterface(arg);
                     
                     if ((arg.yoiType->isBasicType() || arg.yoiType->isBasicRawType()) && !noffi) {
                         auto *param = unboxValue(arg.llvmValue, arg.yoiType);
@@ -1363,64 +1384,18 @@ namespace yoi {
             }
             case IR::Opcode::construct_interface_impl: {
                 auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
-                auto implDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
+                auto interfaceImplDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
+                auto &top = valueStackPhi.back();
+                auto object = ensureObject(top.yoiType, top.llvmValue);
+                top.yoiType = object.first;
+                top.llvmValue = object.second;
 
-                auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject, implDef->implInterfaceIndex.first, implDef->implInterfaceIndex.second);
-                
-                auto key = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second);
-                auto* interfaceLLVMType = structTypeMap.at(key);
-
-                auto size = TheModule->getDataLayout().getTypeAllocSize(interfaceLLVMType);
-                auto* sizeVal = llvm::ConstantInt::get(Builder->getInt64Ty(), size);
-
-                auto* allocCall = Builder->CreateCall(runtimeObjectAllocFunc, sizeVal, "newinterface_alloc");
-                auto* bitcast = Builder->CreateBitCast(allocCall, llvm::PointerType::get(interfaceLLVMType, 0), "casttmp");
-
-                auto* refCountPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 0, "refcount_ptr");
-                Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), 1), refCountPtr);
-
-                auto* typeIdPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 1, "typeid_ptr");
-                auto typeIdKey = std::make_tuple(IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second, 0);
-                Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), typeIDMap[typeIdKey]), typeIdPtr);
-
-                auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::interfaceObject, implDef->implInterfaceIndex.first, implDef->implInterfaceIndex.second);
-
-                auto interfaceShellVal = StackValue{bitcast, yoiType};
-                auto structInstanceVal = valueStackPhi.back(); valueStackPhi.pop_back();
-
-                // Store `this` pointer at index 1
-                auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
-                auto [objectType, objectValue] = ensureObject(structInstanceVal.yoiType, structInstanceVal.llvmValue);
-                auto* castedStructPtr = Builder->CreateBitCast(objectValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
-                Builder->CreateStore(castedStructPtr, thisPtrField);
-                // The interface now holds a reference to the struct.
-                if (structInstanceVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
-                    callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true, true, true);
-
-                // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
-                auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
-                auto decWrapperName = wstring2string(implDef->name) + "_gc_refcount_decrease";
-                auto* incWrapperFunc = functionMap.at(string2wstring(incWrapperName));
-                auto* decWrapperFunc = functionMap.at(string2wstring(decWrapperName));
-
-                auto* incVTableSlot = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 3, "gc_inc_slot");
-                Builder->CreateStore(incWrapperFunc, incVTableSlot);
-                auto* decVTableSlot = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 4, "gc_dec_slot");
-                Builder->CreateStore(decWrapperFunc, decVTableSlot);
-
-                // Populate user method pointers starting at index 5
-                for (size_t i = 0; i < implDef->virtualMethods.size(); ++i) {
-                    auto& methodYoiType = implDef->virtualMethods[i];
-                    yoi_assert(methodYoiType->type == IRValueType::valueType::virtualMethod, 0, 0, "Expected virtual method type in impl definition");
-                    auto funcIndex = methodYoiType->typeIndex;
-                    auto funcDef = yoiModule->functionTable[funcIndex];
-                    auto* llvmFunction = functionMap.at(funcDef->name);
-
-                    auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, i + 5, "vtable_slot");
-                    Builder->CreateStore(llvmFunction, vtableSlotPtr);
-                }
-
-                valueStackPhi.push_back(interfaceShellVal); // Put the constructed interface back
+                // prevent bugs for reusing the IRValueType
+                top.yoiType = managedPtr(*top.yoiType);
+                top.yoiType->type = IRValueType::valueType::interfaceObject;
+                top.yoiType->typeAffiliateModule = ENTRY_MODULE_ID_CONST;
+                top.yoiType->typeIndex = interfaceImplDef->implInterfaceIndex.second;
+                top.yoiType->metadata.setMetadata(L"regressed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{ENTRY_MODULE_ID_CONST, interfaceImplIndex});
                 break;
             }
             case IR::Opcode::bind_elements_post:
@@ -1494,7 +1469,7 @@ namespace yoi {
                 std::vector<std::pair<std::shared_ptr<IRValueType>, llvm::Value*>> postCleanup;
 
                 for (size_t i = 0; i < userArgCount - 1; ++i) { // userArgCount includes 'this'
-                    userArgs.push_back(valueStackPhi.back());
+                    userArgs.push_back(promiseInterfaceObjectIfInterface(valueStackPhi.back()));
                     valueStackPhi.pop_back();
                 }
                 std::reverse(userArgs.begin(), userArgs.end());
@@ -1506,8 +1481,7 @@ namespace yoi {
                 auto* interfaceLLVMType = structTypeMap.at(interfaceKey);
 
                 // Load the concrete `this` pointer from index 2
-                auto* thisPtrField = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
-                auto* concreteThisPtrRaw = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtrField, "concrete_this_raw");
+                auto concreteThisPtrRaw = unwrapInterfaceObject(interfaceShellVal);
                 auto* bitcastedPointer = Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(Builder->getInt64Ty(), 0), "casted_this");
                 // increase the reference count of this pointer, so that when leaving the function, it won't be collected
                 // Builder->CreateStore(Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(Builder->getInt64Ty(), 1)), bitcastedPointer);
@@ -1517,22 +1491,6 @@ namespace yoi {
                 // btw, we have increased the refcount of the interface as well before, so when we finish the invoking, we need to decrease it.
 
                 // Load the function pointer to call from the v-table. User methods start at index 5.
-                auto vtableSlotIndex = methodVTableIndex + 5;
-                auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, vtableSlotIndex, "vtable_slot_ptr");
-
-                auto interfaceDef = compilerCtx->getIRObjectFile()->compiledModule->interfaceTable[std::get<2>(interfaceKey)];
-                auto methodDef = interfaceDef->methodMap[methodVTableIndex];
-                auto* funcType = getFunctionType(methodDef);
-
-                std::vector<llvm::Type*> virtualArgTypes;
-                virtualArgTypes.push_back(llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                for (size_t i = 0; i < funcType->getNumParams(); ++i) {
-                    virtualArgTypes.push_back(funcType->getParamType(i));
-                }
-                auto* virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);
-                auto* virtualFuncPtrType = llvm::PointerType::get(virtualFuncType, 0);
-
-                auto* funcPtrToCall = Builder->CreateLoad(virtualFuncPtrType, vtableSlotPtr, "func_ptr");
 
                 std::vector<llvm::Value*> finalArgs;
                 finalArgs.push_back(concreteThisPtrRaw);
@@ -1543,6 +1501,35 @@ namespace yoi {
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !object.first->hasAttribute(IRValueType::ValueAttr::Raw));
                         // callGcFunction(arg.llvmValue, arg.yoiType, true, true);
                     else postCleanup.emplace_back(object);
+                }
+                
+                std::shared_ptr<IRFunctionDefinition> methodDef;
+                llvm::Value *funcPtrToCall = nullptr;
+                llvm::FunctionType *virtualFuncType = nullptr;
+                if (interfaceShellVal.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                    auto interfaceImplIndex = interfaceShellVal.yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                    auto interfaceImplDef = yoiModule->interfaceImplementationTable[interfaceImplIndex.second];
+                    methodDef = yoiModule->functionTable[interfaceImplDef->virtualMethods[methodVTableIndex]->typeIndex];
+                    funcPtrToCall = functionMap[methodDef->name];
+                    virtualFuncType = functionMap[methodDef->name]->getFunctionType();
+                    printf("newly added code");
+                } else {
+                    printf("breaking changes");
+                    auto vtableSlotIndex = methodVTableIndex + 5;
+                    auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, vtableSlotIndex, "vtable_slot_ptr");
+
+                    auto interfaceDef = compilerCtx->getIRObjectFile()->compiledModule->interfaceTable[std::get<2>(interfaceKey)];
+                    methodDef = interfaceDef->methodMap[methodVTableIndex];
+                    auto* funcType = getFunctionType(methodDef);
+
+                    std::vector<llvm::Type*> virtualArgTypes;
+                    virtualArgTypes.push_back(llvm::PointerType::get(Builder->getInt8Ty(), 0));
+                    for (size_t i = 0; i < funcType->getNumParams(); ++i) {
+                        virtualArgTypes.push_back(funcType->getParamType(i));
+                    }
+                    virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);
+                    auto* virtualFuncPtrType = llvm::PointerType::get(virtualFuncType, 0);
+                    funcPtrToCall = Builder->CreateLoad(virtualFuncPtrType, vtableSlotPtr, "func_ptr");
                 }
 
                 if (methodDef->returnType->type == IRValueType::valueType::none) {
@@ -1630,7 +1617,7 @@ namespace yoi {
                     dimensions.push_back(instr.operands[i].value.symbolIndex);
                 }
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    auto value = valueStackPhi[valueStackPhi.size() - size + i];
+                    auto value = promiseInterfaceObjectIfInterface(valueStackPhi[valueStackPhi.size() - size + i]);
                     if (value.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                         callGcFunction(value.llvmValue, value.yoiType, true, true, true);
                     dimensionsVal.push_back(value);
@@ -1719,7 +1706,7 @@ namespace yoi {
                 yoi::vec<StackValue> valuesToStore;
                 std::shared_ptr<yoi::IRValueType> elementType;
                 for (yoi::indexT i = 0; i < size; ++i) {
-                    auto value = valueStackPhi[valueStackPhi.size() - size + i];
+                    auto value = promiseInterfaceObjectIfInterface(valueStackPhi[valueStackPhi.size() - size + i]);
                     if (value.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                         callGcFunction(value.llvmValue, value.yoiType, true, true, true);
                     valuesToStore.push_back(value);
@@ -1771,6 +1758,8 @@ namespace yoi {
             case IR::Opcode::direct_assign: {
                 auto rhs = valueStackPhi.back(); valueStackPhi.pop_back();
                 auto lhs = valueStackPhi.back(); valueStackPhi.pop_back();
+
+                rhs = promiseInterfaceObjectIfInterface(rhs);
 
                 auto object = ensureObject(rhs.yoiType, rhs.llvmValue);
                 rhs = {object.second, object.first};
@@ -1884,6 +1873,7 @@ namespace yoi {
                 std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT> structTypeIDKey;
 
                 auto interfaceRhs = valueStackPhi.back(); valueStackPhi.pop_back();
+
                 auto structTypeIndex = instr.operands[1].value.symbolIndex;
                 std::shared_ptr<IRValueType> structYoiType;
 
@@ -1922,6 +1912,25 @@ namespace yoi {
                         structTypeIDKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex, 0);
                         structYoiType = managedPtr(IRValueType{IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex});
                         break;
+                }
+
+                if (interfaceRhs.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                    auto regressedImpl = interfaceRhs.yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                    auto implDef = yoiModule->interfaceImplementationTable[regressedImpl.second];
+                    if (implDef->implStructIndex == structTypeKey) {
+                        valueStackPhi.push_back({unwrapInterfaceObject(interfaceRhs), managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)})});
+                    } else {
+                        auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0));
+                        valueStackPhi.push_back({nullValue, managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)})});
+                    }
+
+                    if (interfaceRhs.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
+                        callGcFunction(interfaceRhs.llvmValue, interfaceRhs.yoiType, true, true);
+
+                    // no decrement here
+                    // for which it is a reuse
+
+                    break;
                 }
 
                 auto structTypeId = typeIDMap.at(structTypeIDKey);
@@ -1984,6 +1993,8 @@ namespace yoi {
                 yoi_assert(lhs.yoiType->isArrayType() || lhs.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element on non-array type.");
                 yoi_assert(index.yoiType->type == IRValueType::valueType::unsignedObject || index.yoiType->type == IRValueType::valueType::unsignedRaw, instr.debugInfo.line, instr.debugInfo.column, "LLVM Codegen: store element with non-integer index.");
 
+                rhs = promiseInterfaceObjectIfInterface(rhs);
+
                 // unbox index
                 auto* indexValue = unboxValue(index.llvmValue, index.yoiType);
                 if (rhs.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !lhs.yoiType->isBasicType())
@@ -2014,10 +2025,27 @@ namespace yoi {
                 // get the interface object off the stack
                 auto interfaceValue = valueStackPhi.back(); valueStackPhi.pop_back();
                 
+
+                if (interfaceValue.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                    auto regressedImpl = interfaceValue.yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                    auto implDef = yoiModule->interfaceImplementationTable[regressedImpl.second];
+                    if (typeIDMap.contains({std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex), 0})) {
+                        auto *trueBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 1, true);
+                        valueStackPhi.push_back({trueBoolean, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
+                    } else {
+                        auto *falseBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 0, true);
+                        valueStackPhi.push_back({falseBoolean, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
+                    }
+                    callGcFunction(interfaceValue.llvmValue, interfaceValue.yoiType, false);
+                    callGcFunction(typeidValue.llvmValue, typeidValue.yoiType, false);
+                    break;
+                }
+
                 // evaluate the interface this
                 auto interfaceKey = std::make_tuple(interfaceValue.yoiType->type, interfaceValue.yoiType->typeAffiliateModule, interfaceValue.yoiType->typeIndex);
-                auto thisPtrToStruct = Builder->CreateStructGEP(structTypeMap.at(interfaceKey), interfaceValue.llvmValue, 2, "this_ptr_to_struct");
-                auto loadedThisPtr = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt64Ty(), 0), thisPtrToStruct, "loaded_this_ptr");
+                // auto thisPtrToStruct = Builder->CreateStructGEP(structTypeMap.at(interfaceKey), interfaceValue.llvmValue, 2, "this_ptr_to_struct");
+                // auto loadedThisPtr = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt64Ty(), 0), thisPtrToStruct, "loaded_this_ptr");
+                auto loadedThisPtr = unwrapInterfaceObject(interfaceValue);
                 // offset by 8 bytes and check typeid
                 auto* typeIdPtr = Builder->CreateGEP(Builder->getInt64Ty(), loadedThisPtr, {llvm::ConstantInt::get(Builder->getInt32Ty(), 1, true)});
                 auto* loadedTypeId = Builder->CreateLoad(Builder->getInt64Ty(), typeIdPtr, "loaded_typeid");
@@ -2277,12 +2305,24 @@ namespace yoi {
         }
         if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
             return;
+        
+        auto finalType = managedPtr(*yoiType);
+
+        if (yoiType->type == IRValueType::valueType::interfaceObject && yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+            auto impl = yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+            if (impl.first != -1) {
+                auto implDef = yoiModule->interfaceImplementationTable[impl.second];
+                finalType->type = std::get<0>(implDef->implStructIndex);
+                finalType->typeAffiliateModule = std::get<1>(implDef->implStructIndex);
+                finalType->typeIndex = std::get<2>(implDef->implStructIndex);
+            }
+        }
 
         std::string funcNameBase;
-        if (yoiType->isArrayType() || yoiType->isDynamicArrayType()) {
-            funcNameBase = "array_" + yoi::wstring2string(yoiType->to_string());
+        if (finalType->isArrayType() || finalType->isDynamicArrayType()) {
+            funcNameBase = "array_" + yoi::wstring2string(finalType->to_string());
         } else {
-            switch(yoiType->type) {
+            switch(finalType->type) {
                 case IRValueType::valueType::foreignInt32Type:
                 case IRValueType::valueType::integerObject: funcNameBase = "basic_int"; break;
                 case IRValueType::valueType::foreignFloatType:
@@ -2293,10 +2333,10 @@ namespace yoi {
                 case IRValueType::valueType::shortObject: funcNameBase = "basic_short"; break;
                 case IRValueType::valueType::unsignedObject: funcNameBase = "basic_unsigned"; break;
                 case IRValueType::valueType::structObject:
-                    funcNameBase = "struct_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
+                    funcNameBase = "struct_" + std::to_string(finalType->typeAffiliateModule) + "_" + std::to_string(finalType->typeIndex);
                     break;
                 case IRValueType::valueType::interfaceObject:
-                    funcNameBase = "interface_" + std::to_string(yoiType->typeAffiliateModule) + "_" + std::to_string(yoiType->typeIndex);
+                    funcNameBase = "interface_" + std::to_string(finalType->typeAffiliateModule) + "_" + std::to_string(finalType->typeIndex);
                     break;
                 default: return; // No GC needed for raw types or unhandled types
             }
@@ -3698,13 +3738,14 @@ namespace yoi {
         Builder->SetInsertPoint(continueBlock);
     }
 
-    LLVMCodegen::ValueStackWithPhi::ValueStackWithPhi(const ControlFlowAnalysis &cfa, llvm::IRBuilder<> *builder)
-        : cfa(cfa), stackState(StackState::Finalized), currentState(0), builder(builder) {}
+    LLVMCodegen::ValueStackWithPhi::ValueStackWithPhi(const ControlFlowAnalysis &cfa, llvm::IRBuilder<> *builder, const std::shared_ptr<IRModule> &yoiModule)
+        : cfa(cfa), stackState(StackState::Finalized), currentState(0), builder(builder), yoiModule(yoiModule) {}
         
     void LLVMCodegen::ValueStackWithPhi::enterNode(yoi::indexT currentState,
                                                    yoi::indexT fromState,
                                                    llvm::BasicBlock *currentBlock,
-                                                   llvm::BasicBlock *fromBlock) {
+                                                   llvm::BasicBlock *fromBlock,
+                                                   const std::function<StackValue(const std::shared_ptr<IRValueType> &, llvm::Value *, yoi::indexT)> & actualizeFunc) {
         yoi_assert(
             stackState == StackState::Finalized, 0, 0, "llvmCodegen: invoking enterNode on an unfinalized stack");
         stackState = StackState::InEvaluation;
@@ -3716,6 +3757,7 @@ namespace yoi {
             valueStackStateIn[currentState] = valueStackStateOut[fromState];
             phiNodes[currentState] = valueStackStateOut[fromState].empty() ? yoi::vec<llvm::PHINode *>{} : phiNodes[fromState];
             // also, for those which is not a phi node but exists in the previous block, create a new phi node for them.
+            auto begin = phiNodes[currentState].size();
             for (yoi::indexT begins = phiNodes[currentState].size(); begins < valueStackStateIn[currentState].size(); begins++) {
                 auto phiNode = builder->CreatePHI(valueStackStateIn[currentState][begins].llvmValue->getType(), cfa.reverseG.at(currentState).size(), "phi_node");
                 phiNode->addIncoming(valueStackStateOut[fromState][begins].llvmValue, fromBlock); // definitely from the previous block.
@@ -3737,6 +3779,34 @@ namespace yoi {
                 if (valueStackStateOut[fromState][i].llvmValue != phiNodes[currentState][i]) {
                     // merge phi nodes
                     phiNodes[currentState][i]->addIncoming(valueStackStateOut[fromState][i].llvmValue, fromBlock);
+
+                    // merge variable metadata
+                    if (valueStackStateIn[currentState][i].yoiType->metadata.hasMetadata(L"regressed_interface_impl") && valueStackStateOut[fromState][i].yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                        auto implIndex1 = valueStackStateIn[currentState][i].yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                        auto implIndex2 = valueStackStateOut[fromState][i].yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                        auto implDef1 = yoiModule->interfaceImplementationTable[implIndex1.second];
+                        auto implDef2 = yoiModule->interfaceImplementationTable[implIndex2.second];
+                        if (implIndex1 != implIndex2) {
+                            // conflict, remove metadata, and actualize the interface object.
+                            // while both sides are fucked, we take the phi node as input node.
+                            panic(0, 0, "llvmCodegen: interface implementation conflict");
+                            // valueStackStateIn[currentState][i] = actualizeFunc(managedPtr(IRValueType{std::get<0>(implDef1->implStructIndex), std::get<1>(implDef1->implStructIndex), std::get<2>(implDef1->implStructIndex)}), valueStackStateIn[currentState][i].llvmValue, implIndex1.second);
+                        }
+                    } else if (valueStackStateIn[currentState][i].yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                        auto implIndex1 = valueStackStateIn[currentState][i].yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                        auto implDef = yoiModule->interfaceImplementationTable[implIndex1.second];
+                        // right side is plain, so we normalize the left side.
+                        // valueStackStateIn[currentState][i] = actualizeFunc(managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)}), valueStackStateIn[currentState][i].llvmValue, implIndex1.second);
+                        panic(0, 0, "llvmCodegen: interface implementation conflict");
+                    } else if (valueStackStateOut[fromState][i].yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+                        auto implIndex2 = valueStackStateOut[fromState][i].yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                        auto implDef = yoiModule->interfaceImplementationTable[implIndex2.second];
+                        // left side is plain, so we normalize the right side.
+                        // valueStackStateOut[fromState][i] = actualizeFunc(managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)}), valueStackStateOut[fromState][i].llvmValue, implIndex2.second);
+                        panic(0, 0, "llvmCodegen: interface implementation conflict");
+                    } else {
+                        // both side is plain, we do nothing.
+                    }
                 }
             }
             valueStackStateOut[currentState] = valueStackStateIn[currentState];
@@ -3795,5 +3865,119 @@ namespace yoi {
 
     bool LLVMCodegen::ValueStackWithPhi::empty() const {
         return valueStackStateOut.at(currentState).empty();
+    }
+
+    LLVMCodegen::StackValue LLVMCodegen::actualizeInterfaceObject(const std::shared_ptr<IRValueType> &type,
+                                               llvm::Value *objectPtr,
+                                               yoi::indexT implIndex) {
+
+        auto implDef = yoiModule->interfaceImplementationTable[implIndex];
+
+        auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject,
+                                            implDef->implInterfaceIndex.first,
+                                            implDef->implInterfaceIndex.second);
+
+        auto key = std::make_tuple(
+            IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second);
+        auto *interfaceLLVMType = structTypeMap.at(key);
+
+        auto size = TheModule->getDataLayout().getTypeAllocSize(interfaceLLVMType);
+        auto *sizeVal = llvm::ConstantInt::get(Builder->getInt64Ty(), size);
+
+        auto *allocCall = Builder->CreateCall(runtimeObjectAllocFunc, sizeVal, "newinterface_alloc");
+        auto *bitcast = Builder->CreateBitCast(allocCall, llvm::PointerType::get(interfaceLLVMType, 0), "casttmp");
+
+        auto *refCountPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 0, "refcount_ptr");
+        Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), 1), refCountPtr);
+
+        auto *typeIdPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 1, "typeid_ptr");
+        auto typeIdKey = std::make_tuple(
+            IRValueType::valueType::interfaceObject, yoiModule->identifier, implDef->implInterfaceIndex.second, 0);
+        Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), typeIDMap[typeIdKey]), typeIdPtr);
+
+        auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::interfaceObject,
+                                                     implDef->implInterfaceIndex.first,
+                                                     implDef->implInterfaceIndex.second);
+
+        auto interfaceShellVal = StackValue{bitcast, yoiType};
+        
+        /*auto structInstanceVal = valueStackPhi.back();
+        valueStackPhi.pop_back();*/
+        auto structInstanceVal = StackValue{objectPtr, type};
+
+        if (structInstanceVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope)) {
+            callGcFunction(structInstanceVal.llvmValue, structInstanceVal.yoiType, true, true, true);
+        }
+
+        // Store `this` pointer at index 1
+        auto *thisPtrField =
+            Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
+        auto [objectType, objectValue] = ensureObject(structInstanceVal.yoiType, structInstanceVal.llvmValue);
+        auto *castedStructPtr =
+            Builder->CreateBitCast(objectValue, llvm::PointerType::get(Builder->getInt8Ty(), 0), "casted_this");
+        Builder->CreateStore(castedStructPtr, thisPtrField);
+
+        // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
+        auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
+        auto decWrapperName = wstring2string(implDef->name) + "_gc_refcount_decrease";
+        auto *incWrapperFunc = functionMap.at(string2wstring(incWrapperName));
+        auto *decWrapperFunc = functionMap.at(string2wstring(decWrapperName));
+
+        auto *incVTableSlot =
+            Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 3, "gc_inc_slot");
+        Builder->CreateStore(incWrapperFunc, incVTableSlot);
+        auto *decVTableSlot =
+            Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 4, "gc_dec_slot");
+        Builder->CreateStore(decWrapperFunc, decVTableSlot);
+
+        // Populate user method pointers starting at index 5
+        for (size_t i = 0; i < implDef->virtualMethods.size(); ++i) {
+            auto &methodYoiType = implDef->virtualMethods[i];
+            yoi_assert(methodYoiType->type == IRValueType::valueType::virtualMethod,
+                       0,
+                       0,
+                       "Expected virtual method type in impl definition");
+            auto funcIndex = methodYoiType->typeIndex;
+            auto funcDef = yoiModule->functionTable[funcIndex];
+            auto *llvmFunction = functionMap.at(funcDef->name);
+
+            auto *vtableSlotPtr =
+                Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, i + 5, "vtable_slot");
+            Builder->CreateStore(llvmFunction, vtableSlotPtr);
+        }
+
+        return interfaceShellVal;
+    }
+
+    LLVMCodegen::StackValue LLVMCodegen::wrapInterfaceObjectIfRegressed(const StackValue &objectVal) {
+        if (objectVal.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+            auto impl = objectVal.yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+            auto implDef = yoiModule->interfaceImplementationTable[impl.second];
+            if (impl.first != -1) {
+                return actualizeInterfaceObject(managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex), objectVal.yoiType->attributes}), objectVal.llvmValue, impl.second);
+            }
+        }
+        return objectVal;
+    }
+
+    llvm::Value * LLVMCodegen::unwrapInterfaceObject(const StackValue &objectVal) {
+        yoi_assert(objectVal.yoiType->type == IRValueType::valueType::interfaceObject, 0, 0, "unwrapInterfaceObject(...): Except interface object");
+        if (objectVal.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
+            auto impl = objectVal.yoiType->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+            auto implDef = yoiModule->interfaceImplementationTable[impl.second];
+
+            if (impl.first != -1) {
+                return objectVal.llvmValue;
+            }
+        }
+        auto interfaceType = structTypeMap.at({objectVal.yoiType->type, objectVal.yoiType->typeAffiliateModule, objectVal.yoiType->typeIndex});
+        auto *thisPtrField = Builder->CreateStructGEP(interfaceType, objectVal.llvmValue, 2);
+        auto *thisPtr = Builder->CreateLoad(llvm::PointerType::get(Builder->getInt8Ty(), 0), thisPtrField);
+        return thisPtr;
+    }
+    LLVMCodegen::StackValue LLVMCodegen::promiseInterfaceObjectIfInterface(const StackValue &objectVal) {
+        return objectVal.yoiType->type == IRValueType::valueType::interfaceObject
+                   ? wrapInterfaceObjectIfRegressed(objectVal)
+                   : objectVal;
     }
 } // namespace yoi

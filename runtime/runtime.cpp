@@ -20,7 +20,7 @@ int elysia_main(int argc, char *argv[]) {
     #endif
 #if defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
     if (runtime_object_allocated > 0) {
-        printf("[Elysia/WARNING] hoshi-lang runtime finished with %lld objects allocated, memory leaks detected!\n", runtime_object_allocated);
+        printf("[Elysia/WARNING] hoshi-lang runtime finished with %lld objects allocated, memory leaks detected!\nargv[0]: %s\n", runtime_object_allocated, argv[0]);
 #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
         runtime_debug_print_current_allocated_memory();
 #endif

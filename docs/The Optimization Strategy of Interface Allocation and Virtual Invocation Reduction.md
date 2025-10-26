@@ -26,7 +26,8 @@
 
 对于 construct_interface_impl 命令，我们不进行任何操作，仅改变IRValueType类型，并增加元数据入栈。
 
-对于 invoke 系列命令的参数处理，我们检查是否有未实例化的参数入栈，若有，对其进行接口分配后入栈。
+对于 invoke 系列命令的参数处理、各类 store 命令以及 ret 命令，我们检查是否有未实例化的参数入栈，若有，对其进行接口分配后入栈。
 
 对于 invoke_virtual 命令，若接口对象存在有效元数据，则不进行 this 指针拆箱，直接使用给出指针进行后续操作。
 
+此外，我们也需要修改 callGcFunction 以便正确析构 struct 指针。

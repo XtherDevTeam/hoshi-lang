@@ -3,6 +3,7 @@
 //
 
 #include "IRLinker.hpp"
+#include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
@@ -31,6 +32,7 @@ namespace yoi {
         linkGlobals();
         linkFunctions();
         linkInterfaceImplementations();
+        linkMetadata();
         patchIRFFITable();
         createEntryFunction();
 
@@ -380,6 +382,20 @@ namespace yoi {
             default: {
                 // Other types don't need patching
                 return key;
+            }
+        }
+    }
+
+    void IRLinker::linkMetadata() {
+        auto link = [&](IRMetadata &metadata) {
+            if (metadata.hasMetadata(L"regressed_interface_impl")) {
+                auto &impl = metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"regressed_interface_impl");
+                impl = impl.first != -1 ? std::pair<yoi::indexT, yoi::indexT>(ENTRY_MODULE_ID_CONST, interfaceImplRemapping.at(impl.first).at(impl.second)) : impl;
+            }
+        };
+        for (auto &func : finalModule->functionTable) {
+            for (auto &var : func.second->variableTable.getVariables()) {
+                link(var->metadata);
             }
         }
     }

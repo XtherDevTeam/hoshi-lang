@@ -49,6 +49,7 @@ namespace yoi {
         void linkInterfaceImplementations();
         void linkGlobals();
         void linkFunctions();
+        void linkMetadata();
         void createEntryFunction();
         void patchIRFFITable();
         std::tuple<IRValueType::valueType, indexT, indexT>
