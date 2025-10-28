@@ -105,6 +105,7 @@ namespace yoi {
                 kThreeDots,
                 kInterfaceOf,
                 kAlias,
+                kEnum,
                 eof,
             } kind;
 

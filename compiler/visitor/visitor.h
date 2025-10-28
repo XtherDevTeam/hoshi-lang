@@ -271,6 +271,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::funcExpr *func);
 
+        void visit(yoi::enumerationDefinition *enumerationDefinition);
+
         /**
         * @brief Visits a list of argument expressions and returns their types.
         * @param args The AST node for the argument list.

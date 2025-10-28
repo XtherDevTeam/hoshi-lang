@@ -1590,4 +1590,7 @@ namespace yoi {
             ss.unget();
         return ss.str();
     }
+    std::shared_ptr<IREnumerationType> IREnumerationType::Builder::yield() {
+        return std::make_shared<IREnumerationType>(name, valueToIndexMap);
+    }
 } // namespace yoi

@@ -821,7 +821,42 @@ namespace yoi {
             lastModule = targetModule;
         }
 
-        // 2. Handle static method calls (e.g., MyType::staticFunc())
+        // 2. Handle enumerations
+        if (it + 2 == memberExpr->getTerms().end()) {
+            if ((*it)->isIdentifier() && !(*it)->id->hasTemplateArg() && (*(it + 1))->isIdentifier() && !(*(it + 1))->id->hasTemplateArg() && irModule->enumerationTable.contains((*it)->id->id->node.strVal)) {
+                try {
+                    auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule == -1 ? currentModuleIndex : targetModule);
+                    auto v = targetedModule->enumerationTable[(*it)->id->id->node.strVal]->valueToIndexMap[(*(it + 1))->id->id->node.strVal];
+                    IR::Opcode op = IR::Opcode::push_character;
+                    IROperand operand;
+                    switch (targetedModule->enumerationTable[(*it)->id->id->node.strVal]->getUnderlyingType()) {
+                        case IREnumerationType::UnderlyingType::I8: {
+                            op = IR::Opcode::push_character;
+                            operand = {IROperand::operandType::character, (yoi::wchar)v};
+                            break;
+                        }
+                        case IREnumerationType::UnderlyingType::I16: {
+                            op = IR::Opcode::push_short;
+                            operand = {IROperand::operandType::character, (short)v};
+                            break;
+                        }
+                        case IREnumerationType::UnderlyingType::I64: {
+                            op = IR::Opcode::push_unsigned;
+                            operand = {IROperand::operandType::unsignedInt, (yoi::indexT)v};
+                            break;
+                        }
+                    }
+                    moduleContext->getIRBuilder().pushOp(op, {operand});
+
+                    moduleContext->getIRBuilder().discardStateUntil(snapshotIndex);
+                    return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+                } catch(std::out_of_range &e) {
+                    panic((*(it + 1))->getLine(), (*(it + 1))->getColumn(), "Enumeration value not found: " + yoi::wstring2string((*(it + 1))->id->id->node.strVal));
+                }
+            }
+        }
+
+        // 3. Handle static method calls (e.g., MyType::staticFunc())
         // This is a special case where the base is a type name, not an instance.
         std::shared_ptr<IRValueType> staticTypeBase{};
         try {
@@ -2132,6 +2167,10 @@ namespace yoi {
             }
             case globalStmt::vKind::typeAliasStmt: {
                 visit(globalStmt->value.typeAliasStmtVal);
+                break;
+            }
+            case globalStmt::vKind::enumerationDef: {
+                visit(globalStmt->value.enumerationDefVal);
                 break;
             }
             default: {
@@ -4426,5 +4465,18 @@ namespace yoi {
             default:
                 return nullptr;
         }
+    }
+
+    void visitor::visit(yoi::enumerationDefinition *enumerationDefinition) {
+        IREnumerationType::Builder builder;
+        builder.setName(enumerationDefinition->name->get().strVal);
+        yoi::indexT idx = 0;
+        for (auto &node : enumerationDefinition->values) {
+            builder.addValue(node->get().strVal, idx++);
+        }
+        auto enumType = builder.yield();
+        auto enumIndex = irModule->enumerationTable.put_create(enumType->name, enumType);
+        auto underlyingEnumType = mapEnumTypeToBasicType(currentModuleIndex, enumIndex);
+        irModule->typeAliases[enumerationDefinition->name->get().strVal] = *underlyingEnumType;
     }
 } // namespace yoi

@@ -188,6 +188,8 @@ namespace yoi {
 
     class letAssignmentPairLHS;
 
+    class enumerationDefinition;
+
     class typeAliasStmt : public AST {
     public:
         yoi::identifierWithDefTemplateArg *lhs{};
@@ -741,7 +743,8 @@ namespace yoi {
             letStmt,
             importDecl,
             exportDecl,
-            typeAliasStmt
+            typeAliasStmt,
+            enumerationDef,
         } kind;
 
         marcoDescriptor *marco;
@@ -756,6 +759,7 @@ namespace yoi {
             importDecl *importDeclVal;
             exportDecl *exportDeclVal;
             typeAliasStmt *typeAliasStmtVal;
+            enumerationDefinition *enumerationDefVal;
             void *ptr;
 
             template<typename T>
@@ -1019,6 +1023,12 @@ namespace yoi {
         vec<typeSpec *> types;
     };
 
+    class enumerationDefinition : public AST {
+    public:
+        identifier *name;
+        vec<identifier *> values;
+    };
+
     void finalizeAST(exportDecl *ptr);
 
     void finalizeAST(importInner *ptr);
@@ -1174,6 +1184,8 @@ namespace yoi {
     void finalizeAST(funcExpr *ptr);
 
     void finalizeAST(letAssignmentPairLHS *ptr);
+
+    void finalizeAST(enumerationDefinition *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

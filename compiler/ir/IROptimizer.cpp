@@ -2793,6 +2793,7 @@ namespace yoi {
                 }
                 case IR::Opcode::push_character: {
                     auto newType = std::make_shared<IRValueType>(*compilerCtx->getCharObjectType());
+                    newType->addAttribute(IRValueType::ValueAttr::Raw);
                     simulationStack.push(newType, {});
                     break;
                 }

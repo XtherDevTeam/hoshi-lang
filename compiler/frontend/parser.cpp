@@ -1302,6 +1302,7 @@ namespace yoi {
         exportDecl *g = nullptr;
         importDecl *h = nullptr;
         typeAliasStmt *i = nullptr;
+        enumerationDefinition *j = nullptr;
         
         lexer::token node_start_token = lex.curToken;
 
@@ -1358,6 +1359,12 @@ namespace yoi {
         parse(i, lex);
         if (i) {
             o = new globalStmt{node_start_token, globalStmt::vKind::typeAliasStmt, marco, {i}};
+            return;
+        }
+
+        parse(j, lex);
+        if (j) {
+            o = new globalStmt{node_start_token, globalStmt::vKind::enumerationDef, marco, {j}};
             return;
         }
 
@@ -2541,6 +2548,51 @@ namespace yoi {
             return;
         }
         o = new funcExpr{node_start_token, name, args};
+    }
+
+    void parse(enumerationDefinition *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        if (lex.curToken.kind != lexer::token::tokenKind::kEnum) {
+            o = nullptr;
+            return;
+        }
+        lex.scan();
+        identifier *name = nullptr;
+        parse(name, lex);
+        if (!name) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected identifier after `enum` in enumeration definition");
+            return;
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::leftBraces) {
+            o = nullptr;
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected `{` after identifier in enumeration definition");
+            return;
+        }
+        lex.scan();
+        vec<identifier *> enumerators;
+        identifier *enumerator = nullptr;
+        parse(enumerator, lex);
+        while (enumerator) {
+            enumerators.push_back(enumerator);
+            if (lex.curToken.kind != lexer::token::tokenKind::comma) {
+                break;
+            } else {
+                enumerator = nullptr;
+                lex.scan();
+                parse(enumerator, lex);
+            }
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightBraces) {
+            o = nullptr;
+            for (auto e : enumerators) finalizeAST(e);
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected `}` after enumerators in enumeration definition");
+            return;
+        }
+        lex.scan();
+        o = new enumerationDefinition{node_start_token, name, enumerators};
     }
 } // namespace yoi
 

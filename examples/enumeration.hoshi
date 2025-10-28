@@ -1,0 +1,15 @@
+use runtime "runtime"
+
+enum ServerState {
+    Running,
+    Stopped,
+    Error
+}
+
+func main() : int {
+    let status = ServerState.Running
+    if (status != ServerState.Error) {
+        runtime.puts("enumeration validation passed")
+    }
+    return ServerState.Running
+}

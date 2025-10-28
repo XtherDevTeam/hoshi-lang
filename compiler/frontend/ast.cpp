@@ -1179,4 +1179,10 @@ namespace yoi {
         }
         delete ptr;
     }
+    void finalizeAST(enumerationDefinition *ptr) {
+        finalizeAST(ptr->name);
+        for (auto &i : ptr->values)
+            finalizeAST(i);
+        delete ptr;
+    }
 } // namespace yoi

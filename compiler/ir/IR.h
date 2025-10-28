@@ -405,6 +405,8 @@ namespace yoi {
             Builder &setName(const yoi::wstr &name);
 
             Builder &addValue(const yoi::wstr &valueName, yoi::indexT valueIndex);
+
+            std::shared_ptr<IREnumerationType> yield();
         };
     };
 
