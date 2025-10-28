@@ -5,8 +5,9 @@ var searchData=
   ['enum_5frange_2',['enum_range',['../structmagic__enum_1_1customize_1_1enum__range.html',1,'enum_range&lt; E &gt;'],['../classyoi_1_1enum__range.html',1,'enum_range&lt; enumT, TSize &gt;']]],
   ['enum_5frange_3c_20opcode_20_3e_3',['enum_range&lt; Opcode &gt;',['../classyoi_1_1enum__range.html',1,'yoi']]],
   ['enum_5frange_3c_20operandtype_20_3e_4',['enum_range&lt; operandType &gt;',['../classyoi_1_1enum__range.html',1,'yoi']]],
-  ['equalityexpr_5',['equalityExpr',['../classyoi_1_1equalityExpr.html',1,'yoi']]],
-  ['exclusiveexpr_6',['exclusiveExpr',['../classyoi_1_1exclusiveExpr.html',1,'yoi']]],
-  ['exportdecl_7',['exportDecl',['../classyoi_1_1exportDecl.html',1,'yoi']]],
-  ['externmoduleaccessexpression_8',['externModuleAccessExpression',['../classyoi_1_1externModuleAccessExpression.html',1,'yoi']]]
+  ['enumerationdefinition_5',['enumerationDefinition',['../classyoi_1_1enumerationDefinition.html',1,'yoi']]],
+  ['equalityexpr_6',['equalityExpr',['../classyoi_1_1equalityExpr.html',1,'yoi']]],
+  ['exclusiveexpr_7',['exclusiveExpr',['../classyoi_1_1exclusiveExpr.html',1,'yoi']]],
+  ['exportdecl_8',['exportDecl',['../classyoi_1_1exportDecl.html',1,'yoi']]],
+  ['externmoduleaccessexpression_9',['externModuleAccessExpression',['../classyoi_1_1externModuleAccessExpression.html',1,'yoi']]]
 ];

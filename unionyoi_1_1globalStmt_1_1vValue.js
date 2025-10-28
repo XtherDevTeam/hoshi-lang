@@ -1,6 +1,7 @@
 var unionyoi_1_1globalStmt_1_1vValue =
 [
     [ "vValue", "unionyoi_1_1globalStmt_1_1vValue.html#af1a49fd3bf613b642d5f49665e6ef977", null ],
+    [ "enumerationDefVal", "unionyoi_1_1globalStmt_1_1vValue.html#a0e27a0bf2b1c1dafe04a1e79d5cee552", null ],
     [ "exportDeclVal", "unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870", null ],
     [ "funcDefStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd", null ],
     [ "implStmtVal", "unionyoi_1_1globalStmt_1_1vValue.html#a1fc4dc25ec688d44ae069a3446934b97", null ],
