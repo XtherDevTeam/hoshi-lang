@@ -1185,4 +1185,9 @@ namespace yoi {
             finalizeAST(i);
         delete ptr;
     }
+    
+    void finalizeAST(enumerationPair *ptr) {
+        finalizeAST(ptr->name);
+        delete ptr;
+    }
 } // namespace yoi

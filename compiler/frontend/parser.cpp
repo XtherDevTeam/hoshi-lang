@@ -2571,8 +2571,8 @@ namespace yoi {
             return;
         }
         lex.scan();
-        vec<identifier *> enumerators;
-        identifier *enumerator = nullptr;
+        vec<enumerationPair *> enumerators;
+        enumerationPair *enumerator = nullptr;
         parse(enumerator, lex);
         while (enumerator) {
             enumerators.push_back(enumerator);
@@ -2593,6 +2593,30 @@ namespace yoi {
         }
         lex.scan();
         o = new enumerationDefinition{node_start_token, name, enumerators};
+    }
+
+    void parse(enumerationPair *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        identifier *name = nullptr;
+        parse(name, lex);
+        if (!name) {
+            o = nullptr;
+            return;
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::assignSign) {
+            o = new enumerationPair{node_start_token, name, {}};
+            return;
+        }
+        lex.scan();
+        lexer::token value = lex.curToken;
+        if (value.kind != lexer::token::tokenKind::integer) {
+            o = nullptr;
+            finalizeAST(name);
+            panic(lex.line, lex.col, "expected integer literal after `=` in enumeration pair");
+            return;
+        }
+        o = new enumerationPair{node_start_token, name, value};
+        lex.scan();
     }
 } // namespace yoi
 

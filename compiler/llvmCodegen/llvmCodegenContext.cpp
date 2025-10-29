@@ -1514,9 +1514,7 @@ namespace yoi {
                     methodDef = yoiModule->functionTable[interfaceImplDef->virtualMethods[methodVTableIndex]->typeIndex];
                     funcPtrToCall = functionMap[methodDef->name];
                     virtualFuncType = functionMap[methodDef->name]->getFunctionType();
-                    printf("newly added code");
                 } else {
-                    printf("breaking changes");
                     auto vtableSlotIndex = methodVTableIndex + 5;
                     auto* vtableSlotPtr = Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, vtableSlotIndex, "vtable_slot_ptr");
 

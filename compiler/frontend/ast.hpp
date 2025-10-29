@@ -190,6 +190,8 @@ namespace yoi {
 
     class enumerationDefinition;
 
+    class enumerationPair;
+
     class typeAliasStmt : public AST {
     public:
         yoi::identifierWithDefTemplateArg *lhs{};
@@ -1026,7 +1028,13 @@ namespace yoi {
     class enumerationDefinition : public AST {
     public:
         identifier *name;
-        vec<identifier *> values;
+        vec<enumerationPair *> values;
+    };
+
+    class enumerationPair : public AST {
+    public:
+        identifier *name;
+        lexer::token value; // optional
     };
 
     void finalizeAST(exportDecl *ptr);
@@ -1186,6 +1194,8 @@ namespace yoi {
     void finalizeAST(letAssignmentPairLHS *ptr);
 
     void finalizeAST(enumerationDefinition *ptr);
+
+    void finalizeAST(enumerationPair *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

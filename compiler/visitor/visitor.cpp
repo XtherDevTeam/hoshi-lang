@@ -4472,7 +4472,8 @@ namespace yoi {
         builder.setName(enumerationDefinition->name->get().strVal);
         yoi::indexT idx = 0;
         for (auto &node : enumerationDefinition->values) {
-            builder.addValue(node->get().strVal, idx++);
+            idx = node->value.kind != lexer::token::tokenKind::unknown ? node->value.basicVal.vInt : idx;
+            builder.addValue(node->name->get().strVal, idx++);
         }
         auto enumType = builder.yield();
         auto enumIndex = irModule->enumerationTable.put_create(enumType->name, enumType);
