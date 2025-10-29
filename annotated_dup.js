@@ -56,6 +56,7 @@ var annotated_dup =
       [ "dynCastExpression", "classyoi_1_1dynCastExpression.html", "classyoi_1_1dynCastExpression" ],
       [ "enum_range", "classyoi_1_1enum__range.html", "classyoi_1_1enum__range" ],
       [ "enumerationDefinition", "classyoi_1_1enumerationDefinition.html", "classyoi_1_1enumerationDefinition" ],
+      [ "enumerationPair", "classyoi_1_1enumerationPair.html", "classyoi_1_1enumerationPair" ],
       [ "equalityExpr", "classyoi_1_1equalityExpr.html", "classyoi_1_1equalityExpr" ],
       [ "exclusiveExpr", "classyoi_1_1exclusiveExpr.html", "classyoi_1_1exclusiveExpr" ],
       [ "exportDecl", "classyoi_1_1exportDecl.html", "classyoi_1_1exportDecl" ],

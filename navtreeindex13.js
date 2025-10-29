@@ -1,5 +1,13 @@
 var NAVTREEINDEX13 =
 {
+"index.html#autotoc_md154":[0,3,0],
+"index.html#autotoc_md155":[0,3,1],
+"index.html#autotoc_md156":[0,3,2],
+"index.html#autotoc_md157":[0,3,3],
+"index.html#autotoc_md158":[0,3,4],
+"index.html#autotoc_md159":[0,3,5],
+"index.html#autotoc_md160":[0,3,6],
+"index.html#autotoc_md161":[0,4],
 "index.html#autotoc_md162":[0,5],
 "index.html#autotoc_md163":[0,5,0],
 "index.html#autotoc_md164":[0,5,1],
@@ -241,13 +249,5 @@ var NAVTREEINDEX13 =
 "md_docs_2String.html#autotoc_md117":[19,0,0],
 "md_docs_2String.html#autotoc_md118":[19,0,1],
 "md_docs_2String.html#autotoc_md119":[19,1],
-"md_docs_2String.html#autotoc_md120":[19,2],
-"md_docs_2Structured_01Bindings.html":[20],
-"md_docs_2Structured_01Bindings.html#autotoc_md122":[20,0],
-"md_docs_2Structured_01Bindings.html#autotoc_md123":[20,1],
-"md_docs_2Template.html":[21],
-"md_docs_2Template.html#autotoc_md125":[21,0],
-"md_docs_2Template.html#autotoc_md126":[21,0,0],
-"md_docs_2Template.html#autotoc_md127":[21,1],
-"md_docs_2Template.html#autotoc_md128":[21,2]
+"md_docs_2String.html#autotoc_md120":[19,2]
 };

@@ -19,6 +19,7 @@ var hierarchy =
       [ "definitionArguments", "classyoi_1_1definitionArguments.html", null ],
       [ "dynCastExpression", "classyoi_1_1dynCastExpression.html", null ],
       [ "enumerationDefinition", "classyoi_1_1enumerationDefinition.html", null ],
+      [ "enumerationPair", "classyoi_1_1enumerationPair.html", null ],
       [ "equalityExpr", "classyoi_1_1equalityExpr.html", null ],
       [ "exclusiveExpr", "classyoi_1_1exclusiveExpr.html", null ],
       [ "exportDecl", "classyoi_1_1exportDecl.html", null ],
