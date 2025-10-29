@@ -1348,7 +1348,9 @@ namespace yoi {
                     auto* call = Builder->CreateCall(function, args, "calltmp");
                     // The returned value comes with a reference count for us to own.
                     // valueStackPhi.push_back({call, funcDef->returnType});
-                    valueStackPhi.push_back({call, managedPtr(compilerCtx->normalizeForeignBasicType(funcDef->returnType))});
+                    auto onstackType = noffi ? *funcDef->returnType : compilerCtx->normalizeForeignBasicType(funcDef->returnType);
+
+                    valueStackPhi.push_back({call, managedPtr(onstackType.isBasicType() && !noffi ? onstackType.getBasicRawType() : onstackType)});
                 }
 
                 if (!noffi) {
@@ -2749,7 +2751,7 @@ namespace yoi {
                         if (funcDef->returnType->isForeignBasicType()) {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType, false);
                         } else if (funcDef->returnType->isBasicType()) {
-                            actualResultVal = createBasicObject(funcDef->returnType, result);
+                            actualResultVal = result;
                         } else {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, 0, false); //convert back to yoi type
                         }
@@ -2788,7 +2790,8 @@ namespace yoi {
 
                 // then generate wrapper function decl
                 if (!noffi) {
-                    llvm::Type *wrapperReturnType = yoiTypeToLLVMType(normalizeForeignType(functionPair.second->returnType), false);
+                    auto wrapperReturnYoiType = normalizeForeignType(functionPair.second->returnType);
+                    llvm::Type *wrapperReturnType = yoiTypeToLLVMType(wrapperReturnYoiType, wrapperReturnYoiType->isBasicType());
                     yoi::vec<llvm::Type*> wrapperArgTypes;
                     for (auto &argType : functionPair.second->argumentTypes) {
                         auto paramYoiType = normalizeForeignType(argType);  // normalize foreign int32 type to integerObject
@@ -2846,9 +2849,7 @@ namespace yoi {
                 } else {
                     // convert float type to double type
                     auto *floatVal = Builder->CreateFPExt(val, llvm::Type::getDoubleTy(*TheContext), "float_val");
-                    // create new object
-                    auto *newObj = createBasicObject(compilerCtx->getDeciObjectType(), floatVal);
-                    return newObj;
+                    return floatVal;
                 }
             }
             case IRValueType::valueType::foreignInt32Type: {
@@ -2862,8 +2863,8 @@ namespace yoi {
                     // convert int32 type to integer type
                     auto *int32Val = Builder->CreateSExt(val, llvm::Type::getInt64Ty(*TheContext), "int32_val");
                     // create new object
-                    auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int32Val);
-                    return newObj;
+                    // auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int32Val);
+                    return int32Val;
                 }
             }
             case IRValueType::valueType::pointer: {
@@ -2878,8 +2879,8 @@ namespace yoi {
                     auto *voidPtr = Builder->CreateBitCast(val, llvm::PointerType::get(llvm::Type::getInt8Ty(*TheContext), 0), "void_ptr");
                     auto *int64Val = Builder->CreatePtrToInt(voidPtr, llvm::Type::getInt64Ty(*TheContext), "int64_val");
                     // create new object
-                    auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int64Val);
-                    return newObj;
+                    // auto *newObj = createBasicObject(compilerCtx->getIntObjectType(), int64Val);
+                    return int64Val;
                 }
             }
             default: {

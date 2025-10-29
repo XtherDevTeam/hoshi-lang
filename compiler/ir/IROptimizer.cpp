@@ -2464,7 +2464,8 @@ namespace yoi {
                     for (int i = 0; i < argCount; i++) {
                         simulationStack.pop();
                     }
-                    returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
+                    if (function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI))
+                        returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }
@@ -2918,7 +2919,8 @@ namespace yoi {
                     for (int i = 0; i < argCount; i++) {
                         simulationStack.pop();
                     }
-                    returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
+                    if (!function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI))
+                        returnType->addAttribute(IRValueType::ValueAttr::Raw); // Rule 3
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }
