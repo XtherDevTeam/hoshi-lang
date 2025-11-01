@@ -3375,6 +3375,8 @@ namespace yoi {
                         case IR::Opcode::new_array_int:
                         case IR::Opcode::new_array_deci:
                         case IR::Opcode::new_array_str:
+                        case IR::Opcode::new_array_unsigned:
+                        case IR::Opcode::new_array_short:
                         case IR::Opcode::new_array_char: {
                             std::shared_ptr<IRValueType> elementType;
                             switch (ins.opcode) {
@@ -3392,6 +3394,12 @@ namespace yoi {
                                     break;
                                 case IR::Opcode::new_array_char:
                                     elementType = compilerCtx->getCharObjectType();
+                                    break;
+                                case IR::Opcode::new_array_short:
+                                    elementType = compilerCtx->getShortObjectType();
+                                    break;
+                                case IR::Opcode::new_array_unsigned:
+                                    elementType = compilerCtx->getUnsignedObjectType();
                                     break;
                                 default:
                                     break;
@@ -3422,6 +3430,8 @@ namespace yoi {
                         case IR::Opcode::new_dynamic_array_int:
                         case IR::Opcode::new_dynamic_array_deci:
                         case IR::Opcode::new_dynamic_array_str:
+                        case IR::Opcode::new_dynamic_array_unsigned:
+                        case IR::Opcode::new_dynamic_array_short:
                         case IR::Opcode::new_dynamic_array_char: {
                             std::shared_ptr<IRValueType> elementType;
                             switch (ins.opcode) {
@@ -3439,6 +3449,12 @@ namespace yoi {
                                     break;
                                 case IR::Opcode::new_dynamic_array_char:
                                     elementType = compilerCtx->getCharObjectType();
+                                    break;
+                                case IR::Opcode::new_dynamic_array_unsigned:
+                                    elementType = compilerCtx->getUnsignedObjectType();
+                                    break;
+                                case IR::Opcode::new_dynamic_array_short:
+                                    elementType = compilerCtx->getShortObjectType();
                                     break;
                                 default:
                                     break;

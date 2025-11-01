@@ -416,6 +416,9 @@ interface Stringable {
 impl int : Stringable {
     to_string() : Str {
         let x = math.abs(this)
+        if (x == 0) {
+            return "0"
+        }
         let res = Str(24u)
         let is_negative = this < 0
         while (x > 0) {

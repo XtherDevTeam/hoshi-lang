@@ -2030,7 +2030,8 @@ namespace yoi {
                     for (auto &arg : i->getMethod().getArgs().get()) {
                         if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
                             isVaridic = true;
-                            auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
+                            auto type = arg->spec->elipsis ? parseTypeSpec(arg->spec->elipsis) : *moduleContext->getCompilerContext()->getNullInterfaceType();
+                            auto argType = managedPtr(type.getDynamicArrayType());
                             argTypes.push_back(argType);
                             break;
                         }
