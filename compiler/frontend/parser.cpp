@@ -2609,14 +2609,27 @@ namespace yoi {
         }
         lex.scan();
         lexer::token value = lex.curToken;
-        if (value.kind != lexer::token::tokenKind::integer) {
+        if (value.kind == lexer::token::tokenKind::integer) {
+            o = new enumerationPair{node_start_token, name, value};
+            lex.scan();
+        } else if (value.kind == lexer::token::tokenKind::minus) {
+            lex.scan();
+            if (lex.curToken.kind != lexer::token::tokenKind::integer) {
+                o = nullptr;
+                finalizeAST(name);
+                panic(lex.line, lex.col, "expected integer literal after `-` in enumeration pair");
+                return;
+            }
+            value = lex.curToken;
+            value.basicVal.vInt = -value.basicVal.vInt;
+            o = new enumerationPair{node_start_token, name, value};
+            lex.scan();
+        } else {
             o = nullptr;
             finalizeAST(name);
             panic(lex.line, lex.col, "expected integer literal after `=` in enumeration pair");
             return;
         }
-        o = new enumerationPair{node_start_token, name, value};
-        lex.scan();
     }
 } // namespace yoi
 

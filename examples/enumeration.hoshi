@@ -3,7 +3,7 @@ use runtime "runtime"
 enum ServerState {
     Running,
     Stopped,
-    Error = 4
+    Error = -4
 }
 
 func main() : int {
