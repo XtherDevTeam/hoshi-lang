@@ -1248,7 +1248,7 @@ namespace yoi {
                         yoi_assert(desiredArgTypes.size() == args->arg.size(), args->getLine(), args->getColumn(), "Number of arguments does not match the function signature.");
                         for (yoi::indexT i = 0;i < args->arg.size(); i++) {
                             visit(args->arg[i]);
-                            tryCastTo(desiredArgTypes[i]);
+                            tryCastTo(managedPtr(moduleContext->getCompilerContext()->normalizeForeignBasicType(desiredArgTypes[i], false)));
                         }
                         moduleContext->getIRBuilder().invokeImportedOp(
                             irModule->externTable[importedFunctionIndex]->affiliateModule,
@@ -3283,7 +3283,7 @@ namespace yoi {
 
         if (*rhs == *toType) {
             return;
-        } else if (rhs->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer) {
+        } else if (rhs->type == IRValueType::valueType::pointerObject || rhs->type == IRValueType::valueType::pointer || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer) {
             // no cast needed for pointer type
             return;
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
@@ -3606,7 +3606,7 @@ namespace yoi {
         }
 
         auto fullMangledName = overload.function->name;
-        bool skipFirstParam = structContext != nullptr;
+        bool skipFirstParam = structContext != nullptr && !noThisCall;
 
         if (overload.isVariadic) {
             moduleContext->getIRBuilder().restoreState();

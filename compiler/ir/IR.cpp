@@ -205,7 +205,7 @@ namespace yoi {
                 target = compilerCtx->getUnsignedObjectType();
                 break;
             default: {
-                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast");
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast: " + std::string{magic_enum::enum_name<>(valType->type)});
                 break;
             }
         }

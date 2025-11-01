@@ -116,7 +116,7 @@ namespace yoi {
 
         std::shared_ptr<yoi::IRValueType> getNullInterfaceType();
 
-        yoi::IRValueType normalizeForeignBasicType(const std::shared_ptr<yoi::IRValueType> &type);
+        yoi::IRValueType normalizeForeignBasicType(const std::shared_ptr<yoi::IRValueType> &type, bool handlePointer = true);
 
         // i figured it out, all wrapper struct type should save in IRFFITable independently, they are not import type
         // or export type. they are just wrapper types. as for import function wrapper and export function wrapper, ofc
