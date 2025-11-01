@@ -1238,21 +1238,26 @@ namespace yoi {
                         auto importedFunctionIndex = irModule->externTable.getIndex(baseName);
                         yoi_assert(irModule->externTable[importedFunctionIndex]->type == IRExternEntry::externType::importedFunction,
                                 subscriptExpr->getLine(), subscriptExpr->getColumn(), "This is not an imported function.");
-                        
-                        auto argTypes = evaluateArguments(args);
                         auto importedFunc =
                             moduleContext->getCompilerContext()
                                 ->getIRFFITable()
                                 ->importedLibraries[irModule->externTable[importedFunctionIndex]->affiliateModule]
                                 .importedFunctionTable[irModule->externTable[importedFunctionIndex]->itemIndex];
+                        
+                        auto desiredArgTypes = importedFunc->argumentTypes;
+                        yoi_assert(desiredArgTypes.size() == args->arg.size(), args->getLine(), args->getColumn(), "Number of arguments does not match the function signature.");
+                        for (yoi::indexT i = 0;i < args->arg.size(); i++) {
+                            visit(args->arg[i]);
+                            tryCastTo(desiredArgTypes[i]);
+                        }
                         moduleContext->getIRBuilder().invokeImportedOp(
                             irModule->externTable[importedFunctionIndex]->affiliateModule,
                             irModule->externTable[importedFunctionIndex]->itemIndex,
-                            argTypes.size(),
+                            desiredArgTypes.size(),
                             importedFunc->returnType);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
-                    } catch (const std::exception &) {
+                    } catch (const std::out_of_range &) {
                         moduleContext->getIRBuilder().restoreState();
                     }
                 }
@@ -3278,11 +3283,11 @@ namespace yoi {
 
         if (*rhs == *toType) {
             return;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
-            emitBasicCastTo(toType);
-        } else if (rhs->type == IRValueType::valueType::pointerObject) {
+        } else if (rhs->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer) {
             // no cast needed for pointer type
             return;
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
+            emitBasicCastTo(toType);
         } else if (toType->type == IRValueType::valueType::interfaceObject) {
             // check implemented interfaces
             try {
