@@ -266,7 +266,7 @@ var NAVTREEINDEX =
 "classyoi_1_1IRInterfaceInstanceDefinition.html#a2ffacaf53bfaa19e0d00eb4fe2c40350",
 "classyoi_1_1IRTypeAlias.html",
 "classyoi_1_1LLVMCodegen.html#a7b0c79c543056eb9381aa7ec2355b3d0",
-"classyoi_1_1compilerContext.html#a6957e65d056c54f75fa6ab54f3bfd9d5",
+"classyoi_1_1compilerContext.html#a6cace523975f204e9b0b4c686bd0af7a",
 "classyoi_1_1globalStmt.html#a7f2607e2d216a88d2f9ea60d6fa3d341",
 "classyoi_1_1indexTableDeprecated_1_1iterator.html",
 "classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6",

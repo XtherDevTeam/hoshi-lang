@@ -45,7 +45,7 @@ var searchData=
   ['noneobjectsingleton_42',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]],
   ['nop_43',['nop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0',1,'yoi::IR']]],
   ['norawandnulloptimization_44',['NoRawAndNullOptimization',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9',1,'yoi::IRFunctionDefinition']]],
-  ['normalizeforeignbasictype_45',['normalizeForeignBasicType',['../classyoi_1_1compilerContext.html#a24c84eb32e9e4f5625faa9a60bf67128',1,'yoi::compilerContext']]],
+  ['normalizeforeignbasictype_45',['normalizeForeignBasicType',['../classyoi_1_1compilerContext.html#af2b0dba20d94b4acc3d17e44fa88d991',1,'yoi::compilerContext']]],
   ['normalizeforeigntype_46',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#a9079dfe3e360a05db5e1c0ded4e771ea',1,'yoi::LLVMCodegen']]],
   ['not_5fequal_47',['not_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e',1,'yoi::IR']]],
   ['notequal_48',['notequal',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a80bfff5241ffe1f0c9eb31d4e01a3581',1,'yoi::lexer::token::notEqual'],['../classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180',1,'yoi::IRFunctionOptimizer::notEqual()']]],

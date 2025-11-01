@@ -25,7 +25,7 @@ var classyoi_1_1compilerContext =
     [ "getStrObjectType", "classyoi_1_1compilerContext.html#af32e4c1d7dbe772c3a00da65d37f6244", null ],
     [ "getUnsignedObjectType", "classyoi_1_1compilerContext.html#a6cace523975f204e9b0b4c686bd0af7a", null ],
     [ "initializeSharedObjects", "classyoi_1_1compilerContext.html#a92fb762cae04d5701345764007ddeb28", null ],
-    [ "normalizeForeignBasicType", "classyoi_1_1compilerContext.html#a24c84eb32e9e4f5625faa9a60bf67128", null ],
+    [ "normalizeForeignBasicType", "classyoi_1_1compilerContext.html#af2b0dba20d94b4acc3d17e44fa88d991", null ],
     [ "runOptimizer", "classyoi_1_1compilerContext.html#abe31b1fe910dbd2547cc06213ea20f9e", null ],
     [ "setBuildConfig", "classyoi_1_1compilerContext.html#a4167f0bdd822c6d4e78802e5564228ff", null ],
     [ "setIRObjectFile", "classyoi_1_1compilerContext.html#a1c82adae599e9a3ccfaa34bc2dede43e", null ],
