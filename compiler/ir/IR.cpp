@@ -781,8 +781,7 @@ namespace yoi {
                 return item->second;
             }
         }
-        panic(0, 0, wstring2string(L"Undefined variable: " + name));
-        return 0; // make compiler happy
+        throw std::out_of_range("Undefined variable: " + yoi::wstring2string(name));
     }
 
     yoi::indexT IRVariableTable::createScope() {
