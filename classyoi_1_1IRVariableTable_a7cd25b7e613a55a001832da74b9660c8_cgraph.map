@@ -1,19 +1,7 @@
 <map id="lookup" name="lookup">
-<area shape="rect" id="Node000001" title="Look up a variable by name in the current scope. If the variable is not found in the current scope,..." alt="" coords="5,95,71,121"/>
-<area shape="rect" id="Node000002" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="119,70,204,95"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,99,105,92,106,97,72,104"/>
-<area shape="rect" id="Node000007" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="435,70,577,95"/>
-<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="71,106,204,105,420,89,421,94,204,111,71,111"/>
-<area shape="rect" id="Node000003" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="252,5,387,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,67,250,48,252,53,198,72"/>
-<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="204,80,421,80,421,85,204,85"/>
-<area shape="rect" id="Node000004" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="435,13,577,38"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="387,23,421,23,421,28,387,28"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="386,43,451,63,450,68,384,48"/>
-<area shape="rect" id="Node000005" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="625,13,828,38"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="578,23,612,23,612,28,578,28"/>
-<area shape="rect" id="Node000006" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="876,13,1067,38"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="828,23,862,23,862,28,828,28"/>
-<area shape="rect" id="Node000008" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="625,70,828,95"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="578,80,612,80,612,85,578,85"/>
+<area shape="rect" id="Node000001" title="Look up a variable by name in the current scope. If the variable is not found in the current scope,..." alt="" coords="5,5,71,31"/>
+<area shape="rect" id="Node000002" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="119,5,261,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,15,105,15,105,21,71,21"/>
+<area shape="rect" id="Node000003" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="309,5,512,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="262,15,296,15,296,21,262,21"/>
 </map>
