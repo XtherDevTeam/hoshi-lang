@@ -868,6 +868,8 @@ namespace yoi {
                     castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "bool_to_int_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
                     castedVal = Builder->CreateSExt(rawVal, Builder->getInt64Ty(), "char_to_int_cast");
+                } else if (rawVal->getType()->isIntegerTy(16)) { // short
+                    castedVal = Builder->CreateSExt(rawVal, Builder->getInt64Ty(), "short_to_int_cast");
                 } else if (rawVal->getType()->isIntegerTy(64)) { // int (no-op)
                     castedVal = rawVal;
                 } else {
@@ -889,6 +891,8 @@ namespace yoi {
                     castedVal = Builder->CreateUIToFP(rawVal, Builder->getDoubleTy(), "bool_to_deci_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
                     castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "char_to_deci_cast");
+                } else if (rawVal->getType()->isIntegerTy(16)) { // short
+                    castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "short_to_deci_cast");
                 } else if (rawVal->getType()->isDoubleTy()) { // deci (no-op)
                     castedVal = rawVal;
                 } else {
@@ -908,6 +912,8 @@ namespace yoi {
                     castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "int_to_unsigned_cast");
                 } else if (rawVal->getType()->isDoubleTy()) { // deci
                     castedVal = Builder->CreateFPToUI(rawVal, Builder->getInt64Ty(), "deci_to_unsigned_cast");
+                } else if (rawVal->getType()->isIntegerTy(16)) { // short
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "short_to_unsigned_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
                     castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "char_to_unsigned_cast");
                 } else if (rawVal->getType()->isIntegerTy(1)) { // bool
@@ -950,6 +956,8 @@ namespace yoi {
                     castedVal = Builder->CreateICmpNE(rawVal, llvm::ConstantInt::get(Builder->getInt64Ty(), 0), "int_to_bool_cast");
                 } else if (rawVal->getType()->isDoubleTy()) { // deci
                     castedVal = Builder->CreateFCmpONE(rawVal, llvm::ConstantFP::get(Builder->getDoubleTy(), 0.0), "deci_to_bool_cast");
+                } else if (rawVal->getType()->isIntegerTy(16)) { // short
+                    castedVal = Builder->CreateICmpNE(rawVal, llvm::ConstantInt::get(Builder->getInt8Ty(), 0), "short_to_bool_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
                     castedVal = Builder->CreateICmpNE(rawVal, llvm::ConstantInt::get(Builder->getInt8Ty(), 0), "char_to_bool_cast");
                 } else if (rawVal->getType()->isIntegerTy(1)) { // bool (no-op)
