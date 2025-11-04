@@ -33,6 +33,8 @@ struct Str {
     constructor(arr: char[]),
     constructor(capacity: unsigned),
     static from_c_str(c_str: unsigned) : Str,
+    lowercase() : Str,
+    uppercase() : Str,
     constructor(),
     static operator+(a: Str, b: Str) : Str,
     static operator+(a: Str, b: string) : Str,
@@ -396,6 +398,22 @@ impl Str {
         res.length = length
         res.data[length] = '\0'
         return res
+    },
+    lowercase() : Str {
+        for (let i = 0; i < this.length; i += 1) {
+            if (this.data[i] >= 'A' && this.data[i] <= 'Z') {
+                this.data[i] = this.data[i] - 'A' + 'a'
+            }
+        }
+        return this
+    },
+    uppercase() : Str {
+        for (let i = 0; i < this.length; i += 1) {
+            if (this.data[i] >= 'a' && this.data[i] <= 'z') {
+                this.data[i] = this.data[i] - 'a' + 'A'
+            }
+        }
+        return this
     }
 }
 
