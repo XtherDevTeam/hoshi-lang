@@ -245,6 +245,8 @@ namespace yoi {
         llvm::Value * unwrapInterfaceObject(const StackValue &objectVal);
 
         StackValue promiseInterfaceObjectIfInterface(const StackValue &objectVal);
+
+        void handleIntrinsicCall(const IR &instr);
     };
 
 } // namespace yoi

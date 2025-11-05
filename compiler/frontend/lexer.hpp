@@ -99,6 +99,7 @@ namespace yoi {
                 kDynCast,
                 kNoFFI,
                 kStatic,
+                kIntrinsic,
                 kAlwaysInline,
                 kNew,
                 kCallable,

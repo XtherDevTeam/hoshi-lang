@@ -1312,6 +1312,12 @@ namespace yoi {
                 auto argCount = instr.operands[2].value.symbolIndex;
 
                 auto funcDef = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable[funcIndex];
+
+                if (funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::Intrinsic)) {
+                    handleIntrinsicCall(instr);
+                    break;
+                }
+
                 bool noffi = funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI);
 
                 auto rawFuncName = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable.getKey(funcIndex);
@@ -4002,5 +4008,34 @@ namespace yoi {
         return objectVal.yoiType->type == IRValueType::valueType::interfaceObject
                    ? wrapInterfaceObjectIfRegressed(objectVal)
                    : objectVal;
+    }
+
+    void LLVMCodegen::handleIntrinsicCall(const IR &instr) {
+        switch (instr.opcode) {
+            case IR::Opcode::invoke_imported: {
+                auto libIndex = instr.operands[0].value.symbolIndex;
+                auto funcIndex = instr.operands[1].value.symbolIndex;
+                auto argCount = instr.operands[2].value.symbolIndex;
+
+                auto funcDef = compilerCtx->getIRFFITable()->importedLibraries[libIndex].importedFunctionTable[funcIndex];
+                yoi_assert(funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::Intrinsic), instr.debugInfo.line, instr.debugInfo.column, "llvmCodegen: expected intrinsic function");
+
+                if (funcDef->name == L"runtime_get_string_array_data_pointer") {
+                    // logic of intrinsic, offset to the value address which is the forth member of an array struct definition
+                    auto object = valueStackPhi.back();
+                    valueStackPhi.pop_back();
+                    yoi_assert(object.yoiType->isArrayType() || object.yoiType->isDynamicArrayType(), instr.debugInfo.line, instr.debugInfo.column, "llvmCodegen: expected array type");
+                    auto pointer = Builder->CreateStructGEP(getArrayLLVMType(object.yoiType), object.llvmValue, 3, "array_ptr");
+                    auto toInt = Builder->CreatePtrToInt(pointer, Builder->getInt64Ty(), "array_ptr_ptrtoint");
+                    valueStackPhi.push_back(StackValue{toInt, managedPtr(compilerCtx->getUnsignedObjectType()->getBasicRawType())});
+                } else {
+                    panic(instr.debugInfo.line, instr.debugInfo.column, "llvmCodegen: unsupported intrinsic function");
+                }
+                break;
+            }
+            default:
+                panic(instr.debugInfo.line, instr.debugInfo.column, "llvmCodegen: unsupported intrinsic call");
+                break;
+        }
     }
 } // namespace yoi

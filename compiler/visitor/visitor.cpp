@@ -3405,6 +3405,8 @@ namespace yoi {
                 case lexer::token::tokenKind::kStatic:
                     res.push_back(IRFunctionDefinition::FunctionAttrs::Static);
                     break;
+                case lexer::token::tokenKind::kIntrinsic:
+                    res.push_back(IRFunctionDefinition::FunctionAttrs::Intrinsic);
                 default:
                     break;
             }

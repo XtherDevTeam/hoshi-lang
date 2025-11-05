@@ -1,7 +1,7 @@
 use lang "builtin"
 
 /* memory management functions */
-import noffi runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
+import noffi intrinsic runtime_get_string_array_data_pointer(arr: char[]) : int from "builtin"
 
 /* C runtime functions */
 import strlen(str: ptr) : unsigned from "builtin"

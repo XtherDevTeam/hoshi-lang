@@ -47,7 +47,8 @@ struct Str {
     static operator!=(a: Str, b: string) : bool,
     static operator!=(a: string, b: Str) : bool,
     static operator[](self: Str, index: int) : char,
-    static operator[](value: char, self: Str, index: int) : none
+    static operator[](value: char, self: Str, index: int) : none,
+    static operator+=(a: Str, b: Str) : Str,
 }
 
 impl Str {
@@ -414,6 +415,15 @@ impl Str {
             }
         }
         return this
+    },
+    static operator+=(a: Str, b: Str) : Str {
+        if (a.capacity < a.length + b.length) {
+            a.capacity_resize((a.length + b.length) * 2u)
+        }
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(a.data) + a.length, runtime.runtime_get_string_array_data_pointer(b.data), b.length)
+        a.length += b.length
+        a.data[a.length] = '\0'
+        return a
     }
 }
 
