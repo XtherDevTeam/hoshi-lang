@@ -51,6 +51,7 @@ var classyoi_1_1LLVMCodegen =
     [ "handleComparison", "classyoi_1_1LLVMCodegen.html#afca9d4a2daf7898f37a12b1c2079fce6", null ],
     [ "handleForeignTypeConv", "classyoi_1_1LLVMCodegen.html#a7ffc2d88378f6a1270662c1be20f7db0", null ],
     [ "handleForeignTypeConv", "classyoi_1_1LLVMCodegen.html#a3767428a09aaa4e50145ae1615083854", null ],
+    [ "handleIntrinsicCall", "classyoi_1_1LLVMCodegen.html#a5cd97c6c14d91fae1df60efce6e3ec69", null ],
     [ "loadArrayElement", "classyoi_1_1LLVMCodegen.html#a194b0d71e92a857182fa141896bcd171", null ],
     [ "normalizeForeignType", "classyoi_1_1LLVMCodegen.html#a9079dfe3e360a05db5e1c0ded4e771ea", null ],
     [ "promiseInterfaceObjectIfInterface", "classyoi_1_1LLVMCodegen.html#afc52d8dd3360e2e00c255ecc1cd5655a", null ],

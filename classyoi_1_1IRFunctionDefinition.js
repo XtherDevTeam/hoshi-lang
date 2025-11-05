@@ -11,7 +11,8 @@ var classyoi_1_1IRFunctionDefinition =
       [ "Finalizer", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb", null ],
       [ "Unreachable", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a", null ],
       [ "Preserve", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919", null ],
-      [ "NoRawAndNullOptimization", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9", null ]
+      [ "NoRawAndNullOptimization", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9", null ],
+      [ "Intrinsic", "classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5", null ]
     ] ],
     [ "IRFunctionDefinition", "classyoi_1_1IRFunctionDefinition.html#a89c653b9e1bb756b2b4d29b2b97941c2", null ],
     [ "getVariableTable", "classyoi_1_1IRFunctionDefinition.html#aefcf4ac267aede8e9f26f9c643a58538", null ],
