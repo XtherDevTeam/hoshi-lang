@@ -442,7 +442,11 @@ namespace yoi {
         visit(*term);
         for (; op != shiftExpr->getOp().end(); ++op) {
             moduleContext->getIRBuilder().saveState();
+
+            emitBasicCastTo(moduleContext->getCompilerContext()->getIntObjectType());
+            
             visit(*++term);
+
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 

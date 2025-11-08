@@ -63,6 +63,7 @@ TEST_CASES = {
     "finalizer": {"type": "executable", "return_code": 0},
     "typed-ellipsis": {"type": "executable", "return_code": 0},
     "interface-regression": {"type": "executable", "return_code": 0},
+    "binary-shift": {"type": "executable", "return_code": 0},
 }
 
 

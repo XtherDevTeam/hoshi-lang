@@ -1,0 +1,17 @@
+use console "console"
+
+func main() : int {
+    console.print("binary-shift-validation: start\n")
+    let a : char = 'c' >> 1
+    console.print(a as int, "\n")
+    let b : short = 32768 >> 1
+    console.print(b as int, "\n")
+    let c : int = 2147483648 >> 1
+    console.print(c as int, "\n")
+    if (a != 49 || b != 16384 || c != 1073741824) {
+        console.print("binary-shift-validation: failed\n")
+        return 1
+    }
+    console.print("binary-shift-validation: passed\n")
+    return 0
+}

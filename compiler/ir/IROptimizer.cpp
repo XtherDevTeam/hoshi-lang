@@ -1179,8 +1179,8 @@ namespace yoi {
                     break;
                 }
                 case IR::Opcode::left_shift: {
-                    auto value = simulationStack.peek(0);
-                    auto shift = simulationStack.peek(1);
+                    auto shift = simulationStack.peek(0);
+                    auto value = simulationStack.peek(1);
                     simulationStack.pop();
                     simulationStack.pop();
                     // simulate
@@ -1197,8 +1197,8 @@ namespace yoi {
                     break;
                 }
                 case IR::Opcode::right_shift: {
-                    auto value = simulationStack.peek(0);
-                    auto shift = simulationStack.peek(1);
+                    auto shift = simulationStack.peek(0);
+                    auto value = simulationStack.peek(1);
                     simulationStack.pop();
                     simulationStack.pop();
                     // simulate
@@ -3599,8 +3599,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::left_shift: {
-                auto value = simulationStack.peek(0);
-                auto shift = simulationStack.peek(1);
+                auto shift = simulationStack.peek(0);
+                auto value = simulationStack.peek(1);
                 simulationStack.pop();
                 simulationStack.pop();
                 // simulate
@@ -3609,8 +3609,8 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::right_shift: {
-                auto value = simulationStack.peek(0);
-                auto shift = simulationStack.peek(1);
+                auto shift = simulationStack.peek(0);
+                auto value = simulationStack.peek(1);
                 simulationStack.pop();
                 simulationStack.pop();
                 // simulate

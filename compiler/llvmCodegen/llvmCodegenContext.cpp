@@ -979,6 +979,8 @@ namespace yoi {
             case IR::Opcode::bitwise_and: handleBinaryOp(llvm::Instruction::And, false, fromBlock, toBlock); break;
             case IR::Opcode::bitwise_or: handleBinaryOp(llvm::Instruction::Or, false, fromBlock, toBlock); break;
             case IR::Opcode::bitwise_xor: handleBinaryOp(llvm::Instruction::Xor, false, fromBlock, toBlock); break;
+            case IR::Opcode::left_shift: handleBinaryOp(llvm::Instruction::Shl, false, fromBlock, toBlock); break;
+            case IR::Opcode::right_shift: handleBinaryOp(llvm::Instruction::LShr, false, fromBlock, toBlock); break;
             // Unary
             case IR::Opcode::negate: {
                 auto val = valueStackPhi.back(); valueStackPhi.pop_back();
