@@ -47,3 +47,15 @@ func always_inline sqrt<T>(a: T) : T {
 func always_inline isnan(a : deci) : bool {
     return a != a
 }
+
+func always_inline hextoint(a: char) : int {
+    if (a >= '0' && a <= '9') {
+        return a - '0'
+    } elif (a >= 'a' && a <= 'f') {
+        return a - 'a' + 10
+    } elif (a >= 'A' && a <= 'F') {
+        return a - 'A' + 10
+    } else {
+        return 0
+    }
+}

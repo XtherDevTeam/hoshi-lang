@@ -867,7 +867,7 @@ namespace yoi {
                 } else if (rawVal->getType()->isIntegerTy(1)) { // bool
                     castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "bool_to_int_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
-                    castedVal = Builder->CreateSExt(rawVal, Builder->getInt64Ty(), "char_to_int_cast");
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt64Ty(), "char_to_int_cast");
                 } else if (rawVal->getType()->isIntegerTy(16)) { // short
                     castedVal = Builder->CreateSExt(rawVal, Builder->getInt64Ty(), "short_to_int_cast");
                 } else if (rawVal->getType()->isIntegerTy(64)) { // int (no-op)
@@ -890,7 +890,7 @@ namespace yoi {
                 } else if (rawVal->getType()->isIntegerTy(1)) { // bool
                     castedVal = Builder->CreateUIToFP(rawVal, Builder->getDoubleTy(), "bool_to_deci_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
-                    castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "char_to_deci_cast");
+                    castedVal = Builder->CreateUIToFP(rawVal, Builder->getDoubleTy(), "char_to_deci_cast");
                 } else if (rawVal->getType()->isIntegerTy(16)) { // short
                     castedVal = Builder->CreateSIToFP(rawVal, Builder->getDoubleTy(), "short_to_deci_cast");
                 } else if (rawVal->getType()->isDoubleTy()) { // deci (no-op)
@@ -936,7 +936,7 @@ namespace yoi {
                 } else if (rawVal->getType()->isDoubleTy()) { // deci
                     castedVal = Builder->CreateFPToSI(rawVal, Builder->getInt16Ty(), "deci_to_short_cast");
                 } else if (rawVal->getType()->isIntegerTy(8)) { // char
-                    castedVal = Builder->CreateTrunc(rawVal, Builder->getInt16Ty(), "char_to_short_cast");
+                    castedVal = Builder->CreateZExt(rawVal, Builder->getInt16Ty(), "char_to_short_cast");
                 } else if (rawVal->getType()->isIntegerTy(1)) { // bool
                     castedVal = Builder->CreateZExt(rawVal, Builder->getInt16Ty(), "bool_to_short_cast");
                 } else {
