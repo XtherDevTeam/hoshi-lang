@@ -47,7 +47,7 @@ namespace yoi {
             for (auto &prep : buildConfig->searchPaths) {
                 std::filesystem::path final = prep / std::filesystem::path(filepath);
                 rFilepath = realpath(final.wstring());
-                if (std::filesystem::exists(rFilepath) && std::filesystem::is_regular_file(rFilepath)) {
+                if (std::filesystem::exists(rFilepath)) {
                     break;
                 } else if (std::filesystem::exists(rFilepath + L".hoshi") && std::filesystem::is_regular_file(rFilepath + L".hoshi")) {
                     rFilepath += L".hoshi";
