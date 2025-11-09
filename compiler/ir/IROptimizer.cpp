@@ -1422,7 +1422,7 @@ namespace yoi {
                         *value.type = compilerCtx->normalizeForeignBasicType(value.type);
                     }
 
-                    if(*memberDef != *value.type) {
+                    if(*memberDef != *value.type && value.type->type != IRValueType::valueType::pointerObject && value.type->type != IRValueType::valueType::null) {
                         // type mismatch, panic
                         panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_member: type mismatch");
                     }
@@ -3757,7 +3757,7 @@ namespace yoi {
                     *value.type = compilerCtx->normalizeForeignBasicType(value.type);
                 }
 
-                if (*memberDef != *value.type) {
+                if (*memberDef != *value.type && value.type->type != IRValueType::valueType::pointerObject && value.type->type != IRValueType::valueType::null) {
                     // type mismatch, panic
                     panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::analyzeBlock(): store_member: type mismatch");
                 }
