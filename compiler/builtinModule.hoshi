@@ -65,6 +65,19 @@ impl char : Hashable {
     }
 }
 
+impl unsigned : Hashable {
+    hash() : int {
+        return this
+    }
+}
+
+impl short : Hashable {
+    hash() : int {
+        return this
+    }
+}
+
+
 struct Result<T, E> {
     value: T,
     error: E,

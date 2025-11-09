@@ -801,7 +801,7 @@ namespace yoi {
         std::vector<std::shared_ptr<IRCodeBlock>> codeBlocks;
         std::vector<std::shared_ptr<yoi::IRValueType>> tempVarStack;
         yoi::indexT currentCodeBlockIndex;
-        yoi::vec<std::pair<yoi::indexT, yoi::indexT>> codeBlockInsertionStates;
+        yoi::vec<std::tuple<yoi::indexT, yoi::indexT, yoi::indexT>> codeBlockInsertionStates;
         yoi::vec<IR> tempStateCodeBlock;
         yoi::vec<std::shared_ptr<yoi::IRValueType>> tempStateTempVarStack;
         IRDebugInfo currentDebugInfo;

@@ -1116,17 +1116,20 @@ namespace yoi {
     }
 
     yoi::indexT IRBuilder::saveState() {
-        codeBlockInsertionStates.push_back({codeBlocks[currentCodeBlockIndex]->getIRArray().size(), tempVarStack.size()});
+        codeBlockInsertionStates.emplace_back(currentCodeBlockIndex, codeBlocks[currentCodeBlockIndex]->getIRArray().size(), tempVarStack.size());
         return codeBlockInsertionStates.size() - 1;
     }
 
     void IRBuilder::discardState() {
+        yoi_assert(!codeBlockInsertionStates.empty(), currentDebugInfo.line, currentDebugInfo.column, "Empty code states when poping back");
         codeBlockInsertionStates.pop_back();
     }
 
     void IRBuilder::restoreState() {
-        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(codeBlockInsertionStates.back().first);
-        tempVarStack.resize(codeBlockInsertionStates.back().second);
+        yoi_assert(currentCodeBlockIndex == std::get<0>(codeBlockInsertionStates.back()), currentDebugInfo.line, currentDebugInfo.column, "Invalid code block index");
+        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(std::get<1>(codeBlockInsertionStates.back()));
+        tempVarStack.resize(std::get<2>(codeBlockInsertionStates.back()));
+        yoi_assert(!codeBlockInsertionStates.empty(), currentDebugInfo.line, currentDebugInfo.column, "Empty code states when poping back");
         codeBlockInsertionStates.pop_back();
     }
 
@@ -1424,11 +1427,12 @@ namespace yoi {
 
     void IRBuilder::restoreStateTemporarily() {
         auto current = codeBlockInsertionStates.back();
-        tempStateCodeBlock = std::vector<IR>(codeBlocks[currentCodeBlockIndex]->getIRArray().begin() + current.first, codeBlocks[currentCodeBlockIndex]->getIRArray().end());
-        tempStateTempVarStack = std::vector<std::shared_ptr<IRValueType>>(tempVarStack.begin() + current.second, tempVarStack.end());
+        yoi_assert(currentCodeBlockIndex == std::get<0>(current), currentDebugInfo.line, currentDebugInfo.column, "Invalid code block index");
+        tempStateCodeBlock = std::vector<IR>(codeBlocks[currentCodeBlockIndex]->getIRArray().begin() + std::get<1>(current), codeBlocks[currentCodeBlockIndex]->getIRArray().end());
+        tempStateTempVarStack = std::vector<std::shared_ptr<IRValueType>>(tempVarStack.begin() + std::get<2>(current), tempVarStack.end());
 
-        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(current.first);
-        tempVarStack.resize(current.second);
+        codeBlocks[currentCodeBlockIndex]->getIRArray().resize(std::get<1>(current));
+        tempVarStack.resize(std::get<2>(current));
     }
 
     void IRBuilder::commitState() {

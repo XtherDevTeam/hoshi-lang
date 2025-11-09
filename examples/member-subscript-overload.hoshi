@@ -1,0 +1,44 @@
+use hashMap "hashMap"
+
+struct T {
+    a: int,
+    constructor(),
+    random_method() : none
+}
+
+impl T {
+    constructor() {
+        return this
+    },
+    random_method() : none {
+        return
+    }
+}
+
+struct A {
+    hash: T,
+    constructor()
+}
+
+impl A {
+    constructor() {
+        this.hash = T()
+    }
+}
+
+struct B {
+    a: A,
+    constructor(a: A)
+}
+
+impl B {
+    constructor(a: A) {
+        this.a = a
+    }
+}
+
+func main() : int {
+    let b = B(A())
+    b.a.hash.random_method()
+    return 0
+}

@@ -893,8 +893,7 @@ namespace yoi {
         }
 
         // 4. Loop through the rest of the terms (.b, .c(), .d[i], etc.)
-        for (; it != memberExpr->getTerms().end();) {
-            ++it;
+        for (it ++; it != memberExpr->getTerms().end();it ++) {
             if (it == memberExpr->getTerms().end()) {
                 break;
             }
@@ -932,7 +931,6 @@ namespace yoi {
                             moduleContext->getIRBuilder().commitState();
                             moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, nameInfo.index});
                         } else {
-                            moduleContext->getIRBuilder().discardState();
                             moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, fieldType);
                         }
                     } catch (std::out_of_range&) {
@@ -989,12 +987,12 @@ namespace yoi {
                         // Or `obj.method()()` where `method()` returns a callable.
                         panic(sub->getLine(), sub->getColumn(), "Chained function calls are not yet supported in this context.");
                     } else if (sub->isSubscript()) {
-                        visit(sub->expr); // Evaluate the index and push it.
-                        tryCastTo(moduleContext->getCompilerContext()->getUnsignedObjectType());
-                        auto indexType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                        yoi_assert(indexType->type == IRValueType::valueType::unsignedObject, sub->getLine(), sub->getColumn(), "Array/subscript index must be an integer or unsigned integer.");
-                        
                         if (currentObjectType->isArrayType() || currentObjectType->isDynamicArrayType()) {
+                            visit(sub->expr); // Evaluate the index and push it.
+                            tryCastTo(moduleContext->getCompilerContext()->getUnsignedObjectType());
+                            auto indexType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                            yoi_assert(indexType->type == IRValueType::valueType::unsignedObject, sub->getLine(), sub->getColumn(), "Array/subscript index must be an integer or unsigned integer.");
+
                             if (isStoreOp && isFinalOperation) {
                                 // This handles `... = obj.field[i]`
                                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});

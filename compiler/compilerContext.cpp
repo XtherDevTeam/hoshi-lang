@@ -47,10 +47,13 @@ namespace yoi {
             for (auto &prep : buildConfig->searchPaths) {
                 std::filesystem::path final = prep / std::filesystem::path(filepath);
                 rFilepath = realpath(final.wstring());
-                if (std::filesystem::exists(rFilepath)) {
+                if (std::filesystem::exists(rFilepath) && std::filesystem::is_regular_file(rFilepath)) {
                     break;
                 } else if (std::filesystem::exists(rFilepath + L".hoshi") && std::filesystem::is_regular_file(rFilepath + L".hoshi")) {
                     rFilepath += L".hoshi";
+                    break;
+                } else if (std::filesystem::exists(rFilepath) && std::filesystem::is_directory(rFilepath) && std::filesystem::exists(std::filesystem::path(rFilepath) / "index.hoshi")) {
+                    rFilepath = (std::filesystem::path(rFilepath) / "index.hoshi").wstring();
                     break;
                 } else {
                     continue;
@@ -58,10 +61,6 @@ namespace yoi {
             }
         } else {
             return HOSHI_COMPILER_CTX_GLOB_ID_CONST;
-        }
-
-        if (auto path = std::filesystem::path(rFilepath) / "index.hoshi"; std::filesystem::is_directory(rFilepath) && std::filesystem::exists(path)) {
-            return compileModule(path.wstring());
         }
         
         try {
@@ -72,7 +71,7 @@ namespace yoi {
                 throw std::runtime_error("invalid filename: " + wstring2string(rFilepath));
 
             // temporarily add current directory to search path
-            buildConfig->searchPaths.push_back(std::filesystem::path(filepath).parent_path().wstring());
+            buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().wstring());
 
             fseek(fp, 0, SEEK_END);
             auto size = ftell(fp);
