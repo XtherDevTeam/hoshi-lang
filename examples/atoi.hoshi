@@ -53,6 +53,15 @@ func main() : int {
         failed_tests += 1
     }
 
+    let s6 = str.Str("0xe1751aff")
+    if (str.toInt(s6) == 0xe1751aff) {
+        runtime.puts("atoi: toInt hex: passed")
+        passed_tests += 1
+    } else {
+        runtime.puts("atoi: toInt hex: failed")
+        failed_tests += 1
+    }
+
     // Test toDeci
     let d1 = str.Str("123.45")
     if (str.toDeci(d1) == 123.45) {

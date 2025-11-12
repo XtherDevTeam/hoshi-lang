@@ -558,26 +558,67 @@ func join(sep: Str, args: ...Stringable) : Str {
 }
 
 func always_inline toInt(s: Str) : int {
-    let res = 0
+    let i = 0
+    let len = s.length
+    let acc = 0
     let is_negative = false
-    let start = 0
-    if (s.length == 0) {
-        return 0
-    }
-    if (s[0] == '-') {
-        is_negative = true
-        start = 1
-    }
-    for (let i = start; i < s.length; i += 1) {
-        if (s[i] < '0' || s[i] > '9') {
-            return 0
+    let base = 0
+
+    if (i < len) {
+        if (s[i] == '-') {
+            is_negative = true
+            i += 1
+        } elif (s[i] == '+') {
+            i += 1
         }
-        res = res * 10 + (s[i] - '0')
     }
+
+    // 2. Handle base prefix (e.g., '0x' for hex).
+    // If base is 0, allow 0x for hex and 0 for octal.
+    // If base is 16, allow 0x.
+    if ((base == 0 || base == 16) &&
+        i + 1 < len && s[i] == '0' && (s[i+1] == 'x' || s[i+1] == 'X')) {
+        i += 2
+        base = 16
+    }
+    
+    if (base == 0) {
+        if (i < len && s[i] == '0') {
+            base = 8
+        } else {
+            base = 10
+        }
+    }
+
+    while (i < len) {
+        let c = s[i]
+        let digit = -1
+
+        if (c >= '0' && c <= '9') {
+            digit = c - '0'
+        } elif (c >= 'a' && c <= 'z') {
+            digit = c - 'a' + 10
+        } elif (c >= 'A' && c <= 'Z') {
+            digit = c - 'A' + 10
+        }
+
+        if (digit == -1 || digit >= base) {
+            break
+        }
+        
+        acc = acc * base + digit
+        i += 1
+    }
+
     if (is_negative) {
-        res = -res
+        acc = -acc
     }
-    return res
+
+    if (i != len) {
+        return 0 // invalid character
+    }
+
+    return acc
 }
 
 func always_inline toInt(s: string) : int {
