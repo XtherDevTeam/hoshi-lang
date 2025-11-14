@@ -49,6 +49,7 @@ struct Str {
     static operator[](self: Str, index: int) : char,
     static operator[](value: char, self: Str, index: int) : none,
     static operator+=(a: Str, b: Str) : Str,
+    static operator+=(a: Str, b: char[]) : Str
 }
 
 impl Str {
@@ -422,6 +423,15 @@ impl Str {
         }
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(a.data) + a.length, runtime.runtime_get_string_array_data_pointer(b.data), b.length)
         a.length += b.length
+        a.data[a.length] = '\0'
+        return a
+    },
+    static operator+=(a: Str, b: char[]) : Str {
+        if (a.capacity < a.length + runtime.strlen(runtime.runtime_get_string_array_data_pointer(b))) {
+            a.capacity_resize((a.length + runtime.strlen(runtime.runtime_get_string_array_data_pointer(b))) * 2u)
+        }
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(a.data) + a.length, runtime.runtime_get_string_array_data_pointer(b), runtime.strlen(runtime.runtime_get_string_array_data_pointer(b)))
+        a.length += runtime.strlen(runtime.runtime_get_string_array_data_pointer(b))
         a.data[a.length] = '\0'
         return a
     }

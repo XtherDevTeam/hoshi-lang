@@ -187,7 +187,7 @@ namespace yoi {
         void generateFunctionImplementations();
         void generateFunction(IRFunctionDefinition &funcDef);
         void generateFunctionExitCleanup();
-        void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock);
+        void generateCodeBlock(IRCodeBlock &block, yoi::indexT fromBlock, yoi::indexT toBlock, llvm::BasicBlock *actualFromBlock = nullptr);
         void generateInstruction(const IR &instr, yoi::indexT fromBlock, yoi::indexT toBlock);
         void generateDescription();
         void generateRTTIDeclaration();

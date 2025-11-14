@@ -746,11 +746,11 @@ namespace yoi {
         }
     }
 
-    void LLVMCodegen::generateCodeBlock(IRCodeBlock& block, yoi::indexT fromBlock, yoi::indexT toBlock) {
+    void LLVMCodegen::generateCodeBlock(IRCodeBlock& block, yoi::indexT fromBlock, yoi::indexT toBlock, llvm::BasicBlock *actualFromBlock) {
         // check whether generated
         if (basicBlockVisited.contains(toBlock) && toBlock != 0) {
             // merge stack values
-            valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
+            valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), actualFromBlock ? actualFromBlock : basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
                 return actualizeInterfaceObject(a, b, c);
             });
             valueStackPhi.finalizeNode();
@@ -767,20 +767,25 @@ namespace yoi {
             }
         }
 
-        valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
+        valueStackPhi.enterNode(toBlock, fromBlock, basicBlockMap.at(toBlock), actualFromBlock ? actualFromBlock : basicBlockMap.at(fromBlock), [this] (const std::shared_ptr<IRValueType> &a, llvm::Value* b, yoi::indexT c) -> StackValue {
             return actualizeInterfaceObject(a, b, c);
         });
 
+        llvm::BasicBlock *actual_from_block_for_next = basicBlockMap.at(toBlock);
+
         for (const auto& instr : block.getIRArray()) {
             generateInstruction(instr, fromBlock, toBlock);
-            if (Builder->GetInsertBlock()->getTerminator()) break;
+            if (Builder->GetInsertBlock()->getTerminator()) {
+                actual_from_block_for_next = Builder->GetInsertBlock();
+                break;
+            }
         }
 
         valueStackPhi.finalizeNode();
 
         for (const auto& succ : controlFlowAnalysis.G[toBlock]) {
             // prepare the value stack for the next block
-            generateCodeBlock(*currentFunctionDef->codeBlock[succ], toBlock, succ);
+            generateCodeBlock(*currentFunctionDef->codeBlock[succ], toBlock, succ, actual_from_block_for_next);
         }
     }
 
