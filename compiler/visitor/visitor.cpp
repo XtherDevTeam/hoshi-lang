@@ -4051,7 +4051,7 @@ namespace yoi {
     }
 
     void visitor::pushModuleContext(yoi::indexT moduleIndex) {
-        printf("push module context\n");
+        // printf("push module context\n");
         moduleContextStack.emplace(moduleContext, currentModuleIndex);
         this->moduleContext = moduleContext->getCompilerContext()->getModuleContext(moduleIndex);
         this->irModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
@@ -4059,7 +4059,7 @@ namespace yoi {
     }
 
     void visitor::popModuleContext() {
-        printf("pop module context\n");
+        // printf("pop module context\n");
         this->moduleContext = moduleContextStack.top().first;
         currentModuleIndex = moduleContextStack.top().second;
         this->irModule = moduleContext->getCompilerContext()->getImportedModule(currentModuleIndex);
