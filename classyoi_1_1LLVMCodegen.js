@@ -15,7 +15,7 @@ var classyoi_1_1LLVMCodegen =
     [ "generateArrayGCFunctionDeclarations", "classyoi_1_1LLVMCodegen.html#af96a0635ccf931897d0323985f790b24", null ],
     [ "generateArrayGCFunctionImplementations", "classyoi_1_1LLVMCodegen.html#a21ad92414a93f5dc69894984d3ab5162", null ],
     [ "generateBasicTypesAndFunctions", "classyoi_1_1LLVMCodegen.html#a70c509de6fc12c03fa7d90cadc9fb3d7", null ],
-    [ "generateCodeBlock", "classyoi_1_1LLVMCodegen.html#af7993612668db5426947977772b61316", null ],
+    [ "generateCodeBlock", "classyoi_1_1LLVMCodegen.html#a2b2b28bb5e695a58acea9464b2e854ee", null ],
     [ "generateDeclarations", "classyoi_1_1LLVMCodegen.html#ac9d21138d644ba265408fca77ccc439e", null ],
     [ "generateDescription", "classyoi_1_1LLVMCodegen.html#a4fe6def449898861174c854caa406143", null ],
     [ "generateExportFunctionDecls", "classyoi_1_1LLVMCodegen.html#ad13e3f9e9d0d63fca585da5553339ec7", null ],
