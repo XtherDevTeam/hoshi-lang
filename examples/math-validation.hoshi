@@ -1,0 +1,17 @@
+use math "math"
+use console "console"
+
+func main() : int {
+    let min_val = math.min(1u, 2u)
+    if (min_val != 1u) {
+        console.print("math-validation: math.min(1u, 2u) should be 1u")
+        return 1
+    }
+    let a = 1u, b = 24u
+    let max_val = math.min(a, b)
+    if (max_val != 24u) {
+        console.print("math-validation: math.max(1u, 24u) should be 24u")
+        return 1
+    }
+    return 0
+}

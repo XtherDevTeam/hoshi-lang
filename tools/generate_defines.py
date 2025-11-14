@@ -7,7 +7,7 @@ def write_version_number(version_number: int):
     return version_number
 
 def get_version_number():
-    language_version = int(pathlib.Path("tools/VERSION").read_text().strip()) if pathlib.Path("VERSION").exists() else 11
+    language_version = int(pathlib.Path("tools/VERSION").read_text().strip()) if pathlib.Path("tools/VERSION").exists() else 11
     return write_version_number(language_version + 1)
 
 def get_first_6_digit_of_git_commit_hash():

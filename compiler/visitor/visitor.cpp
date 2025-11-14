@@ -2820,10 +2820,6 @@ namespace yoi {
         yoi::wstr specializedName =
             getMangledTemplateName(astNode->id->id->get().strVal, concreteTemplateArgs);
 
-        if (targetedModule->functionTable.contains(specializedName)) {
-            return targetedModule->functionTable.getIndex(specializedName);
-        }
-
         // Create a new function definition by specializing the template
         IRFunctionDefinition::Builder builder;
 
@@ -2848,6 +2844,15 @@ namespace yoi {
             builder.addArgument(argName, argType);
             paramTypes.push_back(argType);
         }
+
+        if (targetedModule->functionTable.contains(specializedName + getFuncUniqueNameStr(paramTypes))) {
+            auto result = targetedModule->functionTable.getIndex(specializedName + getFuncUniqueNameStr(paramTypes));
+            // restore environment
+            moduleContext->popTemplateBuilder();
+            popModuleContext();
+            return result;
+        }
+
         builder.setName(specializedName + getFuncUniqueNameStr(paramTypes));
         builder.setReturnType(managedPtr(parseTypeSpec(&astNode->getResultType())));
 
@@ -2859,7 +2864,13 @@ namespace yoi {
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), targetedModule, specializedFunc});
         moduleContext->getIRBuilder().setDebugInfo({targetedModule->modulePath, astNode->getLine(), astNode->getColumn()});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-        visit(&astNode->getBlock(), true);
+        try {
+            visit(&astNode->getBlock(), true);
+        } catch (std::runtime_error &e) {
+            panic(astNode->getLine(), astNode->getColumn(), std::string("Exception occurred while specializing method: ") + yoi::wstring2string(specializedName) + ": " + e.what());
+        } catch (std::exception &e) {
+            panic(astNode->getLine(), astNode->getColumn(), std::string("Unknown exception occurred while specializing method: ") + yoi::wstring2string(specializedName) + ": " + e.what());
+        }
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
 
@@ -4040,6 +4051,7 @@ namespace yoi {
     }
 
     void visitor::pushModuleContext(yoi::indexT moduleIndex) {
+        printf("push module context\n");
         moduleContextStack.emplace(moduleContext, currentModuleIndex);
         this->moduleContext = moduleContext->getCompilerContext()->getModuleContext(moduleIndex);
         this->irModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
@@ -4047,6 +4059,7 @@ namespace yoi {
     }
 
     void visitor::popModuleContext() {
+        printf("pop module context\n");
         this->moduleContext = moduleContextStack.top().first;
         currentModuleIndex = moduleContextStack.top().second;
         this->irModule = moduleContext->getCompilerContext()->getImportedModule(currentModuleIndex);
