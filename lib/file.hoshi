@@ -1,5 +1,24 @@
+enum Whence {
+    START = 0,
+    CURRENT = 1,
+    END = 2
+}
+
+struct ReadBufferView {
+    size: int,
+    data: char[],
+    constructor(size: int, data: char[])
+}
+
+impl ReadBufferView {
+    constructor(size: int, data: char[]) {
+        this.size = size
+        this.data = data
+    }
+}
+
 interface AbstractFile {
-    read(size: int): char[],
+    read(size: int): ReadBufferView,
     write(data: char[]) : int,
     close() : none,
     seek(offset: int, whence: int) : int, /* whence: 0 for start, 1 for current, 2 for end */

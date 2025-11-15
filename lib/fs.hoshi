@@ -19,10 +19,10 @@ impl OSFile {
 }
 
 impl OSFile : file.AbstractFile {
-    read(size: int): char[] {
+    read(size: int): file.ReadBufferView {
         let buffer = new char[size]()
         let bytes_read = runtime.fread(runtime.runtime_get_string_array_data_pointer(buffer), 1, size, this.fp)
-        return buffer
+        return file.ReadBufferView(bytes_read, buffer)
     },
     write(data: char[]) : int {
         runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, data.length - this.isText, this.fp)

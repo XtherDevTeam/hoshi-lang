@@ -23,18 +23,18 @@ impl ArrayBuffer {
 }
 
 impl ArrayBuffer : file.AbstractFile {
-    read(size: int) : char[] {
+    read(size: int) : file.ReadBufferView {
         if (size > this.size - this.current_pos) {
             size = this.size - this.current_pos
             let result = new char[size]()
             runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size)
             this.current_pos = this.size
-            return result
+            return file.ReadBufferView (size, result)
         } else {
             let result = new char[size]()
             runtime.memcpy(runtime.runtime_get_string_array_data_pointer(result), runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, size)
             this.current_pos += size
-            return result
+            return file.ReadBufferView(size, result)
         }
     },
     write(buf: char[]) : int {

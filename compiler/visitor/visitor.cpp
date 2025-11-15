@@ -3527,7 +3527,7 @@ namespace yoi {
                     }
                 }
             } else {
-                if (argTypes.size() != fixedParamCount + 1) // balance the variadic argument
+                if (argTypes.size() != fixedParamCount + 1 || paramTypes.size() != fixedParamCount + 1 + skipFirstParam) // balance the variadic argument
                     return false;
 
                 for (size_t i = 0; i < fixedParamCount + 1; ++i) {

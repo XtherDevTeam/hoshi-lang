@@ -132,9 +132,9 @@ impl str.Str : JSONValue {
                 stream.seek(content_pos, 0)
                 let buffer = stream.read(end_pos - content_pos - 1)
                 // TODO: handle un-escaping characters from buffer
-                this.data = buffer
-                this.length = buffer.length
-                this.capacity = buffer.length
+                this.data = buffer.data
+                this.length = buffer.size
+                this.capacity = buffer.size
                 // read ahead to skip \"
                 stream.getch()
                 return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
@@ -194,7 +194,7 @@ impl Numeric : JSONValue {
         stream.seek(start_pos, 0)
         let buffer = stream.read(read_len)
         
-        this.data = str.Str(buffer)
+        this.data = str.Str(buffer.data)
         this.type = type
         return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
     }
@@ -209,7 +209,8 @@ impl JSONNull : JSONValue {
             return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'n' at beginning of null"))
         }
         let next3Char = stream.read(3)
-        if (str.Str(next3Char) != "ull") {
+        // if (str.Str() != "ull") {
+        if (next3Char.data[0] != 'u' || next3Char.data[1] != 'l' || next3Char.data[2] != 'l') {
             return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'ull' after 'n' in null"))
         }
         // unget one ch
