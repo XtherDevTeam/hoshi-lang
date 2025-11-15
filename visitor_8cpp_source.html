@@ -3794,7 +3794,7 @@ $(document).ready(function(){initNavTree('visitor_8cpp_source.html',''); initRes
 <div class="line"><a id="l03527" name="l03527"></a><span class="lineno"> 3527</span>                    }</div>
 <div class="line"><a id="l03528" name="l03528"></a><span class="lineno"> 3528</span>                }</div>
 <div class="line"><a id="l03529" name="l03529"></a><span class="lineno"> 3529</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l03530" name="l03530"></a><span class="lineno"> 3530</span>                <span class="keywordflow">if</span> (argTypes.size() != fixedParamCount + 1) <span class="comment">// balance the variadic argument</span></div>
+<div class="line"><a id="l03530" name="l03530"></a><span class="lineno"> 3530</span>                <span class="keywordflow">if</span> (argTypes.size() != fixedParamCount + 1 || paramTypes.size() != fixedParamCount + 1 + skipFirstParam) <span class="comment">// balance the variadic argument</span></div>
 <div class="line"><a id="l03531" name="l03531"></a><span class="lineno"> 3531</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l03532" name="l03532"></a><span class="lineno"> 3532</span> </div>
 <div class="line"><a id="l03533" name="l03533"></a><span class="lineno"> 3533</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; fixedParamCount + 1; ++i) {</div>
