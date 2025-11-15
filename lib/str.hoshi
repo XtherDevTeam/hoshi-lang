@@ -503,6 +503,41 @@ impl char : Stringable {
     }
 }
 
+struct Hex {
+    value : int,
+    constructor(value: int)
+}
+
+impl Hex {
+    constructor(value: int) {
+        this.value = value
+    }
+}
+
+impl Hex : Stringable {
+    to_string() : Str {
+        let res = Str(16u)
+        if (this.value == 0) {
+            return "0"
+        }
+        let is_negative = this.value < 0
+        if (is_negative) {
+            this.value = -this.value
+        }
+        let hex_chars : Str = "0123456789ABCDEF"
+        while (this.value > 0) {
+            let digit = (this.value % 16) as char
+            res.push(hex_chars[digit])
+            this.value /= 16
+        }
+        if (is_negative) {
+            res.push('-')
+        }
+        res.reverse()
+        return res
+    }
+}
+
 func format(fmt: Str, args: ...Stringable[]) : Str {
     let occur = fmt.find_all(Str("{}"))
     if (occur == 0u) {
