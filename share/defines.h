@@ -1,7 +1,7 @@
 #ifndef HOSHI_LANG_DEFINES_H
 #define HOSHI_LANG_DEFINES_H
 
-#define HOSHI_LANG_VERSION "12"
-#define HOSHI_LANG_GIT_COMMIT_HASH "ac4c9a"
+#define HOSHI_LANG_VERSION "13"
+#define HOSHI_LANG_GIT_COMMIT_HASH "1c2ffb"
 
 #endif

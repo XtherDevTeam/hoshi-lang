@@ -4,6 +4,7 @@ use io "io"
 use file "file"
 use runtime "runtime"
 use hashMap "hashMap"
+use console "console"
 
 func main() : int {
     let s = str.Str("{\"a\": \"Hello, world!\", \"b\": [1, 2, 3], \"c\": null}")
@@ -13,6 +14,7 @@ func main() : int {
         runtime.puts(js.unwrap_err().c_str())
         return 1
     }
+    console.print("Parsed JSON: ", js.unwrap().to_string(), "\n")
     if (js.unwrap() interfaceof str.Str) {
         let s2 = dyn_cast<str.Str>(js.unwrap())
         runtime.puts(s2.c_str())

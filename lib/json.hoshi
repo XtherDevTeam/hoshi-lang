@@ -113,8 +113,7 @@ func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
 
 impl str.Str : JSONValue {
     to_string() : str.Str {
-        /*TODO: implement escape characters*/
-        return str.format("\"{}\"", this)
+        return str.format("\"{}\"", str.escape(this))
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         let start_pos = stream.tell()
@@ -202,7 +201,7 @@ impl Numeric : JSONValue {
 
 impl JSONNull : JSONValue {
     to_string() : str.Str {
-        return str.Str("JSONValue")
+        return "null"
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         if (stream.getch() != 'n') {
@@ -299,8 +298,16 @@ impl JSONDict : JSONValue {
 
 impl JSONList : JSONValue {
     to_string() : str.Str {
-        /*not implemented*/
-        return str.Str("JSONValue")
+        let s = str.Str("[")
+        for (let i = 0; i < this.length; i += 1) {
+            let value = this[i]
+            s += value.to_string()
+            if (i < this.length - 1) {
+                s = s + ","
+            }
+        }
+        s = s + "]"
+        return s
     },
     construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         skip_whitespace(stream)

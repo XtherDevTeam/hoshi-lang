@@ -710,3 +710,28 @@ func always_inline toDeci(s: Str) : deci {
 func always_inline toDeci(s: string) : deci {
     return toDeci(Str(s))
 }
+
+func escape(s: Str) : Str {
+    let res = Str(s.length * 2u + 1u)
+    for (let i = 0; i < s.length; i += 1) {
+        if (s[i] == '\"') {
+            res.push('\\')
+            res.push('\"')
+        } elif (s[i] == '\\') {
+            res.push('\\')
+            res.push('\\')
+        } elif (s[i] == '\n') {
+            res.push('\\')
+            res.push('n')
+        } elif (s[i] == '\r') {
+            res.push('\\')
+            res.push('r')
+        } elif (s[i] == '\t') {
+            res.push('\\')
+            res.push('t')
+        } else {
+            res.push(s[i])
+        }
+    }
+    return res
+}
