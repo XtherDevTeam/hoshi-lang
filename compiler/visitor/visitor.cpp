@@ -4657,7 +4657,7 @@ namespace yoi {
 
         moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), targetedModule, targetedModule->functionTable[constructorIndex]});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, (yoi::indexT)0}, structType, moduleIndex);
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, structType, moduleIndex);
         moduleContext->getIRBuilder().retOp();
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
