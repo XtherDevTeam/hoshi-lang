@@ -7,6 +7,7 @@ var classyoi_1_1visitor =
     [ "checkMarcoSatisfaction", "classyoi_1_1visitor.html#a87f9e0165bcc1efb98600218aa102587", null ],
     [ "createCallableImplementationForFunction", "classyoi_1_1visitor.html#aea8cb201359addacea36dd13242b4ac3", null ],
     [ "createCallableImplementationForLambda", "classyoi_1_1visitor.html#a518ede4200beecdfb916060f01cb1579", null ],
+    [ "createCallableInstanceForFunction", "classyoi_1_1visitor.html#ad6a7a7277bf3d1f35952eb2a1dc6f5d7", null ],
     [ "createCallableInterface", "classyoi_1_1visitor.html#acac4734d246c0afd94301e9ebcd0d119", null ],
     [ "createLambdaUnnamedStruct", "classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab", null ],
     [ "emitBasicCastInBasicArithOpByLhsAndRhs", "classyoi_1_1visitor.html#a6641d63668aeb197a61c57a59ecf2aac", null ],

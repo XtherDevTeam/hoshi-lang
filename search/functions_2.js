@@ -28,12 +28,13 @@ var searchData=
   ['createbasicobject_25',['createBasicObject',['../classyoi_1_1LLVMCodegen.html#ab1d663f047e687ccfe75f7a1f34da43b',1,'yoi::LLVMCodegen']]],
   ['createcallableimplementationforfunction_26',['createCallableImplementationForFunction',['../classyoi_1_1visitor.html#aea8cb201359addacea36dd13242b4ac3',1,'yoi::visitor']]],
   ['createcallableimplementationforlambda_27',['createCallableImplementationForLambda',['../classyoi_1_1visitor.html#a518ede4200beecdfb916060f01cb1579',1,'yoi::visitor']]],
-  ['createcallableinterface_28',['createCallableInterface',['../classyoi_1_1visitor.html#acac4734d246c0afd94301e9ebcd0d119',1,'yoi::visitor']]],
-  ['createcodeblock_29',['createCodeBlock',['../classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9',1,'yoi::IRBuilder']]],
-  ['createdynamicarrayobject_30',['createDynamicArrayObject',['../classyoi_1_1LLVMCodegen.html#a83dad9a08329282b8c8324a051842a47',1,'yoi::LLVMCodegen']]],
-  ['createentryfunction_31',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
-  ['createlambdaunnamedstruct_32',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
-  ['createlocalvar_33',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
-  ['createscope_34',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
-  ['customize_5ft_35',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
+  ['createcallableinstanceforfunction_28',['createCallableInstanceForFunction',['../classyoi_1_1visitor.html#ad6a7a7277bf3d1f35952eb2a1dc6f5d7',1,'yoi::visitor']]],
+  ['createcallableinterface_29',['createCallableInterface',['../classyoi_1_1visitor.html#acac4734d246c0afd94301e9ebcd0d119',1,'yoi::visitor']]],
+  ['createcodeblock_30',['createCodeBlock',['../classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9',1,'yoi::IRBuilder']]],
+  ['createdynamicarrayobject_31',['createDynamicArrayObject',['../classyoi_1_1LLVMCodegen.html#a83dad9a08329282b8c8324a051842a47',1,'yoi::LLVMCodegen']]],
+  ['createentryfunction_32',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
+  ['createlambdaunnamedstruct_33',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
+  ['createlocalvar_34',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
+  ['createscope_35',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
+  ['customize_5ft_36',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
 ];

@@ -314,15 +314,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a518ede4200beecdfb916060f01cb1579" id="r_a518ede4200beecdfb916060f01cb1579"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#a518ede4200beecdfb916060f01cb1579">createCallableImplementationForLambda</a> (const std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRStructDefinition.html">IRStructDefinition</a> &gt; &amp;lambda, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> lambdaStructIndex, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> moduleIndex)</td></tr>
 <tr class="memdesc:a518ede4200beecdfb916060f01cb1579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Callable Implementation For Lambda object also create a struct for the lambda and return its callable implementation index in the module's implementation table.  <br /></td></tr>
 <tr class="separator:a518ede4200beecdfb916060f01cb1579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea8cb201359addacea36dd13242b4ac3" id="r_aea8cb201359addacea36dd13242b4ac3"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#aea8cb201359addacea36dd13242b4ac3">createCallableImplementationForFunction</a> (const std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRFunctionDefinition.html">IRFunctionDefinition</a> &gt; &amp;func, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> funcIndex, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> moduleIndex)</td></tr>
+<tr class="memdesc:aea8cb201359addacea36dd13242b4ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Callable Implementation For Function object also create a unnamed struct for the function and return its callable implementation index in the module's implementation table.  <br /></td></tr>
+<tr class="separator:aea8cb201359addacea36dd13242b4ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6a7a7277bf3d1f35952eb2a1dc6f5d7" id="r_ad6a7a7277bf3d1f35952eb2a1dc6f5d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#ad6a7a7277bf3d1f35952eb2a1dc6f5d7">createCallableInstanceForFunction</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> implIndex, std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt; callableInterfaceIndex, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> moduleIndex)</td></tr>
+<tr class="memdesc:ad6a7a7277bf3d1f35952eb2a1dc6f5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Callable Instance For Function object.  <br /></td></tr>
+<tr class="separator:ad6a7a7277bf3d1f35952eb2a1dc6f5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5556008060d304b8cd917c73e60e42ab" id="r_a5556008060d304b8cd917c73e60e42ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab">createLambdaUnnamedStruct</a> (<a class="el" href="classyoi_1_1lambdaExpr.html">yoi::lambdaExpr</a> *<a class="el" href="classyoi_1_1lambdaExpr.html">lambdaExpr</a>)</td></tr>
 <tr class="memdesc:a5556008060d304b8cd917c73e60e42ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Lambda Unnamed Struct object.  <br /></td></tr>
 <tr class="separator:a5556008060d304b8cd917c73e60e42ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87f9e0165bcc1efb98600218aa102587" id="r_a87f9e0165bcc1efb98600218aa102587"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#a87f9e0165bcc1efb98600218aa102587">checkMarcoSatisfaction</a> (<a class="el" href="classyoi_1_1marcoDescriptor.html">yoi::marcoDescriptor</a> *desc)</td></tr>
 <tr class="memdesc:a87f9e0165bcc1efb98600218aa102587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the marco satisfies the condition.  <br /></td></tr>
 <tr class="separator:a87f9e0165bcc1efb98600218aa102587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea8cb201359addacea36dd13242b4ac3" id="r_aea8cb201359addacea36dd13242b4ac3"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#aea8cb201359addacea36dd13242b4ac3">createCallableImplementationForFunction</a> (const std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRFunctionDefinition.html">IRFunctionDefinition</a> &gt; &amp;func, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> funcIndex, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> moduleIndex)</td></tr>
-<tr class="memdesc:aea8cb201359addacea36dd13242b4ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Callable Implementation For Function object also create a function for the function and return its callable implementation index in the module's implementation table.  <br /></td></tr>
-<tr class="separator:aea8cb201359addacea36dd13242b4ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e2d350e0df8fbcb14f98644d9748564" id="r_a1e2d350e0df8fbcb14f98644d9748564"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRValueType.html">IRValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1visitor.html#a1e2d350e0df8fbcb14f98644d9748564">mapEnumTypeToBasicType</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> targetModule, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> targetEnumType)</td></tr>
 <tr class="separator:a1e2d350e0df8fbcb14f98644d9748564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -429,7 +432,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Extern entries are not used anymore, use getExternEntry to get the direct entry instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02574">2574</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02578">2578</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -471,7 +474,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03334">3334</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03338">3338</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, and <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -516,7 +519,7 @@ Here is the call graph for this function:</div>
 <dd>
 false The marco doesn't satisfy the condition </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04357">4357</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04361">4361</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="structyoi_1_1lexer_1_1token.html#aec50e2b8549fbb0f41040add5a3f0818">lexer::token::basicVal</a>, <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::col</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">lexer::token::kind</a>, <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::line</a>, <a class="el" href="ast_8hpp_source.html#l00210">marcoDescriptor::pairs</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="lexer_8hpp_source.html#l00115">lexer::token::vBasicValue::vDeci</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -678,16 +681,81 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a Callable Implementation For Function object also create a function for the function and return its callable implementation index in the module's implementation table. </p>
+<p>Create a Callable Implementation For Function object also create a unnamed struct for the function and return its callable implementation index in the module's implementation table. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">func</td><td>function definition </td></tr>
-    <tr><td class="paramname">funcIndex</td><td>the index of the function in the module's function table. </td></tr>
-    <tr><td class="paramname">moduleIndex</td><td>the index of the module where the implementation will be created. </td></tr>
+    <tr><td class="paramname">func</td><td>The function definition. </td></tr>
+    <tr><td class="paramname">funcIndex</td><td>The index of the function in the module's function table. </td></tr>
+    <tr><td class="paramname">moduleIndex</td><td>The index of the module where the implementation will be created. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::pair&lt;yoi::indexT, std::pair&lt;yoi::indexT, yoi::indexT&gt;&gt; The index of the created callable implementation in the module's implementation table and callable interface index. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::pair&lt;yoi::indexT, std::pair&lt;yoi::indexT, yoi::indexT&gt;&gt; </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04612">4612</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00760">IRStructDefinition::Builder::addMethod()</a>, <a class="el" href="IR_8h_source.html#l00502">IRFunctionDefinition::Builder::argumentTypes</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l01150">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00748">IRStructDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00766">IRStructDefinition::Builder::yield()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1visitor_aea8cb201359addacea36dd13242b4ac3_cgraph.png" border="0" usemap="#aclassyoi_1_1visitor_aea8cb201359addacea36dd13242b4ac3_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1visitor_aea8cb201359addacea36dd13242b4ac3_cgraph" id="aclassyoi_1_1visitor_aea8cb201359addacea36dd13242b4ac3_cgraph">
+<area shape="rect" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="5,603,225,643"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#aa3de8ea8cda0e2c99a64c165aaf99727" title=" " alt="" coords="279,5,460,45"/>
+<area shape="poly" title=" " alt="" coords="113,602,115,506,122,437,134,360,153,280,181,199,220,123,244,88,271,56,275,52,279,56,275,59,248,91,224,126,186,201,158,281,139,361,127,438,121,506,119,603"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#acf5c7ad03ee58817810b7b700cc59194" title=" " alt="" coords="279,69,460,109"/>
+<area shape="poly" title=" " alt="" coords="114,602,120,515,128,454,141,386,161,315,188,245,225,178,271,120,275,116,279,120,275,123,229,181,193,247,166,317,146,388,133,455,125,516,119,602"/>
+<area shape="rect" href="structyoi_1_1IRStructDefinition_1_1Builder.html#a3cb27bf09f0585919f5d34ca3f35c405" title=" " alt="" coords="287,133,451,173"/>
+<area shape="poly" title=" " alt="" coords="115,602,124,525,148,413,169,352,195,291,229,234,271,183,276,179,280,183,275,187,233,237,200,293,174,354,154,415,130,526,121,603"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9" title=" " alt="" coords="274,197,465,237"/>
+<area shape="poly" title=" " alt="" coords="117,602,129,535,156,440,177,388,202,337,234,289,271,247,277,243,280,247,275,251,238,293,207,340,182,390,161,441,134,536,122,603"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#af6a622e483813b2016dcd89c0218eb69" title=" " alt="" coords="289,261,450,301"/>
+<area shape="poly" title=" " alt="" coords="119,602,135,545,164,467,185,425,209,384,238,345,272,311,277,307,281,311,275,315,242,349,214,387,190,428,169,469,140,546,124,603"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a264c0cac7877a10ecfa89996efe50f87" title=" " alt="" coords="276,325,463,365"/>
+<area shape="poly" title=" " alt="" coords="122,602,141,555,173,495,217,431,243,401,272,375,279,370,282,374,275,379,247,405,221,434,178,497,146,558,126,604"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#a0419cd963e30ad21d64c2919001de5a0" title=" " alt="" coords="294,389,445,429"/>
+<area shape="poly" title=" " alt="" coords="127,601,183,523,224,478,272,439,282,433,285,438,275,444,228,482,187,526,131,604"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a0900ad2f02279bfec72caffcb459310a" title="Invoke a function with the given arguments." alt="" coords="280,503,459,529"/>
+<area shape="poly" title=" " alt="" coords="148,600,205,568,272,538,295,530,297,535,274,542,207,573,151,605"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a" title=" " alt="" coords="288,454,451,479"/>
+<area shape="poly" title=" " alt="" coords="133,600,191,545,230,514,272,488,288,481,290,486,275,493,233,519,195,549,137,604"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="555,919,685,945"/>
+<area shape="poly" title=" " alt="" coords="146,641,203,679,274,716,327,732,372,737,415,745,440,753,467,767,511,799,549,837,605,906,601,910,545,840,507,803,464,772,438,758,414,750,371,743,326,737,272,721,201,683,143,645"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#ad1b425b42f99202f53f61ee9efa78c4b" title=" " alt="" coords="294,603,445,643"/>
+<area shape="poly" title=" " alt="" coords="225,620,280,620,280,625,225,625"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#a3a87b40f9616a71669c3650e0116022a" title=" " alt="" coords="294,667,445,707"/>
+<area shape="poly" title=" " alt="" coords="196,640,281,662,280,667,195,645"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#afcf74078272d6268d94b8f6342b31ff5" title=" " alt="" coords="293,553,446,578"/>
+<area shape="poly" title=" " alt="" coords="204,600,299,578,300,584,205,605"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#a4de20261a97f2859d9463995d9b20e4a" title=" " alt="" coords="279,781,460,821"/>
+<area shape="poly" title=" " alt="" coords="137,641,196,699,234,731,275,760,299,773,296,778,272,765,231,736,192,703,133,645"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#a8e984024f844af1ac65e850174419871" title=" " alt="" coords="279,845,460,885"/>
+<area shape="poly" title=" " alt="" coords="129,642,151,682,183,733,225,786,275,831,283,837,281,841,272,835,221,789,179,736,146,685,124,645"/>
+<area shape="rect" href="structyoi_1_1IRStructDefinition_1_1Builder.html#adaa74788fe0e46b2366340a32cbb7f0a" title=" " alt="" coords="287,909,451,949"/>
+<area shape="poly" title=" " alt="" coords="125,642,143,693,174,761,218,833,245,866,275,895,281,900,278,904,272,899,241,870,213,836,169,763,138,695,120,644"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8" title=" " alt="" coords="279,973,460,1013"/>
+<area shape="poly" title=" " alt="" coords="123,642,137,703,166,789,186,835,211,880,240,922,275,959,280,964,277,968,272,963,236,926,206,883,181,837,161,791,132,705,118,643"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a6e0ce7f9d1515206333d1e95104d9c82" title=" " alt="" coords="273,1037,465,1077"/>
+<area shape="poly" title=" " alt="" coords="121,642,132,714,158,816,178,872,204,927,236,978,275,1023,280,1027,276,1031,271,1027,232,981,199,929,173,874,153,818,127,715,116,643"/>
+<area shape="rect" href="structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d" title=" " alt="" coords="279,1101,460,1141"/>
+<area shape="poly" title=" " alt="" coords="120,642,127,724,136,780,150,843,170,908,197,973,231,1034,275,1088,280,1091,276,1095,271,1091,227,1037,192,975,165,910,145,844,131,781,122,724,115,643"/>
+<area shape="rect" href="structyoi_1_1IRStructDefinition_1_1Builder.html#a0fb794c5679205ac08d83e61662068a3" title=" " alt="" coords="287,1165,451,1205"/>
+<area shape="poly" title=" " alt="" coords="119,643,123,733,130,798,143,869,162,945,190,1019,227,1090,250,1122,275,1151,279,1155,275,1159,271,1155,245,1125,222,1092,185,1021,157,946,137,871,125,798,118,734,114,643"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a58c8b2ad0ea491a6642e5e1cbd358c89" title=" " alt="" coords="295,1230,444,1255"/>
+<area shape="poly" title=" " alt="" coords="122,643,139,760,172,933,193,1022,218,1104,245,1171,260,1196,275,1215,284,1223,281,1227,271,1219,256,1199,240,1173,213,1106,188,1024,167,934,134,761,117,643"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451" title=" " alt="" coords="543,503,697,529"/>
+<area shape="poly" title=" " alt="" coords="459,513,528,513,528,519,459,519"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#aa92b31ff8f2eea49abba0edaca962761" title=" " alt="" coords="786,468,973,508"/>
+<area shape="poly" title=" " alt="" coords="697,505,772,497,773,502,698,510"/>
+<area shape="rect" href="classyoi_1_1IRCodeBlock.html#a0ce5ce7fd99199287c70c64ae3ae252e" title=" " alt="" coords="775,533,984,558"/>
+<area shape="poly" title=" " alt="" coords="698,522,761,529,761,535,697,527"/>
+<area shape="poly" title=" " alt="" coords="435,477,542,498,541,503,434,482"/>
+<area shape="poly" title=" " alt="" coords="434,550,541,529,542,534,435,555"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a09af64578d379fd7719ae0f8ebac8bbf" title=" " alt="" coords="513,553,727,578"/>
+<area shape="poly" title=" " alt="" coords="446,563,499,563,499,568,446,568"/>
+<area shape="poly" title=" " alt="" coords="441,1099,464,1087,506,1056,543,1020,599,954,603,958,547,1024,509,1060,467,1092,443,1104"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -734,7 +802,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::pair&lt;yoi::indexT, std::pair&lt;yoi::indexT, yoi::indexT&gt;&gt; The index of the created callable implementation in the module's implementation table and callable interface index. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04319">4319</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04323">4323</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00527">IRInterfaceImplementationDefinition::Builder::addVirtualMethod()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l00521">IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex()</a>, <a class="el" href="IR_8cpp_source.html#l00515">IRInterfaceImplementationDefinition::Builder::setImplStructIndex()</a>, and <a class="el" href="IR_8cpp_source.html#l00534">IRInterfaceImplementationDefinition::Builder::yield()</a>.</p>
 <div class="dynheader">
@@ -781,6 +849,79 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ad6a7a7277bf3d1f35952eb2a1dc6f5d7" name="ad6a7a7277bf3d1f35952eb2a1dc6f5d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a7a7277bf3d1f35952eb2a1dc6f5d7">&#9670;&#160;</a></span>createCallableInstanceForFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void createCallableInstanceForFunction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>implIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::pair&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt;&#160;</td>
+          <td class="paramname"><em>callableInterfaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>moduleIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a Callable Instance For Function object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">implIndex</td><td></td></tr>
+    <tr><td class="paramname">callableInterfaceIndex</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04692">4692</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, and <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1visitor_ad6a7a7277bf3d1f35952eb2a1dc6f5d7_cgraph.png" border="0" usemap="#aclassyoi_1_1visitor_ad6a7a7277bf3d1f35952eb2a1dc6f5d7_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1visitor_ad6a7a7277bf3d1f35952eb2a1dc6f5d7_cgraph" id="aclassyoi_1_1visitor_ad6a7a7277bf3d1f35952eb2a1dc6f5d7_cgraph">
+<area shape="rect" title="Create a Callable Instance For Function object." alt="" coords="5,119,196,159"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a574dbaced194790fae5cad1837fae133" title=" " alt="" coords="255,32,433,72"/>
+<area shape="poly" title=" " alt="" coords="154,116,243,83,268,74,270,79,245,88,155,121"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#af6a622e483813b2016dcd89c0218eb69" title=" " alt="" coords="263,147,425,187"/>
+<area shape="poly" title=" " alt="" coords="196,147,250,153,249,159,196,152"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#a0419cd963e30ad21d64c2919001de5a0" title=" " alt="" coords="269,211,419,251"/>
+<area shape="poly" title=" " alt="" coords="148,156,245,196,266,204,264,209,243,201,146,161"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5" title=" " alt="" coords="244,97,444,122"/>
+<area shape="poly" title=" " alt="" coords="196,125,230,120,231,126,196,130"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#a7e8320b32b98148668c9bd0a0b6d9451" title=" " alt="" coords="492,42,647,67"/>
+<area shape="poly" title=" " alt="" coords="433,50,478,51,478,56,433,56"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="505,93,634,118"/>
+<area shape="poly" title=" " alt="" coords="430,69,503,87,501,92,428,75"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#aa92b31ff8f2eea49abba0edaca962761" title=" " alt="" coords="706,5,893,45"/>
+<area shape="poly" title=" " alt="" coords="647,42,692,36,693,42,647,47"/>
+<area shape="rect" href="classyoi_1_1IRCodeBlock.html#a0ce5ce7fd99199287c70c64ae3ae252e" title=" " alt="" coords="695,70,904,95"/>
+<area shape="poly" title=" " alt="" coords="647,61,682,66,681,71,647,67"/>
+<area shape="poly" title=" " alt="" coords="396,94,503,68,504,73,398,99"/>
+<area shape="poly" title=" " alt="" coords="444,105,491,104,491,109,444,110"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="acac4734d246c0afd94301e9ebcd0d119" name="acac4734d246c0afd94301e9ebcd0d119"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acac4734d246c0afd94301e9ebcd0d119">&#9670;&#160;</a></span>createCallableInterface()</h2>
 
@@ -817,7 +958,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> The index of the created callable interface in the module's interface table. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04186">4186</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04190">4190</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00550">IRInterfaceInstanceDefinition::Builder::addMethod()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l00544">IRInterfaceInstanceDefinition::Builder::setName()</a>, and <a class="el" href="IR_8cpp_source.html#l00556">IRInterfaceInstanceDefinition::Builder::yield()</a>.</p>
 <div class="dynheader">
@@ -866,7 +1007,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> The index of the created lambda unnamed struct in the module's struct table. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04219">4219</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04223">4223</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="ast_8hpp_source.html#l00216">lambdaExpr::args</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="ast_8hpp_source.html#l00218">lambdaExpr::block</a>, <a class="el" href="ast_8hpp_source.html#l00215">lambdaExpr::captures</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="ast_8hpp_source.html#l00217">lambdaExpr::resultType</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00748">IRStructDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="ast_8hpp_source.html#l00291">definitionArguments::spec</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 <div class="dynheader">
@@ -987,7 +1128,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02590">2590</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02594">2594</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, and <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -1054,7 +1195,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02644">2644</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02648">2648</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, and <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>.</p>
 <div class="dynheader">
@@ -1131,7 +1272,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>A vector of shared pointers to the argument types. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function leaves the evaluated arguments on the <a class="el" href="classyoi_1_1IRBuilder.html">IRBuilder</a>'s temporary stack. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03471">3471</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03475">3475</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00044">invocationArguments::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, and <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>.</p>
 <div class="dynheader">
@@ -1184,7 +1325,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03395">3395</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03399">3399</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, and <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -1244,7 +1385,7 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02536">2536</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02540">2540</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -1280,7 +1421,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03408">3408</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03412">3412</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1451,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02720">2720</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02724">2724</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 </div>
 </div>
@@ -1330,7 +1471,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02776">2776</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02780">2780</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00040">moduleContext::getTemplateBuilders()</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -1376,7 +1517,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02495">2495</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02499">2499</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 </div>
 </div>
@@ -1396,7 +1537,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02654">2654</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02658">2658</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 </div>
 </div>
@@ -1426,7 +1567,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02884">2884</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02888">2888</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 </div>
 </div>
@@ -1462,7 +1603,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03151">3151</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03155">3155</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="string_8cpp_source.html#l00036">replace_all()</a>.</p>
 <div class="dynheader">
@@ -1494,7 +1635,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02790">2790</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02794">2794</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8hpp_source.html#l00145">indexTable&lt; A, B &gt;::put_create()</a>, and <a class="el" href="ast_8hpp_source.html#l00263">defTemplateArg::spec</a>.</p>
 <div class="dynheader">
@@ -1528,7 +1669,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02658">2658</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02662">2662</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00068">IRDebugInfo::column</a>, <a class="el" href="IR_8cpp_source.html#l01150">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8h_source.html#l00067">IRDebugInfo::line</a>, and <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -1600,7 +1741,7 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> current insertion point after the invocation </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Make sure the builder state is saved before calling this helper function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03693">3693</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03697">3697</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00068">IRDebugInfo::column</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l01150">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8h_source.html#l00067">IRDebugInfo::line</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -1711,9 +1852,9 @@ Here is the call graph for this function:</div>
 
 <p>Orchestrates an external function/method invocation <a class="el" href="classyoi_1_1IR.html">IR</a> generation. </p>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03602">3602</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03606">3606</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="visitor_8h_source.html#l00027">visitor::OverloadResult::fixedArgCount</a>, <a class="el" href="visitor_8cpp_source.html#l03467">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="ast_8cpp_source.html#l00044">invocationArguments::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l01062">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, and <a class="el" href="visitor_8h_source.html#l00028">visitor::OverloadResult::variadicElementType</a>.</p>
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="visitor_8h_source.html#l00027">visitor::OverloadResult::fixedArgCount</a>, <a class="el" href="visitor_8cpp_source.html#l03471">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="ast_8cpp_source.html#l00044">invocationArguments::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00361">IRBuilder::invokeOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l01062">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, and <a class="el" href="visitor_8h_source.html#l00028">visitor::OverloadResult::variadicElementType</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1819,9 +1960,9 @@ Here is the call graph for this function:</div>
 <p>Handle subscript. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the it need to continue to handle subscript </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04069">4069</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04073">4073</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="visitor_8cpp_source.html#l03467">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01140">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="visitor_8cpp_source.html#l03471">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01140">IRBuilder::popOp()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1926,7 +2067,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> current insertion point after the invocation </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03774">3774</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03778">3778</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00068">IRDebugInfo::column</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l01150">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="IR_8cpp_source.html#l00397">IRBuilder::invokeVirtualOp()</a>, <a class="el" href="IR_8h_source.html#l00067">IRDebugInfo::line</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -2008,7 +2149,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03442">3442</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03446">3446</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, and <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>.</p>
 <div class="dynheader">
@@ -2060,7 +2201,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>-1 if not a module name, otherwise the index of the module in the module table </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02528">2528</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02532">2532</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, and <a class="el" href="ast_8hpp_source.html#l00334">identifierWithTemplateArg::id</a>.</p>
 <div class="dynheader">
@@ -2091,7 +2232,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02586">2586</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02590">2590</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, and <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>.</p>
 <div class="dynheader">
@@ -2135,7 +2276,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04479">4479</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04483">4483</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>.</p>
 <div class="dynheader">
@@ -2167,7 +2308,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02481">2481</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02485">2485</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00040">templateArg::get()</a>, <a class="el" href="ast_8cpp_source.html#l00076">identifierWithTemplateArg::getArg()</a>, <a class="el" href="ast_8cpp_source.html#l00072">identifierWithTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, and <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>.</p>
 <div class="dynheader">
@@ -2205,7 +2346,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02502">2502</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02506">2506</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -2262,7 +2403,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02806">2806</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02810">2810</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, and <a class="el" href="ast_8hpp_source.html#l00277">templateArg::spec</a>.</p>
 <div class="dynheader">
@@ -2294,7 +2435,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03452">3452</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03456">3456</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>.</p>
 <div class="dynheader">
@@ -2326,7 +2467,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04174">4174</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04178">4178</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, and <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -2358,7 +2499,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01530">1530</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01534">1534</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2410,7 +2551,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02335">2335</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02339">2339</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00076">identifierWithTemplateArg::getArg()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00072">identifierWithTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00334">identifierWithTemplateArg::id</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2466,7 +2607,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02363">2363</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02367">2367</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l01028">subscriptExpr::getSubscript()</a>, <a class="el" href="ast_8hpp_source.html#l00358">subscriptExpr::id</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -2515,7 +2656,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02437">2437</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02441">2441</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00310">typeSpec::func</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>, <a class="el" href="ast_8hpp_source.html#l00313">typeSpec::hasArrayTypeSpec</a>, <a class="el" href="ast_8hpp_source.html#l00308">typeSpec::kind</a>, <a class="el" href="ast_8hpp_source.html#l00309">typeSpec::member</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -2579,7 +2720,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02379">2379</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02383">2383</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2643,7 +2784,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02393">2393</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02397">2397</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00076">identifierWithTemplateArg::getArg()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00072">identifierWithTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00334">identifierWithTemplateArg::id</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2711,7 +2852,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02424">2424</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02428">2428</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l01028">subscriptExpr::getSubscript()</a>, <a class="el" href="ast_8hpp_source.html#l00358">subscriptExpr::id</a>, and <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -2769,7 +2910,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04061">4061</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04065">4065</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>.</p>
 <div class="dynheader">
@@ -2809,7 +2950,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04053">4053</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04057">4057</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>.</p>
 <div class="dynheader">
@@ -2875,7 +3016,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="structyoi_1_1visitor_1_1OverloadResult.html">OverloadResult</a> struct with the resolution details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03480">3480</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03484">3484</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="visitor_8h_source.html#l00027">visitor::OverloadResult::fixedArgCount</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="visitor_8h_source.html#l00028">visitor::OverloadResult::variadicElementType</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2947,7 +3088,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structyoi_1_1visitor_1_1OverloadResult.html">visitor::OverloadResult</a> with the resolution details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03975">3975</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03979">3979</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="visitor_8h_source.html#l00027">visitor::OverloadResult::fixedArgCount</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="visitor_8h_source.html#l00026">visitor::OverloadResult::isCastRequired</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="visitor_8h_source.html#l00025">visitor::OverloadResult::isVirtual</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, and <a class="el" href="visitor_8h_source.html#l00028">visitor::OverloadResult::variadicElementType</a>.</p>
 <div class="dynheader">
@@ -2997,7 +3138,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02815">2815</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02819">2819</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l00966">IRTemplateBuilder::addTemplateArgument()</a>, <a class="el" href="ast_8hpp_source.html#l00347">identifierWithDefTemplateArg::arg</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00032">defTemplateArg::get()</a>, <a class="el" href="ast_8cpp_source.html#l00048">definitionArguments::get()</a>, <a class="el" href="ast_8cpp_source.html#l00280">funcDefStmt::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00288">funcDefStmt::getBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00284">funcDefStmt::getResultType()</a>, <a class="el" href="ast_8hpp_source.html#l00346">identifierWithDefTemplateArg::id</a>, <a class="el" href="ast_8hpp_source.html#l00580">funcDefStmt::id</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00037">moduleContext::popTemplateBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00034">moduleContext::pushTemplateBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 <div class="dynheader">
@@ -3124,7 +3265,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03874">3874</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03878">3878</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l00527">IRInterfaceImplementationDefinition::Builder::addVirtualMethod()</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00352">implInner::getInner()</a>, <a class="el" href="ast_8cpp_source.html#l00368">implStmt::getInner()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00698">implStmt::inner</a>, <a class="el" href="ast_8hpp_source.html#l00696">implStmt::interfaceName</a>, <a class="el" href="ast_8cpp_source.html#l00364">implStmt::isImplForStmt()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00521">IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex()</a>, <a class="el" href="IR_8cpp_source.html#l00515">IRInterfaceImplementationDefinition::Builder::setImplStructIndex()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00509">IRInterfaceImplementationDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00534">IRInterfaceImplementationDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -3240,7 +3381,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03808">3808</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03812">3812</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00550">IRInterfaceInstanceDefinition::Builder::addMethod()</a>, <a class="el" href="IR_8cpp_source.html#l00966">IRTemplateBuilder::addTemplateArgument()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00037">moduleContext::popTemplateBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00034">moduleContext::pushTemplateBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00544">IRInterfaceInstanceDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00556">IRInterfaceInstanceDefinition::Builder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -3345,7 +3486,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02963">2963</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02967">2967</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00966">IRTemplateBuilder::addTemplateArgument()</a>, <a class="el" href="ast_8hpp_source.html#l00899">innerMethodDecl::attrs</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00048">definitionArguments::get()</a>, <a class="el" href="ast_8cpp_source.html#l00907">innerMethodDecl::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00931">constructorDecl::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00320">structDefInnerPair::getConstructor()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00324">structDefInnerPair::getMethod()</a>, <a class="el" href="ast_8cpp_source.html#l00903">innerMethodDecl::getName()</a>, <a class="el" href="ast_8cpp_source.html#l00911">innerMethodDecl::getResultType()</a>, <a class="el" href="ast_8hpp_source.html#l00629">structDefInnerPair::kind</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00037">moduleContext::popTemplateBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00034">moduleContext::pushTemplateBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8h_source.html#l00535">IRTemplateBuilder::templateArguments</a>, and <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>.</p>
 <div class="dynheader">
@@ -3452,7 +3593,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03059">3059</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03063">3063</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00966">IRTemplateBuilder::addTemplateArgument()</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00048">definitionArguments::get()</a>, <a class="el" href="ast_8cpp_source.html#l00919">innerMethodDef::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00935">constructorDef::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00927">innerMethodDef::getBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00939">constructorDef::getBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00340">implInnerPair::getConstructor()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00344">implInnerPair::getMethod()</a>, <a class="el" href="ast_8cpp_source.html#l00915">innerMethodDef::getName()</a>, <a class="el" href="ast_8cpp_source.html#l00348">implInnerPair::isConstructor()</a>, <a class="el" href="ast_8cpp_source.html#l01149">implInnerPair::isFinalizer()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00037">moduleContext::popTemplateBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00034">moduleContext::pushTemplateBuilder()</a>, <a class="el" href="def_8cpp_source.html#l00070">yoi::set_current_file_path()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="IR_8h_source.html#l00535">IRTemplateBuilder::templateArguments</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 <div class="dynheader">
@@ -3573,7 +3714,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02897">2897</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02901">2901</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00753">IRStructDefinition::Builder::addField()</a>, <a class="el" href="IR_8cpp_source.html#l00760">IRStructDefinition::Builder::addMethod()</a>, <a class="el" href="IR_8cpp_source.html#l00966">IRTemplateBuilder::addTemplateArgument()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="ast_8cpp_source.html#l00352">implInner::getInner()</a>, <a class="el" href="ast_8cpp_source.html#l00368">implStmt::getInner()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00037">moduleContext::popTemplateBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00034">moduleContext::pushTemplateBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00748">IRStructDefinition::Builder::setName()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00766">IRStructDefinition::Builder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -3643,7 +3784,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03292">3292</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03296">3296</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00068">IRDebugInfo::column</a>, <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l01150">IRBuilder::getCurrentDebugInfo()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01526">IRBuilder::invokeDanglingOp()</a>, <a class="el" href="IR_8h_source.html#l00067">IRDebugInfo::line</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -3801,7 +3942,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00175">175</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00179">179</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01336">IRBuilder::interfaceOfOp()</a>, <a class="el" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">lexer::token::kind</a>, <a class="el" href="ast_8hpp_source.html#l00402">abstractExpr::lhs</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="ast_8hpp_source.html#l00403">abstractExpr::op</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="ast_8hpp_source.html#l00404">abstractExpr::rhs</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l01165">IRBuilder::typeIdOp()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -3888,7 +4029,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00410">410</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00414">414</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00160">addExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00156">addExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -3967,7 +4108,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00535">535</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00539">539</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00208">andExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00204">andExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -4117,7 +4258,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02330">2330</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02334">2334</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01483">IRBuilder::breakOp()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, and <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>.</p>
 <div class="dynheader">
@@ -4184,7 +4325,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00803">803</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00807">807</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00468">codeBlock::getStmts()</a>, <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>.</p>
 <div class="dynheader">
@@ -4234,7 +4375,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02325">2325</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02329">2329</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01491">IRBuilder::continueOp()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, and <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>.</p>
 <div class="dynheader">
@@ -4291,7 +4432,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03379">3379</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03383">3383</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01218">IRBuilder::dynCastOp()</a>, <a class="el" href="ast_8hpp_source.html#l01020">dynCastExpression::expr</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="ast_8hpp_source.html#l01019">dynCastExpression::type</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -4361,7 +4502,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04493">4493</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04497">4497</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01562">IREnumerationType::Builder::addValue()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8hpp_source.html#l01030">enumerationDefinition::name</a>, <a class="el" href="IR_8cpp_source.html#l01557">IREnumerationType::Builder::setName()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="ast_8hpp_source.html#l01031">enumerationDefinition::values</a>, and <a class="el" href="IR_8cpp_source.html#l01596">IREnumerationType::Builder::yield()</a>.</p>
 <div class="dynheader">
@@ -4401,7 +4542,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00506">506</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00510">510</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00196">equalityExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00192">equalityExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -4480,7 +4621,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00584">584</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00588">588</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00220">exclusiveExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00216">exclusiveExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -4568,7 +4709,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03164">3164</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03168">3168</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00983">exportDecl::as</a>, <a class="el" href="ast_8hpp_source.html#l00981">exportDecl::attrs</a>, <a class="el" href="ast_8hpp_source.html#l00982">exportDecl::from</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="ast_8hpp_source.html#l00309">typeSpec::member</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -4635,7 +4776,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02306">2306</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02310">2310</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, and <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -4684,7 +4825,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02265">2265</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02269">2269</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00815">forStmt::afterStmt</a>, <a class="el" href="ast_8hpp_source.html#l00816">forStmt::block</a>, <a class="el" href="ast_8hpp_source.html#l00814">forStmt::cond</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8hpp_source.html#l00813">forStmt::initStmt</a>, <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l01479">IRBuilder::popLoopContext()</a>, <a class="el" href="IR_8cpp_source.html#l01520">IRBuilder::pushLoopContext()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -4769,7 +4910,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01584">1584</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01588">1588</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="ast_8hpp_source.html#l00579">funcDefStmt::attrs</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="ast_8hpp_source.html#l00583">funcDefStmt::block</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00048">definitionArguments::get()</a>, <a class="el" href="ast_8cpp_source.html#l00280">funcDefStmt::getArgs()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00276">funcDefStmt::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00084">identifierWithDefTemplateArg::getId()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00284">funcDefStmt::getResultType()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8h_source.html#l00501">IRFunctionDefinition::Builder::name</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, and <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>.</p>
 <div class="dynheader">
@@ -4852,6 +4993,55 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04511">4511</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="ast_8hpp_source.html#l00224">funcExpr::args</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="ast_8hpp_source.html#l00223">funcExpr::name</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="ast_8hpp_source.html#l01025">unnamedDefinitionArguments::types</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1visitor_af802421b701d99ccdabdd0edadb1698c_cgraph.png" border="0" usemap="#aclassyoi_1_1visitor_af802421b701d99ccdabdd0edadb1698c_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1visitor_af802421b701d99ccdabdd0edadb1698c_cgraph" id="aclassyoi_1_1visitor_af802421b701d99ccdabdd0edadb1698c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,277,56,303"/>
+<area shape="rect" href="classyoi_1_1AST.html#a43f2be4f2bb4b38ba53a0d33b9eb3e8c" title=" " alt="" coords="155,5,309,31"/>
+<area shape="poly" title=" " alt="" coords="29,277,30,232,39,168,48,134,61,100,79,69,102,41,120,29,140,21,142,26,123,34,106,45,83,72,65,102,53,135,44,169,35,232,34,277"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#af6a622e483813b2016dcd89c0218eb69" title=" " alt="" coords="151,55,313,95"/>
+<area shape="poly" title=" " alt="" coords="30,277,36,242,48,196,69,147,84,125,102,105,136,85,139,90,106,109,88,128,74,150,53,198,41,244,36,278"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#acfdb375fd4ca7e14b73fdbc64ff8ef6b" title=" " alt="" coords="139,119,325,159"/>
+<area shape="poly" title=" " alt="" coords="34,276,57,224,77,194,102,169,124,156,127,161,106,173,81,198,62,227,39,278"/>
+<area shape="rect" href="classyoi_1_1moduleContext.html#a0419cd963e30ad21d64c2919001de5a0" title=" " alt="" coords="157,183,307,223"/>
+<area shape="poly" title=" " alt="" coords="44,275,70,254,103,233,143,218,145,223,105,238,73,258,47,279"/>
+<area shape="rect" href="classyoi_1_1AST.html#aae59fbfe596180f1547a5d365e6baca3" title=" " alt="" coords="167,248,297,273"/>
+<area shape="poly" title=" " alt="" coords="56,284,153,270,153,275,57,289"/>
+<area shape="rect" href="classyoi_1_1externModuleAccessExpression.html#a4dcb8f4e1960429ab6188ff7a49f2aaa" title=" " alt="" coords="104,298,360,338"/>
+<area shape="poly" title=" " alt="" coords="57,291,91,296,90,301,56,296"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="167,363,297,388"/>
+<area shape="poly" title=" " alt="" coords="45,301,71,325,105,348,154,364,153,369,103,352,68,329,42,305"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="470,439,555,464"/>
+<area shape="poly" title=" " alt="" coords="39,302,62,350,81,376,105,397,133,409,170,419,265,434,368,443,456,447,456,453,368,448,265,439,169,425,131,414,103,402,77,380,57,353,34,304"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="848,464,991,489"/>
+<area shape="poly" title=" " alt="" coords="34,303,36,343,46,398,54,426,67,454,84,478,106,499,153,527,203,550,255,566,309,578,364,584,420,586,531,579,637,562,733,538,813,514,874,492,876,497,815,519,734,544,638,567,532,584,420,591,364,589,308,583,254,572,201,555,150,532,102,503,80,482,62,456,49,428,40,399,31,343,29,303"/>
+<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="173,464,291,489"/>
+<area shape="poly" title=" " alt="" coords="37,302,44,332,56,370,77,409,106,443,131,458,160,468,159,473,129,463,102,447,72,412,52,372,38,333,32,304"/>
+<area shape="rect" href="classyoi_1_1IRBuilder.html#aa92b31ff8f2eea49abba0edaca962761" title=" " alt="" coords="419,91,606,131"/>
+<area shape="poly" title=" " alt="" coords="325,127,405,119,406,125,326,133"/>
+<area shape="rect" href="classyoi_1_1IRCodeBlock.html#a0ce5ce7fd99199287c70c64ae3ae252e" title=" " alt="" coords="408,156,617,181"/>
+<area shape="poly" title=" " alt="" coords="326,146,395,154,394,159,325,152"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="665,399,800,439"/>
+<area shape="poly" title=" " alt="" coords="555,443,652,428,652,434,556,448"/>
+<area shape="poly" title=" " alt="" coords="556,451,834,469,834,474,555,457"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="848,407,991,432"/>
+<area shape="poly" title=" " alt="" coords="800,417,834,417,834,422,800,422"/>
+<area shape="poly" title=" " alt="" coords="799,437,865,457,863,462,798,442"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1039,407,1241,432"/>
+<area shape="poly" title=" " alt="" coords="991,417,1025,417,1025,422,991,422"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1289,407,1480,432"/>
+<area shape="poly" title=" " alt="" coords="1242,417,1275,417,1275,422,1242,422"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1039,464,1241,489"/>
+<area shape="poly" title=" " alt="" coords="991,474,1025,474,1025,479,991,479"/>
+<area shape="poly" title=" " alt="" coords="291,469,456,454,456,459,291,474"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a433d3b41abae000d02812f145e53c84c" name="a433d3b41abae000d02812f145e53c84c"></a>
@@ -4870,7 +5060,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02140">2140</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02144">2144</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00764">globalStmt::vValue::enumerationDefVal</a>, <a class="el" href="ast_8hpp_source.html#l00762">globalStmt::vValue::exportDeclVal</a>, <a class="el" href="ast_8hpp_source.html#l00760">globalStmt::vValue::funcDefStmtVal</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00758">globalStmt::vValue::implStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00761">globalStmt::vValue::importDeclVal</a>, <a class="el" href="ast_8hpp_source.html#l00756">globalStmt::vValue::interfaceDefStmtVal</a>, <a class="el" href="classyoi_1_1globalStmt.html#ad38547a24d0bb38586a3e75ef26cb715">globalStmt::kind</a>, <a class="el" href="ast_8hpp_source.html#l00759">globalStmt::vValue::letStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00752">globalStmt::marco</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="ast_8hpp_source.html#l00757">globalStmt::vValue::structDefStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00763">globalStmt::vValue::typeAliasStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00755">globalStmt::vValue::useStmtVal</a>, and <a class="el" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">globalStmt::value</a>.</p>
 <div class="dynheader">
@@ -5026,7 +5216,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01516">1516</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01520">1520</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00334">identifierWithTemplateArg::id</a>, and <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -5077,7 +5267,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02190">2190</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02194">2194</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00781">ifStmt::ifBlock::block</a>, <a class="el" href="ast_8hpp_source.html#l00780">ifStmt::ifBlock::cond</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8hpp_source.html#l00789">ifStmt::elifB</a>, <a class="el" href="ast_8hpp_source.html#l00790">ifStmt::elseB</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00400">ifStmt::getIfBlock()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00412">ifStmt::hasElseBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -5160,7 +5350,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01832">1832</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01836">1836</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00527">IRInterfaceImplementationDefinition::Builder::addVirtualMethod()</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00352">implInner::getInner()</a>, <a class="el" href="ast_8cpp_source.html#l00368">implStmt::getInner()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00360">implStmt::getStructId()</a>, <a class="el" href="ast_8cpp_source.html#l00947">externModuleAccessExpression::getTerms()</a>, <a class="el" href="ast_8hpp_source.html#l00698">implStmt::inner</a>, <a class="el" href="ast_8hpp_source.html#l00696">implStmt::interfaceName</a>, <a class="el" href="ast_8cpp_source.html#l00364">implStmt::isImplForStmt()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00027">moduleContext::popIRBuilder()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00023">moduleContext::pushIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00521">IRInterfaceImplementationDefinition::Builder::setImplInterfaceIndex()</a>, <a class="el" href="IR_8cpp_source.html#l00515">IRInterfaceImplementationDefinition::Builder::setImplStructIndex()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00509">IRInterfaceImplementationDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="ast_8hpp_source.html#l00697">implStmt::structName</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00534">IRInterfaceImplementationDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00133">IRBuilder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -5272,7 +5462,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03241">3241</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03245">3245</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="ast_8hpp_source.html#l00901">innerMethodDecl::args</a>, <a class="el" href="ast_8hpp_source.html#l00899">innerMethodDecl::attrs</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="ast_8hpp_source.html#l00989">importDecl::from_path</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00048">definitionArguments::get()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00988">importDecl::inner</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="ast_8hpp_source.html#l00900">innerMethodDecl::name</a>, <a class="el" href="def_8cpp_source.html#l00134">yoi::realpath()</a>, <a class="el" href="ast_8hpp_source.html#l00902">innerMethodDecl::resultType</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -5355,7 +5545,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00631">631</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00635">635</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00232">inclusiveExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00228">inclusiveExpr::getTerms()</a>, and <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -5438,7 +5628,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01051">1051</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01055">1055</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00880">inCodeBlockStmt::vValue::breakStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00882">inCodeBlockStmt::vValue::codeBlockVal</a>, <a class="el" href="ast_8hpp_source.html#l00879">inCodeBlockStmt::vValue::continueStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00877">inCodeBlockStmt::vValue::forEachStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00884">inCodeBlockStmt::vValue::forStmtVal</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00460">inCodeBlockStmt::getKind()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00464">inCodeBlockStmt::getValue()</a>, <a class="el" href="ast_8hpp_source.html#l00875">inCodeBlockStmt::vValue::ifStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00881">inCodeBlockStmt::vValue::letStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00872">inCodeBlockStmt::marco</a>, <a class="el" href="IR_8cpp_source.html#l01140">IRBuilder::popOp()</a>, <a class="el" href="ast_8hpp_source.html#l00878">inCodeBlockStmt::vValue::returnStmtVal</a>, <a class="el" href="ast_8hpp_source.html#l00883">inCodeBlockStmt::vValue::rExprVal</a>, <a class="el" href="IR_8cpp_source.html#l01145">IRBuilder::setDebugInfo()</a>, and <a class="el" href="ast_8hpp_source.html#l00876">inCodeBlockStmt::vValue::whileStmtVal</a>.</p>
 <div class="dynheader">
@@ -5490,7 +5680,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01640">1640</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01644">1644</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00550">IRInterfaceInstanceDefinition::Builder::addMethod()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00084">identifierWithDefTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00304">interfaceDefInner::getInner()</a>, <a class="el" href="ast_8cpp_source.html#l00312">interfaceDefStmt::getInner()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00092">identifierWithDefTemplateArg::hasDefTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00618">interfaceDefStmt::id</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00544">IRInterfaceInstanceDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, <a class="el" href="IR_8cpp_source.html#l00556">IRInterfaceInstanceDefinition::Builder::yield()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -5578,7 +5768,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00276">276</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00280">280</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::col</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00128">leftExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00140">leftExpr::hasRhs()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">lexer::token::kind</a>, <a class="el" href="ast_8hpp_source.html#l00428">leftExpr::lhs</a>, <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::line</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00450">IRBuilder::popFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01136">IRBuilder::pushTempVar()</a>, <a class="el" href="ast_8hpp_source.html#l00429">leftExpr::rhs</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -5663,7 +5853,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02067">2067</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02071">2071</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01499">IRBuilder::bindElementsOp()</a>, <a class="el" href="IR_8cpp_source.html#l01509">IRBuilder::bindFieldsOp()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, and <a class="el" href="ast_8hpp_source.html#l00732">letStmt::terms</a>.</p>
 <div class="dynheader">
@@ -5737,7 +5927,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00678">678</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00682">682</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00244">logicalAndExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00240">logicalAndExpr::getTerms()</a>, <a class="el" href="IR_8cpp_source.html#l00148">IRBuilder::insert()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, and <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>.</p>
 <div class="dynheader">
@@ -5825,7 +6015,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00723">723</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00727">727</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00170">IRBuilder::basicCast()</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="IR_8cpp_source.html#l00129">IRBuilder::getCodeBlock()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00256">logicalOrExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00252">logicalOrExpr::getTerms()</a>, <a class="el" href="IR_8cpp_source.html#l00468">IRCodeBlock::insert()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l01136">IRBuilder::pushTempVar()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -5930,9 +6120,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00816">816</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00820">820</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01330">IRBuilder::arrayLengthOp()</a>, <a class="el" href="IR_8cpp_source.html#l01438">IRBuilder::commitState()</a>, <a class="el" href="IR_8cpp_source.html#l01450">IRBuilder::discardStateUntil()</a>, <a class="el" href="visitor_8cpp_source.html#l03467">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00100">memberExpr::getTerms()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01428">IRBuilder::restoreStateTemporarily()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01330">IRBuilder::arrayLengthOp()</a>, <a class="el" href="IR_8cpp_source.html#l01438">IRBuilder::commitState()</a>, <a class="el" href="IR_8cpp_source.html#l01450">IRBuilder::discardStateUntil()</a>, <a class="el" href="visitor_8cpp_source.html#l03471">visitor::OverloadResult::found()</a>, <a class="el" href="visitor_8h_source.html#l00029">visitor::OverloadResult::function</a>, <a class="el" href="visitor_8h_source.html#l00023">visitor::OverloadResult::functionIndex</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00100">memberExpr::getTerms()</a>, <a class="el" href="IR_8cpp_source.html#l00376">IRBuilder::invokeMethodOp()</a>, <a class="el" href="visitor_8h_source.html#l00024">visitor::OverloadResult::isVariadic</a>, <a class="el" href="IR_8cpp_source.html#l00325">IRBuilder::loadMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00281">IRBuilder::pushOp()</a>, <a class="el" href="IR_8cpp_source.html#l01428">IRBuilder::restoreStateTemporarily()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="IR_8cpp_source.html#l00354">IRBuilder::storeMemberOp()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -6036,7 +6226,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00378">378</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00382">382</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00148">mulExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00144">mulExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -6115,7 +6305,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03430">3430</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03434">3434</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00377">newExpression::args</a>, <a class="el" href="ast_8hpp_source.html#l00322">subscript::expr</a>, <a class="el" href="ast_8cpp_source.html#l00044">invocationArguments::get()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8hpp_source.html#l00376">newExpression::length</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01275">IRBuilder::newDynamicArrayOp()</a>, and <a class="el" href="ast_8hpp_source.html#l00375">newExpression::type</a>.</p>
 <div class="dynheader">
@@ -6188,7 +6378,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00137">137</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="ast_8hpp_source.html#l00388">primary::dynCast</a>, <a class="el" href="ast_8hpp_source.html#l00386">primary::expr</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00382">primary::kind</a>, <a class="el" href="ast_8hpp_source.html#l00390">primary::lambda</a>, <a class="el" href="ast_8hpp_source.html#l00385">primary::literals</a>, <a class="el" href="ast_8hpp_source.html#l00384">primary::member</a>, <a class="el" href="ast_8hpp_source.html#l00389">primary::newExpr</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="ast_8hpp_source.html#l00387">primary::typeId</a>.</p>
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="ast_8hpp_source.html#l00388">primary::dynCast</a>, <a class="el" href="ast_8hpp_source.html#l00386">primary::expr</a>, <a class="el" href="ast_8hpp_source.html#l00391">primary::func</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8hpp_source.html#l00383">primary::kind</a>, <a class="el" href="ast_8hpp_source.html#l00390">primary::lambda</a>, <a class="el" href="ast_8hpp_source.html#l00385">primary::literals</a>, <a class="el" href="ast_8hpp_source.html#l00384">primary::member</a>, <a class="el" href="ast_8hpp_source.html#l00389">primary::newExpr</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="ast_8hpp_source.html#l00387">primary::typeId</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -6251,7 +6441,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00472">472</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00476">476</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00184">relationalExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00180">relationalExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -6330,7 +6520,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02311">2311</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02315">2315</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00456">returnStmt::hasValue()</a>, <a class="el" href="IR_8cpp_source.html#l00464">IRBuilder::irFuncDefinition()</a>, <a class="el" href="IR_8cpp_source.html#l00414">IRBuilder::retOp()</a>, and <a class="el" href="ast_8hpp_source.html#l00842">returnStmt::value</a>.</p>
 <div class="dynheader">
@@ -6380,7 +6570,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00799">799</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00803">803</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00264">rExpr::getExpr()</a>.</p>
 <div class="dynheader">
@@ -6412,7 +6602,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00439">439</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00443">443</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00223">IRBuilder::arithmeticOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00160">IRBuilder::getLhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00172">shiftExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l00168">shiftExpr::getTerms()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>.</p>
 <div class="dynheader">
@@ -6493,7 +6683,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01698">1698</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01702">1702</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00561">IRFunctionDefinition::Builder::addArgument()</a>, <a class="el" href="IR_8cpp_source.html#l01264">IRFunctionDefinition::Builder::addAttr()</a>, <a class="el" href="IR_8cpp_source.html#l00753">IRStructDefinition::Builder::addField()</a>, <a class="el" href="IR_8cpp_source.html#l00760">IRStructDefinition::Builder::addMethod()</a>, <a class="el" href="IR_8h_source.html#l00504">IRFunctionDefinition::Builder::attrs</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00332">structDefStmt::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00084">identifierWithDefTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00328">structDefInner::getInner()</a>, <a class="el" href="ast_8cpp_source.html#l00336">structDefStmt::getInner()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00092">identifierWithDefTemplateArg::hasDefTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00657">structDefStmt::id</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01154">IRFunctionDefinition::Builder::setDebugInfo()</a>, <a class="el" href="IR_8cpp_source.html#l00503">IRFunctionDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00748">IRStructDefinition::Builder::setName()</a>, <a class="el" href="IR_8cpp_source.html#l00568">IRFunctionDefinition::Builder::setReturnType()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="IR_8cpp_source.html#l00573">IRFunctionDefinition::Builder::yield()</a>, and <a class="el" href="IR_8cpp_source.html#l00766">IRStructDefinition::Builder::yield()</a>.</p>
 <div class="dynheader">
@@ -6578,7 +6768,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01093">1093</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01097">1097</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00076">identifierWithTemplateArg::getArg()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00072">identifierWithTemplateArg::getId()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l01028">subscriptExpr::getSubscript()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00358">subscriptExpr::id</a>, <a class="el" href="IR_8cpp_source.html#l01027">IRBuilder::invokeImportedOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01062">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a7ad1670edae17aaec62cf0cf29266ee7">structObject</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -6684,7 +6874,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04465">4465</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l04469">4469</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="ast_8cpp_source.html#l00084">identifierWithDefTemplateArg::getId()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="ast_8cpp_source.html#l00092">identifierWithDefTemplateArg::hasDefTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00197">typeAliasStmt::lhs</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="ast_8hpp_source.html#l00198">typeAliasStmt::rhs</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -6738,7 +6928,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03365">3365</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l03369">3369</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l01014">typeIdExpression::expr</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="ast_8hpp_source.html#l01013">typeIdExpression::type</a>, and <a class="el" href="IR_8cpp_source.html#l01165">IRBuilder::typeIdOp()</a>.</p>
 <div class="dynheader">
@@ -6815,7 +7005,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00221">221</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l00225">225</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::col</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00116">uniqueExpr::getOp()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">lexer::token::kind</a>, <a class="el" href="ast_8hpp_source.html#l00416">uniqueExpr::lhs</a>, <a class="el" href="lexer_8hpp_source.html#l00018">lexer::token::line</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, and <a class="el" href="IR_8cpp_source.html#l00214">IRBuilder::uniqueArithmeticOp()</a>.</p>
 <div class="dynheader">
@@ -6881,7 +7071,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01524">1524</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01528">1528</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8hpp_source.html#l00569">useStmt::name</a>, <a class="el" href="ast_8hpp_source.html#l00570">useStmt::path</a>, and <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>.</p>
 <div class="dynheader">
@@ -6923,7 +7113,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02237">2237</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02241">2241</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8hpp_source.html#l00804">whileStmt::block</a>, <a class="el" href="ast_8hpp_source.html#l00803">whileStmt::cond</a>, <a class="el" href="IR_8cpp_source.html#l00124">IRBuilder::createCodeBlock()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l00269">IRBuilder::jumpIfOp()</a>, <a class="el" href="IR_8cpp_source.html#l00263">IRBuilder::jumpOp()</a>, <a class="el" href="IR_8cpp_source.html#l01479">IRBuilder::popLoopContext()</a>, <a class="el" href="IR_8cpp_source.html#l01520">IRBuilder::pushLoopContext()</a>, <a class="el" href="IR_8cpp_source.html#l00454">IRBuilder::switchCodeBlock()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -7022,7 +7212,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02737">2737</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02741">2741</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00755">IRExternEntry::affiliateModule</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8h_source.html#l00756">IRExternEntry::itemIndex</a>, <a class="el" href="IR_8cpp_source.html#l00307">IRBuilder::loadOp()</a>, <a class="el" href="ast_8hpp_source.html#l00236">identifier::node</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00331">IRBuilder::storeOp()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="classyoi_1_1IRExternEntry.html#a74dc0eb2fcbc228ad5b1f692d4cff4fc">IRExternEntry::type</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -7113,7 +7303,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02766">2766</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l02770">2770</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, and <a class="el" href="ast_8hpp_source.html#l00334">identifierWithTemplateArg::id</a>.</p>
 <div class="dynheader">
@@ -7161,7 +7351,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01341">1341</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="visitor_8cpp_source.html#l01345">1345</a> of file <a class="el" href="visitor_8cpp_source.html">visitor.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00437">IRBuilder::constructInterfaceImplOp()</a>, <a class="el" href="IR_8cpp_source.html#l01123">IRBuilder::discardState()</a>, <a class="el" href="ast_8cpp_source.html#l00012">identifier::get()</a>, <a class="el" href="ast_8cpp_source.html#l00076">identifierWithTemplateArg::getArg()</a>, <a class="el" href="ast_8cpp_source.html#l00985">AST::getColumn()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00031">moduleContext::getCompilerContext()</a>, <a class="el" href="IR_8cpp_source.html#l00446">IRBuilder::getCurrentInsertionPoint()</a>, <a class="el" href="ast_8cpp_source.html#l00072">identifierWithTemplateArg::getId()</a>, <a class="el" href="moduleContext_8cpp_source.html#l00019">moduleContext::getIRBuilder()</a>, <a class="el" href="ast_8cpp_source.html#l00989">AST::getLine()</a>, <a class="el" href="IR_8cpp_source.html#l00165">IRBuilder::getRhsFromTempVarStack()</a>, <a class="el" href="ast_8cpp_source.html#l01028">subscriptExpr::getSubscript()</a>, <a class="el" href="ast_8cpp_source.html#l00080">identifierWithTemplateArg::hasTemplateArg()</a>, <a class="el" href="ast_8hpp_source.html#l00358">subscriptExpr::id</a>, <a class="el" href="IR_8cpp_source.html#l01027">IRBuilder::invokeImportedOp()</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="IR_8cpp_source.html#l01062">IRBuilder::newArrayOp()</a>, <a class="el" href="IR_8cpp_source.html#l00429">IRBuilder::newStructOp()</a>, <a class="el" href="def_8cpp_source.html#l00088">yoi::panic()</a>, <a class="el" href="IR_8cpp_source.html#l00450">IRBuilder::popFromTempVarStack()</a>, <a class="el" href="IR_8cpp_source.html#l01128">IRBuilder::restoreState()</a>, <a class="el" href="IR_8cpp_source.html#l01118">IRBuilder::saveState()</a>, <a class="el" href="lexer_8hpp_source.html#l00133">lexer::token::strVal</a>, <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00115">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">

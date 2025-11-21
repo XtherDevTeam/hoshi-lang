@@ -1,39 +1,41 @@
 <map id="createCodeBlock" name="createCodeBlock">
-<area shape="rect" id="Node000001" title=" " alt="" coords="672,425,804,450"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331" title=" " alt="" coords="435,5,621,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="734,411,730,342,714,248,700,197,680,147,655,101,622,59,607,47,611,43,626,55,659,98,685,145,705,195,719,246,735,341,739,411"/>
-<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="432,69,624,109"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="732,411,724,352,706,275,692,234,673,194,650,156,622,123,607,111,610,107,626,119,655,153,678,191,697,232,711,274,729,351,737,410"/>
-<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="446,133,610,173"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="730,412,718,364,698,304,666,241,646,213,622,187,606,176,609,171,626,183,650,209,671,238,702,302,723,362,735,410"/>
-<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="436,197,620,237"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="725,413,711,377,689,333,659,289,622,251,604,240,607,235,626,247,663,286,693,331,715,374,730,411"/>
-<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="442,261,614,301"/>
-<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="719,415,678,365,652,338,623,316,600,304,603,299,625,311,655,334,682,361,723,412"/>
-<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="465,350,591,375"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="698,421,623,389,586,378,587,373,625,384,700,416"/>
-<area shape="rect" id="Node000011" href="$classyoi_1_1visitor.html#ae32c02a57c9f8340c0f36aa3c1abec4b" title=" " alt="" coords="465,399,591,425"/>
-<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="658,430,591,422,592,417,659,425"/>
-<area shape="rect" id="Node000012" href="$classyoi_1_1visitor.html#a17733bfd438ff33e6ec37e0534f10205" title=" " alt="" coords="465,449,591,474"/>
-<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="658,449,592,457,591,451,658,444"/>
-<area shape="rect" id="Node000013" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="465,498,591,523"/>
-<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="698,458,625,488,583,500,582,495,623,483,696,453"/>
-<area shape="rect" id="Node000014" href="$classyoi_1_1visitor.html#aaed49e3b28622b6cc2b1e3fb002740f7" title=" " alt="" coords="465,547,591,573"/>
-<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="718,462,678,500,625,537,592,550,590,545,623,532,674,496,715,458"/>
-<area shape="rect" id="Node000015" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="465,597,591,622"/>
-<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="726,464,687,525,659,558,625,586,593,601,590,597,623,582,655,554,683,522,722,461"/>
-<area shape="rect" id="Node000016" href="$classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="465,646,591,671"/>
-<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="732,464,717,502,695,549,665,596,626,635,593,652,590,647,622,631,661,592,691,546,712,500,726,462"/>
-<area shape="rect" id="Node000017" href="$classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="465,695,591,721"/>
-<area shape="poly" id="edge18_Node000001_Node000017" title=" " alt="" coords="735,465,723,512,703,571,671,632,650,660,626,685,593,702,590,697,622,681,646,657,666,630,698,569,718,510,730,463"/>
-<area shape="rect" id="Node000018" href="$classyoi_1_1visitor.html#ae6ed1cb9a2fbe5e0e62ec07f18be642e" title=" " alt="" coords="465,745,591,770"/>
-<area shape="poly" id="edge19_Node000001_Node000018" title=" " alt="" coords="737,464,729,520,710,593,695,631,677,669,654,704,626,734,610,745,593,752,591,747,608,740,622,730,650,700,672,666,690,629,705,591,723,519,732,463"/>
-<area shape="rect" id="Node000003" href="$classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="249,13,384,38"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="421,28,384,28,384,23,421,23"/>
-<area shape="rect" id="Node000004" href="$classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,13,201,38"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="236,37,201,37,201,32,236,31"/>
-<area shape="rect" id="Node000005" href="$main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="76,62,131,87"/>
-<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="249,44,132,71,131,66,247,39"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="215,14,249,14,249,20,215,19"/>
-<area shape="poly" id="edge11_Node000010_Node000010" title=" " alt="" coords="565,340,555,332,528,329,506,331,494,335,492,341,498,348,494,352,487,342,490,332,505,326,528,323,557,327,568,336"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="681,463,813,489"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#aea8cb201359addacea36dd13242b4ac3" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="432,5,633,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="744,450,742,374,729,269,715,213,694,157,667,105,631,59,617,48,620,43,635,55,672,102,699,155,720,211,734,268,748,373,750,449"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331" title=" " alt="" coords="440,69,625,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="743,450,737,384,721,297,706,250,687,204,663,161,631,123,616,111,619,107,635,119,667,158,692,202,711,248,726,296,742,384,748,450"/>
+<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="437,133,629,173"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="741,450,731,395,712,324,698,287,680,251,658,217,632,187,615,176,619,171,635,183,662,214,685,248,703,285,717,323,737,394,746,449"/>
+<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="451,197,615,237"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="738,450,725,407,704,353,673,299,654,273,632,251,614,239,617,235,635,247,658,270,677,296,708,351,730,405,743,449"/>
+<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="441,261,625,301"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="733,452,694,384,666,347,632,315,612,304,615,299,635,311,670,343,699,381,737,449"/>
+<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="447,325,619,365"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="724,455,683,417,632,380,607,368,609,363,635,375,687,413,727,451"/>
+<area shape="rect" id="Node000011" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="469,414,596,439"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="677,463,588,442,589,437,679,458"/>
+<area shape="rect" id="Node000012" href="$classyoi_1_1visitor.html#ae32c02a57c9f8340c0f36aa3c1abec4b" title=" " alt="" coords="469,463,596,489"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="668,479,596,479,596,473,668,473"/>
+<area shape="rect" id="Node000013" href="$classyoi_1_1visitor.html#a17733bfd438ff33e6ec37e0534f10205" title=" " alt="" coords="469,513,596,538"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="679,494,589,515,588,510,677,489"/>
+<area shape="rect" id="Node000014" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="469,562,596,587"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="721,499,681,526,634,552,597,565,596,560,632,547,678,522,718,495"/>
+<area shape="rect" id="Node000015" href="$classyoi_1_1visitor.html#aaed49e3b28622b6cc2b1e3fb002740f7" title=" " alt="" coords="469,611,596,637"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="732,502,692,552,665,579,635,601,597,617,595,612,632,596,662,575,688,549,728,499"/>
+<area shape="rect" id="Node000016" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="469,661,596,686"/>
+<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="739,503,723,536,701,576,672,616,635,650,598,667,595,662,632,646,668,613,697,573,719,534,734,500"/>
+<area shape="rect" id="Node000017" href="$classyoi_1_1visitor.html#a509451dc28bf0def2cafba67be758e63" title=" " alt="" coords="469,710,596,735"/>
+<area shape="poly" id="edge18_Node000001_Node000017" title=" " alt="" coords="743,503,730,546,709,599,678,653,658,678,635,699,617,711,597,718,595,713,615,706,632,695,654,674,673,650,704,597,725,544,738,501"/>
+<area shape="rect" id="Node000018" href="$classyoi_1_1visitor.html#ae0c65295f4a63be564633d0edf420314" title=" " alt="" coords="469,759,596,785"/>
+<area shape="poly" id="edge19_Node000001_Node000018" title=" " alt="" coords="745,503,736,555,716,621,684,690,661,721,635,749,617,760,597,768,595,763,615,756,632,745,657,718,679,687,711,619,730,554,740,502"/>
+<area shape="rect" id="Node000019" href="$classyoi_1_1visitor.html#ae6ed1cb9a2fbe5e0e62ec07f18be642e" title=" " alt="" coords="469,809,596,834"/>
+<area shape="poly" id="edge20_Node000001_Node000019" title=" " alt="" coords="747,503,740,564,723,643,708,685,689,726,665,765,635,798,617,810,597,818,595,813,615,805,632,794,661,761,685,724,703,683,718,642,735,563,742,503"/>
+<area shape="rect" id="Node000004" href="$classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="249,77,384,102"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="426,92,385,92,385,87,426,87"/>
+<area shape="rect" id="Node000005" href="$classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,77,201,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="236,101,201,101,201,96,236,95"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="76,126,131,151"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="249,108,132,135,131,130,247,103"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="215,78,249,78,249,84,215,83"/>
+<area shape="poly" id="edge12_Node000011_Node000011" title=" " alt="" coords="571,404,560,396,533,393,510,395,498,400,495,405,502,412,498,416,490,406,494,396,509,390,533,387,562,391,574,400"/>
 </map>
