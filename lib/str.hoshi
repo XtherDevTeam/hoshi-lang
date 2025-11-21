@@ -472,6 +472,23 @@ impl int : Stringable {
     }
 }
 
+impl unsigned : Stringable {
+    to_string() : Str {
+        let x = this + 0u
+        if (x == 0) {
+            return "0"
+        }
+        let res = Str(24u)
+        while (x > 0u) {
+            let digit = (x % 10u) as char
+            res.push(digit + '0')
+            x /= 10u
+        }
+        res.reverse()
+        return res
+    }
+}
+
 impl bool : Stringable {
     to_string() : Str {
         if (this) {

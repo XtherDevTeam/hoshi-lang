@@ -1,0 +1,16 @@
+use random "random"
+use console "console"
+
+func main() : int {
+    console.print("random-library-validation: start\n")
+    let rand = random.Random(random.LegacyRandomEngine())
+
+    console.print("random-library-validation: seeding RNG with 12345\n")
+    rand.seed(12345)
+    console.print("random-library-validation: integer()", rand.integer(), "\n")
+    console.print("random-library-validation: uinteger()", rand.uinteger(), "\n")
+    console.print("random-library-validation: integer(0, 1024)", rand.integer(0, 1024), "\n")
+    console.print("random-library-validation: boolean()", rand.boolean(), "\n")
+    console.print("random-library-validation: passed", "\n")
+    return 0
+}

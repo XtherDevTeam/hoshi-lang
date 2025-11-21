@@ -1,0 +1,111 @@
+use runtime "runtime"
+
+interface RandomEngine {
+    seed(seed: int) : none,
+    unsigned() : unsigned
+}
+
+struct LegacyRandomEngine {
+    constructor(),
+    constructor(seed: int),
+    seed(seed: int) : none,
+    unsigned() : unsigned
+}
+
+impl LegacyRandomEngine {
+    constructor() {
+        return this
+    },
+    constructor(seed: int) {
+        this.seed(seed)
+    },
+    seed(seed: int) : none {
+        runtime.runtime_random_legacy_set_seed(seed as unsigned)
+    },
+    unsigned() : unsigned {
+        return runtime.runtime_random_legacy_unsigned()
+    }
+}
+
+impl LegacyRandomEngine : RandomEngine {
+    seed(seed: int) : none {
+        this.seed(seed)
+    },
+    unsigned() : unsigned {
+        return this.unsigned()
+    }
+}
+
+struct Random {
+    engine: RandomEngine,
+    seed(seed: int) : none,
+    integer(min: int, max: int) : int,
+    integer() : int,
+    uinteger(min: unsigned, max: unsigned) : unsigned,
+    uinteger() : unsigned,
+    decimal(min: deci, max: deci) : deci,
+    decimal() : deci,
+    boolean() : bool,
+    boolean(probability: deci) : bool,
+    constructor(engine: RandomEngine)
+}
+
+impl Random {
+    constructor(engine: RandomEngine) {
+        this.engine = engine
+    },
+    seed(seed: int) : none {
+        this.engine.seed(seed)
+    },
+    integer() : int {
+        return this.engine.unsigned() as int
+    },
+    integer(min: int, max: int) : int {
+        let range = (max - min) as unsigned + 1
+        // MAX_UINT64 is 18446744073709551615
+        // We calculate the rejection threshold
+        let limit = 18446744073709551615u - (18446744073709551615u % range as unsigned)
+        let raw : unsigned = this.engine.unsigned() + 0 // explicit conversion to value type
+
+        while (raw >= limit) {
+            raw = this.engine.unsigned() + 0u
+        }
+        return (raw % range as unsigned) as int + min
+    },
+    uinteger() : unsigned {
+        return this.engine.unsigned()
+    },
+    uinteger(min: unsigned, max: unsigned) : unsigned {
+        let range = max - min + 1
+        let limit = 18446744073709551615u - (18446744073709551615u % range as unsigned)
+        let raw : unsigned = this.engine.unsigned() + 0 // explicit conversion to value type
+        while (raw >= limit) {
+            raw = this.engine.unsigned() + 0u
+        }
+
+        return (raw % range as unsigned) + min
+    },
+    // --- DECIMALS ---
+    // Returns 0.0 (inclusive) to 1.0 (exclusive)
+    decimal() : deci {
+        let raw : unsigned = this.engine.unsigned() + 0 // explicit conversion to value type
+        
+        // We only have 53 bits of precision in a standard float (double).
+        // Shift right by 11 bits to keep the top 53 random bits.
+        // (64 - 11 = 53)
+        let safe_bits = raw >> 11
+        
+        // Divide by 2^53 (9007199254740992.0)
+        return safe_bits as deci / 9007199254740992.0
+    },
+    decimal(min: deci, max: deci) : deci {
+        return this.decimal() * (max - min) + min
+    },
+    // --- BOOLEANS ---
+    boolean() : bool {
+        return (this.engine.unsigned() & 9223372036854775808u) != 0
+    },
+    boolean(probability: deci) : bool {
+        return this.decimal() < probability
+    }
+}

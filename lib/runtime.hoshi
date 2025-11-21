@@ -34,3 +34,8 @@ import noffi runtime_thread_mutex_try_lock(mutex_id: unsigned) : int from "built
 import runtime_get_stdin_fp() : ptr from "builtin"
 import runtime_get_stdout_fp() : ptr from "builtin"
 import runtime_get_stderr_fp() : ptr from "builtin"
+
+/* legacy random library */
+
+import runtime_random_legacy_set_seed(seed: unsigned) : none from "builtin"
+import runtime_random_legacy_unsigned() : unsigned from "builtin"

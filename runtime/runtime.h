@@ -5,12 +5,12 @@
 #ifndef HOSHI_LANG_RUNTIME_RUNTIME_H
 #define HOSHI_LANG_RUNTIME_RUNTIME_H
 
-#include <cstdio>
 #include <runtime/memory/memory.h>
 #include <runtime/build_config.h>
 #include <runtime/debug/debug.h>
 #include <runtime/rtti/rtti.h>
 #include <runtime/threading/threading.h>
+#include <runtime/random/random.h>
 
 extern "C" const char ** yoi_argv;
 

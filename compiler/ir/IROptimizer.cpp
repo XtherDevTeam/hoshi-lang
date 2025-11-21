@@ -2466,6 +2466,8 @@ namespace yoi {
                     }
                     if (function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI))
                         returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
+                    else if (function->returnType->isBasicType())
+                        returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
                 }

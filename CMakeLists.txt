@@ -67,6 +67,7 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/debug/*.cpp
         runtime/threading/*.cpp
         runtime/rtti/*.cpp
+        runtime/random/*.cpp
 )
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
