@@ -1,0 +1,36 @@
+use console "console"
+
+struct A {
+    a: int,
+    constructor(a: int),
+    static c() : none
+}
+
+impl A {
+    constructor(a: int) {
+        this.a = a
+    },
+    static c() : none {
+        console.print("A.c(): static method called.\n")
+    }
+}
+
+func example() : none {
+    console.print("example(): called.\n")
+}
+
+func call(f: func() : none) : none {
+    f()
+}
+
+func main() : int {
+    console.print("callable-interface-validation: start\n")
+    let a = A(10)
+    call(func A.c)
+    call(func example)
+    call(func[] () : none {
+        console.print("Lambda called.\n")
+    })
+    console.print("callable-interface-validation: end\n")
+    return 0
+}

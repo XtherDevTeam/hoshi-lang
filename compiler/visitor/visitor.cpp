@@ -164,6 +164,10 @@ namespace yoi {
                 moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterface, lambdaCallableIndex);
                 break;
             }
+            case 7: {
+                visit(primary->func);
+                break;
+            }
             default: {
                 panic(primary->getLine(), primary->getColumn(), "Unexpected primary type");
             }
@@ -4502,5 +4506,197 @@ namespace yoi {
         auto enumIndex = irModule->enumerationTable.put_create(enumType->name, enumType);
         auto underlyingEnumType = mapEnumTypeToBasicType(currentModuleIndex, enumIndex);
         irModule->typeAliases[enumerationDefinition->name->get().strVal] = *underlyingEnumType;
+    }
+
+    yoi::indexT visitor::visit(yoi::funcExpr *func) {
+        auto it = func->name->getTerms().begin();
+        yoi::indexT targetModule = -1, lastModule = -1;
+        // 1. Resolve module prefixes (e.g., std.io)
+        while (it + 1 != func->name->getTerms().end() && (targetModule = isModuleName((*it)->id, lastModule)) != lastModule) {
+            it++;
+            lastModule = targetModule;
+        }
+
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule == -1 ? currentModuleIndex : targetModule);
+        enum class CreateStrategy {
+            Plain,
+            IncludeThis
+        } strategy{CreateStrategy::Plain};
+        yoi::indexT funcIndex = -1;
+
+        // 1. Struct Static Method
+        if (it + 2 == func->name->getTerms().end()) {
+            auto nameNode = *(it);
+            auto funcNameNode = *(it + 1);
+            std::shared_ptr<IRStructDefinition> structType;
+
+            if (nameNode->hasTemplateArg() && targetedModule->structTemplateAsts.contains(nameNode->getId().node.strVal)) {
+                auto concreteTypes = parseTemplateArgs(nameNode->getArg());
+                auto specializedIndex = specializeStructTemplate(nameNode->id->node.strVal, concreteTypes, targetedModule->templateImplAsts[nameNode->getId().node.strVal], targetModule);
+                structType = targetedModule->structTable[specializedIndex];
+                
+            } else if (targetedModule->structTable.contains(nameNode->getId().node.strVal)) {
+                structType = targetedModule->structTable[nameNode->getId().node.strVal];
+            } else {
+                panic(nameNode->getLine(), nameNode->getColumn(), "Undefined struct: " + yoi::wstring2string(nameNode->getId().node.strVal));
+            }
+
+            yoi::wstr baseName = structType->name + L"::" + funcNameNode->getId().node.strVal;
+
+            yoi_assert(targetedModule->functionOverloadIndexies.contains(baseName), funcNameNode->getLine(), funcNameNode->getColumn(), "Undefined method: " + yoi::wstring2string(baseName));
+
+            // check whether explicit param types specified
+            if (func->args) {
+                yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+                for (auto &arg : func->args->types) {
+                    argTypes.push_back(managedPtr(parseTypeSpec(arg)));
+                }
+                yoi::wstr fullFuncName = baseName + getFuncUniqueNameStr(argTypes);
+                yoi_assert(targetedModule->functionTable.contains(fullFuncName), funcNameNode->getLine(), funcNameNode->getColumn(), "No matching function overload found with explicit param types: " + yoi::wstring2string(fullFuncName));
+                yoi_assert(targetedModule->functionTable[fullFuncName]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Static), funcNameNode->getLine(), funcNameNode->getColumn(), "Cannot call non-static method: " + yoi::wstring2string(fullFuncName));
+                funcIndex = targetedModule->functionTable.getIndex(fullFuncName);
+                strategy = CreateStrategy::Plain;
+            } else {
+                // no params, check whether the function table contains only one
+                yoi_assert(targetedModule->functionOverloadIndexies[baseName].size() == 1, funcNameNode->getLine(), funcNameNode->getColumn(), "Inplicit specification on multiple overloads of method: " + yoi::wstring2string(baseName));
+                auto candidateIndex = targetedModule->functionOverloadIndexies[baseName][0];
+                yoi_assert(targetedModule->functionTable[candidateIndex]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Static), funcNameNode->getLine(), funcNameNode->getColumn(), "Cannot call non-static method: " + yoi::wstring2string(baseName));
+                funcIndex = candidateIndex;
+                strategy = CreateStrategy::Plain;
+            }
+        } else if (it + 1 == func->name->getTerms().end()) {
+            // 2. Global Function
+            auto funcNameNode = *(it);
+            yoi_assert(targetedModule->functionOverloadIndexies.contains(funcNameNode->getId().node.strVal), funcNameNode->getLine(), funcNameNode->getColumn(), "Undefined function: " + yoi::wstring2string(funcNameNode->getId().node.strVal));
+            // If explicit param types specified, use full-qualified name first
+            if (func->args) {
+                yoi::vec<std::shared_ptr<yoi::IRValueType>> argTypes;
+                for (auto &arg : func->args->types) {
+                    argTypes.push_back(managedPtr(parseTypeSpec(arg)));
+                }
+                yoi::wstr fullFuncName = funcNameNode->getId().node.strVal + getFuncUniqueNameStr(argTypes);
+                yoi_assert(targetedModule->functionTable.contains(fullFuncName), funcNameNode->getLine(), funcNameNode->getColumn(), "No matching function overload found with explicit param types: " + yoi::wstring2string(fullFuncName));
+                funcIndex = targetedModule->functionTable.getIndex(fullFuncName);
+                strategy = CreateStrategy::Plain;
+            } else {
+                // no params, check whether the function table contains only one
+                yoi_assert(targetedModule->functionOverloadIndexies[funcNameNode->getId().node.strVal].size() == 1, funcNameNode->getLine(), funcNameNode->getColumn(), "Inplicit specification on multiple overloads of function: " + yoi::wstring2string(funcNameNode->getId().node.strVal));
+                funcIndex = targetedModule->functionOverloadIndexies[funcNameNode->getId().node.strVal][0];
+                strategy = CreateStrategy::Plain;
+            }
+        } else {
+            yoi_assert(false, func->getLine(), func->getColumn(), "invalid function expression");
+        }
+
+        yoi_assert (funcIndex != -1, func->getLine(), func->getColumn(), "Cannot resolve function overload");
+        switch (strategy) {
+            case CreateStrategy::Plain: {
+                auto funcDef = targetedModule->functionTable[funcIndex];
+                auto impl = createCallableImplementationForFunction(funcDef, funcIndex, targetModule == -1 ? currentModuleIndex : targetModule);
+                createCallableInstanceForFunction(impl.first, impl.second, targetModule == -1 ? currentModuleIndex : targetModule);
+                break;
+            }
+            case CreateStrategy::IncludeThis: {
+                panic(func->getLine(), func->getColumn(), "Not implemented yet");
+                break;
+            }
+            default: {
+                panic(func->getLine(), func->getColumn(), "Unsupported create strategy");
+                break;
+            }
+        }
+
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> visitor::createCallableImplementationForFunction(
+        const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex) {
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
+
+        auto callableInterface = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(func->argumentTypes, func->returnType)};
+
+        auto uniqueName = L"callableWrapper#" + func->name + getFuncUniqueNameStr(func->argumentTypes);
+        if (targetedModule->structTable.contains(uniqueName)) {
+            auto interfaceImplName = getInterfaceImplName(callableInterface, managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, targetedModule->structTable.getIndex(uniqueName)}));
+            return {targetedModule->interfaceImplementationTable.getIndex(interfaceImplName), callableInterface};
+        }
+
+        yoi::indexT structTypeIndex = targetedModule->structTable.put_create(uniqueName, {});
+        yoi::wstr constructorName = uniqueName + L"::constructor#";
+        yoi::indexT constructorIndex = targetedModule->functionTable.put_create(constructorName, {});
+        yoi::wstr callableName = uniqueName + L"::operator()" + getFuncUniqueNameStr(func->argumentTypes);
+        yoi::indexT callableIndex = targetedModule->functionTable.put_create(callableName, {});
+
+        IRStructDefinition::Builder builder;
+        builder.setName(uniqueName).addMethod(L"constructor#", constructorIndex);
+        builder.setName(uniqueName).addMethod(L"operator()" + getFuncUniqueNameStr(func->argumentTypes), callableIndex);
+        targetedModule->structTable[structTypeIndex] = builder.yield();
+
+        auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, structTypeIndex});
+
+        IRFunctionDefinition::Builder constructorBuilder;
+        constructorBuilder.setName(constructorName);
+        constructorBuilder.addArgument(L"this", structType);
+        constructorBuilder.setReturnType(structType);
+        constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+        constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
+        constructorBuilder.setDebugInfo(moduleContext->getIRBuilder().getCurrentDebugInfo());
+        targetedModule->functionTable[constructorIndex] = constructorBuilder.yield();
+        IRFunctionDefinition::Builder callableBuilder;
+        callableBuilder.setName(callableName);
+        callableBuilder.addArgument(L"this", structType);
+        for (yoi::indexT argIndex = 0; argIndex < func->argumentTypes.size(); argIndex++) {
+            auto arg = func->argumentTypes[argIndex];
+            callableBuilder.addArgument(L"param" + std::to_wstring(argIndex), arg);
+        }
+        callableBuilder.setReturnType(func->returnType);
+        callableBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+        callableBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
+        callableBuilder.setDebugInfo(moduleContext->getIRBuilder().getCurrentDebugInfo());
+        targetedModule->functionTable[callableIndex] = callableBuilder.yield();
+
+        moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), targetedModule, targetedModule->functionTable[constructorIndex]});
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, (yoi::indexT)0}, structType, moduleIndex);
+        moduleContext->getIRBuilder().retOp();
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), targetedModule, targetedModule->functionTable[callableIndex]});
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        for (yoi::indexT argIndex = 0; argIndex < func->argumentTypes.size(); argIndex++) {
+            auto arg = func->argumentTypes[argIndex];
+            moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, (yoi::indexT)(argIndex + 1)}, arg, moduleIndex);
+        }
+        moduleContext->getIRBuilder().invokeOp(funcIndex, func->argumentTypes.size(), func->returnType, true, moduleIndex);
+        moduleContext->getIRBuilder().retOp(func->returnType->type == IRValueType::valueType::none);
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        auto interfaceImplName = getInterfaceImplName(callableInterface, managedPtr(IRValueType{IRValueType::valueType::structObject, moduleIndex, targetedModule->structTable.getIndex(uniqueName)}));
+
+        auto interfaceImplIndex = targetedModule->interfaceImplementationTable.put_create(
+            interfaceImplName,
+            IRInterfaceImplementationDefinition::Builder()
+                .setName(interfaceImplName)
+                .addVirtualMethod(
+                    L"operator()" + getFuncUniqueNameStr(func->argumentTypes),
+                    managedPtr(IRValueType{IRValueType::valueType::virtualMethod, moduleIndex, callableIndex}))
+                .setImplInterfaceIndex(callableInterface)
+                .setImplStructIndex({IRValueType::valueType::structObject, moduleIndex, structTypeIndex})
+                .yield());
+        
+        return {interfaceImplIndex, callableInterface};
+    }
+
+    void visitor::createCallableInstanceForFunction(yoi::indexT implIndex,
+                                                    std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex,
+                                                    yoi::indexT moduleIndex) {
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
+        auto implDef = targetedModule->interfaceImplementationTable[implIndex];
+        auto structIndex = implDef->implStructIndex;
+        // moduleContext->getCompilerContext()->getImportedModule(std::get<1>(structIndex))->structTable[std]
+        moduleContext->getIRBuilder().newStructOp(std::get<2>(structIndex), true, std::get<1>(structIndex));
+        moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterfaceIndex, implIndex, true, moduleIndex);
     }
 } // namespace yoi

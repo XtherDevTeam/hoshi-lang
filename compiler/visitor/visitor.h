@@ -368,6 +368,27 @@ namespace yoi {
                                                           yoi::indexT moduleIndex);
 
         /**
+         * @brief Create a Callable Implementation For Function object also create a unnamed struct for the function and return its callable implementation index in the module's implementation table.
+         * 
+         * @param func The function definition.
+         * @param funcIndex The index of the function in the module's function table.
+         * @param moduleIndex The index of the module where the implementation will be created.
+         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> 
+         */
+        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForFunction(
+            const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
+
+        /**
+         * @brief Create a Callable Instance For Function object
+         * 
+         * @param implIndex 
+         * @param callableInterfaceIndex 
+         */
+        void createCallableInstanceForFunction(yoi::indexT implIndex,
+                                               std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex,
+                                               yoi::indexT moduleIndex);
+
+        /**
          * @brief Create a Lambda Unnamed Struct object
          * 
          * @param lambdaExpr The lambda expression.
@@ -383,17 +404,6 @@ namespace yoi {
          * @return false The marco doesn't satisfy the condition
          */
         bool checkMarcoSatisfaction(yoi::marcoDescriptor *desc);
-
-        /**
-         * @brief Create a Callable Implementation For Function object also create a function for the function and return its callable implementation index in the module's implementation table.
-         * 
-         * @param func function definition
-         * @param funcIndex the index of the function in the module's function table.
-         * @param moduleIndex the index of the module where the implementation will be created.
-         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> The index of the created callable implementation in the module's implementation table and callable interface index.
-         */
-        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForFunction(
-            const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
 
         std::shared_ptr<IRValueType> mapEnumTypeToBasicType(yoi::indexT targetModule, yoi::indexT targetEnumType);
     };

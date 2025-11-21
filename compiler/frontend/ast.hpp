@@ -379,8 +379,8 @@ namespace yoi {
 
     class primary : public AST {
     public:
-        int8_t kind;
         // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
+        int8_t kind;
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
