@@ -17,6 +17,7 @@ var signal_8h =
     [ "LIBSIG_INTERNAL_ALRM", "signal_8h.html#ad10773e96447bd5b583c1132279e0659", null ],
     [ "LIBSIG_INTERNAL_KILL", "signal_8h.html#ae0f03e22bb0a09d5f9859020614efb2d", null ],
     [ "LIBSIG_SUCCESS", "signal_8h.html#ab0142d834722cd0711dce0b2b7e0033f", null ],
+    [ "runtime_signal_handler_bare_t", "signal_8h.html#a9554e4d795733685341fc98eca523e98", null ],
     [ "runtime_signal_handler_t", "signal_8h.html#a9d16a1626f880724b7f3a4e97070be33", null ],
     [ "runtime_signal_alarm", "signal_8h.html#a62e3b6a775dee2deeda8d0522db9ef31", null ],
     [ "runtime_signal_default", "signal_8h.html#aa16d4c62e620fb34785983a32ef92edd", null ],

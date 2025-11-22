@@ -193,6 +193,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a9554e4d795733685341fc98eca523e98" id="r_a9554e4d795733685341fc98eca523e98"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="signal_8h.html#a9554e4d795733685341fc98eca523e98">runtime_signal_handler_bare_t</a>) (int signum)</td></tr>
+<tr class="separator:a9554e4d795733685341fc98eca523e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d16a1626f880724b7f3a4e97070be33" id="r_a9d16a1626f880724b7f3a4e97070be33"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="signal_8h.html#a9d16a1626f880724b7f3a4e97070be33">runtime_signal_handler_t</a>) (<a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *signum)</td></tr>
 <tr class="separator:a9d16a1626f880724b7f3a4e97070be33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -460,6 +462,22 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9554e4d795733685341fc98eca523e98" name="a9554e4d795733685341fc98eca523e98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9554e4d795733685341fc98eca523e98">&#9670;&#160;</a></span>runtime_signal_handler_bare_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* runtime_signal_handler_bare_t) (int signum)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="signal_8h_source.html#l00041">41</a> of file <a class="el" href="signal_8h_source.html">signal.h</a>.</p>
+
+</div>
+</div>
 <a id="a9d16a1626f880724b7f3a4e97070be33" name="a9d16a1626f880724b7f3a4e97070be33"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d16a1626f880724b7f3a4e97070be33">&#9670;&#160;</a></span>runtime_signal_handler_t</h2>
 
@@ -472,7 +490,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="signal_8h_source.html#l00041">41</a> of file <a class="el" href="signal_8h_source.html">signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signal_8h_source.html#l00042">42</a> of file <a class="el" href="signal_8h_source.html">signal.h</a>.</p>
 
 </div>
 </div>
@@ -517,7 +535,7 @@ Variables</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="signal_8cpp_source.html#l00151">151</a> of file <a class="el" href="signal_8cpp_source.html">signal.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00035">HS_SIGKILL</a>, <a class="el" href="signal_8h_source.html#l00029">LIBSIG_ERR_CANT_CATCH_KILL</a>, <a class="el" href="signal_8h_source.html#l00026">LIBSIG_SUCCESS</a>, <a class="el" href="signal_8h_source.html#l00054">runtime_signal_handler_info::next</a>, and <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>.</p>
+<p class="reference">References <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00035">HS_SIGKILL</a>, <a class="el" href="signal_8h_source.html#l00029">LIBSIG_ERR_CANT_CATCH_KILL</a>, <a class="el" href="signal_8h_source.html#l00026">LIBSIG_SUCCESS</a>, <a class="el" href="signal_8h_source.html#l00055">runtime_signal_handler_info::next</a>, and <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>.</p>
 
 </div>
 </div>
@@ -539,7 +557,7 @@ Variables</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="signal_8cpp_source.html#l00190">190</a> of file <a class="el" href="signal_8cpp_source.html">signal.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8h_source.html#l00026">YoiIntegerObject::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00037">HANDLER_TYPE_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00038">HANDLER_TYPE_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00032">HS_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00033">HS_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00054">runtime_signal_handler_info::next</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>, <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::type_id</a>, and <a class="el" href="memory_8h_source.html#l00028">YoiIntegerObject::value</a>.</p>
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00026">YoiIntegerObject::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00037">HANDLER_TYPE_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00038">HANDLER_TYPE_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00032">HS_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00033">HS_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00055">runtime_signal_handler_info::next</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>, <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::type_id</a>, and <a class="el" href="memory_8h_source.html#l00028">YoiIntegerObject::value</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="signal_8cpp_source.html#l00217">runtime_signal_init()</a>.</p>
 <div class="dynheader">
@@ -674,7 +692,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="signal_8cpp_source.html#l00034">34</a> of file <a class="el" href="signal_8cpp_source.html">signal.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="signal_8h_source.html#l00048">YoiVoidIntCallableInterface::gc_dec_func</a>, <a class="el" href="memory_8h_source.html#l00026">YoiIntegerObject::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00044">YoiVoidIntCallableInterface::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00049">YoiVoidIntCallableInterface::handler</a>, <a class="el" href="signal_8h_source.html#l00053">runtime_signal_handler_info::handler</a>, <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00037">HANDLER_TYPE_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00038">HANDLER_TYPE_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00032">HS_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00035">HS_SIGKILL</a>, <a class="el" href="signal_8h_source.html#l00033">HS_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00029">LIBSIG_ERR_CANT_CATCH_KILL</a>, <a class="el" href="signal_8h_source.html#l00028">LIBSIG_ERR_UNSUPPORTED</a>, <a class="el" href="signal_8h_source.html#l00026">LIBSIG_SUCCESS</a>, <a class="el" href="signal_8h_source.html#l00054">runtime_signal_handler_info::next</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>, <a class="el" href="signal_8h_source.html#l00046">YoiVoidIntCallableInterface::this_ptr</a>, <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::type_id</a>, and <a class="el" href="memory_8h_source.html#l00028">YoiIntegerObject::value</a>.</p>
+<p class="reference">References <a class="el" href="signal_8h_source.html#l00049">YoiVoidIntCallableInterface::gc_dec_func</a>, <a class="el" href="memory_8h_source.html#l00026">YoiIntegerObject::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00045">YoiVoidIntCallableInterface::gc_refcount</a>, <a class="el" href="signal_8h_source.html#l00050">YoiVoidIntCallableInterface::handler</a>, <a class="el" href="signal_8h_source.html#l00054">runtime_signal_handler_info::handler</a>, <a class="el" href="signal_8h_source.html#l00039">HANDLER_TYPE_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00037">HANDLER_TYPE_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00038">HANDLER_TYPE_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00034">HS_SIGALRM</a>, <a class="el" href="signal_8h_source.html#l00032">HS_SIGINT</a>, <a class="el" href="signal_8h_source.html#l00035">HS_SIGKILL</a>, <a class="el" href="signal_8h_source.html#l00033">HS_SIGTERM</a>, <a class="el" href="signal_8h_source.html#l00029">LIBSIG_ERR_CANT_CATCH_KILL</a>, <a class="el" href="signal_8h_source.html#l00028">LIBSIG_ERR_UNSUPPORTED</a>, <a class="el" href="signal_8h_source.html#l00026">LIBSIG_SUCCESS</a>, <a class="el" href="signal_8h_source.html#l00055">runtime_signal_handler_info::next</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, <a class="el" href="signal_8cpp_source.html#l00005">runtime_signal_handlers</a>, <a class="el" href="signal_8h_source.html#l00047">YoiVoidIntCallableInterface::this_ptr</a>, <a class="el" href="memory_8h_source.html#l00027">YoiIntegerObject::type_id</a>, and <a class="el" href="memory_8h_source.html#l00028">YoiIntegerObject::value</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
