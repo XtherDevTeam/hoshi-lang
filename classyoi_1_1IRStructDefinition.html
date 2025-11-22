@@ -113,6 +113,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a37df2adb929bbf0024cf217ee84951bf" id="r_a37df2adb929bbf0024cf217ee84951bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRStructDefinition.html#a37df2adb929bbf0024cf217ee84951bf">IRStructDefinition</a> (const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;<a class="el" href="classyoi_1_1IRStructDefinition.html#a9d24a0275ba98a7726bfe14c798f9850">name</a>, const std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, <a class="el" href="structyoi_1_1IRStructDefinition_1_1nameInfo.html">nameInfo</a> &gt; &amp;<a class="el" href="classyoi_1_1IRStructDefinition.html#ad661f5d7ca3f0d517973fe899e5f402a">nameIndexMap</a>, const <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a>&lt; std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRValueType.html">IRValueType</a> &gt; &gt; &amp;<a class="el" href="classyoi_1_1IRStructDefinition.html#a1c0dad859c2a9feb09ecf53f8280538f">fieldTypes</a>)</td></tr>
 <tr class="separator:a37df2adb929bbf0024cf217ee84951bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76b34d519d3e12727df4979e2b1d069f" id="r_a76b34d519d3e12727df4979e2b1d069f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structyoi_1_1IRStructDefinition_1_1nameInfo.html">nameInfo</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f">lookupName</a> (const <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a> &amp;<a class="el" href="classyoi_1_1IRStructDefinition.html#a9d24a0275ba98a7726bfe14c798f9850">name</a>)</td></tr>
+<tr class="memdesc:a76b34d519d3e12727df4979e2b1d069f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lookup a name in the struct definition, returning the index of the field or method and its type.  <br /></td></tr>
 <tr class="separator:a76b34d519d3e12727df4979e2b1d069f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61fa8c172e7397d729af1135ec6076a6" id="r_a61fa8c172e7397d729af1135ec6076a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRStructDefinition.html#a61fa8c172e7397d729af1135ec6076a6">to_string</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> indent=0)</td></tr>
 <tr class="separator:a61fa8c172e7397d729af1135ec6076a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,6 +184,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Lookup a name in the struct definition, returning the index of the field or method and its type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name to lookup. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>const <a class="el" href="structyoi_1_1IRStructDefinition_1_1nameInfo.html">nameInfo</a>&amp; The index of the field or method and its type. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>Throws if the name is not found in the struct definition. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00740">740</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8h_source.html#l00566">IRStructDefinition::name</a>, <a class="el" href="IR_8h_source.html#l00573">IRStructDefinition::nameIndexMap</a>, and <a class="el" href="def_8cpp_source.html#l00128">yoi::wstring2string()</a>.</p>
@@ -191,7 +207,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IRStructDefinition_a76b34d519d3e12727df4979e2b1d069f_cgraph.png" border="0" usemap="#aclassyoi_1_1IRStructDefinition_a76b34d519d3e12727df4979e2b1d069f_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1IRStructDefinition_a76b34d519d3e12727df4979e2b1d069f_cgraph" id="aclassyoi_1_1IRStructDefinition_a76b34d519d3e12727df4979e2b1d069f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,109,31"/>
+<area shape="rect" title="Lookup a name in the struct definition, returning the index of the field or method and its type." alt="" coords="5,5,109,31"/>
 <area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="157,5,300,31"/>
 <area shape="poly" title=" " alt="" coords="110,15,144,15,144,21,110,21"/>
 <area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="348,5,551,31"/>
