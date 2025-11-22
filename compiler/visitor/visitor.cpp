@@ -951,8 +951,28 @@ namespace yoi {
 
                 if (isMethodCall) {
                     if (objectType->type == IRValueType::valueType::structObject) {
-                        if(!handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType))
+                        bool isResolved = false;
+
+                        isResolved = handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType);
+
+                        if (!isResolved) {
+                            auto structDef = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->structTable[objectType->typeIndex];
+                            try {
+                                // no method call would ever enter this block
+                                auto info = structDef->lookupName(currentTermNode->id->getId().get().strVal);
+                                moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, info.index}, structDef->fieldTypes[info.index]);
+                                
+                                yoi_assert(structDef->fieldTypes[info.index]->type == IRValueType::valueType::structObject || structDef->fieldTypes[info.index]->type == IRValueType::valueType::interfaceObject, currentTermNode->getLine(), currentTermNode->getColumn(), "Cannot invoke basic types as methods: " + wstring2string(currentTermNode->id->getId().get().strVal));
+                                if(!handleInvocationExtern(L"operator()", firstOp->args, structDef->fieldTypes[info.index]->typeAffiliateModule, structDef->fieldTypes[info.index]))
+                                    panic(currentTermNode->getLine(), currentTermNode->getColumn(), "No matching method found for: " + wstring2string(currentTermNode->id->getId().get().strVal) + ".operator()");
+                                
+                                isResolved = true;
+                            } catch (std::out_of_range&) {}
+                        }
+
+                        if (!isResolved) {
                             panic(currentTermNode->getLine(), currentTermNode->getColumn(), "No matching method found for: " + wstring2string(currentTermNode->id->getId().get().strVal));
+                        }
                     } else if (objectType->type == IRValueType::valueType::interfaceObject) {
                         // Interface method call logic... (was already correct)
                         if(!handleInvocationExtern(currentTermNode->id->getId().get().strVal, firstOp->args, objectType->typeAffiliateModule, objectType))

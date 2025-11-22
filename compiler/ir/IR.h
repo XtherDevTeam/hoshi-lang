@@ -576,6 +576,13 @@ namespace yoi {
                            const std::map<yoi::wstr, nameInfo> &nameIndexMap,
                            const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes);
 
+        /**
+         * @brief Lookup a name in the struct definition, returning the index of the field or method and its type.
+         * 
+         * @param name The name to lookup.
+         * @return const nameInfo& The index of the field or method and its type.
+         * @throws std::out_of_range Throws if the name is not found in the struct definition.
+         */
         const nameInfo &lookupName(const yoi::wstr &name);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
