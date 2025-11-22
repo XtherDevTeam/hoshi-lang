@@ -8,7 +8,7 @@ var searchData=
   ['handleinstruction_5',['handleInstruction',['../classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba',1,'yoi::IRFunctionOptimizer']]],
   ['handleintrinsiccall_6',['handleIntrinsicCall',['../classyoi_1_1LLVMCodegen.html#a5cd97c6c14d91fae1df60efce6e3ec69',1,'yoi::LLVMCodegen']]],
   ['handleinvocationextern_7',['handleInvocationExtern',['../classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da',1,'yoi::visitor']]],
-  ['handler_8',['handler',['../structruntime__signal__handler__info.html#a28fa2def66625f8438cdde75cf975042',1,'runtime_signal_handler_info::handler'],['../structYoiVoidIntCallableInterface.html#a28fa2def66625f8438cdde75cf975042',1,'YoiVoidIntCallableInterface::handler']]],
+  ['handler_8',['handler',['../structYoiVoidIntCallableInterface.html#a28fa2def66625f8438cdde75cf975042',1,'YoiVoidIntCallableInterface']]],
   ['handler_5ftype_5fsigalrm_9',['HANDLER_TYPE_SIGALRM',['../signal_8h.html#a568f1c57a134fd0e3d77183fedf8fe40',1,'signal.h']]],
   ['handler_5ftype_5fsigint_10',['HANDLER_TYPE_SIGINT',['../signal_8h.html#a8a3457061e67e838c526b2a9bca49659',1,'signal.h']]],
   ['handler_5ftype_5fsigterm_11',['HANDLER_TYPE_SIGTERM',['../signal_8h.html#ac3a26f5721e11b527e3eec494f753299',1,'signal.h']]],
