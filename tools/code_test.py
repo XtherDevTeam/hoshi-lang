@@ -66,6 +66,7 @@ TEST_CASES = {
     "binary-shift": {"type": "executable", "return_code": 0},
     "randomlib": {"type": "executable", "return_code": 0},
     "callable-interface": {"type": "executable", "return_code": 0},
+    "signallib": {"type": "executable", "return_code": 0},
 }
 
 

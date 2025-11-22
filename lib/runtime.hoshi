@@ -39,3 +39,12 @@ import runtime_get_stderr_fp() : ptr from "builtin"
 
 import runtime_random_legacy_set_seed(seed: unsigned) : none from "builtin"
 import runtime_random_legacy_unsigned() : unsigned from "builtin"
+
+/* signal library */
+
+import runtime_signal_init() : none from "builtin"
+import noffi runtime_signal_register(signum: int, handler: func (int) : none) : int from "builtin"
+import runtime_signal_alarm(seconds: int32) : int32 from "builtin"
+import runtime_signal_raise(signum: int32) : int32 from "builtin"
+import runtime_signal_default(signum: int32) : int32 from "builtin"
+import runtime_signal_ignore(signum: int32) : int32 from "builtin"

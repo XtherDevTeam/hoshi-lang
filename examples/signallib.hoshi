@@ -1,0 +1,16 @@
+use signal "signal"
+use console "console"
+
+func handler(signum: int) : none {
+    console.print("handler: signal", signum , "received\n")
+}
+
+func main() : int {
+    console.print("signal-library-validation: start\n")
+    signal.init()
+    signal.register(signal.Signal.SIGALARM, func handler)
+    signal.register(signal.Signal.SIGINT, func handler)
+    signal.alarm(5)
+    console.print("signal-library-validation: end\n")
+    return 0
+}

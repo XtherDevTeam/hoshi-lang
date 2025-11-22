@@ -1,0 +1,40 @@
+use runtime "runtime"
+
+enum Signal {
+    SIGINT = 2,
+    SIGTERM = 15,
+    SIGALARM = 14,
+    SIGKILL = 9
+}
+
+enum ErrorCode {
+    SUCCESS = 0,
+    REGISTER_FAIL = -1,
+    UNSUPPORTED = -2,
+    CANT_CATCH = -3,
+    RAISE_FAIL = -4
+}
+
+func init() : none {
+    runtime.runtime_signal_init()
+}
+
+func register(signum: int, handler: func(int) : none) : ErrorCode {
+    return runtime.runtime_signal_register(signum, handler)
+}
+
+func alarm(seconds: int) : ErrorCode {
+    return runtime.runtime_signal_alarm(seconds)
+}
+
+func raise(signum: int) : ErrorCode {
+    return runtime.runtime_signal_raise(signum)
+}
+
+func ignore(signum: int) : ErrorCode {
+    return runtime.runtime_signal_ignore(signum)
+}
+
+func default(signum: int) : ErrorCode {
+    return runtime.runtime_signal_default(signum)
+}
