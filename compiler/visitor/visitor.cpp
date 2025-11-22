@@ -1021,10 +1021,6 @@ namespace yoi {
                                                                     moduleContext->getCompilerContext()
                                                                         ->getImportedModule(array->typeAffiliateModule)
                                                                         ->structTable[array->typeIndex]);
-                                /*else if(array->type == IRValueType::valueType::interfaceObject)
-                                    overload = resolveOverloadInterface(L"operator[]", {value, array, index},
-                                array->typeAffiliateModule,
-                                        moduleContext->getCompilerContext()->getImportedModule(array->typeAffiliateModule)->interfaceTable[array->typeIndex]);*/
 
                                 yoi_assert(overload.found(),
                                         sub->getLine(),
@@ -1037,6 +1033,8 @@ namespace yoi {
 
                                 moduleContext->getIRBuilder().invokeMethodOp(
                                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
+
+                                moduleContext->getIRBuilder().popOp();
                             } else {
                                 moduleContext->getIRBuilder().saveState();
                                 visit(sub->expr);
@@ -4139,10 +4137,6 @@ namespace yoi {
                                                      moduleContext->getCompilerContext()
                                                          ->getImportedModule(array->typeAffiliateModule)
                                                          ->structTable[array->typeIndex]);
-                /*else if(array->type == IRValueType::valueType::interfaceObject)
-                    overload = resolveOverloadInterface(L"operator[]", {value, array, index},
-                   array->typeAffiliateModule,
-                        moduleContext->getCompilerContext()->getImportedModule(array->typeAffiliateModule)->interfaceTable[array->typeIndex]);*/
 
                 yoi_assert(overload.found(),
                            currentTerm->getLine(),

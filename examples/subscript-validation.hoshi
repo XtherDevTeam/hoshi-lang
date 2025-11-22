@@ -1,0 +1,49 @@
+use runtime "runtime"
+use lang "builtin"
+
+struct SubscriptValidation {
+    arr: int[],
+    constructor(size: int),
+    static operator[](value: int, this: SubscriptValidation, index: int) : none,
+    static operator[](this: SubscriptValidation, index: int) : int,
+}
+
+impl SubscriptValidation {
+    constructor(size: int) {
+        this.arr = new int[size]()
+    },
+    static operator[](value: int, this: SubscriptValidation, index: int) : none {
+        if (index < 0 || index >= this.arr.length) {
+            lang.runtime_panic("Subscript out of range")
+        }
+        this.arr[index] = value
+    },
+    static operator[](this: SubscriptValidation, index: int) : int {
+        if (index < 0 || index >= this.arr.length) {
+            lang.runtime_panic("Subscript out of range")
+        }
+        return this.arr[index]
+    }
+}
+
+struct SubscriptValidation2 {
+    a: SubscriptValidation,
+    constructor(size: int)
+}
+
+impl SubscriptValidation2 {
+    constructor(size: int) {
+        this.a = SubscriptValidation(size)
+    }
+}
+
+func main() : int {
+    let s = SubscriptValidation2(5)
+    s.a[0] = 10
+    s.a[1] = 20
+    s.a[4] = 2
+    if (s.a[s.a[4]] == 0) {
+        s.a[s.a[4]] = 30
+    }
+    return s.a[2] - s.a[1] - s.a[0]
+}

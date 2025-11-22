@@ -48,3 +48,4 @@
 - [x] invoke_virtual由于ensureObject后仍使用arg的属性来判断是否post cleanup导致的memory leak
 - [x] dyn_cast 匹配到错误typeid
 - [x] 接口优化导致内存泄漏
+- [x] operator[] 重载导致 noneObject 存在栈上
