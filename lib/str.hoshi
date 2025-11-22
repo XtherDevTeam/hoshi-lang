@@ -351,8 +351,8 @@ impl Str {
         return res
     },
     split(sep: Str) : Str[] {
-        let occurences = this.find_all(sep) + 1
-        let res = new Str[occurences]()
+        let occurences = this.find_all(sep)
+        let res = new Str[occurences + 1]()
         let index = 0u
         let index_after_last_sep = 0u
         let offset = 0u
