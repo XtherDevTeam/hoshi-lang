@@ -39,7 +39,7 @@
 #define HANDLER_TYPE_SIGALRM 2
 
 typedef void (*runtime_signal_handler_bare_t)(int signum);
-typedef void (*runtime_signal_handler_t)(YoiIntegerObject *signum);
+typedef void (*runtime_signal_handler_t)(YoiObject *self, YoiIntegerObject *signum);
 
 struct YoiVoidIntCallableInterface {
     unsigned long long gc_refcount;
@@ -51,7 +51,7 @@ struct YoiVoidIntCallableInterface {
 };
 
 struct runtime_signal_handler_info {
-    runtime_signal_handler_t handler;
+    YoiVoidIntCallableInterface *self;
     runtime_signal_handler_info *next;
 };
 

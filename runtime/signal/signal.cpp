@@ -65,16 +65,9 @@ LIBSIG_EXPORT YoiIntegerObject *runtime_signal_register(YoiIntegerObject *signum
     }
 
     runtime_signal_handler_info *info = (runtime_signal_handler_info *)malloc(sizeof(runtime_signal_handler_info)); // not YoiObject, use malloc
-    info->handler = handler->handler;
+    info->self = handler;
     info->next = runtime_signal_handlers[type];
     runtime_signal_handlers[type] = info;
-
-    if (--handler->gc_refcount == 0) {
-        if (handler->gc_dec_func) {
-            handler->gc_dec_func(handler->this_ptr);
-        }
-        runtime_finalize_object((YoiObject *)handler);
-    }
 
     YoiIntegerObject *success = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
     success->type_id = 0;
@@ -153,18 +146,28 @@ LIBSIG_EXPORT int runtime_signal_default(int signum) {
 
 #ifdef _WIN32
     if (signum == HS_SIGALRM) {
-        while (runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->next) {
+        while (runtime_signal_handlers[HANDLER_TYPE_SIGALRM]) {
             auto next = runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->next;
-            free(runtime_signal_handlers[HANDLER_TYPE_SIGALRM]);
+            if (--runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->self->gc_refcount == 0) {
+                if (runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->self->gc_dec_func) {
+                    runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->self->gc_dec_func(runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->self->this_ptr);
+                }
+                runtime_finalize_object((YoiObject *)runtime_signal_handlers[HANDLER_TYPE_SIGALRM]->self);
+            }
             runtime_signal_handlers[HANDLER_TYPE_SIGALRM] = next;
         }
         return LIBSIG_SUCCESS;
     }
 #endif
 
-    while (runtime_signal_handlers[signum]->next) {
+    while (runtime_signal_handlers[signum]) {
         auto next = runtime_signal_handlers[signum]->next;
-        free(runtime_signal_handlers[signum]);
+        if (--runtime_signal_handlers[signum]->self->gc_refcount == 0) {
+            if (runtime_signal_handlers[signum]->self->gc_dec_func) {
+                runtime_signal_handlers[signum]->self->gc_dec_func(runtime_signal_handlers[signum]->self->this_ptr);
+            }
+            runtime_finalize_object((YoiObject *)runtime_signal_handlers[signum]->self);
+        }
         runtime_signal_handlers[signum] = next;
     }
     
@@ -196,17 +199,17 @@ void runtime_signal_handler(int signum) {
     switch (signum) {
         case HS_SIGINT:
             for (runtime_signal_handler_info *info = runtime_signal_handlers[HANDLER_TYPE_SIGINT]; info; info = info->next) {
-                info->handler(signum_obj);
+                info->self->handler((YoiObject *)info->self->this_ptr, signum_obj);
             }
             break;
         case HS_SIGTERM:
             for (runtime_signal_handler_info *info = runtime_signal_handlers[HANDLER_TYPE_SIGTERM]; info; info = info->next) {
-                info->handler(signum_obj);
+                info->self->handler((YoiObject *)info->self->this_ptr, signum_obj);
             }
             break;
         case HS_SIGALRM:
             for (runtime_signal_handler_info *info = runtime_signal_handlers[HANDLER_TYPE_SIGALRM]; info; info = info->next) {
-                info->handler(signum_obj);
+                info->self->handler((YoiObject *)info->self->this_ptr, signum_obj);
             }
             break;
         default:

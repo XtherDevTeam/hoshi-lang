@@ -1,0 +1,129 @@
+use str "str"
+
+struct Time {
+    seconds: int,
+    nanoseconds: int,
+    constructor(seconds: int, nanoseconds: int)
+}
+
+impl Time {
+    constructor(seconds: int, nanoseconds: int) {
+        this.seconds = seconds
+        this.nanoseconds = nanoseconds
+    }
+}
+
+struct Duration {
+    time: Time,
+    constructor(time: Time),
+    static days(days: int) : Duration,
+    static hours(hours: int) : Duration,
+    static minutes(minutes: int) : Duration,
+    static seconds(seconds: int) : Duration
+    static milliseconds(milliseconds: int) : Duration,
+    static microseconds(microseconds: int) : Duration,
+    static nanoseconds(nanoseconds: int) : Duration,
+    static months(months: int) : Duration,
+    static years(years: int) : Duration,
+    static operator+(duration: Duration, duration2: Duration) : Duration,
+    static operator-(duration: Duration, duration2: Duration) : Duration,
+    static operator+=(duration: Duration, duration2: Duration) : Duration,
+    static operator-=(duration: Duration, duration2: Duration) : Duration,
+    format(format: str.Str) : str.Str,
+}
+
+struct Date {
+    time: Time,
+    constructor(time: Time),
+    static now() : Date,
+    static from_timestamp(timestamp: int) : Date,
+    static date(year: int, month: int, day: int) : Date,
+    static operator+(date: Date, duration: Duration) : Date,
+    static operator-(date: Date, duration: Duration) : Date,
+    static operator+=(date: Date, duration: Duration) : Date,
+    static operator-=(date: Date, duration: Duration) : Date,
+    format(format: str.Str) : str.Str
+}
+
+impl Duration {
+    constructor(time: Time) {
+        this.time = time
+    },
+    static days(days: int) : Duration {
+        return Duration(Time(days * 24 * 60 * 60, 0))
+    },
+    static hours(hours: int) : Duration {
+        return Duration(Time(hours * 60 * 60, 0))
+    },
+    static minutes(minutes: int) : Duration {
+        return Duration(Time(minutes * 60, 0))
+    },
+    static seconds(seconds: int) : Duration {
+        return Duration(Time(seconds, 0))
+    },
+    static milliseconds(milliseconds: int) : Duration {
+        return Duration(Time(milliseconds / 1000, (milliseconds % 1000) * 1000))
+    },
+    static microseconds(microseconds: int) : Duration {
+        return Duration(Time(microseconds / 1000000, (microseconds % 1000000) * 1000))
+    },
+    static nanoseconds(nanoseconds: int) : Duration {
+        return Duration(Time(nanoseconds / 1000000000, (nanoseconds % 1000000000) * 1000))
+    },
+    static months(months: int) : Duration {
+        return Duration(Time(months * 30 * 24 * 60 * 60, 0))
+    },
+    static years(years: int) : Duration {
+        return Duration(Time(years * 365 * 24 * 60 * 60, 0))
+    },
+    static operator+(duration: Duration, duration2: Duration) : Duration {
+        return Duration(Time(duration.time.seconds + duration2.time.seconds, duration.time.nanoseconds + duration2.time.nanoseconds))
+    },
+    static operator-(duration: Duration, duration2: Duration) : Duration {
+        return Duration(Time(duration.time.seconds - duration2.time.seconds, duration.time.nanoseconds - duration2.time.nanoseconds))
+    },
+    static operator+=(duration: Duration, duration2: Duration) : Duration {
+        duration.time.seconds += duration2.time.seconds
+        duration.time.nanoseconds += duration2.time.nanoseconds
+        return duration
+    },
+    static operator-=(duration: Duration, duration2: Duration) : Duration {
+        duration.time.seconds -= duration2.time.seconds
+        duration.time.nanoseconds -= duration2.time.nanoseconds
+        return duration
+    }
+}
+
+impl Date {
+    constructor(time: Time) {
+        this.time = time
+    },
+    static now() : Date {
+        return Date(Time(0, 0))
+    },
+    static from_timestamp(timestamp: int) : Date {
+        return Date(Time(timestamp, 0))
+    },
+    static date(year: int, month: int, day: int) : Date {
+        return Date(Time(0, 0))
+    },
+    static operator+(date: Date, duration: Duration) : Date {
+        return Date(Time(date.time.seconds + duration.time.seconds, date.time.nanoseconds + duration.time.nanoseconds))
+    },
+    static operator-(date: Date, duration: Duration) : Date {
+        return Date(Time(date.time.seconds - duration.time.seconds, date.time.nanoseconds - duration.time.nanoseconds))
+    },
+    static operator+=(date: Date, duration: Duration) : Date {
+        date.time.seconds += duration.time.seconds
+        date.time.nanoseconds += duration.time.nanoseconds
+        return date
+    },
+    static operator-=(date: Date, duration: Duration) : Date {
+        date.time.seconds -= duration.time.seconds
+        date.time.nanoseconds -= duration.time.nanoseconds
+        return date
+    },
+    static format(format: str.Str) : str.Str {
+        return ""
+    }
+}

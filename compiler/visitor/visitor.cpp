@@ -4236,6 +4236,24 @@ namespace yoi {
 
     yoi::indexT visitor::createLambdaUnnamedStruct(yoi::lambdaExpr *lambdaExpr) {
         auto structName = L"lambda" + std::to_wstring(lambdaExpr->getLine()) + L"_" + std::to_wstring(lambdaExpr->getColumn());
+
+        if (irModule->structTable.contains(structName)) {
+            // when triggering re-evaluation due to cast required, we may already have the struct in the table, a quick fix for that.
+            // but our tempVarStack rolled back, re-evaluate it then
+            auto index = irModule->structTable.getIndex(structName);
+            auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, index});
+            yoi::vec<std::shared_ptr<IRValueType>> argTypes;
+            moduleContext->getIRBuilder().newStructOp(index);
+            for (auto &i : lambdaExpr->captures) {
+                visit(i);
+                argTypes.push_back(managedPtr(*moduleContext->getIRBuilder().getRhsFromTempVarStack()));
+            }
+            auto funcName = structName + L"::constructor" + getFuncUniqueNameStr(argTypes);
+            moduleContext->getIRBuilder().invokeMethodOp(
+                irModule->functionTable.getIndex(funcName), argTypes.size(), structType, false, true, currentModuleIndex);
+            return index;
+        }
+
         auto structIndex = irModule->structTable.put_create(structName, nullptr);
 
         auto structType = managedPtr(IRValueType{IRValueType::valueType::structObject, currentModuleIndex, structIndex});
@@ -4283,7 +4301,7 @@ namespace yoi {
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Constructor);
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         for (yoi::indexT i = 0;i < argTypes.size(); ++i) {
-            constructorBuilder.addArgument(lambdaExpr->captures[i]->node.strVal, argTypes[i]);
+            constructorBuilder.addArgument(L"capture#" + lambdaExpr->captures[i]->node.strVal, argTypes[i]);
         }
         constructorBuilder.setReturnType(structType);
         constructorBuilder.setName(structName + L"::constructor" + getFuncUniqueNameStr(argTypes));
@@ -4357,6 +4375,10 @@ namespace yoi {
         auto interfaceSrc = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(argTypes, returnType)};
         auto interfaceImpl = getInterfaceImplName(interfaceSrc, moduleContext->getIRBuilder().getRhsFromTempVarStack());
 
+        if (irModule->interfaceImplementationTable.contains(interfaceImpl)) {
+            // same fix here
+            return {irModule->interfaceImplementationTable.getIndex(interfaceImpl), interfaceSrc};
+        }
 
         IRInterfaceImplementationDefinition::Builder builder;
         builder.setImplInterfaceIndex(interfaceSrc)
