@@ -11,7 +11,7 @@ runtime_signal_handler_info *runtime_signal_handlers[3];
 // Global state for the simulated alarm timer
 static HANDLE hTimerQueue = NULL;
 static HANDLE hTimer = NULL;
-static runtime_signal_handler_t g_alarm_handler = NULL;
+static runtime_signal_handler_bare_t g_alarm_handler = NULL;
 
 VOID CALLBACK WindowsAlarmCallback(PVOID lpParam, BOOLEAN TimerOrWaitFired) {
     if (g_alarm_handler) {

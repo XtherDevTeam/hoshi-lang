@@ -38,6 +38,7 @@
 #define HANDLER_TYPE_SIGTERM 1
 #define HANDLER_TYPE_SIGALRM 2
 
+typedef void (*runtime_signal_handler_bare_t)(int signum);
 typedef void (*runtime_signal_handler_t)(YoiIntegerObject *signum);
 
 struct YoiVoidIntCallableInterface {
