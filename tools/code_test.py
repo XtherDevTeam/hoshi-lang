@@ -64,6 +64,8 @@ TEST_CASES = {
     "typed-ellipsis": {"type": "executable", "return_code": 0},
     "interface-regression": {"type": "executable", "return_code": 0},
     "binary-shift": {"type": "executable", "return_code": 0},
+    "randomlib": {"type": "executable", "return_code": 0},
+    "callable-interface": {"type": "executable", "return_code": 0},
 }
 
 

@@ -831,9 +831,9 @@ namespace yoi {
 
         // 2. Handle enumerations
         if (it + 2 == memberExpr->getTerms().end()) {
-            if ((*it)->isIdentifier() && !(*it)->id->hasTemplateArg() && (*(it + 1))->isIdentifier() && !(*(it + 1))->id->hasTemplateArg() && irModule->enumerationTable.contains((*it)->id->id->node.strVal)) {
+            auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule == -1 ? currentModuleIndex : targetModule);
+            if ((*it)->isIdentifier() && !(*it)->id->hasTemplateArg() && (*(it + 1))->isIdentifier() && !(*(it + 1))->id->hasTemplateArg() && targetedModule->enumerationTable.contains((*it)->id->id->node.strVal)) {
                 try {
-                    auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule == -1 ? currentModuleIndex : targetModule);
                     auto v = targetedModule->enumerationTable[(*it)->id->id->node.strVal]->valueToIndexMap[(*(it + 1))->id->id->node.strVal];
                     IR::Opcode op = IR::Opcode::push_character;
                     IROperand operand;
