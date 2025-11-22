@@ -11,5 +11,6 @@ var searchData=
   ['yoitypeinfo_8',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
   ['yoitypeinfoobject_9',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
   ['yoiunsignedobject_10',['YoiUnsignedObject',['../structYoiUnsignedObject.html',1,'']]],
-  ['yoivoidcallableinterface_11',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]]
+  ['yoivoidcallableinterface_11',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]],
+  ['yoivoidintcallableinterface_12',['YoiVoidIntCallableInterface',['../structYoiVoidIntCallableInterface.html',1,'']]]
 ];

@@ -201,6 +201,7 @@ var hierarchy =
       [ "customize_t", "classmagic__enum_1_1customize_1_1customize__t.html", null ]
     ] ],
     [ "PossibleValue", "unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html", null ],
+    [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", null ],
     [ "SimulationStack", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html", null ],
     [ "StackValue", "structyoi_1_1LLVMCodegen_1_1StackValue.html", null ],
     [ "static_str< N >", "classmagic__enum_1_1detail_1_1static__str.html", null ],
@@ -235,5 +236,6 @@ var hierarchy =
     [ "YoiTypeInfo", "structYoiTypeInfo.html", null ],
     [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", null ],
     [ "YoiUnsignedObject", "structYoiUnsignedObject.html", null ],
-    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", null ]
+    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", null ],
+    [ "YoiVoidIntCallableInterface", "structYoiVoidIntCallableInterface.html", null ]
 ];

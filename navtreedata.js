@@ -272,14 +272,14 @@ var NAVTREEINDEX =
 "classyoi_1_1lexer.html#aba94fcee9162fa79506654bd44d07362",
 "classyoi_1_1symbol.html#a2b15e1bb76ff7bbc24a7a7d2ad143906",
 "classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef",
-"hierarchy.html",
-"md_docs_2Spec.html#autotoc_md114",
-"namespaceyoi.html#a456a0bcc8b714a6e50fe7908d124018c",
-"parser_8hpp.html#a6d44c97f60c114b94f3fd70cd5b157f7",
-"structyoi_1_1CallGraph.html#a6b48c59be20b76b1ed08325cd78c5ec3",
-"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a7595ec51b788725a74d2d928890383d8",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a9487bfa7d8372f25426f24998a50c2b3",
-"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a3a3c08b33de97d5a125b6a4f88770448"
+"globals_vars.html",
+"md_docs_2Spec.html#autotoc_md113",
+"namespaceyoi.html#a44ac071c6201fe3f369912d370bda5d4",
+"parser_8hpp.html#a69d393ad12a9fb463a7b45135e90d990",
+"structmagic__enum_1_1detail_1_1range__min.html",
+"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a4dde968c67b7f988195b624e9f703919",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8",
+"unionyoi_1_1IROperand_1_1operandValue.html#a981ff374b45263ef10610604b8b12bef"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

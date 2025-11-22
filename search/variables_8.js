@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['hasarraytypespec_0',['hasArrayTypeSpec',['../classyoi_1_1typeSpec.html#ad060c6c394399834953e33490afab637',1,'yoi::typeSpec']]],
-  ['haspossiblevalue_1',['haspossiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::hasPossibleValue']]]
+  ['handler_0',['handler',['../structYoiVoidIntCallableInterface.html#a28fa2def66625f8438cdde75cf975042',1,'YoiVoidIntCallableInterface::handler'],['../structruntime__signal__handler__info.html#a28fa2def66625f8438cdde75cf975042',1,'runtime_signal_handler_info::handler']]],
+  ['hasarraytypespec_1',['hasArrayTypeSpec',['../classyoi_1_1typeSpec.html#ad060c6c394399834953e33490afab637',1,'yoi::typeSpec']]],
+  ['haspossiblevalue_2',['haspossiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::hasPossibleValue']]]
 ];

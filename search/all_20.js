@@ -15,7 +15,7 @@ var searchData=
   ['yoidecimalobject_12',['YoiDecimalObject',['../structYoiDecimalObject.html',1,'']]],
   ['yoiintegerobject_13',['YoiIntegerObject',['../structYoiIntegerObject.html',1,'']]],
   ['yoimiya_5fentry_14',['yoimiya_entry',['../runtime_8h.html#a4519923e43680d275ec2169d1db1705f',1,'runtime.h']]],
-  ['yoimodule_15',['yoimodule',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::ValueStackWithPhi::yoiModule'],['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::yoiModule']]],
+  ['yoimodule_15',['yoimodule',['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::yoiModule'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::ValueStackWithPhi::yoiModule']]],
   ['yoiobject_16',['YoiObject',['../structYoiObject.html',1,'']]],
   ['yoiobjectarray_17',['YoiObjectArray',['../structYoiObjectArray.html',1,'']]],
   ['yoiresultunsignedandintobject_18',['YoiResultUnsignedAndIntObject',['../structYoiResultUnsignedAndIntObject.html',1,'']]],
@@ -27,5 +27,6 @@ var searchData=
   ['yoitypeinfoobject_24',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
   ['yoitypetollvmtype_25',['yoiTypeToLLVMType',['../classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242',1,'yoi::LLVMCodegen']]],
   ['yoiunsignedobject_26',['YoiUnsignedObject',['../structYoiUnsignedObject.html',1,'']]],
-  ['yoivoidcallableinterface_27',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]]
+  ['yoivoidcallableinterface_27',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]],
+  ['yoivoidintcallableinterface_28',['YoiVoidIntCallableInterface',['../structYoiVoidIntCallableInterface.html',1,'']]]
 ];

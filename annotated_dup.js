@@ -161,6 +161,7 @@ var annotated_dup =
       [ "whileStmt", "classyoi_1_1whileStmt.html", "classyoi_1_1whileStmt" ]
     ] ],
     [ "AllocatedMemoryList", "structAllocatedMemoryList.html", "structAllocatedMemoryList" ],
+    [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", "structruntime__signal__handler__info" ],
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", "structThreadStarterArgs" ],
     [ "utf8Unicode", "classutf8Unicode.html", "classutf8Unicode" ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", "structYoiBooleanObject" ],
@@ -174,5 +175,6 @@ var annotated_dup =
     [ "YoiTypeInfo", "structYoiTypeInfo.html", "structYoiTypeInfo" ],
     [ "YoiTypeInfoObject", "structYoiTypeInfoObject.html", "structYoiTypeInfoObject" ],
     [ "YoiUnsignedObject", "structYoiUnsignedObject.html", "structYoiUnsignedObject" ],
-    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", "structYoiVoidCallableInterface" ]
+    [ "YoiVoidCallableInterface", "structYoiVoidCallableInterface.html", "structYoiVoidCallableInterface" ],
+    [ "YoiVoidIntCallableInterface", "structYoiVoidIntCallableInterface.html", "structYoiVoidIntCallableInterface" ]
 ];
