@@ -7,5 +7,8 @@ var searchData=
   ['libsig_5fexport_4',['LIBSIG_EXPORT',['../signal_8h.html#a6311055a021fa8d36820eaeea164d246',1,'signal.h']]],
   ['libsig_5finternal_5falrm_5',['LIBSIG_INTERNAL_ALRM',['../signal_8h.html#ad10773e96447bd5b583c1132279e0659',1,'signal.h']]],
   ['libsig_5finternal_5fkill_6',['LIBSIG_INTERNAL_KILL',['../signal_8h.html#ae0f03e22bb0a09d5f9859020614efb2d',1,'signal.h']]],
-  ['libsig_5fsuccess_7',['LIBSIG_SUCCESS',['../signal_8h.html#ab0142d834722cd0711dce0b2b7e0033f',1,'signal.h']]]
+  ['libsig_5fsuccess_7',['LIBSIG_SUCCESS',['../signal_8h.html#ab0142d834722cd0711dce0b2b7e0033f',1,'signal.h']]],
+  ['libtime_5fexport_8',['LIBTIME_EXPORT',['../time_8h.html#a8bc0d639b8a5b493d758c552f8e73398',1,'time.h']]],
+  ['libtime_5fffi_9',['LIBTIME_FFI',['../time_8h.html#aa7ca06f3a2546c84085a302b283ef933',1,'time.h']]],
+  ['libtime_5fnoffi_10',['LIBTIME_NOFFI',['../time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156',1,'time.h']]]
 ];

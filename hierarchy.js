@@ -228,6 +228,7 @@ var hierarchy =
     [ "YoiBooleanObject", "structYoiBooleanObject.html", null ],
     [ "YoiCharObject", "structYoiCharObject.html", null ],
     [ "YoiDecimalObject", "structYoiDecimalObject.html", null ],
+    [ "YoiIntAndIntObject", "structYoiIntAndIntObject.html", null ],
     [ "YoiIntegerObject", "structYoiIntegerObject.html", null ],
     [ "YoiObject", "structYoiObject.html", null ],
     [ "YoiObjectArray", "structYoiObjectArray.html", null ],

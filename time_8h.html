@@ -90,11 +90,364 @@ $(document).ready(function(){initNavTree('time_8h.html',''); initResizable(); })
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">time.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &quot;<a class="el" href="memory_8h_source.html">runtime/memory/memory.h</a>&quot;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;ctime&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for time.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="time_8h__incl.png" border="0" usemap="#aruntime_2time_2time_8h" alt=""/></div>
+<map name="aruntime_2time_2time_8h" id="aruntime_2time_2time_8h">
+<area shape="rect" title=" " alt="" coords="428,5,581,31"/>
+<area shape="rect" href="memory_8h.html" title=" " alt="" coords="251,79,452,104"/>
+<area shape="poly" title=" " alt="" coords="481,33,390,75,388,70,479,28"/>
+<area shape="rect" title=" " alt="" coords="421,225,487,251"/>
+<area shape="poly" title=" " alt="" coords="505,32,462,212,457,211,499,30"/>
+<area shape="rect" title=" " alt="" coords="542,79,601,104"/>
+<area shape="poly" title=" " alt="" coords="518,29,553,67,549,70,514,33"/>
+<area shape="poly" title=" " alt="" coords="374,102,404,122,431,150,446,181,453,211,448,213,441,183,426,154,400,126,371,106"/>
+<area shape="rect" title=" " alt="" coords="5,152,71,177"/>
+<area shape="poly" title=" " alt="" coords="298,107,85,154,84,149,296,101"/>
+<area shape="rect" href="build__config_8h.html" title=" " alt="" coords="95,152,261,177"/>
+<area shape="poly" title=" " alt="" coords="324,106,220,149,218,144,322,102"/>
+<area shape="rect" href="rtti_8h.html" title=" " alt="" coords="286,152,417,177"/>
+<area shape="poly" title=" " alt="" coords="354,104,354,138,349,138,349,104"/>
+<area shape="poly" title=" " alt="" coords="369,175,427,215,424,219,366,180"/>
+<area shape="rect" title=" " alt="" coords="316,225,387,251"/>
+<area shape="poly" title=" " alt="" coords="354,178,354,212,349,212,349,178"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="time_8h__dep__incl.png" border="0" usemap="#aruntime_2time_2time_8hdep" alt=""/></div>
+<map name="aruntime_2time_2time_8hdep" id="aruntime_2time_2time_8hdep">
+<area shape="rect" title=" " alt="" coords="13,5,166,31"/>
+<area shape="rect" href="time_8cpp.html" title=" " alt="" coords="5,79,173,104"/>
+<area shape="poly" title=" " alt="" coords="92,44,92,79,87,79,87,44"/>
+</map>
+</div>
+</div>
 <p><a href="time_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a429b8d0285e7ff4197c2170a1ee06b59" id="r_a429b8d0285e7ff4197c2170a1ee06b59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a429b8d0285e7ff4197c2170a1ee06b59">MAX_TIME_STR_LEN</a>&#160;&#160;&#160;128</td></tr>
+<tr class="separator:a429b8d0285e7ff4197c2170a1ee06b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bc0d639b8a5b493d758c552f8e73398" id="r_a8bc0d639b8a5b493d758c552f8e73398"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a>&#160;&#160;&#160;extern &quot;C&quot;</td></tr>
+<tr class="separator:a8bc0d639b8a5b493d758c552f8e73398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f5fa66a1d2c1eec5890c40fe0fe156" id="r_ad8f5fa66a1d2c1eec5890c40fe0fe156"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156">LIBTIME_NOFFI</a></td></tr>
+<tr class="separator:ad8f5fa66a1d2c1eec5890c40fe0fe156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ca06f3a2546c84085a302b283ef933" id="r_aa7ca06f3a2546c84085a302b283ef933"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a></td></tr>
+<tr class="separator:aa7ca06f3a2546c84085a302b283ef933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a4bcd4805dffd8f18dffc2c68680114f9" id="r_a4bcd4805dffd8f18dffc2c68680114f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156">LIBTIME_NOFFI</a> <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a4bcd4805dffd8f18dffc2c68680114f9">runtime_time_now</a> ()</td></tr>
+<tr class="memdesc:a4bcd4805dffd8f18dffc2c68680114f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>.  <br /></td></tr>
+<tr class="separator:a4bcd4805dffd8f18dffc2c68680114f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82bbdb3f43a7a3e84f45cdb64e5ae3b8" id="r_a82bbdb3f43a7a3e84f45cdb64e5ae3b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a82bbdb3f43a7a3e84f45cdb64e5ae3b8">runtime_time_sleep</a> (int64_t seconds, int64_t nanoseconds)</td></tr>
+<tr class="memdesc:a82bbdb3f43a7a3e84f45cdb64e5ae3b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sleep for a given number of seconds.  <br /></td></tr>
+<tr class="separator:a82bbdb3f43a7a3e84f45cdb64e5ae3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde01a683c358632d25103b886af03aa" id="r_acde01a683c358632d25103b886af03aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#acde01a683c358632d25103b886af03aa">runtime_time_strftime</a> (const char *format, int64_t timestamp)</td></tr>
+<tr class="memdesc:acde01a683c358632d25103b886af03aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a timestamp to a string according to a given format.  <br /></td></tr>
+<tr class="separator:acde01a683c358632d25103b886af03aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c093eb4373693f0c6422ddf3ed11da" id="r_ab2c093eb4373693f0c6422ddf3ed11da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#ab2c093eb4373693f0c6422ddf3ed11da">runtime_time_localtimezone_offset</a> ()</td></tr>
+<tr class="memdesc:ab2c093eb4373693f0c6422ddf3ed11da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the local timezone offset in seconds.  <br /></td></tr>
+<tr class="separator:ab2c093eb4373693f0c6422ddf3ed11da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ddd514880ae4204df548bc19fd55fad" id="r_a4ddd514880ae4204df548bc19fd55fad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156">LIBTIME_NOFFI</a> <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a4ddd514880ae4204df548bc19fd55fad">runtime_time_monotonic_now</a> ()</td></tr>
+<tr class="memdesc:a4ddd514880ae4204df548bc19fd55fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current monotonic time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>.  <br /></td></tr>
+<tr class="separator:a4ddd514880ae4204df548bc19fd55fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af584cb40088614f3219370d21f15daa4" id="r_af584cb40088614f3219370d21f15daa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#af584cb40088614f3219370d21f15daa4">runtime_time_finalize</a> (void *memory)</td></tr>
+<tr class="memdesc:af584cb40088614f3219370d21f15daa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize the memory created by the time module.  <br /></td></tr>
+<tr class="separator:af584cb40088614f3219370d21f15daa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a8bc0d639b8a5b493d758c552f8e73398" name="a8bc0d639b8a5b493d758c552f8e73398"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bc0d639b8a5b493d758c552f8e73398">&#9670;&#160;</a></span>LIBTIME_EXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIBTIME_EXPORT&#160;&#160;&#160;extern &quot;C&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="time_8h_source.html#l00034">34</a> of file <a class="el" href="time_8h_source.html">time.h</a>.</p>
+
+</div>
+</div>
+<a id="aa7ca06f3a2546c84085a302b283ef933" name="aa7ca06f3a2546c84085a302b283ef933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7ca06f3a2546c84085a302b283ef933">&#9670;&#160;</a></span>LIBTIME_FFI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIBTIME_FFI</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="time_8h_source.html#l00036">36</a> of file <a class="el" href="time_8h_source.html">time.h</a>.</p>
+
+</div>
+</div>
+<a id="ad8f5fa66a1d2c1eec5890c40fe0fe156" name="ad8f5fa66a1d2c1eec5890c40fe0fe156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8f5fa66a1d2c1eec5890c40fe0fe156">&#9670;&#160;</a></span>LIBTIME_NOFFI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIBTIME_NOFFI</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="time_8h_source.html#l00035">35</a> of file <a class="el" href="time_8h_source.html">time.h</a>.</p>
+
+</div>
+</div>
+<a id="a429b8d0285e7ff4197c2170a1ee06b59" name="a429b8d0285e7ff4197c2170a1ee06b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a429b8d0285e7ff4197c2170a1ee06b59">&#9670;&#160;</a></span>MAX_TIME_STR_LEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_TIME_STR_LEN&#160;&#160;&#160;128</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="time_8h_source.html#l00020">20</a> of file <a class="el" href="time_8h_source.html">time.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="af584cb40088614f3219370d21f15daa4" name="af584cb40088614f3219370d21f15daa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af584cb40088614f3219370d21f15daa4">&#9670;&#160;</a></span>runtime_time_finalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> void runtime_time_finalize </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>memory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finalize the memory created by the time module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">memory</td><td>The memory to finalize. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00171">171</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab2c093eb4373693f0c6422ddf3ed11da" name="ab2c093eb4373693f0c6422ddf3ed11da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c093eb4373693f0c6422ddf3ed11da">&#9670;&#160;</a></span>runtime_time_localtimezone_offset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> int64_t runtime_time_localtimezone_offset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the local timezone offset in seconds. </p>
+<dl class="section return"><dt>Returns</dt><dd>int64_t The local timezone offset in seconds. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00156">156</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4ddd514880ae4204df548bc19fd55fad" name="a4ddd514880ae4204df548bc19fd55fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ddd514880ae4204df548bc19fd55fad">&#9670;&#160;</a></span>runtime_time_monotonic_now()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156">LIBTIME_NOFFI</a> <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a> * runtime_time_monotonic_now </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current monotonic time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>YoiIntAndIntObject* The current monotonic time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The type-id of the returned object will be audited by the runtime. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00163">163</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="time_8cpp_source.html#l00116">YoiIntAndIntObject::create()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="time_8h_a4ddd514880ae4204df548bc19fd55fad_cgraph.png" border="0" usemap="#atime_8h_a4ddd514880ae4204df548bc19fd55fad_cgraph" alt=""/></div>
+<map name="atime_8h_a4ddd514880ae4204df548bc19fd55fad_cgraph" id="atime_8h_a4ddd514880ae4204df548bc19fd55fad_cgraph">
+<area shape="rect" title="Get the current monotonic time as a YoiIntAndIntObject." alt="" coords="5,13,225,38"/>
+<area shape="rect" href="structYoiIntAndIntObject.html#af2c04be3881ace5538c4bf77f14ac980" title=" " alt="" coords="273,5,415,45"/>
+<area shape="poly" title=" " alt="" coords="226,23,259,23,259,28,226,28"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="463,13,621,38"/>
+<area shape="poly" title=" " alt="" coords="415,23,449,23,449,28,415,28"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="669,5,828,45"/>
+<area shape="poly" title=" " alt="" coords="622,23,656,23,656,28,622,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4bcd4805dffd8f18dffc2c68680114f9" name="a4bcd4805dffd8f18dffc2c68680114f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bcd4805dffd8f18dffc2c68680114f9">&#9670;&#160;</a></span>runtime_time_now()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156">LIBTIME_NOFFI</a> <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a> * runtime_time_now </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the current time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>YoiIntAndIntObject* The current time as a <a class="el" href="structYoiIntAndIntObject.html">YoiIntAndIntObject</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The type-id of the returned object will be audited by the runtime. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00133">133</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="time_8cpp_source.html#l00116">YoiIntAndIntObject::create()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="time_8h_a4bcd4805dffd8f18dffc2c68680114f9_cgraph.png" border="0" usemap="#atime_8h_a4bcd4805dffd8f18dffc2c68680114f9_cgraph" alt=""/></div>
+<map name="atime_8h_a4bcd4805dffd8f18dffc2c68680114f9_cgraph" id="atime_8h_a4bcd4805dffd8f18dffc2c68680114f9_cgraph">
+<area shape="rect" title="Return the current time as a YoiIntAndIntObject." alt="" coords="5,13,149,38"/>
+<area shape="rect" href="structYoiIntAndIntObject.html#af2c04be3881ace5538c4bf77f14ac980" title=" " alt="" coords="197,5,339,45"/>
+<area shape="poly" title=" " alt="" coords="150,23,183,23,183,28,150,28"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="387,13,545,38"/>
+<area shape="poly" title=" " alt="" coords="339,23,373,23,373,28,339,28"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="593,5,752,45"/>
+<area shape="poly" title=" " alt="" coords="546,23,580,23,580,28,546,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a82bbdb3f43a7a3e84f45cdb64e5ae3b8" name="a82bbdb3f43a7a3e84f45cdb64e5ae3b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82bbdb3f43a7a3e84f45cdb64e5ae3b8">&#9670;&#160;</a></span>runtime_time_sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> void runtime_time_sleep </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>seconds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>nanoseconds</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sleep for a given number of seconds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seconds</td><td>The number of seconds to sleep. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00141">141</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acde01a683c358632d25103b886af03aa" name="acde01a683c358632d25103b886af03aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acde01a683c358632d25103b886af03aa">&#9670;&#160;</a></span>runtime_time_strftime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="time_8h.html#a8bc0d639b8a5b493d758c552f8e73398">LIBTIME_EXPORT</a> <a class="el" href="time_8h.html#aa7ca06f3a2546c84085a302b283ef933">LIBTIME_FFI</a> char * runtime_time_strftime </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert a timestamp to a string according to a given format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">format</td><td>The format string. </td></tr>
+    <tr><td class="paramname">timestamp</td><td>The timestamp to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>char* The resulting string. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="time_8cpp_source.html#l00148">148</a> of file <a class="el" href="time_8cpp_source.html">time.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="time_8h_source.html#l00020">MAX_TIME_STR_LEN</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -7,5 +7,6 @@ var searchData=
   ['magic_5fenum_5fv_4',['MAGIC_ENUM_V',['../magic__enum_8h.html#af39eaae0020d827410ae67df2773ad7d',1,'magic_enum.h']]],
   ['magic_5fenum_5fversion_5fmajor_5',['MAGIC_ENUM_VERSION_MAJOR',['../magic__enum_8h.html#a2b1e2194fd5bc90499887460e8318e30',1,'magic_enum.h']]],
   ['magic_5fenum_5fversion_5fminor_6',['MAGIC_ENUM_VERSION_MINOR',['../magic__enum_8h.html#ae60129f9fd71fa854fd4c84803732e14',1,'magic_enum.h']]],
-  ['magic_5fenum_5fversion_5fpatch_7',['MAGIC_ENUM_VERSION_PATCH',['../magic__enum_8h.html#ab1a8c0173da51fc4cd6a763ba9be51bd',1,'magic_enum.h']]]
+  ['magic_5fenum_5fversion_5fpatch_7',['MAGIC_ENUM_VERSION_PATCH',['../magic__enum_8h.html#ab1a8c0173da51fc4cd6a763ba9be51bd',1,'magic_enum.h']]],
+  ['max_5ftime_5fstr_5flen_8',['MAX_TIME_STR_LEN',['../time_8h.html#a429b8d0285e7ff4197c2170a1ee06b59',1,'time.h']]]
 ];
