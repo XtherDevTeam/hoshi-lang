@@ -1371,6 +1371,28 @@ namespace yoi {
                     // valueStackPhi.push_back({call, funcDef->returnType});
                     auto onstackType = noffi ? *funcDef->returnType : compilerCtx->normalizeForeignBasicType(funcDef->returnType);
 
+                    if (noffi && (funcDef->returnType->type == IRValueType::valueType::structObject ||
+                                  funcDef->returnType->type == IRValueType::valueType::interfaceObject)) {
+                        // audit the type id before pushing to stack
+                        auto notNullBlock = llvm::BasicBlock::Create(*TheContext, "audit_typeid_not_null", currentFunction);
+                        auto continueBlock = llvm::BasicBlock::Create(*TheContext, "audit_typeid_continue", currentFunction);
+                        Builder->CreateCondBr(Builder->CreateIsNotNull(call, "audit_typeid_isnotnull"), notNullBlock, continueBlock);
+                        Builder->SetInsertPoint(notNullBlock);
+                        auto typeIdKey = std::make_tuple(IRValueType::valueType::structObject,
+                                                         ENTRY_MODULE_ID_CONST,
+                                                         funcDef->returnType->typeIndex,
+                                                         0);
+                        auto structKey = std::make_tuple(IRValueType::valueType::structObject,
+                                                         ENTRY_MODULE_ID_CONST,
+                                                         funcDef->returnType->typeIndex);
+                        auto typeId = typeIDMap[typeIdKey];
+                        auto llvmStruct = structTypeMap.at(structKey);
+                        auto *typeIdPtr = Builder->CreateStructGEP(llvmStruct, call, 1, "typeid_ptr");
+                        Builder->CreateStore(llvm::ConstantInt::get(Builder->getInt64Ty(), typeId), typeIdPtr);
+                        Builder->CreateBr(continueBlock);
+                        Builder->SetInsertPoint(continueBlock);
+                    }
+
                     valueStackPhi.push_back({call, managedPtr(onstackType.isBasicType() && !noffi ? onstackType.getBasicRawType() : onstackType)});
                 }
 

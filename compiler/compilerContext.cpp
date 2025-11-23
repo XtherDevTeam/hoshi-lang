@@ -129,9 +129,6 @@ namespace yoi {
         std::shared_ptr<visitor> vis = std::make_shared<visitor>(builtinModuleContext, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
         vis->visit();
         astToFinalize.insert(mod);
-        
-        // pre-specialize the types required for runtime to get determined type ids
-        vis->specializeStructTemplate(L"Result", {getUnsignedObjectType(), getIntObjectType()}, vis->irModule->templateImplAsts.at(L"Result"), HOSHI_COMPILER_CTX_GLOB_ID_CONST);
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType(bool forceRawAttr) {

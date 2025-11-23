@@ -67,6 +67,7 @@ TEST_CASES = {
     "randomlib": {"type": "executable", "return_code": 0},
     "callable-interface": {"type": "executable", "return_code": 0},
     "signallib": {"type": "executable", "return_code": 0},
+    "timelib": {"type": "executable", "return_code": 0}
 }
 
 

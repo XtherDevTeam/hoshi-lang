@@ -1,4 +1,5 @@
 use str "str"
+use runtime "runtime"
 
 struct Time {
     seconds: int,
@@ -13,23 +14,31 @@ impl Time {
     }
 }
 
+import noffi runtime_time_now() : Time from "builtin"
+import noffi runtime_time_monotonic_now() : Time from "builtin"
+import runtime_time_sleep(seconds: int, nanoseconds: int) : none from "builtin"
+import runtime_time_strftime(format: ptr, seconds: int, nanoseconds: int) : ptr from "builtin"
+import runtime_time_localtimezone_offset() : int from "builtin"
+import runtime_time_finalize(memory: ptr) : none from "builtin"
+
 struct Duration {
     time: Time,
     constructor(time: Time),
     static days(days: int) : Duration,
     static hours(hours: int) : Duration,
     static minutes(minutes: int) : Duration,
-    static seconds(seconds: int) : Duration
+    static seconds(seconds: int) : Duration,
     static milliseconds(milliseconds: int) : Duration,
     static microseconds(microseconds: int) : Duration,
     static nanoseconds(nanoseconds: int) : Duration,
-    static months(months: int) : Duration,
-    static years(years: int) : Duration,
     static operator+(duration: Duration, duration2: Duration) : Duration,
     static operator-(duration: Duration, duration2: Duration) : Duration,
     static operator+=(duration: Duration, duration2: Duration) : Duration,
     static operator-=(duration: Duration, duration2: Duration) : Duration,
     format(format: str.Str) : str.Str,
+    sleep() : none,
+    static monotonic_now() : Duration,
+    static timezone() : Duration
 }
 
 struct Date {
@@ -70,12 +79,6 @@ impl Duration {
     static nanoseconds(nanoseconds: int) : Duration {
         return Duration(Time(nanoseconds / 1000000000, (nanoseconds % 1000000000) * 1000))
     },
-    static months(months: int) : Duration {
-        return Duration(Time(months * 30 * 24 * 60 * 60, 0))
-    },
-    static years(years: int) : Duration {
-        return Duration(Time(years * 365 * 24 * 60 * 60, 0))
-    },
     static operator+(duration: Duration, duration2: Duration) : Duration {
         return Duration(Time(duration.time.seconds + duration2.time.seconds, duration.time.nanoseconds + duration2.time.nanoseconds))
     },
@@ -91,6 +94,21 @@ impl Duration {
         duration.time.seconds -= duration2.time.seconds
         duration.time.nanoseconds -= duration2.time.nanoseconds
         return duration
+    },
+    format(format: str.Str) : str.Str {
+        let p = runtime_time_strftime(runtime.runtime_get_string_array_data_pointer(format.data), this.time.seconds, this.time.nanoseconds)
+        let s = str.Str.from_c_str(p)
+        runtime_time_finalize(p)
+        return s
+    },
+    sleep() : none {
+        runtime_time_sleep(this.time.seconds, this.time.nanoseconds)
+    },
+    static monotonic_now() : Duration {
+        return Duration(runtime_time_monotonic_now())
+    },
+    static timezone() : Duration {
+        return Duration(Time(runtime_time_localtimezone_offset(), 0))
     }
 }
 
@@ -99,13 +117,29 @@ impl Date {
         this.time = time
     },
     static now() : Date {
-        return Date(Time(0, 0))
+        return Date(runtime_time_now())
     },
     static from_timestamp(timestamp: int) : Date {
         return Date(Time(timestamp, 0))
     },
     static date(year: int, month: int, day: int) : Date {
-        return Date(Time(0, 0))
+        let days_in_month = new int[12](31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        let timestamp_result = 0
+        for (let i = 1970; i < year; i += 1) {
+            if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {
+                timestamp_result += 366
+            } else {
+                timestamp_result += 365
+            }
+        }
+        for (let i = 1; i < month; i += 1) {
+            timestamp_result += days_in_month[i - 1]
+            if (i == 2 && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) {
+                timestamp_result += 1
+            }
+        }
+        timestamp_result += (day - 1)
+        return Date(Time(timestamp_result * 24 * 60 * 60, 0))
     },
     static operator+(date: Date, duration: Duration) : Date {
         return Date(Time(date.time.seconds + duration.time.seconds, date.time.nanoseconds + duration.time.nanoseconds))
@@ -124,6 +158,21 @@ impl Date {
         return date
     },
     static format(format: str.Str) : str.Str {
-        return ""
+        let p = runtime_time_strftime(runtime.runtime_get_string_array_data_pointer(format.data), this.time.seconds, this.time.nanoseconds)
+        let s = str.Str.from_c_str(p)
+        runtime_time_finalize(p)
+        return s
+    }
+}
+
+impl Date : str.Stringable {
+    to_string() : str.Str {
+        return this.format("%Y-%m-%d %H:%M:%S")
+    }
+}
+
+impl Duration : str.Stringable {
+    to_string() : str.Str {
+        return this.format("%H:%M:%S")
     }
 }

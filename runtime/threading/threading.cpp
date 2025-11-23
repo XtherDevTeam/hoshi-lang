@@ -284,7 +284,6 @@ YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock() {
 
         auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
         yoi_result_obj->gc_refcount = 1;
-        yoi_result_obj->type_id = 16;
         yoi_result_obj->err = nullptr;
         yoi_result_obj->ok = yoi_result;
         return yoi_result_obj;
@@ -296,7 +295,6 @@ YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock() {
 
         auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
         yoi_result_obj->gc_refcount = 1;
-        yoi_result_obj->type_id = 16;
         yoi_result_obj->err = yoi_result;
         yoi_result_obj->ok = nullptr;
 

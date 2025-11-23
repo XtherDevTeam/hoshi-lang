@@ -1,0 +1,18 @@
+use time "time"
+use str "str"
+use console "console"
+
+func main() : int {
+    console.print("time-library-validation: start", "\n")
+    let monotonic_now = time.Duration.monotonic_now()
+    console.print("time-library-validation: current monotonic time", monotonic_now, "\n")
+    let wall_now = time.Date.now()
+    console.print("time-library-validation: current wall time", wall_now, "\n")
+    let custom = time.Date.date(2008, 12, 9)
+    console.print("time-library-validation: custom date", custom, "\n")
+    custom += time.Duration.days(23)
+    console.print("time-library-validation: custom date + 23 days", custom, "\n")
+    console.print("time-library-validation: validation complete", "\n")
+    time.Duration.seconds(1).sleep()
+    return 0
+}
