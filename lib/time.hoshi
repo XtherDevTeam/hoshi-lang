@@ -4,13 +4,35 @@ use runtime "runtime"
 struct Time {
     seconds: int,
     nanoseconds: int,
-    constructor(seconds: int, nanoseconds: int)
+    constructor(seconds: int, nanoseconds: int),
+    static operator-(t1: Time, t2: Time),
+    static operator+(t1: Time, t2: Time),
 }
 
 impl Time {
     constructor(seconds: int, nanoseconds: int) {
         this.seconds = seconds
         this.nanoseconds = nanoseconds
+    },
+    static operator-(t1: Time, t2: Time) : Time {
+        // handle overflow
+        let seconds = t1.seconds - t2.seconds
+        let nanoseconds = t1.nanoseconds - t2.nanoseconds
+        if (nanoseconds < 0) {
+            nanoseconds += 1000000000
+            seconds -= 1
+        }
+        return Time(seconds, nanoseconds)
+    },
+    static operator+(t1: Time, t2: Time) : Time {
+        // handle overflow
+        let seconds = t1.seconds + t2.seconds
+        let nanoseconds = t1.nanoseconds + t2.nanoseconds
+        if (nanoseconds >= 1000000000) {
+            nanoseconds -= 1000000000
+            seconds += 1
+        }
+        return Time(seconds, nanoseconds)
     }
 }
 
@@ -80,19 +102,17 @@ impl Duration {
         return Duration(Time(nanoseconds / 1000000000, (nanoseconds % 1000000000) * 1000))
     },
     static operator+(duration: Duration, duration2: Duration) : Duration {
-        return Duration(Time(duration.time.seconds + duration2.time.seconds, duration.time.nanoseconds + duration2.time.nanoseconds))
+        return Duration(duration.time + duration2.time)
     },
     static operator-(duration: Duration, duration2: Duration) : Duration {
-        return Duration(Time(duration.time.seconds - duration2.time.seconds, duration.time.nanoseconds - duration2.time.nanoseconds))
+        return Duration(duration.time - duration2.time)
     },
     static operator+=(duration: Duration, duration2: Duration) : Duration {
-        duration.time.seconds += duration2.time.seconds
-        duration.time.nanoseconds += duration2.time.nanoseconds
+        duration.time += duration2.time
         return duration
     },
     static operator-=(duration: Duration, duration2: Duration) : Duration {
-        duration.time.seconds -= duration2.time.seconds
-        duration.time.nanoseconds -= duration2.time.nanoseconds
+        duration.time -= duration2.time
         return duration
     },
     format(format: str.Str) : str.Str {

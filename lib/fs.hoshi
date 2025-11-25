@@ -44,8 +44,12 @@ impl OSFile : file.AbstractFile {
         return runtime.feof(this.fp)
     },
     size() : int {
-        lang.runtime_panic("OSFile::size(): not implemented")
-        return 0
+        // seek to the end of the file
+        let current_pos = runtime.ftell(this.fp)
+        runtime.fseek(this.fp, 0, 2)
+        let size = runtime.ftell(this.fp)
+        runtime.fseek(this.fp, current_pos, 0)
+        return size
     },
     is_seekable() : bool {
         return true

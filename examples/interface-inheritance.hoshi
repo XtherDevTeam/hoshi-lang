@@ -1,0 +1,25 @@
+use json "json"
+use str "str"
+use console "console"
+
+impl json.JSONValue : str.Stringable {
+    to_string() : str.Str {
+        return this.to_string()
+    }
+}
+
+func main() : int {
+    console.print("interface-inheritance-validation: start\n")
+    let s = str.Str("{\"a\": \"Hello, world!\", \"b\": [1, 2, 3], \"c\": null}")
+
+    let js = json.parse(s)
+    if (js.is_err()) {
+        console.print("interface-inheritance-validation: error parsing JSON", js.unwrap_err(), "\n")
+        return 1
+    }
+
+    let jso = js.unwrap()
+    console.print("interface-inheritance-validation: parsed JSON", jso, "\n")
+    console.print("interface-inheritance-validation: passed\n")
+    return 0
+}
