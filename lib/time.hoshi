@@ -6,7 +6,9 @@ struct Time {
     nanoseconds: int,
     constructor(seconds: int, nanoseconds: int),
     static operator-(t1: Time, t2: Time) : Time,
-    static operator+(t1: Time, t2: Time) : Time
+    static operator+(t1: Time, t2: Time) : Time,
+    static operator+=(t1: Time, t2: Time) : none,
+    static operator-=(t1: Time, t2: Time) : none
 }
 
 impl Time {
@@ -33,6 +35,22 @@ impl Time {
             seconds += 1
         }
         return Time(seconds, nanoseconds)
+    },
+    static operator+=(t1: Time, t2: Time) : none {
+        t1.seconds += t2.seconds
+        t2.nanoseconds += t2.nanoseconds
+        if (t1.nanoseconds >= 1000000000) {
+            t1.nanoseconds -= 1000000000
+            t1.seconds += 1
+        }
+    },
+    static operator-=(t1: Time, t2: Time) : none {
+        t1.seconds -= t2.seconds
+        t2.nanoseconds -= t2.nanoseconds
+        if (t1.nanoseconds < 0) {
+            t1.nanoseconds += 1000000000
+            t1.seconds -= 1
+        }
     }
 }
 
@@ -108,11 +126,11 @@ impl Duration {
         return Duration(duration.time - duration2.time)
     },
     static operator+=(duration: Duration, duration2: Duration) : Duration {
-        duration.time = duration.time + duration2.time
+        duration.time += duration2.time
         return duration
     },
     static operator-=(duration: Duration, duration2: Duration) : Duration {
-        duration.time = duration.time - duration2.time
+        duration.time -= duration2.time
         return duration
     },
     format(format: str.Str) : str.Str {
