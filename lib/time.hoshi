@@ -5,8 +5,8 @@ struct Time {
     seconds: int,
     nanoseconds: int,
     constructor(seconds: int, nanoseconds: int),
-    static operator-(t1: Time, t2: Time),
-    static operator+(t1: Time, t2: Time),
+    static operator-(t1: Time, t2: Time) : Time,
+    static operator+(t1: Time, t2: Time) : Time
 }
 
 impl Time {
@@ -108,11 +108,11 @@ impl Duration {
         return Duration(duration.time - duration2.time)
     },
     static operator+=(duration: Duration, duration2: Duration) : Duration {
-        duration.time += duration2.time
+        duration.time = duration.time + duration2.time
         return duration
     },
     static operator-=(duration: Duration, duration2: Duration) : Duration {
-        duration.time -= duration2.time
+        duration.time = duration.time - duration2.time
         return duration
     },
     format(format: str.Str) : str.Str {
