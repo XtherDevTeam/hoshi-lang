@@ -1,12 +1,21 @@
 use runtime "runtime"
 
 enum ServerState {
-    Running,
+    Running = 233,
     Stopped,
     Error = -4
 }
 
+enum TestEnum {
+    A = 1048576,
+    B = 23
+}
+
 func main() : int {
+    if (TestEnum.A != 1048576) {
+        runtime.puts("TestEnum.A is not 1048576")   
+        return 1
+    }
     let status = ServerState.Running
     if (status != ServerState.Error) {
         runtime.puts("enumeration validation passed")

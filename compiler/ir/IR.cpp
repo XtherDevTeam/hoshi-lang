@@ -1545,10 +1545,14 @@ namespace yoi {
                                          const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap)
         : name(name), valueToIndexMap(valueToIndexMap) {}
 
-    IREnumerationType::UnderlyingType IREnumerationType::getUnderlyingType() const {
-        if (valueToIndexMap.size() <= 256)
+    IREnumerationType::UnderlyingType IREnumerationType::getUnderlyingType() {
+        yoi::indexT maxIndex = 0;
+        
+        for (auto &entry : valueToIndexMap) maxIndex = std::max(maxIndex, entry.second);
+
+        if (maxIndex <= 255)
             return UnderlyingType::I8;
-        else if (valueToIndexMap.size() <= 65536)
+        else if (maxIndex <= 65535)
             return UnderlyingType::I16;
         else
             return UnderlyingType::I64;

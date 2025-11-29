@@ -393,7 +393,7 @@ namespace yoi {
 
         IREnumerationType(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap);
 
-        UnderlyingType getUnderlyingType() const;
+        UnderlyingType getUnderlyingType();
 
         class Builder {
             yoi::wstr name;
