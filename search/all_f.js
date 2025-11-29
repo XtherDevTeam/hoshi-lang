@@ -167,7 +167,7 @@ var searchData=
   ['gettoken_164',['getToken',['../classyoi_1_1AST.html#a6807dc8cec01f34b48f183fc06815ab2',1,'yoi::AST']]],
   ['gettypespec_165',['getTypeSpec',['../classyoi_1_1typeSpec.html#a0bd889987206d724b99d6c2cf2e69b01',1,'yoi::typeSpec']]],
   ['gettypespecuniquenamestr_166',['getTypeSpecUniqueNameStr',['../classyoi_1_1visitor.html#a1373e305b6c738d4580bb63d8031b7a8',1,'yoi::visitor']]],
-  ['getunderlyingtype_167',['getUnderlyingType',['../classyoi_1_1IREnumerationType.html#af62dde5ca38536457f508413c875fff6',1,'yoi::IREnumerationType']]],
+  ['getunderlyingtype_167',['getUnderlyingType',['../classyoi_1_1IREnumerationType.html#a22806e3d65008bd3f86daa9c142419e7',1,'yoi::IREnumerationType']]],
   ['getunsignedobject_168',['getUnsignedObject',['../classyoi_1_1BuiltinModuleBuilder.html#aaa9fe2ee1f20df2b58d91f3065f46ef7',1,'yoi::BuiltinModuleBuilder']]],
   ['getunsignedobjectdefinition_169',['getUnsignedObjectDefinition',['../classyoi_1_1BuiltinModuleBuilder.html#a19df66110fb50344f8dc39513d393322',1,'yoi::BuiltinModuleBuilder']]],
   ['getunsignedobjecttype_170',['getUnsignedObjectType',['../classyoi_1_1compilerContext.html#a6cace523975f204e9b0b4c686bd0af7a',1,'yoi::compilerContext']]],

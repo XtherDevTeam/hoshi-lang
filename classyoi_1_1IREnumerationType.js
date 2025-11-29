@@ -7,7 +7,7 @@ var classyoi_1_1IREnumerationType =
       [ "I64", "classyoi_1_1IREnumerationType.html#aaaf91a8097d88fcf9daa98a42270ab41ae7e62f6928f76df671b5a0379793fab6", null ]
     ] ],
     [ "IREnumerationType", "classyoi_1_1IREnumerationType.html#a50487465bd99d8fcca70a9f6363f7bb9", null ],
-    [ "getUnderlyingType", "classyoi_1_1IREnumerationType.html#af62dde5ca38536457f508413c875fff6", null ],
+    [ "getUnderlyingType", "classyoi_1_1IREnumerationType.html#a22806e3d65008bd3f86daa9c142419e7", null ],
     [ "name", "classyoi_1_1IREnumerationType.html#a9d24a0275ba98a7726bfe14c798f9850", null ],
     [ "valueToIndexMap", "classyoi_1_1IREnumerationType.html#a63b14fb7d5c5b5e6b98e93c8c0c53e4e", null ]
 ];
