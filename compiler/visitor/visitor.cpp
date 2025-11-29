@@ -32,7 +32,7 @@ namespace yoi {
     std::shared_ptr<yoi::IRModule> visitor::visit() {
         IRDebugInfo debugInfo{irModule->modulePath, 0, 0};
         auto globInitializer = managedPtr(IRFunctionDefinition{
-            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType(), {}, {}, debugInfo});
+            L"yoimiya_glob_initializer", {}, moduleContext->getCompilerContext()->getNoneObjectType(), {}, {IRFunctionDefinition::FunctionAttrs::Preserve}, debugInfo});
         irModule->functionTable.put(L"yoimiya_glob_initializer", globInitializer);
         moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, globInitializer});
         moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, 0, 0});
@@ -450,6 +450,8 @@ namespace yoi {
             emitBasicCastTo(moduleContext->getCompilerContext()->getIntObjectType());
             
             visit(*++term);
+
+            emitBasicCastTo(moduleContext->getCompilerContext()->getIntObjectType());
 
             auto &lhsType = moduleContext->getIRBuilder().getLhsFromTempVarStack();
             auto &rhsType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
@@ -3456,7 +3458,10 @@ namespace yoi {
             visit(i);
             tryCastTo(managedPtr(baseType));
         }
-        visit(newExpression->length->expr);
+        if (newExpression->length)
+            visit(newExpression->length->expr);
+        else
+            moduleContext->getIRBuilder().pushOp(IR::Opcode::push_integer, IROperand{IROperand::operandType::integer, yoi::indexT{newExpression->args->get().size()}});
         moduleContext->getIRBuilder().newDynamicArrayOp(managedPtr(baseType), newExpression->args->get().size());
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }

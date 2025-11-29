@@ -40,15 +40,6 @@ struct JSONNull {
     constructor()
 }
 
-impl JSONNull {
-    constructor() {
-        return this
-    },
-    to_string() : str.Str {
-        return str.Str("null")
-    }
-}
-
 struct Numeric {
     type: unsigned, /* 0 = int, 1 = decimal */
     data: str.Str,
@@ -56,6 +47,23 @@ struct Numeric {
     getDecimal() : deci,
     constructor(type: unsigned, data: str.Str),
     constructor()
+}
+
+/* forward-declaration */
+
+impl str.Str : JSONValue
+impl Numeric : JSONValue
+impl JSONNull : JSONValue
+impl JSONDict : JSONValue
+impl JSONList : JSONValue
+
+impl JSONNull {
+    constructor() {
+        return this
+    },
+    to_string() : str.Str {
+        return str.Str("null")
+    }
 }
 
 impl Numeric {
@@ -73,14 +81,6 @@ impl Numeric {
         return str.toDeci(this.data)
     }
 }
-
-/* forward-declaration */
-
-impl str.Str : JSONValue
-impl Numeric : JSONValue
-impl JSONNull : JSONValue
-impl JSONDict : JSONValue
-impl JSONList : JSONValue
 
 func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
     // evaluate the start of type to determine the type of JSON constructor to be used
@@ -351,4 +351,10 @@ func parse(s: str.Str) : lang.Result<JSONValue, str.Str> {
     let buffer = io.ArrayBuffer(s.data) as file.AbstractFile
     buffer.seek(0, 0)
     return parse(buffer)
+}
+
+impl JSONValue : str.Stringable {
+    to_string() : str.Str {
+        return this.to_string()
+    }
 }

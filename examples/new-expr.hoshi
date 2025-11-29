@@ -16,5 +16,12 @@ func main() : int {
         puts("store element validation failed")
         return 1
     }
+    x = new int[](0xe1751a, 0x709394)
+    if (x[0] == 0xe1751a && x[1] == 0x709394) {
+        puts("new expr with no size validation passed")
+    } else {
+        puts("new expr with no size validation failed")
+        return 1
+    }
     return 0
 }

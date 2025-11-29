@@ -27,12 +27,17 @@ struct HashMap<K, V> {
     contains(key: K) : bool,
     remove(key: K) : none,
     capacity_resize(new_capacity: int) : none,
+    put(key: K, value: V) : HashMap<K, V>
 }
 
 impl HashMap<> {
     constructor() {
         this.buckets = new HashMapNode<K, V>[64]()
         this.size = 0
+    },
+    put(key: K, value: V) : HashMap<K, V> {
+        this[key] = value
+        return this
     },
     static operator[](this: HashMap<K, V>, key: K) : V {
         let index = lang.Hashable(key).hash() % this.buckets.length

@@ -1,0 +1,18 @@
+use runtime "runtime"
+use console "console"
+use str "str"
+
+func initializer(s : str.Str) : str.Str {
+    console.print("initializer works\n")
+    return s
+}
+
+let global_variable : str.Str = initializer("Then, in the name of \"Cyrene,\" together with the shooting star, let's write a romantic story like none that has come before ♪")
+
+func main() : int {
+    console.print("test read", global_variable, "\n")
+    global_variable = "Perhaps it's a stroke of wistful loss, but those countless rays of light will surely write an ending unlike any before for this world we so deeply love ♪"
+    console.print("test write", global_variable, "\n")
+    console.print("test read", global_variable, "\n")
+    return 0
+}

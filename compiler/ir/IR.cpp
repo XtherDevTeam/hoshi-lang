@@ -341,7 +341,7 @@ namespace yoi {
             case IR::Opcode::store_global: {
                 // fetch rhs from tempVarStack
                 tempVarStack.pop_back();
-                insert({op, {{IROperand::operandType::index, moduleIndex}, operand}, currentDebugInfo});
+                insert({op, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, operand}, currentDebugInfo});
                 break;
             }
             default: {

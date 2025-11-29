@@ -2,12 +2,6 @@ use json "json"
 use str "str"
 use console "console"
 
-impl json.JSONValue : str.Stringable {
-    to_string() : str.Str {
-        return this.to_string()
-    }
-}
-
 func main() : int {
     console.print("interface-inheritance-validation: start\n")
     let s = str.Str("{\"a\": \"Hello, world!\", \"b\": [1, 2, 3], \"c\": null}")

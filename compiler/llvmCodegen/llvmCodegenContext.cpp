@@ -1054,17 +1054,16 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::load_global: {
-                auto varIndex = instr.operands[0].value.symbolIndex;
+                auto varIndex = instr.operands[1].value.symbolIndex;
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule ->globalVariables[varIndex];
-                yoiType->addAttribute(IRValueType::ValueAttr::Nullable);
+                yoiType->addAttribute(IRValueType::ValueAttr::Nullable).addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope);
                 auto loadedPtr = Builder->CreateLoad(global->getValueType(), global, "loadglobaltmp");
-                callGcFunction(loadedPtr, yoiType, true);
                 valueStackPhi.push_back({loadedPtr, yoiType});
                 break;
             }
             case IR::Opcode::store_global: {
-                auto varIndex = instr.operands[0].value.symbolIndex;
+                auto varIndex = instr.operands[1].value.symbolIndex;
                 auto* global = globalValues.at(varIndex);
                 auto yoiType = yoiModule->globalVariables[varIndex];
                 auto valToStore = valueStackPhi.back(); valueStackPhi.pop_back();

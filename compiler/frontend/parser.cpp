@@ -562,12 +562,17 @@ namespace yoi {
         o = new newExpression{node_start_token, expr, nullptr, nullptr};
         parse(o->length, lex);
         if (!o->length) {
-            panic(lex.line, lex.col, "expected lengthExpr after `new` in newExpression");
-            finalizeAST(o->type);
-            delete o;
-            o = nullptr;
+            if (lex.curToken.kind == lexer::token::tokenKind::leftBracket && lex.scan().kind == lexer::token::tokenKind::rightBracket) {
+                o->length = nullptr;
+                lex.scan(); // Consume ']'
+            } else {
+                panic(lex.line, lex.col, "expected lengthExpr after `new` in newExpression");
+                finalizeAST(o->type);
+                delete o;
+                o = nullptr;
+            }
+            
         }
-
         parse(o->args, lex);
         if (!o->args) {
             panic(lex.line, lex.col, "expected invocationArguments after `new` in newExpression");
