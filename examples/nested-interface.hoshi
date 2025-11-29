@@ -1,0 +1,37 @@
+use runtime "runtime"
+
+interface IA {
+    m() : int
+}
+
+interface IB {
+    m() : int
+}
+
+struct A {
+    a: int,
+    constructor(a: int)
+}
+
+impl A {
+    constructor(a: int) {
+        this.a = a
+    }
+}
+
+impl A : IA {
+    m() : int {
+        return this.a
+    }
+}
+
+impl IA : IB {
+    m() : int {
+        return this.m()
+    }
+}
+
+func main() : int {
+    let a = IB(IA(A(10)))
+    return a.m() - 10
+}

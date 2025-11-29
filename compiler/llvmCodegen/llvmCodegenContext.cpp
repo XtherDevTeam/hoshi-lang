@@ -1431,6 +1431,7 @@ namespace yoi {
                 auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
                 auto interfaceImplDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
                 auto &top = valueStackPhi.back();
+                top = promiseInterfaceObjectIfInterface(top);
                 auto object = ensureObject(top.yoiType, top.llvmValue);
                 top.yoiType = object.first;
                 top.llvmValue = object.second;
