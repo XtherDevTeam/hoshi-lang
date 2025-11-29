@@ -1710,7 +1710,7 @@ namespace yoi {
             methodBuilder.setName(methodFuncName + uniq);
 
             auto func = methodBuilder.yield();
-            builder.addMethod(methodName + uniq, func);
+            builder.addMethod(methodName, methodName + uniq, func);
         }
         auto interfaceType = builder.yield();
         irModule->interfaceTable[interfaceIndex] = interfaceType;
@@ -3644,7 +3644,7 @@ namespace yoi {
         }
 
         auto fullMangledName = overload.function->name;
-        bool skipFirstParam = structContext != nullptr && !noThisCall;
+        bool skipFirstParam = structContext != nullptr && !noThisCall && structContext->type != IRValueType::valueType::interfaceObject;
 
         if (overload.isVariadic) {
             moduleContext->getIRBuilder().restoreState();
@@ -3882,7 +3882,7 @@ namespace yoi {
             }
             auto uniq = getFuncUniqueNameStr(argTypes);
             methodBuilder.setName(L"interface#" + specializedName + L"#" + methodName + uniq);
-            builder.addMethod(methodName + uniq, methodBuilder.yield());
+            builder.addMethod(methodName, methodName + uniq, methodBuilder.yield());
         }
     
         auto specializedInterface = builder.yield();
@@ -4062,11 +4062,13 @@ namespace yoi {
             return false;
         };
 
-        for (const auto &it : interfaceContext->methodMap) {
-            if (it.second->name.starts_with(baseName)) {
-                if (findVariadicMatch(it.first))
-                    return result;
-            }
+        // if not even a single overload exists, return an empty result
+        if (!interfaceContext->functionOverloadIndexies.contains(baseName))
+            return result;
+
+        for (const auto &it : interfaceContext->functionOverloadIndexies[baseName]) {
+            if (findVariadicMatch(interfaceContext->methodMap.getKey(it)))
+                return result;
         }
 
         return result; // Not found
@@ -4220,7 +4222,7 @@ namespace yoi {
         }
         IRInterfaceInstanceDefinition::Builder builder;
         builder.setName(callableInterfaceName);
-        builder.addMethod(L"operator()" + getFuncUniqueNameStr(parameterTypes), managedPtr(IRFunctionDefinition{
+        builder.addMethod(L"operator()", L"operator()" + getFuncUniqueNameStr(parameterTypes), managedPtr(IRFunctionDefinition{
             L"operator()" + getFuncUniqueNameStr(parameterTypes),
             argTypes,
             returnType,

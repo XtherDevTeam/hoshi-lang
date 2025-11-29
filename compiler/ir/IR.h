@@ -672,23 +672,26 @@ namespace yoi {
     class IRInterfaceInstanceDefinition {
       public:
         yoi::wstr name;
+        std::map<yoi::wstr, yoi::vec<yoi::indexT>> functionOverloadIndexies;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
         yoi::vec<std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT>> implementations;
 
         IRInterfaceInstanceDefinition(
-            const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
+            const yoi::wstr &name, const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
         struct Builder {
             yoi::wstr name;
+            std::map<yoi::wstr, yoi::vec<yoi::indexT>> functionOverloadIndexies;
             yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
 
             Builder() = default;
 
             Builder &setName(const yoi::wstr &name);
 
-            Builder &addMethod(const yoi::wstr &methodName,
+            Builder &addMethod(const yoi::wstr &methodNameOri,
+                               const yoi::wstr &methodName,
                                const std::shared_ptr<IRFunctionDefinition> &methodSignature);
 
             std::shared_ptr<IRInterfaceInstanceDefinition> yield();

@@ -93,8 +93,8 @@ namespace yoi {
           virtualMethodIndexMap(virtualMethodIndexMap), implInterfaceIndex(implInterfaceIndex) {}
 
     IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(
-        const yoi::wstr &name, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap)
-        : name(name), methodMap(methodMap) {}
+        const yoi::wstr &name, const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap)
+        : name(name), functionOverloadIndexies(functionOverloadIndexies), methodMap(methodMap) {}
 
     yoi::wstr IRModule::to_string(yoi::indexT indent) {
         yoi::wstr r;
@@ -547,14 +547,15 @@ namespace yoi {
     }
 
     IRInterfaceInstanceDefinition::Builder &
-    IRInterfaceInstanceDefinition::Builder::addMethod(const yoi::wstr &methodName,
+    IRInterfaceInstanceDefinition::Builder::addMethod(const yoi::wstr &methodNameOri,
+                                                      const yoi::wstr &methodName,
                                                       const std::shared_ptr<IRFunctionDefinition> &methodSignature) {
-        this->methodMap.put_create(methodName, methodSignature);
+        this->functionOverloadIndexies[methodNameOri].push_back(this->methodMap.put_create(methodName, methodSignature));
         return *this;
     }
 
     std::shared_ptr<IRInterfaceInstanceDefinition> IRInterfaceInstanceDefinition::Builder::yield() {
-        return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(methodMap));
+        return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(functionOverloadIndexies), std::move(methodMap));
     }
 
     IRFunctionDefinition::Builder &
@@ -1547,7 +1548,7 @@ namespace yoi {
 
     IREnumerationType::UnderlyingType IREnumerationType::getUnderlyingType() {
         yoi::indexT maxIndex = 0;
-        
+
         for (auto &entry : valueToIndexMap) maxIndex = std::max(maxIndex, entry.second);
 
         if (maxIndex <= 255)

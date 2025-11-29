@@ -118,7 +118,7 @@ namespace yoi {
     }
 
     yoi::IRInterfaceInstanceDefinition BuiltinModuleBuilder::getNullInterfaceInstanceDefinition() {
-        return {L"NullInterface", {}};
+        return {L"NullInterface", {}, {}};
     }
 
     BuiltinModuleBuilder::BuiltinModuleBuilder(std::shared_ptr<IRModule> module) : module(std::move(module)) {}

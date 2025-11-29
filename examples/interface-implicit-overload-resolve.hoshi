@@ -1,0 +1,27 @@
+use runtime "runtime"
+
+interface I1 {
+    method1(a: deci, b: deci) : deci
+}
+
+struct S {
+    constructor()
+}
+
+impl S {
+    constructor() {
+        return this
+    }
+}
+
+impl S : I1 {
+    method1(a: deci, b: deci) : deci {
+        return a + b
+    }
+}
+
+func main() : int {
+    let s = S()
+    let i1 = s as I1
+    return i1.method1(1, 2.0) - 3
+}

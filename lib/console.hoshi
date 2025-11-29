@@ -6,6 +6,7 @@ use runtime "runtime"
 func print(s: str.Str) : none {
     let stdout = fs.stdout() as file.AbstractFile
     stdout.write(s.data)
+    stdout.flush()
 }
 
 func print(args: ...str.Stringable) : none {
@@ -16,6 +17,7 @@ func print(args: ...str.Stringable) : none {
     }
     let s = str.join(" ", strings)
     stdout.write(s.data)
+    stdout.flush()
 }
 
 func input() : str.Str {
