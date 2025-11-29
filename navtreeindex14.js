@@ -1,5 +1,7 @@
 var NAVTREEINDEX14 =
 {
+"md_docs_2Spec.html#autotoc_md110":[18,3],
+"md_docs_2Spec.html#autotoc_md111":[18,4],
 "md_docs_2Spec.html#autotoc_md112":[18,5],
 "md_docs_2Spec.html#autotoc_md113":[18,6],
 "md_docs_2Spec.html#autotoc_md114":[18,7],
@@ -247,7 +249,5 @@ var NAVTREEINDEX14 =
 "namespaceyoi.html#a39fbcbce6263254a8e4ed7c14c54ce3f":[30,0,1,266],
 "namespaceyoi.html#a3a832fa0533a1d0473785c83c875531e":[30,0,1,284],
 "namespaceyoi.html#a3ad9e1856fdcc012055cdfedb1461b70":[30,0,1,197],
-"namespaceyoi.html#a3c1e8acbd0c6982239a39d342071f389":[30,0,1,138],
-"namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d":[30,0,1,297],
-"namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7":[30,0,1,299]
+"namespaceyoi.html#a3c1e8acbd0c6982239a39d342071f389":[30,0,1,138]
 };

@@ -11,7 +11,7 @@ var searchData=
   ['addfield_8',['addField',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a742b4c00189dd1ba83c5cb5026825501',1,'yoi::IRStructDefinition::Builder']]],
   ['addforeigntype_9',['addForeignType',['../classyoi_1_1IRFFITable.html#a12b6db2175dbae2719869a0faf537bf9',1,'yoi::IRFFITable']]],
   ['addimportedfunction_10',['addImportedFunction',['../classyoi_1_1IRFFITable.html#a3b5aefa6ed075b8c5133c81438b20817',1,'yoi::IRFFITable']]],
-  ['addmethod_11',['addmethod',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a3cb27bf09f0585919f5d34ca3f35c405',1,'yoi::IRStructDefinition::Builder::addMethod()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a093d4ecdc6b6646ebf03dee3908379ab',1,'yoi::IRInterfaceInstanceDefinition::Builder::addMethod()']]],
+  ['addmethod_11',['addmethod',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a3cb27bf09f0585919f5d34ca3f35c405',1,'yoi::IRStructDefinition::Builder::addMethod()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ae47d421959b4a7d8568a902f2f8fd0d6',1,'yoi::IRInterfaceInstanceDefinition::Builder::addMethod()']]],
   ['addsearchpath_12',['addSearchPath',['../structyoi_1_1IRBuildConfig_1_1Builder.html#a018974377dbe893144969b5a486fe294',1,'yoi::IRBuildConfig::Builder']]],
   ['addstringliteral_13',['addStringLiteral',['../classyoi_1_1IRStringLiteralPool.html#a87b1ba7fd8977c1869730e0a6721826e',1,'yoi::IRStringLiteralPool']]],
   ['addtemplateargument_14',['addTemplateArgument',['../classyoi_1_1IRTemplateBuilder.html#a5c824377d8bc04d23af5eed0a29b6241',1,'yoi::IRTemplateBuilder']]],

@@ -1,10 +1,12 @@
 var NAVTREEINDEX13 =
 {
+"globals_enum.html":[32,1,4],
+"globals_func.html":[32,1,1],
 "globals_type.html":[32,1,3],
 "globals_vars.html":[32,1,2],
 "hierarchy.html":[31,2],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "index.html#autotoc_md150":[0,0],
 "index.html#autotoc_md151":[0,1],
 "index.html#autotoc_md152":[0,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "md_docs_2Spec.html#autotoc_md106":[18,0,1],
 "md_docs_2Spec.html#autotoc_md107":[18,0,2],
 "md_docs_2Spec.html#autotoc_md108":[18,1],
-"md_docs_2Spec.html#autotoc_md109":[18,2],
-"md_docs_2Spec.html#autotoc_md110":[18,3],
-"md_docs_2Spec.html#autotoc_md111":[18,4]
+"md_docs_2Spec.html#autotoc_md109":[18,2]
 };
