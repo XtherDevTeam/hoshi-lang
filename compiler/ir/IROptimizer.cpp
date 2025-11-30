@@ -1376,7 +1376,7 @@ namespace yoi {
                 case IR::Opcode::load_global: {
                     // as for global variables, we can't optimize it
                     auto moduleIndex = ins.operands[0].value.symbolIndex;
-                    auto type = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[0].value.symbolIndex];
+                    auto type = compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
                     simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});
                     break;
                 }
@@ -3710,7 +3710,7 @@ namespace yoi {
                 // as for global variables, we can't optimize it
                 auto moduleIndex = ins.operands[0].value.symbolIndex;
                 auto type =
-                    compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[0].value.symbolIndex];
+                    compilerCtx->getImportedModule(moduleIndex)->globalVariables[ins.operands[1].value.symbolIndex];
                 simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});
                 break;
             }
