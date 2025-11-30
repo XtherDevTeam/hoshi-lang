@@ -46,7 +46,8 @@ struct Numeric {
     getInt() : int,
     getDecimal() : deci,
     constructor(type: unsigned, data: str.Str),
-    constructor()
+    constructor(),
+    constructor(i: int)
 }
 
 /* forward-declaration */
@@ -79,6 +80,10 @@ impl Numeric {
     },
     getDecimal() : deci {
         return str.toDeci(this.data)
+    },
+    constructor(i: int) {
+        this.type = 0
+        this.data = str.Stringable(i).to_string()
     }
 }
 

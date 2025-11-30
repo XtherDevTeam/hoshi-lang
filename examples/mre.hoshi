@@ -1,9 +1,9 @@
-func external() : int {
-    let y = 233
-    return -1
-}
+use json "json"
+use str "str"
+use console "console"
 
 func main() : int {
-    let x = external() != -1
-    return x
+    let a = json.JSONDict().put("name", str.Str("Jerry Chou")).put("age", json.Numeric(17))
+    console.print(json.JSONValue(a).to_string(), "\n")
+    return 0
 }

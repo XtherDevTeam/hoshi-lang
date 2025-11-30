@@ -67,7 +67,9 @@ TEST_CASES = {
     "randomlib": {"type": "executable", "return_code": 0},
     "callable-interface": {"type": "executable", "return_code": 0},
     "signallib": {"type": "executable", "return_code": 0},
-    "timelib": {"type": "executable", "return_code": 0}
+    "timelib": {"type": "executable", "return_code": 0},
+    "interface-implicit-overload-resolve.hoshi" : {"type": "executable", "return_code": 0},
+    "global-var": {"type": "executable", "return_code": 0},
 }
 
 

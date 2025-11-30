@@ -1032,6 +1032,9 @@ namespace yoi {
                                 // current stack: [..., value, array, index]
                                 auto value = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                                 auto array = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
+                                moduleContext->getIRBuilder().saveState();
+
                                 visit(sub->expr);
                                 auto index = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
@@ -1052,6 +1055,15 @@ namespace yoi {
                                         sub->getLine(),
                                         sub->getColumn(),
                                         "Variadic operator[] overloading is not supported.");
+
+                                if (overload.isCastRequired) {
+                                    moduleContext->getIRBuilder().restoreState();
+                                    // value cannot be rolled back
+                                    visit(sub->expr);
+                                    tryCastTo(overload.function->argumentTypes.back());
+                                } else {
+                                    moduleContext->getIRBuilder().discardState();
+                                }
 
                                 moduleContext->getIRBuilder().invokeMethodOp(
                                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
@@ -1500,6 +1512,43 @@ namespace yoi {
                     } catch (const std::exception &) {
                         moduleContext->getIRBuilder().restoreState();
                     }
+                }
+            }
+
+            // Attempt 5: Type alias
+            if (auto it = targetedModule->typeAliases.find(baseName); it != targetedModule->typeAliases.end()) {
+                if (it->second.type == IRValueType::valueType::structObject) {
+                    auto targetModule = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
+                    auto structIndex = it->second.typeIndex;
+                    auto structType = targetModule->structTable[structIndex];
+                    moduleContext->getIRBuilder().newStructOp(structIndex, true, targetModule->identifier);
+                    auto rhs = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                    if (handleInvocationExtern(L"constructor", args, targetModule->identifier, rhs)) {
+                        resolved = true;
+                        moduleContext->getIRBuilder().discardState();
+                    } else {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not resolve constructor for struct '" + wstring2string(baseName) + "'.");
+                    }
+                } else if (it->second.type == IRValueType::valueType::interfaceObject) {
+                    auto targetModuleForInterface = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
+                    moduleContext->getIRBuilder().saveState();
+                    try {
+                        // auto interfaceIndex = targetModuleForInterface->interfaceTable.getIndex(baseName);
+                        auto interfaceIndex = it->second.typeIndex;
+                        auto argTypes = evaluateArguments(args);
+                        yoi_assert(argTypes.size() == 1, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Interface constructor expects exactly one argument.");
+                        // moduleContext->getIRBuilder().newInterfaceOp(interfaceIndex, true, targetModuleForInterface->identifier);
+                        auto interfaceImplName = getInterfaceImplName({currentModuleIndex, interfaceIndex}, argTypes[0]);
+                        auto targetModule = moduleContext->getCompilerContext()->getImportedModule(argTypes[0]->typeAffiliateModule);
+                        auto interfaceImplIndex = targetModule->interfaceImplementationTable.getIndex(interfaceImplName);
+                        moduleContext->getIRBuilder().constructInterfaceImplOp({currentModuleIndex, interfaceIndex}, interfaceImplIndex, true, targetModule->identifier);
+                        resolved = true;
+                        moduleContext->getIRBuilder().discardState();
+                    } catch (const std::exception &) {
+                        moduleContext->getIRBuilder().restoreState();
+                    }
+                } else {
+                    panic(firstTerm->getLine(), firstTerm->getColumn(), "invalid type alias type: " + wstring2string(baseName));
                 }
             }
 
