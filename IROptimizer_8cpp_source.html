@@ -1565,7 +1565,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l01376" name="l01376"></a><span class="lineno"> 1376</span>                <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5">IR::Opcode::load_global</a>: {</div>
 <div class="line"><a id="l01377" name="l01377"></a><span class="lineno"> 1377</span>                    <span class="comment">// as for global variables, we can&#39;t optimize it</span></div>
 <div class="line"><a id="l01378" name="l01378"></a><span class="lineno"> 1378</span>                    <span class="keyword">auto</span> moduleIndex = ins.operands[0].value.symbolIndex;</div>
-<div class="line"><a id="l01379" name="l01379"></a><span class="lineno"> 1379</span>                    <span class="keyword">auto</span> type = compilerCtx-&gt;getImportedModule(moduleIndex)-&gt;globalVariables[ins.operands[0].value.symbolIndex];</div>
+<div class="line"><a id="l01379" name="l01379"></a><span class="lineno"> 1379</span>                    <span class="keyword">auto</span> type = compilerCtx-&gt;getImportedModule(moduleIndex)-&gt;globalVariables[ins.operands[1].value.symbolIndex];</div>
 <div class="line"><a id="l01380" name="l01380"></a><span class="lineno"> 1380</span>                    simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});</div>
 <div class="line"><a id="l01381" name="l01381"></a><span class="lineno"> 1381</span>                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01382" name="l01382"></a><span class="lineno"> 1382</span>                }</div>
@@ -3939,7 +3939,7 @@ $(document).ready(function(){initNavTree('IROptimizer_8cpp_source.html',''); ini
 <div class="line"><a id="l03710" name="l03710"></a><span class="lineno"> 3710</span>                <span class="comment">// as for global variables, we can&#39;t optimize it</span></div>
 <div class="line"><a id="l03711" name="l03711"></a><span class="lineno"> 3711</span>                <span class="keyword">auto</span> moduleIndex = ins.operands[0].value.symbolIndex;</div>
 <div class="line"><a id="l03712" name="l03712"></a><span class="lineno"> 3712</span>                <span class="keyword">auto</span> type =</div>
-<div class="line"><a id="l03713" name="l03713"></a><span class="lineno"> 3713</span>                    compilerCtx-&gt;getImportedModule(moduleIndex)-&gt;globalVariables[ins.operands[0].value.symbolIndex];</div>
+<div class="line"><a id="l03713" name="l03713"></a><span class="lineno"> 3713</span>                    compilerCtx-&gt;getImportedModule(moduleIndex)-&gt;globalVariables[ins.operands[1].value.symbolIndex];</div>
 <div class="line"><a id="l03714" name="l03714"></a><span class="lineno"> 3714</span>                simulationStack.push(type, {currentCodeBlockIndex, {insIndex}});</div>
 <div class="line"><a id="l03715" name="l03715"></a><span class="lineno"> 3715</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l03716" name="l03716"></a><span class="lineno"> 3716</span>            }</div>
