@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('md_docs_2JSON.html',''); initResizable
   <div class="headertitle"><div class="title">JSON in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md71"></a> The <code>json</code> standard library module provides functionality for parsing JSON data.</p>
-<h1><a class="anchor" id="autotoc_md72"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md72"></a> The <code>json</code> standard library module provides functionality for parsing JSON data.</p>
+<h1><a class="anchor" id="autotoc_md73"></a>
 &lt;tt&gt;parse&lt;/tt&gt; Function</h1>
 <p>The <code>parse</code> function takes a <code>str.Str</code> object containing JSON data and returns a <code>lang.Result&lt;JSONValue, str.Str&gt;</code>.</p>
 <ul>
 <li>If parsing is successful, the <code>Result</code> will be an <code>Ok</code> containing a <code>JSONValue</code>.</li>
 <li>If parsing fails, the <code>Result</code> will be an <code>Err</code> containing an error message.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md73"></a>
+<h1><a class="anchor" id="autotoc_md74"></a>
 &lt;tt&gt;JSONValue&lt;/tt&gt; Interface</h1>
 <p>The <code>JSONValue</code> interface is a marker interface for the different types of JSON values:</p>
 <ul>
@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('md_docs_2JSON.html',''); initResizable
 <li><code>JSONDict</code>: For JSON objects (a <code>hashMap.HashMap&lt;str.Str, JSONValue&gt;</code>)</li>
 <li><code>JSONList</code>: For JSON arrays (a <code>vec.Vec&lt;JSONValue&gt;</code>)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md74"></a>
+<h1><a class="anchor" id="autotoc_md75"></a>
 Example</h1>
 <div class="fragment"><div class="line">use json &quot;json&quot;</div>
 <div class="line">use str &quot;str&quot;</div>

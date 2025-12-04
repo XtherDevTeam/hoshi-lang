@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('md_docs_2Null.html',''); initResizable
   <div class="headertitle"><div class="title">The implementation of null literal in hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md83"></a> 已知 <code>null</code> 是一种字面量，其意义为在栈上放置一个值为 nullptr 的指针（ <code>pointerObject</code> ）。</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md84"></a> 已知 <code>null</code> 是一种字面量，其意义为在栈上放置一个值为 nullptr 的指针（ <code>pointerObject</code> ）。</p>
 <p>其预期使用如下：</p>
 <div class="fragment"><div class="line">func main () : int {</div>
 <div class="line">    let x = lang.NullInterface(&quot;hello&quot;)</div>
@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('md_docs_2Null.html',''); initResizable
 <div class="line">        puts(&quot;validation failed&quot;)</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md84"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md85"></a>
 Pointer Object in hoshi-lang</h1>
 <p>Pointer object 为一种特殊的 object，其无变量头，不能被显式初始化，不能为变量类型，仅在与 null 的比较时参与运算，在 LLVM IR 中体现为一个 int64 字面量，而在 Yoi IR 层面，只支持 equal, not_equal 两种计算操作。 </p>
 </div></div><!-- contents -->

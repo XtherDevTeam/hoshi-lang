@@ -11,7 +11,7 @@ var searchData=
   ['nametype_8',['nameType',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0',1,'yoi::IRStructDefinition::nameInfo']]],
   ['nanoseconds_9',['nanoseconds',['../structYoiIntAndIntObject.html#a2bbdb97031ca626c3da8fbd604c90371',1,'YoiIntAndIntObject']]],
   ['negate_10',['negate',['../classyoi_1_1IRFunctionOptimizer.html#a623d68a3d810f761f59e0fea09eb46d6',1,'yoi::IRFunctionOptimizer::negate()'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2d11beba811e6ec7b47d7a801cf8173f',1,'yoi::IR::negate']]],
-  ['new_20语句设计_11',['new 语句设计',['../md_docs_2Interface.html#autotoc_md39',1,'']]],
+  ['new_20语句设计_11',['new 语句设计',['../md_docs_2Interface.html#autotoc_md40',1,'']]],
   ['new_5farray_5fbool_12',['new_array_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949',1,'yoi::IR']]],
   ['new_5farray_5fchar_13',['new_array_char',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907',1,'yoi::IR']]],
   ['new_5farray_5fdeci_14',['new_array_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556',1,'yoi::IR']]],
