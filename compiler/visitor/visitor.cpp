@@ -1011,7 +1011,8 @@ namespace yoi {
                     if (sub->isInvocation()) {
                         // This handles `obj.field[i]()` where `field[i]` returns a callable.
                         // Or `obj.method()()` where `method()` returns a callable.
-                        panic(sub->getLine(), sub->getColumn(), "Chained function calls are not yet supported in this context.");
+                        if (!handleInvocationExtern(L"operator()", sub->args, currentObjectType->typeAffiliateModule, currentObjectType))
+                            panic(sub->getLine(), sub->getColumn(), "No matching method found for: " + wstring2string(currentTermNode->id->getId().get().strVal) + ".operator()");
                     } else if (sub->isSubscript()) {
                         if (currentObjectType->isArrayType() || currentObjectType->isDynamicArrayType()) {
                             visit(sub->expr); // Evaluate the index and push it.
