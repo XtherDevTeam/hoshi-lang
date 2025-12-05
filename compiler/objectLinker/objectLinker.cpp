@@ -36,4 +36,17 @@ namespace yoi {
         this->config = config;
         return *this;
     }
+    
+    yoi::vec<yoi::wstr> ObjectLinker::defaultAdditionalLinkingFiles() {
+        std::filesystem::path dir = whereIsHoshiLang();
+        yoi::vec<yoi::wstr> files;
+        for (auto &path : std::filesystem::recursive_directory_iterator(dir)) {
+            if (path.path().extension() == L".lib" || path.path().extension() == L".a" ||
+                path.path().extension() == L".so" || path.path().extension() == L".dll" ||
+                path.path().extension() == L".dylib") {
+                files.push_back(path.path().wstring());
+            }
+        }
+        return files;
+    }
 } // namespace yoi

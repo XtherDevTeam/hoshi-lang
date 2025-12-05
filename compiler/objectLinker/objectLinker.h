@@ -8,6 +8,7 @@
 #include "compiler/ir/IR.h"
 #include <memory>
 #include <share/def.hpp>
+#include <filesystem>
 
 namespace yoi {
     class ObjectLinker {
@@ -39,6 +40,8 @@ namespace yoi {
         virtual ObjectLinker &link(const yoi::wstr &outputPath) = 0;
 
         virtual ~ObjectLinker() = default;
+
+        static yoi::vec<yoi::wstr> defaultAdditionalLinkingFiles();
     };
 } // namespace yoi
 #endif // OBJECTLINKER_H

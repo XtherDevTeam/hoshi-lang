@@ -65,7 +65,7 @@ int main(int argc, const char **argv) {
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
-    yoi::vec<yoi::wstr> additionalLinkingFiles;
+    yoi::vec<yoi::wstr> additionalLinkingFiles = yoi::ObjectLinker::defaultAdditionalLinkingFiles();
     yoi::vec<std::pair<yoi::wstr, yoi::wstr>> macroDefs;
     bool preserveIntermediateFiles = false; 
 
