@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('md_docs_2Macros.html',''); initResizab
   <div class="headertitle"><div class="title">Macros in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md76"></a> Hoshi-lang has a simple conditional compilation feature that works like a macro system. This allows you to include or exclude code based on flags passed to the compiler.</p>
-<h1><a class="anchor" id="autotoc_md77"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md75"></a> Hoshi-lang has a simple conditional compilation feature that works like a macro system. This allows you to include or exclude code based on flags passed to the compiler.</p>
+<h1><a class="anchor" id="autotoc_md76"></a>
 Syntax</h1>
 <p>The syntax for a macro is a double-bracketed expression:</p>
 <div class="fragment"><div class="line">[[&lt;key&gt; &lt;operator&gt; &lt;value&gt;]]</div>
@@ -104,7 +104,7 @@ Syntax</h1>
 <li><code>&lt;value&gt;</code>: The value to compare against.</li>
 </ul>
 <p>If the condition is true, the code immediately following the macro will be included in the compilation. Otherwise, it will be ignored.</p>
-<h1><a class="anchor" id="autotoc_md78"></a>
+<h1><a class="anchor" id="autotoc_md77"></a>
 Pre-defined Macros</h1>
 <p>Hoshi-lang provides the following pre-defined macros:</p>
 <ul>
@@ -113,11 +113,11 @@ Pre-defined Macros</h1>
 <li><code>hoshi_feature_version</code>: The version of the Hoshi-lang language.</li>
 <li><code>hoshi_lang_commit</code>: The git commit hash of the Hoshi-lang compiler.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md79"></a>
+<h1><a class="anchor" id="autotoc_md78"></a>
 Custom Macros</h1>
 <p>You can define your own macros using the <code>-D</code> or <code>--define</code> flag when compiling:</p>
 <div class="fragment"><div class="line">./hoshi_lang -D my_macro 123 my_file.hoshi</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md80"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md79"></a>
 Example</h1>
 <div class="fragment"><div class="line">use runtime &quot;runtime&quot;</div>
 <div class="line"> </div>

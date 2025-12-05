@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('md_docs_2Result.html',''); initResizab
   <div class="headertitle"><div class="title">Result Type in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md97"></a> The <code>Result&lt;T, E&gt;</code> type is a standard library feature in Hoshi-lang for functions that can return either a value or an error.</p>
-<h1><a class="anchor" id="autotoc_md98"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md96"></a> The <code>Result&lt;T, E&gt;</code> type is a standard library feature in Hoshi-lang for functions that can return either a value or an error.</p>
+<h1><a class="anchor" id="autotoc_md97"></a>
 &lt;tt&gt;Result&lt;T, E&gt;&lt;/tt&gt; Struct</h1>
 <p>The <code>Result&lt;T, E&gt;</code> struct is an enumeration with two variants:</p>
 <ul>
 <li><code>Ok(T)</code>: Represents success and contains a value of type <code>T</code>.</li>
 <li><code>Err(E)</code>: Represents an error and contains a value of type <code>E</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md99"></a>
+<h2><a class="anchor" id="autotoc_md98"></a>
 Methods</h2>
 <ul>
 <li><code>is_ok() : bool</code>: Returns <code>true</code> if the result is <code>Ok</code>.</li>
@@ -109,13 +109,13 @@ Methods</h2>
 <li><code>unwrap() : T</code>: Returns the value inside an <code>Ok</code>. Panics if the result is <code>Err</code>.</li>
 <li><code>unwrap_err() : E</code>: Returns the error inside an <code>Err</code>. Panics if the result is <code>Ok</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md100"></a>
+<h2><a class="anchor" id="autotoc_md99"></a>
 Static Methods</h2>
 <ul>
 <li><code>ok(value: T) : Result&lt;T, E&gt;</code>: Creates an <code>Ok</code> result.</li>
 <li><code>err(error: E) : Result&lt;T, E&gt;</code>: Creates an <code>Err</code> result.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md101"></a>
+<h2><a class="anchor" id="autotoc_md100"></a>
 Example</h2>
 <div class="fragment"><div class="line">use lang &quot;builtin&quot;</div>
 <div class="line">use str &quot;str&quot;</div>
