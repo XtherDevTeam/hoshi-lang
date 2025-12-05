@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[31,0,0,1,4],
+"structmagic__enum_1_1detail_1_1is__reflected.html":[30,0,0,2,5],
 "structmagic__enum_1_1detail_1_1is__reflected.html":[31,0,0,1,5],
 "structmagic__enum_1_1detail_1_1is__scoped__enum.html":[31,0,0,1,6],
 "structmagic__enum_1_1detail_1_1is__scoped__enum.html":[30,0,0,2,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a38f7d8fa68adb172cee56661d8f1413e":[30,0,1,67,0,0,0,7],
 "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a38f7d8fa68adb172cee56661d8f1413e":[31,0,1,67,0,0,0,7],
 "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a406f6ebfa3b492541c00a06f957b0a34":[30,0,1,67,0,0,0,1],
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a406f6ebfa3b492541c00a06f957b0a34":[31,0,1,67,0,0,0,1],
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a454c755b740c962efaa40168b9433283":[30,0,1,67,0,0,0,2],
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a454c755b740c962efaa40168b9433283":[31,0,1,67,0,0,0,2]
+"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a406f6ebfa3b492541c00a06f957b0a34":[31,0,1,67,0,0,0,1]
 };

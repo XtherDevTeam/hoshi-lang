@@ -2,6 +2,7 @@ var classyoi_1_1ObjectLinker =
 [
     [ "ObjectLinker", "classyoi_1_1ObjectLinker.html#a1bb73ce3370ae32c1643fe64b8c7d7ac", null ],
     [ "~ObjectLinker", "classyoi_1_1ObjectLinker.html#aa8bb88fde0d42dca5b036215e4bcabc6", null ],
+    [ "defaultAdditionalLinkingFiles", "classyoi_1_1ObjectLinker.html#a4ce42dd3dff8cd40a766f1bb81323b61", null ],
     [ "getConfig", "classyoi_1_1ObjectLinker.html#a3e14062b6b07ca74399b0a7a7a40c88a", null ],
     [ "getElysiaRuntimePath", "classyoi_1_1ObjectLinker.html#af27c8ed19e621eb8b16c60d863d61089", null ],
     [ "getLinkerPath", "classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3", null ],
