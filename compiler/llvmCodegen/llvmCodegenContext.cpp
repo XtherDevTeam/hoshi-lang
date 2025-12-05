@@ -1524,6 +1524,7 @@ namespace yoi {
 
                 auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject, interfaceShellVal.yoiType->typeAffiliateModule, interfaceShellVal.yoiType->typeIndex);
                 auto* interfaceLLVMType = structTypeMap.at(interfaceKey);
+                auto interfaceDef = yoiModule->interfaceTable[std::get<2>(interfaceKey)];
 
                 // Load the concrete `this` pointer from index 2
                 auto concreteThisPtrRaw = unwrapInterfaceObject(interfaceShellVal);
@@ -1539,8 +1540,12 @@ namespace yoi {
 
                 std::vector<llvm::Value*> finalArgs;
                 finalArgs.push_back(concreteThisPtrRaw);
-                for(const auto& arg : userArgs) {
-                    auto object = ensureObject(arg.yoiType, arg.llvmValue);
+                for(yoi::indexT paramIndex = 0; paramIndex < userArgs.size(); ++paramIndex) {
+                    const auto& arg = userArgs[paramIndex];
+                    auto paramDef = interfaceDef->methodMap[methodVTableIndex]->argumentTypes[paramIndex];
+                    auto object = (paramDef->hasAttribute(IRValueType::ValueAttr::Nullable) || (!paramDef->isBasicType() && !paramDef->isBasicRawType()) || !paramDef->dimensions.empty()) 
+                        ? ensureObject(arg.yoiType, arg.llvmValue) 
+                        : std::pair{managedPtr(arg.yoiType->getBasicRawType()), unboxValue(arg.llvmValue, arg.yoiType)};
                     finalArgs.push_back(object.second);
                     // default to borrow
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !object.first->hasAttribute(IRValueType::ValueAttr::Raw));

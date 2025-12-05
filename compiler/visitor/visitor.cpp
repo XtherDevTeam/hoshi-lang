@@ -1170,7 +1170,6 @@ namespace yoi {
             }
             
             yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
-            generateNullInterfaceImplementation(managedPtr(baseType->getArrayType(dimensions)));
             moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
         } 
         // Case 2: Invocation `id<...>(...)` or `id(...)`
@@ -1420,7 +1419,6 @@ namespace yoi {
             }
             yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
 
-            generateNullInterfaceImplementation(managedPtr(baseType->getArrayType(dimensions)));
             moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
         } 
         // Case 2: Extern Invocation
@@ -2013,7 +2011,6 @@ namespace yoi {
                     methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                     methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
                     methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-                    methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
 
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
@@ -3502,7 +3499,6 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::newExpression *newExpression) {
         auto baseType = parseTypeSpec(newExpression->type);
-        generateNullInterfaceImplementation(managedPtr(baseType.getDynamicArrayType()));
         for (auto &i : newExpression->args->get()) {
             visit(i);
             tryCastTo(managedPtr(baseType));
@@ -4002,7 +3998,6 @@ namespace yoi {
                 methodBuilder.setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
                 methodBuilder.attrs = getFunctionAttributes(methodAst.attrs);
                 methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
                 
                 yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
                 
@@ -4322,7 +4317,6 @@ namespace yoi {
 
         callableBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
         callableBuilder.attrs.push_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-        callableBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         callableBuilder.addArgument(L"this", structType);
         for (auto &i : lambdaExpr->args->spec) {
             auto argType = managedPtr(parseTypeSpec(i->spec));
@@ -4742,7 +4736,6 @@ namespace yoi {
             callableBuilder.addArgument(L"param" + std::to_wstring(argIndex), arg);
         }
         callableBuilder.setReturnType(func->returnType);
-        callableBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         callableBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
         callableBuilder.setDebugInfo(moduleContext->getIRBuilder().getCurrentDebugInfo());
         targetedModule->functionTable[callableIndex] = callableBuilder.yield();

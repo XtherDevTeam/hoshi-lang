@@ -4,6 +4,7 @@
 
 #include "IROptimizer.hpp"
 #include "compiler/compilerContext.h"
+#include "compiler/visitor/visitor.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
 
@@ -4281,6 +4282,7 @@ namespace yoi {
         }
 
         performStructNullablePass();
+        performInterfaceWrapperPass();
     }
 
     bool FunctionAnalysisInfo::operator!=(const FunctionAnalysisInfo &other) const {
@@ -4381,6 +4383,102 @@ namespace yoi {
         }
         return true;
     }
+
+    bool IROptimizer::performInterfaceWrapperPass() {
+        // patch the original definition with corresponding Raw and Nullable tag.
+        for (auto &module : compilerCtx->getCompiledModules()) {
+            for (auto &interface : module.second->interfaceTable) {
+                for (auto &impl : interface.second->implementations) {
+                    // module.second->interfaceImplementationTable.contains()
+                    auto targetedModule = compilerCtx->getImportedModule(std::get<1>(impl));
+                    auto implName = visitor::getInterfaceImplName(
+                        std::pair{module.first, module.second->interfaceTable.getIndex(interface.first)}, 
+                        managedPtr(IRValueType{std::get<0>(impl), std::get<1>(impl), std::get<2>(impl)}));
+                    auto implDef = targetedModule->interfaceImplementationTable[implName];
+                    for (yoi::indexT virtIndex = 0; virtIndex < implDef->virtualMethods.size(); virtIndex++) {
+                        auto virtDef = compilerCtx->getImportedModule(implDef->virtualMethods[virtIndex]->typeAffiliateModule)->functionTable[implDef->virtualMethods[virtIndex]->typeIndex];
+                        auto targetDef = interface.second->methodMap[virtIndex];
+                        virtDef->argumentTypes[0]->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Borrow);
+                        for (yoi::indexT paramIndex = 0; paramIndex < targetDef->argumentTypes.size(); paramIndex++) {
+                            if (!virtDef->argumentTypes[paramIndex + 1]->hasAttribute(IRValueType::ValueAttr::Raw)) 
+                                targetDef->argumentTypes[paramIndex]->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
+                        }
+                        // patch the function return type as well
+                        if (!virtDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            targetDef->returnType->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
+                        }
+                    }
+                }
+            }
+
+            // add Raw tag if no Nullable tag present for basic types in interface methods.
+            for (auto &interface : module.second->interfaceTable) {
+                for (auto & virtIndex : interface.second->methodMap) {
+                    for (auto &i : virtIndex.second->argumentTypes) {
+                        if (!i->hasAttribute(IRValueType::ValueAttr::Nullable) && i->isBasicType() && i->dimensions.empty())
+                            i->addAttribute(IRValueType::ValueAttr::Raw);
+                    }
+                    if (!virtIndex.second->returnType->hasAttribute(IRValueType::ValueAttr::Nullable) && virtIndex.second->returnType->isBasicType() && virtIndex.second->returnType->dimensions.empty())
+                        virtIndex.second->returnType->addAttribute(IRValueType::ValueAttr::Raw);
+                }
+            }
+
+            auto interface_wrapper_generator = [&] (yoi::indexT moduleIndex, yoi::indexT funcIndex, const yoi::vec<std::shared_ptr<IRValueType>> &targetTypes, const std::shared_ptr<IRValueType> &returnType) -> yoi::indexT {
+                auto originalFunc = compilerCtx->getImportedModule(moduleIndex)->functionTable[funcIndex];
+                auto builder = IRFunctionDefinition::Builder().setReturnType(returnType).setDebugInfo(originalFunc->debugInfo).setName(originalFunc->name + L"#wrapper");
+                builder.addArgument(L"this", originalFunc->argumentTypes[0]);
+                for (yoi::indexT index = 0;index < targetTypes.size(); index++)
+                    builder.addArgument(L"param" + std::to_wstring(index), targetTypes[index]);
+                builder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                auto index = compilerCtx->getImportedModule(moduleIndex)->functionTable.put(originalFunc->name + L"wrapper", builder.yield());
+                auto moduleCtx = compilerCtx->getModuleContext(moduleIndex);
+                moduleCtx->pushIRBuilder(IRBuilder(compilerCtx, compilerCtx->getImportedModule(moduleIndex), compilerCtx->getImportedModule(moduleIndex)->functionTable[index]));
+                moduleCtx->getIRBuilder().switchCodeBlock(moduleCtx->getIRBuilder().createCodeBlock());
+                moduleCtx->getIRBuilder().loadOp(IR::Opcode::load_local, IROperand{IROperand::operandType::index, IROperand::operandValue{yoi::indexT{0}}}, originalFunc->argumentTypes[0]);
+                for (yoi::indexT index = 1; index < originalFunc->argumentTypes.size(); index++) {
+                    moduleCtx->getIRBuilder().loadOp(IR::Opcode::load_local, IROperand{IROperand::operandType::index, index}, targetTypes[index - 1]);
+                }
+                moduleCtx->getIRBuilder().invokeMethodOp(funcIndex, targetTypes.size(), originalFunc->returnType, false, true, moduleIndex);
+                moduleCtx->getIRBuilder().retOp(returnType->type == IRValueType::valueType::none);
+                moduleCtx->getIRBuilder().yield();
+                moduleCtx->popIRBuilder();
+                return index;
+            };
+            
+            // check the implementation of interface methods again for any misalignment, if presents, generate a wrapper method to fix it.
+            for (auto &interface : module.second->interfaceTable) {
+                for (auto &impl : interface.second->implementations) {
+                    // module.second->interfaceImplementationTable.contains()
+                    auto targetedModule = compilerCtx->getImportedModule(std::get<1>(impl));
+                    auto implName = visitor::getInterfaceImplName(
+                        std::pair{module.first, module.second->interfaceTable.getIndex(interface.first)},
+                        managedPtr(IRValueType{std::get<0>(impl), std::get<1>(impl), std::get<2>(impl)}));
+                    auto implDef = targetedModule->interfaceImplementationTable[implName];
+                    for (yoi::indexT virtIndex = 0; virtIndex < implDef->virtualMethods.size(); virtIndex++) {
+                        auto virtDef =
+                            compilerCtx->getImportedModule(implDef->virtualMethods[virtIndex]->typeAffiliateModule)
+                                ->functionTable[implDef->virtualMethods[virtIndex]->typeIndex];
+                        auto targetDef = interface.second->methodMap[virtIndex];
+                        bool needWrapper = false;
+                        for (yoi::indexT paramIndex = 0; paramIndex < targetDef->argumentTypes.size(); paramIndex++) {
+                            if (virtDef->argumentTypes[paramIndex + 1]->hasAttribute(IRValueType::ValueAttr::Raw) &&
+                                !targetDef->argumentTypes[paramIndex]->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                                    needWrapper = true;
+                            }
+                        }
+                        if (virtDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw) &&
+                            !targetDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            needWrapper = true;
+                        }
+                        if (needWrapper)
+                            implDef->virtualMethods[virtIndex]->typeIndex = interface_wrapper_generator(implDef->virtualMethods[virtIndex]->typeAffiliateModule, implDef->virtualMethods[virtIndex]->typeIndex, targetDef->argumentTypes, targetDef->returnType);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     std::pair<std::map<indexT, std::vector<indexT>>, std::map<indexT, std::vector<indexT>>>
     IRFunctionOptimizer::performCFGAnalysis() {
         std::map<indexT, std::vector<indexT>> successors;

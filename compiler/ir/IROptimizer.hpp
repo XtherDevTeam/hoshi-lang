@@ -264,6 +264,8 @@ namespace yoi {
         std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> functionAnalysisResults;
 
         bool performStructNullablePass();
+
+        bool performInterfaceWrapperPass();
         
     public:
         IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx, yoi::indexT entryModuleIndex);
