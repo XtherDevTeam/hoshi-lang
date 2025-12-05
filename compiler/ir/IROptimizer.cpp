@@ -3011,6 +3011,16 @@ namespace yoi {
                     simulationStack.push(result);
                     break;
                 }
+                case IR::Opcode::add: case IR::Opcode::sub: case IR::Opcode::mul: case IR::Opcode::div:
+                case IR::Opcode::mod: case IR::Opcode::bitwise_and: case IR::Opcode::bitwise_or:
+                case IR::Opcode::bitwise_xor: case IR::Opcode::left_shift: case IR::Opcode::right_shift: {
+                    auto r = simulationStack.peek(0); simulationStack.pop();
+                    auto l = simulationStack.peek(0); simulationStack.pop();
+                    auto resultType = std::make_shared<IRValueType>(*l.type);
+                    resultType->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(resultType, {});
+                    break;
+                }
                 default: {
                     handleInstruction(ins, 0, blockIndex);
                     break;
@@ -4377,7 +4387,7 @@ namespace yoi {
             for (auto &struct_type : irModule->structTable) {
                 for (auto &field : struct_type.second->fieldTypes) {
                     field = managedPtr(*field);
-                    field->addAttribute(IRValueType::ValueAttr::Nullable);
+                    field->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
                 }
             }
         }

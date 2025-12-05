@@ -54,9 +54,42 @@ struct Numeric {
 
 impl str.Str : JSONValue
 impl Numeric : JSONValue
+impl bool : JSONValue
 impl JSONNull : JSONValue
 impl JSONDict : JSONValue
 impl JSONList : JSONValue
+
+impl bool : JSONValue {
+    to_string() : str.Str {
+        if (this) {
+            return "true"
+        } else {
+            return "false"
+        }
+    },
+    construct(stream: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
+        let start_pos = stream.tell()
+        let ch = stream.getch()
+        if (ch == 't') {
+            let next3Char = stream.read(3)
+            if (next3Char.data[0] != 'r' || next3Char.data[1] != 'u' || next3Char.data[2] != 'e') {
+                stream.seek(start_pos, 0)
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'true' after 't' in boolean"))
+            }
+            return lang.Result<JSONValue, str.Str>.ok(true as JSONValue)
+        } elif (ch == 'f') {
+            let next4Char = stream.read(4)
+            if (next4Char.data[0] != 'a' || next4Char.data[1] != 'l' || next4Char.data[2] != 's' || next4Char.data[3] != 'e') {
+                stream.seek(start_pos, 0)
+                return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 'false' after 'f' in boolean"))
+            }
+            return lang.Result<JSONValue, str.Str>.ok(false as JSONValue)
+        } else {
+            stream.seek(start_pos, 0)
+            return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Expected 't' or 'f' in boolean"))
+        }
+    }
+}
 
 impl JSONNull {
     constructor() {
@@ -108,6 +141,9 @@ func parse(filelike: file.AbstractFile) : lang.Result<JSONValue, str.Str> {
         // null
         filelike.seek(pos, 0)
         return JSONValue(JSONNull()).construct(filelike)
+    } elif (ch == 't' || ch == 'f') {
+        filelike.seek(pos, 0)
+        return JSONValue(false).construct(filelike)
     } else {
         // future support for arrays, booleans, null would go here
         return lang.Result<JSONValue, str.Str>.err(str.Str("JSON: Unexpected token while parsing value"))

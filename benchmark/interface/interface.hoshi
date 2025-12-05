@@ -1,0 +1,30 @@
+interface ITest {
+    method(a: int, b: int, c: int) : deci
+}
+
+struct Test {
+    constructor()
+}
+
+impl Test {
+    constructor() {
+        return this
+    }
+}
+
+impl Test : ITest {
+    method(a: int, b: int, c: int) : deci {
+        return a + b + c
+    }
+}
+
+func iteration() : deci {
+    return ITest(Test()).method(1, 233, 3)
+}
+
+func main() : int {
+    for (let i = 0;i < 10000000; i+= 1) {
+        iteration()
+    }
+    return 0
+}

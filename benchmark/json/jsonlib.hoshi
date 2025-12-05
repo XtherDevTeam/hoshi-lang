@@ -1,0 +1,21 @@
+use json "json"
+use str "str"
+use file "file"
+use fs "fs"
+use console "console"
+
+func iteration(s: str.Str) : none {
+    json.parse(s)
+}
+
+func main() : int {
+    let f = fs.open("benchmark/json/test.json", "r+").unwrap() as file.AbstractFile
+    let s = str.Str(f.read(f.size()).data)
+    f.close()
+    console.print(s, "\n")
+
+    for (let i = 0;i < 10000;i += 1) {
+        iteration(s)
+    }
+    return 0
+}
