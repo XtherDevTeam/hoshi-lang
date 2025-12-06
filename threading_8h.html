@@ -183,6 +183,14 @@ Functions</h2></td></tr>
 <tr class="separator:a5c010abc32b1204a203514442e284cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9f6cb4e5d86e8a84b688a3c0b3276a2" id="r_ac9f6cb4e5d86e8a84b688a3c0b3276a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8h.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">runtime_thread_mutex_try_lock</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle)</td></tr>
 <tr class="separator:ac9f6cb4e5d86e8a84b688a3c0b3276a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c25dd923769771a737469ed6460c73f" id="r_a5c25dd923769771a737469ed6460c73f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8h.html#a5c25dd923769771a737469ed6460c73f">runtime_thread_new_condition</a> ()</td></tr>
+<tr class="separator:a5c25dd923769771a737469ed6460c73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34e525c4bc3b459cf83851a6e0f59f3f" id="r_a34e525c4bc3b459cf83851a6e0f59f3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8h.html#a34e525c4bc3b459cf83851a6e0f59f3f">runtime_thread_condition_wait</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle, <a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle)</td></tr>
+<tr class="separator:a34e525c4bc3b459cf83851a6e0f59f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac175047930bdf10df93e70fd0d79ebd8" id="r_ac175047930bdf10df93e70fd0d79ebd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8h.html#ac175047930bdf10df93e70fd0d79ebd8">runtime_thread_condition_signal</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle)</td></tr>
+<tr class="separator:ac175047930bdf10df93e70fd0d79ebd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada1a8647c9fcdee49287ce5d8de9f09a" id="r_ada1a8647c9fcdee49287ce5d8de9f09a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="threading_8h.html#ada1a8647c9fcdee49287ce5d8de9f09a">runtime_thread_finalize_condition</a> (<a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *handle)</td></tr>
+<tr class="separator:ada1a8647c9fcdee49287ce5d8de9f09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a948646bae9c3e20fbe7dcde33f39e945" name="a948646bae9c3e20fbe7dcde33f39e945"></a>
@@ -233,7 +241,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00254">254</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00317">317</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>.</p>
 <div class="dynheader">
@@ -267,7 +275,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00263">263</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00326">326</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -305,9 +313,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00209">209</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00272">272</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="threading_8cpp_source.html#l00190">thread_starter_wrapper()</a>.</p>
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="threading_8cpp_source.html#l00253">thread_starter_wrapper()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -329,6 +337,118 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ac175047930bdf10df93e70fd0d79ebd8" name="ac175047930bdf10df93e70fd0d79ebd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac175047930bdf10df93e70fd0d79ebd8">&#9670;&#160;</a></span>runtime_thread_condition_signal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runtime_thread_condition_signal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
+          <td class="paramname"><em>condition_handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00451">451</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8h_ac175047930bdf10df93e70fd0d79ebd8_cgraph.png" border="0" usemap="#athreading_8h_ac175047930bdf10df93e70fd0d79ebd8_cgraph" alt=""/></div>
+<map name="athreading_8h_ac175047930bdf10df93e70fd0d79ebd8_cgraph" id="athreading_8h_ac175047930bdf10df93e70fd0d79ebd8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,195,45"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="243,13,417,38"/>
+<area shape="poly" title=" " alt="" coords="195,23,229,23,229,28,195,28"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="465,5,640,45"/>
+<area shape="poly" title=" " alt="" coords="418,23,452,23,452,28,418,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a34e525c4bc3b459cf83851a6e0f59f3f" name="a34e525c4bc3b459cf83851a6e0f59f3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34e525c4bc3b459cf83851a6e0f59f3f">&#9670;&#160;</a></span>runtime_thread_condition_wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runtime_thread_condition_wait </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
+          <td class="paramname"><em>condition_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
+          <td class="paramname"><em>mutex_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00458">458</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8h_a34e525c4bc3b459cf83851a6e0f59f3f_cgraph.png" border="0" usemap="#athreading_8h_a34e525c4bc3b459cf83851a6e0f59f3f_cgraph" alt=""/></div>
+<map name="athreading_8h_a34e525c4bc3b459cf83851a6e0f59f3f_cgraph" id="athreading_8h_a34e525c4bc3b459cf83851a6e0f59f3f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,229,38"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="277,13,452,38"/>
+<area shape="poly" title=" " alt="" coords="230,23,264,23,264,28,230,28"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="500,5,675,45"/>
+<area shape="poly" title=" " alt="" coords="452,23,486,23,486,28,452,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ada1a8647c9fcdee49287ce5d8de9f09a" name="ada1a8647c9fcdee49287ce5d8de9f09a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada1a8647c9fcdee49287ce5d8de9f09a">&#9670;&#160;</a></span>runtime_thread_finalize_condition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runtime_thread_finalize_condition </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00442">442</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8h_ada1a8647c9fcdee49287ce5d8de9f09a_cgraph.png" border="0" usemap="#athreading_8h_ada1a8647c9fcdee49287ce5d8de9f09a_cgraph" alt=""/></div>
+<map name="athreading_8h_ada1a8647c9fcdee49287ce5d8de9f09a_cgraph" id="athreading_8h_ada1a8647c9fcdee49287ce5d8de9f09a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,181,45"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="229,13,404,38"/>
+<area shape="poly" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="452,5,627,45"/>
+<area shape="poly" title=" " alt="" coords="404,23,438,23,438,28,404,28"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a6011a952cfc243fdc1375c39db6fe46a" name="a6011a952cfc243fdc1375c39db6fe46a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6011a952cfc243fdc1375c39db6fe46a">&#9670;&#160;</a></span>runtime_thread_finalize_mutex_lock()</h2>
 
@@ -345,7 +465,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00306">306</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00369">369</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -379,7 +499,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00240">240</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00303">303</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -417,7 +537,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00314">314</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00377">377</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -451,7 +571,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00328">328</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00391">391</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -489,7 +609,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00321">321</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00384">384</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8h_source.html#l00032">YoiUnsignedObject::gc_refcount</a>, <a class="el" href="memory_8cpp_source.html#l00088">runtime_finalize_object()</a>, and <a class="el" href="memory_8h_source.html#l00034">YoiUnsignedObject::value</a>.</p>
 <div class="dynheader">
@@ -502,6 +622,39 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="176,23,210,23,210,28,176,28"/>
 <area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="447,5,621,45"/>
 <area shape="poly" title=" " alt="" coords="399,23,433,23,433,28,399,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5c25dd923769771a737469ed6460c73f" name="a5c25dd923769771a737469ed6460c73f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c25dd923769771a737469ed6460c73f">&#9670;&#160;</a></span>runtime_thread_new_condition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> * runtime_thread_new_condition </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00404">404</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="threading_8h_a5c25dd923769771a737469ed6460c73f_cgraph.png" border="0" usemap="#athreading_8h_a5c25dd923769771a737469ed6460c73f_cgraph" alt=""/></div>
+<map name="athreading_8h_a5c25dd923769771a737469ed6460c73f_cgraph" id="athreading_8h_a5c25dd923769771a737469ed6460c73f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,161,45"/>
+<area shape="rect" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="209,13,368,38"/>
+<area shape="poly" title=" " alt="" coords="162,23,195,23,195,28,162,28"/>
+<area shape="rect" href="memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="416,5,575,45"/>
+<area shape="poly" title=" " alt="" coords="368,23,402,23,402,28,368,28"/>
 </map>
 </div>
 
@@ -522,7 +675,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00275">275</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00338">338</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00094">runtime_object_alloc()</a>.</p>
 <div class="dynheader">

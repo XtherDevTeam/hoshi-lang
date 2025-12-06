@@ -1,5 +1,7 @@
 var NAVTREEINDEX16 =
 {
+"parser_8hpp.html#a5b689f11d617119d251e7c8b64175173":[32,0,1,0,5,66],
+"parser_8hpp.html#a5c2137213e41bb584bf434f353ab0558":[32,0,1,0,5,40],
 "parser_8hpp.html#a5e3a920f1f96846727f470a63776a48d":[32,0,1,0,5,33],
 "parser_8hpp.html#a6309141a31571d0abb7b8fa7f58a9ec5":[32,0,1,0,5,22],
 "parser_8hpp.html#a652b4dc0a66f564af90508bcff146950":[32,0,1,0,5,62],
@@ -237,17 +239,15 @@ var NAVTREEINDEX16 =
 "structYoiVoidIntCallableInterface.html#aad5755fc090d15f53804edafe94a7b32":[31,0,19,4],
 "structmagic__enum_1_1customize_1_1enum__range.html":[31,0,0,0,1],
 "structmagic__enum_1_1customize_1_1enum__range.html":[30,0,0,1,2],
-"structmagic__enum_1_1customize_1_1enum__range.html#a89896aa02a72e30deb5ce066831b59c3":[31,0,0,0,1,1],
 "structmagic__enum_1_1customize_1_1enum__range.html#a89896aa02a72e30deb5ce066831b59c3":[30,0,0,1,2,1],
-"structmagic__enum_1_1customize_1_1enum__range.html#abefd74bd671f8d41a184a201234708d7":[31,0,0,0,1,0],
+"structmagic__enum_1_1customize_1_1enum__range.html#a89896aa02a72e30deb5ce066831b59c3":[31,0,0,0,1,1],
 "structmagic__enum_1_1customize_1_1enum__range.html#abefd74bd671f8d41a184a201234708d7":[30,0,0,1,2,0],
+"structmagic__enum_1_1customize_1_1enum__range.html#abefd74bd671f8d41a184a201234708d7":[31,0,0,0,1,0],
 "structmagic__enum_1_1detail_1_1enable__if__enum.html":[31,0,0,1,1],
 "structmagic__enum_1_1detail_1_1enable__if__enum.html":[30,0,0,2,1],
-"structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html":[30,0,0,2,2],
 "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html":[31,0,0,1,2],
+"structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html":[30,0,0,2,2],
 "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a":[31,0,0,1,2,0],
 "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a":[30,0,0,2,2,0],
-"structmagic__enum_1_1detail_1_1has__is__flags.html":[30,0,0,2,3],
-"structmagic__enum_1_1detail_1_1has__is__flags.html":[31,0,0,1,3],
-"structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[30,0,0,2,4]
+"structmagic__enum_1_1detail_1_1has__is__flags.html":[31,0,0,1,3]
 };

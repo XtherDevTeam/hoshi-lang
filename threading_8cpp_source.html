@@ -285,181 +285,322 @@ $(document).ready(function(){initNavTree('threading_8cpp_source.html',''); initR
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordflow">return</span> yoi_result;</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>}</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#else </span><span class="comment">// POSIX (-nix) Implementation</span></div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="foldopen" id="foldopen00190" data-start="{" data-end="}">
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">  190</a></span><span class="keywordtype">void</span>* <a class="code hl_function" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a>(<span class="keywordtype">void</span>* args) {</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keyword">auto</span>* starter_args = (<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>*)args;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <a class="code hl_struct" href="structYoiVoidCallableInterface.html">YoiVoidCallableInterface</a>* callable = starter_args-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c">callable</a>;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c">callable</a>(callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#aad5755fc090d15f53804edafe94a7b32">this_ptr</a>);</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="comment">// now that the thread&#39;s work is done, we can release the callable.</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keywordflow">if</span> (--callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0) {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">if</span> (callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1">gc_dec_func</a>) {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1">gc_dec_func</a>(callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#aad5755fc090d15f53804edafe94a7b32">this_ptr</a>);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)callable);</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    }</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    free(starter_args);</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>}</div>
-</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a5c25dd923769771a737469ed6460c73f">runtime_thread_new_condition</a>() {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keyword">auto</span>* cv = (CONDITION_VARIABLE*) malloc(<span class="keyword">sizeof</span>(CONDITION_VARIABLE));</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keywordflow">if</span> (!cv) {</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        yoi_result_obj-&gt;<a class="code hl_variable" href="structYoiResultUnsignedAndIntObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> = 1;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        yoi_result_obj-&gt;type_id = 16;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        yoi_result_obj-&gt;ok = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        yoi_result_obj-&gt;err = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        yoi_result_obj-&gt;err-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        yoi_result_obj-&gt;err-&gt;type_id = 0;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        yoi_result_obj-&gt;err-&gt;value = ENOMEM;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    InitializeConditionVariable(cv);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keyword">auto</span> yoi_cv_handle = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    yoi_cv_handle-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    yoi_cv_handle-&gt;type_id = 0;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    yoi_cv_handle-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)cv;</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="foldopen" id="foldopen00209" data-start="{" data-end="}">
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">  209</a></span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">runtime_start_thread</a>(<a class="code hl_struct" href="structYoiVoidCallableInterface.html">YoiVoidCallableInterface</a> *callable) {</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keyword">auto</span>* starter_args = (<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>*) malloc(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>));</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    starter_args-&gt;callable = callable;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a> thread_id;</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordtype">int</span> result = pthread_create(&amp;thread_id, <span class="keyword">nullptr</span>, &amp;<a class="code hl_function" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a>, starter_args);</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    yoi_result-&gt;type_id = 16;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">if</span> (result != 0) {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        yoi_result-&gt;ok = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        yoi_result-&gt;err = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        yoi_result-&gt;err-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        yoi_result-&gt;err-&gt;type_id = 0;</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        yoi_result-&gt;err-&gt;value = result;</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        free(starter_args);</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        yoi_result-&gt;err = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        yoi_result-&gt;ok = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        yoi_result-&gt;ok-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        yoi_result-&gt;ok-&gt;type_id = 0;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        yoi_result-&gt;ok-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)thread_id;</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    }</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="comment">// IMPORTANT: the refcount for &#39;callable&#39; is NOT decremented here.</span></div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="comment">// its ownership is passed to the new thread via the wrapper.</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordflow">return</span> yoi_result;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>}</div>
-</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
-<div class="foldopen" id="foldopen00240" data-start="{" data-end="}">
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">  240</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">runtime_thread_join</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj) {</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keyword">auto</span> pthread_id = (<a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a>)thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordtype">int</span> result = pthread_join(pthread_id, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    yoi_result-&gt;type_id = 0;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    yoi_result-&gt;value = result;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    yoi_result_obj-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    yoi_result_obj-&gt;type_id = 16;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    yoi_result_obj-&gt;err = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    yoi_result_obj-&gt;ok = yoi_cv_handle;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>}</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a">runtime_thread_finalize_condition</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *handle) {</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">auto</span> *cv = (CONDITION_VARIABLE *)handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="comment">// Windows Condition Variables do not require explicit destruction </span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="comment">// functions like DeleteCriticalSection, provided no threads are waiting on them.</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    free(cv);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordflow">if</span> (--handle-&gt;gc_refcount == 0)</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)handle);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>}</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8">runtime_thread_condition_signal</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    WakeConditionVariable((CONDITION_VARIABLE *)condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordflow">if</span> (--condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)condition_handle);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>}</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f">runtime_thread_condition_wait</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle, <a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keyword">auto</span> *cv = (CONDITION_VARIABLE *)condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keyword">auto</span> *cs = (CRITICAL_SECTION *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="comment">// Atomically releases CS, waits on CV, then re-acquires CS.</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    SleepConditionVariableCS(cv, cs, INFINITE);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordflow">if</span> (--condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)condition_handle);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>}</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">if</span> (--thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)thread_id_obj);</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordflow">return</span> yoi_result;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="preprocessor">#else </span><span class="comment">// POSIX (-nix) Implementation</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
+<div class="foldopen" id="foldopen00253" data-start="{" data-end="}">
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">  253</a></span><span class="keywordtype">void</span>* <a class="code hl_function" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a>(<span class="keywordtype">void</span>* args) {</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="keyword">auto</span>* starter_args = (<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>*)args;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_struct" href="structYoiVoidCallableInterface.html">YoiVoidCallableInterface</a>* callable = starter_args-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c">callable</a>;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c">callable</a>(callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#aad5755fc090d15f53804edafe94a7b32">this_ptr</a>);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="comment">// now that the thread&#39;s work is done, we can release the callable.</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordflow">if</span> (--callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">if</span> (callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1">gc_dec_func</a>) {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1">gc_dec_func</a>(callable-&gt;<a class="code hl_variable" href="structYoiVoidCallableInterface.html#aad5755fc090d15f53804edafe94a7b32">this_ptr</a>);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        }</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)callable);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    }</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    </div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    free(starter_args);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>}</div>
 </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
-<div class="foldopen" id="foldopen00254" data-start="{" data-end="}">
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">  254</a></span><a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *<a class="code hl_function" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">runtime_get_thread_id</a>() {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_typedef" href="threading_8h.html#a0db2b7eb0adaec040feb25f24687304a">YoiThreadId</a> pthread_id = pthread_self();</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">auto</span> yoi_thread_id = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    yoi_thread_id-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    yoi_thread_id-&gt;type_id = 0;</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    yoi_thread_id-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)pthread_id;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordflow">return</span> yoi_thread_id;</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>}</div>
-</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="foldopen" id="foldopen00263" data-start="{" data-end="}">
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">  263</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">runtime_ping_thread</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj) {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordtype">int</span> result = pthread_kill((<a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a>)thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>, 0);</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    yoi_result-&gt;type_id = 0;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    yoi_result-&gt;value = result;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">if</span> (--thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *) thread_id_obj);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <span class="keywordflow">return</span> yoi_result;</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>}</div>
-</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
-<div class="foldopen" id="foldopen00275" data-start="{" data-end="}">
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">  275</a></span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">runtime_thread_new_mutex_lock</a>() {</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keyword">auto</span> mutex = (pthread_mutex_t*) malloc(<span class="keyword">sizeof</span>(pthread_mutex_t));</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keyword">auto</span> result = pthread_mutex_init(mutex, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="foldopen" id="foldopen00272" data-start="{" data-end="}">
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">  272</a></span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">runtime_start_thread</a>(<a class="code hl_struct" href="structYoiVoidCallableInterface.html">YoiVoidCallableInterface</a> *callable) {</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    <span class="keyword">auto</span>* starter_args = (<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>*) malloc(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structThreadStarterArgs.html">ThreadStarterArgs</a>));</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    starter_args-&gt;callable = callable;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a> thread_id;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keywordtype">int</span> result = pthread_create(&amp;thread_id, <span class="keyword">nullptr</span>, &amp;<a class="code hl_function" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a>, starter_args);</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keywordflow">if</span> (result == 0) {</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        yoi_result-&gt;type_id = 0;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        yoi_result-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)mutex;</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        yoi_result_obj-&gt;err = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        yoi_result_obj-&gt;ok = yoi_result;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    yoi_result-&gt;type_id = 16;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keywordflow">if</span> (result != 0) {</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        yoi_result-&gt;ok = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        yoi_result-&gt;err = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        yoi_result-&gt;err-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        yoi_result-&gt;err-&gt;type_id = 0;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        yoi_result-&gt;err-&gt;value = result;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        free(starter_args);</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        yoi_result-&gt;type_id = 0;</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        yoi_result-&gt;value = 0;</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        yoi_result_obj-&gt;err = yoi_result;</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        yoi_result_obj-&gt;ok = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    }</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    </div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>}</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        yoi_result-&gt;err = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        yoi_result-&gt;ok = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        yoi_result-&gt;ok-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        yoi_result-&gt;ok-&gt;type_id = 0;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        yoi_result-&gt;ok-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)thread_id;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="comment">// IMPORTANT: the refcount for &#39;callable&#39; is NOT decremented here.</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="comment">// its ownership is passed to the new thread via the wrapper.</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    <span class="keywordflow">return</span> yoi_result;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>}</div>
 </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="foldopen" id="foldopen00306" data-start="{" data-end="}">
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">  306</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">runtime_thread_finalize_mutex_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *handle) {</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keyword">auto</span> *mutex = (pthread_mutex_t *)handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    pthread_mutex_destroy(mutex);</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    <span class="keywordflow">if</span> (--handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)handle);</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>}</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="foldopen" id="foldopen00303" data-start="{" data-end="}">
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">  303</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">runtime_thread_join</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj) {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keyword">auto</span> pthread_id = (<a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a>)thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keywordtype">int</span> result = pthread_join(pthread_id, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    yoi_result-&gt;type_id = 0;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    yoi_result-&gt;value = result;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <span class="keywordflow">if</span> (--thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)thread_id_obj);</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordflow">return</span> yoi_result;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>}</div>
 </div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
-<div class="foldopen" id="foldopen00314" data-start="{" data-end="}">
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">  314</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">runtime_thread_mutex_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    pthread_mutex_lock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>}</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="foldopen" id="foldopen00317" data-start="{" data-end="}">
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">  317</a></span><a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *<a class="code hl_function" href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">runtime_get_thread_id</a>() {</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <a class="code hl_typedef" href="threading_8h.html#a0db2b7eb0adaec040feb25f24687304a">YoiThreadId</a> pthread_id = pthread_self();</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="keyword">auto</span> yoi_thread_id = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    yoi_thread_id-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    yoi_thread_id-&gt;type_id = 0;</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    yoi_thread_id-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)pthread_id;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    <span class="keywordflow">return</span> yoi_thread_id;</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>}</div>
 </div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
-<div class="foldopen" id="foldopen00321" data-start="{" data-end="}">
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">  321</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">runtime_thread_mutex_unlock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    pthread_mutex_unlock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>}</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
+<div class="foldopen" id="foldopen00326" data-start="{" data-end="}">
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">  326</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">runtime_ping_thread</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *thread_id_obj) {</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordtype">int</span> result = pthread_kill((<a class="code hl_typedef" href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a>)thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>, 0);</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    yoi_result-&gt;type_id = 0;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    yoi_result-&gt;value = result;</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    </div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    <span class="keywordflow">if</span> (--thread_id_obj-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *) thread_id_obj);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    <span class="keywordflow">return</span> yoi_result;</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>}</div>
 </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
-<div class="foldopen" id="foldopen00328" data-start="{" data-end="}">
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">  328</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">runtime_thread_mutex_try_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keyword">auto</span> res = pthread_mutex_trylock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    yoi_result-&gt;gc_refcount = 1;</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    yoi_result-&gt;type_id = 0;</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    yoi_result-&gt;value = res;</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    </div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    <span class="keywordflow">return</span> yoi_result;</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>}</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
+<div class="foldopen" id="foldopen00338" data-start="{" data-end="}">
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">  338</a></span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">runtime_thread_new_mutex_lock</a>() {</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keyword">auto</span> mutex = (pthread_mutex_t*) malloc(<span class="keyword">sizeof</span>(pthread_mutex_t));</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <span class="keyword">auto</span> result = pthread_mutex_init(mutex, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> </div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">if</span> (result == 0) {</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        yoi_result-&gt;type_id = 0;</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        yoi_result-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)mutex;</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        yoi_result_obj-&gt;err = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        yoi_result_obj-&gt;ok = yoi_result;</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        yoi_result-&gt;type_id = 0;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        yoi_result-&gt;value = 0;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        yoi_result_obj-&gt;err = yoi_result;</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        yoi_result_obj-&gt;ok = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    }</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    </div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>}</div>
 </div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="preprocessor">#endif </span><span class="comment">// _WIN32</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
+<div class="foldopen" id="foldopen00369" data-start="{" data-end="}">
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">  369</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">runtime_thread_finalize_mutex_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *handle) {</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    <span class="keyword">auto</span> *mutex = (pthread_mutex_t *)handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    pthread_mutex_destroy(mutex);</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    <span class="keywordflow">if</span> (--handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)handle);</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>}</div>
+</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> </div>
+<div class="foldopen" id="foldopen00377" data-start="{" data-end="}">
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">  377</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">runtime_thread_mutex_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    pthread_mutex_lock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>}</div>
+</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="foldopen" id="foldopen00384" data-start="{" data-end="}">
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">  384</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">runtime_thread_mutex_unlock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>    pthread_mutex_unlock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>}</div>
+</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
+<div class="foldopen" id="foldopen00391" data-start="{" data-end="}">
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno"><a class="line" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">  391</a></span><a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *<a class="code hl_function" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">runtime_thread_mutex_try_lock</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="keyword">auto</span> res = pthread_mutex_trylock((pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="keyword">auto</span> yoi_result = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    yoi_result-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    yoi_result-&gt;type_id = 0;</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    yoi_result-&gt;value = res;</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> </div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    </div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keywordflow">return</span> yoi_result;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>}</div>
+</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
+<div class="foldopen" id="foldopen00404" data-start="{" data-end="}">
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a5c25dd923769771a737469ed6460c73f">  404</a></span><a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *<a class="code hl_function" href="threading_8cpp.html#a5c25dd923769771a737469ed6460c73f">runtime_thread_new_condition</a>() {</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keyword">auto</span>* cv = (pthread_cond_t*) malloc(<span class="keyword">sizeof</span>(pthread_cond_t));</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    <span class="keywordtype">int</span> result = -1;</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>    <span class="keywordflow">if</span> (cv) {</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        result = pthread_cond_init(cv, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        result = ENOMEM;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    }</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keywordflow">if</span> (result == 0) {</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keyword">auto</span> yoi_cv_handle = (<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a>));</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        yoi_cv_handle-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        yoi_cv_handle-&gt;type_id = 0;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        yoi_cv_handle-&gt;value = (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> long)cv;</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>        yoi_result_obj-&gt;type_id = 16;</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        yoi_result_obj-&gt;err = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        yoi_result_obj-&gt;ok = yoi_cv_handle;</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        <span class="keywordflow">if</span> (cv) free(cv); <span class="comment">// Clean up if init failed but malloc succeeded</span></div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        </div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        <span class="keyword">auto</span> yoi_result_obj = (<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiResultUnsignedAndIntObject.html">YoiResultUnsignedAndIntObject</a>));</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        yoi_result_obj-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>        yoi_result_obj-&gt;type_id = 16;</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        yoi_result_obj-&gt;ok = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        </div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>        yoi_result_obj-&gt;err = (<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a> *)<a class="code hl_function" href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a>(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structYoiIntegerObject.html">YoiIntegerObject</a>));</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>        yoi_result_obj-&gt;err-&gt;gc_refcount = 1;</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>        yoi_result_obj-&gt;err-&gt;type_id = 0;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        yoi_result_obj-&gt;err-&gt;value = result;</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        <span class="keywordflow">return</span> yoi_result_obj;</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>    }</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>}</div>
+</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
+<div class="foldopen" id="foldopen00442" data-start="{" data-end="}">
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno"><a class="line" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a">  442</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a">runtime_thread_finalize_condition</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *handle) {</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>    <span class="keyword">auto</span> *cv = (pthread_cond_t *)handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>    pthread_cond_destroy(cv);</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>    free(cv);</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span> </div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>    <span class="keywordflow">if</span> (--handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)handle);</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>}</div>
+</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span> </div>
+<div class="foldopen" id="foldopen00451" data-start="{" data-end="}">
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno"><a class="line" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8">  451</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8">runtime_thread_condition_signal</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle) {</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    pthread_cond_signal((pthread_cond_t *)condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>);</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span> </div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>    <span class="keywordflow">if</span> (--condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)condition_handle);</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>}</div>
+</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span> </div>
+<div class="foldopen" id="foldopen00458" data-start="{" data-end="}">
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno"><a class="line" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f">  458</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f">runtime_thread_condition_wait</a>(<a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *condition_handle, <a class="code hl_struct" href="structYoiUnsignedObject.html">YoiUnsignedObject</a> *mutex_handle) {</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="keyword">auto</span> *cv = (pthread_cond_t *)condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <span class="keyword">auto</span> *mutex = (pthread_mutex_t *)mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a74339eb69221a9aad78b79a8726d1bdc">value</a>;</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span> </div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    pthread_cond_wait(cv, mutex);</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    <span class="keywordflow">if</span> (--condition_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)condition_handle);</div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span> </div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>    <span class="keywordflow">if</span> (--mutex_handle-&gt;<a class="code hl_variable" href="structYoiUnsignedObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a> == 0)</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>        <a class="code hl_function" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a>((<a class="code hl_struct" href="structYoiObject.html">YoiObject</a> *)mutex_handle);</div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>}</div>
+</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span> </div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span> </div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span><span class="preprocessor">#endif </span><span class="comment">// _WIN32</span></div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span> </div>
 <div class="ttc" id="amemory_8cpp_html_a77e252460b25bfcbcb0745e81860a2ec"><div class="ttname"><a href="memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec">runtime_object_alloc</a></div><div class="ttdeci">void * runtime_object_alloc(unsigned long size)</div><div class="ttdef"><b>Definition</b> <a href="memory_8cpp_source.html#l00094">memory.cpp:94</a></div></div>
 <div class="ttc" id="amemory_8cpp_html_aadd6dcb4d367e405a3c4d02e248c4220"><div class="ttname"><a href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220">runtime_finalize_object</a></div><div class="ttdeci">void runtime_finalize_object(YoiObject *object)</div><div class="ttdef"><b>Definition</b> <a href="memory_8cpp_source.html#l00088">memory.cpp:88</a></div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div></div>
@@ -477,16 +618,20 @@ $(document).ready(function(){initNavTree('threading_8cpp_source.html',''); initR
 <div class="ttc" id="astructYoiVoidCallableInterface_html_a7c9bc7500ffb10c1ee04b39f3059a8d1"><div class="ttname"><a href="structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1">YoiVoidCallableInterface::gc_dec_func</a></div><div class="ttdeci">void *(* gc_dec_func)(void *this_ptr)</div><div class="ttdef"><b>Definition</b> <a href="threading_8h_source.html#l00027">threading.h:27</a></div></div>
 <div class="ttc" id="astructYoiVoidCallableInterface_html_a87cbde5c607ba2663ff8b4c876bdad2c"><div class="ttname"><a href="structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c">YoiVoidCallableInterface::callable</a></div><div class="ttdeci">void *(* callable)(void *this_ptr)</div><div class="ttdef"><b>Definition</b> <a href="threading_8h_source.html#l00028">threading.h:28</a></div></div>
 <div class="ttc" id="astructYoiVoidCallableInterface_html_aad5755fc090d15f53804edafe94a7b32"><div class="ttname"><a href="structYoiVoidCallableInterface.html#aad5755fc090d15f53804edafe94a7b32">YoiVoidCallableInterface::this_ptr</a></div><div class="ttdeci">void * this_ptr</div><div class="ttdef"><b>Definition</b> <a href="threading_8h_source.html#l00025">threading.h:25</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a05e877ccdd9015f0515a5925085584b5"><div class="ttname"><a href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">runtime_thread_join</a></div><div class="ttdeci">YoiIntegerObject * runtime_thread_join(YoiUnsignedObject *thread_id_obj)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00240">threading.cpp:240</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a2d76322afbf604e7fd11b475654d217b"><div class="ttname"><a href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">runtime_thread_mutex_lock</a></div><div class="ttdeci">void runtime_thread_mutex_lock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00314">threading.cpp:314</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a444dba8591942ff8168348fad7a218fc"><div class="ttname"><a href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">runtime_get_thread_id</a></div><div class="ttdeci">YoiUnsignedObject * runtime_get_thread_id()</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00254">threading.cpp:254</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a4d2015cc45ad286767cf3c05ed4e8ad5"><div class="ttname"><a href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">runtime_ping_thread</a></div><div class="ttdeci">YoiIntegerObject * runtime_ping_thread(YoiUnsignedObject *thread_id_obj)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00263">threading.cpp:263</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a4e3aa11ce37849e7544c074a43bf6854"><div class="ttname"><a href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a></div><div class="ttdeci">void * thread_starter_wrapper(void *args)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00190">threading.cpp:190</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a524018bbcc3335e63d3f0b7057a23c98"><div class="ttname"><a href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">runtime_start_thread</a></div><div class="ttdeci">YoiResultUnsignedAndIntObject * runtime_start_thread(YoiVoidCallableInterface *callable)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00209">threading.cpp:209</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a5c010abc32b1204a203514442e284cac"><div class="ttname"><a href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">runtime_thread_mutex_unlock</a></div><div class="ttdeci">void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00321">threading.cpp:321</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a6011a952cfc243fdc1375c39db6fe46a"><div class="ttname"><a href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">runtime_thread_finalize_mutex_lock</a></div><div class="ttdeci">void runtime_thread_finalize_mutex_lock(YoiUnsignedObject *handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00306">threading.cpp:306</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_a83c10c76466b6915abd9ae61a898cc03"><div class="ttname"><a href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">runtime_thread_new_mutex_lock</a></div><div class="ttdeci">YoiResultUnsignedAndIntObject * runtime_thread_new_mutex_lock()</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00275">threading.cpp:275</a></div></div>
-<div class="ttc" id="athreading_8cpp_html_ac9f6cb4e5d86e8a84b688a3c0b3276a2"><div class="ttname"><a href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">runtime_thread_mutex_try_lock</a></div><div class="ttdeci">YoiIntegerObject * runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00328">threading.cpp:328</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a05e877ccdd9015f0515a5925085584b5"><div class="ttname"><a href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5">runtime_thread_join</a></div><div class="ttdeci">YoiIntegerObject * runtime_thread_join(YoiUnsignedObject *thread_id_obj)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00303">threading.cpp:303</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a2d76322afbf604e7fd11b475654d217b"><div class="ttname"><a href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b">runtime_thread_mutex_lock</a></div><div class="ttdeci">void runtime_thread_mutex_lock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00377">threading.cpp:377</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a34e525c4bc3b459cf83851a6e0f59f3f"><div class="ttname"><a href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f">runtime_thread_condition_wait</a></div><div class="ttdeci">void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00458">threading.cpp:458</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a444dba8591942ff8168348fad7a218fc"><div class="ttname"><a href="threading_8cpp.html#a444dba8591942ff8168348fad7a218fc">runtime_get_thread_id</a></div><div class="ttdeci">YoiUnsignedObject * runtime_get_thread_id()</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00317">threading.cpp:317</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a4d2015cc45ad286767cf3c05ed4e8ad5"><div class="ttname"><a href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5">runtime_ping_thread</a></div><div class="ttdeci">YoiIntegerObject * runtime_ping_thread(YoiUnsignedObject *thread_id_obj)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00326">threading.cpp:326</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a4e3aa11ce37849e7544c074a43bf6854"><div class="ttname"><a href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854">thread_starter_wrapper</a></div><div class="ttdeci">void * thread_starter_wrapper(void *args)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00253">threading.cpp:253</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a524018bbcc3335e63d3f0b7057a23c98"><div class="ttname"><a href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98">runtime_start_thread</a></div><div class="ttdeci">YoiResultUnsignedAndIntObject * runtime_start_thread(YoiVoidCallableInterface *callable)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00272">threading.cpp:272</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a5c010abc32b1204a203514442e284cac"><div class="ttname"><a href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac">runtime_thread_mutex_unlock</a></div><div class="ttdeci">void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00384">threading.cpp:384</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a5c25dd923769771a737469ed6460c73f"><div class="ttname"><a href="threading_8cpp.html#a5c25dd923769771a737469ed6460c73f">runtime_thread_new_condition</a></div><div class="ttdeci">YoiResultUnsignedAndIntObject * runtime_thread_new_condition()</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00404">threading.cpp:404</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a6011a952cfc243fdc1375c39db6fe46a"><div class="ttname"><a href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a">runtime_thread_finalize_mutex_lock</a></div><div class="ttdeci">void runtime_thread_finalize_mutex_lock(YoiUnsignedObject *handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00369">threading.cpp:369</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_a83c10c76466b6915abd9ae61a898cc03"><div class="ttname"><a href="threading_8cpp.html#a83c10c76466b6915abd9ae61a898cc03">runtime_thread_new_mutex_lock</a></div><div class="ttdeci">YoiResultUnsignedAndIntObject * runtime_thread_new_mutex_lock()</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00338">threading.cpp:338</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_ac175047930bdf10df93e70fd0d79ebd8"><div class="ttname"><a href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8">runtime_thread_condition_signal</a></div><div class="ttdeci">void runtime_thread_condition_signal(YoiUnsignedObject *condition_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00451">threading.cpp:451</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_ac9f6cb4e5d86e8a84b688a3c0b3276a2"><div class="ttname"><a href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2">runtime_thread_mutex_try_lock</a></div><div class="ttdeci">YoiIntegerObject * runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00391">threading.cpp:391</a></div></div>
+<div class="ttc" id="athreading_8cpp_html_ada1a8647c9fcdee49287ce5d8de9f09a"><div class="ttname"><a href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a">runtime_thread_finalize_condition</a></div><div class="ttdeci">void runtime_thread_finalize_condition(YoiUnsignedObject *handle)</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00442">threading.cpp:442</a></div></div>
 <div class="ttc" id="athreading_8h_html"><div class="ttname"><a href="threading_8h.html">threading.h</a></div></div>
 <div class="ttc" id="athreading_8h_html_a0db2b7eb0adaec040feb25f24687304a"><div class="ttname"><a href="threading_8h.html#a0db2b7eb0adaec040feb25f24687304a">YoiThreadId</a></div><div class="ttdeci">pthread_t YoiThreadId</div><div class="ttdef"><b>Definition</b> <a href="threading_8h_source.html#l00019">threading.h:19</a></div></div>
 <div class="ttc" id="athreading_8h_html_a948646bae9c3e20fbe7dcde33f39e945"><div class="ttname"><a href="threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945">YoiThreadHandle</a></div><div class="ttdeci">pthread_t YoiThreadHandle</div><div class="ttdef"><b>Definition</b> <a href="threading_8h_source.html#l00018">threading.h:18</a></div></div>

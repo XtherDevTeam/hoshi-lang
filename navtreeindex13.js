@@ -1,5 +1,7 @@
 var NAVTREEINDEX13 =
 {
+"functions_w.html":[31,3,0,21],
+"functions_x.html":[31,3,0,22],
 "functions_y.html":[31,3,0,23],
 "functions_~.html":[31,3,0,24],
 "globals.html":[32,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "md_docs_2Result.html#autotoc_md99":[16,0,1],
 "md_docs_2Runtime.html":[17],
 "md_docs_2Runtime.html#autotoc_md102":[17,0],
-"md_docs_2Spec.html":[18],
-"md_docs_2Spec.html#autotoc_md104":[18,0],
-"md_docs_2Spec.html#autotoc_md105":[18,0,0]
+"md_docs_2Spec.html":[18]
 };
