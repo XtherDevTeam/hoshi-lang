@@ -161,15 +161,14 @@ $(document).ready(function(){initNavTree('objectLinker_8cpp_source.html',''); in
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec&lt;yoi::wstr&gt;</a> files;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;path : std::filesystem::recursive_directory_iterator(dir)) {</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">if</span> (path.path().extension() == L<span class="stringliteral">&quot;.lib&quot;</span> || path.path().extension() == L<span class="stringliteral">&quot;.a&quot;</span> ||</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                path.path().extension() == L<span class="stringliteral">&quot;.so&quot;</span> || path.path().extension() == L<span class="stringliteral">&quot;.dll&quot;</span> ||</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                path.path().extension() == L<span class="stringliteral">&quot;.dylib&quot;</span>) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                files.push_back(path.path().wstring());</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">return</span> files;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                path.path().extension() == L<span class="stringliteral">&quot;.so&quot;</span> || path.path().extension() == L<span class="stringliteral">&quot;.dylib&quot;</span>) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                files.push_back(path.path().wstring());</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">return</span> files;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">// namespace yoi</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <span class="comment">// namespace yoi</span></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html">yoi::ObjectLinker</a></div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00014">objectLinker.h:14</a></div></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html_a16bb6f4ba9ecdd57b4d99326be74e0dd"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html#a16bb6f4ba9ecdd57b4d99326be74e0dd">yoi::ObjectLinker::elysiaRuntimePath</a></div><div class="ttdeci">yoi::wstr elysiaRuntimePath</div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00017">objectLinker.h:17</a></div></div>
 <div class="ttc" id="aclassyoi_1_1ObjectLinker_html_a1972635a412271af8b988d53c8bd0783"><div class="ttname"><a href="classyoi_1_1ObjectLinker.html#a1972635a412271af8b988d53c8bd0783">yoi::ObjectLinker::config</a></div><div class="ttdeci">std::shared_ptr&lt; IRBuildConfig &gt; config</div><div class="ttdef"><b>Definition</b> <a href="objectLinker_8h_source.html#l00018">objectLinker.h:18</a></div></div>
