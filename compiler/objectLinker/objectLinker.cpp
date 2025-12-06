@@ -42,8 +42,7 @@ namespace yoi {
         yoi::vec<yoi::wstr> files;
         for (auto &path : std::filesystem::recursive_directory_iterator(dir)) {
             if (path.path().extension() == L".lib" || path.path().extension() == L".a" ||
-                path.path().extension() == L".so" || path.path().extension() == L".dll" ||
-                path.path().extension() == L".dylib") {
+                path.path().extension() == L".so" || path.path().extension() == L".dylib") {
                 files.push_back(path.path().wstring());
             }
         }
