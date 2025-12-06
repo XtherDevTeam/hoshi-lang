@@ -66,3 +66,35 @@ impl Mutex {
         }
     }
 }
+
+struct Condition {
+    condition_handle: unsigned,
+    mutex_handle: unsigned,
+    constructor(mutex: Mutex),
+    constructor(),
+    wait() : none,
+    signal() : none,
+    finalizer()
+}
+
+impl Condition {
+    constructor(mutex: Mutex) {
+        this.condition_handle = runtime.runtime_thread_new_condition().unwrap()
+        this.mutex_handle = mutex.mutex_handle
+    },
+    constructor() {
+        this.mutex_handle = runtime.runtime_thread_new_mutex_lock().unwrap()
+        this.condition_handle = runtime.runtime_thread_new_condition().unwrap()
+    },
+    wait() : none {
+        runtime.runtime_thread_condition_wait(this.condition_handle, this.mutex_handle)
+    },
+    signal() : none {
+        runtime.runtime_thread_condition_signal(this.condition_handle)
+    },
+    finalizer() {
+        if (this.condition_handle != 0) {
+            runtime.runtime_thread_finalize_condition(this.condition_handle)
+        }
+    }
+}

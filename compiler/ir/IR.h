@@ -473,7 +473,8 @@ namespace yoi {
             Unreachable,
             Preserve,
             NoRawAndNullOptimization,
-            Intrinsic
+            Intrinsic,
+            Throws,
         };
 
         yoi::wstr name;

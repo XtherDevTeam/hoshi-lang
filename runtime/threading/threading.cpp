@@ -183,6 +183,69 @@ YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle)
     return yoi_result;
 }
 
+YoiResultUnsignedAndIntObject *runtime_thread_new_condition() {
+    auto* cv = (CONDITION_VARIABLE*) malloc(sizeof(CONDITION_VARIABLE));
+    
+    if (!cv) {
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->ok = nullptr;
+        
+        yoi_result_obj->err = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+        yoi_result_obj->err->gc_refcount = 1;
+        yoi_result_obj->err->type_id = 0;
+        yoi_result_obj->err->value = ENOMEM;
+        return yoi_result_obj;
+    }
+
+    InitializeConditionVariable(cv);
+
+    auto yoi_cv_handle = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
+    yoi_cv_handle->gc_refcount = 1;
+    yoi_cv_handle->type_id = 0;
+    yoi_cv_handle->value = (unsigned long long)cv;
+
+    auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+    yoi_result_obj->gc_refcount = 1;
+    yoi_result_obj->type_id = 16;
+    yoi_result_obj->err = nullptr;
+    yoi_result_obj->ok = yoi_cv_handle;
+
+    return yoi_result_obj;
+}
+
+void runtime_thread_finalize_condition(YoiUnsignedObject *handle) {
+    auto *cv = (CONDITION_VARIABLE *)handle->value;
+    // Windows Condition Variables do not require explicit destruction 
+    // functions like DeleteCriticalSection, provided no threads are waiting on them.
+    free(cv);
+
+    if (--handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)handle);
+}
+
+void runtime_thread_condition_signal(YoiUnsignedObject *condition_handle) {
+    WakeConditionVariable((CONDITION_VARIABLE *)condition_handle->value);
+
+    if (--condition_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)condition_handle);
+}
+
+void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsignedObject *mutex_handle) {
+    auto *cv = (CONDITION_VARIABLE *)condition_handle->value;
+    auto *cs = (CRITICAL_SECTION *)mutex_handle->value;
+    
+    // Atomically releases CS, waits on CV, then re-acquires CS.
+    SleepConditionVariableCS(cv, cs, INFINITE);
+
+    if (--condition_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)condition_handle);
+        
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
 #else // POSIX (-nix) Implementation
 
 #include <pthread.h>
@@ -337,4 +400,74 @@ YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle)
     
     return yoi_result;
 }
+
+YoiResultUnsignedAndIntObject *runtime_thread_new_condition() {
+    auto* cv = (pthread_cond_t*) malloc(sizeof(pthread_cond_t));
+    int result = -1;
+    
+    if (cv) {
+        result = pthread_cond_init(cv, nullptr);
+    } else {
+        result = ENOMEM;
+    }
+
+    if (result == 0) {
+        auto yoi_cv_handle = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
+        yoi_cv_handle->gc_refcount = 1;
+        yoi_cv_handle->type_id = 0;
+        yoi_cv_handle->value = (unsigned long long)cv;
+
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->err = nullptr;
+        yoi_result_obj->ok = yoi_cv_handle;
+        return yoi_result_obj;
+    } else {
+        if (cv) free(cv); // Clean up if init failed but malloc succeeded
+        
+        auto yoi_result_obj = (YoiResultUnsignedAndIntObject *)runtime_object_alloc(sizeof(YoiResultUnsignedAndIntObject));
+        yoi_result_obj->gc_refcount = 1;
+        yoi_result_obj->type_id = 16;
+        yoi_result_obj->ok = nullptr;
+        
+        yoi_result_obj->err = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
+        yoi_result_obj->err->gc_refcount = 1;
+        yoi_result_obj->err->type_id = 0;
+        yoi_result_obj->err->value = result;
+        return yoi_result_obj;
+    }
+}
+
+void runtime_thread_finalize_condition(YoiUnsignedObject *handle) {
+    auto *cv = (pthread_cond_t *)handle->value;
+    pthread_cond_destroy(cv);
+    free(cv);
+
+    if (--handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)handle);
+}
+
+void runtime_thread_condition_signal(YoiUnsignedObject *condition_handle) {
+    pthread_cond_signal((pthread_cond_t *)condition_handle->value);
+
+    if (--condition_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)condition_handle);
+}
+
+void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsignedObject *mutex_handle) {
+    auto *cv = (pthread_cond_t *)condition_handle->value;
+    auto *mutex = (pthread_mutex_t *)mutex_handle->value;
+
+    pthread_cond_wait(cv, mutex);
+
+    if (--condition_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)condition_handle);
+
+    if (--mutex_handle->gc_refcount == 0)
+        runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+
 #endif // _WIN32
+

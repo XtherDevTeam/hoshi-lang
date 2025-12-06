@@ -7,7 +7,7 @@ func main() : int {
     let monotonic_now = time.Duration.monotonic_now()
     console.print("time-library-validation: current monotonic time", monotonic_now, "\n")
     let wall_now = time.Date.now()
-    console.print("time-library-validation: current wall time", wall_now, "\n")
+    console.print("time-library-validation: current wall time", wall_now, wall_now.format("%a, %d %b %Y %H:%M:%S %Z"), "\n")
     let wall_now_local = wall_now + time.Duration.timezone()
     console.print("time-library-validation: current wall time (local)", wall_now_local, "\n")
     let custom = time.Date.date(2008, 12, 9) + time.Duration.hours(3) - time.Duration.timezone()

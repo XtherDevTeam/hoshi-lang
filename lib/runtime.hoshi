@@ -29,6 +29,10 @@ import noffi runtime_thread_mutex_lock(mutex_id: unsigned) : none from "builtin"
 import noffi runtime_thread_mutex_unlock(mutex_id: unsigned) : none from "builtin"
 import noffi runtime_thread_finalize_mutex_lock(mutex_id: unsigned) : none from "builtin"
 import noffi runtime_thread_mutex_try_lock(mutex_id: unsigned) : int from "builtin"
+import noffi runtime_thread_new_condition() : lang.Result<unsigned, int> from "builtin"
+import noffi runtime_thread_condition_wait(condition_id: unsigned, mutex_id: unsigned) : none from "builtin"
+import noffi runtime_thread_condition_signal(condition_id: unsigned) : none from "builtin"
+import noffi runtime_thread_finalize_condition(condition_id: unsigned) : none from "builtin"
 
 /* stdin/stdout/stderr */
 import runtime_get_stdin_fp() : ptr from "builtin"

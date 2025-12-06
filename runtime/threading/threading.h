@@ -53,4 +53,12 @@ extern "C" void runtime_thread_mutex_unlock(YoiUnsignedObject *mutex_handle);
 
 extern "C" YoiIntegerObject *runtime_thread_mutex_try_lock(YoiUnsignedObject *mutex_handle);
 
+extern "C" YoiResultUnsignedAndIntObject *runtime_thread_new_condition();
+
+extern "C" void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsignedObject *mutex_handle);
+
+extern "C" void runtime_thread_condition_signal(YoiUnsignedObject *condition_handle);
+
+extern "C" void runtime_thread_finalize_condition(YoiUnsignedObject *handle);
+
 #endif //HOSHI_LANG_THREADING_H
