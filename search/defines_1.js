@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['gc_5fwrapper_5fdecl_0',['GC_WRAPPER_DECL',['../memory_8h.html#aeac8fa7a07ebe0db15b2bacbb7da7a0c',1,'memory.h']]],
-  ['gc_5fwrapper_5fimpl_1',['GC_WRAPPER_IMPL',['../memory_8h.html#a856d445dadb6926d5c587c700d858870',1,'memory.h']]]
+  ['elysia_5fruntime_5fbuild_5fpreserve_5fbasic_5finformation_0',['ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION',['../build__config_8h.html#abea5a5f7dec39b7b9c62d9056fb9bd80',1,'build_config.h']]],
+  ['elysia_5fruntime_5fbuild_5ftype_5fdebug_1',['ELYSIA_RUNTIME_BUILD_TYPE_DEBUG',['../build__config_8h.html#a613503b3087f5a7ff5f640794884b53a',1,'build_config.h']]],
+  ['elysia_5fruntime_5fenable_5fbuiltin_5fmemory_5fleak_5fdetector_2',['ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR',['../build__config_8h.html#ab4f58084fd89474da73a0463d65a35c1',1,'build_config.h']]],
+  ['entry_5fmodule_5fid_5fconst_3',['ENTRY_MODULE_ID_CONST',['../IRLinker_8hpp.html#a247fa9326c4f0fb94466c1f5a6abf487',1,'IRLinker.hpp']]]
 ];

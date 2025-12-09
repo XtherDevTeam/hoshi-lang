@@ -246,7 +246,7 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
@@ -272,14 +272,14 @@ var NAVTREEINDEX =
 "classyoi_1_1lexer.html#a9cff40af0d1128b9faf8081323556836",
 "classyoi_1_1subscriptExpr.html#ad0c5ccb31e86611b873d58e144a65eb6",
 "classyoi_1_1visitor.html#a96f7ccb0afaf7c68d8aa82dd1047c0af",
-"functions_w.html",
-"md_docs_2Spec.html#autotoc_md104",
-"namespaceyoi.html#a35e85819e141a7bdf3b213405a0bb4ff",
-"parser_8hpp.html#a5b689f11d617119d251e7c8b64175173",
-"structmagic__enum_1_1detail_1_1has__is__flags.html",
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a406f6ebfa3b492541c00a06f957b0a34",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2cf89fd1b72127b3eaf5008b6b46b5d8",
-"unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#a0751a2978ff59b51bb430d58acb2e4a3"
+"functions_g.html",
+"md_docs_2IR.html#autotoc_md50",
+"namespacemembers_l.html",
+"parser_8cpp.html#abdf61793a2f93319458e9f95a94a7bc9",
+"structYoiResultUnsignedAndIntObject.html#a21197e49dd48d6f8dc580e42630ab047",
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d",
+"structyoi_1_1ifStmt_1_1ifBlock.html#a4f12d9ae58f8b4d08debfc33b8042adf",
+"threading_8cpp.html#a444dba8591942ff8168348fad7a218fc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
