@@ -354,7 +354,7 @@ impl Str {
         let occurences = this.find_all(sep)
         let res = new Str[occurences + 1]()
         let index = 0u
-        let index_after_last_sep = 0u
+        let index_after_last_sep = -1
         let offset = 0u
         for (let i = 0; i < occurences + 1; i += 1) {
             index = this.find(sep, index_after_last_sep + 1)

@@ -1,0 +1,13 @@
+use str "str"
+use console "console"
+
+func main() : int {
+    let s : str.Str = "/a/b/"
+    s.pop()
+    console.print("Occurences", s.find_all("/"), "\n")
+    let r = s.split("/")
+    for (let i = 0; i < r.length; i+=1) {
+        console.print(i, r[i], "\n")
+    }
+    return 0
+}

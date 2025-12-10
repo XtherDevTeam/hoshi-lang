@@ -35,6 +35,9 @@ impl Path {
         this.parts = parts
     },
     constructor(s: str.Str) {
+        if (s.length != 0 && s[s.length - 1] == '/' || s[s.length - 1] == '\\') {
+            s.pop()
+        }
         let sep : str.Str = ""
         if (path_sep_preference == PathSplitPreference.Backslash) {
             sep = "/"
