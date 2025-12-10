@@ -100,7 +100,14 @@ impl Path {
         } else {
             sep = "\\"
         }
-        return str.join(sep, this.parts.data)
+        let built : str.Str = ""
+        for (let index = 0;index < this.parts.length; index += 1) {
+            built += this.parts[index]
+            if (index != this.parts.length - 1) {
+                built += sep
+            }
+        }
+        return built
     }
 }
 

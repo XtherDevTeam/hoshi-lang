@@ -1,0 +1,12 @@
+use fs "fs"
+use str "str"
+use console "console"
+
+func main() : int {
+    console.print("Home directory: ", fs.Path.home_dir().to_string(), "\n")
+    console.print("Current directory: ", fs.Path.current_dir().to_string(), "\n")
+    console.print("Temp directory: ", fs.Path.temp_dir().to_string(), "\n")
+    let p = fs.Path.home_dir() / "test.txt"
+    console.print("Test file path: ", p.to_string(), "\n")
+    return 0
+}

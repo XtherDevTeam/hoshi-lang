@@ -3371,9 +3371,9 @@ namespace yoi {
         } else if (rhs->type == IRValueType::valueType::pointerObject || rhs->type == IRValueType::valueType::pointer || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer) {
             // no cast needed for pointer type
             return;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             emitBasicCastTo(toType);
-        } else if (toType->type == IRValueType::valueType::interfaceObject) {
+        } else if (toType->type == IRValueType::valueType::interfaceObject && !toType->isArrayType() && !toType->isDynamicArrayType()) {
             // check implemented interfaces
             try {
                 auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, rhs);
@@ -3384,7 +3384,7 @@ namespace yoi {
             } catch (std::out_of_range &e) {
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line, moduleContext->getIRBuilder().getCurrentDebugInfo().column, "Cannot cast type " + yoi::wstring2string((rhs->to_string())) + " to interface " + yoi::wstring2string((toType->to_string())) + ": no implementation found.");
             }
-        } else if (toType->type == IRValueType::valueType::structObject) {
+        } else if (toType->type == IRValueType::valueType::structObject && !toType->isArrayType() && !toType->isDynamicArrayType()) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
             auto result = resolveOverloadExtern(L"constructor", {rhs}, toType->typeAffiliateModule, structType);
@@ -3409,12 +3409,12 @@ namespace yoi {
         }
         if (*rhs == *toType) {
             return true;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             return true;
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
             // no cast needed for pointer type
             return true;
-        } else if (toType->type == IRValueType::valueType::interfaceObject) {
+        } else if (toType->type == IRValueType::valueType::interfaceObject && !toType->isArrayType() && !toType->isDynamicArrayType()) {
             // check implemented interfaces
             try {
                 auto implName = getInterfaceImplName({toType->typeAffiliateModule, toType->typeIndex}, rhs);
@@ -3423,7 +3423,7 @@ namespace yoi {
             } catch (std::out_of_range &e) {
                 return false;
             }
-        } else if (toType->type == IRValueType::valueType::structObject) {
+        } else if (toType->type == IRValueType::valueType::structObject && !toType->isArrayType() && !toType->isDynamicArrayType()) {
             // check whether owns the constructor
             auto structType = moduleContext->getCompilerContext()->getImportedModule(toType->typeAffiliateModule)->structTable[toType->typeIndex];
             auto result = resolveOverloadExtern(L"constructor", {rhs}, toType->typeAffiliateModule, structType);
