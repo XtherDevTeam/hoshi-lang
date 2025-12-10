@@ -3,6 +3,7 @@
 //
 
 #include "IRLinker.hpp"
+#include "IR.h"
 #include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
@@ -216,6 +217,7 @@ namespace yoi {
             case IR::Opcode::invoke:
             case IR::Opcode::invoke_virtual:
             case IR::Opcode::invoke_dangling:
+            case IR::Opcode::store_global:
             case IR::Opcode::load_global:
             case IR::Opcode::new_struct:
             case IR::Opcode::new_array_struct:
@@ -234,6 +236,7 @@ namespace yoi {
                     case IR::Opcode::invoke:
                         newInstr.operands[1].value.symbolIndex = functionRemapping.at(moduleId).at(symbolIndex);
                         break;
+                    case IR::Opcode::store_global:
                     case IR::Opcode::load_global:
                         newInstr.operands[1].value.symbolIndex = globalRemapping.at(moduleId).at(symbolIndex);
                         break;

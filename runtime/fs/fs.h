@@ -1,0 +1,41 @@
+//
+// Created by XIaokang00010 on 2025/12/09.
+//
+
+#ifndef HOSHI_FS_H
+#define HOSHI_FS_H
+
+#include <cstdint>
+#include <cstddef>
+
+#define LIBFS_EXPORT extern "C"
+
+LIBFS_EXPORT bool runtime_fs_exists(const char* path);
+
+LIBFS_EXPORT bool runtime_fs_isfile(const char* path);
+
+LIBFS_EXPORT bool runtime_fs_isdir(const char* path);
+
+LIBFS_EXPORT int64_t runtime_fs_get_mtime(const char* path);
+
+LIBFS_EXPORT uint64_t runtime_fs_get_size(const char* path);
+
+LIBFS_EXPORT int64_t runtime_fs_get_ctime(const char* path);
+
+LIBFS_EXPORT int64_t runtime_fs_get_atime(const char* path);
+
+LIBFS_EXPORT int runtime_fs_get_mode(const char* path);
+
+LIBFS_EXPORT int runtime_fs_get_uid(const char* path);
+
+LIBFS_EXPORT char *runtime_fs_temp_dir();
+
+LIBFS_EXPORT char *runtime_fs_home_dir();
+
+LIBFS_EXPORT char *runtime_fs_cwd();
+
+LIBFS_EXPORT char *runtime_fs_realpath(const char* path);
+
+LIBFS_EXPORT void runtime_fs_finalize(void *res);
+
+#endif //HOSHI_FS_H

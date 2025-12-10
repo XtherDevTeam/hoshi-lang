@@ -2,6 +2,113 @@ use file "file"
 use str "str"
 use runtime "runtime"
 use lang "builtin"
+use vec "vec"
+
+enum PathSplitPreference {
+    Backslash,  // /
+    Rightslash  // \
+}
+
+[[platform == "darwin"]] let path_sep_preference = PathSplitPreference.Backslash
+[[platform == "linux"]] let path_sep_preference = PathSplitPreference.Backslash
+[[platform == "win32"]] let path_sep_preference = PathSplitPreference.Rightslash
+
+
+struct Path {
+    parts: vec.Vec<str.Str>,
+    constructor(parts: vec.Vec<str.Str>),
+    constructor(s: str.Str),
+    static operator/(left: Path, right: str.Str) : Path,
+    static operator/(left: Path, right: Path) : Path,
+    is_file() : bool,
+    is_directory() : bool,
+    exists() : bool,
+    parent() : Path,
+    static current_dir() : Path,
+    static home_dir() : Path,
+    static temp_dir() : Path,
+    to_string() : str.Str
+}
+
+impl Path {
+    constructor(parts: vec.Vec<str.Str>) {
+        this.parts = parts
+    },
+    constructor(s: str.Str) {
+        let sep : str.Str = ""
+        if (path_sep_preference == PathSplitPreference.Backslash) {
+            sep = "/"
+        } else {
+            sep = "\\"
+        }
+        this.parts = vec.Vec<str.Str>(s.split(sep))
+    },
+    static operator/(left: Path, right: str.Str) : Path {
+        let right_path = Path(right)
+        let parts = left.parts
+        for (let index = 0;index < right_path.parts.length; index += 1) {
+            parts.push(right_path.parts[index])
+        }
+        return Path(parts)
+    },
+    static operator/(left: Path, right: Path) : Path {
+        let parts = left.parts
+        for (let index = 0;index < right.parts.length; index += 1) {
+            parts.push(right.parts[index])
+        }
+        return Path(parts)
+    },
+    is_file() : bool {
+        let file_path = this.to_string()
+        return runtime.runtime_fs_isfile(file_path.c_str()) 
+    },
+    is_directory() : bool {
+        let dir_path = this.to_string()
+        return runtime.runtime_fs_isdir(dir_path.c_str())
+    },
+    exists() : bool {
+        let file_path = this.to_string()
+        return runtime.runtime_fs_exists(file_path.c_str())
+    },
+    parent() : Path {
+        let parts = this.parts
+        parts.pop()
+        return Path(parts)
+    },
+    static current_dir() : Path {
+        let p = runtime.runtime_fs_cwd()
+        let current_dir = str.Str.from_c_str(p)
+        runtime.runtime_fs_finalize(p)
+        return Path(current_dir)
+    },
+    static home_dir() : Path {
+        let p = runtime.runtime_fs_home_dir()
+        let home_dir = str.Str.from_c_str(p)
+        runtime.runtime_fs_finalize(p)
+        return Path(home_dir)
+    },
+    static temp_dir() : Path {
+        let p = runtime.runtime_fs_temp_dir()
+        let temp_dir = str.Str.from_c_str(p)
+        runtime.runtime_fs_finalize(p)
+        return Path(temp_dir)
+    },
+    to_string() : str.Str {
+        let sep : str.Str = ""
+        if (path_sep_preference == PathSplitPreference.Backslash) {
+            sep = "/"
+        } else {
+            sep = "\\"
+        }
+        return str.join(sep, this.parts.data)
+    }
+}
+
+impl Path : str.Stringable {
+    to_string() : str.Str {
+        return this.to_string()
+    }
+}
 
 struct OSFile {
     fp: unsigned,

@@ -70,6 +70,7 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/random/*.cpp
         runtime/signal/*.cpp
         runtime/time/*.cpp
+        runtime/fs/*.cpp
 )
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})

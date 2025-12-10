@@ -16,6 +16,7 @@ struct Vec<T> {
     constructor(data: T[]),
     constructor(data: T[], capacity: int),
     constructor(),
+    extend(other: Vec<T>) : none
 }
 
 impl Vec<> {
@@ -89,5 +90,10 @@ impl Vec<> {
         }
         this.data = new_data
         this.capacity = this.length
+    },
+    extend(other: Vec<T>) : none {
+        for (let i = 0; i < other.length; i += 1) {
+            this.push(other.data[i])
+        }
     }
 }
