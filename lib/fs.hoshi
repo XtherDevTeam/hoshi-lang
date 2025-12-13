@@ -199,6 +199,7 @@ impl OSFile {
     },
     close() : none {
         runtime.fclose(this.fp)
+        this.fp = 0
     },
     seek(offset: int, whence: int) : int {
         return runtime.fseek(this.fp, offset, whence)
@@ -230,13 +231,13 @@ impl OSFile {
         return true
     },
     is_closed() : bool {
-        return runtime.fclose(this.fp) == 0
+        return this.fp == 0
     },
     getch() : char {
         return runtime.fgetc(this.fp)
     },
     finalizer() {
-        if (this.fp != 0 && this.noFinalizer == false && this.is_closed() == false) {
+        if (this.fp != 0 && this.noFinalizer == false) {
             this.close()
         }
     }
