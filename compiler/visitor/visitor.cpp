@@ -1132,6 +1132,8 @@ namespace yoi {
             return visit(subscriptExpr->id, isStoreOp);
         }
 
+        moduleContext->getIRBuilder().saveState(); // for resolving operator[] overload param type checking and resolving
+
         auto it = subscriptExpr->getSubscript().begin();
         auto end = subscriptExpr->getSubscript().end();
         auto &first_term = *it;
@@ -1359,6 +1361,7 @@ namespace yoi {
 
             if (currentTerm->isSubscript()) {
                 if (handleSubscript(it, end, isStoreOp, isLastTerm)) continue;
+                else return moduleContext->getIRBuilder().getCurrentInsertionPoint(); // avoid releasing the state twice.
             } else if (currentTerm->isInvocation()) {
                 if(objectOnStackType->type == IRValueType::valueType::structObject || objectOnStackType->type == IRValueType::valueType::interfaceObject) {
                     if(!handleInvocationExtern(L"operator()", currentTerm->args, currentModuleIndex, objectOnStackType))
@@ -1370,6 +1373,7 @@ namespace yoi {
             it++;
         }
 
+        moduleContext->getIRBuilder().discardState(); // release the state after all subscript terms are handled.
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -1378,6 +1382,8 @@ namespace yoi {
         if (subscriptExpr->getSubscript().empty()) {
             return visitExtern(subscriptExpr->id, targetModule, isStoreOp);
         }
+
+        moduleContext->getIRBuilder().saveState(); // save as visit
 
         auto it = subscriptExpr->getSubscript().begin();
         auto end = subscriptExpr->getSubscript().end();
@@ -1565,12 +1571,12 @@ namespace yoi {
         // --- Loop for subsequent terms ---
         while (it != end) {
             auto currentTerm = *it;
+            bool isLastTerm = (std::next(it) == end);
             auto objectOnStackType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
             if (currentTerm->isSubscript()) {
-                panic(currentTerm->getLine(),
-                    currentTerm->getColumn(),
-                    "TODO: Extern array access is not fully implemented yet.");
+                if (handleSubscript(it, end, isStoreOp, isLastTerm)) continue;
+                else return moduleContext->getIRBuilder().getCurrentInsertionPoint(); // avoid releasing state twice
             } else if (currentTerm->isInvocation()) {
                 if(objectOnStackType->type == IRValueType::valueType::structObject || objectOnStackType->type == IRValueType::valueType::interfaceObject) {
                     handleInvocationExtern(L"operator()", currentTerm->args, currentModuleIndex, objectOnStackType);
@@ -1581,6 +1587,7 @@ namespace yoi {
             it++;
         }
 
+        moduleContext->getIRBuilder().discardState(); // release the state after all subscript terms are handled.
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
@@ -2458,7 +2465,7 @@ namespace yoi {
         else if (ex.type == IRExternEntry::externType::interfaceType)
             return {IRValueType::valueType::interfaceObject, ex.affiliateModule, ex.itemIndex};
         else
-            panic(identifier->getLine(), identifier->getColumn(), "Unsupported extern type: " + wstring2string(identifier->node.strVal));
+            throw std::out_of_range("Unsupported extern type: " + wstring2string(identifier->node.strVal));
     }
 
     IRValueType visitor::parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
@@ -4145,6 +4152,7 @@ namespace yoi {
                                   bool isStoreOp,
                                   bool isLastTerm) {
         auto objectOnStackType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+
         auto currentTerm = *it;
 
         if (objectOnStackType->isArrayType() || objectOnStackType->isDynamicArrayType()) {
@@ -4187,17 +4195,18 @@ namespace yoi {
 
             if (isStoreOp && isLastTerm) {
                 moduleContext->getIRBuilder().storeOp(IR::Opcode::store_element, {});
+                return false;
             } else {
                 auto elementType = managedPtr(objectOnStackType->getElementType());
                 moduleContext->getIRBuilder().loadOp(IR::Opcode::load_element, {}, elementType);
-            }
-            return true;
+                return true;
+            }            
         } else {
             if (isLastTerm && isStoreOp) {
                 // current stack: [..., value, array, index]
+
                 auto value = moduleContext->getIRBuilder().getLhsFromTempVarStack();
                 auto array = moduleContext->getIRBuilder().getRhsFromTempVarStack();
-                moduleContext->getIRBuilder().saveState();
                 visit(currentTerm->expr);
                 auto index = moduleContext->getIRBuilder().getRhsFromTempVarStack();
 
@@ -4219,12 +4228,14 @@ namespace yoi {
                            currentTerm->getColumn(),
                            "Variadic operator[] overloading is not supported.");
 
-                // FIXME: 前面value已经被运算了而且没有保存状态，不知道要怎么搞了，除非每次入栈的时候顺便记录一下当前insertion point
+                // FIXED: 前面value已经被运算了而且没有保存状态，不知道要怎么搞了，除非每次入栈的时候顺便记录一下当前insertion point
                 if (overload.isCastRequired) {
-                    moduleContext->getIRBuilder().restoreState();
-                    visit(currentTerm->expr);
                     tryCastTo(overload.function->argumentTypes.back());
+                    moduleContext->getIRBuilder().restoreStateTemporarily();
+                    tryCastTo(overload.function->argumentTypes.front()); // 天才啊
+                    moduleContext->getIRBuilder().commitState(); // this would commit the state.
                 } else {
+                    // discard the state if no cast is required
                     moduleContext->getIRBuilder().discardState();
                 }
 
@@ -4232,13 +4243,14 @@ namespace yoi {
                     overload.functionIndex, 2, overload.function->returnType, false, true, array->typeAffiliateModule);
 
                 moduleContext->getIRBuilder().popOp();
+                return false;
             } else {
                 moduleContext->getIRBuilder().saveState();
                 visit(currentTerm->expr);
                 handleBinaryOperatorOverload(L"operator[]", currentTerm->expr);
+                return false;
             }
         }
-        return false;
     }
 
     IRValueType visitor::parseTypeSpec(yoi::funcTypeSpec *typeSpec) {

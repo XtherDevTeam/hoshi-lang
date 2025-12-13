@@ -339,6 +339,7 @@ namespace yoi {
         /**
          * @brief Handle subscript
          * @return bool whether the it need to continue to handle subscript
+         * @note a state before the evaluation of the subscript expression should be saved before calling this helper function.
          */
         bool handleSubscript(yoi::vec<yoi::subscript *>::iterator &it,
                              yoi::vec<yoi::subscript *>::iterator end,

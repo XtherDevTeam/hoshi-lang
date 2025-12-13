@@ -49,3 +49,4 @@
 - [x] dyn_cast 匹配到错误typeid
 - [x] 接口优化导致内存泄漏
 - [x] operator[] 重载导致 noneObject 存在栈上
+- [x] operator[] 重载在存在参数类型不一致时无法自动转换

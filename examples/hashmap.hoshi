@@ -8,12 +8,17 @@ func main() : int {
     map["World"] = 0x2233ff
     map["Hoshi"] = 0x112233
     map["Language"] = 0x445566
-    if (map.size() != 4) {
-        runtime.puts("HashMap validation failed: size is not 4")
+    map["TestCast"] = 0.123
+    if (map.size() != 5) {
+        runtime.puts("HashMap validation failed: size is not 5")
         return 1
     }
     if (map["Hello"] != 0xe1751a) {
         runtime.puts("HashMap validation failed: value of 'Hello' is not 0xe1751a")
+        return 1
+    }
+    if (map["TestCast"] != 0) {
+        runtime.puts("HashMap validation failed: value of 'TestCast' is not 0.123")
         return 1
     }
     runtime.puts("HashMap validation passed")

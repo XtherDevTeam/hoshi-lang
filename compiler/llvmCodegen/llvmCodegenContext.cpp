@@ -723,7 +723,7 @@ namespace yoi {
         DBuilder->finalize();
         if (llvm::verifyFunction(*currentFunction, &llvm::errs())) {
             TheModule->print(llvm::errs(), nullptr);
-            panic(0, 0, "LLVM function verification failed for: " + wstring2string(funcDef.name));
+            panic(funcDef.debugInfo.line, funcDef.debugInfo.column, "LLVM function verification failed for: " + wstring2string(funcDef.name));
         }
     }
 
