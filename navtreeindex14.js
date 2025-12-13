@@ -1,5 +1,9 @@
 var NAVTREEINDEX14 =
 {
+"md_docs_2IR.html#autotoc_md45":[9,1,0],
+"md_docs_2IR.html#autotoc_md46":[9,1,1],
+"md_docs_2IR.html#autotoc_md48":[9,2],
+"md_docs_2IR.html#autotoc_md49":[9,2,0],
 "md_docs_2IR.html#autotoc_md50":[9,2,1],
 "md_docs_2IR.html#autotoc_md51":[9,2,2],
 "md_docs_2IR.html#autotoc_md52":[9,2,3],
@@ -222,8 +226,8 @@ var NAVTREEINDEX14 =
 "namespacemagic__enum_1_1detail.html#aeb24ce9f57fa538036bc1b5e7612f045":[30,0,0,2,24],
 "namespacemagic__enum_1_1detail.html#aecb503bf656bb14b3d2d3fa9198c3f04":[30,0,0,2,31],
 "namespacemagic__enum_1_1detail.html#aeed0690739f2ba6e082f95b0c719afaf":[30,0,0,2,30],
-"namespacemembers.html":[30,1,0,0],
 "namespacemembers.html":[30,1,0],
+"namespacemembers.html":[30,1,0,0],
 "namespacemembers_a.html":[30,1,0,1],
 "namespacemembers_c.html":[30,1,0,2],
 "namespacemembers_d.html":[30,1,0,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX14 =
 "namespacemembers_func_s.html":[30,1,1,11],
 "namespacemembers_func_t.html":[30,1,1,12],
 "namespacemembers_func_u.html":[30,1,1,13],
-"namespacemembers_func_v.html":[30,1,1,14],
-"namespacemembers_func_w.html":[30,1,1,15],
-"namespacemembers_func_y.html":[30,1,1,16],
-"namespacemembers_g.html":[30,1,0,6],
-"namespacemembers_i.html":[30,1,0,7]
+"namespacemembers_func_v.html":[30,1,1,14]
 };

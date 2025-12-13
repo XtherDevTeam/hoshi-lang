@@ -1,5 +1,9 @@
 var NAVTREEINDEX13 =
 {
+"functions_func_w.html":[31,3,1,20],
+"functions_func_x.html":[31,3,1,21],
+"functions_func_y.html":[31,3,1,22],
+"functions_func_~.html":[31,3,1,23],
 "functions_g.html":[31,3,0,6],
 "functions_h.html":[31,3,0,7],
 "functions_i.html":[31,3,0,8],
@@ -44,8 +48,8 @@ var NAVTREEINDEX13 =
 "functions_x.html":[31,3,0,22],
 "functions_y.html":[31,3,0,23],
 "functions_~.html":[31,3,0,24],
-"globals.html":[32,1,0],
 "globals.html":[32,1,0,0],
+"globals.html":[32,1,0],
 "globals_defs.html":[32,1,5],
 "globals_e.html":[32,1,0,1],
 "globals_enum.html":[32,1,4],
@@ -245,9 +249,5 @@ var NAVTREEINDEX13 =
 "md_docs_2IR.html#autotoc_md41":[9,0],
 "md_docs_2IR.html#autotoc_md42":[9,0,0],
 "md_docs_2IR.html#autotoc_md43":[9,0,1],
-"md_docs_2IR.html#autotoc_md44":[9,1],
-"md_docs_2IR.html#autotoc_md45":[9,1,0],
-"md_docs_2IR.html#autotoc_md46":[9,1,1],
-"md_docs_2IR.html#autotoc_md48":[9,2],
-"md_docs_2IR.html#autotoc_md49":[9,2,0]
+"md_docs_2IR.html#autotoc_md44":[9,1]
 };
