@@ -44,7 +44,7 @@ impl ArrayBuffer : file.AbstractFile {
         }
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size)
         this.current_pos += size
-        return size
+        return size + 0 // force raw value to be returned
     },
     write(buf: char[], size: int) : int {
         if (size > this.size - this.current_pos) {
@@ -52,7 +52,7 @@ impl ArrayBuffer : file.AbstractFile {
         }
         runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size)
         this.current_pos += size
-        return size
+        return size + 0 // force raw value to be returned
     },
     seek(offset: int, whence: int) : int {
         if (whence == 0) {
@@ -62,10 +62,10 @@ impl ArrayBuffer : file.AbstractFile {
         } elif (whence == 2) {
             this.current_pos = this.size + offset
         }
-        return this.current_pos
+        return this.current_pos + 0 // force raw value to be returned
     },
     tell() : int {
-        return this.current_pos
+        return this.current_pos + 0 // force raw value to be returned
     },
     flush() : none {
         return
@@ -97,6 +97,6 @@ impl ArrayBuffer : file.AbstractFile {
         }
         let result = this.buf[this.current_pos]
         this.current_pos += 1
-        return result
+        return result + 0 // force raw value to be returned
     }
 }

@@ -4436,9 +4436,9 @@ namespace yoi {
             auto interface_wrapper_generator = [&] (yoi::indexT moduleIndex, yoi::indexT funcIndex, const yoi::vec<std::shared_ptr<IRValueType>> &targetTypes, const std::shared_ptr<IRValueType> &returnType) -> yoi::indexT {
                 auto originalFunc = compilerCtx->getImportedModule(moduleIndex)->functionTable[funcIndex];
                 auto builder = IRFunctionDefinition::Builder().setReturnType(returnType).setDebugInfo(originalFunc->debugInfo).setName(originalFunc->name + L"#wrapper");
-                builder.addArgument(L"this", originalFunc->argumentTypes[0]);
+                builder.addArgument(L"this", managedPtr(IRValueType{*originalFunc->argumentTypes[0]}.addAttribute(IRValueType::ValueAttr::Borrow)));
                 for (yoi::indexT index = 0;index < targetTypes.size(); index++)
-                    builder.addArgument(L"param" + std::to_wstring(index), targetTypes[index]);
+                    builder.addArgument(L"param" + std::to_wstring(index), managedPtr(IRValueType{*targetTypes[index]}.addAttribute(IRValueType::ValueAttr::Borrow)));
                 builder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
                 auto index = compilerCtx->getImportedModule(moduleIndex)->functionTable.put(originalFunc->name + L"wrapper", builder.yield());
                 auto moduleCtx = compilerCtx->getModuleContext(moduleIndex);
