@@ -38,4 +38,8 @@ LIBFS_EXPORT char *runtime_fs_realpath(const char* path);
 
 LIBFS_EXPORT void runtime_fs_finalize(void *res);
 
+LIBFS_EXPORT bool runtime_fs_mkdir(const char *path, int mode);
+
+LIBFS_EXPORT bool runtime_fs_rmdir(const char* path);
+
 #endif //HOSHI_FS_H

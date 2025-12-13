@@ -8,5 +8,17 @@ func main() : int {
     console.print("Temp directory: ", fs.Path.temp_dir().to_string(), "\n")
     let p = fs.Path.temp_dir() / "test.txt"
     console.print("Test file path: ", p.to_string(), "\n")
+    p = fs.Path(".")
+    if (p.realpath() == null) {
+        console.print("Error: Cannot resolve path: ", p.to_string(), "\n")
+        return 1
+    }
+    console.print("Resolved path: ", p.to_string(), "realpath: ", p.realpath().to_string(), "\n")
+    p = p / "test_dir1" / "test_dir2"
+    if (p.mkdir(true) == false || p.exists() == false) {
+        console.print("Error: Cannot create directory: ", p.to_string(), "\n")
+        return 1
+    }
+    console.print("Created directory: ", p.to_string(), "\n")
     return 0
 }

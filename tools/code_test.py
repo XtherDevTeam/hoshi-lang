@@ -70,6 +70,7 @@ TEST_CASES = {
     "timelib": {"type": "executable", "return_code": 0},
     "interface-implicit-overload-resolve.hoshi" : {"type": "executable", "return_code": 0},
     "global-var": {"type": "executable", "return_code": 0},
+    "libfs": {"type": "executable", "return_code": 0},
 }
 
 

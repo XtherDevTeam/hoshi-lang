@@ -67,5 +67,7 @@ import runtime_fs_temp_dir() : ptr from "builtin"
 import runtime_fs_home_dir() : ptr from "builtin"
 import runtime_fs_cwd() : ptr from "builtin"
 import runtime_fs_realpath(path: ptr) : ptr from "builtin"
+import runtime_fs_mkdir(path: ptr, mode: int) : bool from "builtin"
+import runtime_fs_rmdir(path: ptr) : bool from "builtin"
 
 import runtime_fs_finalize(res: ptr) : none from "builtin"

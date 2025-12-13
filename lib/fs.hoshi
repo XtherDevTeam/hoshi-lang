@@ -27,7 +27,10 @@ struct Path {
     static current_dir() : Path,
     static home_dir() : Path,
     static temp_dir() : Path,
-    to_string() : str.Str
+    to_string() : str.Str,
+    mkdir() : bool,
+    mkdir(recursive: bool) : bool,
+    realpath() : Path,
 }
 
 impl Path {
@@ -48,14 +51,14 @@ impl Path {
     },
     static operator/(left: Path, right: str.Str) : Path {
         let right_path = Path(right)
-        let parts = left.parts
+        let parts = left.parts.clone()
         for (let index = 0;index < right_path.parts.length; index += 1) {
             parts.push(right_path.parts[index])
         }
         return Path(parts)
     },
     static operator/(left: Path, right: Path) : Path {
-        let parts = left.parts
+        let parts = left.parts.clone()
         for (let index = 0;index < right.parts.length; index += 1) {
             parts.push(right.parts[index])
         }
@@ -74,7 +77,10 @@ impl Path {
         return runtime.runtime_fs_exists(file_path.c_str())
     },
     parent() : Path {
-        let parts = this.parts
+        if (this.parts.length <= 1) {
+            return this
+        }
+        let parts = this.parts.clone()
         parts.pop()
         return Path(parts)
     },
@@ -111,6 +117,29 @@ impl Path {
             }
         }
         return built
+    },
+    mkdir() : bool {
+        return this.mkdir(false)
+    },
+    mkdir(recursive: bool) : bool {
+        if (recursive) {
+            let p = this.parent()
+            if (p.exists() == false) {
+                this.parent().mkdir(true)
+            }
+        }
+        let s = this.to_string()
+        return runtime.runtime_fs_mkdir(s.c_str(), 0755)
+    },
+    realpath() : Path {
+        let s = this.to_string()
+        let p = runtime.runtime_fs_realpath(s.c_str())
+        if (p == 0) {
+            return null
+        }
+        let real_path = str.Str.from_c_str(p)
+        runtime.runtime_fs_finalize(p)
+        return Path(real_path)
     }
 }
 

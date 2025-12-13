@@ -215,3 +215,17 @@ void runtime_fs_finalize(void *res) {
         free(res);
     }
 }
+
+bool runtime_fs_mkdir(const char *path, int mode) {
+    if (!path) return false;
+#ifdef _WIN32
+    return _mkdir(path) == 0;
+#else
+    return mkdir(path, mode) == 0;
+#endif
+}
+
+bool runtime_fs_rmdir(const char *path) {
+    if (!path) return false;
+    return rmdir(path) == 0;
+}
