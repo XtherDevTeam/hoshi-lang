@@ -392,7 +392,7 @@ $(document).ready(function(){initNavTree('fs_8cpp_source.html',''); initResizabl
 <div class="foldopen" id="foldopen00256" data-start="{" data-end="}">
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">  256</a></span><span class="keywordtype">void</span> *<a class="code hl_function" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">runtime_fs_opendir</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">char</span> *concated = (<span class="keywordtype">char</span>*)malloc(strlen(name) + 3);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">char</span> *concatenated = (<span class="keywordtype">char</span>*)malloc(strlen(name) + 3);</div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">if</span> (!concatenated) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    strcpy(concatenated, name);</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    strcat(concatenated, <span class="stringliteral">&quot;/*&quot;</span>);</div>
