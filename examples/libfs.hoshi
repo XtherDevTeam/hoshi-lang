@@ -28,7 +28,7 @@ func main() : int {
     console.print("Removed directory: ", p.to_string(), "\n")
     let dirs = fs.Path.current_dir().listdir()
     for (let i = 0; i < dirs.length; i += 1) {
-        console.print(dirs[i].to_string(), "\n")
+        console.print(dirs[i].stem(), dirs[i].extension(), "\n")
     }
     return 0
 }

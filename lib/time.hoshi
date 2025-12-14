@@ -91,6 +91,7 @@ struct Date {
     static operator-(date: Date, duration: Duration) : Date,
     static operator+=(date: Date, duration: Duration) : Date,
     static operator-=(date: Date, duration: Duration) : Date,
+    static operator-(date: Date, date2: Date) : Duration,
     format(format: str.Str) : str.Str
 }
 
@@ -200,6 +201,9 @@ impl Date {
         let s = str.Str.from_c_str(p)
         runtime_time_finalize(p)
         return s
+    },
+    static operator-(date: Date, date2: Date) : Duration {
+        return Duration(date.time - date2.time)
     }
 }
 

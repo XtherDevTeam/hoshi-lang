@@ -39,6 +39,9 @@ namespace yoi {
                     case 't':
                         value.push_back('\t');
                         break;
+                    case 'e':
+                        value.push_back('\033');
+                        break;
                     case 'u': {
                         wchar fuckutf{};
                         for (int64_t i = 3; input && i >= 0; i--) {

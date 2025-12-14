@@ -3416,7 +3416,7 @@ namespace yoi {
         }
         if (*rhs == *toType) {
             return true;
-        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
+        } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (toType->type != IRValueType::valueType::stringObject) && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             return true;
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
             // no cast needed for pointer type

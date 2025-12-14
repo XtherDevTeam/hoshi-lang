@@ -35,7 +35,10 @@ struct Path {
     remove() : bool,
     rename(new_name: str.Str) : bool,
     move(new_path: Path) : bool,
-    listdir() : vec.Vec<Path>
+    listdir() : vec.Vec<Path>,
+    stem() : str.Str,
+    extension() : str.Str,
+    filename() : str.Str
 }
 
 impl Path {
@@ -190,6 +193,28 @@ impl Path {
         }
         runtime.runtime_fs_closedir(dir)
         return entries
+    },
+    stem() : str.Str {
+        let filename = this.filename()
+        let index = filename.rfind('.')
+        if (index == -1 || index == 0) {
+            return filename
+        }
+        return filename.substring(0, index)
+    },
+    extension() : str.Str {
+        let filename = this.filename()
+        let index = filename.rfind('.')
+        if (index == -1 || index == 0) {
+            return ""
+        }
+        return filename.substring(index, filename.length)
+    },
+    filename() : str.Str {
+        if (this.parts.length == 0) {
+            return ""
+        }
+        return this.parts[this.parts.length - 1]
     }
 }
 

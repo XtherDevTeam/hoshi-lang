@@ -255,7 +255,7 @@ bool runtime_fs_rename(const char *old_path, const char *new_path) {
 
 void *runtime_fs_opendir(const char *name) {
 #ifdef _WIN32
-    char *concated = (char*)malloc(strlen(name) + 3);
+    char *concatenated = (char*)malloc(strlen(name) + 3);
     if (!concatenated) return nullptr;
     strcpy(concatenated, name);
     strcat(concatenated, "/*");
