@@ -1,6 +1,7 @@
 var fs_8h =
 [
     [ "LIBFS_EXPORT", "fs_8h.html#ab8b0851dd1d3c6165994bd0e7357ee5e", null ],
+    [ "runtime_fs_closedir", "fs_8h.html#ad27bcaae14f68eeabfd4e615a0a580ea", null ],
     [ "runtime_fs_cwd", "fs_8h.html#a43bc8f3b3a4bacca53469adc3f66ea53", null ],
     [ "runtime_fs_exists", "fs_8h.html#a33e5f3fda4bb5d95673910981a6b99ac", null ],
     [ "runtime_fs_finalize", "fs_8h.html#aa5858c2ef310ebc46c3ea07bcf1926cd", null ],
@@ -14,7 +15,11 @@ var fs_8h =
     [ "runtime_fs_isdir", "fs_8h.html#a2ecdbb06ccdbdb762d8e79eaca7ffbaf", null ],
     [ "runtime_fs_isfile", "fs_8h.html#a74a432d3954b9c05f747c292727a6980", null ],
     [ "runtime_fs_mkdir", "fs_8h.html#a3f3f909e521ae1c1a484c71b09d3e62c", null ],
+    [ "runtime_fs_opendir", "fs_8h.html#ae61d1fb4f6cbe49eea9f2d1a0ed646f0", null ],
+    [ "runtime_fs_readdir", "fs_8h.html#a4967dd138a193659c8952d2df1bf1772", null ],
     [ "runtime_fs_realpath", "fs_8h.html#a4f886c856fbcd299a6ce5c8eeab0ad16", null ],
+    [ "runtime_fs_remove", "fs_8h.html#a82d6bb1736750d3f8fe1ad7f8b6d1fd7", null ],
+    [ "runtime_fs_rename", "fs_8h.html#a859e651f7f3b5079df6e76fb499e027a", null ],
     [ "runtime_fs_rmdir", "fs_8h.html#aee13fe4f9b76c91b6571e9b931ef8eeb", null ],
     [ "runtime_fs_temp_dir", "fs_8h.html#a844a820c5a0f35fa32fc822f008efc38", null ]
 ];
