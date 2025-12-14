@@ -20,5 +20,15 @@ func main() : int {
         return 1
     }
     console.print("Created directory: ", p.to_string(), "\n")
+    fs.Path("./test_dir1").remove(true)
+    if (fs.Path("./test_dir1").exists()) {
+        console.print("Error: Cannot remove directory: ", p.to_string(), "\n")
+        return 1
+    }
+    console.print("Removed directory: ", p.to_string(), "\n")
+    let dirs = fs.Path.current_dir().listdir()
+    for (let i = 0; i < dirs.length; i += 1) {
+        console.print(dirs[i].to_string(), "\n")
+    }
     return 0
 }

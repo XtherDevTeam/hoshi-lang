@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <cstdio>
 
 #define LIBFS_EXPORT extern "C"
 
@@ -41,5 +42,15 @@ LIBFS_EXPORT void runtime_fs_finalize(void *res);
 LIBFS_EXPORT bool runtime_fs_mkdir(const char *path, int mode);
 
 LIBFS_EXPORT bool runtime_fs_rmdir(const char* path);
+
+LIBFS_EXPORT bool runtime_fs_rename(const char *old_path, const char *new_path);
+
+LIBFS_EXPORT bool runtime_fs_remove(const char *path);
+
+LIBFS_EXPORT void *runtime_fs_opendir(const char *name);
+
+LIBFS_EXPORT char *runtime_fs_readdir(void *dir);
+
+LIBFS_EXPORT void runtime_fs_closedir(void *dir);
 
 #endif //HOSHI_FS_H

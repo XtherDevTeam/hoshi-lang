@@ -31,6 +31,11 @@ struct Path {
     mkdir() : bool,
     mkdir(recursive: bool) : bool,
     realpath() : Path,
+    remove(recursive: bool) : bool,
+    remove() : bool,
+    rename(new_name: str.Str) : bool,
+    move(new_path: Path) : bool,
+    listdir() : vec.Vec<Path>
 }
 
 impl Path {
@@ -140,6 +145,51 @@ impl Path {
         let real_path = str.Str.from_c_str(p)
         runtime.runtime_fs_finalize(p)
         return Path(real_path)
+    },
+    remove(recursive: bool) : bool {
+        let s = this.to_string()
+        if (this.is_file()) {
+            return runtime.runtime_fs_remove(s.c_str())
+        } elif (this.is_directory()) {
+            let entries = this.listdir()
+            for (let index = 0;index < entries.length; index += 1) {
+                entries[index].remove(recursive)
+            }
+            return runtime.runtime_fs_rmdir(s.c_str())
+        }
+        return false
+    },
+    remove() : bool {
+        return this.remove(false)
+    },
+    rename(new_name: str.Str) : bool {
+        let old_path = this.to_string()
+        let new_path = this.parent() / new_name
+        let new_path_str = new_path.to_string()
+        return runtime.runtime_fs_rename(old_path.c_str(), new_path_str.c_str())
+    },
+    move(new_path: Path) : bool {
+        let old_path = this.to_string()
+        let new_path_str = new_path.to_string()
+        return runtime.runtime_fs_rename(old_path.c_str(), new_path_str.c_str())
+    },
+    listdir() : vec.Vec<Path> {
+        let dir_path = this.to_string()
+        let dir = runtime.runtime_fs_opendir(dir_path.c_str())
+        if (dir == 0) {
+            return vec.Vec<Path>()
+        }
+        let entries = vec.Vec<Path>()
+        let entry = runtime.runtime_fs_readdir(dir)
+        while (entry != 0) {
+            let name = str.Str.from_c_str(entry)
+            if (name != "." && name != "..") {
+                entries.push(this / name)
+            }
+            entry = runtime.runtime_fs_readdir(dir)
+        }
+        runtime.runtime_fs_closedir(dir)
+        return entries
     }
 }
 

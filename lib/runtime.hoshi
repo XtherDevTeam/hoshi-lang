@@ -53,6 +53,8 @@ import runtime_signal_raise(signum: int32) : int32 from "builtin"
 import runtime_signal_default(signum: int32) : int32 from "builtin"
 import runtime_signal_ignore(signum: int32) : int32 from "builtin"
 
+/* file system library */
+
 import runtime_fs_exists(path: ptr) : bool from "builtin"
 import runtime_fs_isfile(path: ptr) : bool from "builtin"
 import runtime_fs_isdir(path: ptr) : bool from "builtin"
@@ -69,5 +71,10 @@ import runtime_fs_cwd() : ptr from "builtin"
 import runtime_fs_realpath(path: ptr) : ptr from "builtin"
 import runtime_fs_mkdir(path: ptr, mode: int) : bool from "builtin"
 import runtime_fs_rmdir(path: ptr) : bool from "builtin"
+import runtime_fs_remove(path: ptr) : bool from "builtin"
+import runtime_fs_rename(oldpath: ptr, newpath: ptr) : bool from "builtin"
+import runtime_fs_opendir(path: ptr) : ptr from "builtin"
+import runtime_fs_readdir(dirp: ptr) : ptr from "builtin"
+import runtime_fs_closedir(dirp: ptr) : int from "builtin"
 
 import runtime_fs_finalize(res: ptr) : none from "builtin"

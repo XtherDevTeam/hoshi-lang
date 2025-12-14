@@ -3,6 +3,21 @@
 */
 
 // Ensure standard functions like strdup, realpath, etc., are exposed
+
+#ifdef _WIN32
+#include <windows.h>
+#include <cstring>
+
+struct DirectoryHandle {
+    HANDLE hFind = INVALID_HANDLE_VALUE;
+    WIN32_FIND_DATAA findFileData;
+    bool firstEntry = true;
+};
+
+#else
+#include <dirent.h> // POSIX header for directory operations
+#endif
+
 #define _POSIX_C_SOURCE 200809L
 #define _XOPEN_SOURCE 700
 #define _CRT_SECURE_NO_WARNINGS // For MSVC
@@ -110,15 +125,15 @@ int runtime_fs_get_uid(const char* path) {
 
 char *runtime_fs_temp_dir() {
 #ifdef _WIN32
-    DWORD len = GetTempPathA(0, NULL);
-    if (len == 0) return NULL;
+    DWORD len = GetTempPathA(0, nullptr);
+    if (len == 0) return nullptr;
     
     char* buf = (char*)malloc(len + 1);
-    if (!buf) return NULL;
+    if (!buf) return nullptr;
     
     if (GetTempPathA(len + 1, buf) == 0) {
         free(buf);
-        return NULL;
+        return nullptr;
     }
     
     // Remove trailing backslash if present (consistency preference)
@@ -154,7 +169,7 @@ char *runtime_fs_home_dir() {
         }
         return buf;
     }
-    return NULL;
+    return nullptr;
 #else
     const char* home = getenv("HOME");
     if (home) {
@@ -166,7 +181,7 @@ char *runtime_fs_home_dir() {
     if (pwd) {
         return strdup(pwd->pw_dir);
     }
-    return NULL;
+    return nullptr;
 #endif
 }
 
@@ -176,20 +191,20 @@ char *runtime_fs_cwd() {
     size_t size = 1024;
     char* buf = (char*)malloc(size);
     
-    if (!buf) return NULL;
+    if (!buf) return nullptr;
 
-    while (getcwd(buf, (int)size) == NULL) {
+    while (getcwd(buf, (int)size) == nullptr) {
         if (errno == ERANGE) {
             size *= 2;
             char* new_buf = (char*)realloc(buf, size);
             if (!new_buf) {
                 free(buf);
-                return NULL;
+                return nullptr;
             }
             buf = new_buf;
         } else {
             free(buf);
-            return NULL;
+            return nullptr;
         }
     }
     
@@ -200,13 +215,13 @@ char *runtime_fs_cwd() {
 }
 
 char *runtime_fs_realpath(const char* path) {
-    if (!path) return NULL;
+    if (!path) return nullptr;
 #ifdef _WIN32
-    // _fullpath with NULL automatically mallocs
-    return _fullpath(NULL, path, 0); 
+    // _fullpath with nullptr automatically mallocs
+    return _fullpath(nullptr, path, 0); 
 #else
-    // realpath with NULL automatically mallocs (POSIX.1-2008)
-    return realpath(path, NULL); 
+    // realpath with nullptr automatically mallocs (POSIX.1-2008)
+    return realpath(path, nullptr); 
 #endif
 }
 
@@ -228,4 +243,76 @@ bool runtime_fs_mkdir(const char *path, int mode) {
 bool runtime_fs_rmdir(const char *path) {
     if (!path) return false;
     return rmdir(path) == 0;
+}
+
+bool runtime_fs_remove(const char *path) {
+    return remove(path) == 0;
+}
+
+bool runtime_fs_rename(const char *old_path, const char *new_path) {
+    return rename(old_path, new_path) == 0;
+}
+
+void *runtime_fs_opendir(const char *name) {
+#ifdef _WIN32
+    char *concated = (char*)malloc(strlen(name) + 3);
+    if (!concatenated) return nullptr;
+    strcpy(concatenated, name);
+    strcat(concatenated, "/*");
+    
+    DirectoryHandle *dir = (DirectoryHandle*)malloc(sizeof(DirectoryHandle));
+    if (!dir) {
+        free(concatenated);
+        return nullptr;
+    }
+    dir->hFind = FindFirstFileA(concatenated, &(dir->findFileData));
+
+    if (dir->hFind == INVALID_HANDLE_VALUE) {
+        free(dir);
+        free(concatenated);
+        return nullptr;
+    }
+    dir->firstEntry = true;
+    return dir;
+#else
+    return opendir(name);
+#endif
+}
+
+char *runtime_fs_readdir(void *dir) {
+    if (!dir) return nullptr;
+
+#ifdef _WIN32
+    DirectoryHandle *handle = (DirectoryHandle*)dir;
+
+    if (handle->firstEntry) {
+        handle->firstEntry = false;
+        return handle->findFileData.cFileName;
+    }
+
+    if (FindNextFileA(handle->hFind, &(handle->findFileData)) != 0) {
+        return handle->findFileData.cFileName;
+    }
+    return nullptr;
+#else
+    struct dirent* entry = readdir((DIR*)dir);
+    if (!entry) {
+        return nullptr;
+    }
+    return entry->d_name;
+#endif
+}
+
+void runtime_fs_closedir(void *dir) {
+    if (!dir) return;
+
+#ifdef _WIN32
+    DirectoryHandle *handle = (DirectoryHandle*)dir;
+    if (handle->hFind != INVALID_HANDLE_VALUE) {
+        FindClose(handle->hFind);
+    }
+    delete handle;
+#else
+    closedir((DIR*)dir);
+#endif
 }
