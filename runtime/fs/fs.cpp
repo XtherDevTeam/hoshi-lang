@@ -242,7 +242,11 @@ bool runtime_fs_mkdir(const char *path, int mode) {
 
 bool runtime_fs_rmdir(const char *path) {
     if (!path) return false;
+    #ifdef _WIN32
+    return _rmdir(path) == 0;
+    #else
     return rmdir(path) == 0;
+    #endif
 }
 
 bool runtime_fs_remove(const char *path) {
