@@ -44,7 +44,7 @@ void printUsage(const char* programName) {
               << "                                  If not specified, derived from input_file in the current directory.\n"
               << "  --build-type <type>             Specify build type (executable, static-lib, shared-lib). Default: executable\n"
               << "  --build-mode <mode>             Specify build mode (debug, release). Default: debug\n"
-              << "  --linker <linker>               Specify object linker (cc, cl, none). Default: cc\n"
+              << "  --linker <linker>               Specify object linker (cc, cl, none). Default: cc (cl on Windows platform)\n"
               << "                                  'none' will generate .o file but skip final linking.\n"
               << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
               << "                                  Default: do not preserve intermediate files.\n"
@@ -63,7 +63,7 @@ int main(int argc, const char **argv) {
     yoi::IRBuildConfig::BuildMode buildMode = yoi::IRBuildConfig::BuildMode::debug;
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
-    yoi::IRBuildConfig::UseObjectLinker useObjectLinker = yoi::IRBuildConfig::UseObjectLinker::cc;
+    yoi::IRBuildConfig::UseObjectLinker useObjectLinker = strcmp(YOI_PLATFORM, "win32") == 0 ? yoi::IRBuildConfig::UseObjectLinker::cl : yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
     yoi::vec<yoi::wstr> additionalLinkingFiles = yoi::ObjectLinker::defaultAdditionalLinkingFiles();
     yoi::vec<std::pair<yoi::wstr, yoi::wstr>> macroDefs;
@@ -311,13 +311,12 @@ int main(int argc, const char **argv) {
         }
         std::cout << "Compilation successful!\n";
 
-    }/* catch (const std::runtime_error &e) {
+    } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exitCode = 1; 
-    }*//* catch (const std::exception& e) {
+    } catch (const std::exception& e) {
         std::cerr << "An unexpected error occurred: " << e.what() << std::endl;
         exitCode = 1; 
-    }*/ catch (int e) {
     }
     
     if (!preserveIntermediateFiles && exitCode == 0) {

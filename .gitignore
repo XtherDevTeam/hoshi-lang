@@ -4,3 +4,4 @@ cmake-build-*
 build*
 tools/vscode_extension
 *.log
+.cache

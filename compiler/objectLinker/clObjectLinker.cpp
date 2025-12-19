@@ -87,13 +87,13 @@ namespace yoi {
 
                         // Common bin paths relative to MSVC version folder (prefer x64 host/target)
                         std::vector<std::filesystem::path> bin_sub_paths = {
-                            L"bin/Hostx64/x64", // Preferred: 64-bit host, 64-bit target
-                            L"bin/Hostx86/x64", // 32-bit host, 64-bit target (e.g., when run from VS dev cmd x86)
-                            L"bin/Hostx64/x86", // 64-bit host, 32-bit target
-                            L"bin/Hostx86/x86"  // 32-bit host, 32-bit target
+                            L"bin\\Hostx64\\x64", // Preferred: 64-bit host, 64-bit target
+                            L"bin\\Hostx86\\x64", // 32-bit host, 64-bit target (e.g., when run from VS dev cmd x86)
+                            L"bin\\Hostx64\\x86", // 64-bit host, 32-bit target
+                            L"bin\\Hostx86\\x86"  // 32-bit host, 32-bit target
                         };
                         // Library paths contain the runtime library (e.g., "lib/x64")
-                        std::vector<std::filesystem::path> lib_sub_paths = {L"lib/x64", L"lib/x86"};
+                        std::vector<std::filesystem::path> lib_sub_paths = {L"lib\\x64", L"lib\\x86"};
 
                         for (const auto &bin_sub_path : bin_sub_paths) {
                             std::filesystem::path potential_cl_path =
@@ -216,7 +216,7 @@ namespace yoi {
         for (auto &path : vsRuntimePath) {
             command += L" /LIBPATH:\"" + path + L"\"";
         }
-        command += L" libcmt.lib kernel32.lib";
+        command += L" libcmt.lib";
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
             command += L" /LD"; // Build a shared library
