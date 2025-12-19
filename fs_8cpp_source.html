@@ -373,90 +373,94 @@ $(document).ready(function(){initNavTree('fs_8cpp_source.html',''); initResizabl
 <div class="foldopen" id="foldopen00243" data-start="{" data-end="}">
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="fs_8cpp.html#a0fc45dbdf51c5542ff36b94ce33677a1">  243</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="fs_8cpp.html#a0fc45dbdf51c5542ff36b94ce33677a1">runtime_fs_rmdir</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) {</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">if</span> (!path) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="keywordflow">return</span> rmdir(path) == 0;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>}</div>
-</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="foldopen" id="foldopen00248" data-start="{" data-end="}">
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">  248</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">runtime_fs_remove</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">return</span> remove(path) == 0;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="preprocessor">    #ifdef _WIN32</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordflow">return</span> _rmdir(path) == 0;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="preprocessor">    #else</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">return</span> rmdir(path) == 0;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="preprocessor">    #endif</span></div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>}</div>
 </div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
 <div class="foldopen" id="foldopen00252" data-start="{" data-end="}">
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">  252</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">runtime_fs_rename</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *old_path, <span class="keyword">const</span> <span class="keywordtype">char</span> *new_path) {</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keywordflow">return</span> rename(old_path, new_path) == 0;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">  252</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">runtime_fs_remove</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) {</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keywordflow">return</span> remove(path) == 0;</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>}</div>
 </div>
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
 <div class="foldopen" id="foldopen00256" data-start="{" data-end="}">
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">  256</a></span><span class="keywordtype">void</span> *<a class="code hl_function" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">runtime_fs_opendir</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">char</span> *concatenated = (<span class="keywordtype">char</span>*)malloc(strlen(name) + 3);</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">if</span> (!concatenated) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    strcpy(concatenated, name);</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    strcat(concatenated, <span class="stringliteral">&quot;/*&quot;</span>);</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    DirectoryHandle *dir = (DirectoryHandle*)malloc(<span class="keyword">sizeof</span>(DirectoryHandle));</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordflow">if</span> (!dir) {</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        free(concatenated);</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    }</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    dir-&gt;hFind = FindFirstFileA(concatenated, &amp;(dir-&gt;findFileData));</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">if</span> (dir-&gt;hFind == INVALID_HANDLE_VALUE) {</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        free(dir);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        free(concatenated);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    }</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    dir-&gt;firstEntry = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keywordflow">return</span> dir;</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keywordflow">return</span> opendir(name);</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>}</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">  256</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">runtime_fs_rename</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *old_path, <span class="keyword">const</span> <span class="keywordtype">char</span> *new_path) {</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordflow">return</span> rename(old_path, new_path) == 0;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>}</div>
 </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="foldopen" id="foldopen00282" data-start="{" data-end="}">
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno"><a class="line" href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">  282</a></span><span class="keywordtype">char</span> *<a class="code hl_function" href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">runtime_fs_readdir</a>(<span class="keywordtype">void</span> *dir) {</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keywordflow">if</span> (!dir) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    DirectoryHandle *handle = (DirectoryHandle*)dir;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    <span class="keywordflow">if</span> (handle-&gt;firstEntry) {</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        handle-&gt;firstEntry = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        <span class="keywordflow">return</span> handle-&gt;findFileData.cFileName;</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    }</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keywordflow">if</span> (FindNextFileA(handle-&gt;hFind, &amp;(handle-&gt;findFileData)) != 0) {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="foldopen" id="foldopen00260" data-start="{" data-end="}">
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">  260</a></span><span class="keywordtype">void</span> *<a class="code hl_function" href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">runtime_fs_opendir</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keywordtype">char</span> *concatenated = (<span class="keywordtype">char</span>*)malloc(strlen(name) + 3);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keywordflow">if</span> (!concatenated) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    strcpy(concatenated, name);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    strcat(concatenated, <span class="stringliteral">&quot;/*&quot;</span>);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    </div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    DirectoryHandle *dir = (DirectoryHandle*)malloc(<span class="keyword">sizeof</span>(DirectoryHandle));</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keywordflow">if</span> (!dir) {</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        free(concatenated);</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    }</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    dir-&gt;hFind = FindFirstFileA(concatenated, &amp;(dir-&gt;findFileData));</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keywordflow">if</span> (dir-&gt;hFind == INVALID_HANDLE_VALUE) {</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        free(dir);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        free(concatenated);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    }</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    dir-&gt;firstEntry = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">return</span> dir;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keywordflow">return</span> opendir(name);</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>}</div>
+</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="foldopen" id="foldopen00286" data-start="{" data-end="}">
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">  286</a></span><span class="keywordtype">char</span> *<a class="code hl_function" href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">runtime_fs_readdir</a>(<span class="keywordtype">void</span> *dir) {</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <span class="keywordflow">if</span> (!dir) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    DirectoryHandle *handle = (DirectoryHandle*)dir;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="keywordflow">if</span> (handle-&gt;firstEntry) {</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        handle-&gt;firstEntry = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="keywordflow">return</span> handle-&gt;findFileData.cFileName;</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    }</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="keyword">struct </span>dirent* entry = readdir((DIR*)dir);</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordflow">if</span> (!entry) {</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    }</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordflow">return</span> entry-&gt;d_name;</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>}</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keywordflow">if</span> (FindNextFileA(handle-&gt;hFind, &amp;(handle-&gt;findFileData)) != 0) {</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="keywordflow">return</span> handle-&gt;findFileData.cFileName;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    }</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keyword">struct </span>dirent* entry = readdir((DIR*)dir);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="keywordflow">if</span> (!entry) {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    }</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordflow">return</span> entry-&gt;d_name;</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>}</div>
 </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="foldopen" id="foldopen00306" data-start="{" data-end="}">
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="fs_8cpp.html#a8a221c81633637194025698eb180e036">  306</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="fs_8cpp.html#a8a221c81633637194025698eb180e036">runtime_fs_closedir</a>(<span class="keywordtype">void</span> *dir) {</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keywordflow">if</span> (!dir) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    DirectoryHandle *handle = (DirectoryHandle*)dir;</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keywordflow">if</span> (handle-&gt;hFind != INVALID_HANDLE_VALUE) {</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        FindClose(handle-&gt;hFind);</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    }</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keyword">delete</span> handle;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    closedir((DIR*)dir);</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>}</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
+<div class="foldopen" id="foldopen00310" data-start="{" data-end="}">
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno"><a class="line" href="fs_8cpp.html#a8a221c81633637194025698eb180e036">  310</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="fs_8cpp.html#a8a221c81633637194025698eb180e036">runtime_fs_closedir</a>(<span class="keywordtype">void</span> *dir) {</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keywordflow">if</span> (!dir) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    DirectoryHandle *handle = (DirectoryHandle*)dir;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keywordflow">if</span> (handle-&gt;hFind != INVALID_HANDLE_VALUE) {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        FindClose(handle-&gt;hFind);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keyword">delete</span> handle;</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    closedir((DIR*)dir);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>}</div>
 </div>
 <div class="ttc" id="afs_8cpp_html_a0e098c578c22e5bf51f1d32417ce1911"><div class="ttname"><a href="fs_8cpp.html#a0e098c578c22e5bf51f1d32417ce1911">runtime_fs_home_dir</a></div><div class="ttdeci">char * runtime_fs_home_dir()</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00156">fs.cpp:156</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a0fc45dbdf51c5542ff36b94ce33677a1"><div class="ttname"><a href="fs_8cpp.html#a0fc45dbdf51c5542ff36b94ce33677a1">runtime_fs_rmdir</a></div><div class="ttdeci">bool runtime_fs_rmdir(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00243">fs.cpp:243</a></div></div>
@@ -466,20 +470,20 @@ $(document).ready(function(){initNavTree('fs_8cpp_source.html',''); initResizabl
 <div class="ttc" id="afs_8cpp_html_a45e12e9f7a35769ccf7a716156b875f9"><div class="ttname"><a href="fs_8cpp.html#a45e12e9f7a35769ccf7a716156b875f9">runtime_fs_cwd</a></div><div class="ttdeci">char * runtime_fs_cwd()</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00188">fs.cpp:188</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a4d5fff49528708c055e8c064350a9d11"><div class="ttname"><a href="fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11">runtime_fs_isdir</a></div><div class="ttdeci">bool runtime_fs_isdir(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00086">fs.cpp:86</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a50ba6e1ede5b19d4cd24ad86082d4092"><div class="ttname"><a href="fs_8cpp.html#a50ba6e1ede5b19d4cd24ad86082d4092">runtime_fs_get_uid</a></div><div class="ttdeci">int runtime_fs_get_uid(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00118">fs.cpp:118</a></div></div>
-<div class="ttc" id="afs_8cpp_html_a562e3ef3b98b13c83da4f706e7be6040"><div class="ttname"><a href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">runtime_fs_rename</a></div><div class="ttdeci">bool runtime_fs_rename(const char *old_path, const char *new_path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00252">fs.cpp:252</a></div></div>
+<div class="ttc" id="afs_8cpp_html_a562e3ef3b98b13c83da4f706e7be6040"><div class="ttname"><a href="fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040">runtime_fs_rename</a></div><div class="ttdeci">bool runtime_fs_rename(const char *old_path, const char *new_path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00256">fs.cpp:256</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a798e8244d5a44230f893edaacd35a8df"><div class="ttname"><a href="fs_8cpp.html#a798e8244d5a44230f893edaacd35a8df">stat_struct</a></div><div class="ttdeci">#define stat_struct</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00059">fs.cpp:59</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a7ec16ea75b66cf5fc75140115a3c5767"><div class="ttname"><a href="fs_8cpp.html#a7ec16ea75b66cf5fc75140115a3c5767">runtime_fs_get_mtime</a></div><div class="ttdeci">int64_t runtime_fs_get_mtime(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00094">fs.cpp:94</a></div></div>
-<div class="ttc" id="afs_8cpp_html_a8a221c81633637194025698eb180e036"><div class="ttname"><a href="fs_8cpp.html#a8a221c81633637194025698eb180e036">runtime_fs_closedir</a></div><div class="ttdeci">void runtime_fs_closedir(void *dir)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00306">fs.cpp:306</a></div></div>
+<div class="ttc" id="afs_8cpp_html_a8a221c81633637194025698eb180e036"><div class="ttname"><a href="fs_8cpp.html#a8a221c81633637194025698eb180e036">runtime_fs_closedir</a></div><div class="ttdeci">void runtime_fs_closedir(void *dir)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00310">fs.cpp:310</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a8ecb0c265c363ad8cee7ca47b5300ff5"><div class="ttname"><a href="fs_8cpp.html#a8ecb0c265c363ad8cee7ca47b5300ff5">runtime_fs_get_ctime</a></div><div class="ttdeci">int64_t runtime_fs_get_ctime(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00106">fs.cpp:106</a></div></div>
 <div class="ttc" id="afs_8cpp_html_a9024e3426967421c344069e6c2348041"><div class="ttname"><a href="fs_8cpp.html#a9024e3426967421c344069e6c2348041">runtime_fs_temp_dir</a></div><div class="ttdeci">char * runtime_fs_temp_dir()</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00126">fs.cpp:126</a></div></div>
 <div class="ttc" id="afs_8cpp_html_aa5ebe16d2b53c756efb7438ee72cc096"><div class="ttname"><a href="fs_8cpp.html#aa5ebe16d2b53c756efb7438ee72cc096">runtime_fs_exists</a></div><div class="ttdeci">bool runtime_fs_exists(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00072">fs.cpp:72</a></div></div>
 <div class="ttc" id="afs_8cpp_html_aba28768f0d09b47a501b2aae93b36f80"><div class="ttname"><a href="fs_8cpp.html#aba28768f0d09b47a501b2aae93b36f80">runtime_fs_realpath</a></div><div class="ttdeci">char * runtime_fs_realpath(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00217">fs.cpp:217</a></div></div>
-<div class="ttc" id="afs_8cpp_html_ac4111934b84d4f1acf739344dc2979d4"><div class="ttname"><a href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">runtime_fs_opendir</a></div><div class="ttdeci">void * runtime_fs_opendir(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00256">fs.cpp:256</a></div></div>
+<div class="ttc" id="afs_8cpp_html_ac4111934b84d4f1acf739344dc2979d4"><div class="ttname"><a href="fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4">runtime_fs_opendir</a></div><div class="ttdeci">void * runtime_fs_opendir(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00260">fs.cpp:260</a></div></div>
 <div class="ttc" id="afs_8cpp_html_ac909f13cba1c032ef67b9d579a417b83"><div class="ttname"><a href="fs_8cpp.html#ac909f13cba1c032ef67b9d579a417b83">runtime_fs_mkdir</a></div><div class="ttdeci">bool runtime_fs_mkdir(const char *path, int mode)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00234">fs.cpp:234</a></div></div>
 <div class="ttc" id="afs_8cpp_html_ad7b8d61359a8fe66187f413470913f9e"><div class="ttname"><a href="fs_8cpp.html#ad7b8d61359a8fe66187f413470913f9e">stat_func</a></div><div class="ttdeci">#define stat_func</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00060">fs.cpp:60</a></div></div>
 <div class="ttc" id="afs_8cpp_html_ad849ea6dedc673b7b494c6f1356da5aa"><div class="ttname"><a href="fs_8cpp.html#ad849ea6dedc673b7b494c6f1356da5aa">runtime_fs_isfile</a></div><div class="ttdeci">bool runtime_fs_isfile(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00080">fs.cpp:80</a></div></div>
-<div class="ttc" id="afs_8cpp_html_ae1dd57f1b1b6554f9d8b23bba6299491"><div class="ttname"><a href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">runtime_fs_readdir</a></div><div class="ttdeci">char * runtime_fs_readdir(void *dir)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00282">fs.cpp:282</a></div></div>
-<div class="ttc" id="afs_8cpp_html_afc3d719c3c8d902629029a1d7d1d08f7"><div class="ttname"><a href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">runtime_fs_remove</a></div><div class="ttdeci">bool runtime_fs_remove(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00248">fs.cpp:248</a></div></div>
+<div class="ttc" id="afs_8cpp_html_ae1dd57f1b1b6554f9d8b23bba6299491"><div class="ttname"><a href="fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491">runtime_fs_readdir</a></div><div class="ttdeci">char * runtime_fs_readdir(void *dir)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00286">fs.cpp:286</a></div></div>
+<div class="ttc" id="afs_8cpp_html_afc3d719c3c8d902629029a1d7d1d08f7"><div class="ttname"><a href="fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7">runtime_fs_remove</a></div><div class="ttdeci">bool runtime_fs_remove(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00252">fs.cpp:252</a></div></div>
 <div class="ttc" id="afs_8cpp_html_afe0b62100840a56e36b49df2b9459394"><div class="ttname"><a href="fs_8cpp.html#afe0b62100840a56e36b49df2b9459394">runtime_fs_get_size</a></div><div class="ttdeci">uint64_t runtime_fs_get_size(const char *path)</div><div class="ttdef"><b>Definition</b> <a href="fs_8cpp_source.html#l00100">fs.cpp:100</a></div></div>
 <div class="ttc" id="afs_8h_html"><div class="ttname"><a href="fs_8h.html">fs.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
