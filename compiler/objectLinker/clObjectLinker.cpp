@@ -132,9 +132,6 @@ namespace yoi {
             }
         }
 
-        if (!isResolved)
-            panic(0, 0, "Unable to find cl.exe. Please ensure Visual Studio Build Tools are installed.");
-
         for (const auto &base_path : windows_kit_install_bases) {
             if (!std::filesystem::exists(base_path) || !std::filesystem::is_directory(base_path)) {
                 continue;
@@ -220,6 +217,10 @@ namespace yoi {
 
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
+        if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
+            command += L" /LD"; // Build a shared library
+        }
+
         command += L" /link";
 
         if (!elysia_runtime_fs_path.empty()) {
@@ -234,10 +235,6 @@ namespace yoi {
             command += L" /LIBPATH:\"" + path + L"\"";
         }
         command += L" libcmt.lib";
-
-        if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
-            command += L" /LD"; // Build a shared library
-        }
 
         command += L" /SUBSYSTEM:CONSOLE"; // fuck argc, argv
 
