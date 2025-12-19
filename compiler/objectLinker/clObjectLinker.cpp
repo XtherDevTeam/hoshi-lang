@@ -132,6 +132,9 @@ namespace yoi {
             }
         }
 
+        if (!isResolved)
+            panic(0, 0, "Unable to find cl.exe. Please ensure Visual Studio Build Tools are installed.");
+
         for (const auto &base_path : windows_kit_install_bases) {
             if (!std::filesystem::exists(base_path) || !std::filesystem::is_directory(base_path)) {
                 continue;
@@ -173,9 +176,23 @@ namespace yoi {
             }
         }
 
-        yoi_assert(isResolved, 0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
-        if (isResolved)
-            return *this;
+        if (!isResolved)
+            warning(0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
+        
+        const char* lib_env = std::getenv("LIB");
+        if (lib_env) {
+            std::wstring lib_env_str = yoi::string2wstring(lib_env);
+            
+            for (auto pos = lib_env_str.find(L';'); pos != std::wstring::npos; pos = lib_env_str.find(L';', pos + 1)) {
+                std::wstring path = lib_env_str.substr(0, pos);
+                vsRuntimePath.emplace_back(path);
+            }
+            // Add the last path segment
+            std::wstring path = lib_env_str.substr(0, lib_env_str.find(L';'));
+            vsRuntimePath.emplace_back(path);
+        }
+
+        return *this;
 
         throw std::runtime_error("cl.exe linker not found. Please ensure Visual Studio Build Tools are installed and "
                                  "configured, or add cl.exe to your system PATH.");
