@@ -51,6 +51,7 @@ void printUsage(const char* programName) {
               << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
               << "  -D <k> <v>, --define <k> <v>    Add a macro definition.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
+              << "  --whereami, -w                  Print the path to the hoshi-lang installation directory.\n"
               << "  -h, --help                      Display this help message.\n";
 }
 
@@ -135,6 +136,9 @@ int main(int argc, const char **argv) {
             preserveIntermediateFiles = true;
         } else if (arg == "--help" || arg == "-h") {
             printUsage(argv[0]);
+            return 0; 
+        } else if (arg == "--whereami" || arg == "-w") {
+            std::cout << yoi::wstring2string(yoi::realpath(yoi::whereIsHoshiLang()));
             return 0; 
         } else if (arg == "-D" || arg == "--define") {
             if (i + 2 < argc) {

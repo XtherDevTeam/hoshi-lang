@@ -2833,7 +2833,11 @@ namespace yoi {
                 return moduleContext->getIRBuilder().getCurrentInsertionPoint();
             }
         } catch (std::runtime_error &) {
-            // not found, panic
+            panic(identifier->getLine(),
+                  identifier->getColumn(),
+                  "undefined identifier: " + wstring2string(identifier->node.strVal));
+            return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+        } catch (std::out_of_range &) {
             panic(identifier->getLine(),
                   identifier->getColumn(),
                   "undefined identifier: " + wstring2string(identifier->node.strVal));

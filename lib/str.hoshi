@@ -66,7 +66,7 @@ impl Str {
         this.data[this.length] = '\0'
     },
     constructor(arr: char[]) {
-        this.length = arr.length
+        this.length = runtime.strlen(runtime.runtime_get_string_array_data_pointer(arr))
         this.data = arr
         this.capacity = this.length + 1
     },

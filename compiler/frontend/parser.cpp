@@ -2379,6 +2379,7 @@ namespace yoi {
         lex.scan();
         switch (lex.curToken.kind) {
             case lexer::token::tokenKind::equal:
+            case lexer::token::tokenKind::notEqual:
             case lexer::token::tokenKind::lessEqual:
             case lexer::token::tokenKind::greaterEqual:
             case lexer::token::tokenKind::greaterThan:
