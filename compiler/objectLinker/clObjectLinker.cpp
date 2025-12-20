@@ -229,10 +229,12 @@ namespace yoi {
         } else {
             warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.");
         }
+        // also link against msvcrt.lib
         // command += L" /LIBPATH:\"" + vsRuntimePath + L"\"";
         for (auto &path : vsRuntimePath) {
             command += L" /LIBPATH:\"" + path + L"\"";
         }
+        command += L" msvcrt.lib";
 
         command += L" /SUBSYSTEM:CONSOLE"; // fuck argc, argv
 
