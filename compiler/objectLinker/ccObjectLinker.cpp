@@ -5,6 +5,7 @@
 #include "ccObjectLinker.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <cstring>
 #include <sstream>
 #include <filesystem>
 #include <string>
@@ -74,9 +75,15 @@ namespace yoi {
         command += yoi::wstring2string(this->getObjectPath()) + "\"";
 
         // add additional linking files
+        if (strcmp(YOI_PLATFORM, "darwin") != 0)
+            // if the platform is not darwin, we need to add -Wl,--start-group and -Wl,--end-group to link as groups
+            command += " -Wl,--start-group";
         for (const auto &file : this->getConfig()->additionalLinkingFiles) {
+            // link as groups
             command += " \"" + yoi::wstring2string(file) + "\"";
         }
+        if (strcmp(YOI_PLATFORM, "darwin") != 0)
+            command += " -Wl,--end-group";
 
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
