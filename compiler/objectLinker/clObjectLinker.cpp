@@ -229,12 +229,10 @@ namespace yoi {
         } else {
             warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.");
         }
-        // also link against libcmt.lib
         // command += L" /LIBPATH:\"" + vsRuntimePath + L"\"";
         for (auto &path : vsRuntimePath) {
             command += L" /LIBPATH:\"" + path + L"\"";
         }
-        command += L" libcmt.lib";
 
         command += L" /SUBSYSTEM:CONSOLE"; // fuck argc, argv
 
