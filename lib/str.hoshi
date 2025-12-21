@@ -368,7 +368,7 @@ impl Str {
     },
     trim() : Str {
         let start = 0u
-        let end = this.length
+        let end = this.length + 0u
         while (start < end && this.data[start] <= ' ') {
             start += 1
         }

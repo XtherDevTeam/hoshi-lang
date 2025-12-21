@@ -2254,7 +2254,7 @@ namespace yoi {
         
         AnalysisState entryState;
         // Rule 3: Function parameters are nullable
-        for(yoi::indexT i = 0; i < targetFunction->argumentTypes.size(); ++i) {
+        for(yoi::indexT i = 0; i < targetFunction->variableTable.getVariables().size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
             if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
                 varType->addAttribute(IRValueType::ValueAttr::Nullable);
@@ -2465,7 +2465,7 @@ namespace yoi {
                     for (int i = 0; i < argCount; i++) {
                         simulationStack.pop();
                     }
-                    if (function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI))
+                    if (function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI) && !function->hasAttribute(IRFunctionDefinition::FunctionAttrs::Intrinsic))
                         returnType->addAttribute(IRValueType::ValueAttr::Nullable); // Rule 3
                     else if (function->returnType->isBasicType())
                         returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
@@ -2654,11 +2654,10 @@ namespace yoi {
         std::queue<indexT> worklist;
         bool isAlwaysRaw = targetFunction->returnType->isBasicType();
         bool hasReturnInstruction = false;
-
         
         // Rule 5: Parameters are not raw
         AnalysisState entryState;
-        for(yoi::indexT i = 0; i < targetFunction->argumentTypes.size(); ++i) {
+        for(yoi::indexT i = 0; i < targetFunction->variableTable.getVariables().size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
             if (varType->isBasicType() && !varType->isArrayType() && !varType->isDynamicArrayType() && !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
                 varType->addAttribute(IRValueType::ValueAttr::Raw);
@@ -2922,7 +2921,7 @@ namespace yoi {
                     for (int i = 0; i < argCount; i++) {
                         simulationStack.pop();
                     }
-                    if (!function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI))
+                    if (!function->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoFFI) || function->hasAttribute(IRFunctionDefinition::FunctionAttrs::Intrinsic))
                         returnType->addAttribute(IRValueType::ValueAttr::Raw); // Rule 3
                     simulationStack.push(returnType, {currentCodeBlockIndex, {}, false});
                     break;
@@ -2930,18 +2929,21 @@ namespace yoi {
                 case IR::Opcode::basic_cast_int:
                 case IR::Opcode::basic_cast_deci:
                 case IR::Opcode::basic_cast_bool:
-                case IR::Opcode::basic_cast_char: {
+                case IR::Opcode::basic_cast_char: 
+                case IR::Opcode::basic_cast_unsigned:
+                case IR::Opcode::basic_cast_short: {
                     auto val = simulationStack.peek(0); simulationStack.pop();
                     std::shared_ptr<IRValueType> targetType;
                     if (ins.opcode == IR::Opcode::basic_cast_int) targetType = compilerCtx->getIntObjectType();
                     else if (ins.opcode == IR::Opcode::basic_cast_deci) targetType = compilerCtx->getDeciObjectType();
                     else if (ins.opcode == IR::Opcode::basic_cast_bool) targetType = compilerCtx->getBoolObjectType();
-                    else targetType = compilerCtx->getCharObjectType();
+                    else if (ins.opcode == IR::Opcode::basic_cast_char) targetType = compilerCtx->getCharObjectType();
+                    else if (ins.opcode == IR::Opcode::basic_cast_unsigned) targetType = compilerCtx->getUnsignedObjectType();
+                    else if (ins.opcode == IR::Opcode::basic_cast_short) targetType = compilerCtx->getShortObjectType();
+                    else panic(ins.debugInfo.line, ins.debugInfo.column, "Invalid basic cast opcode");
                     
                     auto resultType = std::make_shared<IRValueType>(*targetType);
-                    if (val.type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                        resultType->addAttribute(IRValueType::ValueAttr::Raw);
-                    }
+                    resultType->addAttribute(IRValueType::ValueAttr::Raw);
                     simulationStack.push(resultType, {});
                     break;
                 }
@@ -4209,88 +4211,7 @@ namespace yoi {
     }
 
     void IROptimizer::optimize() {
-        std::queue<CallGraph::FuncIdentifier> worklist;
-        for (const auto& funcId : callGraph.functions) {
-            functionAnalysisResults[funcId] = FunctionAnalysisInfo{}; 
-            worklist.push(funcId);
-        }
-
-        while (!worklist.empty()) {
-            auto funcId = worklist.front();
-            worklist.pop();
-
-            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
-            auto& func = targetedModule->functionTable[funcId.second];
-
-            // skip unreachable functions during analysis phase, unless they are preserved.
-            if (callGraph.unreachableFunctions.count(funcId) && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
-                continue;
-            }
-
-            IRFunctionOptimizer analyzer{compilerCtx, targetedModule, functionAnalysisResults};
-            analyzer.setTargetFunction(func);
-
-            // Re-analyze the function to get its new properties
-            bool newIsNullable = analyzer.performNullableCheck();
-            bool newIsRaw = analyzer.performRawCheck();
-
-            FunctionAnalysisInfo& currentInfo = functionAnalysisResults.at(funcId);
-            if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw) {
-                // update the global results
-                currentInfo.isReturnValueNullable = newIsNullable;
-                currentInfo.isReturnValueRaw = newIsRaw;
-
-                // if they changed, add all CALLERS of this function back to the worklist
-                // because their analysis might now be incorrect.
-                if (callGraph.callerGraph.count(funcId)) {
-                    for (const auto& callerId : callGraph.callerGraph.at(funcId)) {
-                        worklist.push(callerId);
-                    }
-                }
-            }
-        }
-
-        for (const auto& [funcId, analysisInfo] : functionAnalysisResults) {
-            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
-            auto& func = targetedModule->functionTable[funcId.second];
-
-            // get a mutable reference to the function's return type
-            auto returnType = managedPtr(*func->returnType);
-
-            // synchronize the Nullable attribute
-            if (analysisInfo.isReturnValueNullable && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
-                returnType->addAttribute(IRValueType::ValueAttr::Nullable);
-            } else {
-                // crucially, remove the attribute if the analysis proved non-nullability.
-                returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
-            }
-
-            // synchronize the Raw attribute
-            if (analysisInfo.isReturnValueRaw && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
-                returnType->addAttribute(IRValueType::ValueAttr::Raw);
-            } else {
-                returnType->removeAttribute(IRValueType::ValueAttr::Raw);
-            }
-
-            func->returnType = returnType;
-        }
-
-        for (const auto& funcId : callGraph.functions) {
-            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
-            auto& func = targetedModule->functionTable[funcId.second];
-
-            // skip unreachable/dead functions from being optimized, or just clear their bodies.
-            if (callGraph.unreachableFunctions.count(funcId) && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
-                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Unreachable);
-                func->codeBlock.clear();
-                continue;
-            }
-
-            set_current_file_path(func->debugInfo.sourceFile);
-            IRFunctionOptimizer optimizer{compilerCtx, targetedModule, functionAnalysisResults};
-            optimizer.setTargetFunction(func).doOptimizationForCurrentFunction();
-        }
-
+        performBaseOptimization();
         performStructNullablePass();
         performInterfaceWrapperPass();
     }
@@ -4535,5 +4456,95 @@ namespace yoi {
             }
         }
         return std::make_pair(successors, predecessors);
+    }
+
+    bool IROptimizer::performBaseOptimization() {
+        std::queue<CallGraph::FuncIdentifier> worklist;
+        for (const auto &funcId : callGraph.functions) {
+            functionAnalysisResults[funcId] = FunctionAnalysisInfo{};
+            worklist.push(funcId);
+        }
+
+        while (!worklist.empty()) {
+            auto funcId = worklist.front();
+            worklist.pop();
+
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto &func = targetedModule->functionTable[funcId.second];
+
+            // skip unreachable functions during analysis phase, unless they are preserved.
+            if (callGraph.unreachableFunctions.count(funcId) &&
+                !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
+                continue;
+            }
+
+            IRFunctionOptimizer analyzer{compilerCtx, targetedModule, functionAnalysisResults};
+            analyzer.setTargetFunction(func);
+
+            // Re-analyze the function to get its new properties
+            bool newIsNullable = analyzer.performNullableCheck();
+            bool newIsRaw = analyzer.performRawCheck();
+
+            FunctionAnalysisInfo &currentInfo = functionAnalysisResults.at(funcId);
+            if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw) {
+                // update the global results
+                currentInfo.isReturnValueNullable = newIsNullable;
+                currentInfo.isReturnValueRaw = newIsRaw;
+
+                // if they changed, add all CALLERS of this function back to the worklist
+                // because their analysis might now be incorrect.
+                if (callGraph.callerGraph.count(funcId)) {
+                    for (const auto &callerId : callGraph.callerGraph.at(funcId)) {
+                        worklist.push(callerId);
+                    }
+                }
+            }
+        }
+
+        for (const auto &[funcId, analysisInfo] : functionAnalysisResults) {
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto &func = targetedModule->functionTable[funcId.second];
+
+            // get a mutable reference to the function's return type
+            auto returnType = managedPtr(*func->returnType);
+
+            // synchronize the Nullable attribute
+            if (analysisInfo.isReturnValueNullable &&
+                !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
+                returnType->addAttribute(IRValueType::ValueAttr::Nullable);
+            } else {
+                // crucially, remove the attribute if the analysis proved non-nullability.
+                returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
+            }
+
+            // synchronize the Raw attribute
+            if (analysisInfo.isReturnValueRaw &&
+                !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)) {
+                returnType->addAttribute(IRValueType::ValueAttr::Raw);
+            } else {
+                returnType->removeAttribute(IRValueType::ValueAttr::Raw);
+            }
+
+            func->returnType = returnType;
+        }
+
+        for (const auto &funcId : callGraph.functions) {
+            auto targetedModule = compilerCtx->getImportedModule(funcId.first);
+            auto &func = targetedModule->functionTable[funcId.second];
+
+            // skip unreachable/dead functions from being optimized, or just clear their bodies.
+            if (callGraph.unreachableFunctions.count(funcId) &&
+                !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
+                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Unreachable);
+                func->codeBlock.clear();
+                continue;
+            }
+
+            set_current_file_path(func->debugInfo.sourceFile);
+            IRFunctionOptimizer optimizer{compilerCtx, targetedModule, functionAnalysisResults};
+            optimizer.setTargetFunction(func).doOptimizationForCurrentFunction();
+        }
+
+        return true;
     }
 } // namespace yoi

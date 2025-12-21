@@ -8,11 +8,11 @@
 python benchmark/string/string.py &> test.log  0.19s user 0.03s system 82% cpu 0.272 total
 ❯ time java ./benchmark/string/string.java &> test.log
 java ./benchmark/string/string.java &> test.log  1.15s user 1.06s system 122% cpu 1.798 total
-❯ ./cmake-build-release/hoshi_lang benchmark/string/string.hoshi -o string.1 --build-mode release
+❯ ./cmake-build-release/hoshi_lang benchmark/string/string.hoshi -o string-1 --build-mode release
 Linking Yoi IR modules...
 Generating target object code...
 Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features N/A
 Linking final darwin executable...
 Compilation successful!
-❯ time ./string &> test.log
-./string &> test.log  0.82s user 0.02s system 79% cpu 1.068 total
+❯ time ./string-1 &> test.log
+./string-1 &> test.log  0.39s user 0.02s system 98% cpu 0.409 total

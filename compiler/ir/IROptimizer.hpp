@@ -266,8 +266,10 @@ namespace yoi {
         bool performStructNullablePass();
 
         bool performInterfaceWrapperPass();
-        
-    public:
+
+        bool performBaseOptimization();
+
+      public:
         IROptimizer(const std::shared_ptr<compilerContext> &compilerCtx, yoi::indexT entryModuleIndex);
 
         void buildCallGraph();
