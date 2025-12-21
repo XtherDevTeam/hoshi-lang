@@ -1,5 +1,7 @@
 var NAVTREEINDEX18 =
 {
+"structyoi_1_1IRDebugInfo.html#a679a66343843973e165578188e7853a8":[31,0,1,62,1],
+"structyoi_1_1IRDebugInfo.html#a679a66343843973e165578188e7853a8":[30,0,1,62,1],
 "structyoi_1_1IRDebugInfo.html#af7f6f87684c5ad59aff4619c585fb114":[31,0,1,62,2],
 "structyoi_1_1IRDebugInfo.html#af7f6f87684c5ad59aff4619c585fb114":[30,0,1,62,2],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html":[31,0,1,66,0],
@@ -102,8 +104,8 @@ var NAVTREEINDEX18 =
 "structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#abde5e8778f624735adbeadb5b5320c1b":[31,0,1,67,1,2],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html":[30,0,1,69,0],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html":[31,0,1,69,0],
-"structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac":[30,0,1,69,0,0],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac":[31,0,1,69,0,0],
+"structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac":[30,0,1,69,0,0],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a3f10fccf76a77d428ca964d40d432a4f":[30,0,1,69,0,5],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a3f10fccf76a77d428ca964d40d432a4f":[31,0,1,69,0,5],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a55c7915b2ce93edd345c7f8376366093":[30,0,1,69,0,3],
@@ -112,8 +114,8 @@ var NAVTREEINDEX18 =
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a88c208b7738be84da44193989ef7662a":[31,0,1,69,0,2],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a99714b4c55b630851c80e2ee9d57ad8d":[31,0,1,69,0,1],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a99714b4c55b630851c80e2ee9d57ad8d":[30,0,1,69,0,1],
-"structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[31,0,1,69,0,8],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[30,0,1,69,0,8],
+"structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[31,0,1,69,0,8],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#acbbd39ee3d6a81a2985f92fbb9e8e65a":[31,0,1,69,0,6],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#acbbd39ee3d6a81a2985f92fbb9e8e65a":[30,0,1,69,0,6],
 "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#adce3b4c9628343d653e3048ac082d3a8":[31,0,1,69,0,9],
@@ -247,7 +249,5 @@ var NAVTREEINDEX18 =
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a098cb71bc7fad0ce8f634d06991dc484":[31,0,1,92,2,0,1],
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a098cb71bc7fad0ce8f634d06991dc484":[30,0,1,92,2,0,1],
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a65457a3fa7904cfb30c890a602332205":[30,0,1,92,2,0,0],
-"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a65457a3fa7904cfb30c890a602332205":[31,0,1,92,2,0,0],
-"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad8338ed934c05074fc0e055c3f76be30":[31,0,1,92,2,2],
-"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad8338ed934c05074fc0e055c3f76be30":[30,0,1,92,2,2]
+"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a65457a3fa7904cfb30c890a602332205":[31,0,1,92,2,0,0]
 };

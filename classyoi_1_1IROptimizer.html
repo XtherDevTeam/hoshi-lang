@@ -126,6 +126,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a64e9d4cbf28b8bb795a72d27b4cda1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cbc351156c6d8771e9a8daa04546c5f" id="r_a1cbc351156c6d8771e9a8daa04546c5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a1cbc351156c6d8771e9a8daa04546c5f">performInterfaceWrapperPass</a> ()</td></tr>
 <tr class="separator:a1cbc351156c6d8771e9a8daa04546c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec8e700598aff8677e84c81fcbdea6e" id="r_a7ec8e700598aff8677e84c81fcbdea6e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IROptimizer.html#a7ec8e700598aff8677e84c81fcbdea6e">performBaseOptimization</a> ()</td></tr>
+<tr class="separator:a7ec8e700598aff8677e84c81fcbdea6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -168,7 +170,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04136">4136</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04138">4138</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
 </div>
 </div>
@@ -188,9 +190,9 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04144">4144</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04146">4146</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l04139">CallGraph::addCall()</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00262">IROptimizer::callGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00024">CallGraph::entryModuleIndex</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00263">IROptimizer::entryModuleIndex</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343">IRBuildConfig::executable</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00030">CallGraph::functions</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9">IRFunctionDefinition::NoRawAndNullOptimization</a>, <a class="el" href="def_8cpp_source.html#l00091">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919">IRFunctionDefinition::Preserve</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04203">CallGraph::traverseGraph()</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l04141">CallGraph::addCall()</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00262">IROptimizer::callGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00024">CallGraph::entryModuleIndex</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00263">IROptimizer::entryModuleIndex</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343">IRBuildConfig::executable</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00030">CallGraph::functions</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9">IRFunctionDefinition::NoRawAndNullOptimization</a>, <a class="el" href="def_8cpp_source.html#l00091">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919">IRFunctionDefinition::Preserve</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04205">CallGraph::traverseGraph()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00198">compilerContext::runOptimizer()</a>.</p>
 <div class="dynheader">
@@ -248,129 +250,289 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04211">4211</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04213">4213</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00027">CallGraph::callerGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00262">IROptimizer::callGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01917">IRFunctionOptimizer::doOptimizationForCurrentFunction()</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00264">IROptimizer::functionAnalysisResults</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00030">CallGraph::functions</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00040">FunctionAnalysisInfo::isReturnValueNullable</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00041">FunctionAnalysisInfo::isReturnValueRaw</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9">IRFunctionDefinition::NoRawAndNullOptimization</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04397">IROptimizer::performInterfaceWrapperPass()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02247">IRFunctionOptimizer::performNullableCheck()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04385">IROptimizer::performStructNullablePass()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919">IRFunctionDefinition::Preserve</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="def_8cpp_source.html#l00073">yoi::set_current_file_path()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00578">IRFunctionOptimizer::setTargetFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00029">CallGraph::unreachableFunctions</a>.</p>
+<p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l04461">IROptimizer::performBaseOptimization()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04318">IROptimizer::performInterfaceWrapperPass()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04306">IROptimizer::performStructNullablePass()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1IROptimizer_aa5f96dceae0a01376ab1001f038abf9f_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_aa5f96dceae0a01376ab1001f038abf9f_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1IROptimizer_aa5f96dceae0a01376ab1001f038abf9f_cgraph" id="aclassyoi_1_1IROptimizer_aa5f96dceae0a01376ab1001f038abf9f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,613,84,638"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c" title=" " alt="" coords="132,548,385,588"/>
-<area shape="poly" title=" " alt="" coords="84,612,170,589,171,594,85,618"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a60ec4221487086a4bb1662eeab00988f" title=" " alt="" coords="477,605,660,645"/>
-<area shape="poly" title=" " alt="" coords="84,623,464,623,464,628,84,628"/>
-<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1061,70,1191,95"/>
-<area shape="poly" title=" " alt="" coords="55,611,130,534,285,399,351,347,415,304,483,266,558,231,646,197,751,161,829,139,908,120,1047,92,1048,98,910,125,831,144,753,167,648,202,561,236,485,270,418,308,354,352,288,403,134,538,59,615"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a1cbc351156c6d8771e9a8daa04546c5f" title=" " alt="" coords="151,663,367,689"/>
-<area shape="poly" title=" " alt="" coords="85,632,192,658,191,663,84,637"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#a64e9d4cbf28b8bb795a72d27b4cda1da" title=" " alt="" coords="161,73,356,98"/>
-<area shape="poly" title=" " alt="" coords="44,612,48,516,61,366,72,288,87,216,106,156,117,133,130,116,148,101,151,105,134,119,122,136,111,158,92,217,78,289,67,367,54,516,49,613"/>
-<area shape="rect" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7" title=" " alt="" coords="165,713,352,738"/>
-<area shape="poly" title=" " alt="" coords="59,636,90,668,133,698,154,706,152,711,131,702,87,672,55,640"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5e976e390e5d19c5168b62ef6c6c1260" title=" " alt="" coords="167,763,350,803"/>
-<area shape="poly" title=" " alt="" coords="54,637,82,691,105,721,134,747,156,760,153,764,130,751,101,725,78,694,49,639"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="776,784,959,824"/>
-<area shape="poly" title=" " alt="" coords="303,586,346,613,387,649,403,676,409,701,416,724,435,744,480,758,563,771,762,793,762,798,562,777,478,763,432,749,412,726,404,702,398,678,383,652,343,617,300,591"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5bc9db2399f983ebd619c163eff5c0aa" title=" " alt="" coords="1031,5,1221,45"/>
-<area shape="poly" title=" " alt="" coords="266,547,288,498,324,432,372,361,400,328,432,298,501,246,576,200,655,161,735,127,888,76,1016,43,1018,48,890,81,737,132,657,166,579,205,504,250,435,302,404,331,376,364,328,434,293,500,270,549"/>
-<area shape="rect" href="namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b" title=" " alt="" coords="1059,619,1193,645"/>
-<area shape="poly" title=" " alt="" coords="385,561,511,560,661,563,822,572,983,591,1031,604,1065,613,1064,618,1030,609,982,596,822,577,660,568,511,565,386,566"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a258f700dd06df5f3c119cd12c7492663" title=" " alt="" coords="433,809,704,849"/>
-<area shape="poly" title=" " alt="" coords="306,586,349,612,387,649,399,669,406,688,409,723,414,756,421,772,435,789,450,800,447,805,431,793,417,775,409,758,404,723,401,689,395,671,383,652,346,617,303,591"/>
-<area shape="poly" title=" " alt="" coords="368,585,465,603,464,609,367,591"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ad73567d0708438f82747b3a9fa7955cc" title=" " alt="" coords="763,176,972,216"/>
-<area shape="poly" title=" " alt="" coords="274,546,338,479,383,442,432,412,472,398,509,392,575,396,606,398,637,395,669,384,702,362,715,348,722,334,727,303,731,271,737,254,750,238,774,220,777,224,754,242,742,257,736,272,732,304,727,335,720,351,706,366,671,389,638,400,606,403,574,401,509,398,473,403,434,417,386,447,342,483,278,550"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a615d1d144130d412d4aac19047f2432d" title=" " alt="" coords="477,491,660,531"/>
-<area shape="poly" title=" " alt="" coords="367,545,464,527,465,533,368,551"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2cd583aab0483eb60ded1aa51247a6ba" title=" " alt="" coords="1269,733,1455,773"/>
-<area shape="poly" title=" " alt="" coords="309,586,351,612,371,629,388,649,403,679,409,707,407,761,405,786,407,811,416,835,435,859,472,890,508,909,542,918,578,921,656,919,702,918,752,923,824,936,887,951,995,979,1046,985,1098,984,1155,970,1220,943,1243,929,1264,911,1300,869,1327,824,1346,785,1351,787,1332,827,1304,872,1268,915,1246,933,1223,948,1157,975,1099,989,1046,991,994,984,886,956,823,941,752,928,701,924,656,924,578,927,541,923,506,914,469,894,431,863,411,838,402,812,400,786,401,760,404,708,398,681,383,652,367,633,348,616,306,590"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f020b6a408a7e38cf2cccca2fbd2c4b" title=" " alt="" coords="477,312,660,352"/>
-<area shape="poly" title=" " alt="" coords="270,546,295,508,332,460,378,411,432,368,463,353,465,358,435,373,382,415,336,464,299,512,274,549"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a787a23f0876a41ec2dfa7ebe7567ae45" title=" " alt="" coords="477,427,660,467"/>
-<area shape="poly" title=" " alt="" coords="292,545,356,510,432,476,463,466,465,471,434,481,358,515,295,550"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a35f75104c0b80b9a58f28db3216ecacf" title=" " alt="" coords="477,695,660,735"/>
-<area shape="poly" title=" " alt="" coords="298,586,434,655,507,687,505,692,432,660,296,591"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="1035,784,1217,824"/>
-<area shape="poly" title=" " alt="" coords="959,801,1021,801,1021,807,959,807"/>
-<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="1271,669,1453,709"/>
-<area shape="poly" title=" " alt="" coords="1184,782,1220,763,1243,741,1253,730,1268,719,1280,713,1282,717,1271,724,1257,734,1247,745,1223,768,1186,786"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1319,351,1405,377"/>
-<area shape="poly" title=" " alt="" coords="1206,43,1223,55,1245,83,1255,109,1261,137,1272,171,1351,338,1346,340,1267,173,1255,139,1249,111,1240,85,1219,59,1203,48"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1685,402,1828,427"/>
-<area shape="poly" title=" " alt="" coords="1195,43,1222,55,1301,97,1380,143,1527,239,1649,328,1731,391,1727,395,1646,332,1524,244,1377,147,1299,101,1220,60,1192,48"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1503,503,1637,543"/>
-<area shape="poly" title=" " alt="" coords="1377,375,1430,427,1504,487,1515,494,1512,498,1501,491,1427,431,1374,379"/>
-<area shape="poly" title=" " alt="" coords="1405,366,1638,393,1672,398,1671,404,1637,399,1404,371"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1685,510,1828,535"/>
-<area shape="poly" title=" " alt="" coords="1638,520,1672,520,1672,525,1638,525"/>
-<area shape="poly" title=" " alt="" coords="1611,500,1636,487,1724,433,1727,437,1639,492,1614,505"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1876,510,2079,535"/>
-<area shape="poly" title=" " alt="" coords="1828,520,1862,520,1862,525,1828,525"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2127,510,2317,535"/>
-<area shape="poly" title=" " alt="" coords="2079,520,2113,520,2113,525,2079,525"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1876,402,2079,427"/>
-<area shape="poly" title=" " alt="" coords="1828,412,1862,412,1862,417,1828,417"/>
-<area shape="poly" title=" " alt="" coords="1180,642,1267,664,1266,669,1178,647"/>
-<area shape="poly" title=" " alt="" coords="1191,619,1220,604,1246,581,1269,554,1307,494,1334,436,1351,389,1356,391,1339,438,1312,497,1273,557,1250,585,1223,609,1194,624"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="772,605,963,645"/>
-<area shape="poly" title=" " alt="" coords="660,623,758,623,758,628,660,628"/>
-<area shape="poly" title=" " alt="" coords="620,603,664,577,684,560,702,541,715,517,721,495,722,450,724,407,733,384,750,362,779,340,809,330,838,328,868,330,897,331,925,329,953,319,981,298,997,275,1005,252,1006,228,1004,204,1002,180,1003,155,1011,130,1029,106,1047,93,1050,97,1033,110,1016,133,1008,156,1007,180,1009,204,1011,228,1010,253,1002,277,985,302,956,324,926,334,897,336,867,335,838,333,810,335,782,345,754,366,738,387,730,408,727,451,727,496,720,519,706,544,688,564,667,581,623,607"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ab76118251ae1334e527dd712be8a0178" title=" " alt="" coords="1033,848,1219,888"/>
-<area shape="poly" title=" " alt="" coords="661,638,861,676,944,693,984,706,998,722,1006,738,1010,771,1014,803,1020,819,1033,834,1037,838,1033,842,1029,838,1016,821,1009,804,1005,771,1001,739,994,725,981,710,943,699,860,681,660,644"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a6fe2aa4aba62e331fc443cf88fd694ab" title=" " alt="" coords="776,491,959,531"/>
-<area shape="poly" title=" " alt="" coords="621,603,801,533,803,538,623,608"/>
-<area shape="poly" title=" " alt="" coords="955,643,984,662,996,675,1003,688,1010,714,1016,739,1033,764,1048,775,1044,779,1029,767,1011,741,1004,715,998,690,992,678,981,666,952,648"/>
-<area shape="poly" title=" " alt="" coords="948,643,984,662,1000,677,1008,693,1016,707,1032,719,1081,735,1123,736,1221,719,1274,710,1275,715,1222,724,1123,741,1081,740,1029,724,1012,711,1003,696,995,680,981,666,946,648"/>
-<area shape="poly" title=" " alt="" coords="911,603,949,577,966,560,980,541,995,511,1005,481,1010,453,1011,425,1005,371,993,318,983,266,981,214,985,188,994,161,1008,134,1029,106,1047,92,1050,96,1033,110,1013,137,999,163,990,189,986,215,988,266,998,317,1010,370,1016,425,1015,453,1010,482,1000,513,985,544,970,564,952,581,914,607"/>
-<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a23fb8387413d0a28bab5476fd5554206" title=" " alt="" coords="1035,555,1217,595"/>
-<area shape="poly" title=" " alt="" coords="962,604,1021,593,1022,598,963,609"/>
-<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="1035,669,1217,709"/>
-<area shape="poly" title=" " alt="" coords="950,643,1032,663,1031,669,948,648"/>
-<area shape="poly" title=" " alt="" coords="1203,846,1220,834,1231,820,1238,807,1243,778,1248,749,1255,734,1267,719,1273,715,1276,719,1271,723,1260,737,1253,751,1248,779,1243,808,1236,823,1223,838,1206,850"/>
-<area shape="poly" title=" " alt="" coords="1205,846,1219,834,1236,813,1247,793,1255,753,1257,710,1267,657,1350,389,1355,391,1272,658,1263,710,1260,754,1252,795,1241,816,1223,838,1209,850"/>
-<area shape="poly" title=" " alt="" coords="938,173,981,152,995,141,1004,129,1014,117,1029,106,1047,97,1050,102,1032,110,1018,121,1009,133,999,145,984,157,940,178"/>
-<area shape="poly" title=" " alt="" coords="659,501,682,491,702,477,718,456,726,434,727,413,726,390,726,344,734,321,750,298,779,275,808,264,837,260,866,260,895,260,923,257,952,246,981,226,993,212,999,197,1004,167,1008,137,1016,121,1029,106,1047,94,1050,99,1032,110,1020,124,1014,138,1009,168,1004,199,997,215,984,230,954,251,924,262,895,265,866,265,837,265,809,269,781,280,754,302,738,324,731,345,731,390,733,413,731,435,723,458,706,481,685,496,661,506"/>
-<area shape="poly" title=" " alt="" coords="660,508,762,508,762,513,660,513"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="776,376,959,416"/>
-<area shape="poly" title=" " alt="" coords="659,493,703,476,717,466,726,455,736,444,751,432,778,419,780,424,753,437,739,448,730,459,721,470,705,481,661,498"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a732ef2ba483c732f0b6d0f5d22447925" title=" " alt="" coords="1035,440,1217,480"/>
-<area shape="poly" title=" " alt="" coords="660,490,752,476,892,465,1021,459,1021,464,892,470,752,481,661,495"/>
-<area shape="poly" title=" " alt="" coords="912,414,951,440,970,458,985,477,1002,511,1010,542,1012,571,1011,599,1011,656,1018,687,1033,720,1056,749,1083,774,1079,778,1052,753,1028,723,1013,688,1006,657,1006,599,1007,571,1005,543,997,513,980,480,966,461,948,445,909,418"/>
-<area shape="poly" title=" " alt="" coords="899,414,959,452,1032,490,1085,505,1128,511,1172,518,1196,527,1223,540,1259,566,1292,597,1341,656,1337,660,1288,601,1256,570,1220,545,1194,531,1170,523,1128,516,1083,511,1030,494,956,457,896,418"/>
-<area shape="poly" title=" " alt="" coords="930,374,958,357,981,336,997,306,1004,277,1004,248,1001,220,998,192,999,164,1008,135,1029,106,1047,93,1050,97,1033,110,1013,137,1004,165,1003,192,1006,220,1009,248,1009,277,1002,308,985,339,961,362,933,378"/>
-<area shape="poly" title=" " alt="" coords="902,414,943,442,985,477,999,493,1008,507,1017,520,1032,534,1053,546,1050,551,1029,538,1013,524,1004,510,995,496,981,481,939,446,899,418"/>
-<area shape="poly" title=" " alt="" coords="910,414,950,441,985,477,998,502,1005,526,1006,570,1009,612,1017,633,1033,654,1038,660,1035,663,1029,658,1012,635,1004,613,1001,570,999,527,993,504,981,480,946,445,907,418"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a339d3a0aa61e74ba354ced6bd8725bd0" title=" " alt="" coords="1035,120,1217,160"/>
-<area shape="poly" title=" " alt="" coords="928,373,957,357,981,336,994,314,1001,294,1002,253,1005,212,1013,191,1029,170,1033,166,1036,170,1033,174,1018,194,1010,213,1008,253,1006,295,999,317,985,339,960,362,931,378"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#afa99abb8be663b5844b3845c59e5e517" title=" " alt="" coords="1035,184,1217,224"/>
-<area shape="poly" title=" " alt="" coords="924,373,954,357,981,336,997,310,1003,285,1010,260,1029,234,1035,229,1038,234,1033,238,1015,262,1008,286,1002,312,985,339,957,361,926,378"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a50ae79fe5803e845abdf0b0914d1933c" title=" " alt="" coords="1035,248,1217,288"/>
-<area shape="poly" title=" " alt="" coords="911,373,981,335,1005,316,1029,298,1043,291,1045,296,1032,302,1008,320,984,340,914,378"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a969fec9b5397f86e8b2b9b0de7643e2d" title=" " alt="" coords="1035,312,1217,352"/>
-<area shape="poly" title=" " alt="" coords="948,373,1031,353,1032,358,950,379"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180" title=" " alt="" coords="1035,376,1217,416"/>
-<area shape="poly" title=" " alt="" coords="959,393,1021,393,1021,399,959,399"/>
-<area shape="poly" title=" " alt="" coords="1203,158,1223,170,1266,210,1303,256,1331,301,1351,338,1347,340,1327,303,1298,259,1262,213,1220,174,1200,163"/>
-<area shape="poly" title=" " alt="" coords="1198,222,1223,234,1259,258,1292,287,1343,339,1339,343,1288,291,1255,263,1220,238,1196,226"/>
-<area shape="poly" title=" " alt="" coords="1190,286,1222,298,1324,343,1321,348,1220,302,1188,291"/>
-<area shape="poly" title=" " alt="" coords="1218,342,1306,354,1305,359,1217,347"/>
-<area shape="poly" title=" " alt="" coords="1217,381,1305,369,1306,374,1218,386"/>
-<area shape="poly" title=" " alt="" coords="1192,478,1223,497,1263,534,1298,577,1347,656,1342,659,1294,581,1259,538,1220,501,1189,482"/>
-<area shape="poly" title=" " alt="" coords="1188,437,1220,426,1321,380,1324,385,1222,430,1190,442"/>
-<area shape="poly" title=" " alt="" coords="1439,731,1453,720,1474,684,1481,648,1479,613,1472,577,1466,542,1465,506,1475,472,1501,438,1520,423,1541,412,1588,399,1636,395,1681,398,1681,403,1636,400,1589,404,1543,417,1523,428,1505,442,1480,474,1470,507,1471,541,1477,576,1484,612,1486,649,1479,686,1457,723,1443,735"/>
-<area shape="rect" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c" title=" " alt="" coords="1519,453,1621,478"/>
-<area shape="poly" title=" " alt="" coords="1439,731,1453,720,1471,691,1479,663,1480,635,1476,607,1473,578,1474,549,1482,519,1501,489,1505,484,1509,488,1505,492,1486,521,1479,550,1479,578,1482,606,1485,635,1484,664,1476,693,1457,723,1443,735"/>
-<area shape="poly" title=" " alt="" coords="1617,450,1695,428,1697,434,1618,455"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a997efaf37da0be42d423cdc1355e0b1a" title=" " alt="" coords="752,720,983,760"/>
-<area shape="poly" title=" " alt="" coords="660,720,739,726,738,732,660,725"/>
-<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aa9302f811b4455c3a2a67c27759c5a7d" title=" " alt="" coords="752,873,983,913"/>
-<area shape="poly" title=" " alt="" coords="607,733,706,795,729,815,753,834,809,865,807,869,751,838,726,819,702,799,604,737"/>
-<area shape="poly" title=" " alt="" coords="924,911,990,928,1068,938,1109,937,1148,931,1186,918,1220,898,1238,879,1246,859,1248,837,1246,815,1245,767,1251,743,1267,720,1271,716,1275,720,1271,723,1256,745,1250,768,1251,814,1253,837,1251,860,1242,882,1223,902,1188,923,1150,936,1109,942,1068,943,989,933,923,916"/>
-<area shape="rect" href="classyoi_1_1visitor.html#a50c4daa568ead9a9da67b99211bd44c0" title=" " alt="" coords="479,1013,658,1053"/>
-<area shape="poly" title=" " alt="" coords="368,684,387,698,402,716,413,735,422,772,421,809,414,846,406,883,404,920,412,957,422,975,435,993,450,1006,468,1016,465,1020,447,1010,431,996,417,977,407,958,399,920,401,883,408,845,415,809,417,772,408,737,398,719,384,702,365,688"/>
-<area shape="poly" title=" " alt="" coords="356,82,1047,80,1047,86,356,88"/>
+<area shape="rect" title=" " alt="" coords="5,615,84,640"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a7ec8e700598aff8677e84c81fcbdea6e" title=" " alt="" coords="145,615,335,640"/>
+<area shape="poly" title=" " alt="" coords="84,625,131,625,131,630,84,630"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a1cbc351156c6d8771e9a8daa04546c5f" title=" " alt="" coords="132,728,348,754"/>
+<area shape="poly" title=" " alt="" coords="69,638,206,719,203,723,66,643"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#a64e9d4cbf28b8bb795a72d27b4cda1da" title=" " alt="" coords="143,300,337,326"/>
+<area shape="poly" title=" " alt="" coords="52,614,221,336,226,339,56,616"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c" title=" " alt="" coords="396,608,649,648"/>
+<area shape="poly" title=" " alt="" coords="335,625,382,625,382,630,335,630"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a60ec4221487086a4bb1662eeab00988f" title=" " alt="" coords="741,386,924,426"/>
+<area shape="poly" title=" " alt="" coords="274,612,764,429,766,434,276,617"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1325,196,1455,222"/>
+<area shape="poly" title=" " alt="" coords="252,613,351,522,431,456,527,383,636,311,756,245,819,215,884,190,949,169,1015,153,1080,142,1131,139,1183,143,1247,153,1303,168,1352,188,1350,193,1301,173,1246,158,1182,148,1131,144,1081,147,1017,158,951,174,886,195,821,220,759,249,639,316,530,388,434,460,354,526,256,617"/>
+<area shape="rect" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7" title=" " alt="" coords="429,672,616,698"/>
+<area shape="poly" title=" " alt="" coords="303,638,397,657,445,667,444,672,395,662,302,643"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5e976e390e5d19c5168b62ef6c6c1260" title=" " alt="" coords="431,722,614,762"/>
+<area shape="poly" title=" " alt="" coords="263,638,322,672,397,708,420,716,418,721,395,713,319,677,260,643"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="1040,448,1223,488"/>
+<area shape="poly" title=" " alt="" coords="572,605,697,561,870,517,1026,484,1027,489,871,522,698,566,574,610"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5bc9db2399f983ebd619c163eff5c0aa" title=" " alt="" coords="1295,1140,1485,1180"/>
+<area shape="poly" title=" " alt="" coords="635,646,651,659,674,693,682,728,681,762,675,796,669,829,668,862,677,894,699,926,730,951,760,965,790,970,821,970,888,965,927,967,969,976,1074,1012,1176,1054,1339,1131,1336,1136,1174,1059,1072,1017,967,981,926,972,888,970,821,975,790,975,759,970,728,956,695,930,672,896,663,863,664,829,669,795,675,762,677,728,669,695,647,663,632,650"/>
+<area shape="rect" href="namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b" title=" " alt="" coords="1323,911,1457,936"/>
+<area shape="poly" title=" " alt="" coords="614,645,651,659,675,674,699,689,826,742,994,801,1295,896,1327,905,1325,910,1294,901,992,806,824,747,696,694,672,678,648,663,612,650"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a258f700dd06df5f3c119cd12c7492663" title=" " alt="" coords="697,812,968,852"/>
+<area shape="poly" title=" " alt="" coords="632,646,651,659,665,676,672,693,676,727,680,760,686,775,699,791,715,803,712,807,695,795,682,778,674,761,671,727,667,694,660,678,648,663,629,650"/>
+<area shape="poly" title=" " alt="" coords="547,605,648,522,696,482,779,431,781,435,699,486,651,526,550,609"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ad73567d0708438f82747b3a9fa7955cc" title=" " alt="" coords="1027,168,1236,208"/>
+<area shape="poly" title=" " alt="" coords="531,606,554,560,590,498,638,432,666,400,696,372,735,342,778,315,867,269,956,234,1034,209,1036,214,958,239,870,274,780,320,738,347,699,376,669,404,642,435,595,501,559,562,535,609"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a615d1d144130d412d4aac19047f2432d" title=" " alt="" coords="741,640,924,680"/>
+<area shape="poly" title=" " alt="" coords="650,638,728,646,727,652,649,643"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2cd583aab0483eb60ded1aa51247a6ba" title=" " alt="" coords="1533,1165,1719,1205"/>
+<area shape="poly" title=" " alt="" coords="636,646,651,659,669,684,682,708,688,733,691,757,687,805,676,853,665,900,660,947,663,970,670,994,682,1017,699,1041,740,1081,786,1116,835,1145,887,1169,941,1188,998,1203,1113,1222,1228,1228,1338,1225,1436,1216,1519,1204,1520,1209,1437,1221,1338,1230,1228,1234,1113,1227,997,1209,940,1193,885,1174,832,1150,783,1120,737,1085,695,1044,677,1020,665,996,658,971,655,947,659,899,670,851,681,804,686,757,683,734,677,710,665,686,647,663,632,650"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f020b6a408a7e38cf2cccca2fbd2c4b" title=" " alt="" coords="741,876,924,916"/>
+<area shape="poly" title=" " alt="" coords="634,646,651,659,670,685,678,711,678,737,676,763,673,788,674,813,682,838,699,862,730,882,727,886,696,866,677,840,669,814,668,788,670,762,673,737,672,712,665,687,647,663,631,650"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a787a23f0876a41ec2dfa7ebe7567ae45" title=" " alt="" coords="741,990,924,1030"/>
+<area shape="poly" title=" " alt="" coords="636,646,651,659,666,679,677,699,686,738,684,778,676,816,669,855,667,893,675,932,685,951,699,970,713,982,730,992,727,997,710,987,695,973,680,953,670,933,661,894,664,854,671,815,679,777,681,739,672,701,662,682,647,663,632,650"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a35f75104c0b80b9a58f28db3216ecacf" title=" " alt="" coords="741,576,924,616"/>
+<area shape="poly" title=" " alt="" coords="649,612,727,604,728,609,650,617"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="1299,361,1481,401"/>
+<area shape="poly" title=" " alt="" coords="1210,445,1246,433,1294,411,1313,403,1315,408,1296,415,1248,438,1212,450"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="1535,546,1717,586"/>
+<area shape="poly" title=" " alt="" coords="1464,399,1487,411,1523,439,1556,471,1605,533,1601,536,1552,475,1520,443,1484,415,1462,403"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1583,940,1669,966"/>
+<area shape="poly" title=" " alt="" coords="1452,1137,1484,1119,1604,975,1608,978,1487,1123,1454,1142"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1949,1071,2092,1096"/>
+<area shape="poly" title=" " alt="" coords="1485,1145,1766,1109,1935,1090,1936,1095,1767,1114,1486,1150"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1767,936,1901,976"/>
+<area shape="poly" title=" " alt="" coords="1669,951,1753,952,1753,957,1669,956"/>
+<area shape="poly" title=" " alt="" coords="1666,963,1969,1064,1967,1069,1665,968"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1949,943,2092,968"/>
+<area shape="poly" title=" " alt="" coords="1902,953,1936,953,1936,958,1902,958"/>
+<area shape="poly" title=" " alt="" coords="1866,974,1903,999,1991,1061,1988,1065,1900,1003,1863,978"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="2140,943,2343,968"/>
+<area shape="poly" title=" " alt="" coords="2092,953,2126,953,2126,958,2092,958"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2391,943,2581,968"/>
+<area shape="poly" title=" " alt="" coords="2343,953,2377,953,2377,958,2343,958"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="2140,1071,2343,1096"/>
+<area shape="poly" title=" " alt="" coords="2092,1081,2126,1081,2126,1086,2092,1086"/>
+<area shape="poly" title=" " alt="" coords="1456,912,1484,896,1515,864,1541,826,1563,785,1581,743,1605,663,1618,600,1623,601,1610,664,1586,745,1568,788,1546,829,1519,867,1487,900,1458,917"/>
+<area shape="poly" title=" " alt="" coords="1457,929,1570,943,1569,949,1457,935"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="1036,384,1227,424"/>
+<area shape="poly" title=" " alt="" coords="924,403,1022,402,1022,407,924,408"/>
+<area shape="poly" title=" " alt="" coords="854,384,922,329,967,299,1015,275,1092,248,1171,230,1246,218,1312,211,1312,216,1247,223,1172,235,1093,253,1017,279,970,304,925,333,857,388"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ab76118251ae1334e527dd712be8a0178" title=" " alt="" coords="1297,297,1483,337"/>
+<area shape="poly" title=" " alt="" coords="924,386,1016,369,1283,329,1283,334,1016,374,925,391"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a6fe2aa4aba62e331fc443cf88fd694ab" title=" " alt="" coords="1040,640,1223,680"/>
+<area shape="poly" title=" " alt="" coords="854,425,970,562,992,597,1001,611,1018,626,1029,632,1026,637,1014,630,997,615,987,600,966,565,850,428"/>
+<area shape="poly" title=" " alt="" coords="1227,393,1284,388,1285,393,1227,398"/>
+<area shape="poly" title=" " alt="" coords="1157,381,1235,322,1294,283,1348,265,1393,256,1415,256,1437,260,1487,283,1518,307,1544,337,1566,370,1584,405,1609,475,1622,532,1617,533,1604,477,1579,407,1562,373,1540,340,1514,311,1484,287,1436,265,1414,261,1393,261,1349,270,1296,287,1238,326,1160,386"/>
+<area shape="poly" title=" " alt="" coords="1162,381,1203,351,1245,313,1259,293,1267,275,1276,257,1293,239,1317,225,1320,229,1296,243,1280,260,1271,277,1263,295,1249,316,1207,355,1166,385"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a23fb8387413d0a28bab5476fd5554206" title=" " alt="" coords="1299,489,1481,529"/>
+<area shape="poly" title=" " alt="" coords="1221,421,1248,433,1263,444,1273,454,1282,465,1296,475,1308,481,1306,486,1293,479,1279,469,1269,458,1259,448,1245,438,1218,426"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="1299,425,1481,465"/>
+<area shape="poly" title=" " alt="" coords="1227,416,1286,426,1285,431,1226,422"/>
+<area shape="poly" title=" " alt="" coords="1468,335,1487,347,1531,390,1567,440,1595,490,1614,532,1609,534,1590,492,1562,443,1527,394,1484,351,1465,339"/>
+<area shape="poly" title=" " alt="" coords="1473,335,1487,347,1510,378,1523,408,1529,436,1531,464,1528,525,1530,559,1536,598,1582,787,1620,926,1615,928,1577,788,1531,599,1525,560,1523,525,1525,464,1524,437,1518,409,1505,381,1483,351,1470,339"/>
+<area shape="poly" title=" " alt="" coords="1236,194,1312,200,1311,205,1236,199"/>
+<area shape="poly" title=" " alt="" coords="923,651,946,641,966,626,988,595,996,565,996,534,992,502,987,470,986,438,994,404,1014,370,1040,343,1066,325,1092,314,1119,307,1177,296,1210,288,1246,275,1294,251,1348,225,1350,230,1296,255,1248,279,1211,293,1178,302,1120,312,1094,319,1069,329,1044,347,1018,373,999,406,992,438,992,470,997,502,1002,533,1002,565,992,597,970,630,949,645,925,656"/>
+<area shape="poly" title=" " alt="" coords="924,657,1026,657,1026,662,924,662"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="1040,754,1223,794"/>
+<area shape="poly" title=" " alt="" coords="881,677,1017,733,1056,747,1054,752,1015,738,879,682"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a732ef2ba483c732f0b6d0f5d22447925" title=" " alt="" coords="1299,604,1481,644"/>
+<area shape="poly" title=" " alt="" coords="905,677,977,692,1063,703,1156,704,1201,699,1246,689,1270,676,1293,660,1322,646,1325,651,1296,665,1273,681,1248,694,1202,704,1156,709,1063,708,976,697,904,682"/>
+<area shape="poly" title=" " alt="" coords="1173,752,1212,726,1230,709,1244,690,1262,652,1268,616,1267,582,1262,549,1258,515,1259,481,1269,447,1293,411,1296,408,1300,412,1297,415,1274,449,1265,482,1264,515,1268,548,1272,582,1273,617,1267,654,1249,693,1234,713,1215,730,1176,756"/>
+<area shape="poly" title=" " alt="" coords="1175,752,1294,704,1348,689,1391,681,1433,672,1484,653,1539,624,1586,592,1589,597,1542,629,1486,658,1434,677,1392,686,1349,694,1296,709,1177,757"/>
+<area shape="poly" title=" " alt="" coords="1152,793,1199,854,1249,933,1258,955,1262,976,1264,1013,1271,1046,1280,1060,1296,1075,1321,1090,1343,1100,1365,1104,1386,1104,1431,1094,1484,1075,1522,1055,1556,1028,1606,975,1609,978,1559,1032,1525,1059,1486,1079,1433,1099,1386,1110,1364,1109,1342,1105,1318,1095,1293,1079,1276,1064,1266,1048,1259,1014,1257,977,1253,957,1244,936,1195,857,1148,796"/>
+<area shape="poly" title=" " alt="" coords="1175,752,1213,726,1230,709,1244,690,1269,635,1278,584,1276,536,1270,490,1262,443,1260,394,1269,341,1292,284,1319,251,1351,227,1354,231,1323,255,1297,286,1274,343,1266,394,1268,442,1275,489,1282,536,1283,585,1274,636,1249,693,1234,713,1216,730,1178,756"/>
+<area shape="poly" title=" " alt="" coords="1168,752,1208,725,1245,690,1261,664,1269,641,1277,617,1293,590,1319,561,1347,536,1351,540,1323,565,1297,593,1281,620,1274,643,1266,667,1249,693,1211,729,1171,756"/>
+<area shape="poly" title=" " alt="" coords="1172,752,1211,726,1229,709,1244,690,1259,661,1265,634,1264,581,1262,555,1265,529,1274,503,1293,475,1296,471,1300,475,1297,479,1278,505,1270,530,1268,555,1269,581,1270,634,1264,663,1249,693,1233,713,1215,730,1175,756"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a339d3a0aa61e74ba354ced6bd8725bd0" title=" " alt="" coords="1299,718,1481,758"/>
+<area shape="poly" title=" " alt="" coords="1223,759,1285,750,1285,756,1223,764"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#afa99abb8be663b5844b3845c59e5e517" title=" " alt="" coords="1299,782,1481,822"/>
+<area shape="poly" title=" " alt="" coords="1223,782,1285,788,1285,794,1223,787"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a50ae79fe5803e845abdf0b0914d1933c" title=" " alt="" coords="1299,846,1481,886"/>
+<area shape="poly" title=" " alt="" coords="1196,792,1248,811,1296,832,1315,839,1313,844,1294,837,1246,815,1194,797"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a969fec9b5397f86e8b2b9b0de7643e2d" title=" " alt="" coords="1299,961,1481,1001"/>
+<area shape="poly" title=" " alt="" coords="1148,793,1207,868,1249,910,1296,947,1306,953,1303,957,1293,951,1245,914,1203,871,1144,796"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180" title=" " alt="" coords="1299,1025,1481,1065"/>
+<area shape="poly" title=" " alt="" coords="1150,793,1249,933,1262,956,1270,976,1279,993,1296,1011,1303,1016,1300,1020,1293,1015,1275,996,1265,978,1257,959,1244,936,1146,796"/>
+<area shape="poly" title=" " alt="" coords="1466,756,1487,768,1529,806,1565,849,1594,892,1614,927,1610,929,1589,894,1561,852,1525,809,1484,773,1463,761"/>
+<area shape="poly" title=" " alt="" coords="1462,820,1487,832,1521,855,1554,880,1605,928,1602,932,1550,884,1518,859,1484,837,1459,825"/>
+<area shape="poly" title=" " alt="" coords="1449,884,1486,897,1580,933,1579,938,1484,902,1448,889"/>
+<area shape="poly" title=" " alt="" coords="1481,968,1569,957,1570,962,1482,973"/>
+<area shape="poly" title=" " alt="" coords="1452,1022,1484,1011,1583,969,1585,974,1486,1016,1454,1027"/>
+<area shape="poly" title=" " alt="" coords="1472,601,1529,587,1531,592,1474,606"/>
+<area shape="poly" title=" " alt="" coords="1421,642,1454,670,1487,705,1530,764,1566,826,1616,926,1611,929,1562,828,1525,767,1483,708,1451,674,1417,646"/>
+<area shape="poly" title=" " alt="" coords="1704,1162,1956,1097,1958,1102,1705,1168"/>
+<area shape="rect" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c" title=" " alt="" coords="1783,1172,1885,1198"/>
+<area shape="poly" title=" " alt="" coords="1719,1182,1769,1182,1769,1188,1719,1188"/>
+<area shape="poly" title=" " alt="" coords="1862,1170,1900,1151,1985,1101,1988,1106,1903,1155,1864,1175"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a997efaf37da0be42d423cdc1355e0b1a" title=" " alt="" coords="1016,576,1247,616"/>
+<area shape="poly" title=" " alt="" coords="924,593,1002,593,1002,598,924,598"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aa9302f811b4455c3a2a67c27759c5a7d" title=" " alt="" coords="1016,512,1247,552"/>
+<area shape="poly" title=" " alt="" coords="923,574,1023,552,1025,557,925,579"/>
+<area shape="poly" title=" " alt="" coords="1247,537,1521,556,1521,562,1247,542"/>
+<area shape="rect" href="classyoi_1_1visitor.html#a50c4daa568ead9a9da67b99211bd44c0" title=" " alt="" coords="433,786,612,826"/>
+<area shape="poly" title=" " alt="" coords="296,751,423,781,422,786,295,756"/>
+<area shape="poly" title=" " alt="" coords="244,299,262,259,294,205,338,151,365,128,395,109,514,57,621,23,719,6,813,4,909,16,1010,38,1248,109,1283,124,1316,144,1368,185,1364,189,1313,148,1280,129,1246,114,1008,44,908,21,813,10,719,11,622,28,516,62,397,114,368,132,342,155,298,208,267,261,249,301"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a7ec8e700598aff8677e84c81fcbdea6e" name="a7ec8e700598aff8677e84c81fcbdea6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ec8e700598aff8677e84c81fcbdea6e">&#9670;&#160;</a></span>performBaseOptimization()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool performBaseOptimization </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04461">4461</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00027">CallGraph::callerGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00262">IROptimizer::callGraph</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="IROptimizer_8cpp_source.html#l01917">IRFunctionOptimizer::doOptimizationForCurrentFunction()</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00264">IROptimizer::functionAnalysisResults</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00030">CallGraph::functions</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00040">FunctionAnalysisInfo::isReturnValueNullable</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00041">FunctionAnalysisInfo::isReturnValueRaw</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac49458c0f8bb62f1374dc5dc187911c9">IRFunctionDefinition::NoRawAndNullOptimization</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="IROptimizer_8cpp_source.html#l02247">IRFunctionOptimizer::performNullableCheck()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919">IRFunctionDefinition::Preserve</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="def_8cpp_source.html#l00073">yoi::set_current_file_path()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l00578">IRFunctionOptimizer::setTargetFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, and <a class="el" href="IROptimizer_8hpp_source.html#l00029">CallGraph::unreachableFunctions</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04213">IROptimizer::optimize()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_cgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_cgraph" id="aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,650,196,675"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c" title=" " alt="" coords="244,643,497,683"/>
+<area shape="poly" title=" " alt="" coords="196,660,230,660,230,665,196,665"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a60ec4221487086a4bb1662eeab00988f" title=" " alt="" coords="589,495,772,535"/>
+<area shape="poly" title=" " alt="" coords="148,647,545,544,581,535,582,540,546,549,150,653"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1173,70,1303,95"/>
+<area shape="poly" title=" " alt="" coords="115,648,215,562,390,427,498,352,615,279,738,211,863,154,940,128,1019,108,1159,87,1160,92,1020,114,941,133,865,158,740,216,618,283,501,357,394,431,218,566,118,652"/>
+<area shape="rect" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7" title=" " alt="" coords="277,707,464,733"/>
+<area shape="poly" title=" " alt="" coords="157,673,245,692,292,702,291,707,243,697,156,678"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5e976e390e5d19c5168b62ef6c6c1260" title=" " alt="" coords="279,757,462,797"/>
+<area shape="poly" title=" " alt="" coords="122,673,176,707,245,742,270,751,268,756,243,746,173,711,119,678"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f0039fd849c7ca308fe5f2cc7100bb7" title=" " alt="" coords="888,885,1071,925"/>
+<area shape="poly" title=" " alt="" coords="484,681,499,693,516,716,524,741,524,766,522,790,520,813,521,836,529,858,547,878,570,891,602,900,686,911,783,913,874,910,875,915,783,918,686,916,601,905,568,896,544,882,525,860,516,837,514,813,517,789,519,765,518,742,512,719,495,697,480,685"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a5bc9db2399f983ebd619c163eff5c0aa" title=" " alt="" coords="1143,5,1333,45"/>
+<area shape="poly" title=" " alt="" coords="377,642,400,588,436,515,484,434,512,395,543,359,611,297,687,242,767,193,849,152,930,116,1008,87,1139,46,1141,51,1010,92,932,121,852,156,770,198,690,246,615,301,547,363,517,399,488,437,440,518,404,591,382,644"/>
+<area shape="rect" href="namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b" title=" " alt="" coords="1171,747,1305,773"/>
+<area shape="poly" title=" " alt="" coords="498,663,650,671,816,685,1004,713,1162,742,1161,747,1003,718,816,691,650,676,498,669"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a258f700dd06df5f3c119cd12c7492663" title=" " alt="" coords="545,700,816,740"/>
+<area shape="poly" title=" " alt="" coords="480,680,559,695,558,700,479,685"/>
+<area shape="poly" title=" " alt="" coords="400,640,544,544,575,533,577,538,547,549,403,645"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ad73567d0708438f82747b3a9fa7955cc" title=" " alt="" coords="875,168,1084,208"/>
+<area shape="poly" title=" " alt="" coords="388,640,454,568,544,481,628,407,696,352,768,302,863,242,918,212,921,216,865,246,771,306,699,356,632,411,547,485,458,571,392,644"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a615d1d144130d412d4aac19047f2432d" title=" " alt="" coords="589,559,772,599"/>
+<area shape="poly" title=" " alt="" coords="445,640,592,600,593,605,446,645"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2cd583aab0483eb60ded1aa51247a6ba" title=" " alt="" coords="1381,829,1567,869"/>
+<area shape="poly" title=" " alt="" coords="485,681,499,693,514,712,524,732,532,771,528,810,520,849,512,887,510,924,520,959,531,976,547,993,596,1032,643,1065,690,1091,736,1110,781,1124,827,1133,872,1137,918,1135,1012,1120,1111,1091,1217,1050,1332,1000,1371,976,1405,945,1432,911,1453,880,1457,883,1436,914,1409,949,1374,981,1335,1005,1219,1055,1113,1096,1013,1126,919,1141,872,1142,826,1138,780,1130,734,1115,688,1095,640,1069,593,1036,544,997,527,979,515,962,505,925,507,887,515,848,523,810,526,771,519,733,509,715,495,696,482,685"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8f020b6a408a7e38cf2cccca2fbd2c4b" title=" " alt="" coords="589,828,772,868"/>
+<area shape="poly" title=" " alt="" coords="482,681,499,693,512,708,520,724,524,755,528,786,535,800,547,814,578,832,575,837,544,818,530,803,523,787,519,756,514,725,508,711,496,697,479,685"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a787a23f0876a41ec2dfa7ebe7567ae45" title=" " alt="" coords="589,943,772,983"/>
+<area shape="poly" title=" " alt="" coords="485,681,499,693,520,722,528,751,528,780,524,809,521,838,521,866,528,894,547,922,561,934,578,944,575,948,558,939,543,926,523,896,515,867,515,838,519,809,523,780,523,752,515,724,495,696,481,685"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a35f75104c0b80b9a58f28db3216ecacf" title=" " alt="" coords="589,764,772,804"/>
+<area shape="poly" title=" " alt="" coords="475,680,499,692,515,707,524,722,532,736,547,750,578,764,575,769,544,754,528,740,519,725,511,710,496,697,473,685"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba" title=" " alt="" coords="1147,899,1329,939"/>
+<area shape="poly" title=" " alt="" coords="1071,907,1133,911,1133,916,1071,913"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a48caf178e86fbf1ad494cf2e395580d2" title=" " alt="" coords="1383,765,1565,805"/>
+<area shape="poly" title=" " alt="" coords="1300,896,1332,878,1346,863,1355,847,1364,831,1380,815,1388,809,1391,814,1383,819,1368,834,1359,850,1351,866,1335,882,1303,901"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1431,383,1517,409"/>
+<area shape="poly" title=" " alt="" coords="1320,43,1335,55,1350,74,1360,91,1368,125,1372,161,1384,203,1425,296,1462,370,1457,372,1420,298,1379,205,1367,162,1363,126,1355,93,1346,77,1331,59,1317,48"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1797,434,1940,459"/>
+<area shape="poly" title=" " alt="" coords="1308,43,1335,55,1415,100,1495,150,1643,256,1764,353,1845,422,1841,426,1761,357,1639,260,1492,155,1412,105,1332,60,1306,48"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1615,535,1749,575"/>
+<area shape="poly" title=" " alt="" coords="1489,407,1542,459,1616,519,1627,526,1624,530,1613,523,1539,463,1486,411"/>
+<area shape="poly" title=" " alt="" coords="1517,398,1750,425,1784,430,1783,436,1749,431,1516,403"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1797,542,1940,567"/>
+<area shape="poly" title=" " alt="" coords="1750,552,1784,552,1784,557,1750,557"/>
+<area shape="poly" title=" " alt="" coords="1723,532,1748,519,1836,465,1839,469,1751,524,1726,537"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1988,542,2191,567"/>
+<area shape="poly" title=" " alt="" coords="1940,552,1974,552,1974,557,1940,557"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2239,542,2429,567"/>
+<area shape="poly" title=" " alt="" coords="2191,552,2225,552,2225,557,2191,557"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1988,434,2191,459"/>
+<area shape="poly" title=" " alt="" coords="1940,444,1974,444,1974,449,1940,449"/>
+<area shape="poly" title=" " alt="" coords="1305,764,1369,771,1369,777,1305,770"/>
+<area shape="poly" title=" " alt="" coords="1304,748,1332,733,1365,698,1392,657,1414,614,1432,570,1456,485,1467,422,1472,423,1461,487,1437,571,1419,616,1397,660,1369,701,1335,737,1306,753"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a8ec09a5063d01d557b49c3201c43c092" title=" " alt="" coords="884,495,1075,535"/>
+<area shape="poly" title=" " alt="" coords="772,512,870,512,870,517,772,517"/>
+<area shape="poly" title=" " alt="" coords="692,493,719,453,758,402,806,349,862,302,895,283,926,273,983,264,1010,261,1037,254,1064,240,1093,218,1104,205,1110,191,1115,163,1121,134,1128,120,1141,106,1159,94,1162,99,1144,110,1133,123,1126,136,1121,164,1116,193,1109,207,1097,222,1067,245,1039,259,1011,266,984,270,927,278,898,288,866,306,810,352,762,405,723,456,697,496"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#ab76118251ae1334e527dd712be8a0178" title=" " alt="" coords="1145,619,1331,659"/>
+<area shape="poly" title=" " alt="" coords="773,531,1095,601,1143,613,1142,618,1094,607,772,536"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a6fe2aa4aba62e331fc443cf88fd694ab" title=" " alt="" coords="888,316,1071,356"/>
+<area shape="poly" title=" " alt="" coords="702,492,770,434,815,401,863,372,893,359,895,363,865,377,818,406,774,438,705,496"/>
+<area shape="poly" title=" " alt="" coords="993,534,1040,627,1097,751,1109,789,1114,820,1123,848,1145,878,1158,890,1155,894,1141,882,1118,851,1109,821,1104,790,1092,753,1035,629,989,536"/>
+<area shape="poly" title=" " alt="" coords="993,534,1076,703,1120,788,1144,827,1169,840,1192,847,1213,849,1233,848,1333,827,1402,807,1403,812,1334,832,1234,853,1213,855,1191,852,1167,845,1141,831,1115,791,1071,705,988,536"/>
+<area shape="poly" title=" " alt="" coords="1074,496,1093,481,1110,458,1121,434,1128,411,1130,388,1126,342,1116,296,1105,249,1101,202,1104,178,1111,154,1123,130,1141,106,1159,92,1162,96,1145,110,1127,133,1116,156,1109,179,1107,202,1111,248,1121,295,1132,341,1136,388,1133,412,1126,436,1114,460,1097,485,1077,500"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a23fb8387413d0a28bab5476fd5554206" title=" " alt="" coords="1147,491,1329,531"/>
+<area shape="poly" title=" " alt="" coords="1075,511,1133,510,1133,515,1075,516"/>
+<area shape="rect" href="structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html#a312e7f6c761a199c1369fbe651e084f0" title=" " alt="" coords="1147,555,1329,595"/>
+<area shape="poly" title=" " alt="" coords="1067,532,1139,549,1138,554,1066,537"/>
+<area shape="poly" title=" " alt="" coords="1309,656,1335,668,1396,710,1445,754,1442,758,1392,714,1332,673,1307,661"/>
+<area shape="poly" title=" " alt="" coords="1313,616,1332,605,1376,561,1413,510,1441,461,1460,420,1465,423,1446,463,1418,513,1380,564,1335,609,1315,621"/>
+<area shape="poly" title=" " alt="" coords="1041,166,1093,142,1117,123,1141,106,1162,97,1164,102,1144,110,1120,128,1096,146,1043,170"/>
+<area shape="poly" title=" " alt="" coords="771,567,794,558,814,545,827,530,834,515,837,482,841,449,848,433,862,417,893,397,923,390,953,390,982,393,1011,396,1039,395,1066,387,1093,366,1114,335,1123,304,1122,272,1117,239,1111,206,1110,173,1119,139,1141,106,1159,93,1162,97,1145,110,1124,142,1116,173,1117,206,1122,238,1127,271,1128,304,1119,337,1097,370,1068,391,1039,401,1010,402,981,398,952,395,924,395,895,402,866,421,853,435,846,451,843,483,839,516,832,533,818,549,797,563,773,572"/>
+<area shape="poly" title=" " alt="" coords="771,568,794,559,814,545,830,525,837,504,838,462,839,418,846,395,862,373,876,361,880,365,866,376,851,398,844,419,844,462,843,505,835,527,818,549,797,564,773,573"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a53fe25b9377f6dad0f0399c47a222993" title=" " alt="" coords="888,431,1071,471"/>
+<area shape="poly" title=" " alt="" coords="771,564,815,544,830,530,838,514,846,497,862,481,874,473,877,478,866,485,850,500,843,516,834,533,817,549,773,569"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a732ef2ba483c732f0b6d0f5d22447925" title=" " alt="" coords="1147,683,1329,723"/>
+<area shape="poly" title=" " alt="" coords="773,589,924,615,1095,652,1166,676,1164,681,1094,657,923,620,772,594"/>
+<area shape="poly" title=" " alt="" coords="1072,463,1097,481,1126,524,1138,566,1139,608,1133,648,1126,690,1122,733,1127,779,1145,828,1168,861,1197,888,1194,892,1164,865,1140,831,1122,780,1117,733,1121,689,1128,648,1133,607,1133,567,1121,527,1093,484,1069,467"/>
+<area shape="poly" title=" " alt="" coords="1073,463,1097,481,1111,500,1121,520,1128,560,1125,600,1116,639,1109,677,1107,714,1117,749,1128,766,1144,782,1172,801,1203,814,1237,821,1271,824,1340,819,1401,806,1402,812,1340,825,1271,829,1236,826,1202,819,1170,806,1141,786,1124,769,1112,751,1102,714,1103,676,1111,638,1120,599,1123,560,1116,522,1107,503,1093,485,1070,467"/>
+<area shape="poly" title=" " alt="" coords="1071,446,1196,440,1333,425,1417,408,1418,413,1334,431,1196,445,1071,452"/>
+<area shape="poly" title=" " alt="" coords="1069,429,1093,410,1116,372,1124,334,1122,297,1115,259,1108,222,1106,183,1116,145,1141,106,1159,92,1162,97,1145,110,1120,147,1112,184,1113,221,1120,258,1127,296,1129,335,1121,374,1097,414,1072,433"/>
+<area shape="poly" title=" " alt="" coords="1067,468,1139,485,1138,490,1066,473"/>
+<area shape="poly" title=" " alt="" coords="1072,468,1096,480,1112,496,1121,511,1129,526,1144,541,1153,546,1150,551,1141,545,1125,529,1117,514,1108,499,1093,485,1070,472"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a339d3a0aa61e74ba354ced6bd8725bd0" title=" " alt="" coords="1147,120,1329,160"/>
+<area shape="poly" title=" " alt="" coords="1069,428,1093,410,1112,380,1120,351,1120,322,1116,292,1112,262,1112,232,1121,201,1141,170,1144,167,1148,171,1145,174,1125,204,1118,233,1118,262,1121,292,1125,322,1125,352,1117,383,1097,414,1073,433"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#afa99abb8be663b5844b3845c59e5e517" title=" " alt="" coords="1147,184,1329,224"/>
+<area shape="poly" title=" " alt="" coords="1068,428,1093,410,1108,389,1115,367,1116,324,1117,280,1125,257,1141,234,1145,230,1148,234,1145,238,1129,259,1122,281,1121,324,1120,368,1113,391,1097,414,1071,433"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a50ae79fe5803e845abdf0b0914d1933c" title=" " alt="" coords="1147,248,1329,288"/>
+<area shape="poly" title=" " alt="" coords="1065,428,1093,410,1104,397,1111,383,1116,356,1121,327,1129,312,1141,298,1146,293,1150,298,1145,302,1133,315,1127,329,1121,357,1116,385,1109,400,1096,414,1068,433"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a969fec9b5397f86e8b2b9b0de7643e2d" title=" " alt="" coords="1147,312,1329,352"/>
+<area shape="poly" title=" " alt="" coords="1055,428,1093,410,1107,398,1117,386,1126,374,1141,362,1152,356,1155,360,1144,366,1130,378,1121,390,1111,402,1096,414,1057,433"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180" title=" " alt="" coords="1147,376,1329,416"/>
+<area shape="poly" title=" " alt="" coords="1070,429,1132,416,1134,421,1071,434"/>
+<area shape="poly" title=" " alt="" coords="1316,158,1335,170,1360,192,1382,218,1420,273,1448,327,1466,370,1461,372,1443,329,1415,276,1378,221,1356,196,1332,174,1313,162"/>
+<area shape="poly" title=" " alt="" coords="1313,222,1335,234,1375,266,1410,303,1460,370,1455,373,1406,306,1371,270,1332,238,1310,226"/>
+<area shape="poly" title=" " alt="" coords="1307,286,1335,298,1397,335,1448,373,1445,377,1394,340,1332,302,1305,291"/>
+<area shape="poly" title=" " alt="" coords="1313,350,1419,379,1418,384,1312,355"/>
+<area shape="poly" title=" " alt="" coords="1330,393,1417,393,1417,399,1330,399"/>
+<area shape="poly" title=" " alt="" coords="1300,720,1334,732,1406,758,1404,763,1332,737,1298,725"/>
+<area shape="poly" title=" " alt="" coords="1315,680,1332,669,1359,641,1383,609,1422,540,1448,473,1464,421,1469,423,1454,475,1427,542,1388,612,1363,644,1335,673,1318,685"/>
+<area shape="poly" title=" " alt="" coords="1552,827,1565,816,1580,794,1590,772,1597,728,1593,684,1583,641,1574,597,1571,554,1575,533,1582,512,1595,491,1613,470,1632,455,1654,443,1701,430,1749,427,1795,429,1795,435,1749,432,1701,435,1656,448,1635,459,1617,474,1599,494,1587,514,1580,534,1577,555,1579,597,1588,639,1598,683,1603,728,1595,773,1584,796,1569,819,1555,831"/>
+<area shape="rect" href="namespaceyoi.html#a774ab9590e79332760376ed248af507c" title=" " alt="" coords="1631,485,1733,510"/>
+<area shape="poly" title=" " alt="" coords="1551,827,1565,816,1587,779,1596,743,1595,707,1589,671,1583,635,1581,598,1590,560,1613,521,1617,516,1621,520,1617,524,1595,562,1586,598,1588,634,1594,670,1600,706,1601,743,1592,781,1569,819,1555,831"/>
+<area shape="poly" title=" " alt="" coords="1729,482,1807,460,1809,466,1730,487"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#a997efaf37da0be42d423cdc1355e0b1a" title=" " alt="" coords="864,764,1095,804"/>
+<area shape="poly" title=" " alt="" coords="772,781,850,781,850,787,772,787"/>
+<area shape="rect" href="classyoi_1_1IRFunctionOptimizer.html#aa9302f811b4455c3a2a67c27759c5a7d" title=" " alt="" coords="864,949,1095,989"/>
+<area shape="poly" title=" " alt="" coords="773,790,797,800,818,814,831,829,838,845,843,876,847,907,854,921,866,935,871,940,868,944,862,939,849,924,842,908,838,877,833,846,827,832,814,818,794,805,771,795"/>
+<area shape="poly" title=" " alt="" coords="1067,987,1130,994,1200,993,1235,989,1270,980,1302,967,1332,949,1346,934,1353,919,1357,886,1359,851,1366,833,1379,816,1384,811,1388,815,1383,819,1371,836,1365,852,1362,887,1358,921,1350,938,1335,953,1304,972,1271,985,1236,994,1201,999,1130,999,1066,992"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_icgraph.png" border="0" usemap="#aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_icgraph" id="aclassyoi_1_1IROptimizer_a7ec8e700598aff8677e84c81fcbdea6e_icgraph">
+<area shape="rect" title=" " alt="" coords="132,5,323,31"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#aa5f96dceae0a01376ab1001f038abf9f" title=" " alt="" coords="5,5,84,31"/>
+<area shape="poly" title=" " alt="" coords="118,21,84,21,84,15,118,15"/>
 </map>
 </div>
 
@@ -399,11 +561,11 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04397">4397</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04318">4318</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">IRValueType::Borrow</a>, <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="visitor_8cpp_source.html#l02573">visitor::getInterfaceImplName()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04211">IROptimizer::optimize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04213">IROptimizer::optimize()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -450,11 +612,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04385">4385</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IROptimizer_8cpp_source.html#l04306">4306</a> of file <a class="el" href="IROptimizer_8cpp_source.html">IROptimizer.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IROptimizer_8hpp_source.html#l00261">IROptimizer::compilerCtx</a>, <a class="el" href="def_8hpp_source.html#l00298">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04211">IROptimizer::optimize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04213">IROptimizer::optimize()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -501,7 +663,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00262">262</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04144">IROptimizer::buildCallGraph()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04211">IROptimizer::optimize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04146">IROptimizer::buildCallGraph()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04461">IROptimizer::performBaseOptimization()</a>.</p>
 
 </div>
 </div>
@@ -527,7 +689,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00261">261</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04144">IROptimizer::buildCallGraph()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04211">IROptimizer::optimize()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04397">IROptimizer::performInterfaceWrapperPass()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04385">IROptimizer::performStructNullablePass()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04146">IROptimizer::buildCallGraph()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04461">IROptimizer::performBaseOptimization()</a>, <a class="el" href="IROptimizer_8cpp_source.html#l04318">IROptimizer::performInterfaceWrapperPass()</a>, and <a class="el" href="IROptimizer_8cpp_source.html#l04306">IROptimizer::performStructNullablePass()</a>.</p>
 
 </div>
 </div>
@@ -553,7 +715,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00263">263</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04144">IROptimizer::buildCallGraph()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04146">IROptimizer::buildCallGraph()</a>.</p>
 
 </div>
 </div>
@@ -579,7 +741,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="IROptimizer_8hpp_source.html#l00264">264</a> of file <a class="el" href="IROptimizer_8hpp_source.html">IROptimizer.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04211">IROptimizer::optimize()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="IROptimizer_8cpp_source.html#l04461">IROptimizer::performBaseOptimization()</a>.</p>
 
 </div>
 </div>

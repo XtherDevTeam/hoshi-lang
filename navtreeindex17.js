@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structYoiIntAndIntObject.html#aec9a92a6f9b979a43d72c2884322d11b":[31,0,9,1],
+"structYoiIntAndIntObject.html#af2c04be3881ace5538c4bf77f14ac980":[31,0,9,0],
 "structYoiIntegerObject.html":[31,0,10],
 "structYoiIntegerObject.html#a1871146973c12628deff2a413c04f3ff":[31,0,10,0],
 "structYoiIntegerObject.html#a21197e49dd48d6f8dc580e42630ab047":[31,0,10,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structyoi_1_1IRDebugInfo.html":[31,0,1,62],
 "structyoi_1_1IRDebugInfo.html":[30,0,1,62],
 "structyoi_1_1IRDebugInfo.html#a52f1a713696bc41540d60d59ab9ae177":[31,0,1,62,0],
-"structyoi_1_1IRDebugInfo.html#a52f1a713696bc41540d60d59ab9ae177":[30,0,1,62,0],
-"structyoi_1_1IRDebugInfo.html#a679a66343843973e165578188e7853a8":[31,0,1,62,1],
-"structyoi_1_1IRDebugInfo.html#a679a66343843973e165578188e7853a8":[30,0,1,62,1]
+"structyoi_1_1IRDebugInfo.html#a52f1a713696bc41540d60d59ab9ae177":[30,0,1,62,0]
 };
