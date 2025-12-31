@@ -60,6 +60,7 @@ var classyoi_1_1visitor =
     [ "visit", "classyoi_1_1visitor.html#ada790c5cb50fa1990c13f9d1093f596a", null ],
     [ "visit", "classyoi_1_1visitor.html#a45453c9a6a557c0bc8deccd574ab4ec1", null ],
     [ "visit", "classyoi_1_1visitor.html#a619711d98a61127e0cdb8fbdf529b38f", null ],
+    [ "visit", "classyoi_1_1visitor.html#a74f4a1c98b6cf2f05821ad7d475a3dc1", null ],
     [ "visit", "classyoi_1_1visitor.html#a9b92ec0821a2a26446904de21da87b4c", null ],
     [ "visit", "classyoi_1_1visitor.html#ae32c02a57c9f8340c0f36aa3c1abec4b", null ],
     [ "visit", "classyoi_1_1visitor.html#a315dc961d954f433f9040e2fc97023f9", null ],

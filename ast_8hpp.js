@@ -1,6 +1,7 @@
 var ast_8hpp =
 [
     [ "AST", "classyoi_1_1AST.html", "classyoi_1_1AST" ],
+    [ "bracedInitalizerList", "classyoi_1_1bracedInitalizerList.html", "classyoi_1_1bracedInitalizerList" ],
     [ "typeAliasStmt", "classyoi_1_1typeAliasStmt.html", "classyoi_1_1typeAliasStmt" ],
     [ "marcoPair", "classyoi_1_1marcoPair.html", "classyoi_1_1marcoPair" ],
     [ "marcoDescriptor", "classyoi_1_1marcoDescriptor.html", "classyoi_1_1marcoDescriptor" ],
@@ -87,6 +88,7 @@ var ast_8hpp =
     [ "finalizeAST", "ast_8hpp.html#ab5309c729caab758c7f25ac61cd34d53", null ],
     [ "finalizeAST", "ast_8hpp.html#ac59b996aa6858ed5c3f3fb4416d9031b", null ],
     [ "finalizeAST", "ast_8hpp.html#a5426637233d982037f50afc1d6d5b89e", null ],
+    [ "finalizeAST", "ast_8hpp.html#afda441dad03c5684fbb7efc672260ad3", null ],
     [ "finalizeAST", "ast_8hpp.html#aa088147c0130f6cd93b33259fbf76306", null ],
     [ "finalizeAST", "ast_8hpp.html#ab2e9d349c1c0ae32491a37098047d8bb", null ],
     [ "finalizeAST", "ast_8hpp.html#a2a67f1a4f14af076678458a63452a88d", null ],

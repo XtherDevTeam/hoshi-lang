@@ -39,6 +39,7 @@ var annotated_dup =
       [ "andExpr", "classyoi_1_1andExpr.html", "classyoi_1_1andExpr" ],
       [ "AST", "classyoi_1_1AST.html", "classyoi_1_1AST" ],
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", "classyoi_1_1basicLiterals" ],
+      [ "bracedInitalizerList", "classyoi_1_1bracedInitalizerList.html", "classyoi_1_1bracedInitalizerList" ],
       [ "breakStmt", "classyoi_1_1breakStmt.html", null ],
       [ "BuiltinModuleBuilder", "classyoi_1_1BuiltinModuleBuilder.html", "classyoi_1_1BuiltinModuleBuilder" ],
       [ "CallGraph", "structyoi_1_1CallGraph.html", "structyoi_1_1CallGraph" ],

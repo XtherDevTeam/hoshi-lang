@@ -8,6 +8,7 @@ var hierarchy =
       [ "addExpr", "classyoi_1_1addExpr.html", null ],
       [ "andExpr", "classyoi_1_1andExpr.html", null ],
       [ "basicLiterals", "classyoi_1_1basicLiterals.html", null ],
+      [ "bracedInitalizerList", "classyoi_1_1bracedInitalizerList.html", null ],
       [ "breakStmt", "classyoi_1_1breakStmt.html", null ],
       [ "catchParam", "classyoi_1_1catchParam.html", null ],
       [ "codeBlock", "classyoi_1_1codeBlock.html", null ],

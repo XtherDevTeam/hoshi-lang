@@ -1,8 +1,8 @@
 var searchData=
 [
   ['lambda_0',['lambda',['../classyoi_1_1primary.html#a1c0ac60a7f655afd63d7361f8b22e164',1,'yoi::primary']]],
-  ['lambda_20expressions_1',['lambda expressions',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md10',1,'2. Lambda Expressions'],['../index.html#autotoc_md157',1,'Callable Objects &amp; Lambda Expressions'],['../md_docs_2Callable_01_6_01Lambda.html',1,'Callable Objects &amp; Lambda Expressions']]],
-  ['lambdaexpr_2',['lambdaExpr',['../classyoi_1_1lambdaExpr.html',1,'yoi']]],
+  ['lambda_20expressions_1',['lambda expressions',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md10',1,'2. Lambda Expressions'],['../md_docs_2Callable_01_6_01Lambda.html',1,'Callable Objects &amp; Lambda Expressions'],['../index.html#autotoc_md157',1,'Callable Objects &amp; Lambda Expressions']]],
+  ['lambdaexpr_2',['lambdaexpr',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894ae02d44fb0b613aae8ef337d42e79268a',1,'yoi::primary::lambdaExpr'],['../classyoi_1_1lambdaExpr.html',1,'lambdaExpr']]],
   ['lang_3',['lang',['../md_docs_2Console.html',1,'Console I/O in Hoshi-lang'],['../md_docs_2File_01System.html',1,'File System in Hoshi-lang'],['../md_docs_2Finalizers.html',1,'Finalizers in Hoshi-lang'],['../md_docs_2HashMap.html',1,'HashMap in Hoshi-lang'],['../md_docs_2JSON.html',1,'JSON in Hoshi-lang'],['../md_docs_2Macros.html',1,'Macros in Hoshi-lang'],['../md_docs_2Math.html',1,'Math in Hoshi-lang'],['../md_docs_2Null.html#autotoc_md84',1,'Pointer Object in hoshi-lang'],['../md_docs_2Result.html',1,'Result Type in Hoshi-lang'],['../md_docs_2Runtime.html',1,'Runtime in Hoshi-lang'],['../md_docs_2String.html',1,'String in Hoshi-lang'],['../md_docs_2Structured_01Bindings.html',1,'Structured Bindings in Hoshi-lang'],['../md_docs_2Null.html',1,'The implementation of null literal in hoshi-lang'],['../md_docs_2Threading.html',1,'Threading in Hoshi-lang'],['../md_docs_2Type_01Aliases.html',1,'Type Aliases in Hoshi-lang'],['../md_docs_2Vector.html',1,'Vector in Hoshi-lang']]],
   ['lang_20arrays_4',['Hoshi-lang Arrays',['../md_docs_2Array.html',1,'']]],
   ['lang_20intermediate_20representation_20ir_20handbook_5',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]],
@@ -30,8 +30,8 @@ var searchData=
   ['lessthanorequal_27',['lessThanOrEqual',['../classyoi_1_1IRFunctionOptimizer.html#a0c205cbb52cfd5f38fc18b817fb17af1',1,'yoi::IRFunctionOptimizer']]],
   ['letassignmentpair_28',['letAssignmentPair',['../classyoi_1_1letAssignmentPair.html',1,'yoi']]],
   ['letassignmentpairlhs_29',['letAssignmentPairLHS',['../classyoi_1_1letAssignmentPairLHS.html',1,'yoi']]],
-  ['letstmt_30',['letstmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::globalStmt::letStmt'],['../classyoi_1_1letStmt.html',1,'letStmt'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::inCodeBlockStmt::letStmt']]],
-  ['letstmtval_31',['letstmtval',['../unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::globalStmt::vValue::letStmtVal'],['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::inCodeBlockStmt::vValue::letStmtVal']]],
+  ['letstmt_30',['letstmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::inCodeBlockStmt::letStmt'],['../classyoi_1_1letStmt.html',1,'letStmt'],['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99',1,'yoi::globalStmt::letStmt']]],
+  ['letstmtval_31',['letstmtval',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::inCodeBlockStmt::vValue::letStmtVal'],['../unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb',1,'yoi::globalStmt::vValue::letStmtVal']]],
   ['lexer_32',['lexer',['../classyoi_1_1lexer.html',1,'lexer'],['../classyoi_1_1lexer.html#a3e70362cee7281a81eeda9cf15c431b9',1,'yoi::lexer::lexer()']]],
   ['lexer_2ecpp_33',['lexer.cpp',['../lexer_8cpp.html',1,'']]],
   ['lexer_2ehpp_34',['lexer.hpp',['../lexer_8hpp.html',1,'']]],

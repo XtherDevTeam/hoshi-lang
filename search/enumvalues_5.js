@@ -8,9 +8,10 @@ var searchData=
   ['flags_5',['flags',['../namespacemagic__enum_1_1detail.html#ad1e8ca7399ef090ef09549302d9d7d40a4e5868d676cb634aa75b125a0f741abf',1,'magic_enum::detail']]],
   ['foreachstmt_6',['forEachStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ead2532406d9ca1ec1343b89ad5aaa5991',1,'yoi::inCodeBlockStmt']]],
   ['foreignfloattype_7',['foreignfloattype',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a',1,'yoi::IRValueType::foreignFloatType'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675aed9ea5b4d20c5145dcfb4ddd34ddd56a',1,'foreignFloatType:&#160;rtti.h']]],
-  ['foreignint32type_8',['foreignint32type',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc',1,'yoi::IRValueType::foreignInt32Type'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ad5493486c999a3f1b5898b82dfea19cc',1,'foreignInt32Type:&#160;rtti.h']]],
+  ['foreignint32type_8',['foreignint32type',['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ad5493486c999a3f1b5898b82dfea19cc',1,'foreignInt32Type:&#160;rtti.h'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc',1,'yoi::IRValueType::foreignInt32Type']]],
   ['forstmt_9',['forStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eac34522e8fb773ea3e6cac8f0149b01ea',1,'yoi::inCodeBlockStmt']]],
   ['func_10',['Func',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::symbol']]],
   ['funcdefstmt_11',['funcDefStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87',1,'yoi::globalStmt']]],
-  ['function_12',['function',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ac1c425268e68385d1ab5074c17a94f14',1,'yoi::IRExternEntry']]]
+  ['funcexpr_12',['funcExpr',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a095285d308033f26c6b2f6d2c10956d5',1,'yoi::primary']]],
+  ['function_13',['function',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ac1c425268e68385d1ab5074c17a94f14',1,'yoi::IRExternEntry']]]
 ];

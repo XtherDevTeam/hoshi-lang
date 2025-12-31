@@ -3,6 +3,7 @@ var parser_8cpp =
     [ "PARSE_BINARY_EXPR", "parser_8cpp.html#a9beeb41ff1a58cdc83d2e66d651c0cee", null ],
     [ "finalizeAST_vec", "parser_8cpp.html#ae8f13fcf89f8c2aab98a389953ee95f2", null ],
     [ "parse", "parser_8cpp.html#a4600689cb595347b843d027c2d1b2087", null ],
+    [ "parse", "parser_8cpp.html#af22a5f0500098025c7d5601743f2b104", null ],
     [ "parse", "parser_8cpp.html#a66f39c0f53ae734cb74ca78c7a1561cd", null ],
     [ "parse", "parser_8cpp.html#add54fcea8dc58f89d04c81c9e671bdfa", null ],
     [ "parse", "parser_8cpp.html#ad6bed038de518d556d4d6d26fffe1075", null ],

@@ -18,5 +18,6 @@ var searchData=
   ['dyn_5fcast_5fdeci_15',['dyn_cast_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de',1,'yoi::IR']]],
   ['dyn_5fcast_5fint_16',['dyn_cast_int',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae',1,'yoi::IR']]],
   ['dyn_5fcast_5fstr_17',['dyn_cast_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02',1,'yoi::IR']]],
-  ['dyn_5fcast_5fstruct_18',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]]
+  ['dyn_5fcast_5fstruct_18',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]],
+  ['dyncastexpression_19',['dynCastExpression',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a31f87f0953204f20a6ff5ebb9a78a74e',1,'yoi::primary']]]
 ];

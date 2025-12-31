@@ -3,7 +3,7 @@ var searchData=
   ['n_0',['n',['../namespacemagic__enum_1_1detail.html#ae8d0754165cd1de99c9cf685301d1343',1,'magic_enum::detail']]],
   ['names_1',['names',['../namespacemagic__enum_1_1detail.html#acb1293f2bd5702962577def366666364',1,'magic_enum::detail']]],
   ['negate_2',['negate',['../classyoi_1_1IRFunctionOptimizer.html#a623d68a3d810f761f59e0fea09eb46d6',1,'yoi::IRFunctionOptimizer']]],
-  ['newarrayop_3',['newArrayOp',['../classyoi_1_1IRBuilder.html#aa664e67be6dc36f35d565904e743abb1',1,'yoi::IRBuilder']]],
+  ['newarrayop_3',['newArrayOp',['../classyoi_1_1IRBuilder.html#a5e7f45fc3e6144221d9a8f027c8defe0',1,'yoi::IRBuilder']]],
   ['newdynamicarrayop_4',['newDynamicArrayOp',['../classyoi_1_1IRBuilder.html#ad3c80f3275dce944c8129d1d5e67e62a',1,'yoi::IRBuilder']]],
   ['newinterfaceop_5',['newInterfaceOp',['../classyoi_1_1IRBuilder.html#a78476b4c465330bc3d6b743e7515e0ac',1,'yoi::IRBuilder']]],
   ['newstructop_6',['newStructOp',['../classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5',1,'yoi::IRBuilder']]],

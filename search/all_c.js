@@ -52,6 +52,6 @@ var searchData=
   ['dyn_5fcast_5fstruct_49',['dyn_cast_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be',1,'yoi::IR']]],
   ['dynamic_20arrays_50',['2. Dynamic Arrays',['../md_docs_2Array.html#autotoc_md4',1,'']]],
   ['dyncast_51',['dynCast',['../classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3',1,'yoi::primary']]],
-  ['dyncastexpression_52',['dynCastExpression',['../classyoi_1_1dynCastExpression.html',1,'yoi']]],
+  ['dyncastexpression_52',['dyncastexpression',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a31f87f0953204f20a6ff5ebb9a78a74e',1,'yoi::primary::dynCastExpression'],['../classyoi_1_1dynCastExpression.html',1,'dynCastExpression']]],
   ['dyncastop_53',['dynCastOp',['../classyoi_1_1IRBuilder.html#afa0d0eb43d3a88922310cd94abc22567',1,'yoi::IRBuilder']]]
 ];
