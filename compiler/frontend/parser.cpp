@@ -6,6 +6,7 @@
 #include "compiler/frontend/lexer.hpp"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp" 
+#include <cstdint>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-qualification"
 #pragma ide diagnostic ignored "misc-no-recursion"
@@ -333,14 +334,14 @@ namespace yoi {
             typeSpec *t = nullptr;
             parse(t, lex);
             if (!t) {
-                o = new typeSpec{node_start_token, 3, nullptr, nullptr, nullptr, false, false};
+                o = new typeSpec{node_start_token, 3, nullptr, nullptr, nullptr, false, nullptr};
             } else {
                 if (t->kind == 3) {
                     finalizeAST(t);
                     o = nullptr;
                     panic(lex.line, lex.col, "expected typeSpec after `...`");
                 }
-                o = new typeSpec{node_start_token, 3, nullptr, nullptr, t, false, false};
+                o = new typeSpec{node_start_token, 3, nullptr, nullptr, t, false, nullptr};
             }
             return;
         }
@@ -350,16 +351,36 @@ namespace yoi {
                 lex.scan();
                 if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
                     lex.scan();
-                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, true};
+                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, new vec<uint64_t>{(uint64_t) -1}};
                     return;
-                } else {
-                    panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
-                    finalizeAST(spec);
-                    o = nullptr;
+                } else if (lex.curToken.kind == lexer::token::tokenKind::integer) {
+                    auto *vec = new yoi::vec<uint64_t>{lex.curToken.basicVal.vUint};
+                    while (lex.scan().kind == lexer::token::tokenKind::comma) {
+                        lex.scan();
+                        if (lex.curToken.kind == lexer::token::tokenKind::integer) {
+                            vec->push_back(lex.curToken.basicVal.vInt);
+                        } else {
+                            finalizeAST(spec);
+                            delete vec;
+                            o = nullptr;
+                            panic(lex.line, lex.col, "expected integer after `,` in array type specifier");
+                        }
+                    }
+                    if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                        lex.scan();
+                        o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, vec};
+                        return;
+                    } else {
+                        finalizeAST(spec);
+                        delete vec;
+                        o = nullptr;
+                    }
+                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, vec};
                     return;
                 }
+            } else {
+                o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, nullptr};
             }
-            o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, true};
             return;
         }
         parse(expr, lex);
@@ -368,16 +389,36 @@ namespace yoi {
                 lex.scan();
                 if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
                     lex.scan();
-                    o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, true};
+                    o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, new vec<uint64_t>{(uint64_t)-1}};
                     return;
-                } else {
-                    panic(lex.line, lex.col, "expected `]` to close a array type specifier node");
-                    finalizeAST(expr);
-                    o = nullptr;
+                } else if (lex.curToken.kind == lexer::token::tokenKind::integer) {
+                    auto *vec = new yoi::vec<uint64_t>{lex.curToken.basicVal.vUint};
+                    while (lex.scan().kind == lexer::token::tokenKind::comma) {
+                        lex.scan();
+                        if (lex.curToken.kind == lexer::token::tokenKind::integer) {
+                            vec->push_back(lex.curToken.basicVal.vInt);
+                        } else {
+                            finalizeAST(expr);
+                            delete vec;
+                            o = nullptr;
+                            panic(lex.line, lex.col, "expected integer after `,` in array type specifier");
+                        }
+                    }
+                    if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
+                        lex.scan();
+                        o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, vec};
+                        return;
+                    } else {
+                        finalizeAST(expr);
+                        delete vec;
+                        o = nullptr;
+                    }
+                    o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, vec};
                     return;
                 }
+            } else {
+                o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false, nullptr};
             }
-            o = new typeSpec{node_start_token, 0, expr, nullptr, nullptr, false};
             return;
         }
         o = nullptr;
@@ -591,43 +632,49 @@ namespace yoi {
         newExpression *f = nullptr;
         lambdaExpr *g = nullptr;
         funcExpr *h = nullptr;
+        bracedInitalizerList *i = nullptr;
         rExpr *c = nullptr;
 
         lexer::token node_start_token = lex.curToken;
 
         parse(a, lex);
         if (a) {
-            o = new primary{node_start_token, 0, a, nullptr, nullptr, nullptr, nullptr, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::memberExpr, a, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(b, lex);
         if (b) {
-            o = new primary{node_start_token, 1, nullptr, b, nullptr, nullptr, nullptr, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::basicLiterals, nullptr, b, nullptr, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(d, lex);
         if (d) {
-            o = new primary{node_start_token, 3, nullptr, nullptr, nullptr, d, nullptr, nullptr, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::typeIdExpression, nullptr, nullptr, nullptr, d, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(e, lex);
         if (e) {
-            o = new primary{node_start_token, 4, nullptr, nullptr, nullptr, nullptr, e, nullptr, nullptr, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::dynCastExpression, nullptr, nullptr, nullptr, nullptr, e, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(f, lex);
         if (f) {
-            o = new primary{node_start_token, 5, nullptr, nullptr, nullptr, nullptr, nullptr, f, nullptr, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::newExpression, nullptr, nullptr, nullptr, nullptr, nullptr, f, nullptr, nullptr, nullptr};
             return;
         }
         parse(g, lex);
         if (g) {
-            o = new primary{node_start_token, 6, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, g, nullptr};
+            o = new primary{node_start_token, primary::primaryKind::lambdaExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, g, nullptr, nullptr};
             return;
         }
         parse(h, lex);
         if (h) {
-            o = new primary{node_start_token, 7, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, h};
+            o = new primary{node_start_token, primary::primaryKind::funcExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, h, nullptr};
+            return;
+        }
+        parse(i, lex);
+        if (i) {
+            o = new primary{node_start_token, primary::primaryKind::bracedInitalizerList, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, i};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
@@ -640,7 +687,7 @@ namespace yoi {
             }
             if (lex.curToken.kind == lexer::token::tokenKind::rightParentheses) {
                 lex.scan(); // Consume ')'
-                o = new primary{node_start_token, 2, nullptr, nullptr, c};
+                o = new primary{node_start_token, primary::primaryKind::rExpr, nullptr, nullptr, c};
                 return;
             } else {
                 finalizeAST(c);
@@ -2636,6 +2683,38 @@ namespace yoi {
             panic(lex.line, lex.col, "expected integer literal after `=` in enumeration pair");
             return;
         }
+    }
+
+    void parse(bracedInitalizerList *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::leftBraces) {
+            o = nullptr;
+            return;
+        }
+        yoi::lexer::token node_start_token = lex.curToken;
+        lex.saveState();        
+        lex.scan();
+        vec<rExpr *> expressions;
+        rExpr *expression = nullptr;
+        parse(expression, lex);
+        while (expression) {
+            expressions.push_back(expression);
+            if (lex.curToken.kind != lexer::token::tokenKind::comma) {
+                break;
+            } else {
+                expression = nullptr;
+                lex.scan();
+                parse(expression, lex);
+            }
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightBraces) {
+            o = nullptr;
+            for (auto e : expressions) finalizeAST(e);
+            lex.returnState();
+            return;
+        }
+        lex.scan();
+        lex.dropState();
+        o = new bracedInitalizerList{node_start_token, expressions};
     }
 } // namespace yoi
 

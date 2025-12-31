@@ -1061,7 +1061,7 @@ namespace yoi {
     }
 
     void IRBuilder::newArrayOp(const std::shared_ptr<IRValueType> &elementType,
-                               const yoi::vec<yoi::indexT> &dimensions) {
+                               const yoi::vec<yoi::indexT> &dimensions, yoi::indexT onstackElementCount) {
         IR::Opcode op = IR::Opcode::nop;
         yoi::vec<IROperand> operands;
         switch (elementType->type) {
@@ -1101,11 +1101,12 @@ namespace yoi {
                 break;
         }
         auto size = 1;
+        operands.emplace_back(IROperand::operandType::index, onstackElementCount);
         for (auto &dim : dimensions) {
             operands.emplace_back(IROperand::operandType::index, dim);
             size *= dim;
         }
-        for (yoi::indexT i = 0; i < size; ++i) {
+        for (yoi::indexT i = 0; i < onstackElementCount; ++i) {
             tempVarStack.pop_back();
         }
         insert(IR{op, operands, currentDebugInfo});
@@ -1139,8 +1140,16 @@ namespace yoi {
     }
 
     void IRBuilder::popOp() {
-        tempVarStack.pop_back();
-        insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
+        if (tempVarStack.back()->type == IRValueType::valueType::bracedInitalizerList) {
+            auto elementCount = tempVarStack.back()->bracedTypes.size();
+            for (yoi::indexT i = 0; i < elementCount; ++i) {
+                tempVarStack.pop_back();
+                insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
+            }
+        } else {
+            tempVarStack.pop_back();
+            insert(IR{IR::Opcode::pop, {}, currentDebugInfo});
+        }
     }
 
     void IRBuilder::setDebugInfo(const IRDebugInfo &debugInfo) {
@@ -1601,4 +1610,6 @@ namespace yoi {
     std::shared_ptr<IREnumerationType> IREnumerationType::Builder::yield() {
         return std::make_shared<IREnumerationType>(name, valueToIndexMap);
     }
+    IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes)
+        : type(type), bracedTypes(bracedTypes) {}
 } // namespace yoi

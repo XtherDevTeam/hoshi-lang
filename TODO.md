@@ -35,6 +35,7 @@
 - [x] 为普通函数实现 callable
     - [x] 函数签名信息推断，在只存在一个函数的情况下省略参数类型信息
 - [ ] 支持带this指针非静态 callable 创建
+- [ ] `braced initializer list` 支持
 
 # Known issues
 

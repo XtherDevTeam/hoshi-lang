@@ -9,8 +9,6 @@
 
 #include <compiler/ir/IR.h>
 
-#include <utility>
-
 namespace yoi {
     class BuiltinModuleBuilder {
         std::shared_ptr<IRModule> module;

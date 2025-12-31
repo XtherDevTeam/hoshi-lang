@@ -136,36 +136,40 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::primary *primary, bool isStoreOp) {
         switch (primary->kind) {
-            case 0:
+            case primary::primaryKind::memberExpr:
                 visit(primary->member, isStoreOp);
                 break;
-            case 1:
+            case primary::primaryKind::basicLiterals:
                 visit(primary->literals);
                 break;
-            case 2:
+            case primary::primaryKind::rExpr:
                 visit(primary->expr);
                 break;
-            case 3: {
+            case primary::primaryKind::typeIdExpression: {
                 visit(primary->typeId);
                 break;
             }
-            case 4: {
+            case primary::primaryKind::dynCastExpression: {
                 visit(primary->dynCast);
                 break;
             }
-            case 5: {
+            case primary::primaryKind::newExpression: {
                 visit(primary->newExpr);
                 break;
             }
-            case 6: {
+            case primary::primaryKind::lambdaExpr: {
                 auto lambdaStructIndex = createLambdaUnnamedStruct(primary->lambda);
                 auto [lambdaCallableIndex, callableInterface] = createCallableImplementationForLambda(irModule->structTable[lambdaStructIndex], lambdaStructIndex, currentModuleIndex);
                 // moduleContext->getIRBuilder().newInterfaceOp(callableInterface.second, true, callableInterface.first);
                 moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterface, lambdaCallableIndex);
                 break;
             }
-            case 7: {
+            case primary::primaryKind::funcExpr: {
                 visit(primary->func);
+                break;
+            }
+            case primary::primaryKind::bracedInitalizerList: {
+                visit(primary->bracedInitalizer);
                 break;
             }
             default: {
@@ -1172,8 +1176,7 @@ namespace yoi {
                 it = dim_it;
             }
             
-            yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
-            moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
+            moduleContext->getIRBuilder().newArrayOp(baseType, dimensions, actualSize);
         } 
         // Case 2: Invocation `id<...>(...)` or `id(...)`
         else if (first_term->isInvocation()) {
@@ -1424,9 +1427,8 @@ namespace yoi {
             } else {
                 it = dim_it;
             }
-            yoi_assert(size == actualSize, subscriptExpr->getLine(), subscriptExpr->getColumn(), "Array size (" + std::to_string(size) + ") does not match the initializer size (" + std::to_string(actualSize) + ").");
 
-            moduleContext->getIRBuilder().newArrayOp(baseType, dimensions);
+            moduleContext->getIRBuilder().newArrayOp(baseType, dimensions, actualSize);
         } 
         // Case 2: Extern Invocation
         else if (firstTerm->isInvocation()) {
@@ -2535,7 +2537,15 @@ namespace yoi {
                            typeSpec->getColumn(),
                            "Type specifier is not valid.");
                 
-                return typeSpec->hasArrayTypeSpec ? lhs.getDynamicArrayType() : lhs;
+                if (typeSpec->arraySubscript) {
+                    if (typeSpec->arraySubscript->front() == -1) {
+                        return lhs.getDynamicArrayType();
+                    } else {
+                        return lhs.getArrayType(*typeSpec->arraySubscript);
+                    }
+                } else {
+                    return lhs;
+                }
             }
             case 1: {
                 // func
@@ -3384,6 +3394,16 @@ namespace yoi {
             return;
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
             emitBasicCastTo(toType);
+        } else if ((toType->isArrayType() || toType->isDynamicArrayType()) && rhs->type == IRValueType::valueType::bracedInitalizerList) {
+            auto elementType = managedPtr(toType->getElementType());
+            auto elementCount = rhs->bracedTypes.size();
+            if (toType->isArrayType()) {
+                moduleContext->getIRBuilder().popFromTempVarStack();
+                moduleContext->getIRBuilder().newArrayOp(elementType, toType->dimensions, elementCount);
+            } else {
+                moduleContext->getIRBuilder().popFromTempVarStack();
+                moduleContext->getIRBuilder().newDynamicArrayOp(elementType, elementCount);
+            }
         } else if (toType->type == IRValueType::valueType::interfaceObject && !toType->isArrayType() && !toType->isDynamicArrayType()) {
             // check implemented interfaces
             try {
@@ -3421,6 +3441,14 @@ namespace yoi {
         if (*rhs == *toType) {
             return true;
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (toType->type != IRValueType::valueType::stringObject) && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
+            return true;
+        } else if ((toType->isArrayType() || toType->isDynamicArrayType()) && fromType->type == IRValueType::valueType::bracedInitalizerList) {
+            auto e = toType->getElementType();
+            for (auto &i : fromType->bracedTypes) {
+                if (i != e) {
+                    return false;
+                }
+            }
             return true;
         } else if (rhs->type == IRValueType::valueType::pointerObject) {
             // no cast needed for pointer type
@@ -3721,9 +3749,9 @@ namespace yoi {
                     tryCastTo(overload.variadicElementType);
                 }
                 moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType,
-                                                         {static_cast<yoi::indexT>(variadicArgCount)});
+                                                         {static_cast<yoi::indexT>(variadicArgCount)}, variadicArgCount);
             } else {
-                moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {0});
+                moduleContext->getIRBuilder().newArrayOp(overload.variadicElementType, {0}, 0);
             }
         } else if (overload.isCastRequired) {
             moduleContext->getIRBuilder().restoreState();
@@ -4800,5 +4828,15 @@ namespace yoi {
         // moduleContext->getCompilerContext()->getImportedModule(std::get<1>(structIndex))->structTable[std]
         moduleContext->getIRBuilder().newStructOp(std::get<2>(structIndex), true, std::get<1>(structIndex));
         moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterfaceIndex, implIndex, true, moduleIndex);
+    }
+
+    yoi::indexT visitor::visit(yoi::bracedInitalizerList *bracedInitalizerList) {
+        yoi::vec<IRValueType> bracedTypes;
+        for (auto &i : bracedInitalizerList->exprs) {
+            visit(i);
+            bracedTypes.push_back(*moduleContext->getIRBuilder().getRhsFromTempVarStack());
+        }
+        moduleContext->getIRBuilder().pushTempVar(managedPtr(IRValueType{IRValueType::valueType::bracedInitalizerList, bracedTypes}));
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 } // namespace yoi

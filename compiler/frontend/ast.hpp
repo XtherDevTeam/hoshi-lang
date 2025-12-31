@@ -192,6 +192,13 @@ namespace yoi {
 
     class enumerationPair;
 
+    class bracedInitalizerList;
+
+    class bracedInitalizerList : public AST {
+    public:
+        yoi::vec<yoi::rExpr *> exprs;
+    };
+
     class typeAliasStmt : public AST {
     public:
         yoi::identifierWithDefTemplateArg *lhs{};
@@ -310,7 +317,7 @@ namespace yoi {
         funcTypeSpec *func;
         typeSpec *elipsis;
         bool isNull;
-        bool hasArrayTypeSpec;
+        yoi::vec<uint64_t> *arraySubscript;
 
         externModuleAccessExpression &getMemberExpr() const;
 
@@ -380,7 +387,17 @@ namespace yoi {
     class primary : public AST {
     public:
         // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
-        int8_t kind;
+        enum class primaryKind : int8_t {
+            memberExpr,
+            basicLiterals,
+            rExpr,
+            typeIdExpression,
+            dynCastExpression,
+            newExpression,
+            lambdaExpr,
+            funcExpr,
+            bracedInitalizerList,
+        } kind;
         memberExpr *member;
         basicLiterals *literals;
         rExpr *expr;
@@ -389,6 +406,7 @@ namespace yoi {
         newExpression *newExpr;
         lambdaExpr *lambda;
         funcExpr *func;
+        bracedInitalizerList *bracedInitalizer;
 
         memberExpr &getMemberExpr() const;
 
@@ -1196,6 +1214,8 @@ namespace yoi {
     void finalizeAST(enumerationDefinition *ptr);
 
     void finalizeAST(enumerationPair *ptr);
+
+    void finalizeAST(bracedInitalizerList *ptr);
 } // hoshi
 #endif //HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

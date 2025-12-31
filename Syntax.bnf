@@ -9,6 +9,7 @@ templateArg ::= "<" [ { templateArgSpec "," } templateArgSpec ] ">"
 invocationArguments ::= "(" [ { rExpr "," } rExpr ] ")"
 definitionArguments ::= "(" [ { identifierWithTypeSpec "," } identifierWithTypeSpec ] ")"
 funcTypeSpecArgs ::= "(" [ { typeSpec "," } typeSpec ] ")"
+bracedInitializerList ::= "{" [ { rExpr "," } rExpr ] "}"
 funcTypeSpec ::= "func" definitionArguments ":" typeSpec
 arrayTypeSpecSubscript ::= "[" "]"
 typeSpec ::= externModuleAccessExpression ( arrayTypeSpecSubscript )
@@ -30,7 +31,7 @@ typeIdExpression ::= "type_id" "<" typeSpec ">"
                  ::= "type_id" "(" rExpr ")"
 dynCastExpression ::= "dyn_cast" "<" typeSpec ">" "(" rExpr ")"
 newExpr ::= "new" externModuleAccessExpression subscript invocationArguments
-primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression | newExpr
+primary ::= memberExpression | basicLiterals | "(" rExpr ")" | typeIdExpression | dynCastExpression | newExpr | bracedInitializerList
 uniqueExpr ::= ( "++" | "--" | "!" | "~" | "-" | "&" ) primary
              | primary
 leftExpr ::= uniqueExpr { ( "=" | "+=" | "-=" | "*=" | "/=" | "%=" ) uniqueExpr }

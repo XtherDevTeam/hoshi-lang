@@ -527,6 +527,8 @@ namespace yoi {
             case 2:
                 break;
         }
+        if (ptr->arraySubscript)
+            delete ptr->arraySubscript;
         delete ptr;
     }
 
@@ -566,26 +568,32 @@ namespace yoi {
 
     void finalizeAST(primary *ptr) {
         switch (ptr->kind) {
-            case 0:
+            case primary::primaryKind::memberExpr:
                 finalizeAST(ptr->member);
                 break;
-            case 1:
+            case primary::primaryKind::basicLiterals:
                 finalizeAST(ptr->literals);
                 break;
-            case 2:
+            case primary::primaryKind::rExpr:
                 finalizeAST(ptr->expr);
                 break;
-            case 3:
+            case primary::primaryKind::typeIdExpression:
                 finalizeAST(ptr->typeId);
                 break;
-            case 4:
+            case primary::primaryKind::dynCastExpression:
                 finalizeAST(ptr->dynCast);
                 break;
-            case 5:
+            case primary::primaryKind::newExpression:
                 finalizeAST(ptr->newExpr);
                 break;
-            case 6:
+            case primary::primaryKind::lambdaExpr:
                 finalizeAST(ptr->lambda);
+                break;
+            case primary::primaryKind::funcExpr:
+                finalizeAST(ptr->func);
+                break;
+            case primary::primaryKind::bracedInitalizerList:
+                finalizeAST(ptr->bracedInitalizer);
                 break;
         }
         delete ptr;
@@ -1188,6 +1196,12 @@ namespace yoi {
     
     void finalizeAST(enumerationPair *ptr) {
         finalizeAST(ptr->name);
+        delete ptr;
+    }
+
+    void finalizeAST(bracedInitalizerList *ptr) {
+        for (auto &expr : ptr->exprs)
+            finalizeAST(expr);
         delete ptr;
     }
 } // namespace yoi

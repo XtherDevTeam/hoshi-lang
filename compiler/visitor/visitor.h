@@ -152,6 +152,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::basicLiterals *basicLiterals);
 
+        yoi::indexT visit(yoi::bracedInitalizerList *bracedInitalizerList);
+
         yoi::indexT visit(yoi::identifier *identifier, bool isStoreOp = false);
 
         yoi::indexT visitExtern(yoi::identifier *identifier, yoi::indexT targetModule, bool isStoreOp = false);

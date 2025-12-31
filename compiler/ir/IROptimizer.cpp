@@ -1572,11 +1572,12 @@ namespace yoi {
 
                     yoi::indexT size = 1;
                     yoi::vec<yoi::indexT> dims;
-                    for (auto &dim : ins.operands) {
-                        size *= dim.value.symbolIndex;
-                        dims.push_back(dim.value.symbolIndex);
+
+                    for (auto i = 1;i < ins.operands.size(); i++) {
+                        size *= ins.operands[i].value.symbolIndex;
+                        dims.push_back(ins.operands[i].value.symbolIndex);
                     }
-                    for (yoi::indexT i = 0; i < size; i++) {
+                    for (yoi::indexT i = 0; i < ins.operands[0].value.symbolIndex; i++) {
                         simulationStack.pop();
                     }
                     simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
@@ -1591,11 +1592,11 @@ namespace yoi {
 
                     auto baseType = managedPtr(IRValueType{ins.opcode == yoi::IR::Opcode::new_array_struct ? IRValueType::valueType::structObject : IRValueType::valueType::interfaceObject, moduleIndex, typeIndex});
 
-                    for (yoi::indexT i = 2; i < ins.operands.size(); i++) {
+                    for (yoi::indexT i = 3; i < ins.operands.size(); i++) {
                         size *= ins.operands[i].value.symbolIndex;
                         dims.push_back(ins.operands[i].value.symbolIndex);
                     }
-                    for (yoi::indexT i = 0; i < size; i++) {
+                    for (yoi::indexT i = 0; i < ins.operands[2].value.symbolIndex; i++) {
                         simulationStack.pop();
                     }
                     simulationStack.push(managedPtr(baseType->getArrayType(dims)), {currentCodeBlockIndex, {insIndex}, false});
@@ -3890,11 +3891,11 @@ namespace yoi {
 
                 yoi::indexT size = 1;
                 yoi::vec<yoi::indexT> dims;
-                for (auto &dim : ins.operands) {
-                    size *= dim.value.symbolIndex;
-                    dims.push_back(dim.value.symbolIndex);
+                for (auto i = 1;i < ins.operands.size(); i++) {
+                    size *= ins.operands[i].value.symbolIndex;
+                    dims.push_back(ins.operands[i].value.symbolIndex);
                 }
-                for (yoi::indexT i = 0; i < size; i++) {
+                for (yoi::indexT i = 0; i < ins.operands[0].value.symbolIndex; i++) {
                     simulationStack.pop();
                 }
                 simulationStack.push(managedPtr(baseType->getArrayType(dims)),
@@ -3914,11 +3915,11 @@ namespace yoi {
                                                        moduleIndex,
                                                        typeIndex});
 
-                for (yoi::indexT i = 2; i < ins.operands.size(); i++) {
+                for (yoi::indexT i = 3; i < ins.operands.size(); i++) {
                     size *= ins.operands[i].value.symbolIndex;
                     dims.push_back(ins.operands[i].value.symbolIndex);
                 }
-                for (yoi::indexT i = 0; i < size; i++) {
+                for (yoi::indexT i = 0; i < ins.operands[2].value.symbolIndex; i++) {
                     simulationStack.pop();
                 }
                 simulationStack.push(managedPtr(baseType->getArrayType(dims)),

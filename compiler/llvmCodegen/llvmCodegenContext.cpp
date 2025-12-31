@@ -1606,13 +1606,13 @@ namespace yoi {
                 yoi::vec<yoi::indexT> dimensions;
 
                 std::shared_ptr<yoi::IRValueType> elementType;
-                for (auto &i : instr.operands) {
-                    size *= i.value.symbolIndex;
-                    dimensions.push_back(i.value.symbolIndex);
+                for (yoi::indexT i = 1; i < instr.operands.size(); ++i) {
+                    size *= instr.operands[i].value.symbolIndex;
+                    dimensions.push_back(instr.operands[i].value.symbolIndex);
                 }
-                for (yoi::indexT i = 0; i < size; ++i) {
+                for (yoi::indexT i = 0; i < instr.operands[0].value.symbolIndex; ++i) {
                     // for basic types, receiving value is not owning the value, so we don't need to increase the refcount.
-                    dimensionsVal.push_back(valueStackPhi[valueStackPhi.size() - size + i]);
+                    dimensionsVal.push_back(valueStackPhi[valueStackPhi.size() - instr.operands[0].value.symbolIndex + i]);
                 }
 
                 switch (instr.opcode) {
@@ -1645,7 +1645,7 @@ namespace yoi {
                 auto arrayType = managedPtr(elementType->getArrayType(dimensions));
                 auto val = createArrayObject(arrayType, dimensionsVal);
 
-                for (yoi::indexT i = 0; i < size; ++i) {
+                for (yoi::indexT i = 0; i < instr.operands[0].value.symbolIndex; ++i) {
                     callGcFunction(valueStackPhi.back().llvmValue, valueStackPhi.back().yoiType, false);
                     valueStackPhi.pop_back();
                 }
@@ -1660,11 +1660,11 @@ namespace yoi {
                 yoi::vec<yoi::indexT> dimensions;
 
                 std::shared_ptr<yoi::IRValueType> elementType;
-                for (yoi::indexT i = 2; i < instr.operands.size(); ++i) {
+                for (yoi::indexT i = 3; i < instr.operands.size(); ++i) {
                     size *= instr.operands[i].value.symbolIndex;
                     dimensions.push_back(instr.operands[i].value.symbolIndex);
                 }
-                for (yoi::indexT i = 0; i < size; ++i) {
+                for (yoi::indexT i = 0; i < instr.operands[2].value.symbolIndex; ++i) {
                     auto value = promiseInterfaceObjectIfInterface(valueStackPhi[valueStackPhi.size() - size + i]);
                     if (value.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                         callGcFunction(value.llvmValue, value.yoiType, true, true, true);
@@ -2145,7 +2145,7 @@ namespace yoi {
             if (type->isArrayType()) {
                 // TODO
             }
-            auto [typeEnum, typeModule, typeIndex, dim, attr, _] = type->isBasicRawType() ? type->getBasicObjectType() : *type;
+            auto [typeEnum, typeModule, typeIndex, dim, attr, _a, _b] = type->isBasicRawType() ? type->getBasicObjectType() : *type;
             auto key = std::make_tuple(typeEnum, typeModule, typeIndex);
             if (foreignTypeMap.count(key)) {
                 return foreignTypeMap.at(key);
@@ -3453,8 +3453,8 @@ namespace yoi {
                                     break;
                             }
                             yoi::vec<yoi::indexT> dims;
-                            for (auto &operand : ins.operands) {
-                                dims.push_back(operand.value.symbolIndex);
+                            for (yoi::indexT i = 1;i < ins.operands.size(); i++) {
+                                dims.push_back(ins.operands[i].value.symbolIndex);
                             }
                             getArrayLLVMType(managedPtr(elementType->getArrayType(dims)));
                             break;
@@ -3462,7 +3462,7 @@ namespace yoi {
                         case IR::Opcode::new_array_interface:
                         case IR::Opcode::new_array_struct: {
                             yoi::vec<yoi::indexT> dims;
-                            for (yoi::indexT i = 2;i < ins.operands.size(); i++) {
+                            for (yoi::indexT i = 3;i < ins.operands.size(); i++) {
                                 dims.push_back(ins.operands[i].value.symbolIndex);
                             }
                             auto arrayType = managedPtr(IRValueType{

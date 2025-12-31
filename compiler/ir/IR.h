@@ -124,12 +124,15 @@ namespace yoi {
             incompleteTemplateType,
             foreignInt32Type,
             foreignFloatType,
+            bracedInitalizerList, // placeholder for basic casts
         } type;
 
         yoi::indexT typeAffiliateModule;
         yoi::indexT typeIndex;
 
         yoi::vec<yoi::indexT> dimensions;
+
+        yoi::vec<IRValueType> bracedTypes;
 
         std::set<ValueAttr> attributes;
 
@@ -147,6 +150,8 @@ namespace yoi {
                     const std::set<ValueAttr> &attributes);
 
         IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions);
+
+        IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes);
 
         IRValueType(valueType type,
                     yoi::indexT typeAffiliateModule,
@@ -959,7 +964,7 @@ namespace yoi {
         void
         constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId, yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
-        void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions);
+        void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions, yoi::indexT onstackElementCount);
 
         void newDynamicArrayOp(const std::shared_ptr<IRValueType> &elementType, yoi::indexT initializerSize = 0);
 
