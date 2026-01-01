@@ -1,7 +1,15 @@
 <map id="runtime_signal_register" name="runtime_signal_register">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,181,38"/>
-<area shape="rect" id="Node000002" href="$memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="229,13,388,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
-<area shape="rect" id="Node000003" href="$memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="436,5,595,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,23,422,23,422,28,388,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,181,80"/>
+<area shape="rect" id="Node000002" href="$memory_8cpp.html#a77e252460b25bfcbcb0745e81860a2ec" title=" " alt="" coords="229,55,388,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,65,216,65,216,70,182,70"/>
+<area shape="rect" id="Node000003" href="$memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e" title=" " alt="" coords="436,47,595,87"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,65,422,65,422,70,388,70"/>
+<area shape="rect" id="Node000004" href="$hperf_8cpp.html#afb91bc3349b0d4b2f28b27e13295c669" title=" " alt="" coords="643,55,824,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="595,65,629,65,629,70,595,70"/>
+<area shape="rect" id="Node000005" href="$hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="872,5,1059,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="793,52,891,31,892,36,794,57"/>
+<area shape="rect" id="Node000006" href="$hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="895,55,1035,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="825,65,881,65,881,70,825,70"/>
+<area shape="rect" id="Node000007" href="$threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="881,104,1050,129"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="794,77,892,98,891,104,793,83"/>
 </map>

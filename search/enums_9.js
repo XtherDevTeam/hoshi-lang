@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['underlyingtype_0',['UnderlyingType',['../classyoi_1_1IREnumerationType.html#aaaf91a8097d88fcf9daa98a42270ab41',1,'yoi::IREnumerationType']]],
-  ['useobjectlinker_1',['UseObjectLinker',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010',1,'yoi::IRBuildConfig']]]
+  ['tokenkind_0',['tokenKind',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32',1,'yoi::lexer::token']]]
 ];

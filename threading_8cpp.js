@@ -1,7 +1,7 @@
 var threading_8cpp =
 [
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", "structThreadStarterArgs" ],
-    [ "runtime_get_thread_id", "threading_8cpp.html#a444dba8591942ff8168348fad7a218fc", null ],
+    [ "runtime_get_thread_id", "threading_8cpp.html#a938ca90c1828b71db528aee755a79baf", null ],
     [ "runtime_ping_thread", "threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5", null ],
     [ "runtime_start_thread", "threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98", null ],
     [ "runtime_thread_condition_signal", "threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8", null ],

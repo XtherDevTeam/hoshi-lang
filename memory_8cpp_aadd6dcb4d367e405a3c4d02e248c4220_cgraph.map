@@ -1,5 +1,13 @@
 <map id="runtime_finalize_object" name="runtime_finalize_object">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,180,38"/>
-<area shape="rect" id="Node000002" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="228,5,403,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,23,214,23,214,28,180,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,180,80"/>
+<area shape="rect" id="Node000002" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="228,47,403,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,65,214,65,214,70,180,70"/>
+<area shape="rect" id="Node000003" href="$hperf_8cpp.html#aaf58587f9ab0e21837b7911a6c5d7a4e" title=" " alt="" coords="451,55,627,80"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="403,65,437,65,437,70,403,70"/>
+<area shape="rect" id="Node000004" href="$hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="675,5,861,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="598,52,694,31,695,36,599,57"/>
+<area shape="rect" id="Node000005" href="$hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="698,55,838,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="627,65,684,65,684,70,627,70"/>
+<area shape="rect" id="Node000006" href="$threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="683,104,853,129"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="599,77,695,98,694,104,598,83"/>
 </map>

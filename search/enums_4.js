@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nametype_0',['nameType',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0',1,'yoi::IRStructDefinition::nameInfo']]]
+  ['hperfeventtype_0',['HPerfEventType',['../hperf_8h.html#acb508c53cd407367bcd55fec03e39fbc',1,'hperf.h']]]
 ];

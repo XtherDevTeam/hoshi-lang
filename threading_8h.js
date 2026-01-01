@@ -4,7 +4,7 @@ var threading_8h =
     [ "YoiResultUnsignedAndIntObject", "structYoiResultUnsignedAndIntObject.html", "structYoiResultUnsignedAndIntObject" ],
     [ "YoiThreadHandle", "threading_8h.html#a948646bae9c3e20fbe7dcde33f39e945", null ],
     [ "YoiThreadId", "threading_8h.html#a0db2b7eb0adaec040feb25f24687304a", null ],
-    [ "runtime_get_thread_id", "threading_8h.html#a444dba8591942ff8168348fad7a218fc", null ],
+    [ "runtime_get_thread_id", "threading_8h.html#a938ca90c1828b71db528aee755a79baf", null ],
     [ "runtime_ping_thread", "threading_8h.html#a4d2015cc45ad286767cf3c05ed4e8ad5", null ],
     [ "runtime_start_thread", "threading_8h.html#a524018bbcc3335e63d3f0b7057a23c98", null ],
     [ "runtime_thread_condition_signal", "threading_8h.html#ac175047930bdf10df93e70fd0d79ebd8", null ],

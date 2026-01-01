@@ -1,7 +1,15 @@
 <map id="runtime_thread_finalize_mutex_lock" name="runtime_thread_finalize_mutex_lock">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,181,45"/>
-<area shape="rect" id="Node000002" href="$memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="229,13,404,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,23,216,23,216,28,182,28"/>
-<area shape="rect" id="Node000003" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="452,5,627,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,23,438,23,438,28,404,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,47,181,87"/>
+<area shape="rect" id="Node000002" href="$memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="229,55,404,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,65,216,65,216,70,182,70"/>
+<area shape="rect" id="Node000003" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="452,47,627,87"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,65,438,65,438,70,404,70"/>
+<area shape="rect" id="Node000004" href="$hperf_8cpp.html#aaf58587f9ab0e21837b7911a6c5d7a4e" title=" " alt="" coords="675,55,851,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="627,65,661,65,661,70,627,70"/>
+<area shape="rect" id="Node000005" href="$hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="899,5,1085,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="822,52,918,31,919,36,823,57"/>
+<area shape="rect" id="Node000006" href="$hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="922,55,1062,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="851,65,908,65,908,70,851,70"/>
+<area shape="rect" id="Node000007" href="$threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="907,104,1077,129"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="823,77,919,98,918,104,822,83"/>
 </map>
