@@ -102,6 +102,9 @@ namespace yoi {
             runtimeDebugReportCurrentFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", TheModule.get());
             runtimeDebugReportCurrentFunctionFunc->setCallingConv(llvm::CallingConv::C);
 
+            // void runtime_debug_report_leave_function(const char *function_name);
+            runtimeDebugReportLeaveFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_leave_function", TheModule.get());
+            runtimeDebugReportLeaveFunctionFunc->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_print(const char *message);
             llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
@@ -1162,6 +1165,14 @@ namespace yoi {
             case IR::Opcode::ret: {
                 auto retVal = valueStackPhi.back(); valueStackPhi.pop_back();
 
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    std::string funcName = wstring2string(currentFunctionDef->name);
+                    auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
+                    auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                    auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                    Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                }
+
                 retVal = promiseInterfaceObjectIfInterface(retVal);
 
                 // The caller receives ownership, so we don't decrease the ref count here.
@@ -1182,7 +1193,15 @@ namespace yoi {
             }
             case IR::Opcode::ret_none: {
                 generateFunctionExitCleanup();
-                // Return the global singleton none object
+
+                if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                    std::string funcName = wstring2string(currentFunctionDef->name);
+                    auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
+                    auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                    auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                    Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                }
+
                 Builder->CreateRetVoid();
                 break;
             }
@@ -2789,6 +2808,14 @@ namespace yoi {
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
                         Builder->CreateCall(externFuncDecl, args);
+                        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                            // print function name
+                            std::string funcName = wstring2string(funcDef->name);
+                            auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
+                            auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                            auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                            Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                        }
                         Builder->CreateRetVoid();
                     } else {
                         auto result = Builder->CreateCall(externFuncDecl, args, "result");
@@ -2800,6 +2827,15 @@ namespace yoi {
                             actualResultVal = result;
                         } else {
                             actualResultVal = handleForeignTypeConv(result, funcDef->returnType->typeIndex, 0, false); //convert back to yoi type
+                        }
+                        
+                        if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+                            // print function name
+                            std::string funcName = wstring2string(funcDef->name);
+                            auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
+                            auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
+                            auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
+                            Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
                         }
 
                         // return with actual result
@@ -3651,18 +3687,6 @@ namespace yoi {
             // add basic block
             llvm::BasicBlock *BB = llvm::BasicBlock::Create(*TheContext, "entry", gcIncFunc);
             Builder->SetInsertPoint(BB);
-            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-                // print function name
-                auto *debugStrConst = llvm::ConstantDataArray::getString(*TheContext, incFuncName, true);
-                auto *debugStrGlobal = new llvm::GlobalVariable(*TheModule,
-                                                                debugStrConst->getType(),
-                                                                true,
-                                                                llvm::GlobalVariable::PrivateLinkage,
-                                                                debugStrConst,
-                                                                "debug_str");
-                auto debugArgs = std::array<llvm::Value *, 1>{debugStrGlobal};
-                Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value *>(debugArgs));
-            }
             auto *objPtr = gcIncFunc->arg_begin();
             auto *refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");
             auto *newRefCounter =
@@ -3685,18 +3709,6 @@ namespace yoi {
             auto retBlock = llvm::BasicBlock::Create(*TheContext, "ret", gcDecFunc);
 
             Builder->SetInsertPoint(BB);
-            if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-                // print function name
-                auto *debugStrConst = llvm::ConstantDataArray::getString(*TheContext, decFuncName, true);
-                auto *debugStrGlobal = new llvm::GlobalVariable(*TheModule,
-                                                                debugStrConst->getType(),
-                                                                true,
-                                                                llvm::GlobalVariable::PrivateLinkage,
-                                                                debugStrConst,
-                                                                "debug_str");
-                auto debugArgs = std::array<llvm::Value *, 1>{debugStrGlobal};
-                Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value *>(debugArgs));
-            }
 
             auto objPtr = gcDecFunc->arg_begin();
             auto refCounter = Builder->CreateStructGEP(structType, objPtr, 0, "ref_counter");

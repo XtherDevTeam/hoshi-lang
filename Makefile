@@ -33,5 +33,6 @@ package:
 	mkdir -p build-package/bin
 	cp cmake-build-release/*hoshi* build-package/bin
 	cp cmake-build-release/*elysia* build-package/bin
+	cp tools/hperf-view.py build-package/bin
 	cp -r lib build-package/lib
 	cp LICENSE build-package/

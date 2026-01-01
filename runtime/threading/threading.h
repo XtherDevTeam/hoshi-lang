@@ -6,6 +6,7 @@
 #define HOSHI_LANG_THREADING_H
 
 #include "runtime/memory/memory.h"
+#include <cstdint>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -39,7 +40,7 @@ extern "C" YoiResultUnsignedAndIntObject *runtime_start_thread(YoiVoidCallableIn
 
 extern "C" YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handle);
 
-extern "C" YoiUnsignedObject *runtime_get_thread_id();
+extern "C" uint64_t runtime_get_thread_id();
 
 extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj);
 

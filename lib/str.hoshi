@@ -821,3 +821,32 @@ func escape(s: Str) : Str {
     }
     return res
 }
+
+func unescape(s: Str) : Str {
+    let res = Str(s.length)
+    let i = 0
+    let j = 0
+    while (i < s.length) {
+        if (s[i] == '\\') {
+            i += 1
+            if (i == s.length) {
+                break
+            }
+            if (s[i] == 'n') {
+                res.data[j] = '\n'
+            } elif (s[i] == 'r') {
+                res.data[j] = '\r'
+            } elif (s[i] == 't') {
+                res.data[j] = '\t'
+            } else {
+                res.data[j] = s[i]
+            }
+        } else {
+            res.data[j] = s[i]
+        }
+        i += 1
+        j += 1
+    }
+    res.length = j
+    return res
+}

@@ -1,6 +1,11 @@
 #include "runtime/threading/threading.h"
 #include "runtime/memory/memory.h"
+#include <cstdint>
 #include <errno.h>
+
+#if defined (ELYSIA_RUNTIME_HPERF_ENABLE)
+#include <runtime/hperf/hperf.h>
+#endif
 
 struct ThreadStarterArgs {
     YoiVoidCallableInterface *callable;
@@ -83,13 +88,8 @@ YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handle_obj) {
     return yoi_result;
 }
 
-YoiUnsignedObject *runtime_get_thread_id() {
-    YoiThreadId thread_id = GetCurrentThreadId();
-    auto yoi_thread_id = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
-    yoi_thread_id->gc_refcount = 1;
-    yoi_thread_id->type_id = 0;
-    yoi_thread_id->value = (unsigned long long)thread_id;
-    return yoi_thread_id;
+uint64_t runtime_get_thread_id() {
+    return (uint64_t)GetCurrentThreadId();
 }
 
 YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle_obj) {
@@ -254,6 +254,12 @@ void* thread_starter_wrapper(void* args) {
     auto* starter_args = (ThreadStarterArgs*)args;
     YoiVoidCallableInterface* callable = starter_args->callable;
 
+    #if defined (ELYSIA_RUNTIME_HPERF_ENABLE)
+    if (hperf_enabled) {
+        hperf_context_create(runtime_get_thread_id());
+    }
+    #endif
+
     callable->callable(callable->this_ptr);
 
     // now that the thread's work is done, we can release the callable.
@@ -314,13 +320,8 @@ YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_id_obj) {
     return yoi_result;
 }
 
-YoiUnsignedObject *runtime_get_thread_id() {
-    YoiThreadId pthread_id = pthread_self();
-    auto yoi_thread_id = (YoiUnsignedObject *)runtime_object_alloc(sizeof(YoiUnsignedObject));
-    yoi_thread_id->gc_refcount = 1;
-    yoi_thread_id->type_id = 0;
-    yoi_thread_id->value = (unsigned long long)pthread_id;
-    return yoi_thread_id;
+uint64_t runtime_get_thread_id() {
+    return (uint64_t)pthread_self();
 }
 
 YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj) {

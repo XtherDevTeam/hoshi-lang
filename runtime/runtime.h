@@ -12,6 +12,7 @@
 #include <runtime/threading/threading.h>
 #include <runtime/random/random.h>
 #include <runtime/fs/fs.h>
+#include <runtime/hperf/hperf.h>
 
 extern "C" const char ** yoi_argv;
 

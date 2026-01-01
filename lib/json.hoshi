@@ -171,12 +171,12 @@ impl str.Str : JSONValue {
                 let end_pos = stream.tell()
                 stream.seek(content_pos, 0)
                 let buffer = stream.read(end_pos - content_pos - 1)
-                // TODO: handle un-escaping characters from buffer
                 this.data = buffer.data
                 this.length = buffer.size
                 this.capacity = buffer.size
                 // read ahead to skip \"
                 stream.getch()
+                this := str.unescape(this)
                 return lang.Result<JSONValue, str.Str>.ok(this as JSONValue)
             } else {
                 stream.seek(start_pos, 0)

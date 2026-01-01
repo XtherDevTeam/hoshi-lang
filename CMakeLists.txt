@@ -71,6 +71,7 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/signal/*.cpp
         runtime/time/*.cpp
         runtime/fs/*.cpp
+        runtime/hperf/*.cpp
 )
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})

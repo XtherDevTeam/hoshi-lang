@@ -10,6 +10,10 @@
 #include "memory.h"
 #include "runtime/rtti/rtti.h"
 
+#if defined(ELYSIA_RUNTIME_HPERF_ENABLE)
+#include <runtime/hperf/hperf.h>
+#endif
+
 #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
 extern "C" AllocatedMemoryList *allocated_memory_list = nullptr;
 
@@ -29,8 +33,11 @@ int64_t runtime_object_allocated = 0;
 #endif
 
 extern "C" void *runtime_object_alloc_report(size_t size, void *object) { 
+    #if defined (ELYSIA_RUNTIME_HPERF_ENABLE) 
+    hperf_report_mem_alloc(object, size);
+    #endif
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
-    printf("[Elysia/DEBUG] Allocating %lld bytes memory at %p. Current object count: %lld.\n", size, object, runtime_object_allocated);
+    printf("[Elysia/DEBUG] Allocating %zu bytes memory at %p. Current object count: %lld.\n", size, object, runtime_object_allocated);
     runtime_object_allocated ++;
     #endif
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
@@ -54,6 +61,9 @@ extern "C" void *runtime_object_alloc_report(size_t size, void *object) {
 }
 
 extern "C" void runtime_finalize_object_report(YoiObject *object) { 
+    #if defined(ELYSIA_RUNTIME_HPERF_ENABLE)
+    hperf_report_mem_free(object);
+    #endif
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) && defined(ELYSIA_RUNTIME_ENABLE_BUILTIN_MEMORY_LEAK_DETECTOR)
     printf("[Elysia/DEBUG] Finalizing %s object at %p. Current object count: %lld.\n", rtti_table[object->type_id].type_name, object, runtime_object_allocated);
     runtime_object_allocated --;

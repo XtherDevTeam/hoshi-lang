@@ -6,7 +6,10 @@
 #define HOSHI_LANG_RUNTIME_DEBUG_H
 
 #include <cstdint>
+
 extern "C" void runtime_debug_report_current_function(const char *function_name);
+
+extern "C" void runtime_debug_report_leave_function(const char *function_name);
 
 extern "C" void runtime_debug_print(const char *message);
 

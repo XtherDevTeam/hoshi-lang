@@ -22,7 +22,7 @@ import fgetc(stream: ptr) : int32 from "builtin"
 /* runtime thread library */
 import noffi runtime_start_thread(f: func () : none) : lang.Result<unsigned, int> from "builtin"
 import noffi runtime_thread_join(thread_id: unsigned) : int from "builtin"
-import noffi runtime_get_thread_id() : unsigned from "builtin"
+import runtime_get_thread_id() : unsigned from "builtin"
 import noffi runtime_ping_thread(thread_id: unsigned) : int from "builtin"
 import noffi runtime_thread_new_mutex_lock() : lang.Result<unsigned, int> from "builtin"
 import noffi runtime_thread_mutex_lock(mutex_id: unsigned) : none from "builtin"

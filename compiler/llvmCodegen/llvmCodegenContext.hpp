@@ -61,6 +61,7 @@ namespace yoi {
         llvm::Function *runtimeDebugPrintIntFunc = nullptr;
         llvm::Function *runtimeDebugPrintDeciFunc = nullptr;
         llvm::Function *runtimeDebugPrintCurrentAllocatedMemoryFunc = nullptr;
+        llvm::Function *runtimeDebugReportLeaveFunctionFunc = nullptr;
 
         // Yoi language context
         std::shared_ptr<compilerContext> compilerCtx;

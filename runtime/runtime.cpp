@@ -1,7 +1,9 @@
 #include "runtime.h"
+#include "runtime/hperf/hperf.h"
 #include "runtime/memory/memory.h"
 
 #include <cstdio>
+#include <cstring>
 
 const char ** yoi_argv{};
 int yoi_argc{};
@@ -9,6 +11,21 @@ int yoi_argc{};
 int elysia_main(int argc, char *argv[]) {
     yoi_argv = (const char **)argv;
     yoi_argc = argc;
+    #if defined(ELYSIA_RUNTIME_HPERF_ENABLE)
+    char *enable_hperf = nullptr;
+    for (int i = 0; i < argc; i++) {
+        if (strcmp(argv[i], "--perf") == 0) {
+            printf("[ELysia/INFO] hoshi-lang runtime: hperf enabled.\n");
+            if (i + 1 >= argc) {
+                printf("[Elysia/ERROR] hoshi-lang runtime: --perf option requires an argument.\n");
+                return -1;
+            }
+            enable_hperf = argv[i + 1];
+        }
+    }
+    if (enable_hperf) 
+        hperf_init(enable_hperf);
+    #endif
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) || defined(ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION)
     printf("[Elysia/DEBUG] hoshi-lang descriptor: %s, build_type: %llu. Runtime linked, invoking yoimiya_entry()...\n", &yoi_desc, yoi_build_type);
     #endif
@@ -27,6 +44,11 @@ int elysia_main(int argc, char *argv[]) {
         return -11;
     }
 #endif
+    #if defined(ELYSIA_RUNTIME_HPERF_ENABLE)
+    if (enable_hperf) {
+        hperf_write_report(hperf_report_filename);
+    }
+    #endif
     return resultVal;
 }
 
