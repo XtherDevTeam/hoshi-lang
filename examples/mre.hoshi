@@ -2,8 +2,9 @@ use json "json"
 use str "str"
 use console "console"
 
+let s : str.Str = null
+
 func main() : int {
-    let a = json.JSONDict().put("name", str.Str("Jerry Chou")).put("age", json.Numeric(17))
-    console.print(json.JSONValue(a).to_string(), "\n")
+    
     return 0
 }

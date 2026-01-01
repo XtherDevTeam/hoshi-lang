@@ -1453,13 +1453,21 @@ namespace yoi {
                         }
                     } catch (const std::runtime_error &e) {
                         panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not resolve template specialization for function '" + wstring2string(baseName) + "'" + ": \n" + e.what() + "\n");
+                    } catch (const std::out_of_range &e) {
+                        panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), e.what());
                     }
                 }
             }
 
             // Attempt 1: Extern Struct Constructor (regular or variadic)
             if (targetedModule->structTable.contains(baseName)) {
-                auto externStructEntry = getExternEntry(targetModule, baseName);
+                IRExternEntry externStructEntry;
+                try {
+                    externStructEntry = getExternEntry(targetModule, baseName);
+                } catch (const std::out_of_range &) {
+                    panic(subscriptExpr->getLine(), subscriptExpr->getColumn(), "Could not find extern struct entry for " + wstring2string(baseName));
+                }
+
                 auto targetedStruct = targetedModule->structTable[baseName];
                 
                 moduleContext->getIRBuilder().newStructOp(externStructEntry.itemIndex, true, externStructEntry.affiliateModule);
@@ -2199,12 +2207,14 @@ namespace yoi {
                         if (isVisitingGlobalScope()) {
                             // global variable
                             auto index = irModule->globalVariables.put(i->lhs->list[curPos].strVal, fieldType);
+                            tryCastTo(fieldType);
                             moduleContext->getIRBuilder().storeOp(IR::Opcode::store_global,
                                                                   {IROperand::operandType::globalVar, index});
 
                         } else {
                             auto index =
                                 moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(i->lhs->list[curPos].strVal, fieldType);
+                            tryCastTo(fieldType);
                             moduleContext->getIRBuilder().storeOp(IR::Opcode::store_local,
                                                                   {IROperand::operandType::localVar, index});
                         }
@@ -2461,7 +2471,7 @@ namespace yoi {
         if (auto it = mod->typeAliases.find(identifier->get().strVal); it != mod->typeAliases.end()) {
             return it->second;
         }
-        auto ex = getExternEntry(targetModule, identifier->node.strVal);
+        IRExternEntry ex = getExternEntry(targetModule, identifier->node.strVal);
         if (ex.type == IRExternEntry::externType::structType)
             return {IRValueType::valueType::structObject, ex.affiliateModule, ex.itemIndex};
         else if (ex.type == IRExternEntry::externType::interfaceType)
@@ -2527,10 +2537,14 @@ namespace yoi {
                 }
 
                 IRValueType lhs{IRValueType::valueType::integerObject};
-                if (targetModule == -1) {
-                    lhs = parseTypeSpec(*it);
-                } else {
-                    lhs = parseTypeSpecExtern(*it, targetModule);
+                try {
+                    if (targetModule == -1) {
+                        lhs = parseTypeSpec(*it);
+                    } else {
+                        lhs = parseTypeSpecExtern(*it, targetModule);
+                    }
+                } catch (std::out_of_range &e) {
+                    panic(typeSpec->getLine(), typeSpec->getColumn(), e.what());
                 }
                 yoi_assert(it + 1 == typeSpec->member->getTerms().end(),
                            typeSpec->getLine(),
@@ -3389,7 +3403,7 @@ namespace yoi {
 
         if (*rhs == *toType) {
             return;
-        } else if (rhs->type == IRValueType::valueType::pointerObject || rhs->type == IRValueType::valueType::pointer || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer) {
+        } else if (rhs->type == IRValueType::valueType::pointerObject || rhs->type == IRValueType::valueType::pointer || rhs->type == IRValueType::valueType::null || toType->type == IRValueType::valueType::pointerObject || toType->type == IRValueType::valueType::pointer ) {
             // no cast needed for pointer type
             return;
         } else if (rhs->isBasicType() && toType->isBasicType() && !rhs->isDynamicArrayType() && !toType->isDynamicArrayType() && !rhs->isArrayType() && !toType->isArrayType() && (rhs->type != IRValueType::valueType::stringObject || toType->type == IRValueType::valueType::pointerObject)) {
@@ -3765,7 +3779,7 @@ namespace yoi {
 
         size_t finalParamCount = overload.function->argumentTypes.size();
         if (structContext && structContext->type == IRValueType::valueType::structObject) {
-            auto externEntry = getExternEntry(targetModule, fullMangledName);
+            IRExternEntry externEntry = getExternEntry(targetModule, fullMangledName);
             auto isStaticMethod = std::find(overload.function->attrs.begin(), overload.function->attrs.end(), IRFunctionDefinition::FunctionAttrs::Static) != overload.function->attrs.end();
             bool usePureStaticLogic = noThisCall && isStaticMethod;
 

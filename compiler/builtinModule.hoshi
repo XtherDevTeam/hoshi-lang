@@ -85,6 +85,7 @@ struct Result<T, E> {
     is_ok() : bool,
     is_err() : bool,
     unwrap() : T,
+    unwrap(s: unsigned) : T,
     unwrap_err() : E,
     static ok(value: T) : Result<T, E>,
     static err(error: E) : Result<T, E>
@@ -103,6 +104,14 @@ impl Result<> {
     unwrap() : T {
         if (this.is_err()) {
             runtime_panic("hoshi-lang: exception unhandled")
+            return null
+        } else {
+            return this.value
+        }
+    },
+    unwrap(s: unsigned) : T {
+        if (this.is_err()) {
+            runtime_panic(s)
             return null
         } else {
             return this.value

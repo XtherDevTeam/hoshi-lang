@@ -12,7 +12,7 @@ namespace yoi {
     void lexer::getCh() {
         start:
         if (!stream) {
-            throw std::runtime_error("hoshi::lexer::getCh() - eof");
+            panic(line, col, "hoshi::lexer::getCh() - eof");
         }
         if (!stream.get(curCh) || stream.fail()) {
             curCh = '\0';
@@ -88,7 +88,7 @@ namespace yoi {
         } else if (curCh == L'\0') {
             return curToken = {line, col, token::tokenKind::eof, token::vBasicValue{false}};
         } else {
-            throw std::runtime_error("hoshi::lexer::scan() - undefined token");
+            panic(line, col, "hoshi::lexer::scan() - undefined token");
         }
     }
 
@@ -211,7 +211,7 @@ namespace yoi {
         tok.strVal = {};
         parseString(ss, tok.strVal);
         if (strV == L'\'' && tok.strVal.size() > 1)
-            throw std::runtime_error("lexer::strStart() - character literal length > 1");
+            panic(line, col, "lexer::strStart() - character literal length > 1");
         return tok;
     }
 
@@ -657,7 +657,7 @@ namespace yoi {
                 operatorId += L"[]";
                 break;
             }
-            default: throw std::runtime_error("lexer::operatorStart() - unknown operator");
+            default: panic(line, col, "lexer::operatorStart() - unknown operator");
         }
         return curToken = lexer::token{line, col, token::tokenKind::identifier, std::move(operatorId)};
     }

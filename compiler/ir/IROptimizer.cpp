@@ -1391,7 +1391,7 @@ namespace yoi {
                         *value.type = compilerCtx->normalizeForeignBasicType(value.type);
                     }
 
-                    if(*definitionType != *value.type) {
+                    if(*definitionType != *value.type && value.type->type == IRValueType::valueType::null && value.type->type == IRValueType::valueType::pointerObject) {
                         // type mismatch, panic
                         panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::reduceRedundantConstantExpr(): store_global: type mismatch");
                     }
@@ -3739,7 +3739,7 @@ namespace yoi {
                     *value.type = compilerCtx->normalizeForeignBasicType(value.type);
                 }
 
-                if (*definitionType != *value.type) {
+                if (*definitionType != *value.type && value.type->type == IRValueType::valueType::null && value.type->type == IRValueType::valueType::pointerObject) {
                     // type mismatch, panic
                     panic(ins.debugInfo.line, ins.debugInfo.column, "IROptimizer::analyzeBlock(): store_global: type mismatch");
                 }
