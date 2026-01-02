@@ -1,19 +1,13 @@
 var searchData=
 [
-  ['objectpath_0',['objectPath',['../classyoi_1_1ObjectLinker.html#a45bc2529ea77b1646d1a3e3d7e0faa8c',1,'yoi::ObjectLinker']]],
-  ['ok_1',['ok',['../structYoiResultUnsignedAndIntObject.html#a25289c36b71273042f3ef19affbab763',1,'YoiResultUnsignedAndIntObject::ok'],['../testhelper_8h.html#a047ea0d874e6802b9b6d08f6b50248e5',1,'ok:&#160;testhelper.h']]],
-  ['op_2',['op',['../classyoi_1_1abstractExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::abstractExpr::op'],['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op'],['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op']]],
-  ['opcode_3',['opcode',['../classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d',1,'yoi::IR']]],
-  ['operands_4',['operands',['../classyoi_1_1IR.html#a8ce7a5a8c6787e9812c15e35f5d0ce15',1,'yoi::IR']]],
-  ['ops_5',['ops',['../classyoi_1_1inclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::inclusiveExpr::ops'],['../classyoi_1_1logicalOrExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalOrExpr::ops'],['../classyoi_1_1logicalAndExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalAndExpr::ops'],['../classyoi_1_1exclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::exclusiveExpr::ops'],['../classyoi_1_1andExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::andExpr::ops'],['../classyoi_1_1equalityExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::equalityExpr::ops'],['../classyoi_1_1relationalExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::relationalExpr::ops'],['../classyoi_1_1shiftExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::shiftExpr::ops'],['../classyoi_1_1addExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::addExpr::ops'],['../classyoi_1_1mulExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::mulExpr::ops']]],
-  ['optimizable_6',['optimizable',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a010ddcc410eb8c270049186c685fd1c4',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet']]],
-  ['option_7',['option',['../structmi__option__desc__t.html#a83a0a3edbf38d8f60ad95e91663a43cd',1,'mi_option_desc_t']]],
-  ['options_8',['options',['../options_8c.html#a92a8d2cc6467e45662af606615851df8',1,'options.c']]],
-  ['os_9',['os',['../structmi__memid__t.html#a2df8e4c787ceeea7300e059bf6ef38ee',1,'mi_memid_t']]],
-  ['os_5flist_5fcount_10',['os_list_count',['../structmi__arena__field__cursor__t.html#ab19eb7e783f6e2797b916ffca867faa1',1,'mi_arena_field_cursor_t']]],
-  ['os_5fpreloading_11',['os_preloading',['../init_8c.html#ae186df80064d2af83c23a13e6deb1089',1,'init.c']]],
-  ['out_12',['out',['../structbuffered__t.html#a15ff67481a82f04ad10ccb0fa3fab5c4',1,'buffered_t']]],
-  ['out_5fbuf_13',['out_buf',['../options_8c.html#a10b377887bb469bc71f17df5d153d414',1,'options.c']]],
-  ['output_14',['output',['../structmi__random__ctx__t.html#aa740b952877676a401315d6fdd1a6abb',1,'mi_random_ctx_t']]],
-  ['output_5favailable_15',['output_available',['../structmi__random__ctx__t.html#aa09bd20387b69762dd0dbc13b992194a',1,'mi_random_ctx_t']]]
+  ['pages_0',['pages',['../structHPerfContext.html#af76ac39ef8ea6706a9b35ff6ef1bafa3',1,'HPerfContext']]],
+  ['pairs_1',['pairs',['../classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af',1,'yoi::marcoDescriptor']]],
+  ['path_2',['path',['../classyoi_1_1useStmt.html#ad199db881b7439ae4c05faa0c5420865',1,'yoi::useStmt::path'],['../classyoi_1_1moduleContext.html#a1313d222a87486a71c3f1900fe1b9ad1',1,'yoi::moduleContext::path']]],
+  ['phinodes_3',['phiNodes',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#afe7836394bb27a03e8598d2d13e466ba',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
+  ['pool_4',['pool',['../classyoi_1_1IRStringLiteralPool.html#a933a5c81d517a6a297bb7883e4941adc',1,'yoi::IRStringLiteralPool::pool'],['../classyoi_1_1indexPool.html#ab9096678e21c77ed4b5e90d5fbad5afe',1,'yoi::indexPool::pool']]],
+  ['pos_5',['pos',['../structyoi_1_1lexer_1_1lexerState.html#acd1a7072cf08fc23fc14f9b4cad71bec',1,'yoi::lexer::lexerState']]],
+  ['possiblevalue_6',['possiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#abde5e8778f624735adbeadb5b5320c1b',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::possibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aca5f498dea08d6ffa5d8330d8bfdf55c',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::possibleValue']]],
+  ['preserveintermediatefiles_7',['preserveintermediatefiles',['../structyoi_1_1IRBuildConfig.html#a1a4a88a36dafa67834472e12d3d32b23',1,'yoi::IRBuildConfig::preserveIntermediateFiles'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1a4a88a36dafa67834472e12d3d32b23',1,'yoi::IRBuildConfig::Builder::preserveIntermediateFiles']]],
+  ['prev_8',['prev',['../structHPerfContext.html#a0910b87478196fc7784b358ceb0b439e',1,'HPerfContext::prev'],['../structAllocatedMemoryList.html#a3908af69a0a5208d3919d372a813af51',1,'AllocatedMemoryList::prev']]],
+  ['ptr_9',['ptr',['../unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba',1,'yoi::globalStmt::vValue::ptr'],['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba',1,'yoi::inCodeBlockStmt::vValue::ptr'],['../structHPerfEventMemAlloc.html#add9af9569af79ec26dd741fb226b38ba',1,'HPerfEventMemAlloc::ptr'],['../structHPerfEventMemFree.html#add9af9569af79ec26dd741fb226b38ba',1,'HPerfEventMemFree::ptr']]]
 ];

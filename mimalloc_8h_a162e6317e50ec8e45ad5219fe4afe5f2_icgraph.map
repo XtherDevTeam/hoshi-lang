@@ -1,9 +1,0 @@
-<map id="mi_heap_alloc_new" name="mi_heap_alloc_new">
-<area shape="rect" id="Node000001" title=" " alt="" coords="355,31,505,56"/>
-<area shape="rect" id="Node000002" href="$alloc_8c.html#a03a8fd356c2c35a619bbf20792ba6ec2" title=" " alt="" coords="141,5,307,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="340,35,306,31,307,25,341,30"/>
-<area shape="rect" id="Node000004" href="$alloc_8c.html#a5896b128fd59b4bbd83a7ba1941f159f" title=" " alt="" coords="187,55,261,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="341,56,261,66,261,60,340,51"/>
-<area shape="rect" id="Node000003" href="$group__cpp.html#gadd11b85c15d21d308386844b5233856c" title="like mi_mallocn(), but when out of memory, use std::get_new_handler and raise std::bad_alloc exceptio..." alt="" coords="5,5,93,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,21,93,21,93,15,128,15"/>
-</map>

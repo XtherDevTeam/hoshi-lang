@@ -118,7 +118,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2172ac23ccace7bbe941af751ae3cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a741ac5ddd3ef961363997aeed13625c4" id="r_a741ac5ddd3ef961363997aeed13625c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#a741ac5ddd3ef961363997aeed13625c4">getIndex</a> (const A &amp;k)</td></tr>
 <tr class="separator:a741ac5ddd3ef961363997aeed13625c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45dd786d9a08d7eb251eb9c6e5218b6b" id="r_a45dd786d9a08d7eb251eb9c6e5218b6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#a45dd786d9a08d7eb251eb9c6e5218b6b">getIndex</a> (const std::function&lt; <a class="el" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>(const A &amp;)&gt; &amp;pred)</td></tr>
+<tr class="memitem:a45dd786d9a08d7eb251eb9c6e5218b6b" id="r_a45dd786d9a08d7eb251eb9c6e5218b6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#a45dd786d9a08d7eb251eb9c6e5218b6b">getIndex</a> (const std::function&lt; bool(const A &amp;)&gt; &amp;pred)</td></tr>
 <tr class="separator:a45dd786d9a08d7eb251eb9c6e5218b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc39e40e2c384316bee5a9d0c06ec426" id="r_afc39e40e2c384316bee5a9d0c06ec426"><td class="memItemLeft" align="right" valign="top">const A &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#afc39e40e2c384316bee5a9d0c06ec426">getKey</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> i) const</td></tr>
 <tr class="separator:afc39e40e2c384316bee5a9d0c06ec426"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,7 +130,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acad38d52497a975bfb6f2f6acd76631f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a581b93e533c8f6dc871eb0233c843d8a" id="r_a581b93e533c8f6dc871eb0233c843d8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#a581b93e533c8f6dc871eb0233c843d8a">size</a> () const</td></tr>
 <tr class="separator:a581b93e533c8f6dc871eb0233c843d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa76a630f26192e5bbc12186472e777fa" id="r_aa76a630f26192e5bbc12186472e777fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#aa76a630f26192e5bbc12186472e777fa">contains</a> (const A &amp;k) const</td></tr>
+<tr class="memitem:aa76a630f26192e5bbc12186472e777fa" id="r_aa76a630f26192e5bbc12186472e777fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1indexTable.html#aa76a630f26192e5bbc12186472e777fa">contains</a> (const A &amp;k) const</td></tr>
 <tr class="separator:aa76a630f26192e5bbc12186472e777fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -188,7 +188,7 @@ template&lt;typename A , typename B &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a> contains </td>
+          <td class="memname">bool contains </td>
           <td>(</td>
           <td class="paramtype">const A &amp;&#160;</td>
           <td class="paramname"><em>k</em></td><td>)</td>
@@ -301,7 +301,7 @@ template&lt;typename A , typename B &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> getIndex </td>
           <td>(</td>
-          <td class="paramtype">const std::function&lt; <a class="el" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>(const A &amp;)&gt; &amp;&#160;</td>
+          <td class="paramtype">const std::function&lt; bool(const A &amp;)&gt; &amp;&#160;</td>
           <td class="paramname"><em>pred</em></td><td>)</td>
           <td></td>
         </tr>

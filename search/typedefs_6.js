@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['funcidentifier_0',['FuncIdentifier',['../structyoi_1_1CallGraph.html#a2d30a0e8667eccec0b62ff7ccf50f9e5',1,'yoi::CallGraph']]]
+  ['pointer_0',['pointer',['../classyoi_1_1indexTable_1_1iterator.html#a4738635aff9c2bb2c8ccc2875ae72496',1,'yoi::indexTable::iterator']]]
 ];

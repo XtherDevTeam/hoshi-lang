@@ -280,7 +280,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
 <div class="foldopen" id="foldopen00124" data-start="{" data-end="}">
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classyoi_1_1uniqueExpr.html#a67b76affb3b5d35fa419ac234144038b">  124</a></span>    uniqueExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classyoi_1_1uniqueExpr.html#a67b76affb3b5d35fa419ac234144038b">  124</a></span>    uniqueExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">return</span> op.kind != <a class="code hl_enumvalue" href="structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a">lexer::token::tokenKind::unknown</a>;</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    }</div>
 </div>
@@ -322,7 +322,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
 <div class="foldopen" id="foldopen00152" data-start="{" data-end="}">
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classyoi_1_1mulExpr.html#a67b76affb3b5d35fa419ac234144038b">  152</a></span>    mulExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classyoi_1_1mulExpr.html#a67b76affb3b5d35fa419ac234144038b">  152</a></span>    mulExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    }</div>
 </div>
@@ -340,7 +340,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
 <div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classyoi_1_1addExpr.html#a67b76affb3b5d35fa419ac234144038b">  164</a></span>    addExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classyoi_1_1addExpr.html#a67b76affb3b5d35fa419ac234144038b">  164</a></span>    addExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
 </div>
@@ -358,7 +358,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
 <div class="foldopen" id="foldopen00176" data-start="{" data-end="}">
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="classyoi_1_1shiftExpr.html#a67b76affb3b5d35fa419ac234144038b">  176</a></span>    shiftExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="classyoi_1_1shiftExpr.html#a67b76affb3b5d35fa419ac234144038b">  176</a></span>    shiftExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    }</div>
 </div>
@@ -376,7 +376,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
 <div class="foldopen" id="foldopen00188" data-start="{" data-end="}">
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classyoi_1_1relationalExpr.html#a67b76affb3b5d35fa419ac234144038b">  188</a></span>    relationalExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classyoi_1_1relationalExpr.html#a67b76affb3b5d35fa419ac234144038b">  188</a></span>    relationalExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
 </div>
@@ -394,7 +394,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
 <div class="foldopen" id="foldopen00200" data-start="{" data-end="}">
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="classyoi_1_1equalityExpr.html#a67b76affb3b5d35fa419ac234144038b">  200</a></span>    equalityExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="classyoi_1_1equalityExpr.html#a67b76affb3b5d35fa419ac234144038b">  200</a></span>    equalityExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    }</div>
 </div>
@@ -412,7 +412,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
 <div class="foldopen" id="foldopen00212" data-start="{" data-end="}">
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classyoi_1_1andExpr.html#a67b76affb3b5d35fa419ac234144038b">  212</a></span>    andExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classyoi_1_1andExpr.html#a67b76affb3b5d35fa419ac234144038b">  212</a></span>    andExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    }</div>
 </div>
@@ -430,7 +430,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
 <div class="foldopen" id="foldopen00224" data-start="{" data-end="}">
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="classyoi_1_1exclusiveExpr.html#a67b76affb3b5d35fa419ac234144038b">  224</a></span>    exclusiveExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="classyoi_1_1exclusiveExpr.html#a67b76affb3b5d35fa419ac234144038b">  224</a></span>    exclusiveExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
 </div>
@@ -448,7 +448,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
 <div class="foldopen" id="foldopen00236" data-start="{" data-end="}">
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classyoi_1_1inclusiveExpr.html#a67b76affb3b5d35fa419ac234144038b">  236</a></span>    inclusiveExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classyoi_1_1inclusiveExpr.html#a67b76affb3b5d35fa419ac234144038b">  236</a></span>    inclusiveExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    }</div>
 </div>
@@ -466,7 +466,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
 <div class="foldopen" id="foldopen00248" data-start="{" data-end="}">
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="classyoi_1_1logicalAndExpr.html#a67b76affb3b5d35fa419ac234144038b">  248</a></span>    logicalAndExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="classyoi_1_1logicalAndExpr.html#a67b76affb3b5d35fa419ac234144038b">  248</a></span>    logicalAndExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    }</div>
 </div>
@@ -484,7 +484,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 </div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
 <div class="foldopen" id="foldopen00260" data-start="{" data-end="}">
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="classyoi_1_1logicalOrExpr.html#a67b76affb3b5d35fa419ac234144038b">  260</a></span>    logicalOrExpr::operator <a class="code hl_function" href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="classyoi_1_1logicalOrExpr.html#a67b76affb3b5d35fa419ac234144038b">  260</a></span>    logicalOrExpr::operator bool()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">return</span> !ops.empty();</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    }</div>
 </div>
@@ -689,7 +689,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
 <div class="foldopen" id="foldopen00396" data-start="{" data-end="}">
 <div class="line"><a id="l00396" name="l00396"></a><span class="lineno"><a class="line" href="structyoi_1_1ifStmt_1_1ifBlock.html#a356c3c41410b1d7e896acc3977402da4">  396</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="structyoi_1_1ifStmt_1_1ifBlock.html#a356c3c41410b1d7e896acc3977402da4">ifStmt::ifBlock::getBlock</a>() {</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    }</div>
 </div>
 <div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
@@ -725,7 +725,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
 <div class="foldopen" id="foldopen00420" data-start="{" data-end="}">
 <div class="line"><a id="l00420" name="l00420"></a><span class="lineno"><a class="line" href="classyoi_1_1whileStmt.html#a356c3c41410b1d7e896acc3977402da4">  420</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="classyoi_1_1whileStmt.html#a356c3c41410b1d7e896acc3977402da4">whileStmt::getBlock</a>() {</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    }</div>
 </div>
 <div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
@@ -749,7 +749,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> </div>
 <div class="foldopen" id="foldopen00436" data-start="{" data-end="}">
 <div class="line"><a id="l00436" name="l00436"></a><span class="lineno"><a class="line" href="classyoi_1_1forStmt.html#a356c3c41410b1d7e896acc3977402da4">  436</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="classyoi_1_1forStmt.html#a356c3c41410b1d7e896acc3977402da4">forStmt::getBlock</a>() {</div>
-<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>    }</div>
 </div>
 <div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span> </div>
@@ -767,7 +767,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span> </div>
 <div class="foldopen" id="foldopen00448" data-start="{" data-end="}">
 <div class="line"><a id="l00448" name="l00448"></a><span class="lineno"><a class="line" href="classyoi_1_1forEachStmt.html#a356c3c41410b1d7e896acc3977402da4">  448</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="classyoi_1_1forEachStmt.html#a356c3c41410b1d7e896acc3977402da4">forEachStmt::getBlock</a>() {</div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>    }</div>
 </div>
 <div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span> </div>
@@ -1388,7 +1388,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span> </div>
 <div class="foldopen" id="foldopen00935" data-start="{" data-end="}">
 <div class="line"><a id="l00935" name="l00935"></a><span class="lineno"><a class="line" href="classyoi_1_1innerMethodDef.html#a356c3c41410b1d7e896acc3977402da4">  935</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="classyoi_1_1innerMethodDef.html#a356c3c41410b1d7e896acc3977402da4">innerMethodDef::getBlock</a>() {</div>
-<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>    }</div>
 </div>
 <div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span> </div>
@@ -1406,7 +1406,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span> </div>
 <div class="foldopen" id="foldopen00947" data-start="{" data-end="}">
 <div class="line"><a id="l00947" name="l00947"></a><span class="lineno"><a class="line" href="classyoi_1_1constructorDef.html#a356c3c41410b1d7e896acc3977402da4">  947</a></span>    <a class="code hl_class" href="classyoi_1_1codeBlock.html">codeBlock</a> &amp;<a class="code hl_function" href="classyoi_1_1constructorDef.html#a356c3c41410b1d7e896acc3977402da4">constructorDef::getBlock</a>() {</div>
-<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        <span class="keywordflow">return</span> *<a class="code hl_typedef" href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a>;</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        <span class="keywordflow">return</span> *block;</div>
 <div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>    }</div>
 </div>
 <div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span> </div>
@@ -1637,8 +1637,8 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span> </div>
 <div class="foldopen" id="foldopen01122" data-start="{" data-end="}">
 <div class="line"><a id="l01122" name="l01122"></a><span class="lineno"><a class="line" href="namespaceyoi.html#ac401c077074f29513030701ef718fc20"> 1122</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1unnamedDefinitionArguments.html">unnamedDefinitionArguments</a> *ptr) {</div>
-<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;<a class="code hl_typedef" href="mimalloc_8h.html#ac9ca0390aa991912667416f6baf99e51">arg</a> : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>) {</div>
-<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_typedef" href="mimalloc_8h.html#ac9ca0390aa991912667416f6baf99e51">arg</a>);</div>
+<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;arg : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>) {</div>
+<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(arg);</div>
 <div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span>        }</div>
 <div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>        <span class="keyword">delete</span> ptr;</div>
 <div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>    }</div>
@@ -2150,9 +2150,6 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="ttc" id="aclassyoi_1_1whileStmt_html_a356c3c41410b1d7e896acc3977402da4"><div class="ttname"><a href="classyoi_1_1whileStmt.html#a356c3c41410b1d7e896acc3977402da4">yoi::whileStmt::getBlock</a></div><div class="ttdeci">codeBlock &amp; getBlock()</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l00420">ast.cpp:420</a></div></div>
 <div class="ttc" id="aclassyoi_1_1whileStmt_html_a4f12d9ae58f8b4d08debfc33b8042adf"><div class="ttname"><a href="classyoi_1_1whileStmt.html#a4f12d9ae58f8b4d08debfc33b8042adf">yoi::whileStmt::getCond</a></div><div class="ttdeci">rExpr &amp; getCond()</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l00416">ast.cpp:416</a></div></div>
 <div class="ttc" id="aclassyoi_1_1whileStmt_html_a8342ddcd6ca0160da8328bbdf6d696f1"><div class="ttname"><a href="classyoi_1_1whileStmt.html#a8342ddcd6ca0160da8328bbdf6d696f1">yoi::whileStmt::cond</a></div><div class="ttdeci">rExpr * cond</div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00821">ast.hpp:821</a></div></div>
-<div class="ttc" id="amimalloc_8h_html_a840cb394e7433c7fe0c4875a3030c955"><div class="ttname"><a href="mimalloc_8h.html#a840cb394e7433c7fe0c4875a3030c955">block</a></div><div class="ttdeci">const mi_heap_area_t void * block</div><div class="ttdef"><b>Definition</b> <a href="mimalloc_8h_source.html#l00270">mimalloc.h:270</a></div></div>
-<div class="ttc" id="amimalloc_8h_html_ab8be3aae12d715c78f7ad7a734af02e5"><div class="ttname"><a href="mimalloc_8h.html#ab8be3aae12d715c78f7ad7a734af02e5">bool</a></div><div class="ttdeci">typedef bool(mi_cdecl mi_block_visit_fun)(const mi_heap_t *heap</div></div>
-<div class="ttc" id="amimalloc_8h_html_ac9ca0390aa991912667416f6baf99e51"><div class="ttname"><a href="mimalloc_8h.html#ac9ca0390aa991912667416f6baf99e51">arg</a></div><div class="ttdeci">unsigned long long void * arg</div><div class="ttdef"><b>Definition</b> <a href="mimalloc_8h_source.html#l00142">mimalloc.h:142</a></div></div>
 <div class="ttc" id="anamespaceyoi_html"><div class="ttname"><a href="namespaceyoi.html">yoi</a></div><div class="ttdef"><b>Definition</b> <a href="builtinModule_8cpp_source.html#l00007">builtinModule.cpp:7</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_a467112ed789564244f414efb801bf606"><div class="ttname"><a href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a></div><div class="ttdeci">std::vector&lt; t &gt; vec</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00052">def.hpp:52</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_ad29f4cef2f4dd7cc9f82b53aa220f1fe"><div class="ttname"><a href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">yoi::finalizeAST</a></div><div class="ttdeci">void finalizeAST(funcTypeSpec *ptr)</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l00472">ast.cpp:472</a></div></div>

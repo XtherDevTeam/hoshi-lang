@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['heap_5fpage_5fvisitor_5ffun_0',['heap_page_visitor_fun',['../heap_8c.html#a7cb2139998c7f08a30a94cdd6f72d5b8',1,'heap.c']]],
-  ['heartbeat_1',['heartbeat',['../mimalloc_8h.html#a411f6e94394a2400aa460c796beff8d8',1,'mimalloc.h']]]
+  ['reference_0',['reference',['../classyoi_1_1indexTable_1_1iterator.html#a74202cdd96628bc49a756e5fc87d22de',1,'yoi::indexTable::iterator']]],
+  ['runtime_5fsignal_5fhandler_5fbare_5ft_1',['runtime_signal_handler_bare_t',['../signal_8h.html#a9554e4d795733685341fc98eca523e98',1,'signal.h']]],
+  ['runtime_5fsignal_5fhandler_5ft_2',['runtime_signal_handler_t',['../signal_8h.html#a65d937df4b0f0461e7ff0653bd88bffb',1,'signal.h']]]
 ];

@@ -1,26 +1,16 @@
 <map id="runtime/time/time.h" name="runtime/time/time.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="532,5,685,31"/>
-<area shape="rect" id="Node000002" href="$unix_2prim_8c.html" title=" " alt="" coords="203,79,375,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="549,37,366,81,365,76,548,31"/>
-<area shape="rect" id="Node000006" href="$wasi_2prim_8c.html" title=" " alt="" coords="425,79,600,119"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="586,41,538,81,534,76,582,37"/>
-<area shape="rect" id="Node000007" href="$hperf_8h.html" title=" " alt="" coords="625,86,785,111"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="635,37,692,84,689,88,632,41"/>
-<area shape="rect" id="Node000012" href="$time_8cpp.html" title=" " alt="" coords="809,86,977,111"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="664,32,852,83,851,89,662,37"/>
-<area shape="rect" id="Node000003" href="$osx_2prim_8c.html" title=" " alt="" coords="5,167,172,207"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="233,127,134,169,131,164,231,122"/>
-<area shape="rect" id="Node000004" href="$prim_8c.html" title=" " alt="" coords="196,174,381,199"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="291,133,291,174,286,174,286,133"/>
-<area shape="rect" id="Node000005" href="$static_8c.html" title=" " alt="" coords="210,255,367,280"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="291,213,291,254,286,254,286,213"/>
-<area shape="rect" id="Node000008" href="$debug_8cpp.html" title=" " alt="" coords="405,174,593,199"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="666,119,528,176,526,171,664,114"/>
-<area shape="rect" id="Node000009" href="$hperf_8cpp.html" title=" " alt="" coords="617,174,792,199"/>
-<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="707,125,707,173,702,173,702,125"/>
-<area shape="rect" id="Node000010" href="$runtime_8cpp.html" title=" " alt="" coords="806,255,961,280"/>
-<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="738,116,772,138,805,165,848,212,878,253,874,256,844,216,802,169,769,142,735,121"/>
-<area shape="rect" id="Node000011" href="$runtime_8h.html" title=" " alt="" coords="868,174,1008,199"/>
-<area shape="poly" id="edge10_Node000007_Node000011" title=" " alt="" coords="750,114,908,171,906,176,748,119"/>
-<area shape="poly" id="edge11_Node000011_Node000010" title=" " alt="" coords="924,212,894,256,889,253,920,209"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="384,5,537,31"/>
+<area shape="rect" id="Node000002" href="$hperf_8h.html" title=" " alt="" coords="287,79,447,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="437,41,384,81,381,76,433,37"/>
+<area shape="rect" id="Node000007" href="$time_8cpp.html" title=" " alt="" coords="471,79,639,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="488,37,541,76,538,81,485,41"/>
+<area shape="rect" id="Node000003" href="$debug_8cpp.html" title=" " alt="" coords="5,152,193,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,110,143,154,142,149,310,105"/>
+<area shape="rect" id="Node000004" href="$hperf_8cpp.html" title=" " alt="" coords="217,152,392,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="350,116,317,154,313,150,346,113"/>
+<area shape="rect" id="Node000005" href="$runtime_8cpp.html" title=" " alt="" coords="406,225,561,251"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="387,113,476,223,472,227,383,117"/>
+<area shape="rect" id="Node000006" href="$runtime_8h.html" title=" " alt="" coords="468,152,608,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="409,107,511,149,509,154,406,112"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="523,190,494,227,490,224,519,187"/>
 </map>

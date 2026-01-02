@@ -1,18 +1,17 @@
 var indexSectionsWithContent =
 {
-  0: "12345678_abcdefghijklmnopqrstuvwxyz~和复实属接的直语",
+  0: "12345678_abcdefghijklmnoprstuvwxy~和复实属接的直语",
   1: "abcdefghilmnoprstuvwy",
   2: "my",
-  3: "abcdefhijlmnoprstuvw",
-  4: "_abcdefghijlmnopqrstuvwxy~",
-  5: "_abcdefghijklmnoprstuvwxyz",
-  6: "_abcdefhimnprstuvwy",
-  7: "bcefhmnopstuv",
-  8: "_abcdefghijklmnprstuvw",
+  3: "abcdfhijlmnoprstuvw",
+  4: "abcdefghijlmnoprstuvwxy~",
+  5: "_abcdefghiklmnoprstuvwy",
+  6: "cdefinprtuvwy",
+  7: "bcefhnopstuv",
+  8: "abcdefghijklmnprstuvw",
   9: "o",
-  10: "_abcefghklmnpqrstvwy",
-  11: "abcefhimoprtwz",
-  12: "abcdefghijlmnoprstuvw实接的直"
+  10: "_eghlmpswy",
+  11: "abcdefghijlmnoprstvw实接的直"
 };
 
 var indexSectionNames =
@@ -28,8 +27,7 @@ var indexSectionNames =
   8: "enumvalues",
   9: "related",
   10: "defines",
-  11: "groups",
-  12: "pages"
+  11: "pages"
 };
 
 var indexSectionLabels =
@@ -45,7 +43,6 @@ var indexSectionLabels =
   8: "Enumerator",
   9: "Friends",
   10: "Macros",
-  11: "Modules",
-  12: "Pages"
+  11: "Pages"
 };
 

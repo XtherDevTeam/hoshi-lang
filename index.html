@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>hoshi-lang: hoshi-lang</title>
+<title>hoshi-lang: The Hoshi-lang Programming Language</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,38 +90,214 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">hoshi-lang </div></div>
+  <div class="headertitle"><div class="title">The Hoshi-lang Programming Language </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is the API documentation of the <a href="https://github.com/microsoft/mimalloc">mimalloc</a> allocator (pronounced "me-malloc") &ndash; a general purpose allocator with excellent <a href="bench.html">performance</a> characteristics. Initially developed by Daan Leijen for the run-time systems of the <a href="https://github.com/koka-lang/koka">Koka</a> and <a href="https://github.com/leanprover/lean">Lean</a> languages.</p>
-<p>It is a drop-in replacement for <code>malloc</code> and can be used in other programs without code changes, for example, on Unix you can use it as: </p><div class="fragment"><div class="line">&gt; LD_PRELOAD=/usr/bin/libmimalloc.so  myprogram</div>
-</div><!-- fragment --><p>Notable aspects of the design include:</p><ul>
-<li><b>small and consistent</b>: the library is about 8k LOC using simple and consistent data structures. This makes it very suitable to integrate and adapt in other projects. For runtime systems it provides hooks for a monotonic <em>heartbeat</em> and deferred freeing (for bounded worst-case times with reference counting). Partly due to its simplicity, mimalloc has been ported to many systems (Windows, macOS, Linux, WASM, various BSD's, Haiku, MUSL, etc) and has excellent support for dynamic overriding. At the same time, it is an industrial strength allocator that runs (very) large scale distributed services on thousands of machines with excellent worst case latencies.</li>
-<li><b>free list sharding</b>: instead of one big free list (per size class) we have many smaller lists per "mimalloc page" which reduces fragmentation and increases locality &ndash; things that are allocated close in time get allocated close in memory. (A mimalloc page contains blocks of one size class and is usually 64KiB on a 64-bit system).</li>
-<li><b>free list multi-sharding</b>: the big idea! Not only do we shard the free list per mimalloc page, but for each page we have multiple free lists. In particular, there is one list for thread-local <code>free</code> operations, and another one for concurrent <code>free</code> operations. Free-ing from another thread can now be a single CAS without needing sophisticated coordination between threads. Since there will be thousands of separate free lists, contention is naturally distributed over the heap, and the chance of contending on a single location will be low &ndash; this is quite similar to randomized algorithms like skip lists where adding a random oracle removes the need for a more complex algorithm.</li>
-<li><b>eager page purging</b>: when a "page" becomes empty (with increased chance due to free list sharding) the memory is marked to the OS as unused (reset or decommitted) reducing (real) memory pressure and fragmentation, especially in long running programs.</li>
-<li><b>secure</b>: <em>mimalloc</em> can be built in secure mode, adding guard pages, randomized allocation, encrypted free lists, etc. to protect against various heap vulnerabilities. The performance penalty is usually around 10% on average over our benchmarks.</li>
-<li><b>first-class heaps</b>: efficiently create and use multiple heaps to allocate across different regions. A heap can be destroyed at once instead of deallocating each object separately.</li>
-<li><b>bounded</b>: it does not suffer from <em>blowup</em> [1], has bounded worst-case allocation times (<em>wcat</em>) (upto OS primitives), bounded space overhead (~0.2% meta-data, with low internal fragmentation), and has no internal points of contention using only atomic operations.</li>
-<li><b>fast</b>: In our benchmarks (see <a class="el" href="bench.html">below</a>), <em>mimalloc</em> outperforms other leading allocators (<em>jemalloc</em>, <em>tcmalloc</em>, <em>Hoard</em>, etc), and often uses less memory. A nice property is that it does consistently well over a wide range of benchmarks. There is also good huge OS page support for larger server programs.</li>
-</ul>
-<p>You can read more on the design of <em>mimalloc</em> in the <a href="https://www.microsoft.com/en-us/research/publication/mimalloc-free-list-sharding-in-action">technical report</a> which also has detailed benchmark results.</p>
-<p>Further information:</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> </p>
+<h1><a class="anchor" id="autotoc_md150"></a>
+Intro</h1>
+<blockquote class="doxtable">
+<p>&zwj;This is one of my practice during Senior High School period. <code>hoshi</code> means both $\mathop{desire}\limits^{欲しい}$ and $\mathop{stars}\limits^{星}$ in Japanese, which also represents my silly wishes: I hope some day I would become the stars I once live up to. </p>
+</blockquote>
+<p>Hoshi-lang is a statically-typed, general-purpose programming language with a focus on performance, safety, and modern language features. It is designed to be a simple yet powerful tool for building a wide range of applications.</p>
+<p>This project is currently under active development and is a personal exploration into language design and implementation.</p>
+<p><a href="https://deepwiki.com/XtherDevTeam/hoshi-lang"><img src="https://deepwiki.com/badge.svg" alt="Checkout the Wiki" style="pointer-events: none;" class="inline"/></a></p>
+<h1><a class="anchor" id="autotoc_md151"></a>
+Features</h1>
 <ul>
-<li><a class="el" href="build.html">Building</a></li>
-<li><a class="el" href="using.html">Using the library</a></li>
-<li><a class="el" href="environment.html">Environment Options</a></li>
-<li><a class="el" href="overrides.html">Overriding Malloc</a></li>
-<li><a class="el" href="bench.html">Performance</a></li>
-<li><a class="el" href="group__malloc.html">Basic Allocation</a></li>
-<li><a class="el" href="group__extended.html">Extended Functions</a></li>
-<li><a class="el" href="group__aligned.html">Aligned Allocation</a></li>
-<li><a class="el" href="group__heap.html">Heap Allocation</a></li>
-<li><a class="el" href="group__typed.html">Typed Macros</a></li>
-<li><a class="el" href="group__analysis.html">Heap Introspection</a></li>
-<li><a class="el" href="group__options.html">Runtime Options</a></li>
-<li><a class="el" href="group__posix.html">Posix</a></li>
-<li><a class="el" href="group__cpp.html">C++ wrappers</a> </li>
+<li><b>Object-Oriented:</b> Hoshi-lang's OOP is based on a composition model using <code>interface</code>, <code>struct</code>, and <code>impl</code>.</li>
+<li><b>Generic Programming:</b> Supports generic programming with <code>template</code>s for both functions and structs.</li>
+<li><b>Operator Overloading:</b> Allows for custom behavior for operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, etc.</li>
+<li><b>Memory Safety:</b> Automatic Reference Counting (ARC) for memory management.</li>
+<li><b>Type Introspection:</b> Runtime type inspection with <code>typeid</code> and <code>interfaceof</code>.</li>
+<li><b>Dynamic Casting:</b> Safe casting of interface objects back to their concrete <code>struct</code> type using <code>dyn_cast</code>.</li>
+<li><b>Modular Programming:</b> Supports modules with the <code>use</code> statement.</li>
+<li><b>Variadic Arguments:</b> Functions can accept a variable number of arguments.</li>
+<li><b>Lambda Expressions:</b> Concise syntax for creating anonymous functions.</li>
+<li><b>Threading:</b> Support for multi-threaded programming.</li>
+<li><b>Rich Standard Library:</b> A growing standard library with support for strings, vectors, file I/O, and more.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md152"></a>
+Syntax</h1>
+<div class="fragment"><div class="line">use lang &quot;builtin&quot;</div>
+<div class="line">use io &quot;std/io&quot;</div>
+<div class="line"> </div>
+<div class="line">interface Greeter {</div>
+<div class="line">  say() : none</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">struct Person {</div>
+<div class="line">  name: string,</div>
+<div class="line">  constructor(name: string),</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">impl Person {</div>
+<div class="line">  constructor(name: string) {</div>
+<div class="line">    this.name = name</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">impl Person : Greeter {</div>
+<div class="line">  say() : none {</div>
+<div class="line">    io.println(&quot;Hello, &quot; + this.name)</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">  let p = Person(&quot;world&quot;)</div>
+<div class="line">  let greeter = Greeter(p)</div>
+<div class="line">  greeter.say()</div>
+<div class="line">  return 0</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md153"></a>
+Object Model and Memory Management</h1>
+<h2><a class="anchor" id="autotoc_md154"></a>
+Object Layout</h2>
+<p>In Hoshi-lang, <b>all data types are heap-allocated objects</b>. This includes primitives like <code>int</code>, <code>bool</code>, etc., which are "boxed" into object wrappers. The compiler and runtime manage these objects through pointers.</p>
+<p>All objects share a common header:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Offset   </th><th class="markdownTableHeadNone">Field   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">0-7   </td><td class="markdownTableBodyNone"><code>gc_refcount</code>   </td><td class="markdownTableBodyNone"><code>unsigned long long</code>   </td><td class="markdownTableBodyNone">The object's current reference count.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">8-15   </td><td class="markdownTableBodyNone"><code>type_id</code>   </td><td class="markdownTableBodyNone"><code>unsigned long long</code>   </td><td class="markdownTableBodyNone">A unique ID for the object's runtime type.   </td></tr>
+</table>
+<p>Specific object types then have their own layouts following this header.</p>
+<h2><a class="anchor" id="autotoc_md155"></a>
+Interface Object Layout</h2>
+<p>Interface objects are special "shell" objects that enable polymorphism. When a <code>struct</code> instance is cast to an <code>interface</code>, a new <code>interfaceObject</code> is created with the following layout:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Offset   </th><th class="markdownTableHeadNone">Field   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">0-15   </td><td class="markdownTableBodyNone">(Standard Header)   </td><td class="markdownTableBodyNone"><code>gc_refcount</code> and <code>type_id</code> for the interface object itself.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">16-23   </td><td class="markdownTableBodyNone"><code>this</code> Pointer   </td><td class="markdownTableBodyNone">A pointer to the concrete <code>struct</code> instance that implements the interface.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">24-31   </td><td class="markdownTableBodyNone"><code>gc_refcount_increase</code> V-Ptr   </td><td class="markdownTableBodyNone">A virtual function pointer to the <code>increase</code> GC function for the concrete <code>struct</code>.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">32-39   </td><td class="markdownTableBodyNone"><code>gc_refcount_decrease</code> V-Ptr   </td><td class="markdownTableBodyNone">A virtual function pointer to the <code>decrease</code> GC function for the concrete <code>struct</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">40+   </td><td class="markdownTableBodyNone">Virtual Method Pointers   </td><td class="markdownTableBodyNone">A sequence of function pointers to the concrete implementations of the interface's methods (the v-table).   </td></tr>
+</table>
+<p>This structure is created by the compiler via the <code>construct_interface_impl</code> IR instruction.</p>
+<h2><a class="anchor" id="autotoc_md156"></a>
+Garbage Collection (GC)</h2>
+<p>Memory is managed via <b>Automatic Reference Counting (ARC)</b>.</p>
+<ul>
+<li>When an object is created or a reference is copied, its <code>gc_refcount</code> is incremented.</li>
+<li>When a reference goes out of scope or is overwritten, the <code>gc_refcount</code> is decremented.</li>
+<li>When the count reaches zero, the object is deallocated.</li>
+</ul>
+<p>The compiler is responsible for generating calls to the appropriate <code>_gc_refcount_increase</code> and <code>_gc_refcount_decrease</code> functions for each type at the right places.</p>
+<h2><a class="anchor" id="autotoc_md157"></a>
+Callable Objects &amp; Lambda Expressions</h2>
+<p>Hoshi-lang now supports callable objects and lambda expressions, allowing for more flexible and functional programming styles.</p>
+<div class="fragment"><div class="line">func test_lambda(x: int, y: int, f: func (int, int) : int) : int {</div>
+<div class="line">    return f(x, y)</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">    let salt = 114514</div>
+<div class="line">    let closure = func[salt] (x: int, y: int) : int {</div>
+<div class="line">        return x + y + this.salt</div>
+<div class="line">    }</div>
+<div class="line">    let result = test_lambda(2, 3, closure)</div>
+<div class="line">    return result</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md158"></a>
+Threading</h2>
+<p>Hoshi-lang now has basic support for multi-threading.</p>
+<div class="fragment"><div class="line">use threading &quot;threading&quot;</div>
+<div class="line">use runtime &quot;runtime&quot;</div>
+<div class="line"> </div>
+<div class="line">func worker() : none {</div>
+<div class="line">    runtime.puts(&quot;Hello from worker thread!&quot;)</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">    let th = threading.Thread(func[] () : none {</div>
+<div class="line">        worker()</div>
+<div class="line">    })</div>
+<div class="line">    th.start()</div>
+<div class="line">    th.join()</div>
+<div class="line">    return 0</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md159"></a>
+Structured Bindings</h2>
+<p>You can now de-structure arrays and structs into individual variables.</p>
+<div class="fragment"><div class="line">let [x, y] = Point(1, 2)</div>
+<div class="line">let [a, b, c] = int[3](10, 20, 30)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md160"></a>
+Type Aliases</h2>
+<p>The <code>alias</code> keyword can be used to create a new name for an existing type.</p>
+<div class="fragment"><div class="line">alias Map = hashMap.HashMap&lt;str.Str, int&gt;</div>
+<div class="line"> </div>
+<div class="line">func main() : int {</div>
+<div class="line">    let m : Map = Map()</div>
+<div class="line">    m[&quot;Hello&quot;] = 0xe1751aff</div>
+<div class="line">    return 0</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md161"></a>
+Standard Library</h1>
+<p>Hoshi-lang's standard library is growing and currently includes:</p>
+<ul>
+<li><code>console</code>: For console input and output.</li>
+<li><code>file</code>: An interface for file-like objects.</li>
+<li><code>fs</code>: For file system operations.</li>
+<li><code>hashMap</code>: A hash map implementation.</li>
+<li><code>io</code>: For I/O operations.</li>
+<li><code>json</code>: For parsing JSON.</li>
+<li><code>math</code>: For mathematical functions.</li>
+<li><code>runtime</code>: For runtime-specific functions.</li>
+<li><code>str</code>: A string library.</li>
+<li><code>threading</code>: For multi-threaded programming.</li>
+<li><code>vec</code>: A dynamic array implementation.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md162"></a>
+Build and Run</h1>
+<h2><a class="anchor" id="autotoc_md163"></a>
+Build Instructions</h2>
+<p><b>macOS / Linux:</b> </p><div class="fragment"><div class="line">make cmake_debug</div>
+<div class="line">make build_debug</div>
+<div class="line">make package</div>
+</div><!-- fragment --><p><b>Windows:</b> </p><div class="fragment"><div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake .. -G &quot;Visual Studio 17 2022&quot; -A x64</div>
+<div class="line">cmake --build . --config Release</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md164"></a>
+Run</h2>
+<div class="fragment"><div class="line">./hoshi_lang [options] &lt;input_file&gt;</div>
+</div><!-- fragment --><p><b>Options:</b></p>
+<ul>
+<li><code>-o &lt;output_file&gt;</code>: Specify the output file name.</li>
+<li><code>-D &lt;key&gt; &lt;value&gt;</code>: Define a macro.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md165"></a>
+Documentation</h1>
+<ul>
+<li><a href="/Syntax.bnf">Syntax Definition</a></li>
+<li><a class="el" href="IR_8md.html">IR Handbook</a></li>
+<li><a class="el" href="Spec_8md.html">Language Specification</a></li>
+<li>Callable Objects &amp; Lambda Expressions</li>
+<li><a class="el" href="Console_8md.html">Console I/O</a></li>
+<li>File System</li>
+<li><a class="el" href="Finalizers_8md.html">Finalizers</a></li>
+<li><a class="el" href="HashMap_8md.html">HashMap</a></li>
+<li><a class="el" href="JSON_8md.html">JSON</a></li>
+<li><a class="el" href="Macros_8md.html">Macros</a></li>
+<li><a class="el" href="Math_8md.html">Math</a></li>
+<li>Nullable and Raw Check Passes</li>
+<li><a class="el" href="Result_8md.html">Result Type</a></li>
+<li><a class="el" href="Runtime_8md.html">Runtime</a></li>
+<li><a class="el" href="String_8md.html">String</a></li>
+<li>Structured Bindings</li>
+<li><a class="el" href="Threading_8md.html">Threading</a></li>
+<li>Type Aliases</li>
+<li><a class="el" href="Vector_8md.html">Vector</a></li>
+<li><a class="el" href="Wrapper_8md.html">Wrapper</a></li>
+<li><a class="el" href="TODO_8md.html">TODO List</a> </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

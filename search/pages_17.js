@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['的必经之路_0',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]]
+  ['直接赋值_20direct_20assignment_0',['直接赋值 (Direct assignment)',['../md_docs_2Direct_01Assignment.html',1,'']]]
 ];

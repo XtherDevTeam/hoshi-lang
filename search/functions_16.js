@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['warning_0',['warning',['../namespaceyoi.html#a774ab9590e79332760376ed248af507c',1,'yoi']]],
-  ['whereishoshilang_1',['whereIsHoshiLang',['../namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa',1,'yoi']]],
-  ['win_5fenable_5flarge_5fos_5fpages_2',['win_enable_large_os_pages',['../windows_2prim_8c.html#ac7c82f33a2c1922eaa099136313f5c93',1,'prim.c']]],
-  ['win_5fis_5fout_5fof_5fmemory_5ferror_3',['win_is_out_of_memory_error',['../windows_2prim_8c.html#a3efebbd793d4119b290a07b52f26e91d',1,'prim.c']]],
-  ['win_5fvirtual_5falloc_4',['win_virtual_alloc',['../windows_2prim_8c.html#ad7e3a7f9b3da019a259fc8cffe715793',1,'prim.c']]],
-  ['win_5fvirtual_5falloc_5fprim_5',['win_virtual_alloc_prim',['../windows_2prim_8c.html#a700812440993f008e9c13ca3f33bc0e0',1,'prim.c']]],
-  ['win_5fvirtual_5falloc_5fprim_5fonce_6',['win_virtual_alloc_prim_once',['../windows_2prim_8c.html#a8d79c6da6416c2a34993bc8592886aa0',1,'prim.c']]],
-  ['wrapinterfaceobjectifregressed_7',['wrapInterfaceObjectIfRegressed',['../classyoi_1_1LLVMCodegen.html#aff340d2ce934aa1147d257008528d9a9',1,'yoi::LLVMCodegen']]],
-  ['wstring2string_8',['wstring2string',['../namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0',1,'yoi']]]
+  ['yield_0',['yield',['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117',1,'yoi::IRBuildConfig::Builder::yield()'],['../classyoi_1_1IREnumerationType_1_1Builder.html#a5b107ea7e7347dfd2d04de66884770b9',1,'yoi::IREnumerationType::Builder::yield()'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d',1,'yoi::IRFunctionDefinition::Builder::yield()'],['../classyoi_1_1IRFunctionTemplate_1_1Builder.html#a16f8d16591aea14fd4383a74aa70128c',1,'yoi::IRFunctionTemplate::Builder::yield()'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a0fb794c5679205ac08d83e61662068a3',1,'yoi::IRStructDefinition::Builder::yield()'],['../classyoi_1_1IRStructTemplate_1_1Builder.html#ad4cfc593d2f93fcb3e7487301cbbae86',1,'yoi::IRStructTemplate::Builder::yield()'],['../structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html#a3f10fccf76a77d428ca964d40d432a4f',1,'yoi::IRInterfaceImplementationDefinition::Builder::yield()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a2ef77979acf5b336fd6c7f00b218965a',1,'yoi::IRInterfaceInstanceDefinition::Builder::yield()'],['../classyoi_1_1IRInterfaceInstanceTemplate_1_1Builder.html#a329fc91cf92149cfcb9c989732bbaecf',1,'yoi::IRInterfaceInstanceTemplate::Builder::yield()'],['../classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#ae5b6becce0d8b3443ed9514f4fa22e14',1,'yoi::IRInterfaceImplementationTemplate::Builder::yield()'],['../classyoi_1_1IRBuilder.html#a58c8b2ad0ea491a6642e5e1cbd358c89',1,'yoi::IRBuilder::yield()']]],
+  ['yoi_5fassert_1',['yoi_assert',['../namespaceyoi.html#a85b420532ed69057ad764f367d13c152',1,'yoi']]],
+  ['yoimiya_5fentry_2',['yoimiya_entry',['../runtime_8h.html#a4519923e43680d275ec2169d1db1705f',1,'runtime.h']]],
+  ['yoitypetollvmtype_3',['yoiTypeToLLVMType',['../classyoi_1_1LLVMCodegen.html#aecdf36d4023f3acdea1e8c9077b9b242',1,'yoi::LLVMCodegen']]]
 ];

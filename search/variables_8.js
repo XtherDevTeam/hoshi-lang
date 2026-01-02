@@ -1,19 +1,8 @@
 var searchData=
 [
   ['handler_0',['handler',['../structYoiVoidIntCallableInterface.html#a28fa2def66625f8438cdde75cf975042',1,'YoiVoidIntCallableInterface']]],
-  ['has_5faligned_1',['has_aligned',['../unionmi__page__flags__t.html#af2c35e02f10fce4c2fa8903b1072a8e8',1,'mi_page_flags_t']]],
-  ['has_5fovercommit_2',['has_overcommit',['../structmi__os__mem__config__t.html#a94f89b95dde936dff38471944d26fc0a',1,'mi_os_mem_config_t']]],
-  ['has_5fpartial_5ffree_3',['has_partial_free',['../structmi__os__mem__config__t.html#a3d976e0fb76f5044624b42c8d1aae523',1,'mi_os_mem_config_t']]],
-  ['has_5fvirtual_5freserve_4',['has_virtual_reserve',['../structmi__os__mem__config__t.html#acb32e7665350edb5540566efb57d8754',1,'mi_os_mem_config_t']]],
-  ['haspossiblevalue_5',['haspossiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::hasPossibleValue']]],
-  ['heap_6',['heap',['../structmi__thread__data__t.html#aa1a94787f34244fd14f6a52ea41c578c',1,'mi_thread_data_t']]],
-  ['heap_5fbacking_7',['heap_backing',['../structmi__tld__s.html#a3c0f404df0846fc4150827af5474c10e',1,'mi_tld_s']]],
-  ['heap_5ftag_8',['heap_tag',['../structmi__page__t.html#abb280efd691eee54cc794db06e4f8678',1,'mi_page_t::heap_tag'],['../structmi__heap__area__t.html#a7793b44c42de3820332c8db080f89697',1,'mi_heap_area_t::heap_tag']]],
-  ['heaps_9',['heaps',['../structmi__tld__s.html#a42e6001908a172591e19abeb4c294d9a',1,'mi_tld_s']]],
-  ['heartbeat_10',['heartbeat',['../structmi__tld__s.html#aa918457829b29332fa70857aafac7d24',1,'mi_tld_s']]],
-  ['highestendingaddress_11',['HighestEndingAddress',['../structMI__MEM__ADDRESS__REQUIREMENTS.html#a01dbc2da23fded71e9b799d0f0dbba34',1,'MI_MEM_ADDRESS_REQUIREMENTS']]],
-  ['hold_5fvisit_5flock_12',['hold_visit_lock',['../structmi__arena__field__cursor__t.html#a1ba26742abb14c31c84ccc898a99fd5a',1,'mi_arena_field_cursor_t']]],
-  ['hperf_5fcontexts_13',['hperf_contexts',['../hperf_8cpp.html#a6468a01755f8514dbadca245fa8aeb58',1,'hperf_contexts:&#160;hperf.cpp'],['../hperf_8h.html#a6468a01755f8514dbadca245fa8aeb58',1,'hperf_contexts:&#160;hperf.cpp']]],
-  ['hperf_5fenabled_14',['hperf_enabled',['../hperf_8cpp.html#a89b083582cedebb2d9fd8d544aa6b1ff',1,'hperf_enabled:&#160;hperf.cpp'],['../hperf_8h.html#a89b083582cedebb2d9fd8d544aa6b1ff',1,'hperf_enabled:&#160;hperf.cpp']]],
-  ['hperf_5freport_5ffilename_15',['hperf_report_filename',['../hperf_8cpp.html#a2e3fab3f5e58978d40e9cfabf318adfd',1,'hperf_report_filename:&#160;hperf.cpp'],['../hperf_8h.html#a2e3fab3f5e58978d40e9cfabf318adfd',1,'hperf_report_filename:&#160;hperf.cpp']]]
+  ['haspossiblevalue_1',['haspossiblevalue',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::hasPossibleValue'],['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html#aabcd99cd677d8a6ab338409448568267',1,'yoi::IRFunctionOptimizer::VariablesExtraInfo::hasPossibleValue']]],
+  ['hperf_5fcontexts_2',['hperf_contexts',['../hperf_8cpp.html#a6468a01755f8514dbadca245fa8aeb58',1,'hperf_contexts:&#160;hperf.cpp'],['../hperf_8h.html#a6468a01755f8514dbadca245fa8aeb58',1,'hperf_contexts:&#160;hperf.cpp']]],
+  ['hperf_5fenabled_3',['hperf_enabled',['../hperf_8cpp.html#a89b083582cedebb2d9fd8d544aa6b1ff',1,'hperf_enabled:&#160;hperf.cpp'],['../hperf_8h.html#a89b083582cedebb2d9fd8d544aa6b1ff',1,'hperf_enabled:&#160;hperf.cpp']]],
+  ['hperf_5freport_5ffilename_4',['hperf_report_filename',['../hperf_8cpp.html#a2e3fab3f5e58978d40e9cfabf318adfd',1,'hperf_report_filename:&#160;hperf.cpp'],['../hperf_8h.html#a2e3fab3f5e58978d40e9cfabf318adfd',1,'hperf_report_filename:&#160;hperf.cpp']]]
 ];

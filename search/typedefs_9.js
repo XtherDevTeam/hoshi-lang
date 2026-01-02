@@ -1,23 +1,4 @@
 var searchData=
 [
-  ['mcgen_5feventregister_5fmust_5fnot_5fbe_5fa_5ffunctionlike_5fmacro_5fmcgen_5feventregister_0',['MCGEN_EVENTREGISTER_must_not_be_a_functionLike_macro_MCGEN_EVENTREGISTER',['../etw_8h.html#ab5c03ed1355acf7e041a168caaf065a7',1,'etw.h']]],
-  ['mcgen_5feventsetinformation_5fmust_5fnot_5fbe_5fa_5ffunctionlike_5fmacro_5fmcgen_5feventsetinformation_1',['MCGEN_EVENTSETINFORMATION_must_not_be_a_functionLike_macro_MCGEN_EVENTSETINFORMATION',['../etw_8h.html#ae2aeefe55c42d43d1d0af70981ebfd06',1,'etw.h']]],
-  ['mcgen_5feventunregister_5fmust_5fnot_5fbe_5fa_5ffunctionlike_5fmacro_5fmcgen_5feventunregister_2',['MCGEN_EVENTUNREGISTER_must_not_be_a_functionLike_macro_MCGEN_EVENTUNREGISTER',['../etw_8h.html#a52b63ae23d74da1eae1ceefc34f8080b',1,'etw.h']]],
-  ['mcgen_5feventwritetransfer_5fmust_5fnot_5fbe_5fa_5ffunctionlike_5fmacro_5fmcgen_5feventwritetransfer_3',['MCGEN_EVENTWRITETRANSFER_must_not_be_a_functionLike_macro_MCGEN_EVENTWRITETRANSFER',['../etw_8h.html#a8fa7151fdb8775d161c0b5fb1caf63ad',1,'etw.h']]],
-  ['mi_5farena_5fid_5ft_4',['mi_arena_id_t',['../group__extended.html#ga99fe38650d0b02e0e0f89ee024db91d3',1,'mi_arena_id_t:&#160;mimalloc-doc.h'],['../mimalloc_8h.html#a99fe38650d0b02e0e0f89ee024db91d3',1,'mi_arena_id_t:&#160;mimalloc.h']]],
-  ['mi_5fbitmap_5findex_5ft_5',['mi_bitmap_index_t',['../bitmap_8h.html#acae895dd533f119750ecdfa60cedacda',1,'bitmap.h']]],
-  ['mi_5fbitmap_5fpred_5ffun_5ft_6',['mi_bitmap_pred_fun_t',['../bitmap_8h.html#ac551a638b3b4f351d849d71940567102',1,'bitmap.h']]],
-  ['mi_5fbitmap_5ft_7',['mi_bitmap_t',['../bitmap_8h.html#ab32e939d7a5158d09e031bafc1a48322',1,'bitmap.h']]],
-  ['mi_5fblock_5fvisit_5ffun_8',['mi_block_visit_fun',['../group__analysis.html#gadfa01e2900f0e5d515ad5506b26f6d65',1,'mimalloc-doc.h']]],
-  ['mi_5fdeferred_5ffree_5ffun_9',['mi_deferred_free_fun',['../group__extended.html#ga299dae78d25ce112e384a98b7309c5be',1,'mimalloc-doc.h']]],
-  ['mi_5fencoded_5ft_10',['mi_encoded_t',['../types_8h.html#a968c427ff38812f02da6c27b6aefc6c4',1,'types.h']]],
-  ['mi_5ferror_5ffun_11',['mi_error_fun',['../group__extended.html#ga251d369cda3f1c2a955c555486ed90e5',1,'mimalloc-doc.h']]],
-  ['mi_5fheap_5farea_5fvisit_5ffun_12',['mi_heap_area_visit_fun',['../heap_8c.html#a6a81c6bc08d776b11e437ad564dbbb5f',1,'heap.c']]],
-  ['mi_5fmsecs_5ft_13',['mi_msecs_t',['../types_8h.html#af67e75b6480efa6e87b2a3a118e58031',1,'types.h']]],
-  ['mi_5foutput_5ffun_14',['mi_output_fun',['../group__extended.html#gad823d23444a4b77a40f66bf075a98a0c',1,'mimalloc-doc.h']]],
-  ['mi_5fslice_5ft_15',['mi_slice_t',['../types_8h.html#a7b0160ed1d26aaecf3236afe92868552',1,'types.h']]],
-  ['mi_5fssize_5ft_16',['mi_ssize_t',['../types_8h.html#a027bd83e124148e3cdd141473e4853e3',1,'types.h']]],
-  ['mi_5fsubproc_5fid_5ft_17',['mi_subproc_id_t',['../group__extended.html#ga8c0bcd1fee27c7641e9c3c0d991b3b7d',1,'mi_subproc_id_t:&#160;mimalloc-doc.h'],['../mimalloc_8h.html#a8c0bcd1fee27c7641e9c3c0d991b3b7d',1,'mi_subproc_id_t:&#160;mimalloc.h']]],
-  ['mi_5fthread_5ffree_5ft_18',['mi_thread_free_t',['../types_8h.html#aa9fb16bc3b4469d57c7b2747c6718b15',1,'types.h']]],
-  ['mi_5fthreadid_5ft_19',['mi_threadid_t',['../types_8h.html#ae3342b51ed88dd82fa3903ca1727e8a8',1,'types.h']]]
+  ['underlying_5ftype_5ft_0',['underlying_type_t',['../namespacemagic__enum.html#a23e4463cad64a4fb5f8e4cf7acafec27',1,'magic_enum']]]
 ];

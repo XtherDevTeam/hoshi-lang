@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "hoshi-lang", "index.html", [
+    [ "The Hoshi-lang Programming Language", "index.html", "index" ],
     [ "Hoshi-lang Arrays", "md_docs_2Array.html", [
       [ "1. Fixed-Size Arrays", "md_docs_2Array.html#autotoc_md1", [
         [ "Declaration and Initialization", "md_docs_2Array.html#autotoc_md2", null ],
@@ -214,65 +215,11 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
-    [ "Windows Override", "md_mimalloc_2bin_2readme.html", null ],
-    [ "readme", "md_mimalloc_2contrib_2docker_2readme.html", null ],
-    [ "Vcpkg support", "md_mimalloc_2contrib_2vcpkg_2readme.html", [
-      [ "Using mimalloc from vcpkg", "md_mimalloc_2contrib_2vcpkg_2readme.html#autotoc_md153", null ],
-      [ "Acknowledgements", "md_mimalloc_2contrib_2vcpkg_2readme.html#autotoc_md154", null ]
-    ] ],
-    [ "Building", "build.html", null ],
-    [ "Using the library", "using.html", null ],
-    [ "Environment Options", "environment.html", null ],
-    [ "Overriding Malloc", "overrides.html", null ],
-    [ "Performance", "bench.html", null ],
-    [ "readme", "md_mimalloc_2readme.html", [
-      [ "mimalloc", "md_mimalloc_2readme.html#autotoc_md166", null ],
-      [ "Building", "md_mimalloc_2readme.html#autotoc_md170", [
-        [ "Windows", "md_mimalloc_2readme.html#autotoc_md171", null ],
-        [ "Linux, macOS, BSD, etc.", "md_mimalloc_2readme.html#autotoc_md172", null ],
-        [ "Cmake with Visual Studio", "md_mimalloc_2readme.html#autotoc_md173", null ],
-        [ "Single Source", "md_mimalloc_2readme.html#autotoc_md174", null ]
-      ] ],
-      [ "Using the Library", "md_mimalloc_2readme.html#autotoc_md175", [
-        [ "Environment Options", "md_mimalloc_2readme.html#autotoc_md176", null ],
-        [ "Secure Mode", "md_mimalloc_2readme.html#autotoc_md177", null ],
-        [ "Debug Mode", "md_mimalloc_2readme.html#autotoc_md178", null ],
-        [ "Guarded Mode", "md_mimalloc_2readme.html#autotoc_md179", null ]
-      ] ],
-      [ "Overriding Standard Malloc", "md_mimalloc_2readme.html#autotoc_md180", [
-        [ "Dynamic override", "md_mimalloc_2readme.html#autotoc_md181", [
-          [ "Dynamic Override on Linux, BSD", "md_mimalloc_2readme.html#autotoc_md182", null ],
-          [ "Dynamic Override on MacOS", "md_mimalloc_2readme.html#autotoc_md183", null ],
-          [ "Dynamic Override on Windows", "md_mimalloc_2readme.html#autotoc_md184", null ]
-        ] ],
-        [ "Static override", "md_mimalloc_2readme.html#autotoc_md185", null ]
-      ] ],
-      [ "Tools", "md_mimalloc_2readme.html#autotoc_md186", [
-        [ "Valgrind", "md_mimalloc_2readme.html#autotoc_md187", null ],
-        [ "ASAN", "md_mimalloc_2readme.html#autotoc_md188", null ],
-        [ "ETW", "md_mimalloc_2readme.html#autotoc_md189", null ]
-      ] ],
-      [ "Performance", "md_mimalloc_2readme.html#autotoc_md190", [
-        [ "Benchmark Results on a 16-core AMD 5950x (Zen3)", "md_mimalloc_2readme.html#autotoc_md191", null ],
-        [ "On a 36-core Intel Xeon", "md_mimalloc_2readme.html#autotoc_md192", null ],
-        [ "Peak Working Set", "md_mimalloc_2readme.html#autotoc_md193", null ]
-      ] ],
-      [ "References", "md_mimalloc_2readme.html#autotoc_md197", null ],
-      [ "Contributing", "md_mimalloc_2readme.html#autotoc_md198", null ],
-      [ "Older Release Notes", "md_mimalloc_2readme.html#autotoc_md199", null ]
-    ] ],
-    [ "SECURITY", "md_mimalloc_2SECURITY.html", null ],
-    [ "Portability Primitives", "md_mimalloc_2src_2prim_2readme.html", null ],
-    [ "Primitives:", "md_mimalloc_2src_2prim_2windows_2readme.html", [
-      [ "Event Tracing for Windows (ETW)", "md_mimalloc_2src_2prim_2windows_2readme.html#autotoc_md206", null ]
-    ] ],
-    [ "readme", "md_mimalloc_2test_2readme.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
-      [ "Known issues", "md_TODO.html#autotoc_md226", null ]
+      [ "Known issues", "md_TODO.html#autotoc_md168", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
-    [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -300,12 +247,11 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", "globals_func" ],
+        [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", "globals_defs" ]
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -314,35 +260,27 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"ast_8hpp.html#a902af260d2f97c5b017dbc5c044af005",
-"classyoi_1_1BuiltinModuleBuilder.html",
-"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906",
-"classyoi_1_1IRExternEntry.html#a9d24a0275ba98a7726bfe14c798f9850",
-"classyoi_1_1IRInterfaceInstanceTemplate.html",
-"classyoi_1_1IRValueType.html",
-"classyoi_1_1LLVMCodegen.html#a76a92e41626d174b8af6101b3bf63b55",
-"classyoi_1_1compilerContext.html#a4167f0bdd822c6d4e78802e5564228ff",
-"classyoi_1_1funcTypeSpec.html",
-"classyoi_1_1indexTableDeprecated.html#a371fe0d52a0bf0b73b6e2af503554581",
-"classyoi_1_1lexer.html#a9cff40af0d1128b9faf8081323556836",
-"classyoi_1_1structDefStmt.html#ab649095acb41e22cb7e5e054d542b528",
-"classyoi_1_1visitor.html#a74f4a1c98b6cf2f05821ad7d475a3dc1",
-"etw_8h.html#a189ec7317e6045f90b286c040802f039",
-"globals_defs_t.html",
-"heap_8c.html#a2a46266e4b06fa4e7fa8e8427767bd8f",
-"internal_8h.html#a8991188606f00dc8665aa14d8e7dab83",
-"magic__enum_8h.html#af39eaae0020d827410ae67df2773ad7d",
-"md_mimalloc_2readme.html#autotoc_md180",
-"namespacemagic__enum_1_1customize_1_1detail.html",
-"namespaceyoi.html#ad972e80955ee962b95fa51c2d5c6a8b8",
-"parser_8cpp.html#ad36c647b0695dda56ddc3eacbfbecdda",
-"segment_8c.html#a5f421b830999ea49f1c7035a8e58314e",
-"structYoiVoidCallableInterface.html#a1871146973c12628deff2a413c04f3ff",
-"structmi__stats__t.html#aad880fc4455c253781e8968f2239d56f",
-"structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html#a272054ca79eba22242c08901bae016ea",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a4adf4299c9c9c249e885fefa686b474d",
-"threading_8cpp_source.html",
-"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a34ad018dbaf263f8c11bfac5317aeb8b"
+"classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707",
+"classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a",
+"classyoi_1_1IRExternEntry.html#a2608be18ffec6c579885e38dce5069f4",
+"classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html#ae5b6becce0d8b3443ed9514f4fa22e14",
+"classyoi_1_1IRStructTemplate_1_1Builder.html#ad4cfc593d2f93fcb3e7487301cbbae86",
+"classyoi_1_1LLVMCodegen.html#a5cd97c6c14d91fae1df60efce6e3ec69",
+"classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4",
+"classyoi_1_1funcDefStmt.html#a38b5e7dde5836d07400f66289e29ca24",
+"classyoi_1_1indexTable.html#a741ac5ddd3ef961363997aeed13625c4",
+"classyoi_1_1lexer.html#a6f8fd8887795d83608dfd04477d1717e",
+"classyoi_1_1structDefInnerPair.html#a70185804c622b3cbbf4c15ebe2eba5b0",
+"classyoi_1_1visitor.html#a628aac51b352074768d7d4b2d4d3dd65",
+"fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7",
+"magic__enum_8h.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81",
+"namespacemagic__enum.html#af8bbdd8d4d7f975d2aea114276626c85",
+"namespaceyoi.html#ac63a78bd8a7a626a4e52ae594b15629d",
+"runtime_8cpp.html#aeb799f1a8860104369dc8b06e734f060",
+"structyoi_1_1CallGraph.html#a900ed3566d0c2f44b4c53d4d00466ce4",
+"structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ae47d421959b4a7d8568a902f2f8fd0d6",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a96067ed75b570c414df5f392c0f00dbd",
+"unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
