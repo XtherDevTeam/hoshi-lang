@@ -76,7 +76,7 @@ void hperf_report_func_enter(const char *func_name) {
         return;
     }
     auto event = hperf_context_add_event(ctx);
-    event->type = HPerfEventType::FUNC_ENTER;
+    event->type = HPerfEventType::HPERF_EVT_FUNC_ENTER;
     auto data = reinterpret_cast<HPerfEventFuncEnter *>(event->data);
     data->func_name = func_name;
 }
@@ -87,7 +87,7 @@ void hperf_report_func_leave(const char *func_name) {
         return;
     }
     auto event = hperf_context_add_event(ctx);
-    event->type = HPerfEventType::FUNC_LEAVE;
+    event->type = HPerfEventType::HPERF_EVT_FUNC_LEAVE;
     auto data = reinterpret_cast<HPerfEventFuncLeave *>(event->data);
     data->func_name = func_name;
 }
@@ -98,7 +98,7 @@ void hperf_report_mem_alloc(void *ptr, size_t size) {
         return;
     }
     auto event = hperf_context_add_event(ctx);
-    event->type = HPerfEventType::MEM_ALLOC;
+    event->type = HPerfEventType::HPERF_EVT_MEM_ALLOC;
     auto data = reinterpret_cast<HPerfEventMemAlloc *>(event->data);
     data->ptr = ptr;
     data->size = size;
@@ -110,7 +110,7 @@ void hperf_report_mem_free(void *ptr) {
         return;
     }
     auto event = hperf_context_add_event(ctx);
-    event->type = HPerfEventType::MEM_FREE;
+    event->type = HPerfEventType::HPERF_EVT_MEM_FREE;
     auto data = reinterpret_cast<HPerfEventMemFree *>(event->data);
     data->ptr = ptr;
 }
@@ -139,7 +139,7 @@ void hperf_write_report(const char *filename) {
                         fprintf(f, ",");
                     }
                     switch (event->type) {
-                        case HPerfEventType::FUNC_ENTER: {
+                        case HPerfEventType::HPERF_EVT_FUNC_ENTER: {
                             auto data = reinterpret_cast<HPerfEventFuncEnter *>(event->data);
                             fprintf(
                                 f,
@@ -149,7 +149,7 @@ void hperf_write_report(const char *filename) {
                                 data->func_name);
                             break;
                         }
-                        case HPerfEventType::FUNC_LEAVE: {
+                        case HPerfEventType::HPERF_EVT_FUNC_LEAVE: {
                             auto data = reinterpret_cast<HPerfEventFuncLeave *>(event->data);
                             fprintf(
                                 f,
@@ -159,7 +159,7 @@ void hperf_write_report(const char *filename) {
                                 data->func_name);
                             break;
                         }
-                        case HPerfEventType::MEM_ALLOC: {
+                        case HPerfEventType::HPERF_EVT_MEM_ALLOC: {
                             auto data = reinterpret_cast<HPerfEventMemAlloc *>(event->data);
                             fprintf(
                                 f,
@@ -170,7 +170,7 @@ void hperf_write_report(const char *filename) {
                                 data->size);
                             break;
                         }
-                        case HPerfEventType::MEM_FREE: {
+                        case HPerfEventType::HPERF_EVT_MEM_FREE: {
                             auto data = reinterpret_cast<HPerfEventMemFree *>(event->data);
                             fprintf(f,
                                     R"({"type": "mem-free", "timestamp": {"sec": %llu, "nsec": %llu}, "ptr": %zu})",

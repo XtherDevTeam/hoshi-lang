@@ -460,7 +460,7 @@ namespace yoi {
 
         yoi::vec<std::shared_ptr<IRValueType>> &getVariables();
 
-        const std::map<yoi::indexT, yoi::wstr> &getReversedVariableNameMap() const;
+        std::map<yoi::indexT, yoi::wstr> &getReversedVariableNameMap();
 
         yoi::indexT scopeIndex(yoi::indexT varIndex);
     };

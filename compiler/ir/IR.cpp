@@ -983,7 +983,7 @@ namespace yoi {
         return variables;
     }
 
-    const std::map<yoi::indexT, yoi::wstr> &IRVariableTable::getReversedVariableNameMap() const {
+    std::map<yoi::indexT, yoi::wstr> &IRVariableTable::getReversedVariableNameMap() {
         return reversedVariableNameMap;
     }
 

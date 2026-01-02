@@ -60,9 +60,12 @@ namespace yoi {
         llvm::Type* sizeTy = Builder->getInt64Ty();
 
         llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(Builder->getInt8Ty(), 0), {sizeTy, sizeTy}, false);
-        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "calloc", TheModule.get());
+        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "mi_calloc", TheModule.get());
         runtimeMalloc->setCallingConv(llvm::CallingConv::C);
 
+        llvm::FunctionType *freeFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
+        runtimeFree = llvm::Function::Create(freeFuncType, llvm::Function::ExternalLinkage, "mi_free", TheModule.get());
+        runtimeFree->setCallingConv(llvm::CallingConv::C);
 
         llvm::FunctionType* allocType = llvm::FunctionType::get(i8PtrTy, {sizeTy, i8PtrTy}, false);
         llvm::FunctionType* funcType = llvm::FunctionType::get(i8PtrTy, {sizeTy}, false);
@@ -92,7 +95,7 @@ namespace yoi {
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             Builder->CreateCall(runtimeFinalizeObjectReportFunc, {objectPtr});
         }
-        Builder->CreateFree(objectPtr);
+        Builder->CreateCall(runtimeFree, {objectPtr});
         Builder->CreateRetVoid();
 
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {

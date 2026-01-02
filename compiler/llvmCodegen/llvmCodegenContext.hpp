@@ -51,6 +51,7 @@ namespace yoi {
 
         // Runtime functions
         llvm::Function *runtimeMalloc = nullptr;
+        llvm::Function *runtimeFree = nullptr;
         llvm::Function *runtimeObjectAllocReportFunc = nullptr;
         llvm::Function *runtimeObjectAllocFunc = nullptr;
         llvm::Function *runtimeFinalizeObjectReportFunc = nullptr;

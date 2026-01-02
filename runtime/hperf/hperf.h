@@ -13,10 +13,10 @@
 #include <runtime/threading/threading.h>
 
 enum class HPerfEventType : uint8_t {
-    FUNC_ENTER = 0,
-    FUNC_LEAVE,
-    MEM_ALLOC,
-    MEM_FREE,
+    HPERF_EVT_FUNC_ENTER = 0,
+    HPERF_EVT_FUNC_LEAVE,
+    HPERF_EVT_MEM_ALLOC,
+    HPERF_EVT_MEM_FREE,
 };
 
 struct HPerfTimestamp {

@@ -1,7 +1,16 @@
 generate_define:
 	python tools/generate_defines.py
 
-cmake_debug: generate_define
+mimalloc-files:
+	git submodule update --init --recursive
+	rm -rf mimalloc/build && mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
+	cp mimalloc/build/*.a cmake-build-debug/ || true
+	cp mimalloc/build/*.a cmake-build-release/ || true
+	# explicitly ignore non-existent files
+	cp mimalloc/build/Release/*.lib cmake-build-debug/ || true
+	cp mimalloc/build/Release/*.lib cmake-build-release/ || true
+
+cmake_debug: generate_define mimalloc-files
 	cmake . -B cmake-build-debug  -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=DEBUG -G "Unix Makefiles"
 
 # add phony
@@ -11,7 +20,7 @@ build_debug:
 clean:
 	cd cmake-build-debug; make clean
 
-cmake_production: generate_define
+cmake_production: generate_define mimalloc-files
 	cmake . -B cmake-build-release  -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=RELEASE -G "Unix Makefiles"
 
 build_production:

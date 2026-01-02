@@ -10,6 +10,7 @@
 
 #include <cmath>
 #include <cstdint>
+#include <iostream>
 #include <memory>
 #include <queue>
 
@@ -4320,8 +4321,16 @@ namespace yoi {
         // patch the original definition with corresponding Raw and Nullable tag.
         for (auto &module : compilerCtx->getCompiledModules()) {
             for (auto &interface : module.second->interfaceTable) {
+                // retarded abuse of auto pointers brought about many problems, including where-the-heck-knows-where-the-nullable-is-coming-from things. Thus we completely erase all the tags attached on the interface definitions before we took action.
+                for (auto &method : interface.second->methodMap) {
+                    method.second->returnType = managedPtr(*method.second->returnType);
+                    method.second->returnType->attributes.clear();
+                    for (auto &arg : method.second->argumentTypes) {
+                        arg = managedPtr(*arg);
+                        arg->attributes.clear();
+                    }
+                }
                 for (auto &impl : interface.second->implementations) {
-                    // module.second->interfaceImplementationTable.contains()
                     auto targetedModule = compilerCtx->getImportedModule(std::get<1>(impl));
                     auto implName = visitor::getInterfaceImplName(
                         std::pair{module.first, module.second->interfaceTable.getIndex(interface.first)}, 
@@ -4332,11 +4341,12 @@ namespace yoi {
                         auto targetDef = interface.second->methodMap[virtIndex];
                         virtDef->argumentTypes[0]->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Borrow);
                         for (yoi::indexT paramIndex = 0; paramIndex < targetDef->argumentTypes.size(); paramIndex++) {
-                            if (!virtDef->argumentTypes[paramIndex + 1]->hasAttribute(IRValueType::ValueAttr::Raw)) 
+                            if (virtDef->argumentTypes[paramIndex]->isBasicType() && !virtDef->argumentTypes[paramIndex]->isArrayType() && !virtDef->argumentTypes[paramIndex]->isDynamicArrayType() && !virtDef->argumentTypes[paramIndex + 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
                                 targetDef->argumentTypes[paramIndex]->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
+                            }
                         }
                         // patch the function return type as well
-                        if (!virtDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                        if (virtDef->returnType->isBasicType() && !virtDef->returnType->isArrayType() && !virtDef->returnType->isDynamicArrayType() && !virtDef->returnType->hasAttribute(IRValueType::ValueAttr::Raw)) {
                             targetDef->returnType->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
                         }
                     }
@@ -4350,8 +4360,9 @@ namespace yoi {
                         if (!i->hasAttribute(IRValueType::ValueAttr::Nullable) && i->isBasicType() && i->dimensions.empty())
                             i->addAttribute(IRValueType::ValueAttr::Raw);
                     }
-                    if (!virtIndex.second->returnType->hasAttribute(IRValueType::ValueAttr::Nullable) && virtIndex.second->returnType->isBasicType() && virtIndex.second->returnType->dimensions.empty())
+                    if (!virtIndex.second->returnType->hasAttribute(IRValueType::ValueAttr::Nullable) && virtIndex.second->returnType->isBasicType() && virtIndex.second->returnType->dimensions.empty()) {
                         virtIndex.second->returnType->addAttribute(IRValueType::ValueAttr::Raw);
+                    }
                 }
             }
 

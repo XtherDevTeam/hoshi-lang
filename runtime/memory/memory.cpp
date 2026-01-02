@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <mimalloc/include/mimalloc.h>
+
 #include <runtime/build_config.h>
 #include "memory.h"
 #include "runtime/rtti/rtti.h"
@@ -98,11 +100,11 @@ GC_WRAPPER_IMPL(string, YoiStringObject);
 void runtime_finalize_object(YoiObject *object) {
     runtime_finalize_object_report(object);
     void *ptr = object;
-    free(ptr);
+    mi_free(ptr);
 }
 
 void *runtime_object_alloc(unsigned long size) {
-    void *ptr = malloc(size);
+    void *ptr = mi_calloc(size, 1);
     runtime_object_alloc_report(size, ptr);
     return ptr;
 }

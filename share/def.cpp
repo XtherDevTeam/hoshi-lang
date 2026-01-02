@@ -101,10 +101,15 @@ namespace yoi {
     }
 
     void warning(yoi::indexT line, yoi::indexT col, const std::string& msg) {
-        if (!__current_file_path.empty())
-            std::cerr << "[hoshi-lang warning] " << msg << " near " << yoi::wstring2string(__current_file_path) << ":" << line + 1 << ":" << col + 1 << std::endl;
-        else
-            std::cerr << "[hoshi-lang warning] " << msg << " near line " << line << " col " << col << std::endl;
+        auto message =  msg;
+        if (!__current_file_path.empty()) {
+            message += " near " + yoi::wstring2string(__current_file_path) + ":" + std::to_string(line + 1) + ":" + std::to_string(col + 1);
+            message += "\n" + yoi::wstring2string(get_line_hint_for_error(__current_file_path, line + 1, col + 1));
+        } else {
+            message += " near line " + std::to_string(line) + " col " + std::to_string(col);
+        }
+
+        std::cerr << "[hoshi-lang warning] " << message << std::endl;
     }
 
     /**
