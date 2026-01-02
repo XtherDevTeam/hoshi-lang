@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['var_0',['Var',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a5a92344ee95acf10c31901b36418be77',1,'yoi::symbol']]],
-  ['variadic_1',['Variadic',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445af685215eb39877e52230b1ab92a4cf3b',1,'yoi::IRFunctionDefinition']]],
-  ['virtualmethod_2',['virtualmethod',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194',1,'yoi::IRValueType::virtualMethod'],['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a4d16c68067bcf187f2e47023d469c194',1,'virtualMethod:&#160;rtti.h']]]
+  ['uninit_0',['UNINIT',['../options_8c.html#a01d63373edec6bae54c05b1f0896c070a2a68f51b73db179a30b6a8aea11f7485',1,'options.c']]],
+  ['unknown_1',['unknown',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a',1,'yoi::lexer::token::unknown'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aad921d60486366258809553a3db49a4a',1,'yoi::IROperand::unknown'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad921d60486366258809553a3db49a4a',1,'yoi::IR::unknown'],['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a88183b946cc5f0e8c96b2e66e1c74a7e',1,'yoi::symbol::Unknown']]],
+  ['unreachable_2',['Unreachable',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a',1,'yoi::IRFunctionDefinition']]],
+  ['unsignedint_3',['unsignedint',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::lexer::token::unsignedInt'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::IROperand::unsignedInt']]],
+  ['unsignedobject_4',['unsignedObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96',1,'yoi::IRValueType']]],
+  ['unsignedraw_5',['unsignedRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634',1,'yoi::IRValueType']]],
+  ['usestmt_6',['useStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb',1,'yoi::globalStmt']]]
 ];

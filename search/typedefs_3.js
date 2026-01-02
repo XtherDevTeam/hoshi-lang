@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['funcidentifier_0',['FuncIdentifier',['../structyoi_1_1CallGraph.html#a2d30a0e8667eccec0b62ff7ccf50f9e5',1,'yoi::CallGraph']]]
+  ['char_5ftype_0',['char_type',['../namespacemagic__enum.html#abfa3c1cab6b215be0f993c090492850f',1,'magic_enum']]]
 ];

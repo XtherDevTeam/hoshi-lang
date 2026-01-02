@@ -1,0 +1,20 @@
+<map id="mi_subproc_t" name="mi_subproc_t">
+<area shape="rect" id="Node000001" title=" " alt="" coords="221,313,330,339"/>
+<area shape="rect" id="Node000002" href="$structmi__segment__t.html" title=" " alt="" coords="338,211,453,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="373,247,291,315,287,311,370,243"/>
+<area shape="rect" id="Node000003" href="$structmi__memid__t.html" title=" " alt="" coords="197,108,301,133"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="255,147,276,313,271,314,249,147"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,139,343,184,379,208,377,213,341,189,275,144"/>
+<area shape="rect" id="Node000004" href="$structmi__memid__os__info__t.html" title=" " alt="" coords="5,5,164,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="116,36,231,106,229,110,114,40"/>
+<area shape="rect" id="Node000005" href="$structmi__memid__arena__info__t.html" title=" " alt="" coords="188,5,368,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="273,45,255,109,249,107,268,43"/>
+<area shape="rect" id="Node000006" href="$structmi__commit__mask__t.html" title=" " alt="" coords="325,108,476,133"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="402,147,399,211,393,211,397,147"/>
+<area shape="rect" id="Node000007" href="$structmi__page__t.html" title=" " alt="" coords="501,108,591,133"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="537,147,523,169,504,189,479,203,453,213,451,208,477,198,500,185,519,166,533,144"/>
+<area shape="rect" id="Node000008" href="$unionmi__page__flags__t.html" title=" " alt="" coords="451,5,579,31"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="525,43,545,107,540,109,520,45"/>
+<area shape="rect" id="Node000009" href="$structmi__block__t.html" title=" " alt="" coords="603,5,697,31"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="630,42,560,110,556,106,626,39"/>
+</map>

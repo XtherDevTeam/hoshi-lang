@@ -3,7 +3,7 @@ var classyoi_1_1IRVariableTable =
     [ "IRVariableTable", "classyoi_1_1IRVariableTable.html#a1eb7e94e299d057b971b893dd7f0c1d6", null ],
     [ "createScope", "classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149", null ],
     [ "get", "classyoi_1_1IRVariableTable.html#a3ffd235378944edd973631e0d8df4b16", null ],
-    [ "getReversedVariableNameMap", "classyoi_1_1IRVariableTable.html#a3263103c1ea3d81ac6b05fbcaa1f4a18", null ],
+    [ "getReversedVariableNameMap", "classyoi_1_1IRVariableTable.html#a4430622b09a9c0efb5fda7f264c8a108", null ],
     [ "getVariables", "classyoi_1_1IRVariableTable.html#abb5efb2c1a8a0dc437df1c678bee64ab", null ],
     [ "lookup", "classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8", null ],
     [ "operator[]", "classyoi_1_1IRVariableTable.html#a23ef58e96cfbb021340b34923e1f9268", null ],

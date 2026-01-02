@@ -1,0 +1,26 @@
+<map id="mi_try_new_handler" name="mi_try_new_handler">
+<area shape="rect" id="Node000001" title=" " alt="" coords="789,136,944,161"/>
+<area shape="rect" id="Node000002" href="$alloc_8c.html#a03a8fd356c2c35a619bbf20792ba6ec2" title=" " alt="" coords="141,12,307,37"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="843,128,799,87,771,67,740,52,685,35,626,22,509,10,399,10,307,16,307,11,398,4,509,4,627,17,686,30,742,47,774,63,802,83,847,124"/>
+<area shape="rect" id="Node000004" href="$alloc_8c.html#ad8e47ad0cb046820e4b013399c7c9a06" title=" " alt="" coords="579,61,716,87"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="823,133,740,102,699,89,700,84,742,97,825,128"/>
+<area shape="rect" id="Node000009" href="$alloc_8c.html#ade10e3acc0a38ab87b20485f1a625f1d" title=" " alt="" coords="583,111,711,136"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="775,141,711,133,712,128,776,135"/>
+<area shape="rect" id="Node000010" href="$group__cpp.html#ga92ae00b6dd64406c7e64557711ec04b7" title="like mi_malloc_aligned, but when out of memory, use std::get_new_handler but return NULL on failure." alt="" coords="553,160,741,185"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="776,161,742,165,741,160,775,156"/>
+<area shape="rect" id="Node000011" href="$group__cpp.html#ga6867d89baf992728e0cc20a1f47db4d0" title="like mi_realloc(), but when out of memory, use std::get_new_handler and raise std::bad_alloc exceptio..." alt="" coords="585,209,709,235"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="825,169,742,200,703,212,702,207,740,195,823,164"/>
+<area shape="rect" id="Node000012" href="$group__cpp.html#gaace912ce086682d56f3ce9f7638d9d67" title="like mi_reallocn(), but when out of memory, use std::get_new_handler and raise std::bad_alloc excepti..." alt="" coords="581,259,713,284"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="845,173,800,212,743,250,713,261,711,256,740,245,797,208,842,169"/>
+<area shape="rect" id="Node000003" href="$group__cpp.html#gadd11b85c15d21d308386844b5233856c" title="like mi_mallocn(), but when out of memory, use std::get_new_handler and raise std::bad_alloc exceptio..." alt="" coords="5,12,93,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="128,27,93,27,93,22,128,22"/>
+<area shape="rect" id="Node000005" href="$alloc_8c.html#a3fa4c0d6c2b6ef3b12f43a60fb0104ed" title=" " alt="" coords="355,61,505,87"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="564,77,506,77,506,71,564,71"/>
+<area shape="rect" id="Node000007" href="$alloc_8c.html#ac3575104c496866a03c1d3c59dadf2fe" title=" " alt="" coords="381,111,479,136"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="578,92,480,115,479,110,577,87"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="363,61,277,40,279,35,364,55"/>
+<area shape="rect" id="Node000006" href="$alloc_8c.html#a5896b128fd59b4bbd83a7ba1941f159f" title=" " alt="" coords="187,61,261,87"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="341,77,261,77,261,71,341,71"/>
+<area shape="rect" id="Node000008" href="$group__cpp.html#ga5cb4f120d1f7296074256215aa9a9e54" title="like mi_malloc, but when out of memory, use std::get_new_handler but return NULL on failure." alt="" coords="157,111,291,136"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="367,126,291,126,291,121,367,121"/>
+</map>

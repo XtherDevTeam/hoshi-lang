@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['difference_5ftype_0',['difference_type',['../classyoi_1_1indexTable_1_1iterator.html#ace405568d0b2f3fad4990044252c7732',1,'yoi::indexTable::iterator']]]
+  ['area_0',['area',['../mimalloc_8h.html#adf0fdf81d937dd5a837e95aff8fc0a49',1,'mimalloc.h']]],
+  ['arg_1',['arg',['../mimalloc_8h.html#ac9ca0390aa991912667416f6baf99e51',1,'mimalloc.h']]]
 ];

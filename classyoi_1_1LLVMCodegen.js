@@ -89,6 +89,7 @@ var classyoi_1_1LLVMCodegen =
     [ "runtimeDebugReportLeaveFunctionFunc", "classyoi_1_1LLVMCodegen.html#a55bcb9229ffa4615522e8a587409ba43", null ],
     [ "runtimeFinalizeObjectFunc", "classyoi_1_1LLVMCodegen.html#a25aeec90a9dbe38e450493a79b775f47", null ],
     [ "runtimeFinalizeObjectReportFunc", "classyoi_1_1LLVMCodegen.html#a5b007239250d025b4584f0c517c7ea71", null ],
+    [ "runtimeFree", "classyoi_1_1LLVMCodegen.html#a8c7d07ddaaf814ef5644b8a2274a5964", null ],
     [ "runtimeMalloc", "classyoi_1_1LLVMCodegen.html#aeefdc361e2dd1481ee3c876660b57446", null ],
     [ "runtimeObjectAllocFunc", "classyoi_1_1LLVMCodegen.html#a79099951318d29c502a54c9da2c4bf98", null ],
     [ "runtimeObjectAllocReportFunc", "classyoi_1_1LLVMCodegen.html#a5b63e7159dcfc8f1f232ced9e40769d7", null ],

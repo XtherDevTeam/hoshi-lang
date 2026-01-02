@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_0',['type',['../classyoi_1_1enum__range.html#ac96fceb7a09e6c9b857b17a891cfef78',1,'yoi::enum_range::type'],['../structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html#a045258c9dd337cb5838996db28696f9a',1,'magic_enum::detail::enable_if_enum&lt; true, R &gt;::type']]]
+  ['indext_0',['indexT',['../namespaceyoi.html#adb858077f604461fe6aba9936e092c59',1,'yoi']]],
+  ['iterator_5fcategory_1',['iterator_category',['../classyoi_1_1indexTable_1_1iterator.html#a8806ca091813ced0b0658fedaa448357',1,'yoi::indexTable::iterator']]]
 ];

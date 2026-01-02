@@ -1,0 +1,26 @@
+var structmi__segment__t =
+[
+    [ "_Atomic", "structmi__segment__t.html#a0b1797beebb1e50151b4f49b91172bfa", null ],
+    [ "abandoned", "structmi__segment__t.html#a37912bd996fedab12fa74179baf82e4f", null ],
+    [ "abandoned_os_next", "structmi__segment__t.html#ac4ac72de3e6920369d9e2522b643719f", null ],
+    [ "abandoned_os_prev", "structmi__segment__t.html#ab02828f564d1fe83aa679bb6e2b7e4e7", null ],
+    [ "abandoned_visits", "structmi__segment__t.html#af6f27f3d04988907fa4fd9e6c78a5292", null ],
+    [ "allow_decommit", "structmi__segment__t.html#a0123f06f3689188e8b49f92991198f18", null ],
+    [ "allow_purge", "structmi__segment__t.html#a6be5d7504c1e65509ef5b1eb0cefbcd9", null ],
+    [ "commit_mask", "structmi__segment__t.html#a4f6a38a0b8bed74d986da40a95a6c5bb", null ],
+    [ "cookie", "structmi__segment__t.html#ab44d54e63bae06244102632bdab87635", null ],
+    [ "dont_free", "structmi__segment__t.html#afbb219f60bfad03223d402ffcab3a36d", null ],
+    [ "kind", "structmi__segment__t.html#ad505f5cdaea2e284e94da00c6db36073", null ],
+    [ "memid", "structmi__segment__t.html#a2836883777695c779baa1851b6f2ec22", null ],
+    [ "next", "structmi__segment__t.html#aaafd5176a08828f7a81e652327a9bb30", null ],
+    [ "purge_expire", "structmi__segment__t.html#a0ad95bd5a8a6e1b160cae5eff9a8ba5b", null ],
+    [ "purge_mask", "structmi__segment__t.html#af21739c62b0e6c42e5b1d80e66d22964", null ],
+    [ "segment_info_slices", "structmi__segment__t.html#a32251bc53647b206bed686090d2b1c64", null ],
+    [ "segment_size", "structmi__segment__t.html#a2c7dabe994a174440463a197184c832a", null ],
+    [ "segment_slices", "structmi__segment__t.html#aeb145808643b8cf03930f58559fc2ef0", null ],
+    [ "slice_entries", "structmi__segment__t.html#a66cff26892de2ea8c63eeb2e7236e152", null ],
+    [ "slices", "structmi__segment__t.html#a3616b5d211e5e49abf4fb8a6740f379b", null ],
+    [ "subproc", "structmi__segment__t.html#a9c0346f856982fd290f9b4c150b015b1", null ],
+    [ "used", "structmi__segment__t.html#ae8cc011bf3ee2d3c19743095ffc0f7a5", null ],
+    [ "was_reclaimed", "structmi__segment__t.html#a9386fd083cd245c3f9a8583ce888d446", null ]
+];

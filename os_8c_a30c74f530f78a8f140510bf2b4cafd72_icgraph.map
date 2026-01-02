@@ -1,0 +1,23 @@
+<map id="mi_os_ensure_zero" name="mi_os_ensure_zero">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1087,55,1233,80"/>
+<area shape="rect" id="Node000002" href="$os_8c.html#ad8d9f97986c219a284b042738dffc14c" title=" " alt="" coords="925,55,1039,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1073,70,1039,70,1039,65,1073,65"/>
+<area shape="rect" id="Node000003" href="$segment-map_8c.html#a7df0a8ed2cd0b3a0b004227cb06ad428" title=" " alt="" coords="752,5,827,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="918,54,826,30,827,25,919,49"/>
+<area shape="rect" id="Node000004" href="$init_8c.html#a15abae81bc8cffcbb834284b90fd0deb" title=" " alt="" coords="752,55,827,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="912,70,827,70,827,65,912,65"/>
+<area shape="rect" id="Node000005" href="$arena_8c.html#af2bdd7af9e0493ae4412c50c9b5b666c" title=" " alt="" coords="701,104,877,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="919,86,841,106,839,101,918,81"/>
+<area shape="rect" id="Node000006" href="$arena_8c.html#a0bffa7386351753962948aa22a5ac537" title=" " alt="" coords="439,79,653,104"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="687,109,653,105,654,100,688,103"/>
+<area shape="rect" id="Node000011" href="$group__extended.html#ga8068cac328e41fa2170faef707315243" title="Create a fresh sub&#45;process (with no associated threads yet)." alt="" coords="481,128,611,153"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="688,129,612,137,611,132,687,124"/>
+<area shape="rect" id="Node000007" href="$group__extended.html#ga41ce8525d77bbb60f618fa1029994f6e" title="Manage externally allocated memory as a mimalloc arena. This memory will not be freed by mimalloc." alt="" coords="184,21,391,47"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="474,78,345,49,346,44,475,73"/>
+<area shape="rect" id="Node000008" href="$group__extended.html#ga591aab1c2bc2ca920e33f0f9f9cb5c52" title="Reserve huge OS pages (1GiB) into a single arena." alt="" coords="209,71,365,111"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="424,94,365,94,365,89,424,89"/>
+<area shape="rect" id="Node000009" href="$group__extended.html#ga32f519797fd9a81acb4f52d36e6d751b" title="Reserve OS memory to be managed in an arena." alt="" coords="186,136,389,161"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="475,110,346,139,345,133,474,104"/>
+<area shape="rect" id="Node000010" href="$main-override-static_8c.html#aff619a61bfabc63d016a88a99e33e1a5" title=" " alt="" coords="5,136,136,161"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="172,151,136,151,136,146,172,146"/>
+</map>

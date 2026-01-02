@@ -13,5 +13,6 @@ var searchData=
   ['3_20structs_10',['3. Structs',['../md_docs_2Spec.html#autotoc_md109',1,'']]],
   ['3_20the_20tt_20length_20tt_20property_11',['3. The &lt;tt&gt;.length&lt;/tt&gt; Property',['../md_docs_2Array.html#autotoc_md6',1,'']]],
   ['3_20tt_20ircodeblock_20tt_12',['2.3. &lt;tt&gt;IRCodeBlock&lt;/tt&gt;',['../md_docs_2IR.html#autotoc_md59',1,'']]],
-  ['3_20under_20the_20hood_3a_20implementation_20details_13',['3. Under the Hood: Implementation Details',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md13',1,'']]]
+  ['3_20under_20the_20hood_3a_20implementation_20details_13',['3. Under the Hood: Implementation Details',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md13',1,'']]],
+  ['36_20core_20intel_20xeon_14',['On a 36-core Intel Xeon',['../md_mimalloc_2readme.html#autotoc_md192',1,'']]]
 ];

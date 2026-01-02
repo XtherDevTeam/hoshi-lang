@@ -1,9 +1,21 @@
 var searchData=
 [
-  ['unknown_0',['unknown',['../classyoi_1_1symbol.html#adbced06f2a0b52ca205e82de1a1f4171a88183b946cc5f0e8c96b2e66e1c74a7e',1,'yoi::symbol::Unknown'],['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a',1,'yoi::lexer::token::unknown'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206aad921d60486366258809553a3db49a4a',1,'yoi::IROperand::unknown'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad921d60486366258809553a3db49a4a',1,'yoi::IR::unknown']]],
-  ['unreachable_1',['Unreachable',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a',1,'yoi::IRFunctionDefinition']]],
-  ['unsignedint_2',['unsignedint',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::lexer::token::unsignedInt'],['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206a227f975f69d7fc46d7373613cbe3a50e',1,'yoi::IROperand::unsignedInt']]],
-  ['unsignedobject_3',['unsignedObject',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96',1,'yoi::IRValueType']]],
-  ['unsignedraw_4',['unsignedRaw',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634',1,'yoi::IRValueType']]],
-  ['usestmt_5',['useStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb',1,'yoi::globalStmt']]]
+  ['throws_0',['throws',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a83a5849d32875836435ece98f910621a',1,'yoi::IRFunctionDefinition::Throws'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584',1,'yoi::IR::throws']]],
+  ['throwstmt_1',['throwStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7',1,'yoi::inCodeBlockStmt']]],
+  ['tosign_2',['toSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aade2fe32a74d0d7cc7750b400e6651fa',1,'yoi::lexer::token']]],
+  ['trycatchstmt_3',['tryCatchStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea9c7f1419b92e397caf445a6c53793eb9',1,'yoi::inCodeBlockStmt']]],
+  ['typealiasstmt_4',['typeAliasStmt',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea71126f8b13a7000ae9a312452c259020',1,'yoi::globalStmt']]],
+  ['typeid_5fbool_5',['typeid_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18384ae9fe241756e420e5c5e7dc43a4',1,'yoi::IR']]],
+  ['typeid_5fchar_6',['typeid_char',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6dc196cdeb50fd6359396d0b3fde1a56',1,'yoi::IR']]],
+  ['typeid_5fdeci_7',['typeid_deci',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a27bd65f37b6aa7e53f41b2bcc3f6dcff',1,'yoi::IR']]],
+  ['typeid_5fint_8',['typeid_int',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ac33f43e2bf0242ec34f31665c99de298',1,'yoi::IR']]],
+  ['typeid_5finterface_9',['typeid_interface',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e',1,'yoi::IR']]],
+  ['typeid_5finterface_5fimpl_10',['typeid_interface_impl',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad91696d28942cb5539ce5a2031a6da9',1,'yoi::IR']]],
+  ['typeid_5fobject_11',['typeid_object',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1ce501a67014d20ed9b4530677585fac',1,'yoi::IR']]],
+  ['typeid_5fobject_5fnon_5fstack_12',['typeid_object_non_stack',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0',1,'yoi::IR']]],
+  ['typeid_5fshort_13',['typeid_short',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adfa4c2a79d608548889c7606ca83cede',1,'yoi::IR']]],
+  ['typeid_5fstr_14',['typeid_str',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906',1,'yoi::IR']]],
+  ['typeid_5fstruct_15',['typeid_struct',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d',1,'yoi::IR']]],
+  ['typeid_5funsigned_16',['typeid_unsigned',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0a65bad3df3f307c675bf59908784b6d',1,'yoi::IR']]],
+  ['typeidexpression_17',['typeIdExpression',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a2b44ce34841af051cca259c8f9c5587d',1,'yoi::primary']]]
 ];
