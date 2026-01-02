@@ -52,7 +52,7 @@ void hperf_context_finalize(HPerfContext *ctx) {
 HPerfEvent *hperf_context_add_event(HPerfContext *ctx) {
     if (ctx->current_page == nullptr || ctx->current_page->num_events == 1024) {
         // allocate a new page if the current one is full
-        auto page = static_cast<HPerfPage *>(malloc(sizeof(HPerfPage)));
+        auto page = static_cast<HPerfPage *>(calloc(sizeof(HPerfPage), 1));
         page->next = nullptr;
         if (ctx->current_page != nullptr) {
             ctx->current_page->next = page;
