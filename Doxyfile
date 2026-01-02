@@ -21,6 +21,8 @@ INPUT                  = ./compiler                  \
                          ./runtime/memory            \
                          ./runtime/string            \
                          .
+
+EXCLUDE                = mimalloc
  
 # 程序文档语言环境
 OUTPUT_LANGUAGE        = English
