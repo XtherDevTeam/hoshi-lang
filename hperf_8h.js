@@ -9,10 +9,10 @@ var hperf_8h =
     [ "HPerfPage", "structHPerfPage.html", "structHPerfPage" ],
     [ "HPerfContext", "structHPerfContext.html", "structHPerfContext" ],
     [ "HPerfEventType", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbc", [
-      [ "FUNC_ENTER", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbcae7ffed266306eea7ce8c12af10036336", null ],
-      [ "FUNC_LEAVE", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbca504d86e9aa978438921cbb9d585d1c39", null ],
-      [ "MEM_ALLOC", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbca812010642c68c74c8e09cd6bcc4d1ac8", null ],
-      [ "MEM_FREE", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbcab7c4065d41cf4d0aa672a18587c2b131", null ]
+      [ "HPERF_EVT_FUNC_ENTER", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbcaea1257f20fc1d46b5824cc2d7cd5a4e5", null ],
+      [ "HPERF_EVT_FUNC_LEAVE", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbcae03d9c5c5a0139cec276c832d181ec51", null ],
+      [ "HPERF_EVT_MEM_ALLOC", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbcae1c0999bc1549f825e8482c3ef8b0fa1", null ],
+      [ "HPERF_EVT_MEM_FREE", "hperf_8h.html#acb508c53cd407367bcd55fec03e39fbca710298b038a15cbf8043e83f13c3109f", null ]
     ] ],
     [ "hperf_context_add_event", "hperf_8h.html#ae5c0aa6b1fd738b24c08e6d93ae7302d", null ],
     [ "hperf_context_create", "hperf_8h.html#a026fc80c6ce2b2306cc9a42f0430d1b3", null ],

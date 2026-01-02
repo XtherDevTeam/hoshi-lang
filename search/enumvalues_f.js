@@ -1,14 +1,21 @@
 var searchData=
 [
-  ['raw_0',['Raw',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00',1,'yoi::IRValueType']]],
-  ['release_1',['release',['../structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593a123fead50246387983ee340507115ef4',1,'yoi::IRBuildConfig']]],
-  ['reminderassignment_2',['reminderAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a59b7c4bed8b14a7b4b0a44d1500ddc45',1,'yoi::lexer::token']]],
-  ['ret_3',['ret',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c',1,'yoi::IR']]],
-  ['ret_5fnone_4',['ret_none',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc',1,'yoi::IR']]],
-  ['returnstmt_5',['returnStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea3c7a84e1b19c2e9113b5c40375162070',1,'yoi::inCodeBlockStmt']]],
-  ['rexpr_6',['rexpr',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a10ebdc819dc33de0b62a6e2f74d5870c',1,'yoi::primary::rExpr'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea10ebdc819dc33de0b62a6e2f74d5870c',1,'yoi::inCodeBlockStmt::rExpr']]],
-  ['right_5fshift_7',['right_shift',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0',1,'yoi::IR']]],
-  ['rightbraces_8',['rightBraces',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a8ccce5d2736d410907346cc4e1605b52',1,'yoi::lexer::token']]],
-  ['rightbracket_9',['rightBracket',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ac7b244209d68f4dd53036c789e7e8aca',1,'yoi::lexer::token']]],
-  ['rightparentheses_10',['rightParentheses',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae392b68fd19c9cbab33708f39b821b7c',1,'yoi::lexer::token']]]
+  ['percentsign_0',['percentSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af3b0d7eb99acc93ea58a2751b70b1fe0',1,'yoi::lexer::token']]],
+  ['permanentincurrentscope_1',['PermanentInCurrentScope',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc',1,'yoi::IRValueType']]],
+  ['plus_2',['plus',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad7d18cfb3a0d8293e2f5d94ea30e04d2',1,'yoi::lexer::token']]],
+  ['pointer_3',['pointer',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9',1,'yoi::IRValueType']]],
+  ['pointer_5fcast_4',['pointer_cast',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442',1,'yoi::IR']]],
+  ['pointerobject_5',['pointerobject',['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ada67bae9e91e98a49d84f1510f994edc',1,'pointerObject:&#160;rtti.h'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc',1,'yoi::IRValueType::pointerObject']]],
+  ['pop_6',['pop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48',1,'yoi::IR']]],
+  ['pop_5fexception_5fhandler_7',['pop_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0234ee301782476fafbfec28816162d2',1,'yoi::IR']]],
+  ['preserve_8',['Preserve',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919',1,'yoi::IRFunctionDefinition']]],
+  ['push_5fboolean_9',['push_boolean',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a',1,'yoi::IR']]],
+  ['push_5fcharacter_10',['push_character',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afb6a04d1b184942ceb195a407f9a2f97',1,'yoi::IR']]],
+  ['push_5fdecimal_11',['push_decimal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1',1,'yoi::IR']]],
+  ['push_5fexception_5fhandler_12',['push_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7073575d0da91ba9b403a3c01de666e3',1,'yoi::IR']]],
+  ['push_5finteger_13',['push_integer',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f',1,'yoi::IR']]],
+  ['push_5fnull_14',['push_null',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90',1,'yoi::IR']]],
+  ['push_5fshort_15',['push_short',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7af634e2e28fa7ae453b5820d75f6fc1',1,'yoi::IR']]],
+  ['push_5fstring_16',['push_string',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b',1,'yoi::IR']]],
+  ['push_5funsigned_17',['push_unsigned',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a167e288648eb6bbc68f157660cc2499a',1,'yoi::IR']]]
 ];
