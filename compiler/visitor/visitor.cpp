@@ -2377,7 +2377,7 @@ namespace yoi {
         moduleContext->getIRBuilder().jumpIfOp(IR::Opcode::jump_if_true, codeBlock);
         moduleContext->getIRBuilder().jumpOp(outBlock);
         moduleContext->getIRBuilder().switchCodeBlock(codeBlock);
-        moduleContext->getIRBuilder().pushLoopContext(outBlock, condBlock);
+        moduleContext->getIRBuilder().pushLoopContext(outBlock, afterBlock);
         visit(forStmt->block, true);
         moduleContext->getIRBuilder().popLoopContext();
 

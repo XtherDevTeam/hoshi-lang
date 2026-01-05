@@ -5,7 +5,7 @@ code_lines = {}
 def traverse(path: pathlib.Path = pathlib.Path(".")) -> None:
     global code_lines
     for child in path.iterdir():
-        if child.is_dir() and not child.name.startswith(".") and child.name not in ["build", "cmake-build-debug", "cmake-build-release"]:
+        if child.is_dir() and not child.name.startswith(".") and child.name not in ["build", "cmake-build-debug", "cmake-build-release", "mimalloc"]:
             traverse(child)
         elif child.is_file():
             if child.suffix in ['.cpp', '.h', '.hpp', '.txt']:

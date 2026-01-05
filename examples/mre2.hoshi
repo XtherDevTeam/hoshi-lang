@@ -1,0 +1,9 @@
+use console "console"
+
+func main() : int {
+    for (let i = 0; i < 10; i = i + 1) {
+        console.print(i, "\n")
+        continue
+    }
+    return 0
+}
