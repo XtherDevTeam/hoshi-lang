@@ -23,11 +23,11 @@ namespace yoi {
 
         yoi::indexT entryModuleIndex{};
 
-        std::map<FuncIdentifier, std::set<FuncIdentifier>> callGraph; // successors for each function
+        std::map<FuncIdentifier, std::set<FuncIdentifier>> callGraph;   // successors for each function
         std::map<FuncIdentifier, std::set<FuncIdentifier>> callerGraph; // predecessors for each function
-        std::set<FuncIdentifier> entryPoints; // entry points of the program
-        std::set<FuncIdentifier> unreachableFunctions; // functions that are not reachable from the entry points
-        std::set<FuncIdentifier> functions; // all functions in the program
+        std::set<FuncIdentifier> entryPoints;                           // entry points of the program
+        std::set<FuncIdentifier> unreachableFunctions;                  // functions that are not reachable from the entry points
+        std::set<FuncIdentifier> functions;                             // all functions in the program
 
         CallGraph() = default;
 
@@ -37,6 +37,9 @@ namespace yoi {
     };
 
     struct FunctionAnalysisInfo {
+        enum class ParameterState { Raw, Nullable, Plain };
+
+        yoi::vec<ParameterState> paramStates;
         bool isReturnValueNullable = false;
         bool isReturnValueRaw = true;
 
@@ -49,8 +52,13 @@ namespace yoi {
         std::shared_ptr<IRModule> irModule;
         std::shared_ptr<IRFunctionDefinition> targetFunction;
         yoi::indexT currentCodeBlockIndex;
-        const std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> &globalAnalysisResults;
-    public:
+        std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> &globalAnalysisResults;
+        std::set<CallGraph::FuncIdentifier> affectedFunctions;
+
+      public:
+        std::set<CallGraph::FuncIdentifier> getAffectedFunctions() const {
+            return affectedFunctions;
+        }
 
         struct SimulationStack {
             struct Item {
@@ -63,7 +71,9 @@ namespace yoi {
 
                     ContributedInstructionSet(yoi::indexT codeBlockIndex, const std::set<yoi::indexT> &instructions);
 
-                    ContributedInstructionSet(yoi::indexT codeBlockIndex, const std::set<yoi::indexT> &instructions, bool optimizable);
+                    ContributedInstructionSet(yoi::indexT codeBlockIndex,
+                                              const std::set<yoi::indexT> &instructions,
+                                              bool optimizable);
 
                     ContributedInstructionSet &insert(yoi::indexT index);
 
@@ -112,7 +122,7 @@ namespace yoi {
 
                     PossibleValue(short shortValue);
                 } possibleValue;
-                
+
                 IRMetadata metadata;
 
                 ContributedInstructionSet contributedInstructions;
@@ -122,11 +132,13 @@ namespace yoi {
             SimulationStack() = default;
 
             /**
-             * Creates a new simulation stack item with the given type, contributed instructions, and will not have a possible value.
+             * Creates a new simulation stack item with the given type, contributed instructions, and will not have a
+             * possible value.
              * @param type The IRValueType of the item.
              * @param contributedInstructions The set of instructions that contribute to the value of this item.
              */
-            void push(const std::shared_ptr<IRValueType> &type, const Item::ContributedInstructionSet & contributedInstructions);
+            void push(const std::shared_ptr<IRValueType> &type,
+                      const Item::ContributedInstructionSet &contributedInstructions);
 
             /**
              * Creates a new simulation stack item with the given type, contributed instructions, and possible value.
@@ -134,7 +146,9 @@ namespace yoi {
              * @param contributedInstructions The set of instructions that contribute to the value of this item.
              * @param value The possible value of the item.
              */
-            void push(const std::shared_ptr<IRValueType> &type, const Item::ContributedInstructionSet & contributedInstructions, Item::PossibleValue value);
+            void push(const std::shared_ptr<IRValueType> &type,
+                      const Item::ContributedInstructionSet &contributedInstructions,
+                      Item::PossibleValue value);
 
             void push(const Item &item);
 
@@ -144,48 +158,59 @@ namespace yoi {
         } simulationStack;
 
         /**
-        * Reduce the given set of instructions by removing redundant instructions.
-        * @param contributedInstructions The set of instructions to be reduced.
-        * @param currentIndex The current index of the instruction being processed.
-        * @return The index of the next instruction to be processed.
-        */
-        yoi::indexT reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions, yoi::indexT currentIndex);
+         * Reduce the given set of instructions by removing redundant instructions.
+         * @param contributedInstructions The set of instructions to be reduced.
+         * @param currentIndex The current index of the instruction being processed.
+         * @return The index of the next instruction to be processed.
+         */
+        yoi::indexT reduce(const SimulationStack::Item::ContributedInstructionSet &contributedInstructions,
+                           yoi::indexT currentIndex);
 
-        SimulationStack::Item add(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item add(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                  const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item sub(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item sub(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                  const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item mul(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item mul(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                  const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item div(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item div(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                  const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item mod(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item mod(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                  const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item negate(const IRFunctionOptimizer::SimulationStack::Item& a);
+        SimulationStack::Item negate(const IRFunctionOptimizer::SimulationStack::Item &a);
 
-        SimulationStack::Item bitwiseNot(const IRFunctionOptimizer::SimulationStack::Item& a);
+        SimulationStack::Item bitwiseNot(const IRFunctionOptimizer::SimulationStack::Item &a);
 
-        SimulationStack::Item bitwiseAnd(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseAnd(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                         const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseOr(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseOr(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                        const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseXor(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseXor(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                         const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseShiftLeft(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseShiftLeft(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                               const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item bitwiseShiftRight(const IRFunctionOptimizer::SimulationStack::Item& a, const IRFunctionOptimizer::SimulationStack::Item &b);
+        SimulationStack::Item bitwiseShiftRight(const IRFunctionOptimizer::SimulationStack::Item &a,
+                                                const IRFunctionOptimizer::SimulationStack::Item &b);
 
-        SimulationStack::Item lessThan(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item lessThan(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
-        SimulationStack::Item lessThanOrEqual(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item lessThanOrEqual(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
-        SimulationStack::Item greaterThan(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item greaterThan(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
-        SimulationStack::Item greaterThanOrEqual(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item greaterThanOrEqual(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
-        SimulationStack::Item equal(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item equal(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
-        SimulationStack::Item notEqual(const SimulationStack::Item & item, const SimulationStack::Item & right);
+        SimulationStack::Item notEqual(const SimulationStack::Item &item, const SimulationStack::Item &right);
 
         struct VariablesExtraInfo {
             bool hasPossibleValue;
@@ -203,9 +228,14 @@ namespace yoi {
          */
         yoi::indexT generatePushOp(const SimulationStack::Item &item, yoi::indexT index);
 
-        IRFunctionOptimizer(const std::shared_ptr<compilerContext> &compilerCtx, const std::shared_ptr<IRModule> &irModule, const std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo>& globalResults);
+        IRFunctionOptimizer(const std::shared_ptr<compilerContext> &compilerCtx,
+                            const std::shared_ptr<IRModule> &irModule,
+                            std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> &globalResults);
 
-        IRFunctionOptimizer &setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction);
+        CallGraph::FuncIdentifier currentFuncId;
+
+        IRFunctionOptimizer &setTargetFunction(const std::shared_ptr<IRFunctionDefinition> &targetFunction,
+                                               CallGraph::FuncIdentifier funcId);
 
         IRFunctionOptimizer &reduceRedundantConstantExpr();
 
@@ -254,7 +284,6 @@ namespace yoi {
         bool operator!=(const AnalysisState &other) const;
     };
 
-
     AnalysisState mergeStates(const AnalysisState &s1, const AnalysisState &s2);
 
     class IROptimizer {
@@ -276,7 +305,7 @@ namespace yoi {
 
         void optimize();
     };
-        
-} // yoi
 
-#endif //IROPTIMIZER_HPP
+} // namespace yoi
+
+#endif // IROPTIMIZER_HPP

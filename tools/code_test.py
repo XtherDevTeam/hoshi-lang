@@ -83,6 +83,7 @@ def run_test(test_file):
     output_path = "build/" + test_name
     params = ["./cmake-build-debug/hoshi_lang", str(test_file), "-o", output_path, "--build-mode", "release", "--build-type", build_type]
     
+    print("Running test: ", test_name)
     res = subprocess.run(params)
     if res.returncode != 0:
         print(f"ERR: Compiler test failed for case: {test_name}")

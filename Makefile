@@ -3,7 +3,7 @@ generate_define:
 
 mimalloc-files:
 	git submodule update --init --recursive
-	rm -rf mimalloc/build && mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
+	mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
 	cp mimalloc/build/*.a cmake-build-debug/ || true
 	cp mimalloc/build/*.a cmake-build-release/ || true
 	# explicitly ignore non-existent files

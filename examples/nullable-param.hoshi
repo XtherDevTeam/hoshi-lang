@@ -1,0 +1,14 @@
+use console "console"
+use str "str"
+
+func test(a: str.Str) : none {
+    console.print(a, "\n")
+    return
+}
+
+func main() : int {
+    let a : str.Str = null
+    test("hello, world")
+    test(a)
+    return 0
+}
