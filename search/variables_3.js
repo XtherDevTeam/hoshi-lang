@@ -37,10 +37,11 @@ var searchData=
   ['current_5fpage_34',['current_page',['../structHPerfContext.html#a27ca348b8afb7e04bba32a9df2a8add0',1,'HPerfContext']]],
   ['currentcodeblockindex_35',['currentcodeblockindex',['../classyoi_1_1IRBuilder.html#a6aa5d77eb53ccbb38448267c18b00ad8',1,'yoi::IRBuilder::currentCodeBlockIndex'],['../classyoi_1_1IRFunctionOptimizer.html#a6aa5d77eb53ccbb38448267c18b00ad8',1,'yoi::IRFunctionOptimizer::currentCodeBlockIndex']]],
   ['currentdebuginfo_36',['currentDebugInfo',['../classyoi_1_1IRBuilder.html#abd96a261aa50fbf2bdee7f6a000fd7df',1,'yoi::IRBuilder']]],
-  ['currentfunction_37',['currentfunction',['../classyoi_1_1IRBuilder.html#a271e3e56e1fe9916201957557e1faf85',1,'yoi::IRBuilder::currentFunction'],['../classyoi_1_1LLVMCodegen.html#ac4cc9579c633f4e6815f1fc0ff61fd17',1,'yoi::LLVMCodegen::currentFunction']]],
-  ['currentfunctiondef_38',['currentFunctionDef',['../classyoi_1_1LLVMCodegen.html#a3c53a3337666534e9cf2e72bfe2b2e78',1,'yoi::LLVMCodegen']]],
-  ['currentmodule_39',['currentModule',['../classyoi_1_1IRBuilder.html#a0e82125bac8069a5ee90e607478781a0',1,'yoi::IRBuilder']]],
-  ['currentmoduleindex_40',['currentModuleIndex',['../classyoi_1_1visitor.html#adffa59781103abf47163ae2d9d247c48',1,'yoi::visitor']]],
-  ['currentstate_41',['currentState',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9b49603adf1aa1bce50ead5ce12c3ca1',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
-  ['curtoken_42',['curtoken',['../structyoi_1_1lexer_1_1lexerState.html#a3c5b49a9b525e2fbc1f1f37bb2574150',1,'yoi::lexer::lexerState::curToken'],['../classyoi_1_1lexer.html#a3c5b49a9b525e2fbc1f1f37bb2574150',1,'yoi::lexer::curToken']]]
+  ['currentfuncid_37',['currentFuncId',['../classyoi_1_1IRFunctionOptimizer.html#a1320dc0b698468859d4e349fa1342051',1,'yoi::IRFunctionOptimizer']]],
+  ['currentfunction_38',['currentfunction',['../classyoi_1_1IRBuilder.html#a271e3e56e1fe9916201957557e1faf85',1,'yoi::IRBuilder::currentFunction'],['../classyoi_1_1LLVMCodegen.html#ac4cc9579c633f4e6815f1fc0ff61fd17',1,'yoi::LLVMCodegen::currentFunction']]],
+  ['currentfunctiondef_39',['currentFunctionDef',['../classyoi_1_1LLVMCodegen.html#a3c53a3337666534e9cf2e72bfe2b2e78',1,'yoi::LLVMCodegen']]],
+  ['currentmodule_40',['currentModule',['../classyoi_1_1IRBuilder.html#a0e82125bac8069a5ee90e607478781a0',1,'yoi::IRBuilder']]],
+  ['currentmoduleindex_41',['currentModuleIndex',['../classyoi_1_1visitor.html#adffa59781103abf47163ae2d9d247c48',1,'yoi::visitor']]],
+  ['currentstate_42',['currentState',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9b49603adf1aa1bce50ead5ce12c3ca1',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
+  ['curtoken_43',['curtoken',['../structyoi_1_1lexer_1_1lexerState.html#a3c5b49a9b525e2fbc1f1f37bb2574150',1,'yoi::lexer::lexerState::curToken'],['../classyoi_1_1lexer.html#a3c5b49a9b525e2fbc1f1f37bb2574150',1,'yoi::lexer::curToken']]]
 ];

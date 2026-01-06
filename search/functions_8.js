@@ -17,7 +17,7 @@ var searchData=
   ['irexternentry_14',['irexternentry',['../classyoi_1_1IRExternEntry.html#aa5c657c5b0363384d4bd4f9fb8dcd107',1,'yoi::IRExternEntry::IRExternEntry()=default'],['../classyoi_1_1IRExternEntry.html#aada8de34735208ca1f781882b28ab201',1,'yoi::IRExternEntry::IRExternEntry(externType type, const yoi::wstr &amp;name, yoi::indexT affiliateModule, yoi::indexT itemIndex)']]],
   ['irfuncdefinition_15',['irFuncDefinition',['../classyoi_1_1IRBuilder.html#a5c3ef4c3c62fc2e1ea329f94af0bf8da',1,'yoi::IRBuilder']]],
   ['irfunctiondefinition_16',['IRFunctionDefinition',['../classyoi_1_1IRFunctionDefinition.html#a89c653b9e1bb756b2b4d29b2b97941c2',1,'yoi::IRFunctionDefinition']]],
-  ['irfunctionoptimizer_17',['IRFunctionOptimizer',['../classyoi_1_1IRFunctionOptimizer.html#af24ce1c7289d630fe913a36170f43936',1,'yoi::IRFunctionOptimizer']]],
+  ['irfunctionoptimizer_17',['IRFunctionOptimizer',['../classyoi_1_1IRFunctionOptimizer.html#a4603c83d2775612b1d6d1e3c4f84fab0',1,'yoi::IRFunctionOptimizer']]],
   ['irfunctiontemplate_18',['IRFunctionTemplate',['../classyoi_1_1IRFunctionTemplate.html#ae460b944d61bfb4d5f6754ac7dd40117',1,'yoi::IRFunctionTemplate']]],
   ['irinterfaceimplementationdefinition_19',['IRInterfaceImplementationDefinition',['../classyoi_1_1IRInterfaceImplementationDefinition.html#af301c03951a1e64d1d649b696865714b',1,'yoi::IRInterfaceImplementationDefinition']]],
   ['irinterfaceimplementationtemplate_20',['IRInterfaceImplementationTemplate',['../classyoi_1_1IRInterfaceImplementationTemplate.html#a676f202eba6c2ac4cc2d0894f0b9adfe',1,'yoi::IRInterfaceImplementationTemplate']]],

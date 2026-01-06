@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['raw_0',['Raw',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00',1,'yoi::IRValueType']]],
+  ['raw_0',['raw',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00',1,'yoi::IRValueType::Raw'],['../structyoi_1_1FunctionAnalysisInfo.html#a02b832de27c9164e3fb0b166655d115ba65e65c8ab0d8609ce12fc68a03cb8e00',1,'yoi::FunctionAnalysisInfo::Raw']]],
   ['release_1',['release',['../structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593a123fead50246387983ee340507115ef4',1,'yoi::IRBuildConfig']]],
   ['reminderassignment_2',['reminderAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a59b7c4bed8b14a7b4b0a44d1500ddc45',1,'yoi::lexer::token']]],
   ['ret_3',['ret',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c',1,'yoi::IR']]],

@@ -1,5 +1,11 @@
 var NAVTREEINDEX14 =
 {
+"magic__enum_8h.html#a8a23adb7a0faa76d42abe82a1f1b1af9":[32,0,4,3,89],
+"magic__enum_8h.html#a8daa61205550ec57a65ab36d72d01262":[32,0,4,3,119],
+"magic__enum_8h.html#a954091005c1d10ea67daa84ce07b6137":[32,0,4,3,51],
+"magic__enum_8h.html#a968be91f69d941a6e0c671c1d4ddebed":[32,0,4,3,44],
+"magic__enum_8h.html#a968be91f69d941a6e0c671c1d4ddebeda11e69738068f7b315076bccfdf5c9d41":[32,0,4,3,44,2],
+"magic__enum_8h.html#a968be91f69d941a6e0c671c1d4ddebeda159cb53c185dae9e51fb5e4d14cf37a3":[32,0,4,3,44,1],
 "magic__enum_8h.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81":[32,0,4,3,44,0],
 "magic__enum_8h.html#a992d343573e9ce8721aefb1f4d35f6b0":[32,0,4,3,53],
 "magic__enum_8h.html#aa1f3704d1aefe4f7c76167f0e8e7a99d":[32,0,4,3,71],
@@ -243,11 +249,5 @@ var NAVTREEINDEX14 =
 "namespacemagic__enum.html#a954091005c1d10ea67daa84ce07b6137":[30,0,0,12],
 "namespacemagic__enum.html#a992d343573e9ce8721aefb1f4d35f6b0":[30,0,0,14],
 "namespacemagic__enum.html#aa1f3704d1aefe4f7c76167f0e8e7a99d":[30,0,0,29],
-"namespacemagic__enum.html#ab594fb2e545785768c14860f3ff031d2":[30,0,0,19],
-"namespacemagic__enum.html#abd3e2cf5a74ee3679f8ee6c71c949b9c":[30,0,0,32],
-"namespacemagic__enum.html#abdabde8a87782dc3372172200935e5d1":[30,0,0,25],
-"namespacemagic__enum.html#abfa3c1cab6b215be0f993c090492850f":[30,0,0,6],
-"namespacemagic__enum.html#ac3a448ce59bc0f085fcf9458dcf26c8e":[30,0,0,15],
-"namespacemagic__enum.html#aedd74a7cae2afd91a6b3d5fe81095336":[30,0,0,10],
-"namespacemagic__enum.html#af6b8d9b4be00250d76c0953e04da2f06":[30,0,0,18]
+"namespacemagic__enum.html#ab594fb2e545785768c14860f3ff031d2":[30,0,0,19]
 };
