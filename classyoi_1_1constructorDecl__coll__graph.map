@@ -1,12 +1,15 @@
 <map id="constructorDecl" name="constructorDecl">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,344,129,369"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1AST.html" title=" " alt="" coords="39,181,85,207"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,220,70,344,64,344,60,221"/>
-<area shape="rect" id="Node000005" href="$classyoi_1_1definitionArguments.html" title=" " alt="" coords="83,256,238,281"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="90,213,146,253,143,258,87,217"/>
-<area shape="rect" id="Node000003" href="$structyoi_1_1lexer_1_1token.html" title=" " alt="" coords="33,93,91,119"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="65,133,65,181,59,181,59,133"/>
-<area shape="rect" id="Node000004" href="$unionyoi_1_1lexer_1_1token_1_1vBasicValue.html" title=" " alt="" coords="11,5,113,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="65,45,65,93,59,93,59,45"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="140,293,82,345,79,341,136,289"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="21,344,145,369"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1AST.html" title=" " alt="" coords="60,181,107,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="50,216,32,229,17,245,9,262,11,281,22,299,36,316,67,342,63,346,32,320,17,302,6,282,4,261,13,242,29,225,47,212"/>
+<area shape="rect" id="Node000005" href="$classyoi_1_1defTemplateArg.html" title=" " alt="" coords="21,256,146,281"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="86,221,86,256,81,256,81,221"/>
+<area shape="rect" id="Node000006" href="$classyoi_1_1definitionArguments.html" title=" " alt="" coords="170,256,325,281"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="120,209,222,253,220,258,118,213"/>
+<area shape="rect" id="Node000003" href="$structyoi_1_1lexer_1_1token.html" title=" " alt="" coords="54,93,113,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,133,86,181,81,181,81,133"/>
+<area shape="rect" id="Node000004" href="$unionyoi_1_1lexer_1_1token_1_1vBasicValue.html" title=" " alt="" coords="33,5,134,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="86,45,86,93,81,93,81,45"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="86,295,86,343,81,343,81,295"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="217,290,158,322,109,346,107,341,155,318,214,286"/>
 </map>

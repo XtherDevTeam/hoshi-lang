@@ -8,7 +8,7 @@ var searchData=
   ['memory_5',['memory',['../structAllocatedMemoryList.html#a9824c7cb7e4069084cbbd4458efd3faf',1,'AllocatedMemoryList']]],
   ['met_6',['met',['../classyoi_1_1implInnerPair.html#a1a28b0ddd01e14c618eea31eb45851c8',1,'yoi::implInnerPair']]],
   ['metadata_7',['metadata',['../structyoi_1_1IRMetadata.html#adec6b3458d931c50d505d0afc83a72e2',1,'yoi::IRMetadata::metadata'],['../classyoi_1_1IRValueType.html#a236397c6389f1e8e070bbb58e7a7c0b3',1,'yoi::IRValueType::metadata'],['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html#a236397c6389f1e8e070bbb58e7a7c0b3',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::metadata'],['../structyoi_1_1LLVMCodegen_1_1StackValue.html#a236397c6389f1e8e070bbb58e7a7c0b3',1,'yoi::LLVMCodegen::StackValue::metadata']]],
-  ['method_8',['method',['../classyoi_1_1interfaceDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d',1,'yoi::interfaceDefInnerPair::method'],['../classyoi_1_1structDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d',1,'yoi::structDefInnerPair::method']]],
+  ['method_8',['method',['../classyoi_1_1structDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d',1,'yoi::structDefInnerPair::method'],['../classyoi_1_1interfaceDefInnerPair.html#a2c981ea6964f133b6f2fe286884e4d7d',1,'yoi::interfaceDefInnerPair::method']]],
   ['methodmap_9',['methodmap',['../classyoi_1_1IRInterfaceInstanceDefinition.html#a7595ec51b788725a74d2d928890383d8',1,'yoi::IRInterfaceInstanceDefinition::methodMap'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#a7595ec51b788725a74d2d928890383d8',1,'yoi::IRInterfaceInstanceDefinition::Builder::methodMap']]],
   ['min_10',['min',['../structmagic__enum_1_1customize_1_1enum__range.html#a89896aa02a72e30deb5ce066831b59c3',1,'magic_enum::customize::enum_range']]],
   ['min_5fv_11',['min_v',['../namespacemagic__enum_1_1detail.html#a830bec78565c9a58160a14b6d9a59650',1,'magic_enum::detail']]],
@@ -18,5 +18,6 @@ var searchData=
   ['moduleimported_15',['moduleImported',['../classyoi_1_1compilerContext.html#a03beb639365fb53f69edc584d38a59e4',1,'yoi::compilerContext']]],
   ['moduleimports_16',['moduleImports',['../classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5',1,'yoi::IRModule']]],
   ['modulepath_17',['modulePath',['../classyoi_1_1IRModule.html#a02df2d9d7dc7d8d5a35488c94c980882',1,'yoi::IRModule']]],
-  ['modules_18',['modules',['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext']]]
+  ['modules_18',['modules',['../classyoi_1_1compilerContext.html#a2872ab8ea009e67a927af192e2dcb703',1,'yoi::compilerContext']]],
+  ['mulexpr_19',['mulExpr',['../namespaceyoi.html#ae5525c965cc58756f77e41b391bf7dd8',1,'yoi']]]
 ];

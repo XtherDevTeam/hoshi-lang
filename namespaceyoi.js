@@ -300,6 +300,7 @@ var namespaceyoi =
     [ "parse", "namespaceyoi.html#abdf61793a2f93319458e9f95a94a7bc9", null ],
     [ "parse", "namespaceyoi.html#af7d65826d3b96505afcfa41f4c94604d", null ],
     [ "parse", "namespaceyoi.html#aeb85681966b20de1c447f55e27b8b20c", null ],
+    [ "PARSE_BINARY_EXPR", "namespaceyoi.html#a3f04b1ec064bd688ad9bd6d0496ea8aa", null ],
     [ "parseString", "namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d", null ],
     [ "realpath", "namespaceyoi.html#a4a59d5413d6da04facbe9ac48e2f7fff", null ],
     [ "replace_all", "namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7", null ],
@@ -309,5 +310,6 @@ var namespaceyoi =
     [ "whereIsHoshiLang", "namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
     [ "yoi_assert", "namespaceyoi.html#a85b420532ed69057ad764f367d13c152", null ],
-    [ "__current_file_path", "namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a", null ]
+    [ "__current_file_path", "namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a", null ],
+    [ "mulExpr", "namespaceyoi.html#ae5525c965cc58756f77e41b391bf7dd8", null ]
 ];

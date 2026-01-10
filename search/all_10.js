@@ -7,7 +7,7 @@ var searchData=
   ['handleforeigntypeconv_4',['handleforeigntypeconv',['../classyoi_1_1LLVMCodegen.html#a7ffc2d88378f6a1270662c1be20f7db0',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, const std::shared_ptr&lt; IRValueType &gt; &amp;foreignType, bool convertToForeign=false)'],['../classyoi_1_1LLVMCodegen.html#a3767428a09aaa4e50145ae1615083854',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign=false)']]],
   ['handleinstruction_5',['handleInstruction',['../classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba',1,'yoi::IRFunctionOptimizer']]],
   ['handleintrinsiccall_6',['handleIntrinsicCall',['../classyoi_1_1LLVMCodegen.html#a5cd97c6c14d91fae1df60efce6e3ec69',1,'yoi::LLVMCodegen']]],
-  ['handleinvocationextern_7',['handleInvocationExtern',['../classyoi_1_1visitor.html#aecacf655974a26b417953668a05f72da',1,'yoi::visitor']]],
+  ['handleinvocationextern_7',['handleInvocationExtern',['../classyoi_1_1visitor.html#a22788e819000478d460ec00a8f0b965b',1,'yoi::visitor']]],
   ['handler_8',['handler',['../structYoiVoidIntCallableInterface.html#a28fa2def66625f8438cdde75cf975042',1,'YoiVoidIntCallableInterface']]],
   ['handler_5ftype_5fsigalrm_9',['HANDLER_TYPE_SIGALRM',['../signal_8h.html#a568f1c57a134fd0e3d77183fedf8fe40',1,'signal.h']]],
   ['handler_5ftype_5fsigint_10',['HANDLER_TYPE_SIGINT',['../signal_8h.html#a8a3457061e67e838c526b2a9bca49659',1,'signal.h']]],

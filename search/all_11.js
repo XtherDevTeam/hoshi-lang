@@ -152,7 +152,7 @@ var searchData=
   ['iroptimizer_2ecpp_149',['IROptimizer.cpp',['../IROptimizer_8cpp.html',1,'']]],
   ['iroptimizer_2ehpp_150',['IROptimizer.hpp',['../IROptimizer_8hpp.html',1,'']]],
   ['irstringliteralpool_151',['IRStringLiteralPool',['../classyoi_1_1IRStringLiteralPool.html',1,'yoi']]],
-  ['irstructdefinition_152',['irstructdefinition',['../classyoi_1_1IRStructDefinition.html#a37df2adb929bbf0024cf217ee84951bf',1,'yoi::IRStructDefinition::IRStructDefinition()'],['../classyoi_1_1IRStructDefinition.html',1,'IRStructDefinition']]],
+  ['irstructdefinition_152',['irstructdefinition',['../classyoi_1_1IRStructDefinition.html#a35a3ed7cf932b198d991c4423cf675cb',1,'yoi::IRStructDefinition::IRStructDefinition()'],['../classyoi_1_1IRStructDefinition.html',1,'IRStructDefinition']]],
   ['irstructtemplate_153',['irstructtemplate',['../classyoi_1_1IRStructTemplate.html#adcafac247349aa965dcd9ed01ab335a5',1,'yoi::IRStructTemplate::IRStructTemplate()'],['../classyoi_1_1IRStructTemplate.html',1,'IRStructTemplate']]],
   ['irtemplatebuilder_154',['irtemplatebuilder',['../classyoi_1_1IRTemplateBuilder.html#a202ea693b2d0bf43377efa16a4e1221c',1,'yoi::IRTemplateBuilder::IRTemplateBuilder()'],['../classyoi_1_1IRTemplateBuilder.html',1,'IRTemplateBuilder']]],
   ['irtypealias_155',['IRTypeAlias',['../classyoi_1_1IRTypeAlias.html',1,'yoi']]],
