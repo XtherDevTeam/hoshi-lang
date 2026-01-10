@@ -1,0 +1,51 @@
+struct Wrapper<T> {
+    val: T,
+    get<U>(u: U) : U,
+    set<U>(u: U) : Wrapper<U>,
+    constructor<T>(t: T)
+}
+
+impl Wrapper<> {
+    get<>(u: U) : U {
+        return u
+    },
+    set<>(u: U) : Wrapper<U> {
+        return Wrapper<U>(u)
+    },
+    constructor<>(t: T) {
+        this.val = t
+    }
+}
+
+struct Basic {
+    x: int,
+    constructor(x: int),
+    store<T>(t: T) : T
+}
+
+impl Basic {
+    constructor(x: int) {
+        this.x = x
+    },
+    store<>(t: T) : T {
+        this.x = t
+        return t
+    }
+}
+
+func main() : int {
+    let w = Wrapper<int>(42)
+    let x = w.get<int>(100)
+    if (x != 100) {
+        return 1
+    }
+ 
+    let w2 = w.set<deci>(3.14)
+
+    let w3 = Basic(10)
+    w3.store(20.32)
+    if (w3.x != 20) {
+        return 1
+    }
+    return 0
+}

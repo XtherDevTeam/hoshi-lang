@@ -71,6 +71,7 @@ TEST_CASES = {
     "interface-implicit-overload-resolve.hoshi" : {"type": "executable", "return_code": 0},
     "global-var": {"type": "executable", "return_code": 0},
     "libfs": {"type": "executable", "return_code": 0},
+    "struct-template-method": {"type": "executable", "return_code": 0},
 }
 
 

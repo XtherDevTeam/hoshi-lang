@@ -2361,7 +2361,9 @@ namespace yoi {
                 }
             }
             blockInStates[currentBlockIdx] = inState;
-
+            
+            set_current_file_path(targetFunction->debugInfo.sourceFile);
+            // warning(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "Performing nullable optmization on " + yoi::wstring2string(targetFunction->name));
             AnalysisState newOutState = analyzeBlockForNullable(currentBlockIdx, inState);
 
             if (blockOutStates.find(currentBlockIdx) == blockOutStates.end() || blockOutStates[currentBlockIdx] != newOutState) {
@@ -2544,7 +2546,6 @@ namespace yoi {
                                     if (globalAnalysisResults.at(calleeId).paramStates[paramIndex] !=
                                         FunctionAnalysisInfo::ParameterState::Nullable) {
                                         globalAnalysisResults.at(calleeId).paramStates[paramIndex] = FunctionAnalysisInfo::ParameterState::Nullable;
-                                        affectedFunctions.insert(calleeId);
                                     }
                                 }
                             }
@@ -4694,6 +4695,33 @@ namespace yoi {
             worklist.push(funcId);
         }
 
+        auto paramStateToString = [](const yoi::vec<FunctionAnalysisInfo::ParameterState> &a) {
+            yoi::wstr result = L"(";
+            for (auto &i : a) {
+                switch (i) {
+                    case FunctionAnalysisInfo::ParameterState::Raw:
+                        result += L"Raw ";
+                        break;
+                    case FunctionAnalysisInfo::ParameterState::Nullable:
+                        result += L"Nullable ";
+                        break;
+                    case FunctionAnalysisInfo::ParameterState::Plain:
+                        result += L"Plain ";
+                        break;
+                }
+            }
+            result.back() = ')';
+            return result;
+        };
+
+        auto paramStateComparator = [](const yoi::vec<FunctionAnalysisInfo::ParameterState> &a,
+                                       const yoi::vec<FunctionAnalysisInfo::ParameterState> &b) {
+            bool result = a.size() == b.size();
+            for (yoi::indexT i = 0; i < a.size() && result; i++)
+                result = a[i] == b[i];
+            return result;
+        };
+
         while (!worklist.empty()) {
             auto funcId = worklist.front();
             worklist.pop();
@@ -4713,39 +4741,40 @@ namespace yoi {
             bool newIsNullable = analyzer.performNullableCheck();
             bool newIsRaw = analyzer.performRawCheck();
 
+            FunctionAnalysisInfo &currentInfo = functionAnalysisResults.at(funcId);
+
             yoi::vec<FunctionAnalysisInfo::ParameterState> paramStates;
-            for (auto &i : func->argumentTypes) {
+            for (yoi::indexT index = 0; index < func->argumentTypes.size(); index++) {
+                auto &i = func->argumentTypes[index];
                 if (i->hasAttribute(IRValueType::ValueAttr::Nullable)) {
                     paramStates.push_back(FunctionAnalysisInfo::ParameterState::Nullable);
                 } else if (i->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     paramStates.push_back(FunctionAnalysisInfo::ParameterState::Raw);
-                } else {
+                } else if (currentInfo.paramStates.empty() || currentInfo.paramStates[index] != FunctionAnalysisInfo::ParameterState::Nullable) {
+                    // we only add plain tag when both branch is plain to prevent loop
                     paramStates.push_back(FunctionAnalysisInfo::ParameterState::Plain);
+                } else {
+                    paramStates.push_back(FunctionAnalysisInfo::ParameterState::Nullable);
                 }
             }
 
-            auto paramStateComparator = [](const yoi::vec<FunctionAnalysisInfo::ParameterState> &a, const yoi::vec<FunctionAnalysisInfo::ParameterState> &b) {
-                bool result = a.size() == b.size();
-                for (yoi::indexT i = 0; i < a.size() && result; i++)
-                    result = a[i] == b[i];
-                return result;
-            };
-
-            FunctionAnalysisInfo &currentInfo = functionAnalysisResults.at(funcId);
             if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw ||
-                paramStateComparator(paramStates, currentInfo.paramStates)) {
+                !paramStateComparator(paramStates, currentInfo.paramStates)) {
                 // update the global results
                 currentInfo.isReturnValueNullable = newIsNullable;
                 currentInfo.isReturnValueRaw = newIsRaw;
-                currentInfo.paramStates = paramStates;
 
                 // if they changed, add all CALLERS of this function back to the worklist
                 // because their analysis might now be incorrect.
                 if (callGraph.callerGraph.count(funcId)) {
                     for (const auto &callerId : callGraph.callerGraph.at(funcId)) {
+                        set_current_file_path(func->debugInfo.sourceFile);
+                        // warning(func->debugInfo.line, func->debugInfo.column, "Function " + wstring2string(func->name) + " has been updated, adding its callers back to the worklist. \nBefore:" + wstring2string(paramStateToString(currentInfo.paramStates)) + "\nAfter :" + wstring2string(paramStateToString(paramStates)) + "\n");
                         worklist.push(callerId);
                     }
                 }
+
+                currentInfo.paramStates = paramStates;
             }
         }
 
@@ -4764,6 +4793,8 @@ namespace yoi {
                 returnType->removeAttribute(IRValueType::ValueAttr::Nullable);
             }
 
+            auto statesBefore = analysisInfo.paramStates;
+
             for (yoi::indexT i = 0; i < analysisInfo.paramStates.size(); i++) {
                 auto &paramType = func->argumentTypes[i];
                 // the only shift that may take place is the plain to nullable.
@@ -4777,7 +4808,6 @@ namespace yoi {
                         break;
                     }
                     case FunctionAnalysisInfo::ParameterState::Plain: {
-                        // do nothing
                         break;
                     }
                 }

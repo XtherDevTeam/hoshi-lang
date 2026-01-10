@@ -32,8 +32,7 @@ namespace yoi {
 
     IROperand::IROperand(IROperand::operandType type, IROperand::operandValue value) : type(type), value(value) {}
 
-    IROperand::IROperand(IROperand::operandType type, std::shared_ptr<IRValueType> lvalueType)
-        : type(type), lvalueType(lvalueType) {}
+    IROperand::IROperand(IROperand::operandType type, std::shared_ptr<IRValueType> lvalueType) : type(type), lvalueType(lvalueType) {}
 
     std::shared_ptr<IRValueType> IROperand::getLvalueType() {
         return lvalueType;
@@ -89,11 +88,12 @@ namespace yoi {
         const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
         const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
         const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap)
-        : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods),
-          virtualMethodIndexMap(virtualMethodIndexMap), implInterfaceIndex(implInterfaceIndex) {}
+        : name(name), implStructIndex(implStructIndex), virtualMethods(virtualMethods), virtualMethodIndexMap(virtualMethodIndexMap),
+          implInterfaceIndex(implInterfaceIndex) {}
 
-    IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(
-        const yoi::wstr &name, const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap)
+    IRInterfaceInstanceDefinition::IRInterfaceInstanceDefinition(const yoi::wstr &name,
+                                                                 const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies,
+                                                                 const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap)
         : name(name), functionOverloadIndexies(functionOverloadIndexies), methodMap(methodMap) {}
 
     yoi::wstr IRModule::to_string(yoi::indexT indent) {
@@ -118,8 +118,7 @@ namespace yoi {
     IRBuilder::IRBuilder(std::shared_ptr<compilerContext> compilerCtx,
                          std::shared_ptr<IRModule> currentModule,
                          std::shared_ptr<IRFunctionDefinition> currentFunction)
-        : compilerCtx(compilerCtx), currentModule(currentModule), currentFunction(currentFunction),
-          currentCodeBlockIndex(0), currentDebugInfo() {}
+        : compilerCtx(compilerCtx), currentModule(currentModule), currentFunction(currentFunction), currentCodeBlockIndex(0), currentDebugInfo() {}
 
     yoi::indexT IRBuilder::createCodeBlock() {
         codeBlocks.emplace_back(std::make_shared<IRCodeBlock>(IRCodeBlock{}));
@@ -171,22 +170,34 @@ namespace yoi {
         auto &target = tempVarStack.at(lhs ? tempVarStack.size() - 2 : tempVarStack.size() - 1);
         switch (valType->type) {
             case IRValueType::valueType::integerObject:
-                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_int, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getIntObjectType();
                 break;
             case IRValueType::valueType::decimalObject:
-            yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_deci, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getDeciObjectType();
                 break;
             case IRValueType::valueType::characterObject:
-                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_char, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getCharObjectType();
                 break;
             case IRValueType::valueType::booleanObject:
-                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_bool, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getBoolObjectType();
                 break;
@@ -195,17 +206,25 @@ namespace yoi {
                 target = managedPtr(IRValueType{IRValueType::valueType::pointerObject});
                 break;
             case IRValueType::valueType::shortObject:
-                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_short, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getShortObjectType();
                 break;
             case IRValueType::valueType::unsignedObject:
-                yoi_assert(target->type != IRValueType::valueType::stringObject, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in basicCast.");
+                yoi_assert(target->type != IRValueType::valueType::stringObject,
+                           currentDebugInfo.line,
+                           currentDebugInfo.column,
+                           "Type mismatch in basicCast.");
                 insert({IR::Opcode::basic_cast_unsigned, {}, currentDebugInfo}, insertionPoint);
                 target = compilerCtx->getUnsignedObjectType();
                 break;
             default: {
-                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported type for basicCast: " + std::string{magic_enum::enum_name<>(valType->type)});
+                panic(currentDebugInfo.line,
+                      currentDebugInfo.column,
+                      "Unsupported type for basicCast: " + std::string{magic_enum::enum_name<>(valType->type)});
                 break;
             }
         }
@@ -226,7 +245,11 @@ namespace yoi {
         tempVarStack.pop_back();
         auto left = tempVarStack.back();
         tempVarStack.pop_back();
-        yoi_assert(left->type == right->type, currentDebugInfo.line, currentDebugInfo.column, "Type mismatch in arithmetic operation: " + wstring2string(left->to_string()) + " " + std::string{magic_enum::enum_name<>(op)} + " " + wstring2string(right->to_string()));
+        yoi_assert(left->type == right->type,
+                   currentDebugInfo.line,
+                   currentDebugInfo.column,
+                   "Type mismatch in arithmetic operation: " + wstring2string(left->to_string()) + " " + std::string{magic_enum::enum_name<>(op)} +
+                       " " + wstring2string(right->to_string()));
         // push result to tempVarStack
         switch (op) {
             case IR::Opcode::add:
@@ -235,10 +258,10 @@ namespace yoi {
             case IR::Opcode::div:
             case IR::Opcode::mod:
             case IR::Opcode::left_shift:
-            case IR::Opcode::right_shift: 
+            case IR::Opcode::right_shift:
             case IR::Opcode::bitwise_not:
-            case IR::Opcode::bitwise_and: 
-            case IR::Opcode::bitwise_or: 
+            case IR::Opcode::bitwise_and:
+            case IR::Opcode::bitwise_or:
             case IR::Opcode::bitwise_xor: {
                 tempVarStack.emplace_back(left);
                 break;
@@ -272,8 +295,7 @@ namespace yoi {
         tempVarStack.pop_back();
         if (hasTerminated())
             return;
-        yoi_assert(
-            condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
+        yoi_assert(condition->type == IRValueType::valueType::booleanObject, 0, 0, "Type mismatch in jumpIf operation.");
         // insert jumpIf operation
         insert(IR(op, {IROperand(IROperand::operandType::codeBlock, target)}, currentDebugInfo));
     }
@@ -304,10 +326,7 @@ namespace yoi {
         insert({op, {constV}, currentDebugInfo});
     }
 
-    void IRBuilder::loadOp(IR::Opcode op,
-                           const yoi::IROperand &source,
-                           const std::shared_ptr<IRValueType> &expectedType,
-                           yoi::indexT moduleIndex) {
+    void IRBuilder::loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType> &expectedType, yoi::indexT moduleIndex) {
         if (op == IR::Opcode::load_member || op == IR::Opcode::load_local) {
             insert({op, {source}, currentDebugInfo});
         } else if (op == IR::Opcode::load_element) {
@@ -341,7 +360,8 @@ namespace yoi {
             case IR::Opcode::store_global: {
                 // fetch rhs from tempVarStack
                 tempVarStack.pop_back();
-                insert({op, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, operand}, currentDebugInfo});
+                insert(
+                    {op, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, operand}, currentDebugInfo});
                 break;
             }
             default: {
@@ -370,7 +390,8 @@ namespace yoi {
         insert(IR(IR::Opcode::invoke,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo));
+                   {IROperand::operandType::index, funcArgsCount}},
+                  currentDebugInfo));
     }
 
     void IRBuilder::invokeMethodOp(yoi::indexT funcIndex,
@@ -391,7 +412,8 @@ namespace yoi {
         insert(IR(IR::Opcode::invoke,
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, methodArgsCount + 1 - isStatic}}, currentDebugInfo));
+                   {IROperand::operandType::index, methodArgsCount + 1 - isStatic}},
+                  currentDebugInfo));
     }
 
     void IRBuilder::invokeVirtualOp(yoi::indexT funcIndex,
@@ -408,7 +430,8 @@ namespace yoi {
                   {{IROperand::operandType::index, externalInvocation ? moduleIndex : currentModule->identifier},
                    {IROperand::operandType::index, interfaceIndex},
                    {IROperand::operandType::index, funcIndex},
-                   {IROperand::operandType::index, methodArgsCount + 1}}, currentDebugInfo));
+                   {IROperand::operandType::index, methodArgsCount + 1}},
+                  currentDebugInfo));
     }
 
     void IRBuilder::retOp(bool returnWithNone) {
@@ -429,18 +452,23 @@ namespace yoi {
     void IRBuilder::newStructOp(yoi::indexT structIndex, bool isExternal, yoi::indexT moduleIndex) {
         insert(IR{IR::Opcode::new_struct,
                   {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
-                   IROperand(IROperand::operandType::index, structIndex)}, currentDebugInfo});
-        tempVarStack.emplace_back(managedPtr(IRValueType{
-            IRValueType::valueType::structObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
+                   IROperand(IROperand::operandType::index, structIndex)},
+                  currentDebugInfo});
+        tempVarStack.emplace_back(
+            managedPtr(IRValueType{IRValueType::valueType::structObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
     }
 
-    void IRBuilder::constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId, yoi::indexT interfaceImplIndex, bool isExternal, yoi::indexT moduleIndex) {
+    void IRBuilder::constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId,
+                                             yoi::indexT interfaceImplIndex,
+                                             bool isExternal,
+                                             yoi::indexT moduleIndex) {
         auto rhs = managedPtr(IRValueType{IRValueType::valueType::interfaceObject, interfaceId.first, interfaceId.second});
         this->tempVarStack.pop_back(); // remove structObject from tempVarStack
         tempVarStack.push_back(rhs);
         insert(IR{IR::Opcode::construct_interface_impl,
                   {IROperand(IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex),
-                   IROperand(IROperand::operandType::index, interfaceImplIndex)}, currentDebugInfo});
+                   IROperand(IROperand::operandType::index, interfaceImplIndex)},
+                  currentDebugInfo});
     }
 
     yoi::indexT IRBuilder::getCurrentInsertionPoint() {
@@ -505,8 +533,7 @@ namespace yoi {
         return *this;
     }
 
-    IRInterfaceImplementationDefinition::Builder &
-    IRInterfaceImplementationDefinition::Builder::setName(const yoi::wstr &interfaceName) {
+    IRInterfaceImplementationDefinition::Builder &IRInterfaceImplementationDefinition::Builder::setName(const yoi::wstr &interfaceName) {
         this->name = interfaceName;
         return *this;
     }
@@ -524,32 +551,24 @@ namespace yoi {
     }
 
     IRInterfaceImplementationDefinition::Builder &
-    IRInterfaceImplementationDefinition::Builder::addVirtualMethod(const yoi::wstr &methodName,
-                                                                   const std::shared_ptr<IRValueType> &methodType) {
+    IRInterfaceImplementationDefinition::Builder::addVirtualMethod(const yoi::wstr &methodName, const std::shared_ptr<IRValueType> &methodType) {
         this->virtualMethods.emplace_back(methodType);
         this->virtualMethodIndexMap[methodName] = this->virtualMethods.size() - 1;
         return *this;
     }
 
     std::shared_ptr<IRInterfaceImplementationDefinition> IRInterfaceImplementationDefinition::Builder::yield() {
-        return std::make_shared<IRInterfaceImplementationDefinition>(
-            IRInterfaceImplementationDefinition{std::move(name),
-                                                implStructIndex,
-                                                implInterfaceIndex,
-                                                std::move(virtualMethods),
-                                                std::move(virtualMethodIndexMap)});
+        return std::make_shared<IRInterfaceImplementationDefinition>(IRInterfaceImplementationDefinition{
+            std::move(name), implStructIndex, implInterfaceIndex, std::move(virtualMethods), std::move(virtualMethodIndexMap)});
     }
 
-    IRInterfaceInstanceDefinition::Builder &
-    IRInterfaceInstanceDefinition::Builder::setName(const yoi::wstr &interfaceName) {
+    IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::setName(const yoi::wstr &interfaceName) {
         this->name = interfaceName;
         return *this;
     }
 
-    IRInterfaceInstanceDefinition::Builder &
-    IRInterfaceInstanceDefinition::Builder::addMethod(const yoi::wstr &methodNameOri,
-                                                      const yoi::wstr &methodName,
-                                                      const std::shared_ptr<IRFunctionDefinition> &methodSignature) {
+    IRInterfaceInstanceDefinition::Builder &IRInterfaceInstanceDefinition::Builder::addMethod(
+        const yoi::wstr &methodNameOri, const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature) {
         this->functionOverloadIndexies[methodNameOri].push_back(this->methodMap.put_create(methodName, methodSignature));
         return *this;
     }
@@ -558,15 +577,13 @@ namespace yoi {
         return std::make_shared<IRInterfaceInstanceDefinition>(std::move(name), std::move(functionOverloadIndexies), std::move(methodMap));
     }
 
-    IRFunctionDefinition::Builder &
-    IRFunctionDefinition::Builder::addArgument(const yoi::wstr &argumentName,
-                                               const std::shared_ptr<IRValueType> &argumentType) {
+    IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::addArgument(const yoi::wstr &argumentName,
+                                                                              const std::shared_ptr<IRValueType> &argumentType) {
         this->argumentTypes.emplace_back(argumentName, argumentType);
         return *this;
     }
 
-    IRFunctionDefinition::Builder &
-    IRFunctionDefinition::Builder::setReturnType(const std::shared_ptr<IRValueType> &returnType) {
+    IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::setReturnType(const std::shared_ptr<IRValueType> &returnType) {
         this->returnType = returnType;
         return *this;
     }
@@ -575,10 +592,12 @@ namespace yoi {
         return managedPtr(IRFunctionDefinition{name, argumentTypes, returnType, {}, attrs, debugInfo});
     }
 
-    IRFunctionDefinition::IRFunctionDefinition(
-        const yoi::wstr &name,
-        const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
-        const std::shared_ptr<IRValueType> &returnType, const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock, const yoi::vec<FunctionAttrs> &attrs, const IRDebugInfo &debugInfo) 
+    IRFunctionDefinition::IRFunctionDefinition(const yoi::wstr &name,
+                                               const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
+                                               const std::shared_ptr<IRValueType> &returnType,
+                                               const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock,
+                                               const yoi::vec<FunctionAttrs> &attrs,
+                                               const IRDebugInfo &debugInfo)
         : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo), attrs(attrs) {
         variableTable.createScope();
         for (auto &i : argumentTypes) {
@@ -591,19 +610,16 @@ namespace yoi {
         return variableTable;
     }
 
-    IRValueType::IRValueType(IRValueType::valueType type,
-                             yoi::indexT typeAffiliateModule,
-                             yoi::indexT objectPrototypeIndex)
+    IRValueType::IRValueType(IRValueType::valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex)
         : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), dimensions() {}
 
-    IRValueType::IRValueType(IRValueType::valueType type)
-        : type(type), typeIndex(0), typeAffiliateModule(0), dimensions() {}
+    IRValueType::IRValueType(IRValueType::valueType type) : type(type), typeIndex(0), typeAffiliateModule(0), dimensions() {}
 
     bool IRValueType::isBasicType() const {
-        return type == valueType::integerObject || type == valueType::decimalObject ||
-               type == valueType::booleanObject || type == valueType::stringObject || 
-               type == valueType::characterObject || type == valueType::foreignFloatType || type == valueType::foreignInt32Type ||
-               type == valueType::shortObject || type == valueType::unsignedObject || type == valueType::pointer;
+        return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject ||
+               type == valueType::stringObject || type == valueType::characterObject || type == valueType::foreignFloatType ||
+               type == valueType::foreignInt32Type || type == valueType::shortObject || type == valueType::unsignedObject ||
+               type == valueType::pointer;
     }
 
     bool IRValueType::isForeignBasicType() const {
@@ -704,12 +720,16 @@ namespace yoi {
         }
 
         if (!dimensions.empty()) {
-            if (dimensions.back() == -1) res += L"[]";
-            else for (auto d : dimensions) res += L"[" + std::to_wstring(d) + L"]";
+            if (dimensions.back() == -1)
+                res += L"[]";
+            else
+                for (auto d : dimensions)
+                    res += L"[" + std::to_wstring(d) + L"]";
         }
 
         if (showAttributes)
-            for (auto &i : attributes) res += L" @" + string2wstring(std::string{magic_enum::enum_name(i)});
+            for (auto &i : attributes)
+                res += L" @" + string2wstring(std::string{magic_enum::enum_name(i)});
 
         if (showAttributes)
             res += L" " + metadata.to_string();
@@ -718,13 +738,19 @@ namespace yoi {
     }
 
     bool IRValueType::operator==(const yoi::IRValueType &rhs) const {
-        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule && dimensions.size() == rhs.dimensions.size();
+        return type == rhs.type && typeIndex == rhs.typeIndex && typeAffiliateModule == rhs.typeAffiliateModule &&
+               dimensions.size() == rhs.dimensions.size();
     }
 
     IRStructDefinition::IRStructDefinition(const yoi::wstr &name,
                                            const std::map<yoi::wstr, nameInfo> &nameInfoMap,
-                                           const vec<std::shared_ptr<IRValueType>> &fieldTypes)
-        : name(name), nameIndexMap(nameInfoMap), fieldTypes(fieldTypes) {}
+                                           const vec<std::shared_ptr<IRValueType>> &fieldTypes,
+                                           const yoi::vec<yoi::wstr> &templateParamNames,
+                                           const yoi::vec<std::shared_ptr<IRValueType>> &storedTemplateArgs,
+                                           const std::map<yoi::wstr, yoi::structDefInnerPair *> &templateMethodDecls,
+                                           const std::map<yoi::wstr, yoi::implInnerPair *> &templateMethodDefs)
+        : name(name), nameIndexMap(nameInfoMap), fieldTypes(fieldTypes), templateParamNames(templateParamNames),
+          storedTemplateArgs(storedTemplateArgs), templateMethodDecls(templateMethodDecls), templateMethodDefs(templateMethodDefs) {}
 
     yoi::wstr IRStructDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
@@ -751,21 +777,37 @@ namespace yoi {
         return *this;
     }
 
-    IRStructDefinition::Builder &IRStructDefinition::Builder::addField(const yoi::wstr &fieldName,
-                                                                       const std::shared_ptr<IRValueType> &fieldType) {
+    IRStructDefinition::Builder &IRStructDefinition::Builder::addField(const yoi::wstr &fieldName, const std::shared_ptr<IRValueType> &fieldType) {
         this->fieldTypes.push_back(fieldType);
         nameIndexMap[fieldName] = nameInfo{nameInfo::nameType::field, this->fieldTypes.size() - 1};
         return *this;
     }
 
-    IRStructDefinition::Builder &IRStructDefinition::Builder::addMethod(const yoi::wstr &methodName,
-                                                                        yoi::indexT index) {
+    IRStructDefinition::Builder &IRStructDefinition::Builder::addMethod(const yoi::wstr &methodName, yoi::indexT index) {
         nameIndexMap[methodName] = nameInfo{nameInfo::nameType::method, index};
         return *this;
     }
 
+    IRStructDefinition::Builder &IRStructDefinition::Builder::setStoredTemplateArgs(const yoi::vec<yoi::wstr> &paramNames, const yoi::vec<std::shared_ptr<IRValueType>> &args) {
+        this->templateParamNames = paramNames;
+        this->storedTemplateArgs = args;
+        return *this;
+    }
+
+    IRStructDefinition::Builder &IRStructDefinition::Builder::addTemplateMethodDecl(const yoi::wstr &name, yoi::structDefInnerPair *decl) {
+        this->templateMethodDecls[name] = decl;
+        return *this;
+    }
+
+    IRStructDefinition::Builder &IRStructDefinition::Builder::addTemplateMethodDef(const yoi::wstr &name, yoi::implInnerPair *def) {
+        this->templateMethodDefs[name] = def;
+        return *this;
+    }
+
     std::shared_ptr<IRStructDefinition> IRStructDefinition::Builder::yield() {
-        return std::make_shared<IRStructDefinition>(std::move(name), std::move(nameIndexMap), std::move(fieldTypes));
+        return std::make_shared<IRStructDefinition>(std::move(name), std::move(nameIndexMap), std::move(fieldTypes),
+                                                    std::move(templateParamNames), std::move(storedTemplateArgs),
+                                                    std::move(templateMethodDecls), std::move(templateMethodDefs));
     }
 
     yoi::indexT IRStringLiteralPool::addStringLiteral(const wstr &str) {
@@ -798,8 +840,8 @@ namespace yoi {
         yoi::wstr r;
         r += yoi::wstr(indent, L' ') + L"Variables {\n";
         for (int64_t i = 0; i < variables.size(); ++i) {
-            r += yoi::wstr(indent + 4, L' ') + L"#" + std::to_wstring(i) + L" " + reversedVariableNameMap[i] +
-                 L"(scope#" + std::to_wstring(variableScopeMap[i]) + L") : " + variables[i]->to_string(true) + L"\n";
+            r += yoi::wstr(indent + 4, L' ') + L"#" + std::to_wstring(i) + L" " + reversedVariableNameMap[i] + L"(scope#" +
+                 std::to_wstring(variableScopeMap[i]) + L") : " + variables[i]->to_string(true) + L"\n";
         }
         return r + yoi::wstr(indent, L' ') + L"}\n";
     }
@@ -820,10 +862,7 @@ namespace yoi {
         return variables.size() - 1;
     }
 
-    IRExternEntry::IRExternEntry(externType type,
-                                 const yoi::wstr &name,
-                                 yoi::indexT affiliateModule,
-                                 yoi::indexT itemIndex)
+    IRExternEntry::IRExternEntry(externType type, const yoi::wstr &name, yoi::indexT affiliateModule, yoi::indexT itemIndex)
         : type(type), name(name), affiliateModule(affiliateModule), itemIndex(itemIndex) {}
 
     IRExternEntry::externType IRExternEntry::getExternType() const {
@@ -846,15 +885,8 @@ namespace yoi {
     }
 
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
-        return managedPtr(IRBuildConfig{buildType,
-                                        buildMode,
-                                        useObjectLinker,
-                                        buildPlatform,
-                                        buildArch,
-                                        preserveIntermediateFiles,
-                                        searchPaths,
-                                        additionalLinkingFiles,
-                                        marcos});
+        return managedPtr(IRBuildConfig{
+            buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles, searchPaths, additionalLinkingFiles, marcos});
     }
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
@@ -884,15 +916,9 @@ namespace yoi {
 
     yoi::wstr IRInterfaceImplementationDefinition::to_string(yoi::indexT indent) {
         yoi::wstr r;
-        r += yoi::wstr(indent, L' ')
-            + L"impl "
-            + name
-            + L" for "
-            + yoi::string2wstring(std::string{magic_enum::enum_name(std::get<0>(implStructIndex))})
-            + L"#"
-            + std::to_wstring(std::get<1>(implStructIndex))
-            + L"#"
-            + std::to_wstring(std::get<2>(implStructIndex)) + L" {\n";
+        r += yoi::wstr(indent, L' ') + L"impl " + name + L" for " +
+             yoi::string2wstring(std::string{magic_enum::enum_name(std::get<0>(implStructIndex))}) + L"#" +
+             std::to_wstring(std::get<1>(implStructIndex)) + L"#" + std::to_wstring(std::get<2>(implStructIndex)) + L" {\n";
 
         for (auto &i : virtualMethods) {
             r += yoi::wstr(indent + 4, L' ') + L"virtual " + i->to_string() + L"\n";
@@ -901,20 +927,16 @@ namespace yoi {
         return r;
     }
 
-    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType,
-                                          const std::pair<yoi::indexT, yoi::indexT> &interfaceType)
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType, const std::pair<yoi::indexT, yoi::indexT> &interfaceType)
         : templateType(templateType), interfaceType(interfaceType) {}
 
-    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType)
-        : templateType(templateType), interfaceType({0, 0}) {}
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType) : templateType(templateType), interfaceType({0, 0}) {}
 
-    IRFunctionTemplate::IRFunctionTemplate(
-        const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
-        const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+    IRFunctionTemplate::IRFunctionTemplate(const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
+                                           const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
         : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
 
-    IRFunctionTemplate::Builder &IRFunctionTemplate::Builder::setTemplateDefinition(
-        const std::shared_ptr<IRFunctionDefinition> &templateDefinition) {
+    IRFunctionTemplate::Builder &IRFunctionTemplate::Builder::setTemplateDefinition(const std::shared_ptr<IRFunctionDefinition> &templateDefinition) {
         this->templateDefinition = templateDefinition;
         return *this;
     }
@@ -923,19 +945,17 @@ namespace yoi {
         return std::make_shared<IRFunctionTemplate>(templateDefinition, templateArguments);
     }
 
-    IRStructTemplate::Builder &
-    IRStructTemplate::Builder::setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition) {
+    IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition) {
         this->templateDefinition = templateDefinition;
         return *this;
     }
 
     std::shared_ptr<IRStructTemplate> IRStructTemplate::Builder::yield() {
-        return std::make_shared<IRStructTemplate>(
-            IRStructTemplate{templateDefinition, templateMethods, templateArguments});
+        return std::make_shared<IRStructTemplate>(IRStructTemplate{templateDefinition, templateMethods, templateArguments});
     }
 
     IRInterfaceInstanceTemplate::IRInterfaceInstanceTemplate(const std::shared_ptr<IRInterfaceInstanceDefinition> &templateDefinition,
-                                             const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+                                                             const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
         : templateDefinition(templateDefinition), templateArguments(templateArguments) {}
 
     IRInterfaceInstanceTemplate::Builder &
@@ -963,17 +983,15 @@ namespace yoi {
         return std::make_shared<IRInterfaceImplementationTemplate>(templateDefinition, templateArguments);
     }
 
-    IRTemplateBuilder & 
-    IRTemplateBuilder::addTemplateArgument(const yoi::wstr &templateName,
-                                           const std::shared_ptr<IRValueType> &templateType,
-                                           const std::pair<yoi::indexT, yoi::indexT> &interfaceType) {
+    IRTemplateBuilder &IRTemplateBuilder::addTemplateArgument(const yoi::wstr &templateName,
+                                                              const std::shared_ptr<IRValueType> &templateType,
+                                                              const std::pair<yoi::indexT, yoi::indexT> &interfaceType) {
         templateArguments.put_create(templateName, {templateType, interfaceType});
         return *this;
     }
 
-    IRStructTemplate::Builder &
-    IRStructTemplate::Builder::setTemplateMethod(const yoi::wstr &methodName,
-                                                 const std::shared_ptr<IRFunctionTemplate> &methodTemplate) {
+    IRStructTemplate::Builder &IRStructTemplate::Builder::setTemplateMethod(const yoi::wstr &methodName,
+                                                                            const std::shared_ptr<IRFunctionTemplate> &methodTemplate) {
         // templateMethods[methodName] = methodTemplate;
         templateMethods.put_create(methodName, methodTemplate);
         return *this;
@@ -987,12 +1005,10 @@ namespace yoi {
         return reversedVariableNameMap;
     }
 
-    IRStructTemplate::IRStructTemplate(
-        const std::shared_ptr<IRStructDefinition> &templateDefinition,
-        const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
-        const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
-        : templateDefinition(templateDefinition), templateMethods(templateMethods),
-          templateArguments(templateArguments) {}
+    IRStructTemplate::IRStructTemplate(const std::shared_ptr<IRStructDefinition> &templateDefinition,
+                                       const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionTemplate>> &templateMethods,
+                                       const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
+        : templateDefinition(templateDefinition), templateMethods(templateMethods), templateArguments(templateArguments) {}
 
     IRFFITable::ImportLibrary::ImportLibrary(const yoi::wstr &libraryPath) : libraryPath(libraryPath) {}
 
@@ -1006,8 +1022,10 @@ namespace yoi {
         return importedLibraries[libraryName].importedFunctionTable.put(functionName, functionDefinition);
     }
 
-    void
-    IRFFITable::addExportedFunction(const yoi::wstr &exportName, yoi::indexT moduleIndex, yoi::indexT functionIndex, const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs) {
+    void IRFFITable::addExportedFunction(const yoi::wstr &exportName,
+                                         yoi::indexT moduleIndex,
+                                         yoi::indexT functionIndex,
+                                         const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs) {
         exportedFunctionTable.put_create(exportName, std::make_tuple(moduleIndex, functionIndex, attrs));
     }
 
@@ -1039,7 +1057,8 @@ namespace yoi {
         insert(IR{IR::Opcode::invoke_imported,
                   {IROperand(IROperand::operandType::index, libIndex),
                    IROperand(IROperand::operandType::index, funcIndex),
-                   IROperand(IROperand::operandType::index, funcArgsCount)}, currentDebugInfo});
+                   IROperand(IROperand::operandType::index, funcArgsCount)},
+                  currentDebugInfo});
     }
 
     bool IRValueType::isArrayType() const {
@@ -1050,8 +1069,7 @@ namespace yoi {
                              yoi::indexT typeAffiliateModule,
                              yoi::indexT objectPrototypeIndex,
                              const yoi::vec<yoi::indexT> &dimensions)
-        : type(type), dimensions(dimensions), typeAffiliateModule(typeAffiliateModule),
-          typeIndex(objectPrototypeIndex) {}
+        : type(type), dimensions(dimensions), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex) {}
 
     IRValueType::IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions)
         : type(type), dimensions(dimensions), typeAffiliateModule(0), typeIndex(0) {}
@@ -1060,8 +1078,8 @@ namespace yoi {
         return {this->type, this->typeAffiliateModule, this->typeIndex, yoi::vec<yoi::indexT>{}};
     }
 
-    void IRBuilder::newArrayOp(const std::shared_ptr<IRValueType> &elementType,
-                               const yoi::vec<yoi::indexT> &dimensions, yoi::indexT onstackElementCount) {
+    void
+    IRBuilder::newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions, yoi::indexT onstackElementCount) {
         IR::Opcode op = IR::Opcode::nop;
         yoi::vec<IROperand> operands;
         switch (elementType->type) {
@@ -1096,8 +1114,10 @@ namespace yoi {
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
                 operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
                 break;
-            default: 
-                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
+            default:
+                panic(currentDebugInfo.line,
+                      currentDebugInfo.column,
+                      "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
                 break;
         }
         auto size = 1;
@@ -1128,7 +1148,10 @@ namespace yoi {
     }
 
     void IRBuilder::restoreState() {
-        yoi_assert(currentCodeBlockIndex == std::get<0>(codeBlockInsertionStates.back()), currentDebugInfo.line, currentDebugInfo.column, "Invalid code block index");
+        yoi_assert(currentCodeBlockIndex == std::get<0>(codeBlockInsertionStates.back()),
+                   currentDebugInfo.line,
+                   currentDebugInfo.column,
+                   "Invalid code block index");
         codeBlocks[currentCodeBlockIndex]->getIRArray().resize(std::get<1>(codeBlockInsertionStates.back()));
         tempVarStack.resize(std::get<2>(codeBlockInsertionStates.back()));
         yoi_assert(!codeBlockInsertionStates.empty(), currentDebugInfo.line, currentDebugInfo.column, "Empty code states when poping back");
@@ -1317,8 +1340,10 @@ namespace yoi {
                 operands.emplace_back(IROperand::operandType::index, elementType->typeAffiliateModule);
                 operands.emplace_back(IROperand::operandType::index, elementType->typeIndex);
                 break;
-            default: 
-                panic(currentDebugInfo.line, currentDebugInfo.column, "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
+            default:
+                panic(currentDebugInfo.line,
+                      currentDebugInfo.column,
+                      "Unsupported array element type: " + yoi::wstring2string(elementType->to_string()));
                 break;
         }
         operands.emplace_back(IROperand::operandType::index, initializerSize);
@@ -1336,7 +1361,7 @@ namespace yoi {
     bool IRValueType::isDynamicArrayType() const {
         return dimensions.size() == 1 && dimensions.back() == static_cast<yoi::indexT>(-1);
     }
-    
+
     void IRBuilder::arrayLengthOp() {
         tempVarStack.pop_back();
         tempVarStack.push_back(compilerCtx->getIntObjectType());
@@ -1363,19 +1388,15 @@ namespace yoi {
         attributes.insert(attr);
         return *this;
     }
-    
-    IRValueType::IRValueType(valueType type,
-                             yoi::indexT typeAffiliateModule,
-                             yoi::indexT objectPrototypeIndex,
-                             const std::set<ValueAttr> &attributes)
-        : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), dimensions(),
-          attributes(attributes) {}
+
+    IRValueType::IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const std::set<ValueAttr> &attributes)
+        : type(type), typeAffiliateModule(typeAffiliateModule), typeIndex(objectPrototypeIndex), dimensions(), attributes(attributes) {}
 
     bool IRValueType::isBasicRawType() const {
-        return type == valueType::integerRaw || type == valueType::decimalRaw || type == valueType::booleanRaw ||
-               type == valueType::charRaw || type == IRValueType::valueType::shortRaw || type == IRValueType::valueType::unsignedRaw || type == valueType::stringLiteral;
+        return type == valueType::integerRaw || type == valueType::decimalRaw || type == valueType::booleanRaw || type == valueType::charRaw ||
+               type == IRValueType::valueType::shortRaw || type == IRValueType::valueType::unsignedRaw || type == valueType::stringLiteral;
     }
-    
+
     IRValueType IRValueType::getBasicRawType() const {
         IRValueType result = *this;
         switch (type) {
@@ -1426,7 +1447,7 @@ namespace yoi {
                 return {type, typeAffiliateModule, typeIndex, dimensions};
         }
     }
-    
+
     bool IRFunctionDefinition::hasAttribute(const FunctionAttrs &attr) {
         return std::find(attrs.begin(), attrs.end(), attr) != attrs.end();
     }
@@ -1438,7 +1459,8 @@ namespace yoi {
     void IRBuilder::restoreStateTemporarily() {
         auto current = codeBlockInsertionStates.back();
         yoi_assert(currentCodeBlockIndex == std::get<0>(current), currentDebugInfo.line, currentDebugInfo.column, "Invalid code block index");
-        tempStateCodeBlock = std::vector<IR>(codeBlocks[currentCodeBlockIndex]->getIRArray().begin() + std::get<1>(current), codeBlocks[currentCodeBlockIndex]->getIRArray().end());
+        tempStateCodeBlock = std::vector<IR>(codeBlocks[currentCodeBlockIndex]->getIRArray().begin() + std::get<1>(current),
+                                             codeBlocks[currentCodeBlockIndex]->getIRArray().end());
         tempStateTempVarStack = std::vector<std::shared_ptr<IRValueType>>(tempVarStack.begin() + std::get<2>(current), tempVarStack.end());
 
         codeBlocks[currentCodeBlockIndex]->getIRArray().resize(std::get<1>(current));
@@ -1462,7 +1484,7 @@ namespace yoi {
             discardState();
         }
     }
-    
+
     bool IRBuilder::hasTerminated() {
         if (!codeBlocks[currentCodeBlockIndex]->getIRArray().empty()) {
             switch (codeBlocks[currentCodeBlockIndex]->getIRArray().back().opcode) {
@@ -1476,7 +1498,7 @@ namespace yoi {
         }
         return false;
     }
-    
+
     IRBuildConfig::Builder &IRBuildConfig::Builder::setMarco(const yoi::wstr &name, const yoi::wstr &value) {
         marcos[name] = value;
         return *this;
@@ -1491,18 +1513,12 @@ namespace yoi {
     }
 
     void IRBuilder::breakOp() {
-        yoi_assert(!loopContext.empty(),
-                   currentDebugInfo.line,
-                   currentDebugInfo.column,
-                   "break statement outside a `while` or `for` loop");
+        yoi_assert(!loopContext.empty(), currentDebugInfo.line, currentDebugInfo.column, "break statement outside a `while` or `for` loop");
         jumpOp(loopContext.back().breakTarget);
     }
 
     void IRBuilder::continueOp() {
-        yoi_assert(!loopContext.empty(),
-                   currentDebugInfo.line,
-                   currentDebugInfo.column,
-                   "continue statement outside a `while` or `for` loop");
+        yoi_assert(!loopContext.empty(), currentDebugInfo.line, currentDebugInfo.column, "continue statement outside a `while` or `for` loop");
         jumpOp(loopContext.back().continueTarget);
     }
 
@@ -1513,7 +1529,9 @@ namespace yoi {
             tempVarStack.push_back(managedPtr(rhs->getElementType()));
         }
 
-        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_elements_post : IR::Opcode::bind_elements_pred, {{IROperand::operandType::index, extractElementCount}}, currentDebugInfo});
+        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_elements_post : IR::Opcode::bind_elements_pred,
+                  {{IROperand::operandType::index, extractElementCount}},
+                  currentDebugInfo});
     }
 
     void IRBuilder::bindFieldsOp(yoi::indexT extractFieldCount, ExtractType extractType) {
@@ -1524,13 +1542,15 @@ namespace yoi {
         for (auto curPos = startPos; curPos < startPos + extractFieldCount; curPos++) {
             tempVarStack.push_back(structDef->fieldTypes[curPos]);
         }
-        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_fields_post : IR::Opcode::bind_fields_pred, {{IROperand::operandType::index, extractFieldCount}}, currentDebugInfo});
+        insert(IR{extractType == ExtractType::First ? IR::Opcode::bind_fields_post : IR::Opcode::bind_fields_pred,
+                  {{IROperand::operandType::index, extractFieldCount}},
+                  currentDebugInfo});
     }
 
     void IRBuilder::pushLoopContext(yoi::indexT breakTarget, yoi::indexT continueTarget) {
         loopContext.push_back({breakTarget, continueTarget});
     }
-    
+
     IRValueType::IRValueType() : type(valueType::none), typeAffiliateModule(0), typeIndex(0), dimensions() {}
 
     void IRBuilder::invokeDanglingOp(yoi::indexT funcIndex,
@@ -1542,23 +1562,26 @@ namespace yoi {
             tempVarStack.pop_back();
         }
         tempVarStack.push_back(returnType);
-        insert(IR{IR::Opcode::invoke_dangling, {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex}, {IROperand::operandType::index, funcIndex}, {IROperand::operandType::index, funcArgsCount}}, currentDebugInfo});
+        insert(IR{IR::Opcode::invoke_dangling,
+                  {{IROperand::operandType::index, moduleIndex == -1 ? currentModule->identifier : moduleIndex},
+                   {IROperand::operandType::index, funcIndex},
+                   {IROperand::operandType::index, funcArgsCount}},
+                  currentDebugInfo});
     }
 
-    IRBuildConfig::Builder &
-    IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
         this->additionalLinkingFiles = additionalLinkingFiles;
         return *this;
     }
 
-    IREnumerationType::IREnumerationType(const yoi::wstr &name,
-                                         const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap)
+    IREnumerationType::IREnumerationType(const yoi::wstr &name, const yoi::indexTable<yoi::wstr, yoi::indexT> &valueToIndexMap)
         : name(name), valueToIndexMap(valueToIndexMap) {}
 
     IREnumerationType::UnderlyingType IREnumerationType::getUnderlyingType() {
         yoi::indexT maxIndex = 0;
 
-        for (auto &entry : valueToIndexMap) maxIndex = std::max(maxIndex, entry.second);
+        for (auto &entry : valueToIndexMap)
+            maxIndex = std::max(maxIndex, entry.second);
 
         if (maxIndex <= 255)
             return UnderlyingType::I8;
@@ -1572,13 +1595,12 @@ namespace yoi {
         this->name = name;
         return *this;
     }
-    
-    IREnumerationType::Builder &IREnumerationType::Builder::addValue(const yoi::wstr &valueName,
-                                                                     yoi::indexT valueIndex) {
+
+    IREnumerationType::Builder &IREnumerationType::Builder::addValue(const yoi::wstr &valueName, yoi::indexT valueIndex) {
         this->valueToIndexMap.put_create(valueName, valueIndex);
         return *this;
     }
-    
+
     void IRMetadata::eraseMetadata(const yoi::wstr &key) {
         if (metadata.count(key)) {
             metadata.erase(key);
@@ -1610,6 +1632,5 @@ namespace yoi {
     std::shared_ptr<IREnumerationType> IREnumerationType::Builder::yield() {
         return std::make_shared<IREnumerationType>(name, valueToIndexMap);
     }
-    IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes)
-        : type(type), bracedTypes(bracedTypes) {}
+    IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes) : type(type), bracedTypes(bracedTypes) {}
 } // namespace yoi

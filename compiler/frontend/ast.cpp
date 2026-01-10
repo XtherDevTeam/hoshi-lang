@@ -125,15 +125,15 @@ namespace yoi {
         return op.kind != lexer::token::tokenKind::unknown;
     }
 
-    lexer::token & leftExpr::getOp() {
+    lexer::token &leftExpr::getOp() {
         return op;
     }
 
-    uniqueExpr & leftExpr::getLhs() const {
+    uniqueExpr &leftExpr::getLhs() const {
         return *lhs;
     }
 
-    rExpr & leftExpr::getRhs() const {
+    rExpr &leftExpr::getRhs() const {
         return *rhs;
     }
 
@@ -476,19 +476,19 @@ namespace yoi {
     }
 
     void finalizeAST(definitionArguments *ptr) {
-        for (auto &i: ptr->get())
+        for (auto &i : ptr->get())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(invocationArguments *ptr) {
-        for (auto &i: ptr->get())
+        for (auto &i : ptr->get())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(templateArg *ptr) {
-        for (auto &i: ptr->get())
+        for (auto &i : ptr->get())
             finalizeAST(i);
         delete ptr;
     }
@@ -499,14 +499,15 @@ namespace yoi {
     }
 
     void finalizeAST(defTemplateArg *ptr) {
-        for (auto &i: ptr->get())
+        for (auto &i : ptr->get())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(defTemplateArgSpec *ptr) {
         finalizeAST(ptr->id);
-        if(ptr->impl) finalizeAST(ptr->impl);
+        if (ptr->impl)
+            finalizeAST(ptr->impl);
         delete ptr;
     }
 
@@ -556,13 +557,13 @@ namespace yoi {
 
     void finalizeAST(subscriptExpr *ptr) {
         finalizeAST(ptr->id);
-        for (auto &i: ptr->subscriptVal)
+        for (auto &i : ptr->subscriptVal)
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(memberExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
     }
 
@@ -605,61 +606,61 @@ namespace yoi {
     }
 
     void finalizeAST(mulExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(addExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(shiftExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(relationalExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(equalityExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(andExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(exclusiveExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(inclusiveExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(logicalAndExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(logicalOrExpr *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
@@ -670,7 +671,7 @@ namespace yoi {
     }
 
     void finalizeAST(codeBlock *ptr) {
-        for (auto &i: ptr->getStmts())
+        for (auto &i : ptr->getStmts())
             finalizeAST(i);
         delete ptr;
     }
@@ -689,7 +690,7 @@ namespace yoi {
     }
 
     void finalizeAST(interfaceDefInner *ptr) {
-        for (auto &i: ptr->getInner())
+        for (auto &i : ptr->getInner())
             finalizeAST(i);
 
         delete ptr;
@@ -729,7 +730,7 @@ namespace yoi {
     }
 
     void finalizeAST(structDefInner *ptr) {
-        for (auto &i: ptr->getInner())
+        for (auto &i : ptr->getInner())
             finalizeAST(i);
         delete ptr;
     }
@@ -752,7 +753,7 @@ namespace yoi {
     }
 
     void finalizeAST(implInner *ptr) {
-        for (auto &i: ptr->getInner())
+        for (auto &i : ptr->getInner())
             finalizeAST(i);
         delete ptr;
     }
@@ -772,7 +773,7 @@ namespace yoi {
     }
 
     void finalizeAST(letStmt *ptr) {
-        for (auto &i: ptr->getTerms())
+        for (auto &i : ptr->getTerms())
             finalizeAST(i);
         delete ptr;
     }
@@ -803,7 +804,7 @@ namespace yoi {
     void finalizeAST(ifStmt *ptr) {
         finalizeAST(ptr->ifB.cond);
         finalizeAST(ptr->ifB.block);
-        for (auto &i: ptr->elifB) {
+        for (auto &i : ptr->elifB) {
             finalizeAST(i.cond);
             finalizeAST(i.block);
         }
@@ -908,7 +909,7 @@ namespace yoi {
         delete ptr;
     }
 
-    identifier &innerMethodDecl::getName() {
+    identifierWithDefTemplateArg &innerMethodDecl::getName() {
         return *name;
     }
 
@@ -920,7 +921,7 @@ namespace yoi {
         return *resultType;
     }
 
-    identifier &innerMethodDef::getName() {
+    identifierWithTemplateArg &innerMethodDef::getName() {
         return *name;
     }
 
@@ -1024,7 +1025,6 @@ namespace yoi {
         delete ptr;
     }
 
-
     bool subscript::isSubscript() const {
         return expr;
     }
@@ -1072,7 +1072,7 @@ namespace yoi {
         finalizeAST(ptr->expr);
         delete ptr;
     }
-    
+
     void finalizeAST(dynCastExpression *ptr) {
         finalizeAST(ptr->expr);
         finalizeAST(ptr->type);
@@ -1086,7 +1086,7 @@ namespace yoi {
             finalizeAST(ptr->type);
         delete ptr;
     }
-    
+
     void finalizeAST(newExpression *ptr) {
         finalizeAST(ptr->type);
         finalizeAST(ptr->args);
@@ -1125,7 +1125,7 @@ namespace yoi {
         }
         delete ptr;
     }
-    
+
     void finalizeAST(marcoDescriptor *ptr) {
         for (auto &i : ptr->pairs) {
             delete i;
@@ -1193,7 +1193,7 @@ namespace yoi {
             finalizeAST(i);
         delete ptr;
     }
-    
+
     void finalizeAST(enumerationPair *ptr) {
         finalizeAST(ptr->name);
         delete ptr;

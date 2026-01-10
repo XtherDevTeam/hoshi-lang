@@ -42,9 +42,7 @@ namespace yoi {
         std::shared_ptr<yoi::IRModule> irModule;
         yoi::indexT currentModuleIndex;
 
-        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext,
-                const std::shared_ptr<yoi::IRModule> &irModule,
-                yoi::indexT moduleIndex);
+        visitor(const std::shared_ptr<yoi::moduleContext> &moduleContext, const std::shared_ptr<yoi::IRModule> &irModule, yoi::indexT moduleIndex);
 
         std::shared_ptr<yoi::IRModule> visit();
 
@@ -75,8 +73,7 @@ namespace yoi {
          * @throws std::runtime_error if the identifier is not found in the module
          * @deprecated Extern entries are not used anymore, use getExternEntry to get the direct entry instead.
          */
-        [[deprecated(
-            "Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT
+        [[deprecated("Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT
         addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
 
         bool isVisitingGlobalScope() const;
@@ -89,50 +86,60 @@ namespace yoi {
 
         yoi::wstr getTypeSpecUniqueNameStr(const std::shared_ptr<IRValueType> &type);
 
-        yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes,
-                                       bool whetherIgnoreFirstParam = false);
+        yoi::wstr getFuncUniqueNameStr(const std::vector<std::shared_ptr<IRValueType>> &argumentTypes, bool whetherIgnoreFirstParam = false);
 
         std::shared_ptr<IRValueType> getIncompleteType(const yoi::wstr &typeName) const;
 
-        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument>
-        getTemplateArgs(const yoi::defTemplateArg &templateArgs);
+        yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> getTemplateArgs(const yoi::defTemplateArg &templateArgs);
 
         yoi::vec<std::shared_ptr<IRValueType>> parseTemplateArgs(const yoi::templateArg &templateArgs);
 
-        yoi::indexT specializeFunctionTemplate(yoi::funcDefStmt *astNode,
-                                               const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs, yoi::indexT moduleIndex);
+        yoi::indexT
+        specializeFunctionTemplate(yoi::funcDefStmt *astNode, const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs, yoi::indexT moduleIndex);
 
         yoi::indexT specializeStructTemplate(const yoi::wstr &templateName,
                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
-                                             yoi::implStmt *pureTemplateImplAst, yoi::indexT moduleIndex);
+                                             yoi::implStmt *pureTemplateImplAst,
+                                             yoi::indexT moduleIndex);
 
-        std::pair<yoi::indexT, yoi::wstr>  specializeStructMethodDeclaration(IRTemplateBuilder &structTemplate,
-                                               yoi::structDefInnerPair *methodAstNode,
-                                               const yoi::wstr &specializedStructName,
-                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
-                                               yoi::indexT moduleIndex);
+        std::pair<yoi::indexT, yoi::wstr> specializeStructMethodDeclaration(IRTemplateBuilder &structTemplate,
+                                                                            yoi::structDefInnerPair *methodAstNode,
+                                                                            const yoi::wstr &specializedStructName,
+                                                                            const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                                                            yoi::indexT moduleIndex);
 
         void specializeStructMethodDefinition(IRTemplateBuilder &structTemplate,
-                                             const std::shared_ptr<IRStructDefinition> &specializedStruct,
-                                             yoi::implInnerPair *methodAstNode,
-                                             const yoi::wstr &specializedStructName,
-                                             const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
-                                             yoi::indexT moduleIndex);
+                                              const std::shared_ptr<IRStructDefinition> &specializedStruct,
+                                              yoi::implInnerPair *methodAstNode,
+                                              const yoi::wstr &specializedStructName,
+                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                              yoi::indexT moduleIndex);
+
+        yoi::vec<yoi::wstr> extractTemplateParamsFromTypeArgs(yoi::templateArg *templateArgs);
+        yoi::vec<yoi::wstr> extractTemplateParamsFromTypeArgs(yoi::defTemplateArg *templateArgs);
+
+        yoi::indexT specializeStructMethodTemplate(const std::shared_ptr<IRStructDefinition> &structDef,
+                                                   yoi::structDefInnerPair *decl,
+                                                   yoi::implInnerPair *def,
+                                                   const yoi::wstr &baseMethodName,
+                                                   const yoi::vec<std::shared_ptr<IRValueType>> &methodTemplateArgs,
+                                                   yoi::indexT moduleIndex);
 
         yoi::wstr getSpecializedMangledMethodName(yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArgs,
                                                   const yoi::wstr &baseMethodName,
                                                   const yoi::vec<std::shared_ptr<IRValueType>> &specializedArgTypes);
-                                                  
+
         yoi::indexT specializeInterfaceTemplate(const yoi::wstr &templateName,
-                                              const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT moduleIndex);
+                                                const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                                yoi::indexT moduleIndex);
 
         void specializeInterfaceImplementation(yoi::implStmt *implAst,
                                                const std::shared_ptr<IRValueType> &concreteStructType,
-                                               const yoi::wstr& specializedStructName,
-                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs, yoi::indexT targetModule);
+                                               const yoi::wstr &specializedStructName,
+                                               const yoi::vec<std::shared_ptr<IRValueType>> &concreteTemplateArgs,
+                                               yoi::indexT targetModule);
 
-        yoi::wstr getMangledTemplateName(const yoi::wstr &baseName,
-                                         const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
+        yoi::wstr getMangledTemplateName(const yoi::wstr &baseName, const yoi::vec<std::shared_ptr<IRValueType>> &templateArgs);
 
         void tryCastTo(const std::shared_ptr<IRValueType> &toType);
 
@@ -160,9 +167,7 @@ namespace yoi {
 
         yoi::indexT visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp = false);
 
-        yoi::indexT visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
-                                yoi::indexT targetModule,
-                                bool isStoreOp = false);
+        yoi::indexT visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule, bool isStoreOp = false);
 
         yoi::indexT visit(yoi::subscriptExpr *subscriptExpr, bool isStoreOp = false);
 
@@ -218,8 +223,7 @@ namespace yoi {
 
         IRValueType parseTypeSpecExtern(yoi::identifier *identifier, yoi::indexT targetModule);
 
-        IRValueType parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg,
-                                        yoi::indexT targetModule);
+        IRValueType parseTypeSpecExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule);
 
         IRValueType parseTypeSpecExtern(yoi::subscriptExpr *subscriptExpr, yoi::indexT targetModule);
 
@@ -231,8 +235,7 @@ namespace yoi {
 
         yoi::wstr parseIdentifierWithTemplateArg(yoi::identifierWithTemplateArg *identifierWithTemplateArg);
 
-        static yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc,
-                                       const std::shared_ptr<IRValueType> &typeSrc);
+        static yoi::wstr getInterfaceImplName(const std::pair<yoi::indexT, yoi::indexT> &interfaceSrc, const std::shared_ptr<IRValueType> &typeSrc);
 
         std::pair<std::pair<yoi::indexT, yoi::indexT>, std::shared_ptr<IRInterfaceInstanceDefinition>>
         parseInterfaceName(yoi::externModuleAccessExpression *structDef);
@@ -276,27 +279,26 @@ namespace yoi {
         void visit(yoi::enumerationDefinition *enumerationDefinition);
 
         /**
-        * @brief Visits a list of argument expressions and returns their types.
-        * @param args The AST node for the argument list.
-        * @return A vector of shared pointers to the argument types.
-        * @note This function leaves the evaluated arguments on the IRBuilder's temporary stack.
-        */
+         * @brief Visits a list of argument expressions and returns their types.
+         * @param args The AST node for the argument list.
+         * @return A vector of shared pointers to the argument types.
+         * @note This function leaves the evaluated arguments on the IRBuilder's temporary stack.
+         */
         yoi::vec<std::shared_ptr<IRValueType>> evaluateArguments(yoi::invocationArguments *args);
 
         /**
          * @brief Resolves an function overload within the interface context.
-         * 
+         *
          * @param baseName The base name of the function (e.g., "println" or "constructor").
          * @param argTypes The types of the arguments provided at the call site.
          * @param targetModule The index of the module being looked into.
          * @param interfaceContext The interface context where the function is being called.
          * @return visitor::OverloadResult with the resolution details.
          */
-        visitor::OverloadResult
-        resolveOverloadInterface(const yoi::wstr &baseName,
-                                 const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
-                                 yoi::indexT targetModule,
-                                 const std::shared_ptr<IRInterfaceInstanceDefinition> &interfaceContext);
+        visitor::OverloadResult resolveOverloadInterface(const yoi::wstr &baseName,
+                                                         const yoi::vec<std::shared_ptr<IRValueType>> &argTypes,
+                                                         yoi::indexT targetModule,
+                                                         const std::shared_ptr<IRInterfaceInstanceDefinition> &interfaceContext);
 
         /**
          * @brief Resolves an external function overload within a target module.
@@ -317,22 +319,24 @@ namespace yoi {
         bool handleInvocationExtern(const yoi::wstr &baseName,
                                     yoi::invocationArguments *args,
                                     yoi::indexT targetModule,
-                                    const std::shared_ptr<IRValueType> &structContext = nullptr, bool noThisCall = false);
+                                    const std::shared_ptr<IRValueType> &structContext = nullptr,
+                                    bool noThisCall = false,
+                                    yoi::templateArg *templateArgs = nullptr);
 
         /**
-         * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator method.
-         * 
+         * @brief Generates a call to certain operator overload function when left hand side or right hand side owns a appropriate overloaded operator
+         * method.
+         *
          * @param overloadName the name of the operator overload method
          * @param rhsAST the right hand side AST expression, will be used when the cast is required when resolving overload method
          * @return yoi::indexT current insertion point after the invocation
          * @note Make sure the builder state is saved before calling this helper function.
          */
-        template <typename T>
-        yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName, T *rhsAST);
+        template <typename T> yoi::indexT handleBinaryOperatorOverload(const yoi::wstr &overloadName, T *rhsAST);
 
         /**
          * @brief Handles unary operator overload function when the operand owns a appropriate overloaded operator method.
-         * 
+         *
          * @param overloadName the name of the operator overload method
          * @return yoi::indexT current insertion point after the invocation
          */
@@ -343,14 +347,11 @@ namespace yoi {
          * @return bool whether the it need to continue to handle subscript
          * @note a state before the evaluation of the subscript expression should be saved before calling this helper function.
          */
-        bool handleSubscript(yoi::vec<yoi::subscript *>::iterator &it,
-                             yoi::vec<yoi::subscript *>::iterator end,
-                             bool isStoreOp,
-                             bool isLastTerm);
+        bool handleSubscript(yoi::vec<yoi::subscript *>::iterator &it, yoi::vec<yoi::subscript *>::iterator end, bool isStoreOp, bool isLastTerm);
 
         /**
          * @brief Create a Callable Interface object and return its index in the module's interface table.
-         * 
+         *
          * @param parameterTypes The parameter types of the callable interface.
          * @param returnType The return type of the callable interface.
          * @return yoi::indexT The index of the created callable interface in the module's interface table.
@@ -359,41 +360,42 @@ namespace yoi {
                                             const std::shared_ptr<IRValueType> &returnType);
 
         /**
-         * @brief Create a Callable Implementation For Lambda object also create a struct for the lambda and return its callable implementation index in the module's implementation table.
-         * 
+         * @brief Create a Callable Implementation For Lambda object also create a struct for the lambda and return its callable implementation index
+         * in the module's implementation table.
+         *
          * @param lambda The lambda struct definition.
          * @param lambdaStructIndex The index of the lambda struct in the module's struct table.
          * @param moduleIndex The index of the module where the implementation will be created.
-         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> The index of the created callable implementation in the module's implementation table and callable interface index.
+         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> The index of the created callable implementation in the module's
+         * implementation table and callable interface index.
          */
-        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForLambda(const std::shared_ptr<IRStructDefinition> &lambda,
-                                                          yoi::indexT lambdaStructIndex,
-                                                          yoi::indexT moduleIndex);
+        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForLambda(
+            const std::shared_ptr<IRStructDefinition> &lambda, yoi::indexT lambdaStructIndex, yoi::indexT moduleIndex);
 
         /**
-         * @brief Create a Callable Implementation For Function object also create a unnamed struct for the function and return its callable implementation index in the module's implementation table.
-         * 
+         * @brief Create a Callable Implementation For Function object also create a unnamed struct for the function and return its callable
+         * implementation index in the module's implementation table.
+         *
          * @param func The function definition.
          * @param funcIndex The index of the function in the module's function table.
          * @param moduleIndex The index of the module where the implementation will be created.
-         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> 
+         * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>>
          */
-        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> createCallableImplementationForFunction(
-            const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
+        std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>>
+        createCallableImplementationForFunction(const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
 
         /**
          * @brief Create a Callable Instance For Function object
-         * 
-         * @param implIndex 
-         * @param callableInterfaceIndex 
+         *
+         * @param implIndex
+         * @param callableInterfaceIndex
          */
-        void createCallableInstanceForFunction(yoi::indexT implIndex,
-                                               std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex,
-                                               yoi::indexT moduleIndex);
+        void
+        createCallableInstanceForFunction(yoi::indexT implIndex, std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex, yoi::indexT moduleIndex);
 
         /**
          * @brief Create a Lambda Unnamed Struct object
-         * 
+         *
          * @param lambdaExpr The lambda expression.
          * @return yoi::indexT The index of the created lambda unnamed struct in the module's struct table.
          */
@@ -401,7 +403,7 @@ namespace yoi {
 
         /**
          * @brief Check whether the marco satisfies the condition
-         * 
+         *
          * @param desc The marco descriptor
          * @return true The marco satisfies the condition
          * @return false The marco doesn't satisfy the condition

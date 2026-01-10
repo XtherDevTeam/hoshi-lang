@@ -5,7 +5,7 @@
 #include "compiler/compilerContext.h"
 #include "compiler/frontend/lexer.hpp"
 #include "compiler/ir/IR.h"
-#include "share/def.hpp" 
+#include "share/def.hpp"
 #include <cstdint>
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-qualification"
@@ -15,9 +15,8 @@
 
 namespace yoi {
     // Helper to finalize children in vectors on error
-    template<typename T>
-    void finalizeAST_vec(yoi::vec<T*>& vec) {
-        for (auto& i : vec) {
+    template <typename T> void finalizeAST_vec(yoi::vec<T *> &vec) {
+        for (auto &i : vec) {
             finalizeAST(i);
         }
         vec.clear(); // Clear the pointers from the vector
@@ -55,7 +54,7 @@ namespace yoi {
         lex.saveState();
         identifier *id = nullptr;
         typeSpec *spec = nullptr;
-        
+
         lexer::token node_start_token = lex.curToken;
 
         parse(id, lex);
@@ -142,7 +141,7 @@ namespace yoi {
                 specs.push_back(t);
             }
         }
-        
+
         if (lex.curToken.kind == lexer::token::tokenKind::greaterThan) {
             lex.scan();
             o = new defTemplateArg{node_start_token, specs};
@@ -351,7 +350,7 @@ namespace yoi {
                 lex.scan();
                 if (lex.curToken.kind == lexer::token::tokenKind::rightBracket) {
                     lex.scan();
-                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, new vec<uint64_t>{(uint64_t) -1}};
+                    o = new typeSpec{node_start_token, 1, nullptr, spec, nullptr, false, new vec<uint64_t>{(uint64_t)-1}};
                     return;
                 } else if (lex.curToken.kind == lexer::token::tokenKind::integer) {
                     auto *vec = new yoi::vec<uint64_t>{lex.curToken.basicVal.vUint};
@@ -517,10 +516,13 @@ namespace yoi {
         while (true) {
             vecA.push_back(a); // Add current 'a' to vector
             if (lex.curToken.kind != lexer::token::tokenKind::dot) {
-                break; // No more dots, end of expression
+                break;                        // No more dots, end of expression
             } else if (a->hasTemplateArg()) { // Logic: an identifier with template arg cannot be followed by a dot.
                 finalizeAST_vec(vecA);
-                panic(lex.line, lex.col, "expected identifier (except the last term) in externModuleAccessExpression, found identifier with template arguments followed by '.'");
+                panic(lex.line,
+                      lex.col,
+                      "expected identifier (except the last term) in externModuleAccessExpression, found identifier with template arguments followed "
+                      "by '.'");
                 o = nullptr;
                 return;
             } else {
@@ -548,7 +550,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        
+
         subscript *s = nullptr;
         for (parse(s, lex); s; parse(s, lex)) {
             b.push_back(s);
@@ -612,7 +614,6 @@ namespace yoi {
                 delete o;
                 o = nullptr;
             }
-            
         }
         parse(o->args, lex);
         if (!o->args) {
@@ -649,32 +650,47 @@ namespace yoi {
         }
         parse(d, lex);
         if (d) {
-            o = new primary{node_start_token, primary::primaryKind::typeIdExpression, nullptr, nullptr, nullptr, d, nullptr, nullptr, nullptr, nullptr};
+            o = new primary{
+                node_start_token, primary::primaryKind::typeIdExpression, nullptr, nullptr, nullptr, d, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(e, lex);
         if (e) {
-            o = new primary{node_start_token, primary::primaryKind::dynCastExpression, nullptr, nullptr, nullptr, nullptr, e, nullptr, nullptr, nullptr, nullptr};
+            o = new primary{
+                node_start_token, primary::primaryKind::dynCastExpression, nullptr, nullptr, nullptr, nullptr, e, nullptr, nullptr, nullptr, nullptr};
             return;
         }
         parse(f, lex);
         if (f) {
-            o = new primary{node_start_token, primary::primaryKind::newExpression, nullptr, nullptr, nullptr, nullptr, nullptr, f, nullptr, nullptr, nullptr};
+            o = new primary{
+                node_start_token, primary::primaryKind::newExpression, nullptr, nullptr, nullptr, nullptr, nullptr, f, nullptr, nullptr, nullptr};
             return;
         }
         parse(g, lex);
         if (g) {
-            o = new primary{node_start_token, primary::primaryKind::lambdaExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, g, nullptr, nullptr};
+            o = new primary{
+                node_start_token, primary::primaryKind::lambdaExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, g, nullptr, nullptr};
             return;
         }
         parse(h, lex);
         if (h) {
-            o = new primary{node_start_token, primary::primaryKind::funcExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, h, nullptr};
+            o = new primary{
+                node_start_token, primary::primaryKind::funcExpr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, h, nullptr};
             return;
         }
         parse(i, lex);
         if (i) {
-            o = new primary{node_start_token, primary::primaryKind::bracedInitalizerList, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, i};
+            o = new primary{node_start_token,
+                            primary::primaryKind::bracedInitalizerList,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            i};
             return;
         }
         if (lex.curToken.kind == lexer::token::tokenKind::leftParentheses) {
@@ -746,7 +762,7 @@ namespace yoi {
             case lexer::token::tokenKind::additionAssignment:
             case lexer::token::tokenKind::subtractionAssignment:
             case lexer::token::tokenKind::multiplicationAssignment:
-            case lexer::token::tokenKind::divisionAssignment: 
+            case lexer::token::tokenKind::divisionAssignment:
             case lexer::token::tokenKind::directAssignSign: {
                 t = lex.curToken;
                 lex.scan();
@@ -767,49 +783,83 @@ namespace yoi {
         }
     }
 
-    // Common pattern for binary expressions (mulExpr, addExpr, shiftExpr, etc.)
-    // Applied to all binary expression parsers below.
-    #define PARSE_BINARY_EXPR(NODE_TYPE, CHILD_TYPE, OPERATORS, ERROR_MSG) \
-    void parse(NODE_TYPE *&o, lexer &lex) { \
-        yoi::vec<CHILD_TYPE *> vecA; \
-        yoi::vec<lexer::token> vecB; \
-        CHILD_TYPE *a = nullptr; \
-        lexer::token node_start_token = lex.curToken; \
-\
-        parse(a, lex); \
-        if (a) { \
-            vecA.push_back(a); \
-            while OPERATORS { \
-                vecB.push_back(lex.curToken); \
-                lex.scan(); \
-                a = nullptr; \
-                parse(a, lex); \
-                if (!a) { \
-                    finalizeAST_vec(vecA); \
-                    panic(lex.line, lex.col, ERROR_MSG); \
-                    o = nullptr; \
-                    return; \
-                } \
-                vecA.push_back(a); \
-            } \
-            o = new NODE_TYPE{node_start_token, vecA, vecB}; \
-        } else { \
-            o = nullptr; \
-        } \
+// Common pattern for binary expressions (mulExpr, addExpr, shiftExpr, etc.)
+// Applied to all binary expression parsers below.
+#define PARSE_BINARY_EXPR(NODE_TYPE, CHILD_TYPE, OPERATORS, ERROR_MSG)                                                                               \
+    void parse(NODE_TYPE *&o, lexer &lex) {                                                                                                          \
+        yoi::vec<CHILD_TYPE *> vecA;                                                                                                                 \
+        yoi::vec<lexer::token> vecB;                                                                                                                 \
+        CHILD_TYPE *a = nullptr;                                                                                                                     \
+        lexer::token node_start_token = lex.curToken;                                                                                                \
+                                                                                                                                                     \
+        parse(a, lex);                                                                                                                               \
+        if (a) {                                                                                                                                     \
+            vecA.push_back(a);                                                                                                                       \
+            while                                                                                                                                    \
+                OPERATORS {                                                                                                                          \
+                    vecB.push_back(lex.curToken);                                                                                                    \
+                    lex.scan();                                                                                                                      \
+                    a = nullptr;                                                                                                                     \
+                    parse(a, lex);                                                                                                                   \
+                    if (!a) {                                                                                                                        \
+                        finalizeAST_vec(vecA);                                                                                                       \
+                        panic(lex.line, lex.col, ERROR_MSG);                                                                                         \
+                        o = nullptr;                                                                                                                 \
+                        return;                                                                                                                      \
+                    }                                                                                                                                \
+                    vecA.push_back(a);                                                                                                               \
+                }                                                                                                                                    \
+            o = new NODE_TYPE{node_start_token, vecA, vecB};                                                                                         \
+        } else {                                                                                                                                     \
+            o = nullptr;                                                                                                                             \
+        }                                                                                                                                            \
     }
 
-    PARSE_BINARY_EXPR(mulExpr, leftExpr, (lex.curToken.kind == lexer::token::tokenKind::asterisk || lex.curToken.kind == lexer::token::tokenKind::slash || lex.curToken.kind == lexer::token::tokenKind::percentSign), "expected uniqueExpr after operators while parsing mulExpr")
-    PARSE_BINARY_EXPR(addExpr, mulExpr, (lex.curToken.kind == lexer::token::tokenKind::plus || lex.curToken.kind == lexer::token::tokenKind::minus), "expected mulExpr after operators while parsing addExpr")
-    PARSE_BINARY_EXPR(shiftExpr, addExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryShiftLeft || lex.curToken.kind == lexer::token::tokenKind::binaryShiftRight), "expected addExpr after operators while parsing shiftExpr")
-    PARSE_BINARY_EXPR(relationalExpr, shiftExpr, (lex.curToken.kind == lexer::token::tokenKind::lessThan || lex.curToken.kind == lexer::token::tokenKind::greaterThan || lex.curToken.kind == lexer::token::tokenKind::lessEqual || lex.curToken.kind == lexer::token::tokenKind::greaterEqual), "expected shiftExpr after operators while parsing relationalExpr")
-    PARSE_BINARY_EXPR(equalityExpr, relationalExpr, (lex.curToken.kind == lexer::token::tokenKind::equal || lex.curToken.kind == lexer::token::tokenKind::notEqual), "expected relationalExpr after operators while parsing equalityExpr")
-    PARSE_BINARY_EXPR(andExpr, equalityExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryAnd), "expected equalityExpr after operators while parsing andExpr") // Corrected from relationalExpr
-    PARSE_BINARY_EXPR(exclusiveExpr, andExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryXor), "expected andExpr after operators while parsing exclusiveExpr")
-    PARSE_BINARY_EXPR(inclusiveExpr, exclusiveExpr, (lex.curToken.kind == lexer::token::tokenKind::binaryOr), "expected exclusiveExpr after operators while parsing inclusiveExpr")
-    PARSE_BINARY_EXPR(logicalAndExpr, inclusiveExpr, (lex.curToken.kind == lexer::token::tokenKind::logicAnd), "expected inclusiveExpr after operators while parsing logicalAndExpr")
-    PARSE_BINARY_EXPR(logicalOrExpr, logicalAndExpr, (lex.curToken.kind == lexer::token::tokenKind::logicOr), "expected logicalAndExpr after operators while parsing logicalOrExpr")
+    PARSE_BINARY_EXPR(mulExpr,
+                      leftExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::asterisk || lex.curToken.kind == lexer::token::tokenKind::slash ||
+                       lex.curToken.kind == lexer::token::tokenKind::percentSign),
+                      "expected uniqueExpr after operators while parsing mulExpr")
+    PARSE_BINARY_EXPR(addExpr,
+                      mulExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::plus || lex.curToken.kind == lexer::token::tokenKind::minus),
+                      "expected mulExpr after operators while parsing addExpr")
+    PARSE_BINARY_EXPR(shiftExpr,
+                      addExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::binaryShiftLeft ||
+                       lex.curToken.kind == lexer::token::tokenKind::binaryShiftRight),
+                      "expected addExpr after operators while parsing shiftExpr")
+    PARSE_BINARY_EXPR(relationalExpr,
+                      shiftExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::lessThan || lex.curToken.kind == lexer::token::tokenKind::greaterThan ||
+                       lex.curToken.kind == lexer::token::tokenKind::lessEqual || lex.curToken.kind == lexer::token::tokenKind::greaterEqual),
+                      "expected shiftExpr after operators while parsing relationalExpr")
+    PARSE_BINARY_EXPR(equalityExpr,
+                      relationalExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::equal || lex.curToken.kind == lexer::token::tokenKind::notEqual),
+                      "expected relationalExpr after operators while parsing equalityExpr")
+    PARSE_BINARY_EXPR(andExpr,
+                      equalityExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::binaryAnd),
+                      "expected equalityExpr after operators while parsing andExpr") // Corrected from relationalExpr
+    PARSE_BINARY_EXPR(exclusiveExpr,
+                      andExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::binaryXor),
+                      "expected andExpr after operators while parsing exclusiveExpr")
+    PARSE_BINARY_EXPR(inclusiveExpr,
+                      exclusiveExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::binaryOr),
+                      "expected exclusiveExpr after operators while parsing inclusiveExpr")
+    PARSE_BINARY_EXPR(logicalAndExpr,
+                      inclusiveExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::logicAnd),
+                      "expected inclusiveExpr after operators while parsing logicalAndExpr")
+    PARSE_BINARY_EXPR(logicalOrExpr,
+                      logicalAndExpr,
+                      (lex.curToken.kind == lexer::token::tokenKind::logicOr),
+                      "expected logicalAndExpr after operators while parsing logicalOrExpr")
 
-    #undef PARSE_BINARY_EXPR
+#undef PARSE_BINARY_EXPR
 
     void parse(rExpr *&o, lexer &lex) {
         logicalOrExpr *expr = nullptr;
@@ -1187,8 +1237,8 @@ namespace yoi {
         }
         lexer::token node_start_token = lex.curToken;
 
-        externModuleAccessExpression *first = nullptr; // Represents the interface (optional)
-        externModuleAccessExpression *second = nullptr;   // Represents the struct
+        externModuleAccessExpression *first = nullptr;  // Represents the interface (optional)
+        externModuleAccessExpression *second = nullptr; // Represents the struct
         implInner *inner = nullptr;
 
         // Save state for potential backtracking related to the optional ':' interface
@@ -1203,7 +1253,7 @@ namespace yoi {
         }
 
         if (lex.curToken.kind == lexer::token::tokenKind::colon) {
-            lex.scan(); // Consume the colon
+            lex.scan();        // Consume the colon
             parse(first, lex); // Now try to parse the interface name
             if (!first) {
                 finalizeAST(second);
@@ -1292,10 +1342,17 @@ namespace yoi {
                 vecA.push_back(lex.curToken);
                 lex.scan();
             }
-            yoi_assert( vecA.empty() || vecA.size() < 2 || (vecA.front().kind != lexer::token::tokenKind::kThreeDots || vecA.back().kind != lexer::token::tokenKind::kThreeDots), lex.line, lex.col, "structured binding cannot have `...` both in the front and in the back of the list");
-            if (vecA.size() > 2) 
-                for (yoi::indexT i = 1;i < vecA.size() - 1;i++) 
-                    yoi_assert(vecA[i].kind != lexer::token::tokenKind::kThreeDots, lex.line, lex.col, "structured binding cannot have `...` in the middle of the list");
+            yoi_assert(vecA.empty() || vecA.size() < 2 ||
+                           (vecA.front().kind != lexer::token::tokenKind::kThreeDots || vecA.back().kind != lexer::token::tokenKind::kThreeDots),
+                       lex.line,
+                       lex.col,
+                       "structured binding cannot have `...` both in the front and in the back of the list");
+            if (vecA.size() > 2)
+                for (yoi::indexT i = 1; i < vecA.size() - 1; i++)
+                    yoi_assert(vecA[i].kind != lexer::token::tokenKind::kThreeDots,
+                               lex.line,
+                               lex.col,
+                               "structured binding cannot have `...` in the middle of the list");
 
             yoi_assert(lex.curToken.kind == lexer::token::tokenKind::rightBracket, lex.curToken.line, lex.curToken.col, "expected `]`");
             lex.scan();
@@ -1320,7 +1377,7 @@ namespace yoi {
 
         while (true) {
             parse(a, lex);
-            if (!a) { // If 'a' could not be parsed
+            if (!a) {               // If 'a' could not be parsed
                 if (vecA.empty()) { // If it's the first assignment and it failed
                     panic(lex.line, lex.col, "expected letAssignmentPair after `let`");
                 } else { // If it's a subsequent assignment after a comma and it failed
@@ -1355,7 +1412,7 @@ namespace yoi {
         importDecl *h = nullptr;
         typeAliasStmt *i = nullptr;
         enumerationDefinition *j = nullptr;
-        
+
         lexer::token node_start_token = lex.curToken;
 
         parse(marco, lex);
@@ -1577,10 +1634,10 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        
+
         parse(initStmt, lex);
         // Original code implies initStmt can be empty. "expected initStmt" panic removed if this is allowed.
-        
+
         // Reconciling with original panic: it seems intended to be mandatory.
         if (!initStmt) {
             panic(lex.line, lex.col, "expected initStmt after `(`");
@@ -1596,9 +1653,9 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        
+
         parse(cond, lex);
-        
+
         if (!cond) {
             finalizeAST(initStmt);
             panic(lex.line, lex.col, "expected condition after `;`");
@@ -1615,7 +1672,7 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        
+
         parse(afterStmt, lex);
         if (!afterStmt) {
             finalizeAST(initStmt);
@@ -1751,14 +1808,14 @@ namespace yoi {
         breakStmt *breakStmtVal = nullptr;
         continueStmt *continueStmtVal = nullptr;
         returnStmt *returnStmtVal = nullptr;
-        forEachStmt *forEachStmtVal = nullptr; 
+        forEachStmt *forEachStmtVal = nullptr;
         whileStmt *whileStmtVal = nullptr;
         forStmt *forStmtVal = nullptr;
         codeBlock *codeBlockVal = nullptr;
         tryCatchStmt *tryCatchStmtVal = nullptr;
         throwStmt *throwStmtVal = nullptr;
         rExpr *rExprVal = nullptr;
-        
+
         lexer::token node_start_token = lex.curToken;
 
         parse(marco, lex);
@@ -1819,7 +1876,7 @@ namespace yoi {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::throwStmt, marco, {throwStmtVal}};
             return;
         }
-        
+
         parse(codeBlockVal, lex);
         if (codeBlockVal) {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, marco, {codeBlockVal}};
@@ -1828,7 +1885,7 @@ namespace yoi {
 
         // rExpr should typically be last, as it's the most general expression statement.
         parse(rExprVal, lex);
-        if (rExprVal) { 
+        if (rExprVal) {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::rExpr, marco, {rExprVal}};
             return;
         }
@@ -1953,6 +2010,15 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        defTemplateArg *tempArg = nullptr;
+        if (lex.curToken.kind == lexer::token::tokenKind::lessThan) {
+            parse(tempArg, lex);
+            if (!tempArg) {
+                panic(lex.line, lex.col, "expected template argument after `<` in constructor declaration");
+                o = nullptr;
+                return;
+            }
+        }
         definitionArguments *args = nullptr;
         parse(args, lex);
         if (!args) {
@@ -1965,7 +2031,7 @@ namespace yoi {
             panic(lex.line, lex.col, "constructor declaration cannot have a return type");
             o = nullptr;
         }
-        o = new constructorDecl{node_start_token, args};
+        o = new constructorDecl{node_start_token, tempArg, args};
     }
 
     void parse(constructorDef *&o, lexer &lex) {
@@ -1977,9 +2043,18 @@ namespace yoi {
             o = nullptr;
             return;
         }
+        templateArg *tempArg = nullptr;
         definitionArguments *args = nullptr;
         codeBlock *block = nullptr;
 
+        if (lex.curToken.kind == lexer::token::tokenKind::lessThan) {
+            parse(tempArg, lex);
+            if (!tempArg) {
+                panic(lex.line, lex.col, "expected template argument after `<` in constructor definition");
+                o = nullptr;
+                return;
+            }
+        }
         parse(args, lex);
         if (!args) {
             panic(lex.line, lex.col, "expected arguments after `constructor`");
@@ -1998,13 +2073,13 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        o = new constructorDef{node_start_token, args, block};
+        o = new constructorDef{node_start_token, tempArg, args, block};
     }
 
     void parse(hoshiModule *&o, lexer &lex) {
         yoi::vec<globalStmt *> vecA;
         globalStmt *a = nullptr; // Initialize a
-        
+
         lexer::token node_start_token = lex.curToken;
 
         while (true) {
@@ -2033,7 +2108,7 @@ namespace yoi {
             return;
         }
 
-        innerMethodDecl *a = nullptr; 
+        innerMethodDecl *a = nullptr;
         parse(a, lex);
         if (!a) {
             panic(lex.line, lex.col, "expected innerMethodDecl after `import`"); // Corrected panic message
@@ -2073,12 +2148,12 @@ namespace yoi {
         }
 
         yoi::vec<lexer::token> attrs;
-        while(lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
+        while (lex.curToken.kind >= lexer::token::tokenKind::kNoFFI && lex.curToken.kind <= lexer::token::tokenKind::kAlwaysInline) {
             attrs.push_back(lex.curToken);
             lex.scan();
         }
 
-        typeSpec *a = nullptr; 
+        typeSpec *a = nullptr;
         parse(a, lex);
         if (!a) {
             panic(lex.line, lex.col, "expected typeSpec after `export`"); // Corrected panic message
@@ -2132,7 +2207,8 @@ namespace yoi {
         parse(finallyBlock, lex);
         if (!finallyBlock) {
             finalizeAST(tryBlock);
-            for (auto p : catchParams) finalizeAST(p);
+            for (auto p : catchParams)
+                finalizeAST(p);
             o = nullptr;
             panic(lex.line, lex.col, "expected codeBlock after `catch`");
         }
@@ -2302,7 +2378,8 @@ namespace yoi {
             o = nullptr;
             return;
         }
-        if (lex.curToken.kind != lexer::token::tokenKind::kInterfaceOf && lex.curToken.kind != lexer::token::tokenKind::kImpl && lex.curToken.kind != lexer::token::tokenKind::kAs) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kInterfaceOf && lex.curToken.kind != lexer::token::tokenKind::kImpl &&
+            lex.curToken.kind != lexer::token::tokenKind::kAs) {
             o = new abstractExpr{node_start_token, lhs, {}, nullptr};
             return;
         }
@@ -2337,7 +2414,8 @@ namespace yoi {
             parse(capture, lex);
             captures.push_back(capture);
             if (!capture) {
-                for (auto c : captures) finalizeAST(c);
+                for (auto c : captures)
+                    finalizeAST(c);
                 o = nullptr;
                 panic(lex.line, lex.col, "expected identifier in capture list in lambda expression");
             }
@@ -2405,7 +2483,8 @@ namespace yoi {
         }
         if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
             o = nullptr;
-            for (auto t : types) finalizeAST(t);
+            for (auto t : types)
+                finalizeAST(t);
             panic(lex.line, lex.col, "expected `)` after typeSpecs in unnamed definition arguments");
         }
         lex.scan();
@@ -2485,13 +2564,15 @@ namespace yoi {
         }
         if (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
             o = nullptr;
-            for (auto p : pairs) finalizeAST(p);
+            for (auto p : pairs)
+                finalizeAST(p);
             return;
         }
         lex.scan();
         if (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
             o = nullptr;
-            for (auto p : pairs) finalizeAST(p);
+            for (auto p : pairs)
+                finalizeAST(p);
             return;
         }
         lex.scan();
@@ -2639,7 +2720,8 @@ namespace yoi {
         }
         if (lex.curToken.kind != lexer::token::tokenKind::rightBraces) {
             o = nullptr;
-            for (auto e : enumerators) finalizeAST(e);
+            for (auto e : enumerators)
+                finalizeAST(e);
             finalizeAST(name);
             panic(lex.line, lex.col, "expected `}` after enumerators in enumeration definition");
             return;
@@ -2691,7 +2773,7 @@ namespace yoi {
             return;
         }
         yoi::lexer::token node_start_token = lex.curToken;
-        lex.saveState();        
+        lex.saveState();
         lex.scan();
         vec<rExpr *> expressions;
         rExpr *expression = nullptr;
@@ -2708,7 +2790,8 @@ namespace yoi {
         }
         if (lex.curToken.kind != lexer::token::tokenKind::rightBraces) {
             o = nullptr;
-            for (auto e : expressions) finalizeAST(e);
+            for (auto e : expressions)
+                finalizeAST(e);
             lex.returnState();
             return;
         }

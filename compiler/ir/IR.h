@@ -14,6 +14,9 @@
 #include <set>
 
 namespace yoi {
+    class structDefInnerPair;
+    class implInnerPair;
+
     struct IRBuildConfig {
         enum class BuildType : yoi::indexT { library = 0, executable } buildType;
         enum class BuildMode : yoi::indexT { debug = 0, release } buildMode;
@@ -71,15 +74,15 @@ namespace yoi {
     struct IRMetadata {
         std::map<yoi::wstr, std::any> metadata;
 
-        template<typename T> T & getMetadata(const yoi::wstr &key) {
+        template <typename T> T &getMetadata(const yoi::wstr &key) {
             return *std::any_cast<T>(&metadata.at(key));
         }
 
-        template<typename T> const T & getMetadata(const yoi::wstr &key) const {
+        template <typename T> const T &getMetadata(const yoi::wstr &key) const {
             return *std::any_cast<T>(&metadata.at(key));
         }
 
-        template<typename T> void setMetadata(const yoi::wstr &key, const T &value) {
+        template <typename T> void setMetadata(const yoi::wstr &key, const T &value) {
             metadata[key] = value;
         }
 
@@ -92,13 +95,7 @@ namespace yoi {
 
     class IRValueType {
       public:
-        enum class ValueAttr : yoi::indexT {
-            Nullable,
-            Raw,
-            PermanentInCurrentScope,
-            Borrow,
-            NoBorrow
-        };
+        enum class ValueAttr : yoi::indexT { Nullable, Raw, PermanentInCurrentScope, Borrow, NoBorrow };
         enum class valueType : yoi::indexT {
             integerRaw = 0,
             decimalRaw,
@@ -144,19 +141,13 @@ namespace yoi {
 
         IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex);
 
-        IRValueType(valueType type,
-                    yoi::indexT typeAffiliateModule,
-                    yoi::indexT objectPrototypeIndex,
-                    const std::set<ValueAttr> &attributes);
+        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const std::set<ValueAttr> &attributes);
 
         IRValueType(valueType type, const yoi::vec<yoi::indexT> &dimensions);
 
         IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes);
 
-        IRValueType(valueType type,
-                    yoi::indexT typeAffiliateModule,
-                    yoi::indexT objectPrototypeIndex,
-                    const yoi::vec<yoi::indexT> &dimensions);
+        IRValueType(valueType type, yoi::indexT typeAffiliateModule, yoi::indexT objectPrototypeIndex, const yoi::vec<yoi::indexT> &dimensions);
 
         bool isBasicType() const;
 
@@ -186,9 +177,9 @@ namespace yoi {
 
         bool operator==(const yoi::IRValueType &rhs) const;
 
-        IRValueType & addAttribute(ValueAttr attr);
+        IRValueType &addAttribute(ValueAttr attr);
 
-        IRValueType & removeAttribute(ValueAttr attr);
+        IRValueType &removeAttribute(ValueAttr attr);
 
         bool hasAttribute(ValueAttr attr) const;
     };
@@ -381,18 +372,14 @@ namespace yoi {
     };
 
     class IRTypeAlias {
-        public:
+      public:
         yoi::wstr name;
         std::shared_ptr<IRValueType> type;
     };
 
     class IREnumerationType {
-        public:
-        enum class UnderlyingType : yoi::indexT {
-            I8,
-            I16,
-            I64
-        };
+      public:
+        enum class UnderlyingType : yoi::indexT { I8, I16, I64 };
         yoi::wstr name;
         yoi::indexTable<yoi::wstr, yoi::indexT> valueToIndexMap;
 
@@ -403,8 +390,8 @@ namespace yoi {
         class Builder {
             yoi::wstr name;
             yoi::indexTable<yoi::wstr, yoi::indexT> valueToIndexMap;
-            public:
-            
+
+          public:
             Builder() = default;
 
             Builder &setName(const yoi::wstr &name);
@@ -532,8 +519,7 @@ namespace yoi {
             std::shared_ptr<IRValueType> templateType;
             std::pair<yoi::indexT, yoi::indexT> interfaceType;
 
-            Argument(const std::shared_ptr<IRValueType> &templateType,
-                     const std::pair<yoi::indexT, yoi::indexT> &interfaceType);
+            Argument(const std::shared_ptr<IRValueType> &templateType, const std::pair<yoi::indexT, yoi::indexT> &interfaceType);
 
             Argument(const std::shared_ptr<IRValueType> &templateType);
         };
@@ -578,13 +564,22 @@ namespace yoi {
         };
         std::map<yoi::wstr, nameInfo> nameIndexMap;
 
+        yoi::vec<yoi::wstr> templateParamNames;
+        yoi::vec<std::shared_ptr<IRValueType>> storedTemplateArgs;
+        std::map<yoi::wstr, yoi::structDefInnerPair *> templateMethodDecls;
+        std::map<yoi::wstr, yoi::implInnerPair *> templateMethodDefs;
+
         IRStructDefinition(const yoi::wstr &name,
                            const std::map<yoi::wstr, nameInfo> &nameIndexMap,
-                           const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes);
+                           const vec<std::shared_ptr<IRValueType>> &fieldTypes,
+                           const yoi::vec<yoi::wstr> &templateParamNames = {},
+                           const yoi::vec<std::shared_ptr<IRValueType>> &storedTemplateArgs = {},
+                           const std::map<yoi::wstr, yoi::structDefInnerPair *> &templateMethodDecls = {},
+                           const std::map<yoi::wstr, yoi::implInnerPair *> &templateMethodDefs = {});
 
         /**
          * @brief Lookup a name in the struct definition, returning the index of the field or method and its type.
-         * 
+         *
          * @param name The name to lookup.
          * @return const nameInfo& The index of the field or method and its type.
          * @throws std::out_of_range Throws if the name is not found in the struct definition.
@@ -600,11 +595,22 @@ namespace yoi {
 
             Builder() = default;
 
+            yoi::vec<yoi::wstr> templateParamNames;
+            yoi::vec<std::shared_ptr<IRValueType>> storedTemplateArgs;
+            std::map<yoi::wstr, yoi::structDefInnerPair *> templateMethodDecls;
+            std::map<yoi::wstr, yoi::implInnerPair *> templateMethodDefs;
+
             Builder &setName(const yoi::wstr &name);
 
             Builder &addField(const yoi::wstr &fieldName, const std::shared_ptr<IRValueType> &fieldType);
 
             Builder &addMethod(const yoi::wstr &methodName, yoi::indexT index);
+
+            Builder &setStoredTemplateArgs(const yoi::vec<yoi::wstr> &paramNames, const yoi::vec<std::shared_ptr<IRValueType>> &args);
+
+            Builder &addTemplateMethodDecl(const yoi::wstr &name, yoi::structDefInnerPair *decl);
+
+            Builder &addTemplateMethodDef(const yoi::wstr &name, yoi::implInnerPair *def);
 
             std::shared_ptr<IRStructDefinition> yield();
         };
@@ -629,8 +635,7 @@ namespace yoi {
 
             Builder &setTemplateDefinition(const std::shared_ptr<IRStructDefinition> &templateDefinition);
 
-            Builder &setTemplateMethod(const yoi::wstr &methodName,
-                                       const std::shared_ptr<IRFunctionTemplate> &methodTemplate);
+            Builder &setTemplateMethod(const yoi::wstr &methodName, const std::shared_ptr<IRFunctionTemplate> &methodTemplate);
 
             std::shared_ptr<IRStructTemplate> yield();
         };
@@ -644,12 +649,11 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
-        IRInterfaceImplementationDefinition(
-            const yoi::wstr &name,
-            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
-            const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
-            const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
-            const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
+        IRInterfaceImplementationDefinition(const yoi::wstr &name,
+                                            std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
+                                            const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
+                                            const yoi::vec<std::shared_ptr<IRValueType>> &virtualMethods,
+                                            const std::map<yoi::wstr, yoi::indexT> &virtualMethodIndexMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -682,8 +686,9 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
         yoi::vec<std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT>> implementations;
 
-        IRInterfaceInstanceDefinition(
-            const yoi::wstr &name, const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies, const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
+        IRInterfaceInstanceDefinition(const yoi::wstr &name,
+                                      const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies,
+                                      const yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> &methodMap);
 
         yoi::wstr to_string(yoi::indexT indent = 0);
 
@@ -696,9 +701,8 @@ namespace yoi {
 
             Builder &setName(const yoi::wstr &name);
 
-            Builder &addMethod(const yoi::wstr &methodNameOri,
-                               const yoi::wstr &methodName,
-                               const std::shared_ptr<IRFunctionDefinition> &methodSignature);
+            Builder &
+            addMethod(const yoi::wstr &methodNameOri, const yoi::wstr &methodName, const std::shared_ptr<IRFunctionDefinition> &methodSignature);
 
             std::shared_ptr<IRInterfaceInstanceDefinition> yield();
         };
@@ -736,15 +740,13 @@ namespace yoi {
 
             Builder() = default;
 
-            Builder &
-            setTemplateDefinition(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition);
+            Builder &setTemplateDefinition(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition);
 
             std::shared_ptr<IRInterfaceImplementationTemplate> yield();
         };
 
-        IRInterfaceImplementationTemplate(
-            const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition,
-            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
+        IRInterfaceImplementationTemplate(const std::shared_ptr<IRInterfaceImplementationDefinition> &templateDefinition,
+                                          const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments);
     };
 
     class IRStringLiteralPool {
@@ -897,10 +899,7 @@ namespace yoi {
 
         void pushOp(IR::Opcode op, const yoi::IROperand &constV);
 
-        void loadOp(IR::Opcode op,
-                    const yoi::IROperand &source,
-                    const std::shared_ptr<IRValueType> &expectedType,
-                    yoi::indexT moduleIndex = -1);
+        void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType> &expectedType, yoi::indexT moduleIndex = -1);
 
         void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
 
@@ -923,7 +922,7 @@ namespace yoi {
 
         /**
          * @brief invoke a function with the given arguments, but the last param will be taken as the first param.
-         * 
+         *
          * @param funcIndex The index of function in irModule->functionTable
          * @param funcArgsCount The number of arguments of invocation.
          * @param returnType The return type of the function. Need for push the return value type to tempVarStack.
@@ -950,10 +949,7 @@ namespace yoi {
                              bool externalInvocation = false,
                              yoi::indexT moduleIndex = -1);
 
-        void invokeImportedOp(yoi::indexT libIndex,
-                              yoi::indexT funcIndex,
-                              yoi::indexT funcArgsCount,
-                              const std::shared_ptr<IRValueType> &returnType);
+        void invokeImportedOp(yoi::indexT libIndex, yoi::indexT funcIndex, yoi::indexT funcArgsCount, const std::shared_ptr<IRValueType> &returnType);
 
         void retOp(bool returnWithNone = false);
 
@@ -961,8 +957,10 @@ namespace yoi {
 
         void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 
-        void
-        constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId, yoi::indexT interfaceImplIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+        void constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId,
+                                      yoi::indexT interfaceImplIndex,
+                                      bool isExternal = false,
+                                      yoi::indexT moduleIndex = -1);
 
         void newArrayOp(const std::shared_ptr<IRValueType> &elementType, const yoi::vec<yoi::indexT> &dimensions, yoi::indexT onstackElementCount);
 
@@ -984,7 +982,7 @@ namespace yoi {
 
         void continueOp();
 
-        enum class ExtractType {All, First, Last};
+        enum class ExtractType { All, First, Last };
 
         /**
          * Extract elements from an array or a dynamic array, push them to the temp var stack, and dereference the array object.
@@ -1024,8 +1022,7 @@ namespace yoi {
             ImportLibrary(const yoi::wstr &libraryPath);
         };
 
-        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>>
-            exportedFunctionTable;
+        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>> exportedFunctionTable;
 
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> foreignTypeTable;
 

@@ -7,14 +7,14 @@
 #ifndef HOSHI_LANG_AST_HPP
 #define HOSHI_LANG_AST_HPP
 
-#include <share/def.hpp>
 #include "lexer.hpp"
+#include <share/def.hpp>
 
 namespace yoi {
     class AST {
         lexer::token token;
 
-    public:
+      public:
         AST();
 
         AST(lexer::token token);
@@ -195,30 +195,30 @@ namespace yoi {
     class bracedInitalizerList;
 
     class bracedInitalizerList : public AST {
-    public:
+      public:
         yoi::vec<yoi::rExpr *> exprs;
     };
 
     class typeAliasStmt : public AST {
-    public:
+      public:
         yoi::identifierWithDefTemplateArg *lhs{};
         yoi::typeSpec *rhs{};
     };
 
     class marcoPair : public AST {
-    public:
+      public:
         lexer::token identifier;
         lexer::token constraint;
         lexer::token rhs;
     };
 
     class marcoDescriptor : public AST {
-    public:
+      public:
         yoi::vec<marcoPair *> pairs;
     };
 
     class lambdaExpr : public AST {
-    public:
+      public:
         vec<yoi::identifier *> captures;
         definitionArguments *args;
         typeSpec *resultType;
@@ -226,27 +226,27 @@ namespace yoi {
     };
 
     class funcExpr : public AST {
-    public:
+      public:
         externModuleAccessExpression *name{};
         unnamedDefinitionArguments *args{};
     };
 
     class basicLiterals : public AST {
-    public:
+      public:
         lexer::token node;
 
         lexer::token &get();
     };
 
     class identifier : public AST {
-    public:
+      public:
         lexer::token node;
 
         lexer::token &get();
     };
 
     class identifierWithTypeSpec : public AST {
-    public:
+      public:
         identifier *id;
         typeSpec *spec;
 
@@ -256,7 +256,7 @@ namespace yoi {
     };
 
     class defTemplateArgSpec : public AST {
-    public:
+      public:
         identifier *id;
         externModuleAccessExpression *impl;
 
@@ -266,42 +266,42 @@ namespace yoi {
     };
 
     class defTemplateArg : public AST {
-    public:
+      public:
         vec<defTemplateArgSpec *> spec;
 
         vec<defTemplateArgSpec *> &get();
     };
 
     class templateArgSpec : public AST {
-    public:
+      public:
         typeSpec *spec;
 
         typeSpec &get() const;
     };
 
     class templateArg : public AST {
-    public:
+      public:
         vec<templateArgSpec *> spec;
 
         vec<templateArgSpec *> &get();
     };
 
     class invocationArguments : public AST {
-    public:
+      public:
         vec<rExpr *> arg;
 
         vec<rExpr *> &get();
     };
 
     class definitionArguments : public AST {
-    public:
+      public:
         vec<identifierWithTypeSpec *> spec;
 
         vec<identifierWithTypeSpec *> &get();
     };
 
     class funcTypeSpec : public AST {
-    public:
+      public:
         unnamedDefinitionArguments *args;
         typeSpec *resultType;
 
@@ -311,7 +311,7 @@ namespace yoi {
     };
 
     class typeSpec : public AST {
-    public:
+      public:
         int16_t kind; // 0 is member 1 is func 2 is null, 3 is elipsis
         externModuleAccessExpression *member;
         funcTypeSpec *func;
@@ -325,7 +325,7 @@ namespace yoi {
     };
 
     class subscript : public AST {
-    public:
+      public:
         rExpr *expr;
         invocationArguments *args;
 
@@ -337,7 +337,7 @@ namespace yoi {
     };
 
     class identifierWithTemplateArg : public AST {
-    public:
+      public:
         identifier *id;
         templateArg *arg;
 
@@ -349,7 +349,7 @@ namespace yoi {
     };
 
     class identifierWithDefTemplateArg : public AST {
-    public:
+      public:
         identifier *id;
         defTemplateArg *arg;
 
@@ -361,7 +361,7 @@ namespace yoi {
     };
 
     class subscriptExpr : public AST {
-    public:
+      public:
         identifierWithTemplateArg *id;
         vec<subscript *> subscriptVal;
 
@@ -371,22 +371,23 @@ namespace yoi {
     };
 
     class memberExpr : public AST {
-    public:
+      public:
         vec<subscriptExpr *> terms;
 
         vec<subscriptExpr *> &getTerms();
     };
 
     class newExpression : public AST {
-    public:
+      public:
         externModuleAccessExpression *type;
         subscript *length;
         invocationArguments *args;
     };
 
     class primary : public AST {
-    public:
-        // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is funcExpr
+      public:
+        // 0 is memberExpr 1 is basicLiterals 2 is rExpr, 3 is typeIdExpression, 4 is dynCastExpression, 5 is newExpression, 6 is lambdaExpr, 7 is
+        // funcExpr
         enum class primaryKind : int8_t {
             memberExpr,
             basicLiterals,
@@ -416,7 +417,7 @@ namespace yoi {
     };
 
     class abstractExpr : public AST {
-    public:
+      public:
         primary *lhs;
         lexer::token op;
         externModuleAccessExpression *rhs;
@@ -429,7 +430,7 @@ namespace yoi {
     };
 
     class uniqueExpr : public AST {
-    public:
+      public:
         lexer::token op;
         abstractExpr *lhs{};
 
@@ -441,7 +442,7 @@ namespace yoi {
     };
 
     class leftExpr : public AST {
-    public:
+      public:
         lexer::token op;
         uniqueExpr *lhs;
         rExpr *rhs;
@@ -456,7 +457,7 @@ namespace yoi {
     };
 
     class mulExpr : public AST {
-    public:
+      public:
         vec<leftExpr *> terms;
         vec<lexer::token> ops;
 
@@ -468,7 +469,7 @@ namespace yoi {
     };
 
     class addExpr : public AST {
-    public:
+      public:
         vec<mulExpr *> terms;
         vec<lexer::token> ops;
 
@@ -480,7 +481,7 @@ namespace yoi {
     };
 
     class shiftExpr : public AST {
-    public:
+      public:
         vec<addExpr *> terms;
         vec<lexer::token> ops;
 
@@ -492,7 +493,7 @@ namespace yoi {
     };
 
     class relationalExpr : public AST {
-    public:
+      public:
         vec<shiftExpr *> terms;
         vec<lexer::token> ops;
 
@@ -504,7 +505,7 @@ namespace yoi {
     };
 
     class equalityExpr : public AST {
-    public:
+      public:
         vec<relationalExpr *> terms;
         vec<lexer::token> ops;
 
@@ -516,7 +517,7 @@ namespace yoi {
     };
 
     class andExpr : public AST {
-    public:
+      public:
         vec<equalityExpr *> terms;
         vec<lexer::token> ops;
 
@@ -528,7 +529,7 @@ namespace yoi {
     };
 
     class exclusiveExpr : public AST {
-    public:
+      public:
         vec<andExpr *> terms;
         vec<lexer::token> ops;
 
@@ -540,7 +541,7 @@ namespace yoi {
     };
 
     class inclusiveExpr : public AST {
-    public:
+      public:
         vec<exclusiveExpr *> terms;
         vec<lexer::token> ops;
 
@@ -552,7 +553,7 @@ namespace yoi {
     };
 
     class logicalAndExpr : public AST {
-    public:
+      public:
         vec<inclusiveExpr *> terms;
         vec<lexer::token> ops;
 
@@ -564,7 +565,7 @@ namespace yoi {
     };
 
     class logicalOrExpr : public AST {
-    public:
+      public:
         vec<logicalAndExpr *> terms;
         vec<lexer::token> ops;
 
@@ -576,14 +577,14 @@ namespace yoi {
     };
 
     class rExpr : public AST {
-    public:
+      public:
         logicalOrExpr *expr;
 
         logicalOrExpr &getExpr() const;
     };
 
     class useStmt : public AST {
-    public:
+      public:
         identifier *name;
         lexer::token path;
 
@@ -593,7 +594,7 @@ namespace yoi {
     };
 
     class funcDefStmt : public AST {
-    public:
+      public:
         yoi::vec<lexer::token> attrs;
         identifierWithDefTemplateArg *id;
         definitionArguments *args;
@@ -610,7 +611,7 @@ namespace yoi {
     };
 
     class interfaceDefInnerPair : public AST {
-    public:
+      public:
         // member var
         identifierWithTypeSpec *var;
 
@@ -625,14 +626,14 @@ namespace yoi {
     };
 
     class interfaceDefInner : public AST {
-    public:
+      public:
         vec<interfaceDefInnerPair *> inner;
 
         vec<interfaceDefInnerPair *> &getInner();
     };
 
     class interfaceDefStmt : public AST {
-    public:
+      public:
         identifierWithDefTemplateArg *id;
         interfaceDefInner *inner;
 
@@ -642,7 +643,7 @@ namespace yoi {
     };
 
     class structDefInnerPair : public AST {
-    public:
+      public:
         // 0 is member 1 is constructor 2 is method, 3 is finalizer
         int8_t kind;
         // member var
@@ -664,14 +665,14 @@ namespace yoi {
     };
 
     class structDefInner : public AST {
-    public:
+      public:
         vec<structDefInnerPair *> inner;
 
         vec<structDefInnerPair *> &getInner();
     };
 
     class structDefStmt : public AST {
-    public:
+      public:
         identifierWithDefTemplateArg *id;
         structDefInner *inner;
 
@@ -681,7 +682,7 @@ namespace yoi {
     };
 
     class implInnerPair : public AST {
-    public:
+      public:
         // constructor
         constructorDef *con;
         // method
@@ -703,14 +704,14 @@ namespace yoi {
     };
 
     class implInner : public AST {
-    public:
+      public:
         vec<implInnerPair *> inner;
 
         vec<implInnerPair *> &getInner();
     };
 
     class implStmt : public AST {
-    public:
+      public:
         externModuleAccessExpression *interfaceName;
         externModuleAccessExpression *structName;
         implInner *inner;
@@ -725,17 +726,14 @@ namespace yoi {
     };
 
     class letAssignmentPairLHS : public AST {
-    public:
-        enum class vKind : int16_t {
-            identifier,
-            list
-        } kind;
+      public:
+        enum class vKind : int16_t { identifier, list } kind;
         identifier *id;
         vec<lexer::token> list; // like [..., a, b, c] [a, b, c, ...], [a, b, c]
     };
 
     class letAssignmentPair : public AST {
-    public:
+      public:
         letAssignmentPairLHS *lhs;
         typeSpec *type;
         rExpr *rhs;
@@ -746,14 +744,14 @@ namespace yoi {
     };
 
     class letStmt : public AST {
-    public:
+      public:
         vec<letAssignmentPair *> terms;
 
         vec<letAssignmentPair *> &getTerms();
     };
 
     class globalStmt : public AST {
-    public:
+      public:
         enum class vKind : int16_t {
             useStmt,
             funcDefStmt,
@@ -782,9 +780,7 @@ namespace yoi {
             enumerationDefinition *enumerationDefVal;
             void *ptr;
 
-            template<typename T>
-            vValue(T *t) : ptr(static_cast<void *>(t)) {
-            }
+            template <typename T> vValue(T *t) : ptr(static_cast<void *>(t)) {}
         } value;
 
         vKind &getKind();
@@ -793,7 +789,7 @@ namespace yoi {
     };
 
     class ifStmt : public AST {
-    public:
+      public:
         struct ifBlock {
             rExpr *cond;
             codeBlock *block;
@@ -817,7 +813,7 @@ namespace yoi {
     };
 
     class whileStmt : public AST {
-    public:
+      public:
         rExpr *cond;
         codeBlock *block;
 
@@ -827,7 +823,7 @@ namespace yoi {
     };
 
     class forStmt : public AST {
-    public:
+      public:
         inCodeBlockStmt *initStmt;
         rExpr *cond;
         inCodeBlockStmt *afterStmt;
@@ -843,7 +839,7 @@ namespace yoi {
     };
 
     class forEachStmt : public AST {
-    public:
+      public:
         identifier *var;
         rExpr *container;
         codeBlock *block;
@@ -856,7 +852,7 @@ namespace yoi {
     };
 
     class returnStmt : public AST {
-    public:
+      public:
         rExpr *value;
 
         rExpr &getValue();
@@ -864,14 +860,12 @@ namespace yoi {
         bool hasValue() const;
     };
 
-    class continueStmt : public AST {
-    };
+    class continueStmt : public AST {};
 
-    class breakStmt : public AST {
-    };
+    class breakStmt : public AST {};
 
     class inCodeBlockStmt : public AST {
-    public:
+      public:
         enum class vKind : int16_t {
             ifStmt,
             whileStmt,
@@ -902,9 +896,7 @@ namespace yoi {
             forStmt *forStmtVal;
             void *ptr;
 
-            template<typename T>
-            vValue(T *t) : ptr((void *) t) {
-            }
+            template <typename T> vValue(T *t) : ptr((void *)t) {}
         } value;
 
         vKind &getKind();
@@ -913,13 +905,13 @@ namespace yoi {
     };
 
     class innerMethodDecl : public AST {
-    public:
+      public:
         yoi::vec<lexer::token> attrs;
-        identifier *name;
+        identifierWithDefTemplateArg *name;
         definitionArguments *args;
         typeSpec *resultType;
 
-        identifier &getName();
+        identifierWithDefTemplateArg &getName();
 
         definitionArguments &getArgs();
 
@@ -927,14 +919,14 @@ namespace yoi {
     };
 
     class innerMethodDef : public AST {
-    public:
+      public:
         yoi::vec<lexer::token> attrs;
-        identifier *name;
+        identifierWithTemplateArg *name;
         definitionArguments *args;
         typeSpec *resultType;
         codeBlock *block;
 
-        identifier &getName();
+        identifierWithTemplateArg &getName();
 
         definitionArguments &getArgs();
 
@@ -944,18 +936,20 @@ namespace yoi {
     };
 
     class constructorDecl : public AST {
-    public:
+      public:
+        defTemplateArg *tempArgs;
         definitionArguments *args;
 
         definitionArguments &getArgs();
     };
 
     class finalizerDecl : public AST {
-    public:
+      public:
     };
 
     class constructorDef : public AST {
-    public:
+      public:
+        templateArg *tempArgs;
         definitionArguments *args;
         codeBlock *block;
 
@@ -965,28 +959,28 @@ namespace yoi {
     };
 
     class finalizerDef : public AST {
-    public:
+      public:
         codeBlock *block;
 
         codeBlock &getBlock();
     };
 
     class codeBlock : public AST {
-    public:
+      public:
         vec<inCodeBlockStmt *> stmts;
 
         vec<inCodeBlockStmt *> &getStmts();
     };
 
     class hoshiModule : public AST {
-    public:
+      public:
         vec<globalStmt *> stmts;
 
         vec<globalStmt *> &getStmts();
     };
 
     class externModuleAccessExpression : public AST {
-    public:
+      public:
         vec<identifierWithTemplateArg *> terms;
 
         vec<identifierWithTemplateArg *> &getTerms();
@@ -995,62 +989,62 @@ namespace yoi {
     };
 
     class exportDecl : public AST {
-    public:
+      public:
         yoi::vec<lexer::token> attrs;
         typeSpec *from;
         identifier *as;
     };
 
     class importDecl : public AST {
-    public:
+      public:
         innerMethodDecl *inner;
         lexer::token from_path;
     };
 
     class throwStmt : public AST {
-    public:
+      public:
         rExpr *expr;
     };
 
     class catchParam : public AST {
-    public:
+      public:
         typeSpec *type;
         identifier *name;
         codeBlock *block;
     };
 
     class tryCatchStmt : public AST {
-    public:
+      public:
         codeBlock *tryBlock;
         vec<catchParam *> catchParams;
         codeBlock *finallyBlock;
     };
 
     class typeIdExpression : public AST {
-    public:
+      public:
         typeSpec *type;
         rExpr *expr;
     };
 
     class dynCastExpression : public AST {
-    public:
+      public:
         typeSpec *type;
         rExpr *expr;
     };
 
     class unnamedDefinitionArguments : public AST {
-    public:
+      public:
         vec<typeSpec *> types;
     };
 
     class enumerationDefinition : public AST {
-    public:
+      public:
         identifier *name;
         vec<enumerationPair *> values;
     };
 
     class enumerationPair : public AST {
-    public:
+      public:
         identifier *name;
         lexer::token value; // optional
     };
@@ -1216,6 +1210,6 @@ namespace yoi {
     void finalizeAST(enumerationPair *ptr);
 
     void finalizeAST(bracedInitalizerList *ptr);
-} // hoshi
-#endif //HOSHI_LANG_AST_HPP
+} // namespace yoi
+#endif // HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop

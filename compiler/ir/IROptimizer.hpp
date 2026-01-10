@@ -53,12 +53,8 @@ namespace yoi {
         std::shared_ptr<IRFunctionDefinition> targetFunction;
         yoi::indexT currentCodeBlockIndex;
         std::map<CallGraph::FuncIdentifier, FunctionAnalysisInfo> &globalAnalysisResults;
-        std::set<CallGraph::FuncIdentifier> affectedFunctions;
 
       public:
-        std::set<CallGraph::FuncIdentifier> getAffectedFunctions() const {
-            return affectedFunctions;
-        }
 
         struct SimulationStack {
             struct Item {
