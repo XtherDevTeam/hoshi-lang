@@ -132,6 +132,11 @@ var namespaceyoi =
     [ "vec", "namespaceyoi.html#a467112ed789564244f414efb801bf606", null ],
     [ "wchar", "namespaceyoi.html#a1a472f9b454d139c84efb5ab01cbf684", null ],
     [ "wstr", "namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4", null ],
+    [ "ExceptionHandleType", "namespaceyoi.html#a7e38b7dc326434b90a5960920775f893", [
+      [ "Suppress", "namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627", null ],
+      [ "Warning", "namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa", null ],
+      [ "Panic", "namespaceyoi.html#a7e38b7dc326434b90a5960920775f893ad4dbdf6f8e0aa2f9cb0e0efa247d4762", null ]
+    ] ],
     [ "finalizeAST", "namespaceyoi.html#a30a0b5978f8b8e8c023debb9ac86e21c", null ],
     [ "finalizeAST", "namespaceyoi.html#ab5309c729caab758c7f25ac61cd34d53", null ],
     [ "finalizeAST", "namespaceyoi.html#ac59b996aa6858ed5c3f3fb4416d9031b", null ],
@@ -306,10 +311,11 @@ var namespaceyoi =
     [ "replace_all", "namespaceyoi.html#a40058c28605a70c5ad52a979a3b551a7", null ],
     [ "set_current_file_path", "namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7", null ],
     [ "string2wstring", "namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023", null ],
-    [ "warning", "namespaceyoi.html#a774ab9590e79332760376ed248af507c", null ],
+    [ "warning", "namespaceyoi.html#a2d71150c6b3a47496cfc00a017d8617f", null ],
     [ "whereIsHoshiLang", "namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
     [ "yoi_assert", "namespaceyoi.html#a85b420532ed69057ad764f367d13c152", null ],
     [ "__current_file_path", "namespaceyoi.html#a147de820f25f66f42a6fd04341fcfd0a", null ],
+    [ "exception_categories", "namespaceyoi.html#ada400d4d6310d67a7f568f860146d8a9", null ],
     [ "mulExpr", "namespaceyoi.html#ae5525c965cc58756f77e41b391bf7dd8", null ]
 ];

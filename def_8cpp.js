@@ -6,9 +6,10 @@ var def_8cpp =
     [ "realpath", "def_8cpp.html#a4a59d5413d6da04facbe9ac48e2f7fff", null ],
     [ "set_current_file_path", "def_8cpp.html#aa35210b71ccd4b7364bd60156755f2f7", null ],
     [ "string2wstring", "def_8cpp.html#a49de16146e5ab66039f7f95b79a82023", null ],
-    [ "warning", "def_8cpp.html#a774ab9590e79332760376ed248af507c", null ],
+    [ "warning", "def_8cpp.html#a2d71150c6b3a47496cfc00a017d8617f", null ],
     [ "whereIsHoshiLang", "def_8cpp.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "def_8cpp.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
     [ "yoi_assert", "def_8cpp.html#a85b420532ed69057ad764f367d13c152", null ],
-    [ "__current_file_path", "def_8cpp.html#a147de820f25f66f42a6fd04341fcfd0a", null ]
+    [ "__current_file_path", "def_8cpp.html#a147de820f25f66f42a6fd04341fcfd0a", null ],
+    [ "exception_categories", "def_8cpp.html#ada400d4d6310d67a7f568f860146d8a9", null ]
 ];

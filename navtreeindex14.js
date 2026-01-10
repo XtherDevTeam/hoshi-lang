@@ -1,5 +1,10 @@
 var NAVTREEINDEX14 =
 {
+"magic__enum_8h.html#a53822aabcfcede0941025bf8c6e3cb42":[32,0,4,3,37],
+"magic__enum_8h.html#a600f8adca491196ab63f2b8ed64e61a5":[32,0,4,3,103],
+"magic__enum_8h.html#a6022bcf6fca6a72012e4e78f0996a4fe":[32,0,4,3,109],
+"magic__enum_8h.html#a60b5d28d5f88bcb69e8f0f868f5d32fb":[32,0,4,3,28],
+"magic__enum_8h.html#a6ce6c4f058540f1e3478588012025432":[32,0,4,3,46],
 "magic__enum_8h.html#a6d7710a2fcf7352c04da12dda6ec8cd1":[32,0,4,3,91],
 "magic__enum_8h.html#a71e4b6034cff6c42e05ee39074faa1be":[32,0,4,3,64],
 "magic__enum_8h.html#a73994e5d1bc470b9f093163aff0ea3ac":[32,0,4,3,65],
@@ -244,10 +249,5 @@ var NAVTREEINDEX14 =
 "namespacemagic__enum.html":[30,0,0],
 "namespacemagic__enum.html#a04e7ccc8b7750c42679ac9c43e106501":[30,0,0,13],
 "namespacemagic__enum.html#a0834fe0b701892852ec14cddfb9d9e84":[30,0,0,31],
-"namespacemagic__enum.html#a1458dab86a6ec81fe789fa1ea94905c5":[30,0,0,22],
-"namespacemagic__enum.html#a1b85e069563a6c9c29a65fb5fd110321":[30,0,0,35],
-"namespacemagic__enum.html#a23e4463cad64a4fb5f8e4cf7acafec27":[30,0,0,9],
-"namespacemagic__enum.html#a2704cef6acf1306d7a163def915ef3b0":[30,0,0,30],
-"namespacemagic__enum.html#a2dba3af11ff47dba00ddd4fe4e330e25":[30,0,0,17],
-"namespacemagic__enum.html#a2eb7be33cb98f8a399b0d53b34030ab0":[30,0,0,8]
+"namespacemagic__enum.html#a1458dab86a6ec81fe789fa1ea94905c5":[30,0,0,22]
 };

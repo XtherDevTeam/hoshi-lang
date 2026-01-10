@@ -15,6 +15,11 @@ var def_8hpp =
     [ "vec", "def_8hpp.html#a467112ed789564244f414efb801bf606", null ],
     [ "wchar", "def_8hpp.html#a1a472f9b454d139c84efb5ab01cbf684", null ],
     [ "wstr", "def_8hpp.html#ad4e272cc9cf89fa5396bd5396154bde4", null ],
+    [ "ExceptionHandleType", "def_8hpp.html#a7e38b7dc326434b90a5960920775f893", [
+      [ "Suppress", "def_8hpp.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627", null ],
+      [ "Warning", "def_8hpp.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa", null ],
+      [ "Panic", "def_8hpp.html#a7e38b7dc326434b90a5960920775f893ad4dbdf6f8e0aa2f9cb0e0efa247d4762", null ]
+    ] ],
     [ "get_line_hint_for_error", "def_8hpp.html#a9b1a87fa4d0a59f9b776d685d6873353", null ],
     [ "managedPtr", "def_8hpp.html#a134082ec04392c8d0e1fdf698a3fd3bd", null ],
     [ "panic", "def_8hpp.html#af1b2d50f7eb8d8e78be001987ad48ab6", null ],
@@ -23,7 +28,7 @@ var def_8hpp =
     [ "replace_all", "def_8hpp.html#a40058c28605a70c5ad52a979a3b551a7", null ],
     [ "set_current_file_path", "def_8hpp.html#aa35210b71ccd4b7364bd60156755f2f7", null ],
     [ "string2wstring", "def_8hpp.html#a49de16146e5ab66039f7f95b79a82023", null ],
-    [ "warning", "def_8hpp.html#a774ab9590e79332760376ed248af507c", null ],
+    [ "warning", "def_8hpp.html#a2d71150c6b3a47496cfc00a017d8617f", null ],
     [ "whereIsHoshiLang", "def_8hpp.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "def_8hpp.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
     [ "yoi_assert", "def_8hpp.html#a85b420532ed69057ad764f367d13c152", null ]
