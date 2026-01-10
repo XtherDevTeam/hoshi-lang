@@ -52,6 +52,14 @@ namespace yoi {
     using vec = std::vector<t>;
     extern yoi::wstr __current_file_path;
 
+    enum class ExceptionHandleType {
+        Suppress,
+        Warning,
+        Panic
+    };
+
+    extern std::map<std::string, ExceptionHandleType> exception_categories;
+
     void parseString(std::wistream &input, wstr &value);
 
     void set_current_file_path(const std::wstring &path);
@@ -60,7 +68,7 @@ namespace yoi {
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 
-    void warning(yoi::indexT line, yoi::indexT col, const std::string &msg);
+    void warning(yoi::indexT line, yoi::indexT col, const std::string &msg, const std::string &label);
 
     void yoi_assert(bool cond, yoi::indexT line, yoi::indexT col, const std::string &msg);
 

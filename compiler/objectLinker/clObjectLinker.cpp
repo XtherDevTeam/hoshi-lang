@@ -174,7 +174,7 @@ namespace yoi {
         }
 
         if (!isResolved)
-            warning(0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.");
+            warning(0, 0, "Unable to find UCRT library. Please ensure Windows Kits are installed.", "UCRT_NOT_FOUND");
         
         const char* lib_env = std::getenv("LIB");
         if (lib_env) {
@@ -227,7 +227,7 @@ namespace yoi {
             command += L" /LIBPATH:\"" + elysia_runtime_fs_path.wstring() + L"\"";
             command += L" elysia_runtime.lib";
         } else {
-            warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.");
+            warning(0, 0, "Elysia runtime library not specified. Linking may fail if runtime functions are used.", "ELYSIA_RUNTIME_NOT_FOUND");
         }
         // also link against msvcrt.lib
         // command += L" /LIBPATH:\"" + vsRuntimePath + L"\"";

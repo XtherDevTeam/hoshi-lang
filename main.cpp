@@ -50,6 +50,9 @@ void printUsage(const char* programName) {
               << "                                  Default: do not preserve intermediate files.\n"
               << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
               << "  -D <k> <v>, --define <k> <v>    Add a macro definition.\n"
+              << "  -W <key>, --warning <key>       Enable warning for a specific category.\n"
+              << "  -S <key>, --suppress <key>      Suppress warning for a specific category.\n"
+              << "  -E <key>, --error <key>         Treat error for a specific category as a warning.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
               << "  --whereami, -w                  Print the path to the hoshi-lang installation directory.\n"
               << "  -h, --help                      Display this help message.\n";
@@ -147,6 +150,33 @@ int main(int argc, const char **argv) {
                 macroDefs.emplace_back(key, value);
             } else {
                 std::cerr << "Error: " << arg << " requires two arguments.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "-W" || arg == "--warning") {
+            if (i + 1 < argc) {
+                std::string key = argv[++i];
+                yoi::exception_categories[key] = yoi::ExceptionHandleType::Warning;
+            } else {
+                std::cerr << "Error: " << arg << " requires one arguments.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "-S" || arg == "--suppress") {
+            if (i + 1 < argc) {
+                std::string key = argv[++i];
+                yoi::exception_categories[key] = yoi::ExceptionHandleType::Suppress;
+            } else {
+                std::cerr << "Error: " << arg << " requires one arguments.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
+        } else if (arg == "-E" || arg == "--error") {
+            if (i + 1 < argc) {
+                std::string key = argv[++i];
+                yoi::exception_categories[key] = yoi::ExceptionHandleType::Panic;
+            } else {
+                std::cerr << "Error: " << arg << " requires one arguments.\n";
                 printUsage(argv[0]);
                 return 1;
             }

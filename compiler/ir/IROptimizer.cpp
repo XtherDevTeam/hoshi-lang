@@ -2150,7 +2150,8 @@ namespace yoi {
                                         0,
                                         "IROptimizer::reduceEmptyCodeBlock(): Invalid jump target " + std::to_string(originalTarget) + " in block " +
                                             std::to_string(oldIndex) + " of function " + wstring2string(targetFunction->name) +
-                                            ". Replacing with NOP.");
+                                            ". Replacing with NOP.",
+                                        "INTERNAL");
                                 ins.opcode = IR::Opcode::nop;
                                 ins.operands.clear();
                                 continue;
@@ -2166,7 +2167,8 @@ namespace yoi {
                                         "IROptimizer::reduceEmptyCodeBlock(): Jump in block " + std::to_string(oldIndex) + " of function " +
                                             wstring2string(targetFunction->name) +
                                             " targets an empty region at the function's end. This control flow path is "
-                                            "being removed.");
+                                            "being removed.",
+                                        "INTERNAL");
                                 ins.opcode = IR::Opcode::nop;
                                 ins.operands.clear();
                             } else {
@@ -2541,7 +2543,8 @@ namespace yoi {
                                             "Invoking function with raw parameters but nullable value presents, this "
                                             "may cause unpredictable behavior: affected parameter " +
                                                 yoi::wstring2string(func->variableTable.getReversedVariableNameMap()[paramIndex]) + " at " +
-                                                yoi::wstring2string(func->name) + " called by " + yoi::wstring2string(targetFunction->name));
+                                                yoi::wstring2string(func->name) + " called by " + yoi::wstring2string(targetFunction->name),
+                                            "NULLABLE_VALUE_SUPPLY_TO_RAW");
                                 } else {
                                     if (globalAnalysisResults.at(calleeId).paramStates[paramIndex] !=
                                         FunctionAnalysisInfo::ParameterState::Nullable) {

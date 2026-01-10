@@ -11,6 +11,13 @@
 namespace yoi {
     yoi::wstr __current_file_path = L"";
 
+    std::map<std::string, ExceptionHandleType> exception_categories = {
+        {"NULLABLE_VALUE_SUPPLY_TO_RAW", ExceptionHandleType::Suppress},
+        {"INTERNAL", ExceptionHandleType::Panic},
+        {"UCRT_NOT_FOUND", ExceptionHandleType::Warning},
+        {"ELYSIA_RUNTIME_NOT_FOUND", ExceptionHandleType::Warning}
+    };
+
     void parseString(std::wistream &input, wstr &value) {
         wchar ch = '\0';
         while (input) {
@@ -100,7 +107,14 @@ namespace yoi {
         throw std::runtime_error(message);
     }
 
-    void warning(yoi::indexT line, yoi::indexT col, const std::string& msg) {
+    void warning(yoi::indexT line, yoi::indexT col, const std::string& msg, const std::string& label) {
+        if (exception_categories.find(label) == exception_categories.end() || exception_categories[label] == ExceptionHandleType::Suppress) {
+            return;
+        }
+        if (exception_categories[label] == ExceptionHandleType::Panic) {
+            panic(line, col, msg);
+        }
+
         auto message =  msg;
         if (!__current_file_path.empty()) {
             message += " near " + yoi::wstring2string(__current_file_path) + ":" + std::to_string(line + 1) + ":" + std::to_string(col + 1);
