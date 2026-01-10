@@ -46,6 +46,14 @@ impl ArrayBuffer : file.AbstractFile {
         this.current_pos += size
         return size + 0 // force raw value to be returned
     },
+    write(buf: char[], start: int, size: int) : int {
+        if (size > this.size - this.current_pos) {
+            size = this.size - this.current_pos
+        }
+        runtime.memcpy(runtime.runtime_get_string_array_data_pointer(this.buf) + this.current_pos as unsigned + start as unsigned, runtime.runtime_get_string_array_data_pointer(buf), size)
+        this.current_pos += size
+        return size + 0 // force raw value to be returned
+    },
     write(buf: char[], size: int) : int {
         if (size > this.size - this.current_pos) {
             size = this.size - this.current_pos

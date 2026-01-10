@@ -2923,7 +2923,7 @@ namespace yoi {
             }
 
             targetFunction->variableTable.get(varIndex) = managedPtr(*targetFunction->variableTable.get(varIndex));
-            if (isRaw && targetFunction->variableTable.get(varIndex)->isBasicType()) {
+            if (isRaw && targetFunction->variableTable.get(varIndex)->isBasicType() && !targetFunction->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Nullable)) {
                 targetFunction->variableTable.get(varIndex)->addAttribute(IRValueType::ValueAttr::Raw);
             } else {
                 targetFunction->variableTable.get(varIndex)->removeAttribute(IRValueType::ValueAttr::Raw);

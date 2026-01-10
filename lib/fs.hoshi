@@ -233,6 +233,7 @@ struct OSFile {
     constructor(fp: unsigned, isText: bool, path: str.Str, noFinalizer: bool),
     read(size: int) : file.ReadBufferView,
     write(data: char[]) : int,
+    write(data: char[], start: int, size: int) : int,
     write(data: char[], size: int) : int,
     close() : none,
     seek(offset: int, whence: int) : int,
@@ -269,6 +270,9 @@ impl OSFile {
     },
     write(data: char[]) : int {
         return runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, data.length - this.isText, this.fp)
+    },
+    write(data: char[], start: int, size: int) : int {
+        return runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data) + start, 1, size, this.fp)
     },
     write(data: char[], size: int) : int {
         return runtime.fwrite(runtime.runtime_get_string_array_data_pointer(data), 1, size, this.fp)
@@ -328,6 +332,9 @@ impl OSFile : file.AbstractFile {
     },
     write(data: char[]) : int {
         return this.write(data)
+    },
+    write(data: char[], start: int, size: int) : int {
+        return this.write(data, size)
     },
     write(data: char[], size: int) : int {
         return this.write(data, size)
