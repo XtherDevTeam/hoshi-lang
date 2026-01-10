@@ -98,5 +98,12 @@ impl ArrayBuffer : file.AbstractFile {
         let result = this.buf[this.current_pos]
         this.current_pos += 1
         return result + 0 // force raw value to be returned
+    },
+    putch(c: char) : none {
+        if (this.current_pos < this.size) {
+            this.buf[this.current_pos] = c
+            this.current_pos += 1
+        }
+        return
     }
 }

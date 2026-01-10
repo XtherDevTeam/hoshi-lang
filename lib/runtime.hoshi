@@ -18,6 +18,7 @@ import fflush(stream: ptr) : int32 from "builtin"
 import fwrite(ptr: ptr, size: unsigned, nmemb: unsigned, stream: ptr) : unsigned from "builtin"
 import feof(stream: ptr) : int32 from "builtin"
 import fgetc(stream: ptr) : int32 from "builtin"
+import fputc(c: char, stream: ptr) : int32 from "builtin"
 
 /* runtime thread library */
 import noffi runtime_start_thread(f: func () : none) : lang.Result<unsigned, int> from "builtin"

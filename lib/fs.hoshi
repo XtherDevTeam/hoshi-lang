@@ -245,6 +245,7 @@ struct OSFile {
     is_writable() : bool,
     is_closed() : bool,
     getch() : char,
+    putch(c: char) : none,
     finalizer()
 }
 
@@ -311,6 +312,9 @@ impl OSFile {
     getch() : char {
         return runtime.fgetc(this.fp)
     },
+    putch(c: char) : none {
+        runtime.fputc(c, this.fp)
+    },
     finalizer() {
         if (this.fp != 0 && this.noFinalizer == false) {
             this.close()
@@ -360,6 +364,10 @@ impl OSFile : file.AbstractFile {
     },
     getch() : char {
         return this.getch()
+    },
+    putch(c: char) : none {
+        this.putch(c)
+        return
     }
 }
 
