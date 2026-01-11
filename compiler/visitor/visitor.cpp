@@ -3829,7 +3829,7 @@ namespace yoi {
         yoi_assert(rhs->type == IRValueType::valueType::interfaceObject,
                    dynCastExpression->expr->getLine(),
                    dynCastExpression->expr->getColumn(),
-                   "dynamic cast can only be applied to interface objects to struct objects.");
+                   "dynamic cast can only be applied to interface objects to struct objects. Type: " + yoi::wstring2string(rhs->to_string()));
 
         auto &impls =
             moduleContext->getCompilerContext()->getImportedModule(rhs->typeAffiliateModule)->interfaceTable[rhs->typeIndex]->implementations;
