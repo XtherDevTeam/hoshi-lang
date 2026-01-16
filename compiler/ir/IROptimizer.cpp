@@ -10,7 +10,6 @@
 
 #include <cmath>
 #include <cstdint>
-#include <iostream>
 #include <memory>
 #include <queue>
 
@@ -3246,14 +3245,17 @@ namespace yoi {
     AnalysisState IRFunctionOptimizer::analyzeBlockForInterfaceAllocationReduction(indexT blockIndex, const AnalysisState &inState) {
         simulationStack = inState.stack;
         variablesExtraInfo.clear();
+        // printf("%s (block %llu): Variable extra infos cleared.\n", wstring2string(targetFunction->name).c_str(), blockIndex);
         for (const auto &[idx, state] : inState.variableStates) {
-            variablesExtraInfo[idx] = {false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}}};
+            // if (!state.possibleValue.metadata.metadata.empty())
+                // printf("%llu: persist metadata %s\n", idx, wstring2string(state.possibleValue.metadata.to_string()).c_str());
+            variablesExtraInfo[idx] = {false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}, state.possibleValue.metadata}};
         }
 
         auto getVarType = [&](indexT varIndex) {
             if (!variablesExtraInfo.count(varIndex)) {
                 auto originalType = targetFunction->variableTable.get(varIndex);
-                variablesExtraInfo[varIndex] = {false, true, {std::make_shared<IRValueType>(*originalType), false, {}}};
+                variablesExtraInfo[varIndex] = {false, true, {std::make_shared<IRValueType>(*originalType), false, {}, {}}};
             }
             return variablesExtraInfo.at(varIndex).possibleValue.type;
         };
@@ -3291,6 +3293,7 @@ namespace yoi {
                 case IR::Opcode::store_local: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
+                    
                     auto varType = getVarType(ins.operands[0].value.symbolIndex);
                     // still check incompatible metadatas, if anything go wrong, remove it
                     if (variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata.hasMetadata(L"delayed_interface_impl") &&
@@ -3462,6 +3465,7 @@ namespace yoi {
                         mergedMetadata.setMetadata(L"delayed_interface_impl", impl1);
                     } else {
                         // different implementations or one is not optimized, cannot keep optimization
+                        // printf("(block %llu) %llu: discarded metadata %s\n", currentCodeBlockIndex, key, wstring2string(it2->second.possibleValue.metadata.to_string()).c_str());
                         mergedMetadata.setMetadata(L"delayed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{-1, -1});
                     }
                 }
@@ -4490,17 +4494,18 @@ namespace yoi {
                         delayedInterfaceImplInfo = impl;
                         isDelayedInterfaceImplInfoInitialized = true;
                     } else {
-                        if (delayedInterfaceImplInfo != impl || delayedInterfaceImplInfo.first == -1) {
+                        if (delayedInterfaceImplInfo != impl || impl.first == -1 || delayedInterfaceImplInfo.first == -1) {
                             delayedInterfaceImplInfo = {-1, -1};
                             break;
                         }
                     }
-                    break;
                 }
             }
-            if (delayedInterfaceImplInfo.first != -1) {
-                auto var = targetFunction->variableTable.getVariables()[varIndex];
+            if (auto var = targetFunction->variableTable.getVariables()[varIndex]; delayedInterfaceImplInfo.first != -1) {
                 var->metadata.setMetadata(L"regressed_interface_impl", delayedInterfaceImplInfo);
+            } else if (isDelayedInterfaceImplInfoInitialized) {
+                // printf("invalid metadata, detected, eliminating...\n");
+                var->metadata.eraseMetadata(L"regressed_interface_impl");
             }
         }
 

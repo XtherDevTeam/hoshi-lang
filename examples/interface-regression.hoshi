@@ -44,9 +44,14 @@ impl Theresa : Bishop {
 }
 
 func main() : int {
+    let random_condition = true
     let thisShallRegress = Bishop(OttoApocalypse())
-    let thisShallNotRegress = Bishop(OttoApocalypse())
-    thisShallNotRegress = Theresa()
+    let thisShallNotRegress : Bishop = null
+    if (random_condition) {
+        thisShallNotRegress = Theresa()
+    } else {
+        thisShallNotRegress = OttoApocalypse()
+    }
     thisShallRegress.sermon()
     thisShallNotRegress.sermon()
     runtime.puts("interface-regression: validation passed")
