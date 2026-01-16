@@ -26,5 +26,6 @@ var fs_8cpp =
     [ "runtime_fs_remove", "fs_8cpp.html#afc3d719c3c8d902629029a1d7d1d08f7", null ],
     [ "runtime_fs_rename", "fs_8cpp.html#a562e3ef3b98b13c83da4f706e7be6040", null ],
     [ "runtime_fs_rmdir", "fs_8cpp.html#a0fc45dbdf51c5542ff36b94ce33677a1", null ],
+    [ "runtime_fs_symlink", "fs_8cpp.html#a43e634e3454ad0850f09738689037b1f", null ],
     [ "runtime_fs_temp_dir", "fs_8cpp.html#a9024e3426967421c344069e6c2348041", null ]
 ];

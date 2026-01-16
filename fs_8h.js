@@ -21,5 +21,6 @@ var fs_8h =
     [ "runtime_fs_remove", "fs_8h.html#a82d6bb1736750d3f8fe1ad7f8b6d1fd7", null ],
     [ "runtime_fs_rename", "fs_8h.html#a859e651f7f3b5079df6e76fb499e027a", null ],
     [ "runtime_fs_rmdir", "fs_8h.html#aee13fe4f9b76c91b6571e9b931ef8eeb", null ],
+    [ "runtime_fs_symlink", "fs_8h.html#a96ed8e5c8040eb9449da48302bacbddb", null ],
     [ "runtime_fs_temp_dir", "fs_8h.html#a844a820c5a0f35fa32fc822f008efc38", null ]
 ];
