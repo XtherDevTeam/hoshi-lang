@@ -53,4 +53,6 @@ LIBFS_EXPORT char *runtime_fs_readdir(void *dir);
 
 LIBFS_EXPORT void runtime_fs_closedir(void *dir);
 
+LIBFS_EXPORT bool runtime_fs_symlink(const char *src_path, const char *dest_path);
+
 #endif //HOSHI_FS_H

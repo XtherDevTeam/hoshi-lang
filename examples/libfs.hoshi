@@ -20,11 +20,42 @@ func main() : int {
         return 1
     }
     console.print("Created directory: ", p.to_string(), "\n")
+
+    p = fs.Path.current_dir() / "test_dir1"
+    console.print("Create symbol link from ", p, " to ", fs.Path.current_dir() / "test_dir1_link", "\n")
+    if (p.symlink_to(fs.Path.current_dir() / "test_dir1_link") == false) {
+        console.print("Error: Cannot create symbol link: ", p.to_string(), "\n")
+        return 1
+    }
+    let sym_link = fs.Path.current_dir() / "test_dir1_link"
+    console.print("Created symbol link: ", p.to_string(), " -> ", sym_link.to_string(), "\n")
+    if (sym_link.exists() == false) {
+        console.print("Error: Cannot find symbol link: ", sym_link.to_string(), "\n")
+        return 1
+    }
+
+    let sym_link_content = sym_link.listdir()
+    for (let i = 0; i < sym_link_content.length; i += 1) {
+        console.print(sym_link_content[i].to_string(), "\n")
+    }
+    
+
+    if (sym_link.remove(true) == false) {
+        console.print("Error: Cannot remove symbol link: ", sym_link.to_string(), "\n")
+        return 1
+    }
+    if (sym_link.exists()) {
+        console.print("Error: symbol link still exists: ", sym_link.to_string(), "\n")
+        return 1
+    }
+    console.print("Removed symbol link: ", sym_link.to_string(), "\n")
+
     fs.Path("./test_dir1").remove(true)
     if (fs.Path("./test_dir1").exists()) {
         console.print("Error: Cannot remove directory: ", p.to_string(), "\n")
         return 1
     }
+
     console.print("Removed directory: ", p.to_string(), "\n")
     let dirs = fs.Path.current_dir().listdir()
     for (let i = 0; i < dirs.length; i += 1) {

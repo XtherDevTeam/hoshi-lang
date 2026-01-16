@@ -38,7 +38,8 @@ struct Path {
     listdir() : vec.Vec<Path>,
     stem() : str.Str,
     extension() : str.Str,
-    filename() : str.Str
+    filename() : str.Str,
+    symlink_to(target: Path) : bool
 }
 
 impl Path {
@@ -158,7 +159,9 @@ impl Path {
             for (let index = 0;index < entries.length; index += 1) {
                 entries[index].remove(recursive)
             }
-            return runtime.runtime_fs_rmdir(s.c_str())
+            return runtime.runtime_fs_remove(s.c_str())
+        } else {
+            lang.runtime_panic("unknown file type")
         }
         return false
     },
@@ -215,6 +218,11 @@ impl Path {
             return ""
         }
         return this.parts[this.parts.length - 1]
+    },
+    symlink_to(target: Path) : bool {
+        let s = this.to_string()
+        let t = target.to_string()
+        return runtime.runtime_fs_symlink(s.c_str(), t.c_str())
     }
 }
 

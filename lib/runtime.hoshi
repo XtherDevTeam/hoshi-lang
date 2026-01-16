@@ -77,5 +77,6 @@ import runtime_fs_rename(oldpath: ptr, newpath: ptr) : bool from "builtin"
 import runtime_fs_opendir(path: ptr) : ptr from "builtin"
 import runtime_fs_readdir(dirp: ptr) : ptr from "builtin"
 import runtime_fs_closedir(dirp: ptr) : int from "builtin"
+import runtime_fs_symlink(src_path: ptr, dst_path: ptr) : bool from "builtin"
 
 import runtime_fs_finalize(res: ptr) : none from "builtin"
