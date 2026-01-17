@@ -160,8 +160,6 @@ impl Path {
                 entries[index].remove(recursive)
             }
             return runtime.runtime_fs_remove(s.c_str())
-        } else {
-            lang.runtime_panic("unknown file type")
         }
         return false
     },
