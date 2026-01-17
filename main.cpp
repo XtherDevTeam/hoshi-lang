@@ -55,6 +55,7 @@ void printUsage(const char* programName) {
               << "  -E <key>, --error <key>         Treat error for a specific category as a warning.\n"
               << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
               << "  --whereami, -w                  Print the path to the hoshi-lang installation directory.\n"
+              << "  --build-number                  Print the build number of hoshi-lang.\n"
               << "  -h, --help                      Display this help message.\n";
 }
 
@@ -143,6 +144,9 @@ int main(int argc, const char **argv) {
         } else if (arg == "--whereami" || arg == "-w") {
             std::cout << yoi::wstring2string(yoi::realpath(yoi::whereIsHoshiLang()));
             return 0; 
+        } else if (arg == "--build-number") {
+            std::cout << HOSHI_LANG_VERSION << "\n";
+            return 0;
         } else if (arg == "-D" || arg == "--define") {
             if (i + 2 < argc) {
                 yoi::wstr key = yoi::string2wstring(argv[++i]);

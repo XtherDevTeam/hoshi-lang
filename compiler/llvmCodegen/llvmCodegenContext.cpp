@@ -2130,23 +2130,21 @@ namespace yoi {
                 // failed match
                 Builder->SetInsertPoint(failedMatchBB);
                 auto *falseBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 0, true);
-                auto *falseObject = createBasicObject(compilerCtx->getBoolObjectType(), falseBoolean);
                 Builder->CreateBr(continueBB);
                 // success match
                 Builder->SetInsertPoint(successBB);
                 auto *trueBoolean = llvm::ConstantInt::get(Builder->getInt1Ty(), 1, true);
-                auto *trueObject = createBasicObject(compilerCtx->getBoolObjectType(), trueBoolean);
                 Builder->CreateBr(continueBB);
                 // in continue block, decrement the interface refcount
                 // but phi first
                 Builder->SetInsertPoint(continueBB);
-                auto phiNode = Builder->CreatePHI(llvm::PointerType::get(yoiTypeToLLVMType(compilerCtx->getBoolObjectType()), 0), 2, "phi_node");
-                phiNode->addIncoming(trueObject, successBB);
-                phiNode->addIncoming(falseObject, failedMatchBB);
+                auto phiNode = Builder->CreatePHI(llvm::Type::getInt1Ty(*TheContext), 2, "phi_node");
+                phiNode->addIncoming(trueBoolean, successBB);
+                phiNode->addIncoming(falseBoolean, failedMatchBB);
 
                 callGcFunction(interfaceValue.llvmValue, interfaceValue.yoiType, false);
                 callGcFunction(typeidValue.llvmValue, typeidValue.yoiType, false);
-                valueStackPhi.push_back({phiNode, compilerCtx->getBoolObjectType()});
+                valueStackPhi.push_back({phiNode, managedPtr(compilerCtx->getBoolObjectType()->getBasicRawType())});
                 break;
             }
             case IR::Opcode::typeid_object_non_stack: {

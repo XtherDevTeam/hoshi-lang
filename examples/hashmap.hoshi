@@ -1,6 +1,7 @@
 use hashMap "hashMap"
 use str "str"
 use runtime "runtime"
+use lang "builtin"
 
 func main() : int {
     let map = hashMap.HashMap<str.Str, int>()
@@ -21,6 +22,16 @@ func main() : int {
         runtime.puts("HashMap validation failed: value of 'TestCast' is not 0.123")
         return 1
     }
+    let map2 = hashMap.HashMap<str.Str, lang.NullInterface>()
+    map2["Hello"] = 0xe1751a
+    map2["World"] = "Hello, World!"
+    if (map2.contains("Hello") && map2["Hello"] interfaceof int) {
+        runtime.puts("HashMap validation: value of 'Hello' is an int")
+    } else {
+        runtime.puts("HashMap validation: value of 'Hello' is not an int")
+        return 1
+    }
+
     runtime.puts("HashMap validation passed")
     return 0
 }

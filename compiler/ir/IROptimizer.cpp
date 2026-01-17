@@ -1994,6 +1994,9 @@ namespace yoi {
     }
 
     IRFunctionOptimizer &IRFunctionOptimizer::doOptimizationForCurrentFunction() {
+        if (targetFunction->codeBlock.empty())
+            return *this;
+
         std::map<indexT, std::vector<indexT>> successors;
         std::map<indexT, std::vector<indexT>> predecessors;
         for (auto i = 0; i < targetFunction->codeBlock.size(); i++) {
@@ -3230,6 +3233,17 @@ namespace yoi {
                     auto resultType = std::make_shared<IRValueType>(*l.type);
                     resultType->addAttribute(IRValueType::ValueAttr::Raw);
                     simulationStack.push(resultType, {});
+                    break;
+                }
+                case IR::Opcode::interfaceof: {
+                    // pop two values and push one boolean value
+                    auto interfaceType = simulationStack.peek(0).type;
+                    auto objectType = simulationStack.peek(1).type;
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    IRValueType result = *compilerCtx->getBoolObjectType();
+                    result = result.getBasicRawType();
+                    simulationStack.push(managedPtr(result), {currentCodeBlockIndex, {}, false});
                     break;
                 }
                 default: {
