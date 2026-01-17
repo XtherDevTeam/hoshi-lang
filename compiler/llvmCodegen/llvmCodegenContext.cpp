@@ -2434,11 +2434,10 @@ namespace yoi {
     }
 
     void LLVMCodegen::generateTargetObjectCode(const yoi::wstr &pathToOutput) {
-        llvm::InitializeAllTargetInfos();
-        llvm::InitializeAllTargets();
-        llvm::InitializeAllTargetMCs();
-        llvm::InitializeAllAsmParsers();
-        llvm::InitializeAllAsmPrinters();
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmParser();
+        llvm::InitializeNativeTargetDisassembler();
+        llvm::InitializeNativeTargetAsmPrinter();
 
         auto TargetTriple = llvm::sys::getDefaultTargetTriple();
         TheModule->setTargetTriple(TargetTriple);

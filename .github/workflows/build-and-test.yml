@@ -25,11 +25,17 @@ jobs:
           sudo ./llvm.sh 20 all
           echo "LLVM_PATH=$(llvm-config-20 --prefix)" >> $GITHUB_ENV
 
+      - name: Further setup for Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt install libzstd-dev zlib1g-dev zlib1g llvm-20-dev llvm-20-linker-tools libpolly-20-dev -y
+
       - name: Install LLVM and Clang (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install llvm@20
+          brew install llvm@20 zstd zlib
           echo "LLVM_PATH=$(brew --prefix llvm@20)" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib" >> $GITHUB_ENV
 
       - name: Setup PATH
         run: echo "$LLVM_PATH/bin" >> $GITHUB_PATH
