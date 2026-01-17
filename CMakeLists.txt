@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(hoshi_lang)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(LLVM REQUIRED CONFIG)
 
@@ -26,9 +26,6 @@ find_program(LLVM_CONFIG_EXECUTABLE
 message(STATUS "Using llvm-config executable: ${LLVM_CONFIG_EXECUTABLE}")
 
 set(ADDITIONAL_LLVM_CONFIG_FLAGS --link-static)
-if (WIN32 OR DISABLE_STATIC_LLVM_LINKING)
-    set(ADDITIONAL_LLVM_CONFIG_FLAGS) # no additional flags needed for Windows
-endif()
 
 # 4. Execute process using the detected LLVM_CONFIG_EXECUTABLE
 execute_process(COMMAND ${LLVM_CONFIG_EXECUTABLE} --libs core support native linker lto ${ADDITIONAL_LLVM_CONFIG_FLAGS}
@@ -103,17 +100,21 @@ target_link_options(hoshi_lang PRIVATE ${LLVM_LDFLAGS_LIST})
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
-target_link_libraries(hoshi_lang PRIVATE ${llvm_components})
+target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
 
-target_link_libraries(hoshi_lang PRIVATE ${llvm_system_libs})
+if (WIN32)
+    
+else()
+    target_link_libraries(hoshi_lang PRIVATE ${llvm_system_libs_list})
+endif()
 
 target_link_directories(hoshi_lang PRIVATE ${llvm_libdir})
 
 if (WIN32)
     set(WINDOWS_SYSTEM_LIBS ntdll.lib shell32.lib user32.lib advapi32.lib)
-    target_link_libraries(hoshi_lang PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components})
+    target_link_libraries(hoshi_lang PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components_list})
 else()
-    target_link_libraries(hoshi_lang PRIVATE ${llvm_components})
+    target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
 endif()
 
 # if build in release mode, add CXX marco definition ELYSIA_RUNTIME_BUILD_TYPE_RELEASE
