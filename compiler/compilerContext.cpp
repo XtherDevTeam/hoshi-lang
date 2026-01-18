@@ -72,6 +72,7 @@ namespace yoi {
 
             // temporarily add current directory to search path
             buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().wstring());
+            buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().append(".pardo_modules").wstring());
 
             fseek(fp, 0, SEEK_END);
             auto size = ftell(fp);
