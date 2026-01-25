@@ -155,9 +155,11 @@ impl Path {
         if (this.is_file()) {
             return runtime.runtime_fs_remove(s.c_str())
         } elif (this.is_directory()) {
-            let entries = this.listdir()
-            for (let index = 0;index < entries.length; index += 1) {
-                entries[index].remove(recursive)
+            if (recursive) {
+                let entries = this.listdir()
+                for (let index = 0;index < entries.length; index += 1) {
+                    entries[index].remove(recursive)
+                }
             }
             return runtime.runtime_fs_remove(s.c_str())
         }
