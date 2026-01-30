@@ -56,11 +56,16 @@ namespace yoi {
                     rFilepath = (std::filesystem::path(rFilepath) / "index.hoshi").wstring();
                     break;
                 } else {
+                    rFilepath.clear();
                     continue;
                 }
             }
         } else {
             return HOSHI_COMPILER_CTX_GLOB_ID_CONST;
+        }
+
+        if (rFilepath.empty()) { 
+            throw std::runtime_error("file not resolved in all search paths: " + wstring2string(filepath));
         }
         
         try {
@@ -103,6 +108,7 @@ namespace yoi {
             set_current_file_path(current_file);
 
             // pop current directory from search path
+            buildConfig->searchPaths.pop_back();
             buildConfig->searchPaths.pop_back();
             
             return idx;
