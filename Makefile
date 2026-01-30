@@ -2,6 +2,7 @@ generate_define:
 	python tools/generate_defines.py
 
 mimalloc-files:
+	mkdir -p cmake-build-debug && mkdir -p cmake-build-release
 	git submodule update --init --recursive
 	mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
 	cp mimalloc/build/*.a cmake-build-debug/ || true
@@ -42,7 +43,7 @@ package:
 	mkdir -p build-package/bin
 	cp cmake-build-release/*hoshi* build-package/bin
 	cp cmake-build-release/*elysia* build-package/bin
-	cp cmake-build-release/*mimalloc* build-package/bin
+	cp cmake-build-release/*mimalloc* build-package/bin || true
 	cp tools/hperf-view.py build-package/bin
 	cp -r lib build-package/lib
 	cp LICENSE build-package/
