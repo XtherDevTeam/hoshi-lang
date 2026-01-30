@@ -2,6 +2,9 @@
 #include "runtime/hperf/hperf.h"
 #include "runtime/memory/memory.h"
 
+// mimalloc requirement
+#pragma comment(lib, "Advapi32.lib")
+
 #include <cstdio>
 #include <cstring>
 

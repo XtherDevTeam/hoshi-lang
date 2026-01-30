@@ -3,12 +3,12 @@ generate_define:
 
 mimalloc-files:
 	git submodule update --init --recursive
-	mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
+	mkdir -p mimalloc/build && cd mimalloc/build && cmake -DCMAKE_BUILD_TYPE=Release -DMI_BUILD_SHARED=OFF -DMI_BUILD_STATIC=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DMI_OVERRIDE=OFF .. && cmake --build . --config Release && cd ../..
 	cp mimalloc/build/*.a cmake-build-debug/ || true
 	cp mimalloc/build/*.a cmake-build-release/ || true
 	# explicitly ignore non-existent files
-	cp mimalloc/build/Release/*.lib cmake-build-debug/ || true
-	cp mimalloc/build/Release/*.lib cmake-build-release/ || true
+	cp mimalloc/build/Release/mimalloc.lib cmake-build-debug/ || true
+	cp mimalloc/build/Release/mimalloc.lib cmake-build-release/ || true
 
 cmake_debug: generate_define mimalloc-files
 	cmake . -B cmake-build-debug  -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=DEBUG -G "Unix Makefiles"
@@ -42,6 +42,7 @@ package:
 	mkdir -p build-package/bin
 	cp cmake-build-release/*hoshi* build-package/bin
 	cp cmake-build-release/*elysia* build-package/bin
+	cp cmake-build-release/*mimalloc* build-package/bin
 	cp tools/hperf-view.py build-package/bin
 	cp -r lib build-package/lib
 	cp LICENSE build-package/
