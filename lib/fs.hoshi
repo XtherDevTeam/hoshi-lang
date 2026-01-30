@@ -47,16 +47,12 @@ impl Path {
         this.parts = parts
     },
     constructor(s: str.Str) {
-        if (s.length != 0 && s[s.length - 1] == '/' || s[s.length - 1] == '\\') {
+        if (s.length != 0 && (s[s.length - 1] == '/' || s[s.length - 1] == '\\')) {
             s.pop()
         }
-        let sep : str.Str = ""
-        if (path_sep_preference == PathSplitPreference.Backslash) {
-            sep = "/"
-        } else {
-            sep = "\\"
-        }
-        this.parts = vec.Vec<str.Str>(s.split(sep))
+        
+        let normalized = s.replace("\\", "/")
+        this.parts = vec.Vec<str.Str>(normalized.split("/"))
     },
     static operator/(left: Path, right: str.Str) : Path {
         let right_path = Path(right)
