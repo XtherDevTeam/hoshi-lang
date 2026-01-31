@@ -171,6 +171,8 @@ Functions</h2></td></tr>
 <tr class="separator:ad849ea6dedc673b7b494c6f1356da5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5fff49528708c055e8c064350a9d11" id="r_a4d5fff49528708c055e8c064350a9d11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11">runtime_fs_isdir</a> (const char *path)</td></tr>
 <tr class="separator:a4d5fff49528708c055e8c064350a9d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ec3239fd7aa1d839ac4890c6c34d8e0" id="r_a8ec3239fd7aa1d839ac4890c6c34d8e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fs_8cpp.html#a8ec3239fd7aa1d839ac4890c6c34d8e0">runtime_fs_issymlink</a> (const char *path)</td></tr>
+<tr class="separator:a8ec3239fd7aa1d839ac4890c6c34d8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ec16ea75b66cf5fc75140115a3c5767" id="r_a7ec16ea75b66cf5fc75140115a3c5767"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fs_8cpp.html#a7ec16ea75b66cf5fc75140115a3c5767">runtime_fs_get_mtime</a> (const char *path)</td></tr>
 <tr class="separator:a7ec16ea75b66cf5fc75140115a3c5767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0b62100840a56e36b49df2b9459394" id="r_afe0b62100840a56e36b49df2b9459394"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fs_8cpp.html#afe0b62100840a56e36b49df2b9459394">runtime_fs_get_size</a> (const char *path)</td></tr>
@@ -344,27 +346,29 @@ Functions</h2></td></tr>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00060">stat_func</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="fs_8cpp_source.html#l00113">runtime_fs_get_atime()</a>, <a class="el" href="fs_8cpp_source.html#l00106">runtime_fs_get_ctime()</a>, <a class="el" href="fs_8cpp_source.html#l00092">runtime_fs_get_mtime()</a>, <a class="el" href="fs_8cpp_source.html#l00099">runtime_fs_get_size()</a>, <a class="el" href="fs_8cpp_source.html#l00120">runtime_fs_get_uid()</a>, <a class="el" href="fs_8cpp_source.html#l00085">runtime_fs_isdir()</a>, and <a class="el" href="fs_8cpp_source.html#l00078">runtime_fs_isfile()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="fs_8cpp_source.html#l00127">runtime_fs_get_atime()</a>, <a class="el" href="fs_8cpp_source.html#l00120">runtime_fs_get_ctime()</a>, <a class="el" href="fs_8cpp_source.html#l00106">runtime_fs_get_mtime()</a>, <a class="el" href="fs_8cpp_source.html#l00113">runtime_fs_get_size()</a>, <a class="el" href="fs_8cpp_source.html#l00134">runtime_fs_get_uid()</a>, <a class="el" href="fs_8cpp_source.html#l00085">runtime_fs_isdir()</a>, and <a class="el" href="fs_8cpp_source.html#l00078">runtime_fs_isfile()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="fs_8cpp_a1e196d1ee145b4c03194bc94fad1a4a6_icgraph.png" border="0" usemap="#afs_8cpp_a1e196d1ee145b4c03194bc94fad1a4a6_icgraph" alt=""/></div>
 <map name="afs_8cpp_a1e196d1ee145b4c03194bc94fad1a4a6_icgraph" id="afs_8cpp_a1e196d1ee145b4c03194bc94fad1a4a6_icgraph">
-<area shape="rect" title=" " alt="" coords="224,153,299,179"/>
-<area shape="rect" href="fs_8cpp.html#a1c09202644cd55514af266932e1b4abb" title=" " alt="" coords="8,5,173,31"/>
-<area shape="poly" title=" " alt="" coords="247,142,219,92,199,66,174,44,154,33,157,28,178,40,202,62,223,89,252,140"/>
-<area shape="rect" href="fs_8cpp.html#a8ecb0c265c363ad8cee7ca47b5300ff5" title=" " alt="" coords="9,55,173,80"/>
-<area shape="poly" title=" " alt="" coords="238,145,209,118,175,94,149,83,151,78,177,89,213,114,241,141"/>
-<area shape="rect" href="fs_8cpp.html#a7ec16ea75b66cf5fc75140115a3c5767" title=" " alt="" coords="5,104,176,129"/>
-<area shape="poly" title=" " alt="" coords="210,154,175,143,136,132,138,127,177,138,211,148"/>
-<area shape="rect" href="fs_8cpp.html#afe0b62100840a56e36b49df2b9459394" title=" " alt="" coords="14,153,167,179"/>
-<area shape="poly" title=" " alt="" coords="210,169,167,169,167,163,210,163"/>
-<area shape="rect" href="fs_8cpp.html#a50ba6e1ede5b19d4cd24ad86082d4092" title=" " alt="" coords="17,203,164,228"/>
-<area shape="poly" title=" " alt="" coords="211,183,136,205,135,200,210,178"/>
-<area shape="rect" href="fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11" title=" " alt="" coords="27,252,154,277"/>
-<area shape="poly" title=" " alt="" coords="241,190,212,217,177,242,148,254,146,249,175,237,209,213,238,187"/>
-<area shape="rect" href="fs_8cpp.html#ad849ea6dedc673b7b494c6f1356da5aa" title=" " alt="" coords="25,301,156,327"/>
-<area shape="poly" title=" " alt="" coords="251,192,223,242,202,268,178,291,154,304,151,299,174,286,198,265,218,239,247,190"/>
+<area shape="rect" title=" " alt="" coords="423,153,497,179"/>
+<area shape="rect" href="fs_8cpp.html#a1c09202644cd55514af266932e1b4abb" title=" " alt="" coords="207,5,372,31"/>
+<area shape="poly" title=" " alt="" coords="446,142,418,92,397,66,373,44,353,33,355,28,376,40,401,62,422,89,450,140"/>
+<area shape="rect" href="fs_8cpp.html#a8ecb0c265c363ad8cee7ca47b5300ff5" title=" " alt="" coords="207,55,371,80"/>
+<area shape="poly" title=" " alt="" coords="436,145,408,118,373,94,347,83,350,78,376,89,411,114,440,141"/>
+<area shape="rect" href="fs_8cpp.html#a7ec16ea75b66cf5fc75140115a3c5767" title=" " alt="" coords="204,104,375,129"/>
+<area shape="poly" title=" " alt="" coords="409,154,374,143,335,132,336,127,375,138,410,148"/>
+<area shape="rect" href="fs_8cpp.html#afe0b62100840a56e36b49df2b9459394" title=" " alt="" coords="213,153,366,179"/>
+<area shape="poly" title=" " alt="" coords="409,169,366,169,366,163,409,163"/>
+<area shape="rect" href="fs_8cpp.html#a50ba6e1ede5b19d4cd24ad86082d4092" title=" " alt="" coords="216,203,363,228"/>
+<area shape="poly" title=" " alt="" coords="410,183,335,205,334,200,408,178"/>
+<area shape="rect" href="fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11" title=" " alt="" coords="226,252,353,277"/>
+<area shape="poly" title=" " alt="" coords="440,190,411,217,376,242,346,254,344,249,373,237,408,213,436,187"/>
+<area shape="rect" href="fs_8cpp.html#ad849ea6dedc673b7b494c6f1356da5aa" title=" " alt="" coords="224,301,355,327"/>
+<area shape="poly" title=" " alt="" coords="450,192,421,242,401,268,376,291,353,304,350,299,373,286,397,265,417,239,446,190"/>
+<area shape="rect" href="fs_8cpp.html#a43e634e3454ad0850f09738689037b1f" title=" " alt="" coords="5,252,156,277"/>
+<area shape="poly" title=" " alt="" coords="212,267,156,267,156,262,212,262"/>
 </map>
 </div>
 
@@ -386,7 +390,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00323">323</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00344">344</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +409,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00195">195</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00209">209</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -445,7 +449,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00237">237</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00251">251</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -465,7 +469,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00113">113</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00127">127</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
 <div class="dynheader">
@@ -497,7 +501,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00106">106</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00120">120</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
 <div class="dynheader">
@@ -529,7 +533,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00092">92</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00106">106</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
 <div class="dynheader">
@@ -561,7 +565,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00099">99</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00113">113</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
 <div class="dynheader">
@@ -593,7 +597,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00120">120</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00134">134</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
 <div class="dynheader">
@@ -624,7 +628,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00163">163</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00177">177</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -647,6 +651,8 @@ Here is the call graph for this function:</div>
 <p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00085">85</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="fs_8cpp_source.html#l00064">get_stat()</a>, and <a class="el" href="fs_8cpp_source.html#l00059">stat_struct</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="fs_8cpp_source.html#l00359">runtime_fs_symlink()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -655,6 +661,16 @@ Here is the call graph for this function:</div>
 <area shape="rect" title=" " alt="" coords="5,5,132,31"/>
 <area shape="rect" href="fs_8cpp.html#a1e196d1ee145b4c03194bc94fad1a4a6" title=" " alt="" coords="180,5,255,31"/>
 <area shape="poly" title=" " alt="" coords="132,15,166,15,166,21,132,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="fs_8cpp_a4d5fff49528708c055e8c064350a9d11_icgraph.png" border="0" usemap="#afs_8cpp_a4d5fff49528708c055e8c064350a9d11_icgraph" alt=""/></div>
+<map name="afs_8cpp_a4d5fff49528708c055e8c064350a9d11_icgraph" id="afs_8cpp_a4d5fff49528708c055e8c064350a9d11_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,331,31"/>
+<area shape="rect" href="fs_8cpp.html#a43e634e3454ad0850f09738689037b1f" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
 </map>
 </div>
 
@@ -692,6 +708,26 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a8ec3239fd7aa1d839ac4890c6c34d8e0" name="a8ec3239fd7aa1d839ac4890c6c34d8e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ec3239fd7aa1d839ac4890c6c34d8e0">&#9670;&#160;</a></span>runtime_fs_issymlink()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool runtime_fs_issymlink </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00092">92</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ac909f13cba1c032ef67b9d579a417b83" name="ac909f13cba1c032ef67b9d579a417b83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac909f13cba1c032ef67b9d579a417b83">&#9670;&#160;</a></span>runtime_fs_mkdir()</h2>
 
@@ -718,7 +754,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00243">243</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00257">257</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -738,7 +774,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00271">271</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00292">292</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -758,7 +794,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00298">298</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00319">319</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -778,7 +814,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00225">225</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00239">239</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -798,7 +834,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00263">263</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00277">277</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -828,7 +864,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00267">267</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00288">288</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -848,7 +884,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00253">253</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00267">267</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>
@@ -878,7 +914,21 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00338">338</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00359">359</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="fs_8cpp_source.html#l00085">runtime_fs_isdir()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="fs_8cpp_a43e634e3454ad0850f09738689037b1f_cgraph.png" border="0" usemap="#afs_8cpp_a43e634e3454ad0850f09738689037b1f_cgraph" alt=""/></div>
+<map name="afs_8cpp_a43e634e3454ad0850f09738689037b1f_cgraph" id="afs_8cpp_a43e634e3454ad0850f09738689037b1f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,31"/>
+<area shape="rect" href="fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11" title=" " alt="" coords="204,5,331,31"/>
+<area shape="poly" title=" " alt="" coords="156,15,190,15,190,21,156,21"/>
+<area shape="rect" href="fs_8cpp.html#a1e196d1ee145b4c03194bc94fad1a4a6" title=" " alt="" coords="379,5,453,31"/>
+<area shape="poly" title=" " alt="" coords="331,15,365,15,365,21,331,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -897,7 +947,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00127">127</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fs_8cpp_source.html#l00141">141</a> of file <a class="el" href="fs_8cpp_source.html">fs.cpp</a>.</p>
 
 </div>
 </div>

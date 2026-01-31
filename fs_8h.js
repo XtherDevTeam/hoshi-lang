@@ -14,6 +14,7 @@ var fs_8h =
     [ "runtime_fs_home_dir", "fs_8h.html#a617d286b8fe9a980435934a72d807a70", null ],
     [ "runtime_fs_isdir", "fs_8h.html#a2ecdbb06ccdbdb762d8e79eaca7ffbaf", null ],
     [ "runtime_fs_isfile", "fs_8h.html#a74a432d3954b9c05f747c292727a6980", null ],
+    [ "runtime_fs_issymlink", "fs_8h.html#aa0cfeab56989e2360f588647ae6c0c0d", null ],
     [ "runtime_fs_mkdir", "fs_8h.html#a3f3f909e521ae1c1a484c71b09d3e62c", null ],
     [ "runtime_fs_opendir", "fs_8h.html#ae61d1fb4f6cbe49eea9f2d1a0ed646f0", null ],
     [ "runtime_fs_readdir", "fs_8h.html#a4967dd138a193659c8952d2df1bf1772", null ],

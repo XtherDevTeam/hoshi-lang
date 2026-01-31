@@ -273,14 +273,14 @@ var NAVTREEINDEX =
 "classyoi_1_1structDefInner.html#a06c7e9c33bcc008578dc883a58b9a4e8",
 "classyoi_1_1visitor.html#a52b461f1a6fcd065affbf392b8bfb254",
 "fs_8cpp.html#a0e098c578c22e5bf51f1d32417ce1911",
-"magic__enum_8h.html#a4baaad87763b818d7c8b926fd6df0087",
-"namespacemagic__enum.html#a0834fe0b701892852ec14cddfb9d9e84",
-"namespaceyoi.html#a8f84bc9a7a8c95b627a21e692cbc7f70",
-"runtime_8h.html#af0ae230516c0f75ab758b046d019f5be",
-"structyoi_1_1FunctionAnalysisInfo.html#a02b832de27c9164e3fb0b166655d115ba4cd8413207629a963225f4314b53adcd",
-"structyoi_1_1IRMetadata.html#a892396828b8a2eda8106d0aa9e11e4c3",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a8ccce5d2736d410907346cc4e1605b52",
-"unionyoi_1_1globalStmt_1_1vValue.html"
+"magic__enum_8h.html#a49389ad68be4736801c46fcceb05c25b",
+"namespacemagic__enum.html",
+"namespaceyoi.html#a8f1438021133dfad893c8aa756b3a7fd",
+"runtime_8h.html#ae9124faa3d68ed08c39e2d26d1c0b456",
+"structyoi_1_1FunctionAnalysisInfo.html#a02b832de27c9164e3fb0b166655d115ba46ad517b8b7aa4e368a7cc226533bfb6",
+"structyoi_1_1IRMetadata.html",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a87c422dba3b7ab4550faa2ca012c6cbb",
+"unionyoi_1_1IROperand_1_1operandValue.html#acc27ee0dd1c490cd660915990e9b35c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

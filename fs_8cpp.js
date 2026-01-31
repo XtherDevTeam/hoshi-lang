@@ -19,6 +19,7 @@ var fs_8cpp =
     [ "runtime_fs_home_dir", "fs_8cpp.html#a0e098c578c22e5bf51f1d32417ce1911", null ],
     [ "runtime_fs_isdir", "fs_8cpp.html#a4d5fff49528708c055e8c064350a9d11", null ],
     [ "runtime_fs_isfile", "fs_8cpp.html#ad849ea6dedc673b7b494c6f1356da5aa", null ],
+    [ "runtime_fs_issymlink", "fs_8cpp.html#a8ec3239fd7aa1d839ac4890c6c34d8e0", null ],
     [ "runtime_fs_mkdir", "fs_8cpp.html#ac909f13cba1c032ef67b9d579a417b83", null ],
     [ "runtime_fs_opendir", "fs_8cpp.html#ac4111934b84d4f1acf739344dc2979d4", null ],
     [ "runtime_fs_readdir", "fs_8cpp.html#ae1dd57f1b1b6554f9d8b23bba6299491", null ],
