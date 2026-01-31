@@ -22,6 +22,7 @@ struct Path {
     static operator/(left: Path, right: Path) : Path,
     is_file() : bool,
     is_directory() : bool,
+    is_symlink() : bool,
     exists() : bool,
     parent() : Path,
     static current_dir() : Path,
@@ -76,6 +77,10 @@ impl Path {
     is_directory() : bool {
         let dir_path = this.to_string()
         return runtime.runtime_fs_isdir(dir_path.c_str())
+    },
+    is_symlink() : bool {
+        let path = this.to_string()
+        return runtime.runtime_fs_issymlink(path.c_str())
     },
     exists() : bool {
         let file_path = this.to_string()
@@ -148,7 +153,7 @@ impl Path {
     },
     remove(recursive: bool) : bool {
         let s = this.to_string()
-        if (this.is_file()) {
+        if (this.is_file() || this.is_symlink()) {
             return runtime.runtime_fs_remove(s.c_str())
         } elif (this.is_directory()) {
             if (recursive) {

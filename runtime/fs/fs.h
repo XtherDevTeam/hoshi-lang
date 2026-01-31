@@ -17,6 +17,8 @@ LIBFS_EXPORT bool runtime_fs_isfile(const char* path);
 
 LIBFS_EXPORT bool runtime_fs_isdir(const char* path);
 
+LIBFS_EXPORT bool runtime_fs_issymlink(const char* path);
+
 LIBFS_EXPORT int64_t runtime_fs_get_mtime(const char* path);
 
 LIBFS_EXPORT uint64_t runtime_fs_get_size(const char* path);

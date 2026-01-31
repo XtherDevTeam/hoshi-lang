@@ -89,6 +89,20 @@ bool runtime_fs_isdir(const char *path) {
     return S_ISDIR(s.st_mode);
 }
 
+bool runtime_fs_issymlink(const char *path) {
+#ifdef _WIN32
+    DWORD attr = GetFileAttributesA(path);
+    if (attr == INVALID_FILE_ATTRIBUTES)
+        return false;
+    return (attr & FILE_ATTRIBUTE_REPARSE_POINT) != 0;
+#else
+    struct stat s;
+    if (lstat(path, &s) != 0)
+        return false;
+    return S_ISLNK(s.st_mode);
+#endif
+}
+
 int64_t runtime_fs_get_mtime(const char *path) {
     stat_struct s;
     if (get_stat(path, &s) != 0)
@@ -261,7 +275,14 @@ bool runtime_fs_rmdir(const char *path) {
 }
 
 bool runtime_fs_remove(const char *path) {
+#ifdef _WIN32
+    if (remove(path) == 0) {
+        return true;
+    }
+    return RemoveDirectoryA(path) != 0;
+#else
     return remove(path) == 0;
+#endif
 }
 
 bool runtime_fs_rename(const char *old_path, const char *new_path) {
