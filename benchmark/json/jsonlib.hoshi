@@ -14,7 +14,7 @@ func main() : int {
     f.close()
     console.print(s, "\n")
 
-    for (let i = 0;i < 10000;i += 1) {
+    for (let i = 0;i < 1000000;i += 1) {
         iteration(s)
     }
     return 0
