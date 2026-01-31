@@ -153,18 +153,15 @@ impl Path {
     },
     remove(recursive: bool) : bool {
         let s = this.to_string()
-        if (this.is_file() || this.is_symlink()) {
-            return runtime.runtime_fs_remove(s.c_str())
-        } elif (this.is_directory()) {
+        if (this.is_directory()) {
             if (recursive) {
                 let entries = this.listdir()
                 for (let index = 0;index < entries.length; index += 1) {
                     entries[index].remove(recursive)
                 }
             }
-            return runtime.runtime_fs_remove(s.c_str())
         }
-        return false
+        return runtime.runtime_fs_remove(s.c_str())
     },
     remove() : bool {
         return this.remove(false)
