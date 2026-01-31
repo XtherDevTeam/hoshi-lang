@@ -329,7 +329,7 @@ void runtime_fs_closedir(void *dir) {
     if (handle->hFind != INVALID_HANDLE_VALUE) {
         FindClose(handle->hFind);
     }
-    delete handle;
+    free(dir);
 #else
     closedir((DIR *)dir);
 #endif
@@ -337,7 +337,12 @@ void runtime_fs_closedir(void *dir) {
 
 bool runtime_fs_symlink(const char *src_path, const char *dest_path) {
 #ifdef _WIN32
-    return CreateSymbolicLinkA(dest_path, src_path, 0) != 0;
+    DWORD flags = 0;
+    if (runtime_fs_isdir(src_path)) {
+        flags |= 0x1; // SYMBOLIC_LINK_FLAG_DIRECTORY
+    }
+    flags |= 0x2;
+    return CreateSymbolicLinkA(dest_path, src_path, flags) != 0;
 #else
     int rc = symlink(src_path, dest_path);
     return rc == 0;
