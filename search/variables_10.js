@@ -12,17 +12,5 @@ var searchData=
   ['rttientrytype_9',['RTTIEntryType',['../classyoi_1_1LLVMCodegen.html#adcb214162c77b78cc3e8fa0e6f1e6437',1,'yoi::LLVMCodegen']]],
   ['rttitable_10',['RTTITable',['../classyoi_1_1LLVMCodegen.html#a126d62560bdd512068d093b6e352654b',1,'yoi::LLVMCodegen']]],
   ['runtime_5fsignal_5fhandlers_11',['runtime_signal_handlers',['../signal_8cpp.html#a74c694ef9f4ae90836b26b4b9255bf8b',1,'runtime_signal_handlers:&#160;signal.cpp'],['../signal_8h.html#a74c694ef9f4ae90836b26b4b9255bf8b',1,'runtime_signal_handlers:&#160;signal.cpp']]],
-  ['runtimedebugprintaddressfunc_12',['runtimeDebugPrintAddressFunc',['../classyoi_1_1LLVMCodegen.html#a226d8a78832f9807bb60bcb8b94a8a4c',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintcurrentallocatedmemoryfunc_13',['runtimeDebugPrintCurrentAllocatedMemoryFunc',['../classyoi_1_1LLVMCodegen.html#a2e61cae680796ff5a75ae45d70fd4b9f',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintdecifunc_14',['runtimeDebugPrintDeciFunc',['../classyoi_1_1LLVMCodegen.html#a7b0c79c543056eb9381aa7ec2355b3d0',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintfunc_15',['runtimeDebugPrintFunc',['../classyoi_1_1LLVMCodegen.html#af809c35db88dfe07161e4a19d0bd25d4',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugprintintfunc_16',['runtimeDebugPrintIntFunc',['../classyoi_1_1LLVMCodegen.html#a75ef9e0ec1855063f349acec6e22888b',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugreportcurrentfunctionfunc_17',['runtimeDebugReportCurrentFunctionFunc',['../classyoi_1_1LLVMCodegen.html#a9f98eda3b2d79eb35579bbc3acc5d67d',1,'yoi::LLVMCodegen']]],
-  ['runtimedebugreportleavefunctionfunc_18',['runtimeDebugReportLeaveFunctionFunc',['../classyoi_1_1LLVMCodegen.html#a55bcb9229ffa4615522e8a587409ba43',1,'yoi::LLVMCodegen']]],
-  ['runtimefinalizeobjectfunc_19',['runtimeFinalizeObjectFunc',['../classyoi_1_1LLVMCodegen.html#a25aeec90a9dbe38e450493a79b775f47',1,'yoi::LLVMCodegen']]],
-  ['runtimefinalizeobjectreportfunc_20',['runtimeFinalizeObjectReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b007239250d025b4584f0c517c7ea71',1,'yoi::LLVMCodegen']]],
-  ['runtimefree_21',['runtimeFree',['../classyoi_1_1LLVMCodegen.html#a8c7d07ddaaf814ef5644b8a2274a5964',1,'yoi::LLVMCodegen']]],
-  ['runtimemalloc_22',['runtimeMalloc',['../classyoi_1_1LLVMCodegen.html#aeefdc361e2dd1481ee3c876660b57446',1,'yoi::LLVMCodegen']]],
-  ['runtimeobjectallocfunc_23',['runtimeObjectAllocFunc',['../classyoi_1_1LLVMCodegen.html#a79099951318d29c502a54c9da2c4bf98',1,'yoi::LLVMCodegen']]],
-  ['runtimeobjectallocreportfunc_24',['runtimeObjectAllocReportFunc',['../classyoi_1_1LLVMCodegen.html#a5b63e7159dcfc8f1f232ced9e40769d7',1,'yoi::LLVMCodegen']]]
+  ['runtimefunctions_12',['runtimeFunctions',['../classyoi_1_1LLVMCodegen.html#ae598730bef4a8d8f25d568ebbf77f882',1,'yoi::LLVMCodegen']]]
 ];

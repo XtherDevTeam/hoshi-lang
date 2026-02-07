@@ -11,7 +11,5 @@ var searchData=
   ['structdefstmt_8',['structDefStmt',['../classyoi_1_1structDefStmt.html',1,'yoi']]],
   ['subscript_9',['subscript',['../classyoi_1_1subscript.html',1,'yoi']]],
   ['subscriptexpr_10',['subscriptExpr',['../classyoi_1_1subscriptExpr.html',1,'yoi']]],
-  ['supported_11',['supported',['../structmagic__enum_1_1detail_1_1supported.html',1,'magic_enum::detail']]],
-  ['symbol_12',['symbol',['../classyoi_1_1symbol.html',1,'yoi']]],
-  ['symboltable_13',['symbolTable',['../classyoi_1_1symbolTable.html',1,'yoi']]]
+  ['supported_11',['supported',['../structmagic__enum_1_1detail_1_1supported.html',1,'magic_enum::detail']]]
 ];

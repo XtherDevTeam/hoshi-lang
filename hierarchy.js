@@ -149,7 +149,6 @@ var hierarchy =
     [ "indexTable< yoi::wstr, yoi::indexT >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::IRFFITable::ImportLibrary >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::IRTemplateBuilder::Argument >", "classyoi_1_1indexTable.html", null ],
-    [ "indexTable< yoi::wstr, yoi::symbol >", "classyoi_1_1indexTable.html", null ],
     [ "indexTableDeprecated< A, B >", "classyoi_1_1indexTableDeprecated.html", null ],
     [ "integral_constant", null, [
       [ "range_max< T, typename >", "structmagic__enum_1_1detail_1_1range__max.html", null ],
@@ -216,8 +215,6 @@ var hierarchy =
     [ "static_str< N >", "classmagic__enum_1_1detail_1_1static__str.html", null ],
     [ "static_str< 0 >", "classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html", null ],
     [ "str_view", "structmagic__enum_1_1detail_1_1str__view.html", null ],
-    [ "symbol", "classyoi_1_1symbol.html", null ],
-    [ "symbolTable", "classyoi_1_1symbolTable.html", null ],
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", null ],
     [ "token", "structyoi_1_1lexer_1_1token.html", null ],
     [ "underlying_type< T, bool >", "structmagic__enum_1_1detail_1_1underlying__type.html", [

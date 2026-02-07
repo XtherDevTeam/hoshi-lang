@@ -16,6 +16,8 @@ var memory_8h =
     [ "GC_WRAPPER_DECL", "memory_8h.html#a3e26debf3089530a61e88b44fa77afd7", null ],
     [ "GC_WRAPPER_DECL", "memory_8h.html#a364b6d9480e4902345a530e652cd7635", null ],
     [ "GC_WRAPPER_DECL", "memory_8h.html#aa25944aee9cfe1ffeb1c91a6fb637322", null ],
+    [ "runtime_exec_permit_alloc", "memory_8h.html#ab1e02a3238892187e3581fc72334aef0", null ],
+    [ "runtime_exec_permit_free", "memory_8h.html#a9ad61d60a40518e8147998b7880a8793", null ],
     [ "runtime_finalize_object", "memory_8h.html#aadd6dcb4d367e405a3c4d02e248c4220", null ],
     [ "runtime_finalize_object_report", "memory_8h.html#a9a1ef7e1e26adc283a63e6e1d8c957e8", null ],
     [ "runtime_get_string_array_data_pointer", "memory_8h.html#a4d3593e8023da81de12e2c623c71488d", null ],

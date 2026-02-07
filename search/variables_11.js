@@ -15,7 +15,7 @@ var searchData=
   ['stack_12',['stack',['../structyoi_1_1AnalysisState.html#a1b86f7d0813ac28a4d129132996e2cbd',1,'yoi::AnalysisState']]],
   ['stackstate_13',['stackState',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
   ['states_14',['states',['../classyoi_1_1lexer.html#a053b39b9ba4728509957ae887a1ab7ca',1,'yoi::lexer']]],
-  ['stmts_15',['stmts',['../classyoi_1_1codeBlock.html#ac4de3ea24de21a4b5fdea83397e3a467',1,'yoi::codeBlock::stmts'],['../classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981',1,'yoi::hoshiModule::stmts']]],
+  ['stmts_15',['stmts',['../classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981',1,'yoi::hoshiModule::stmts'],['../classyoi_1_1codeBlock.html#ac4de3ea24de21a4b5fdea83397e3a467',1,'yoi::codeBlock::stmts']]],
   ['storedtemplateargs_16',['storedtemplateargs',['../classyoi_1_1IRStructDefinition.html#a57be4dca3f84e6d34b23aa410b1ba093',1,'yoi::IRStructDefinition::storedTemplateArgs'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a57be4dca3f84e6d34b23aa410b1ba093',1,'yoi::IRStructDefinition::Builder::storedTemplateArgs']]],
   ['str_5f_17',['str_',['../structmagic__enum_1_1detail_1_1str__view.html#a66ebb04af391bdd5bf2d55a010875cd0',1,'magic_enum::detail::str_view']]],
   ['stream_18',['stream',['../classyoi_1_1lexer.html#a72993309a1242bc81500cc79f61b7e7b',1,'yoi::lexer']]],
@@ -33,6 +33,5 @@ var searchData=
   ['strval_30',['strVal',['../structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14',1,'yoi::lexer::token']]],
   ['subscriptval_31',['subscriptVal',['../classyoi_1_1subscriptExpr.html#a1e5d8a52b81784de65b5bf1ccd6bba28',1,'yoi::subscriptExpr']]],
   ['subtype_5fv_32',['subtype_v',['../namespacemagic__enum_1_1detail.html#ab850ed34ba791f59f0dfe8d55323a97e',1,'magic_enum::detail']]],
-  ['symbolindex_33',['symbolIndex',['../unionyoi_1_1IROperand_1_1operandValue.html#a2910975fb599632c275243421aa5cb80',1,'yoi::IROperand::operandValue']]],
-  ['symbols_34',['symbols',['../classyoi_1_1symbolTable.html#a6b7cdf2baba5384998a10f5f80a6cda8',1,'yoi::symbolTable']]]
+  ['symbolindex_33',['symbolIndex',['../unionyoi_1_1IROperand_1_1operandValue.html#a2910975fb599632c275243421aa5cb80',1,'yoi::IROperand::operandValue']]]
 ];

@@ -10,7 +10,5 @@ var dir_e955afc72e8af59637c9070b8690ff98 =
     [ "compilerContext.cpp", "compilerContext_8cpp.html", null ],
     [ "compilerContext.h", "compilerContext_8h.html", "compilerContext_8h" ],
     [ "moduleContext.cpp", "moduleContext_8cpp.html", null ],
-    [ "moduleContext.h", "moduleContext_8h.html", "moduleContext_8h" ],
-    [ "symbolTable.cpp", "symbolTable_8cpp.html", null ],
-    [ "symbolTable.h", "symbolTable_8h.html", "symbolTable_8h" ]
+    [ "moduleContext.h", "moduleContext_8h.html", "moduleContext_8h" ]
 ];

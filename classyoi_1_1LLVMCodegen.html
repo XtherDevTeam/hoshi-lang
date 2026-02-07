@@ -174,6 +174,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a139ffc09df4150e384efab519d88b094"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2272674bdac9907957f83b8b1a00fd95" id="r_a2272674bdac9907957f83b8b1a00fd95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a2272674bdac9907957f83b8b1a00fd95">generateMainFunction</a> ()</td></tr>
 <tr class="separator:a2272674bdac9907957f83b8b1a00fd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c61f04be6febd2b9c9b0abd3f33663" id="r_a63c61f04be6febd2b9c9b0abd3f33663"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a63c61f04be6febd2b9c9b0abd3f33663">generateWrapperForForeignCallablesIfNotExists</a> (<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">const</a> std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRValueType.html">IRValueType</a> &gt; &amp;type)</td></tr>
+<tr class="separator:a63c61f04be6febd2b9c9b0abd3f33663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08709404cb7cdce59eb620ea795fe29" id="r_ac08709404cb7cdce59eb620ea795fe29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#ac08709404cb7cdce59eb620ea795fe29">generateFunctionImplementations</a> ()</td></tr>
 <tr class="separator:ac08709404cb7cdce59eb620ea795fe29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6af678a7a701499d3db284f21852982" id="r_ad6af678a7a701499d3db284f21852982"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#ad6af678a7a701499d3db284f21852982">generateFunction</a> (<a class="el" href="classyoi_1_1IRFunctionDefinition.html">IRFunctionDefinition</a> &amp;<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">funcDef</a>)</td></tr>
@@ -257,32 +259,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:ac412d01f461e3cd9e8f953c7d24699ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7962ae4f9ffd0ce4448a40f37b735edd" id="r_a7962ae4f9ffd0ce4448a40f37b735edd"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, llvm::DICompileUnit * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a7962ae4f9ffd0ce4448a40f37b735edd">compileUnits</a></td></tr>
 <tr class="separator:a7962ae4f9ffd0ce4448a40f37b735edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeefdc361e2dd1481ee3c876660b57446" id="r_aeefdc361e2dd1481ee3c876660b57446"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#aeefdc361e2dd1481ee3c876660b57446">runtimeMalloc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:aeefdc361e2dd1481ee3c876660b57446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c7d07ddaaf814ef5644b8a2274a5964" id="r_a8c7d07ddaaf814ef5644b8a2274a5964"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a8c7d07ddaaf814ef5644b8a2274a5964">runtimeFree</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a8c7d07ddaaf814ef5644b8a2274a5964"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b63e7159dcfc8f1f232ced9e40769d7" id="r_a5b63e7159dcfc8f1f232ced9e40769d7"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a5b63e7159dcfc8f1f232ced9e40769d7">runtimeObjectAllocReportFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a5b63e7159dcfc8f1f232ced9e40769d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79099951318d29c502a54c9da2c4bf98" id="r_a79099951318d29c502a54c9da2c4bf98"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a79099951318d29c502a54c9da2c4bf98">runtimeObjectAllocFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a79099951318d29c502a54c9da2c4bf98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b007239250d025b4584f0c517c7ea71" id="r_a5b007239250d025b4584f0c517c7ea71"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a5b007239250d025b4584f0c517c7ea71">runtimeFinalizeObjectReportFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a5b007239250d025b4584f0c517c7ea71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25aeec90a9dbe38e450493a79b775f47" id="r_a25aeec90a9dbe38e450493a79b775f47"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a25aeec90a9dbe38e450493a79b775f47">runtimeFinalizeObjectFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a25aeec90a9dbe38e450493a79b775f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f98eda3b2d79eb35579bbc3acc5d67d" id="r_a9f98eda3b2d79eb35579bbc3acc5d67d"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a9f98eda3b2d79eb35579bbc3acc5d67d">runtimeDebugReportCurrentFunctionFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a9f98eda3b2d79eb35579bbc3acc5d67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af809c35db88dfe07161e4a19d0bd25d4" id="r_af809c35db88dfe07161e4a19d0bd25d4"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#af809c35db88dfe07161e4a19d0bd25d4">runtimeDebugPrintFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:af809c35db88dfe07161e4a19d0bd25d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a226d8a78832f9807bb60bcb8b94a8a4c" id="r_a226d8a78832f9807bb60bcb8b94a8a4c"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a226d8a78832f9807bb60bcb8b94a8a4c">runtimeDebugPrintAddressFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a226d8a78832f9807bb60bcb8b94a8a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75ef9e0ec1855063f349acec6e22888b" id="r_a75ef9e0ec1855063f349acec6e22888b"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a75ef9e0ec1855063f349acec6e22888b">runtimeDebugPrintIntFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a75ef9e0ec1855063f349acec6e22888b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b0c79c543056eb9381aa7ec2355b3d0" id="r_a7b0c79c543056eb9381aa7ec2355b3d0"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a7b0c79c543056eb9381aa7ec2355b3d0">runtimeDebugPrintDeciFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a7b0c79c543056eb9381aa7ec2355b3d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e61cae680796ff5a75ae45d70fd4b9f" id="r_a2e61cae680796ff5a75ae45d70fd4b9f"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a2e61cae680796ff5a75ae45d70fd4b9f">runtimeDebugPrintCurrentAllocatedMemoryFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a2e61cae680796ff5a75ae45d70fd4b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55bcb9229ffa4615522e8a587409ba43" id="r_a55bcb9229ffa4615522e8a587409ba43"><td class="memItemLeft" align="right" valign="top">llvm::Function *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a55bcb9229ffa4615522e8a587409ba43">runtimeDebugReportLeaveFunctionFunc</a> = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td></tr>
-<tr class="separator:a55bcb9229ffa4615522e8a587409ba43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae598730bef4a8d8f25d568ebbf77f882" id="r_ae598730bef4a8d8f25d568ebbf77f882"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, llvm::Function * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#ae598730bef4a8d8f25d568ebbf77f882">runtimeFunctions</a></td></tr>
+<tr class="separator:ae598730bef4a8d8f25d568ebbf77f882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada29ba25420ceac96b59dbb9944a1ea2" id="r_ada29ba25420ceac96b59dbb9944a1ea2"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1compilerContext.html">compilerContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#ada29ba25420ceac96b59dbb9944a1ea2">compilerCtx</a></td></tr>
 <tr class="separator:ada29ba25420ceac96b59dbb9944a1ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae04f61451d5da8c8a7360234980e6b10" id="r_ae04f61451d5da8c8a7360234980e6b10"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10">yoiModule</a></td></tr>
@@ -405,7 +383,7 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">3945</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03788">LLVMCodegen::ensureObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::runtimeObjectAllocFunc</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00161">LLVMCodegen::typeIDMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03788">LLVMCodegen::ensureObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">LLVMCodegen::typeIDMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
 <div class="dynheader">
@@ -848,7 +826,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">57</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00061">LLVMCodegen::runtimeDebugPrintAddressFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00064">LLVMCodegen::runtimeDebugPrintCurrentAllocatedMemoryFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">LLVMCodegen::runtimeDebugPrintDeciFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00060">LLVMCodegen::runtimeDebugPrintFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00062">LLVMCodegen::runtimeDebugPrintIntFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00059">LLVMCodegen::runtimeDebugReportCurrentFunctionFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00065">LLVMCodegen::runtimeDebugReportLeaveFunctionFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00058">LLVMCodegen::runtimeFinalizeObjectFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::runtimeFinalizeObjectReportFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00054">LLVMCodegen::runtimeFree</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeMalloc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::runtimeObjectAllocFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00055">LLVMCodegen::runtimeObjectAllocReportFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00138">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
@@ -966,7 +944,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00138">138</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00049">LLVMCodegen::DBuilder</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00268">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02423">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02534">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02515">LLVMCodegen::generateForeignStructTypes()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02750">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02706">LLVMCodegen::generateMainFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l03415">LLVMCodegen::generateRTTIImplmentation()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00049">LLVMCodegen::DBuilder</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00268">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02423">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02534">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02515">LLVMCodegen::generateForeignStructTypes()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02750">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02706">LLVMCodegen::generateMainFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l03415">LLVMCodegen::generateRTTIImplmentation()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00062">main()</a>.</p>
 <div class="dynheader">
@@ -1360,7 +1338,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">158</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">LLVMCodegen::foreignTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::nextTypeId</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00061">LLVMCodegen::runtimeDebugPrintAddressFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00060">LLVMCodegen::runtimeDebugPrintFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00058">LLVMCodegen::runtimeFinalizeObjectFunc</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00161">LLVMCodegen::typeIDMap</a>, and <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">LLVMCodegen::foreignTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00152">LLVMCodegen::nextTypeId</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">LLVMCodegen::typeIDMap</a>, and <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00138">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
@@ -1458,7 +1436,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">755</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00138">LLVMCodegen::basicBlockMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00139">LLVMCodegen::basicBlockVisited</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a151b3347862ed8b1b521d42151def7bc">LLVMCodegen::controlFlowAnalysis</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00135">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00136">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03819">LLVMCodegen::ValueStackWithPhi::enterNode()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03891">LLVMCodegen::ValueStackWithPhi::finalizeNode()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00077">LLVMCodegen::ControlFlowAnalysis::G</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="IR_8cpp_source.html#l00508">IRCodeBlock::getIRArray()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::valueStackPhi</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00126">LLVMCodegen::basicBlockMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00127">LLVMCodegen::basicBlockVisited</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a151b3347862ed8b1b521d42151def7bc">LLVMCodegen::controlFlowAnalysis</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00123">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00124">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03819">LLVMCodegen::ValueStackWithPhi::enterNode()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03891">LLVMCodegen::ValueStackWithPhi::finalizeNode()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00065">LLVMCodegen::ControlFlowAnalysis::G</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="IR_8cpp_source.html#l00508">IRCodeBlock::getIRArray()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00122">LLVMCodegen::valueStackPhi</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>.</p>
 <div class="dynheader">
@@ -1912,7 +1890,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">626</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01387">IRValueType::addAttribute()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00138">LLVMCodegen::basicBlockMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00139">LLVMCodegen::basicBlockVisited</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03909">LLVMCodegen::ValueStackWithPhi::clear()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00050">LLVMCodegen::compileUnits</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a151b3347862ed8b1b521d42151def7bc">LLVMCodegen::controlFlowAnalysis</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00135">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00049">LLVMCodegen::DBuilder</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03157">LLVMCodegen::getDIType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">LLVMCodegen::namedValues</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00059">LLVMCodegen::runtimeDebugReportCurrentFunctionFunc</a>, <a class="el" href="def_8cpp_source.html#l00080">yoi::set_current_file_path()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::valueStackPhi</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="IR_8cpp_source.html#l01387">IRValueType::addAttribute()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00126">LLVMCodegen::basicBlockMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00127">LLVMCodegen::basicBlockVisited</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03909">LLVMCodegen::ValueStackWithPhi::clear()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00050">LLVMCodegen::compileUnits</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a151b3347862ed8b1b521d42151def7bc">LLVMCodegen::controlFlowAnalysis</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00123">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00049">LLVMCodegen::DBuilder</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03157">LLVMCodegen::getDIType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00125">LLVMCodegen::namedValues</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00080">yoi::set_current_file_path()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00122">LLVMCodegen::valueStackPhi</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">LLVMCodegen::generateFunctionImplementations()</a>.</p>
 <div class="dynheader">
@@ -2111,7 +2089,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00305">305</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7">IRFunctionDefinition::AlwaysInline</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7">IRFunctionDefinition::AlwaysInline</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00268">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -2170,7 +2148,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00736">736</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00136">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03798">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">LLVMCodegen::namedValues</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00124">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03798">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00125">LLVMCodegen::namedValues</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 <div class="dynheader">
@@ -2248,7 +2226,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">614</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00136">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00124">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -2447,7 +2425,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00294">294</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00142">LLVMCodegen::globalValues</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00130">LLVMCodegen::globalValues</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00268">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -2602,7 +2580,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">325</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00163">LLVMCodegen::arrayToGenerateImplementations</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a21ad92414a93f5dc69894984d3ab5162">LLVMCodegen::generateArrayGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">LLVMCodegen::generateFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateInterfaceImplementationGCFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03452">LLVMCodegen::generateRTTIDeclaration()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00340">LLVMCodegen::generateStructImplementations()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00151">LLVMCodegen::arrayToGenerateImplementations</a>, <a class="el" href="classyoi_1_1LLVMCodegen.html#a21ad92414a93f5dc69894984d3ab5162">LLVMCodegen::generateArrayGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">LLVMCodegen::generateFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateInterfaceImplementationGCFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03452">LLVMCodegen::generateRTTIDeclaration()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00340">LLVMCodegen::generateStructImplementations()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00138">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
@@ -2975,7 +2953,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">798</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332">IR::add</a>, <a class="el" href="IR_8cpp_source.html#l01387">IRValueType::addAttribute()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a56819a6d5e48912fcb294546e6913182">IR::array_length</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00152">LLVMCodegen::arrayTypeMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03901">LLVMCodegen::ValueStackWithPhi::back()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a92c9834916b8549d937b52c9328c9d0b">IR::basic_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba2787e1cdc508060eba1fa78e3bbb7c">IR::basic_cast_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a412c0d4d2a182f4c13b6cbb0f2c8649d">IR::basic_cast_unsigned</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00138">LLVMCodegen::basicBlockMap</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a298597d0a5f6963e687b2c070026f371">IR::bind_elements_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1043c9ebedc7d77ef407eb0d5c70d93">IR::bind_elements_pred</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5183e0489c74034884eebd6775521377">IR::bind_fields_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a405631db2e1dd53c4f562a311e325ec8">IR::bind_fields_pred</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a90cd923ab195168c5bc80f6f3e03ea">IR::bitwise_and</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa628ff492c9a550656b1a177a82a6274">IR::bitwise_not</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad823bdc16fb140683e3c274c5c13de20">IR::bitwise_or</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a320ca8207163cd63fc60307c388dd01c">IR::bitwise_xor</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">IRValueType::Borrow</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03051">LLVMCodegen::createArrayObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03578">LLVMCodegen::createDynamicArrayObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00135">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00136">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61b3ab147c3ed552692e9b3b620e7f15">IR::direct_assign</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a">IR::div</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942">IR::dyn_cast_any</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5">IR::dyn_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1">IR::dyn_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de">IR::dyn_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae">IR::dyn_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02">IR::dyn_cast_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be">IR::dyn_cast_struct</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03941">LLVMCodegen::ValueStackWithPhi::empty()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03788">LLVMCodegen::ensureObject()</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f">IR::equal</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00736">LLVMCodegen::generateFunctionExitCleanup()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03798">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00142">LLVMCodegen::globalValues</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2">IR::greater_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af9001e5685fe6f7cb467dc66269470b2">IR::greater_than</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02233">LLVMCodegen::handleBinaryOp()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02278">LLVMCodegen::handleComparison()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04059">LLVMCodegen::handleIntrinsicCall()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a33ced12f4457b20ae42e4628e54ea8d0">IR::interfaceof</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50628fab62b5a54a5f0a7e7c7b4f157b">IR::left_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77932225fb35fc4b74dc8fabf0992dac">IR::less_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7875e44acb1bebecb46c929deb43cef4">IR::less_than</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00088">LLVMCodegen::StackValue::llvmValue</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5">IR::load_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03098">LLVMCodegen::loadArrayElement()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5">IR::mod</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253">IR::mul</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">LLVMCodegen::namedValues</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2d11beba811e6ec7b47d7a801cf8173f">IR::negate</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949">IR::new_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907">IR::new_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556">IR::new_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a78d674ed24fc76fa43fbb172e8625e4c">IR::new_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca">IR::new_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a842d088526a5e27a8afbd409c6155578">IR::new_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a97d3d8a264513c5d4199375b420e157f">IR::new_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706">IR::new_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad95df2a3a865323d3bbe76e62f2cb1c1">IR::new_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a01000b33f2706d842172fad74e2cf3d2">IR::new_dynamic_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af196fe5188bbef3e23f9fd76b7d2cc00">IR::new_dynamic_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acba3a0d3d47318c308a3fd16514b79cf">IR::new_dynamic_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a238952302f1acb076da196aeaa5e6483">IR::new_dynamic_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a397993da3d34d815b7910f49199f2852">IR::new_dynamic_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2b6a61f739675fea86d44704ed25d0df">IR::new_dynamic_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4d3cef520c2bea2897f1deb53f2a5bb4">IR::new_dynamic_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a592d3746fb432d2bfc8cb9cbf9afeaf4">IR::new_dynamic_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a71ab5edc09af7946aa49a9f4dbaa247c">IR::new_dynamic_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a">IRFunctionDefinition::NoFFI</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e">IR::not_equal</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442">IR::pointer_cast</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03905">LLVMCodegen::ValueStackWithPhi::pop_back()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04053">LLVMCodegen::promiseInterfaceObjectIfInterface()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03897">LLVMCodegen::ValueStackWithPhi::push_back()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afb6a04d1b184942ceb195a407f9a2f97">IR::push_character</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7af634e2e28fa7ae453b5820d75f6fc1">IR::push_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b">IR::push_string</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a167e288648eb6bbc68f157660cc2499a">IR::push_unsigned</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0">IR::right_shift</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00060">LLVMCodegen::runtimeDebugPrintFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00065">LLVMCodegen::runtimeDebugReportLeaveFunctionFunc</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::runtimeObjectAllocFunc</a>, <a class="el" href="def_8cpp_source.html#l00080">yoi::set_current_file_path()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03937">LLVMCodegen::ValueStackWithPhi::size()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a921e717133b1ab22c6838e4378d9172e">IR::store_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03650">LLVMCodegen::storeArrayElement()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140">IR::sub</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18384ae9fe241756e420e5c5e7dc43a4">IR::typeid_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6dc196cdeb50fd6359396d0b3fde1a56">IR::typeid_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a27bd65f37b6aa7e53f41b2bcc3f6dcff">IR::typeid_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ac33f43e2bf0242ec34f31665c99de298">IR::typeid_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e">IR::typeid_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0">IR::typeid_object_non_stack</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adfa4c2a79d608548889c7606ca83cede">IR::typeid_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906">IR::typeid_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d">IR::typeid_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0a65bad3df3f307c675bf59908784b6d">IR::typeid_unsigned</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00161">LLVMCodegen::typeIDMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02354">LLVMCodegen::unboxValue()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04038">LLVMCodegen::unwrapInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::valueStackPhi</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00089">LLVMCodegen::StackValue::yoiType</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a34ec78fcc91ffb1e54cd85e4a0924332">IR::add</a>, <a class="el" href="IR_8cpp_source.html#l01387">IRValueType::addAttribute()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a56819a6d5e48912fcb294546e6913182">IR::array_length</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00140">LLVMCodegen::arrayTypeMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03901">LLVMCodegen::ValueStackWithPhi::back()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a490f20026212044133c47c6808613293">IR::basic_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a92c9834916b8549d937b52c9328c9d0b">IR::basic_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61ae3e14aebb9727c0459375d5f4fd91">IR::basic_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a99d199043fba3a7a6a28026b94cf6f1c">IR::basic_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba2787e1cdc508060eba1fa78e3bbb7c">IR::basic_cast_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a412c0d4d2a182f4c13b6cbb0f2c8649d">IR::basic_cast_unsigned</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00126">LLVMCodegen::basicBlockMap</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a298597d0a5f6963e687b2c070026f371">IR::bind_elements_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1043c9ebedc7d77ef407eb0d5c70d93">IR::bind_elements_pred</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5183e0489c74034884eebd6775521377">IR::bind_fields_post</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a405631db2e1dd53c4f562a311e325ec8">IR::bind_fields_pred</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a90cd923ab195168c5bc80f6f3e03ea">IR::bitwise_and</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa628ff492c9a550656b1a177a82a6274">IR::bitwise_not</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad823bdc16fb140683e3c274c5c13de20">IR::bitwise_or</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a320ca8207163cd63fc60307c388dd01c">IR::bitwise_xor</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae17322cd63a68d88f678892218a2522e">IRValueType::booleanObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">IRValueType::Borrow</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a944f0651de51dfbe92b22dae8bff199f">IRValueType::characterObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b">IR::construct_interface_impl</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03051">LLVMCodegen::createArrayObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03578">LLVMCodegen::createDynamicArrayObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00123">LLVMCodegen::currentFunction</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00124">LLVMCodegen::currentFunctionDef</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aa50cae699d2ac8b82461b05d4d21c860">IRValueType::decimalObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61b3ab147c3ed552692e9b3b620e7f15">IR::direct_assign</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a">IR::div</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942">IR::dyn_cast_any</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aecd2e259b713e7914a17c63c53e6d4e5">IR::dyn_cast_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adc263fc3b4a9f5ca995afe5d53091ca1">IR::dyn_cast_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbc40be4aa758f7c52d22442e6de7de">IR::dyn_cast_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aea86840758f26cabf4f81d48c19677ae">IR::dyn_cast_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77c19762b7883deb3b4c31a394850a02">IR::dyn_cast_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0d6953f735160344a83ce914e27eb5be">IR::dyn_cast_struct</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03941">LLVMCodegen::ValueStackWithPhi::empty()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03788">LLVMCodegen::ensureObject()</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f">IR::equal</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00736">LLVMCodegen::generateFunctionExitCleanup()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03798">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00130">LLVMCodegen::globalValues</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2">IR::greater_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af9001e5685fe6f7cb467dc66269470b2">IR::greater_than</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02233">LLVMCodegen::handleBinaryOp()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02278">LLVMCodegen::handleComparison()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04059">LLVMCodegen::handleIntrinsicCall()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad235f60d8182b02ba4fd1afb93ede3b9">IRValueType::integerObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad952693e0948c2bd417f2994f2cfd09d">IRValueType::integerRaw</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a33ced12f4457b20ae42e4628e54ea8d0">IR::interfaceof</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536">IR::invoke</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1cbae3d971927f6efafa41647e4f37db">IR::invoke_dangling</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa67694bcce56564c09dda80c0b3b80b3">IR::invoke_virtual</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aba535ef5a9f7b8bc875812bb081286bb">IR::jump</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af5eee445dbcb79f09b12ca76204b4b5d">IR::jump_if_false</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a6f3519037c006f084395b080843118">IR::jump_if_true</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50628fab62b5a54a5f0a7e7c7b4f157b">IR::left_shift</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a77932225fb35fc4b74dc8fabf0992dac">IR::less_equal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7875e44acb1bebecb46c929deb43cef4">IR::less_than</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00076">LLVMCodegen::StackValue::llvmValue</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a45ada188cc13e6973ad6b7424fcef348">IR::load_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7b17a105dec147b27889b424b985b4a5">IR::load_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a89df5082e48abdc267afde37f07e78">IR::load_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a89723877a8821c21897dce7bc7124313">IR::load_member</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03098">LLVMCodegen::loadArrayElement()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5">IR::mod</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a353942263d1bedfbe06b7bfa78226253">IR::mul</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00125">LLVMCodegen::namedValues</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2d11beba811e6ec7b47d7a801cf8173f">IR::negate</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949">IR::new_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad8d049e16ed571a7074c9b6e20938907">IR::new_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad888f715bc2aa44bd66ea12d20667556">IR::new_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a78d674ed24fc76fa43fbb172e8625e4c">IR::new_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca">IR::new_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a842d088526a5e27a8afbd409c6155578">IR::new_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a97d3d8a264513c5d4199375b420e157f">IR::new_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa4482a389138bb274371977318e98706">IR::new_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad95df2a3a865323d3bbe76e62f2cb1c1">IR::new_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a01000b33f2706d842172fad74e2cf3d2">IR::new_dynamic_array_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7af196fe5188bbef3e23f9fd76b7d2cc00">IR::new_dynamic_array_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acba3a0d3d47318c308a3fd16514b79cf">IR::new_dynamic_array_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a238952302f1acb076da196aeaa5e6483">IR::new_dynamic_array_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a397993da3d34d815b7910f49199f2852">IR::new_dynamic_array_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2b6a61f739675fea86d44704ed25d0df">IR::new_dynamic_array_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4d3cef520c2bea2897f1deb53f2a5bb4">IR::new_dynamic_array_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a592d3746fb432d2bfc8cb9cbf9afeaf4">IR::new_dynamic_array_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a71ab5edc09af7946aa49a9f4dbaa247c">IR::new_dynamic_array_unsigned</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb">IR::new_struct</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ac6d3fed34c6dc24c821a570ffcc5eb2a">IRFunctionDefinition::NoFFI</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0">IR::nop</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96ee5c0e2a7149613e7fd0b83316486e">IR::not_equal</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa46ad517b8b7aa4e368a7cc226533bfb6">IRValueType::Nullable</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442">IR::pointer_cast</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc">IRValueType::pointerObject</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48">IR::pop</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03905">LLVMCodegen::ValueStackWithPhi::pop_back()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04053">LLVMCodegen::promiseInterfaceObjectIfInterface()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03897">LLVMCodegen::ValueStackWithPhi::push_back()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a">IR::push_boolean</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afb6a04d1b184942ceb195a407f9a2f97">IR::push_character</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1">IR::push_decimal</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f">IR::push_integer</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90">IR::push_null</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7af634e2e28fa7ae453b5820d75f6fc1">IR::push_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b">IR::push_string</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a167e288648eb6bbc68f157660cc2499a">IR::push_unsigned</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2cb9df9898e55fd0ad829dc202ddbd1c">IR::ret</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a105443195df18c217a43f9e598c7dfdc">IR::ret_none</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a4ee719aaa47e6583842088cf8e6ee8d0">IR::right_shift</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00080">yoi::set_current_file_path()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab342912c6c5212d82fbf5cbaffa132c7">IRValueType::shortObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03937">LLVMCodegen::ValueStackWithPhi::size()</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2e929843678226d01b3553879ed4ee34">IR::store_element</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a921e717133b1ab22c6838e4378d9172e">IR::store_global</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474">IR::store_local</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101">IR::store_member</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03650">LLVMCodegen::storeArrayElement()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a424010b6c68d2de44a625dfb16c5b516">IRValueType::stringLiteral</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140">IR::sub</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18384ae9fe241756e420e5c5e7dc43a4">IR::typeid_bool</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6dc196cdeb50fd6359396d0b3fde1a56">IR::typeid_char</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a27bd65f37b6aa7e53f41b2bcc3f6dcff">IR::typeid_deci</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ac33f43e2bf0242ec34f31665c99de298">IR::typeid_int</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae1f3bde8535733ba9ccf666e3ba0330e">IR::typeid_interface</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0381fb2fbf4710ae73f1a0be86d6a4b0">IR::typeid_object_non_stack</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7adfa4c2a79d608548889c7606ca83cede">IR::typeid_short</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ae4c84f2d23d2faf72040925b6dc78906">IR::typeid_str</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e172987422440062c4fed23d960982d">IR::typeid_struct</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0a65bad3df3f307c675bf59908784b6d">IR::typeid_unsigned</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">LLVMCodegen::typeIDMap</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02354">LLVMCodegen::unboxValue()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a9607e81e2c153ac29cc6d14fa5037f96">IRValueType::unsignedObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ab527e215f56ce9938a7100b32660e634">IRValueType::unsignedRaw</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04038">LLVMCodegen::unwrapInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00122">LLVMCodegen::valueStackPhi</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00077">LLVMCodegen::StackValue::yoiType</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>.</p>
 <div class="dynheader">
@@ -3150,7 +3128,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">472</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3220,7 +3198,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">523</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3279,7 +3257,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">551</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00058">LLVMCodegen::runtimeFinalizeObjectFunc</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3489,7 +3467,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00275">275</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::nextTypeId</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00161">LLVMCodegen::typeIDMap</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00152">LLVMCodegen::nextTypeId</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">LLVMCodegen::typeIDMap</a>, <a class="el" href="def_8cpp_source.html#l00150">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00268">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -3546,7 +3524,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">387</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00045">LLVMCodegen::TheModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3605,7 +3583,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">412</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb">IRFunctionDefinition::Finalizer</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00058">LLVMCodegen::runtimeFinalizeObjectFunc</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02366">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb">IRFunctionDefinition::Finalizer</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">LLVMCodegen::functionMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">LLVMCodegen::runtimeFunctions</a>, <a class="el" href="def_8cpp_source.html#l00144">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00044">LLVMCodegen::TheContext</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3688,7 +3666,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00340">340</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02218">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02163">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
@@ -3796,6 +3774,34 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a63c61f04be6febd2b9c9b0abd3f33663" name="a63c61f04be6febd2b9c9b0abd3f33663"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c61f04be6febd2b9c9b0abd3f33663">&#9670;&#160;</a></span>generateWrapperForForeignCallablesIfNotExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a> generateWrapperForForeignCallablesIfNotExists </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">const</a> std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRValueType.html">IRValueType</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04088">4088</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -4495,7 +4501,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04059">4059</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03901">LLVMCodegen::ValueStackWithPhi::back()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03905">LLVMCodegen::ValueStackWithPhi::pop_back()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03897">LLVMCodegen::ValueStackWithPhi::push_back()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::valueStackPhi</a>, and <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03901">LLVMCodegen::ValueStackWithPhi::back()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02975">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00098">yoi::panic()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03905">LLVMCodegen::ValueStackWithPhi::pop_back()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03897">LLVMCodegen::ValueStackWithPhi::push_back()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00122">LLVMCodegen::valueStackPhi</a>, and <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 <div class="dynheader">
@@ -4719,7 +4725,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04053">4053</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00089">LLVMCodegen::StackValue::yoiType</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00077">LLVMCodegen::StackValue::yoiType</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 <div class="dynheader">
@@ -4971,7 +4977,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04038">4038</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">LLVMCodegen::structTypeMap</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00046">LLVMCodegen::Builder</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">LLVMCodegen::structTypeMap</a>, <a class="el" href="def_8cpp_source.html#l00137">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 <div class="dynheader">
@@ -5051,7 +5057,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">4027</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="IR_8h_source.html#l00134">IRValueType::attributes</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00089">LLVMCodegen::StackValue::yoiType</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="IR_8h_source.html#l00134">IRValueType::attributes</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00077">LLVMCodegen::StackValue::yoiType</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04053">LLVMCodegen::promiseInterfaceObjectIfInterface()</a>.</p>
 <div class="dynheader">
@@ -5248,7 +5254,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00163">163</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00151">151</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00325">LLVMCodegen::generateImplementations()</a>.</p>
 
@@ -5274,7 +5280,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00158">158</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">146</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 </div>
 </div>
@@ -5298,7 +5304,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00152">152</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00140">140</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5324,7 +5330,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00138">138</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00126">126</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5350,7 +5356,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00139">139</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00127">127</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>.</p>
 
@@ -5402,7 +5408,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00068">68</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">56</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00138">LLVMCodegen::generate()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04059">LLVMCodegen::handleIntrinsicCall()</a>.</p>
 
@@ -5478,7 +5484,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00135">135</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00123">123</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5504,7 +5510,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00136">136</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00124">124</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00736">LLVMCodegen::generateFunctionExitCleanup()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">LLVMCodegen::generateFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5556,7 +5562,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">149</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">137</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>.</p>
 
@@ -5582,7 +5588,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">143</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00131">131</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00305">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateInterfaceImplementationGCFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
 
@@ -5608,7 +5614,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00142">142</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00130">130</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00294">LLVMCodegen::generateGlobalDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5634,7 +5640,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00137">137</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00125">125</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00736">LLVMCodegen::generateFunctionExitCleanup()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
 
@@ -5660,7 +5666,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">164</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00152">152</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00275">LLVMCodegen::generateStructDeclarations()</a>.</p>
 
@@ -5686,7 +5692,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00072">72</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00060">60</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 </div>
 </div>
@@ -5710,7 +5716,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00074">74</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00062">62</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 </div>
 </div>
@@ -5734,38 +5740,12 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00073">73</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-</div>
-</div>
-<a id="a226d8a78832f9807bb60bcb8b94a8a4c" name="a226d8a78832f9807bb60bcb8b94a8a4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a226d8a78832f9807bb60bcb8b94a8a4c">&#9670;&#160;</a></span>runtimeDebugPrintAddressFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugPrintAddressFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00061">61</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>.</p>
-
 </div>
 </div>
-<a id="a2e61cae680796ff5a75ae45d70fd4b9f" name="a2e61cae680796ff5a75ae45d70fd4b9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e61cae680796ff5a75ae45d70fd4b9f">&#9670;&#160;</a></span>runtimeDebugPrintCurrentAllocatedMemoryFunc</h2>
+<a id="ae598730bef4a8d8f25d568ebbf77f882" name="ae598730bef4a8d8f25d568ebbf77f882"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae598730bef4a8d8f25d568ebbf77f882">&#9670;&#160;</a></span>runtimeFunctions</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -5774,241 +5754,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">llvm::Function* runtimeDebugPrintCurrentAllocatedMemoryFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00064">64</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="a7b0c79c543056eb9381aa7ec2355b3d0" name="a7b0c79c543056eb9381aa7ec2355b3d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b0c79c543056eb9381aa7ec2355b3d0">&#9670;&#160;</a></span>runtimeDebugPrintDeciFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugPrintDeciFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">63</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="af809c35db88dfe07161e4a19d0bd25d4" name="af809c35db88dfe07161e4a19d0bd25d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af809c35db88dfe07161e4a19d0bd25d4">&#9670;&#160;</a></span>runtimeDebugPrintFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugPrintFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00060">60</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
-
-</div>
-</div>
-<a id="a75ef9e0ec1855063f349acec6e22888b" name="a75ef9e0ec1855063f349acec6e22888b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75ef9e0ec1855063f349acec6e22888b">&#9670;&#160;</a></span>runtimeDebugPrintIntFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugPrintIntFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00062">62</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="a9f98eda3b2d79eb35579bbc3acc5d67d" name="a9f98eda3b2d79eb35579bbc3acc5d67d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f98eda3b2d79eb35579bbc3acc5d67d">&#9670;&#160;</a></span>runtimeDebugReportCurrentFunctionFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugReportCurrentFunctionFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00059">59</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>.</p>
-
-</div>
-</div>
-<a id="a55bcb9229ffa4615522e8a587409ba43" name="a55bcb9229ffa4615522e8a587409ba43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55bcb9229ffa4615522e8a587409ba43">&#9670;&#160;</a></span>runtimeDebugReportLeaveFunctionFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeDebugReportLeaveFunctionFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00065">65</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
-
-</div>
-</div>
-<a id="a25aeec90a9dbe38e450493a79b775f47" name="a25aeec90a9dbe38e450493a79b775f47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25aeec90a9dbe38e450493a79b775f47">&#9670;&#160;</a></span>runtimeFinalizeObjectFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeFinalizeObjectFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00058">58</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
-
-</div>
-</div>
-<a id="a5b007239250d025b4584f0c517c7ea71" name="a5b007239250d025b4584f0c517c7ea71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b007239250d025b4584f0c517c7ea71">&#9670;&#160;</a></span>runtimeFinalizeObjectReportFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeFinalizeObjectReportFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">57</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="a8c7d07ddaaf814ef5644b8a2274a5964" name="a8c7d07ddaaf814ef5644b8a2274a5964"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c7d07ddaaf814ef5644b8a2274a5964">&#9670;&#160;</a></span>runtimeFree</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeFree = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00054">54</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="aeefdc361e2dd1481ee3c876660b57446" name="aeefdc361e2dd1481ee3c876660b57446"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeefdc361e2dd1481ee3c876660b57446">&#9670;&#160;</a></span>runtimeMalloc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeMalloc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
+          <td class="memname">std::map&lt;<a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, llvm::Function *&gt; runtimeFunctions</td>
         </tr>
       </table>
   </td>
@@ -6020,59 +5766,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00053">53</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
-
-</div>
-</div>
-<a id="a79099951318d29c502a54c9da2c4bf98" name="a79099951318d29c502a54c9da2c4bf98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79099951318d29c502a54c9da2c4bf98">&#9670;&#160;</a></span>runtimeObjectAllocFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeObjectAllocFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00056">56</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>.</p>
-
-</div>
-</div>
-<a id="a5b63e7159dcfc8f1f232ced9e40769d7" name="a5b63e7159dcfc8f1f232ced9e40769d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b63e7159dcfc8f1f232ced9e40769d7">&#9670;&#160;</a></span>runtimeObjectAllocReportFunc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">llvm::Function* runtimeObjectAllocReportFunc = <a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">nullptr</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00055">55</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00057">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
 
 </div>
 </div>
@@ -6096,7 +5790,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00155">155</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00143">143</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 </div>
 </div>
@@ -6120,7 +5814,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00146">146</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">134</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateInterfaceImplementationGCFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00275">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00340">LLVMCodegen::generateStructImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04038">LLVMCodegen::unwrapInterfaceObject()</a>.</p>
 
@@ -6198,7 +5892,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00161">161</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00149">149</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00158">LLVMCodegen::generateBasicTypesAndFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00275">LLVMCodegen::generateStructDeclarations()</a>.</p>
 
@@ -6224,7 +5918,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00134">134</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00122">122</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00755">LLVMCodegen::generateCodeBlock()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00626">LLVMCodegen::generateFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04059">LLVMCodegen::handleIntrinsicCall()</a>.</p>
 
@@ -6250,7 +5944,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00069">69</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00057">57</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03945">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03819">LLVMCodegen::ValueStackWithPhi::enterNode()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00305">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00614">LLVMCodegen::generateFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00294">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00798">LLVMCodegen::generateInstruction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateInterfaceImplementationGCFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00523">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00551">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00275">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00387">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00412">LLVMCodegen::generateStructGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00340">LLVMCodegen::generateStructImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04038">LLVMCodegen::unwrapInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
 

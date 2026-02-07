@@ -113,8 +113,6 @@ var namespaceyoi =
     [ "structDefStmt", "classyoi_1_1structDefStmt.html", "classyoi_1_1structDefStmt" ],
     [ "subscript", "classyoi_1_1subscript.html", "classyoi_1_1subscript" ],
     [ "subscriptExpr", "classyoi_1_1subscriptExpr.html", "classyoi_1_1subscriptExpr" ],
-    [ "symbol", "classyoi_1_1symbol.html", "classyoi_1_1symbol" ],
-    [ "symbolTable", "classyoi_1_1symbolTable.html", "classyoi_1_1symbolTable" ],
     [ "templateArg", "classyoi_1_1templateArg.html", "classyoi_1_1templateArg" ],
     [ "templateArgSpec", "classyoi_1_1templateArgSpec.html", "classyoi_1_1templateArgSpec" ],
     [ "throwStmt", "classyoi_1_1throwStmt.html", "classyoi_1_1throwStmt" ],
