@@ -85,6 +85,14 @@ extern "C" void *runtime_object_alloc(unsigned long size);
 
 extern "C" YoiIntegerObject *runtime_get_string_array_data_pointer(YoiObjectArray *array);
 
+#ifndef ELYSIA_DISABLE_MEMORY_EXECUTABLE_MAPPING_FEATURE
+
+extern "C" void *runtime_exec_permit_alloc(unsigned long size);
+
+extern "C" void runtime_exec_permit_free(void *ptr);
+
+#endif
+
 #define GC_WRAPPER_DECL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj);      \
                                                                                             \
 extern "C" void basic_##X##_gc_refcount_decrease(U* obj);                                   \

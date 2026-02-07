@@ -50,19 +50,7 @@ namespace yoi {
         std::map<yoi::wstr, llvm::DICompileUnit *> compileUnits;
 
         // Runtime functions
-        llvm::Function *runtimeMalloc = nullptr;
-        llvm::Function *runtimeFree = nullptr;
-        llvm::Function *runtimeObjectAllocReportFunc = nullptr;
-        llvm::Function *runtimeObjectAllocFunc = nullptr;
-        llvm::Function *runtimeFinalizeObjectReportFunc = nullptr;
-        llvm::Function *runtimeFinalizeObjectFunc = nullptr;
-        llvm::Function *runtimeDebugReportCurrentFunctionFunc = nullptr;
-        llvm::Function *runtimeDebugPrintFunc = nullptr;
-        llvm::Function *runtimeDebugPrintAddressFunc = nullptr;
-        llvm::Function *runtimeDebugPrintIntFunc = nullptr;
-        llvm::Function *runtimeDebugPrintDeciFunc = nullptr;
-        llvm::Function *runtimeDebugPrintCurrentAllocatedMemoryFunc = nullptr;
-        llvm::Function *runtimeDebugReportLeaveFunctionFunc = nullptr;
+        std::map<yoi::wstr, llvm::Function *> runtimeFunctions;
 
         // Yoi language context
         std::shared_ptr<compilerContext> compilerCtx;
@@ -185,6 +173,8 @@ namespace yoi {
         void generateExportFunctionDecls();
         void generateImportFunctionImplementations();
         void generateMainFunction();
+
+        void generateWrapperForForeignCallablesIfNotExists(const std::shared_ptr<IRValueType> &type);
 
         void generateFunctionImplementations();
         void generateFunction(IRFunctionDefinition &funcDef);

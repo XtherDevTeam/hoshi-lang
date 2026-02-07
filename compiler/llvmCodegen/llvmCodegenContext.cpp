@@ -60,78 +60,78 @@ namespace yoi {
         llvm::Type* sizeTy = Builder->getInt64Ty();
 
         llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(Builder->getInt8Ty(), 0), {sizeTy, sizeTy}, false);
-        runtimeMalloc = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "mi_calloc", TheModule.get());
-        runtimeMalloc->setCallingConv(llvm::CallingConv::C);
+        runtimeFunctions[L"mi_calloc"] = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "mi_calloc", TheModule.get());
+        runtimeFunctions[L"mi_calloc"]->setCallingConv(llvm::CallingConv::C);
 
         llvm::FunctionType *freeFuncType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
-        runtimeFree = llvm::Function::Create(freeFuncType, llvm::Function::ExternalLinkage, "mi_free", TheModule.get());
-        runtimeFree->setCallingConv(llvm::CallingConv::C);
+        runtimeFunctions[L"mi_free"] = llvm::Function::Create(freeFuncType, llvm::Function::ExternalLinkage, "mi_free", TheModule.get());
+        runtimeFunctions[L"mi_free"]->setCallingConv(llvm::CallingConv::C);
 
         llvm::FunctionType* allocType = llvm::FunctionType::get(i8PtrTy, {sizeTy, i8PtrTy}, false);
         llvm::FunctionType* funcType = llvm::FunctionType::get(i8PtrTy, {sizeTy}, false);
-        runtimeObjectAllocReportFunc = llvm::Function::Create(allocType, llvm::Function::ExternalLinkage, "runtime_object_alloc_report", TheModule.get());
-        runtimeObjectAllocFunc = llvm::Function::Create(funcType, llvm::Function::InternalLinkage, "object_alloc", TheModule.get());
-        runtimeObjectAllocFunc->addFnAttr(llvm::Attribute::AlwaysInline);
+        runtimeFunctions[L"runtime_object_alloc_report"] = llvm::Function::Create(allocType, llvm::Function::ExternalLinkage, "runtime_object_alloc_report", TheModule.get());
+        runtimeFunctions[L"object_alloc"] = llvm::Function::Create(funcType, llvm::Function::InternalLinkage, "object_alloc", TheModule.get());
+        runtimeFunctions[L"object_alloc"]->addFnAttr(llvm::Attribute::AlwaysInline);
 
-        llvm::BasicBlock *entryOA = llvm::BasicBlock::Create(*TheContext, "entry", runtimeObjectAllocFunc);
+        llvm::BasicBlock *entryOA = llvm::BasicBlock::Create(*TheContext, "entry", runtimeFunctions[L"object_alloc"]);
         Builder->SetInsertPoint(entryOA);
-        llvm::Value* sizeOfObject = runtimeObjectAllocFunc->arg_begin();
-        llvm::Value *mem = Builder->CreateCall(runtimeMalloc, {llvm::ConstantInt::get(sizeTy, 1), sizeOfObject});
+        llvm::Value* sizeOfObject = runtimeFunctions[L"object_alloc"]->arg_begin();
+        llvm::Value *mem = Builder->CreateCall(runtimeFunctions[L"mi_calloc"], {llvm::ConstantInt::get(sizeTy, 1), sizeOfObject});
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-            Builder->CreateCall(runtimeObjectAllocReportFunc, {sizeOfObject, mem});
+            Builder->CreateCall(runtimeFunctions[L"runtime_object_alloc_report"], {sizeOfObject, mem});
         }
         Builder->CreateRet(mem);
 
         // void runtime_finalize_object(void* objectPtr) -> void (i8*)
         llvm::FunctionType* finalizeType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
-        runtimeFinalizeObjectReportFunc = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "runtime_finalize_object_report", TheModule.get());
-        runtimeFinalizeObjectFunc = llvm::Function::Create(finalizeType, llvm::Function::InternalLinkage, "finalize_object", TheModule.get());
+        runtimeFunctions[L"runtime_finalize_object_report"] = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "runtime_finalize_object_report", TheModule.get());
+        runtimeFunctions[L"finalize_object"] = llvm::Function::Create(finalizeType, llvm::Function::InternalLinkage, "finalize_object", TheModule.get());
 
-        runtimeFinalizeObjectFunc->addFnAttr(llvm::Attribute::AlwaysInline);
+        runtimeFunctions[L"finalize_object"]->addFnAttr(llvm::Attribute::AlwaysInline);
 
-        llvm::BasicBlock *entryFO = llvm::BasicBlock::Create(*TheContext, "entry", runtimeFinalizeObjectFunc);
+        llvm::BasicBlock *entryFO = llvm::BasicBlock::Create(*TheContext, "entry", runtimeFunctions[L"finalize_object"]);
         Builder->SetInsertPoint(entryFO);
-        llvm::Value* objectPtr = runtimeFinalizeObjectFunc->arg_begin();
+        llvm::Value* objectPtr = runtimeFunctions[L"finalize_object"]->arg_begin();
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-            Builder->CreateCall(runtimeFinalizeObjectReportFunc, {objectPtr});
+            Builder->CreateCall(runtimeFunctions[L"runtime_finalize_object_report"], {objectPtr});
         }
-        Builder->CreateCall(runtimeFree, {objectPtr});
+        Builder->CreateCall(runtimeFunctions[L"mi_free"], {objectPtr});
         Builder->CreateRetVoid();
 
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             // void runtime_debug_report_current_function(const char *function_name);
             llvm::Type* constCharPtrTy = llvm::PointerType::get(Builder->getInt8Ty(), 0);
             llvm::FunctionType* debugReportType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
-            runtimeDebugReportCurrentFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", TheModule.get());
-            runtimeDebugReportCurrentFunctionFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_report_current_function"] = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", TheModule.get());
+            runtimeFunctions[L"runtime_debug_report_current_function"]->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_report_leave_function(const char *function_name);
-            runtimeDebugReportLeaveFunctionFunc = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_leave_function", TheModule.get());
-            runtimeDebugReportLeaveFunctionFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_report_leave_function"] = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_leave_function", TheModule.get());
+            runtimeFunctions[L"runtime_debug_report_leave_function"]->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_print(const char *message);
             llvm::FunctionType* debugPrintType = llvm::FunctionType::get(Builder->getVoidTy(), {constCharPtrTy}, false);
-            runtimeDebugPrintFunc = llvm::Function::Create(debugPrintType, llvm::Function::ExternalLinkage, "runtime_debug_print", TheModule.get());
-            runtimeDebugPrintFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_print"] = llvm::Function::Create(debugPrintType, llvm::Function::ExternalLinkage, "runtime_debug_print", TheModule.get());
+            runtimeFunctions[L"runtime_debug_print"]->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_print_address(void *address);
             llvm::FunctionType* debugPrintAddressType = llvm::FunctionType::get(Builder->getVoidTy(), {i8PtrTy}, false);
-            runtimeDebugPrintAddressFunc = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
-            runtimeDebugPrintAddressFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_print_address"] = llvm::Function::Create(debugPrintAddressType, llvm::Function::ExternalLinkage, "runtime_debug_print_address", TheModule.get());
+            runtimeFunctions[L"runtime_debug_print_address"]->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_print_int(int value);
             llvm::FunctionType* debugPrintIntType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getInt64Ty()}, false);
-            runtimeDebugPrintIntFunc = llvm::Function::Create(debugPrintIntType, llvm::Function::ExternalLinkage, "runtime_debug_print_int", TheModule.get());
-            runtimeDebugPrintIntFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_print_int"] = llvm::Function::Create(debugPrintIntType, llvm::Function::ExternalLinkage, "runtime_debug_print_int", TheModule.get());
+            runtimeFunctions[L"runtime_debug_print_int"]->setCallingConv(llvm::CallingConv::C);
 
             // void runtime_debug_print_deci(double value);
             llvm::FunctionType* debugPrintDeciType = llvm::FunctionType::get(Builder->getVoidTy(), {Builder->getDoubleTy()}, false);
-            runtimeDebugPrintDeciFunc = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
-            runtimeDebugPrintDeciFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_print_deci"] = llvm::Function::Create(debugPrintDeciType, llvm::Function::ExternalLinkage, "runtime_debug_print_deci", TheModule.get());
+            runtimeFunctions[L"runtime_debug_print_deci"]->setCallingConv(llvm::CallingConv::C);
 
             llvm::FunctionType *debugPrintCurrentAllocatedMemoryType = llvm::FunctionType::get(Builder->getVoidTy(), {}, false);
-            runtimeDebugPrintCurrentAllocatedMemoryFunc = llvm::Function::Create(debugPrintCurrentAllocatedMemoryType, llvm::Function::ExternalLinkage, "runtime_debug_print_current_allocated_memory", TheModule.get());
-            runtimeDebugPrintCurrentAllocatedMemoryFunc->setCallingConv(llvm::CallingConv::C);
+            runtimeFunctions[L"runtime_debug_print_current_allocated_memory"] = llvm::Function::Create(debugPrintCurrentAllocatedMemoryType, llvm::Function::ExternalLinkage, "runtime_debug_print_current_allocated_memory", TheModule.get());
+            runtimeFunctions[L"runtime_debug_print_current_allocated_memory"]->setCallingConv(llvm::CallingConv::C);
         }
     }
 
@@ -208,10 +208,10 @@ namespace yoi {
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
                 auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
                 auto* debugStrPtr = Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print"), debugStrPtr);
                 // address
                 auto* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                Builder->CreateCall(runtimeDebugPrintAddressFunc, castedPtr);
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print_address"), castedPtr);
             }
 
             llvm::Value* incRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
@@ -237,10 +237,10 @@ namespace yoi {
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
                 auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
                 auto* debugStrPtr = Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                Builder->CreateCall(runtimeDebugPrintFunc, debugStrPtr);
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print"), debugStrPtr);
                 // address
                 auto* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
-                Builder->CreateCall(runtimeDebugPrintAddressFunc, castedPtr);
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print_address"), castedPtr);
             }
             llvm::Value* decRefCountPtr = Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
             llvm::Value* decOldRefCount = Builder->CreateLoad(Builder->getInt64Ty(), decRefCountPtr, "old_refcount");
@@ -251,7 +251,7 @@ namespace yoi {
 
             Builder->SetInsertPoint(finalizeBlock);
             llvm::Value* castedPtr = Builder->CreateBitCast(thisPtr, llvm::PointerType::get(Builder->getInt8Ty(), 0));
-            Builder->CreateCall(runtimeFinalizeObjectFunc, castedPtr);
+            Builder->CreateCall(runtimeFunctions.at(L"finalize_object"), castedPtr);
             Builder->CreateBr(continueBlock);
 
             Builder->SetInsertPoint(continueBlock);
@@ -461,7 +461,7 @@ namespace yoi {
                 llvm::Value* loadedField = Builder->CreateLoad(yoiTypeToLLVMType(fieldType), fieldPtr, "loaded_field_for_gc");
                 callGcFunction(loadedField, fieldType, false); // Decrease refcount of member
             }
-            Builder->CreateCall(runtimeFinalizeObjectFunc, castedPtr);
+            Builder->CreateCall(runtimeFunctions.at(L"finalize_object"), castedPtr);
             Builder->CreateBr(continueBlock);
 
             Builder->SetInsertPoint(continueBlock);
@@ -603,7 +603,7 @@ namespace yoi {
             Builder->CreateCall(gcFuncTypeForDispatch, gcDecFuncPtr, {loadedConcreteThis});
 
             llvm::Value* castedInterfacePtr = Builder->CreateBitCast(thisPtr, i8PtrTy);
-            Builder->CreateCall(runtimeFinalizeObjectFunc, castedInterfacePtr);
+            Builder->CreateCall(runtimeFunctions.at(L"finalize_object"), castedInterfacePtr);
             Builder->CreateBr(decContinueBlock);
             Builder->SetInsertPoint(decContinueBlock);
             Builder->CreateRetVoid();
@@ -681,7 +681,7 @@ namespace yoi {
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
             auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
             auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-            Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+            Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_current_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
         }
 
 
@@ -805,7 +805,7 @@ namespace yoi {
             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, debugStr, true);
             auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
             auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-            Builder->CreateCall(runtimeDebugPrintFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+            Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print"), llvm::ArrayRef<llvm::Value*>(debugArgs));
         }
         switch(instr.opcode) {
             case IR::Opcode::push_integer: {
@@ -1173,7 +1173,7 @@ namespace yoi {
                     auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
                     auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
                     auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                    Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                    Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_leave_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
                 }
 
                 retVal = promiseInterfaceObjectIfInterface(retVal);
@@ -1202,7 +1202,7 @@ namespace yoi {
                     auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
                     auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
                     auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                    Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                    Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_leave_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
                 }
 
                 Builder->CreateRetVoid();
@@ -1433,7 +1433,7 @@ namespace yoi {
                 auto size = TheModule->getDataLayout().getTypeAllocSize(structType);
                 auto* sizeVal = llvm::ConstantInt::get(Builder->getInt64Ty(), size);
 
-                auto* allocCall = Builder->CreateCall(runtimeObjectAllocFunc, sizeVal, "newtmp_alloc");
+                auto* allocCall = Builder->CreateCall(runtimeFunctions.at(L"object_alloc"), sizeVal, "newtmp_alloc");
                 auto* bitcast = Builder->CreateBitCast(allocCall, llvm::PointerType::get(structType, 0), "casttmp");
 
                 auto* refCountPtr = Builder->CreateStructGEP(structType, bitcast, 0, "refcount_ptr");
@@ -2336,7 +2336,7 @@ namespace yoi {
         auto size = TheModule->getDataLayout().getTypeAllocSize(objType);
         auto* sizeVal = llvm::ConstantInt::get(Builder->getInt64Ty(), size);
 
-        auto* allocCall = Builder->CreateCall(runtimeObjectAllocFunc, sizeVal, "new_obj_alloc");
+        auto* allocCall = Builder->CreateCall(runtimeFunctions.at(L"object_alloc"), sizeVal, "new_obj_alloc");
         auto* newObjPtr = Builder->CreateBitCast(allocCall, llvm::PointerType::get(objType, 0), "new_obj_ptr");
 
         auto* refCountPtr = Builder->CreateStructGEP(objType, newObjPtr, 0, "refcount_ptr");
@@ -2728,15 +2728,15 @@ namespace yoi {
                 auto* startStrConst = llvm::ConstantDataArray::getString(*TheContext, startMsg, true);
                 auto* startStrGlobal = new llvm::GlobalVariable(*TheModule, startStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, startStrConst, "start_str");
                 auto startArgs = std::array<llvm::Value*, 1>{ startStrGlobal };
-                Builder->CreateCall(runtimeDebugPrintFunc, llvm::ArrayRef<llvm::Value*>(startArgs));
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print"), llvm::ArrayRef<llvm::Value*>(startArgs));
                 // print argc and argv by runtime_print_int and runtime_print_address
                 // i32 to i64
                 auto argc_i64 = Builder->CreateSExt(argc, Builder->getInt64Ty(), "argc_i64");
                 // print argc
                 auto argcArgs = std::array<llvm::Value*, 1>{ argc_i64 };
-                Builder->CreateCall(runtimeDebugPrintIntFunc, llvm::ArrayRef<llvm::Value*>(argcArgs));
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print_int"), llvm::ArrayRef<llvm::Value*>(argcArgs));
                 auto argvArgs = std::array<llvm::Value*, 1>{ argv };
-                Builder->CreateCall(runtimeDebugPrintAddressFunc, llvm::ArrayRef<llvm::Value*>(argvArgs));
+                Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_print_address"), llvm::ArrayRef<llvm::Value*>(argvArgs));
             }
 
             // invoke elysia_main
@@ -2772,7 +2772,7 @@ namespace yoi {
                         auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
                         auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
                         auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                        Builder->CreateCall(runtimeDebugReportCurrentFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                        Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_current_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
                     }
 
                     yoi_assert(!funcDef->returnType->isArrayType() && !funcDef->returnType->isDynamicArrayType(), funcDef->debugInfo.line, funcDef->debugInfo.column, "Array return type not supported for foreign functions");
@@ -2814,7 +2814,7 @@ namespace yoi {
                             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
                             auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
                             auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                            Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                            Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_leave_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
                         }
                         Builder->CreateRetVoid();
                     } else {
@@ -2835,7 +2835,7 @@ namespace yoi {
                             auto* debugStrConst = llvm::ConstantDataArray::getString(*TheContext, funcName, true);
                             auto* debugStrGlobal = new llvm::GlobalVariable(*TheModule, debugStrConst->getType(), true, llvm::GlobalVariable::PrivateLinkage, debugStrConst, "debug_str");
                             auto debugArgs = std::array<llvm::Value*, 1>{ debugStrGlobal };
-                            Builder->CreateCall(runtimeDebugReportLeaveFunctionFunc, llvm::ArrayRef<llvm::Value*>(debugArgs));
+                            Builder->CreateCall(runtimeFunctions.at(L"runtime_debug_report_leave_function"), llvm::ArrayRef<llvm::Value*>(debugArgs));
                         }
 
                         // return with actual result
@@ -3054,7 +3054,7 @@ namespace yoi {
         llvm::Type *llvmType = getArrayLLVMType(type, false);
         // initialize the llvm struct, allocate memory and store the array
         auto memSize = TheModule->getDataLayout().getTypeAllocSize(llvmType);
-        auto *memoryPointer = Builder->CreateCall(runtimeObjectAllocFunc, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), memSize, true)});
+        auto *memoryPointer = Builder->CreateCall(runtimeFunctions.at(L"object_alloc"), {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), memSize, true)});
 
         // increase the refcount to 1
         auto *refCounter = Builder->CreateStructGEP(llvmType, memoryPointer, 0, "ref_counter");
@@ -3592,7 +3592,7 @@ namespace yoi {
             "total_dyn_array_size"
         );
         // allocate memory
-        auto *memoryPointer = Builder->CreateCall(runtimeObjectAllocFunc, {totalSize});
+        auto *memoryPointer = Builder->CreateCall(runtimeFunctions.at(L"object_alloc"), {totalSize});
         // increase the refcount to 1
         auto *refCounter = Builder->CreateStructGEP(llvmType, memoryPointer, 0, "ref_counter");
         auto *refCounterVal = llvm::ConstantInt::get(llvm::Type::getInt64Ty(*TheContext), 1, true);
@@ -3778,7 +3778,7 @@ namespace yoi {
                 // exit block
                 Builder->SetInsertPoint(exitBlock);
             }
-            Builder->CreateCall(runtimeFinalizeObjectFunc, objPtr);
+            Builder->CreateCall(runtimeFunctions.at(L"finalize_object"), objPtr);
             Builder->CreateRetVoid();
         }
         Builder->SetInsertPoint(currentInsertPoint);
@@ -3959,7 +3959,7 @@ namespace yoi {
         auto size = TheModule->getDataLayout().getTypeAllocSize(interfaceLLVMType);
         auto *sizeVal = llvm::ConstantInt::get(Builder->getInt64Ty(), size);
 
-        auto *allocCall = Builder->CreateCall(runtimeObjectAllocFunc, sizeVal, "newinterface_alloc");
+        auto *allocCall = Builder->CreateCall(runtimeFunctions.at(L"object_alloc"), sizeVal, "newinterface_alloc");
         auto *bitcast = Builder->CreateBitCast(allocCall, llvm::PointerType::get(interfaceLLVMType, 0), "casttmp");
 
         auto *refCountPtr = Builder->CreateStructGEP(interfaceLLVMType, bitcast, 0, "refcount_ptr");
@@ -4083,5 +4083,33 @@ namespace yoi {
                 panic(instr.debugInfo.line, instr.debugInfo.column, "llvmCodegen: unsupported intrinsic call");
                 break;
         }
+    }
+
+    void LLVMCodegen::generateWrapperForForeignCallablesIfNotExists(const std::shared_ptr<IRValueType> &type) {
+        // further implementation details are under discussion, leave this function empty temporarily
+
+        
+        // std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> key = {type->type, type->typeAffiliateModule, type->typeIndex};
+
+        // if (foreignTypeMap.find(key) != foreignTypeMap.end()) {
+        //     // we have already created the wrapper, just return
+        //     return;
+        // }
+        
+        // yoi_assert(type->type == IRValueType::valueType::interfaceObject, currentFunctionDef->debugInfo.line, currentFunctionDef->debugInfo.column, "llvmCodegen: expected callable interface type for generateWrapperForForeignCallablesIfNotExists");
+
+        // auto interfaceDef = yoiModule->interfaceTable[type->typeIndex];
+        // yoi_assert(interfaceDef->functionOverloadIndexies.contains(L"operator()") && interfaceDef->functionOverloadIndexies.at(L"operator()").size() == 1, currentFunctionDef->debugInfo.line, currentFunctionDef->debugInfo.column, "llvmCodegen: expected operator() in callable interface");
+
+        // auto funcIndex = interfaceDef->functionOverloadIndexies.at(L"operator()")[0];
+        // auto funcDef = yoiModule->functionTable[funcIndex];
+        // // determine the LLVM type of the foreign type, first
+        // yoi::vec<llvm::Type *> argTypes; 
+
+        // for (auto &param : funcDef->argumentTypes) {
+        //     argTypes.push_back(yoiTypeToLLVMType(param, true));
+        // }
+        
+        // // 
     }
 } // namespace yoi

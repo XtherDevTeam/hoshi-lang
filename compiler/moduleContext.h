@@ -6,7 +6,6 @@
 #define HOSHI_LANG_MODULECONTEXT_H
 
 #include "share/def.hpp"
-#include "symbolTable.h"
 #include "compiler/frontend/ast.hpp"
 #include "compilerContext.h"
 #include "compiler/ir/IR.h"

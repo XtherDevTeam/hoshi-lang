@@ -120,3 +120,59 @@ YoiIntegerObject *runtime_get_string_array_data_pointer(YoiObjectArray *array) {
         runtime_finalize_object((YoiObject*)array);
     return obj;
 }
+
+#ifdef _WIN32
+    #include <windows.h>
+#elif defined(__linux__) || defined(__APPLE__)
+    #include <sys/mman.h>
+    #include <unistd.h>
+#endif
+
+#ifndef ELYSIA_DISABLE_MEMORY_EXECUTABLE_MAPPING_FEATURE
+
+void *runtime_exec_permit_alloc(unsigned long size) {
+    #ifdef _WIN32
+    return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    #elif defined(__linux__) || defined(__APPLE__)
+    // Align to 16 bytes for safe cross-platform JIT structure (metadata + alignment padding)
+    size_t header_size = 16;
+    size_t real_size = size + header_size;
+    
+    int prot = PROT_READ | PROT_WRITE | PROT_EXEC;
+    int flags = MAP_PRIVATE | MAP_ANONYMOUS;
+    
+    #if defined(__APPLE__) && defined(__aarch64__)
+    flags |= MAP_JIT;
+    #endif
+
+    void *ptr = mmap(NULL, real_size, prot, flags, -1, 0);
+    
+    if (ptr == MAP_FAILED) {
+        return nullptr;
+    }
+    
+    // Store the allocated size at the beginning
+    *reinterpret_cast<size_t*>(ptr) = real_size;
+    
+    // Return pointer offset by header_size
+    return static_cast<char*>(ptr) + header_size;
+    #else
+    return nullptr;
+    #endif
+}
+
+void runtime_exec_permit_free(void *ptr) {
+    if (!ptr) return;
+    
+    #ifdef _WIN32
+    VirtualFree(ptr, 0, MEM_RELEASE);
+    #elif defined(__linux__) || defined(__APPLE__)
+    size_t header_size = 16;
+    char *real_ptr = static_cast<char*>(ptr) - header_size;
+    size_t real_size = *reinterpret_cast<size_t*>(real_ptr);
+    
+    munmap(real_ptr, real_size);
+    #endif
+}
+
+#endif

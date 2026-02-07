@@ -284,6 +284,10 @@ int main(int argc, const char **argv) {
                                         .setMarco(L"hoshi_lang_commit", yoi::string2wstring(HOSHI_LANG_GIT_COMMIT_HASH))
                                         .setAdditionalLinkingFiles(additionalLinkingFiles)
                                         .yield());
+        
+        for (auto &macro : macroDefs) {
+            compilerCtx->getBuildConfig()->marcos[macro.first] = macro.second;
+        }
 
         yoi::wstr input = yoi::string2wstring(inputFile);
 
