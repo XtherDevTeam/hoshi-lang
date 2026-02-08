@@ -12,8 +12,8 @@
 
 namespace yoi {
 
-    ccObjectLinker::ccObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config)
-        : ObjectLinker(objectPath, config) {
+    ccObjectLinker::ccObjectLinker(const yoi::vec<yoi::wstr> &objectPaths, const std::shared_ptr<IRBuildConfig> &config)
+        : ObjectLinker(objectPaths, config) {
         this->setLinkerPath(L"");
     }
 
@@ -66,13 +66,15 @@ namespace yoi {
         if (this->getLinkerPath().empty()) {
             throw std::runtime_error("ccObjectLinker: Linker path not set. Call searchAndSetupLinker() first.");
         }
-        if (this->getObjectPath().empty()) {
+        if (this->getObjectPaths().empty()) {
             throw std::runtime_error("ccObjectLinker: Object file path not set.");
         }
 
         std::string command = "\"" + yoi::wstring2string(this->getLinkerPath()) + "\"";
-        command += " \"";
-        command += yoi::wstring2string(this->getObjectPath()) + "\"";
+        for (const auto &objectPath : this->getObjectPaths()) {
+            command += " \"";
+            command += yoi::wstring2string(objectPath) + "\"";
+        }
 
         // add additional linking files
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
@@ -105,6 +107,11 @@ namespace yoi {
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
             command += " -shared"; // build a shared library
+        }
+
+        // synchronize the release/debug
+        if (this->getConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            command += " -g";
         }
 #ifdef _WIN32
         command += " -mconsole"; // fuck argc, argv

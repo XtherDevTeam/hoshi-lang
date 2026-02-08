@@ -4,6 +4,7 @@
 
 #include "IRLinker.hpp"
 #include "IR.h"
+#include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
@@ -72,6 +73,7 @@ namespace yoi {
                 // Just copy the definition, field types will be patched later if needed
                 auto newIndex = finalModule->structTable.put_create(newName, structPair.second);
                 structRemapping[modId][oldIdx] = newIndex;
+                finalModule->structTable[newIndex]->linkedModuleId = modId;
             }
 
             for (const auto& ifacePair : srcModule->interfaceTable) {
@@ -81,6 +83,7 @@ namespace yoi {
                 finalModule->interfaceTable.put_create(newName, ifacePair.second);
                 auto newIndex = finalModule->interfaceTable.getIndex(newName);
                 interfaceRemapping[modId][oldIdx] = newIndex;
+                finalModule->interfaceTable[newIndex]->linkedModuleId = modId;
             }
         }
 
@@ -104,6 +107,7 @@ namespace yoi {
                 auto newName = mangleName(modId, ifacePair.second->name);
                 indexT newIdx = finalModule->interfaceTable.getIndex(newName);
                 finalModule->interfaceTable[newIdx]->name = newName;
+                finalModule->interfaceTable[newIdx]->linkedModuleId = modId;
 
                 for (auto &method : finalModule->interfaceTable[newIdx]->methodMap) {
                     for (auto &param : method.second->argumentTypes) {
@@ -126,6 +130,7 @@ namespace yoi {
                 // printf("remapping interface %lld %lld to %lld %lld\n", implPair.second->implInterfaceIndex.first, implPair.second->implInterfaceIndex.second, ENTRY_MODULE_ID_CONST, interfaceRemapping[implPair.second->implInterfaceIndex.first][implPair.second->implInterfaceIndex.second]);
                 finalModule->interfaceImplementationTable[newIdx]->implInterfaceIndex = {ENTRY_MODULE_ID_CONST, interfaceRemapping[implPair.second->implInterfaceIndex.first][implPair.second->implInterfaceIndex.second]};
                 finalModule->interfaceImplementationTable[newIdx]->name = newName;
+                finalModule->interfaceImplementationTable[newIdx]->linkedModuleId = modId;
                 interfaceImplRemapping[modId][oldIdx] = newIdx;
             }
         }
@@ -168,6 +173,7 @@ namespace yoi {
 
                 indexT newIdx = finalModule->functionTable.put_create(newName, newFuncDef);
                 functionRemapping[modId][oldIdx] = newIdx;
+                finalModule->functionTable[newIdx]->linkedModuleId = modId;
 
                 if (funcPair.first == L"yoimiya_glob_initializer") {
                     globInitializerIndexes.emplace_back(newIdx);
@@ -223,8 +229,6 @@ namespace yoi {
             case IR::Opcode::new_dynamic_array_struct:
             case IR::Opcode::new_dynamic_array_interface:
             case IR::Opcode::construct_interface_impl: 
-            case IR::Opcode::typeid_struct:
-            case IR::Opcode::typeid_interface:
             case IR::Opcode::dyn_cast_struct: {
                 auto moduleId = instr.operands[0].value.symbolIndex;
                 auto symbolIndex = instr.operands[1].value.symbolIndex;
@@ -315,6 +319,7 @@ namespace yoi {
     void IRLinker::createEntryFunction() {
         IRFunctionDefinition::Builder entryBuilder;
         auto entry = entryBuilder.setName(L"yoimiya_entry").setReturnType(compilerCtx->getIntObjectType()).setDebugInfo({L"<entry>", 0, 0}).yield();
+        entry->linkedModuleId = HOSHI_COMPILER_CTX_GLOB_ID_CONST;
         auto entryIndex = this->finalModule->functionTable.put_create(L"yoimiya_entry", entry);
         IRBuilder builder(compilerCtx, finalModule, entry);
         builder.switchCodeBlock(builder.createCodeBlock());

@@ -886,7 +886,7 @@ namespace yoi {
 
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
         return managedPtr(IRBuildConfig{
-            buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles, searchPaths, additionalLinkingFiles, marcos});
+            buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles, searchPaths, additionalLinkingFiles, marcos, buildCachePath, immediatelyClearupCache});
     }
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
@@ -1210,39 +1210,11 @@ namespace yoi {
             operand.emplace_back(IROperand::operandType::index, type->typeIndex);
             operand.emplace_back(IROperand::operandType::index, size);
         } else {
-            switch (type->type) {
-                case IRValueType::valueType::integerObject:
-                    op = IR::Opcode::push_integer;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
-                    break;
-                case IRValueType::valueType::booleanObject:
-                    op = IR::Opcode::push_integer;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(2));
-                    break;
-                case IRValueType::valueType::decimalObject:
-                    op = IR::Opcode::push_integer;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(1));
-                    break;
-                case IRValueType::valueType::characterObject:
-                    op = IR::Opcode::push_integer;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(3));
-                    break;
-                case IRValueType::valueType::stringObject:
-                    op = IR::Opcode::push_integer;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(4));
-                    break;
-                case IRValueType::valueType::structObject:
-                case IRValueType::valueType::interfaceObject:
-                    op = IR::Opcode::typeid_object_non_stack;
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
-                    operand.emplace_back(IROperand::operandType::index, type->typeIndex);
-                    operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
-                    break;
-                default:
-                    /* TODO: add more typeid opcodes */
-                    break;
-            }
+            op = IR::Opcode::typeid_object_non_stack;
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
+            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
         }
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.push_back(managedPtr(IRValueType(IRValueType::valueType::integerObject)));
@@ -1634,7 +1606,9 @@ namespace yoi {
     }
     IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes) : type(type), bracedTypes(bracedTypes) {}
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildCachePath(const yoi::wstr &buildCachePath) {
-        this->buildCachePath = buildCachePath;
+        if (!buildCachePath.empty()) {
+            this->buildCachePath = buildCachePath;
+        }
         return *this;
     }
     IRBuildConfig::Builder &IRBuildConfig::Builder::setImmediatelyClearupCache(bool immediatelyClearupCache) {

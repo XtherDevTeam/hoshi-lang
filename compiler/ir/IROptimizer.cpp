@@ -1728,18 +1728,6 @@ namespace yoi {
                     simulationStack.pop();
                     break;
                 }
-                case IR::Opcode::typeid_int:
-                case IR::Opcode::typeid_bool:
-                case IR::Opcode::typeid_char:
-                case IR::Opcode::typeid_deci:
-                case IR::Opcode::typeid_str:
-                case IR::Opcode::typeid_struct:
-                case IR::Opcode::typeid_unsigned:
-                case IR::Opcode::typeid_short:
-                case IR::Opcode::typeid_interface: {
-                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
                 case IR::Opcode::dyn_cast_int:
                 case IR::Opcode::dyn_cast_bool:
                 case IR::Opcode::dyn_cast_deci:
@@ -1851,12 +1839,6 @@ namespace yoi {
                     simulationStack.pop();
                     simulationStack.pop();
                     simulationStack.push(compilerCtx->getBoolObjectType(), {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::typeid_object: {
-                    auto objectType = simulationStack.peek(0).type;
-                    simulationStack.pop();
-                    simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                     break;
                 }
                 case IR::Opcode::typeid_object_non_stack: {
@@ -2716,16 +2698,6 @@ namespace yoi {
                 }
                 case IR::Opcode::array_length: {
                     simulationStack.pop(); // array
-                    simulationStack.push(std::make_shared<IRValueType>(*compilerCtx->getIntObjectType()), {});
-                    break;
-                }
-                case IR::Opcode::typeid_int:
-                case IR::Opcode::typeid_bool:
-                case IR::Opcode::typeid_char:
-                case IR::Opcode::typeid_deci:
-                case IR::Opcode::typeid_str:
-                case IR::Opcode::typeid_struct:
-                case IR::Opcode::typeid_interface: {
                     simulationStack.push(std::make_shared<IRValueType>(*compilerCtx->getIntObjectType()), {});
                     break;
                 }
@@ -4239,18 +4211,6 @@ namespace yoi {
                                          SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
-            case IR::Opcode::typeid_int:
-            case IR::Opcode::typeid_bool:
-            case IR::Opcode::typeid_char:
-            case IR::Opcode::typeid_deci:
-            case IR::Opcode::typeid_str:
-            case IR::Opcode::typeid_struct:
-            case IR::Opcode::typeid_unsigned:
-            case IR::Opcode::typeid_short:
-            case IR::Opcode::typeid_interface: {
-                simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
-                break;
-            }
             case IR::Opcode::dyn_cast_int:
             case IR::Opcode::dyn_cast_bool:
             case IR::Opcode::dyn_cast_deci:
@@ -4332,12 +4292,6 @@ namespace yoi {
                 simulationStack.pop();
                 simulationStack.pop();
                 simulationStack.push(compilerCtx->getBoolObjectType(), {currentCodeBlockIndex, {insIndex}, false});
-                break;
-            }
-            case IR::Opcode::typeid_object: {
-                auto objectType = simulationStack.peek(0).type;
-                simulationStack.pop();
-                simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
             case IR::Opcode::typeid_object_non_stack: {

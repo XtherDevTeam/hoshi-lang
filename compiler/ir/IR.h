@@ -345,16 +345,6 @@ namespace yoi {
             throws,
             push_exception_handler,
             pop_exception_handler,
-            typeid_int,
-            typeid_deci,
-            typeid_bool,
-            typeid_char,
-            typeid_str,
-            typeid_short,
-            typeid_unsigned,
-            typeid_struct,
-            typeid_interface,
-            typeid_object,
             typeid_object_non_stack,
             typeid_interface_impl,
             dyn_cast_int,
@@ -487,6 +477,8 @@ namespace yoi {
         yoi::vec<FunctionAttrs> attrs;
         IRDebugInfo debugInfo;
 
+        yoi::indexT linkedModuleId;
+
         IRFunctionDefinition(const yoi::wstr &name,
                              const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
                              const std::shared_ptr<IRValueType> &returnType,
@@ -579,6 +571,8 @@ namespace yoi {
         std::map<yoi::wstr, yoi::structDefInnerPair *> templateMethodDecls;
         std::map<yoi::wstr, yoi::implInnerPair *> templateMethodDefs;
 
+        yoi::indexT linkedModuleId;
+
         IRStructDefinition(const yoi::wstr &name,
                            const std::map<yoi::wstr, nameInfo> &nameIndexMap,
                            const vec<std::shared_ptr<IRValueType>> &fieldTypes,
@@ -659,6 +653,8 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> virtualMethods;
         std::map<yoi::wstr, yoi::indexT> virtualMethodIndexMap;
 
+        yoi::indexT linkedModuleId;
+
         IRInterfaceImplementationDefinition(const yoi::wstr &name,
                                             std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> implStructIndex,
                                             const std::pair<yoi::indexT, yoi::indexT> &implInterfaceIndex,
@@ -695,6 +691,8 @@ namespace yoi {
         std::map<yoi::wstr, yoi::vec<yoi::indexT>> functionOverloadIndexies;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> methodMap;
         yoi::vec<std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT>> implementations;
+
+        yoi::indexT linkedModuleId;
 
         IRInterfaceInstanceDefinition(const yoi::wstr &name,
                                       const std::map<yoi::wstr, yoi::vec<yoi::indexT>> &functionOverloadIndexies,

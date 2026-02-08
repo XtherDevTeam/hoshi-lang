@@ -9,8 +9,8 @@
 
 namespace yoi {
 
-    clObjectLinker::clObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config)
-        : ObjectLinker(objectPath, config) {
+    clObjectLinker::clObjectLinker(const yoi::vec<yoi::wstr> &objectPaths, const std::shared_ptr<IRBuildConfig> &config)
+        : ObjectLinker(objectPaths, config) {
         // Constructor simply calls the base class constructor.
     }
 
@@ -199,16 +199,17 @@ namespace yoi {
         if (getLinkerPath().empty()) {
             throw std::runtime_error("Linker path not set. Call searchAndSetupLinker() first.");
         }
-        if (getObjectPath().empty()) {
+        if (getObjectPaths().empty()) {
             throw std::runtime_error("Object path is empty.");
         }
 
         std::filesystem::path output_fs_path(outputPath);
-        std::filesystem::path object_fs_path(getObjectPath());
         std::filesystem::path elysia_runtime_fs_path(getElysiaRuntimePath());
 
         std::wstring command = L"\"" + getLinkerPath() + L"\"";
-        command += L" \"" + object_fs_path.wstring() + L"\"";
+        for (const auto &objectPath : getObjectPaths()) {
+            command += L" \"" + objectPath + L"\"";
+        }
 
         // add additional linking files
         for (const auto &file : this->getConfig()->additionalLinkingFiles) {
@@ -237,6 +238,13 @@ namespace yoi {
         command += L" msvcrt.lib";
 
         command += L" /SUBSYSTEM:CONSOLE"; // fuck argc, argv
+
+        // synchronize the release/debug
+        if (this->getConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
+            command += L" /DEBUG";
+        } else {
+            command += L" /RELEASE";
+        }
 
 #if defined(_WIN32)
         replace_all(command, std::wstring(L"\""), std::wstring(L"\\\""));

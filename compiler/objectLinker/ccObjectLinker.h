@@ -12,7 +12,7 @@
 namespace yoi {
     class ccObjectLinker : public ObjectLinker {
     public:
-        ccObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config);
+        ccObjectLinker(const yoi::vec<yoi::wstr> &objectPaths, const std::shared_ptr<IRBuildConfig> &config);
 
         ObjectLinker &searchAndSetupLinker() override;
         ObjectLinker &link(const yoi::wstr &outputPath) override;

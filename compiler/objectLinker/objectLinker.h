@@ -13,19 +13,19 @@
 namespace yoi {
     class ObjectLinker {
         yoi::wstr linkerPath;
-        yoi::wstr objectPath;
+        yoi::vec<yoi::wstr> objectPaths;
         yoi::wstr elysiaRuntimePath;
         std::shared_ptr<IRBuildConfig> config;
     public:
-        ObjectLinker(const yoi::wstr &objectPath, const std::shared_ptr<IRBuildConfig> &config);
+        ObjectLinker(const yoi::vec<yoi::wstr> &objectPaths, const std::shared_ptr<IRBuildConfig> &config);
 
         yoi::wstr getLinkerPath() const;
 
         ObjectLinker &setLinkerPath(const yoi::wstr &linkerPath);
 
-        yoi::wstr getObjectPath() const;
+        yoi::vec<yoi::wstr> getObjectPaths() const;
 
-        ObjectLinker &setObjectPath(const yoi::wstr &objectPath);
+        ObjectLinker &setObjectPaths(const yoi::vec<yoi::wstr> &objectPaths);
 
         yoi::wstr getElysiaRuntimePath() const;
 

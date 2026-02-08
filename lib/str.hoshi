@@ -362,6 +362,8 @@ impl Str {
                 strs[i] = dyn_cast<Str>(args[i])
             } elif (args[i] interfaceof string) {
                 strs[i] = Str(dyn_cast<string>(args[i]))
+            } else {
+                lang.runtime_panic("positional arguments must be string or Str, but got")
             }
         }
         return Str.join(strs)

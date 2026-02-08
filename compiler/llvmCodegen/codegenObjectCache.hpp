@@ -7,6 +7,7 @@
 
 #include "compiler/ir/IR.h"
 #include <memory>
+#include <mutex>
 #include <share/def.hpp>
 
 namespace yoi {
@@ -24,21 +25,9 @@ namespace yoi {
             fread(&value, sizeof(T), 1, fp);
         }
 
-        template <> void write(FILE *fp, const yoi::wstr &value) {
-            // general serialization helper for wstr
-            // read length first
-            write<uint64_t>(fp, value.size());
-            fwrite(value.data(), sizeof(yoi::wstr::value_type), value.size(), fp);
-        }
+        template <> void write(FILE *fp, const yoi::wstr &value);
 
-        template <> void read(FILE *fp, yoi::wstr &value) {
-            // general deserialization helper for wstr
-            // read length first
-            uint64_t len;
-            read<uint64_t>(fp, len);
-            value.resize(len);
-            fread(value.data(), sizeof(yoi::wstr::value_type), len, fp);
-        }
+        template <> void read(FILE *fp, yoi::wstr &value);
     } // namespace serialization
 
     struct CodegenObjectCacheEntry {
@@ -65,35 +54,20 @@ namespace yoi {
         yoi::indexT getLastModification() const;
     };
 
-    namespace serialization {
-        template <> void write(FILE *fp, const CodegenObjectCacheEntry &value) {
-            write(fp, value.abs_path_on_disk);
-            write(fp, value.object_filename);
-            write(fp, value.hash);
-            write(fp, value.last_modification);
-        }
-
-        template <> void read(FILE *fp, CodegenObjectCacheEntry &value) {
-            read(fp, value.abs_path_on_disk);
-            read(fp, value.object_filename);
-            read(fp, value.hash);
-            read(fp, value.last_modification);
-        }
-    } // namespace serialization
-
     class CodegenObjectCache {
       public:
         std::map<yoi::wstr, CodegenObjectCacheEntry> cache;
         std::vector<yoi::indexT> free_list;
         std::shared_ptr<IRBuildConfig> build_config;
         yoi::indexT next_hash = 0;
+        mutable std::mutex cacheMutex;
 
         /**
          * @brief set the build config
          * @param build_config the build config
          * @return the CodegenObjectCache
          */
-        CodegenObjectCache setBuildConfig(const std::shared_ptr<IRBuildConfig> &build_config);
+        CodegenObjectCache &setBuildConfig(const std::shared_ptr<IRBuildConfig> &build_config);
 
         /**
          * @brief purge the cache, add the entries that previously not in the cache, remove the entries that are not in the source_files
@@ -108,6 +82,13 @@ namespace yoi {
          * @note the object filename will be generated based on the hash of the source file
          */
         yoi::indexT register_entry(const yoi::wstr &abs_path_on_disk);
+
+        /**
+         * @brief update the last modification time of an entry
+         * @param abs_path_on_disk the absolute path of the source file on the disk
+         * @param last_modification the last modification time
+         */
+        void update_last_modification(const yoi::wstr &abs_path_on_disk, yoi::indexT last_modification);
 
         /**
          * @brief get the entry from the cache
@@ -128,57 +109,23 @@ namespace yoi {
          * @param abs_path_on_disk the absolute path of the source file on the disk
          */
         void remove_entry(const yoi::wstr &abs_path_on_disk);
+
+      private:
+        yoi::indexT register_entry_unlocked(const yoi::wstr &abs_path_on_disk);
     };
 
     namespace serialization {
-        template <> void write(FILE *fp, const std::vector<yoi::indexT> &value) {
-            write<uint64_t>(fp, value.size());
-            for (auto &item : value) {
-                write(fp, item);
-            }
-        }
+        template <> void write(FILE *fp, const CodegenObjectCache &value);
 
-        template <> void read(FILE *fp, std::vector<yoi::indexT> &value) {
-            uint64_t len;
-            read<uint64_t>(fp, len);
-            value.resize(len);
-            for (auto &item : value) {
-                read(fp, item);
-            }
-        }
+        template <> void read(FILE *fp, CodegenObjectCache &value);
 
-        template <> void write(FILE *fp, const CodegenObjectCache &value) {
-            write<uint64_t>(fp, value.cache.size());
-            for (auto &item : value.cache) {
-                write(fp, item.first);
-                write(fp, item.second);
-            }
-            write<uint64_t>(fp, value.free_list.size());
-            for (auto &item : value.free_list) {
-                write(fp, item);
-            }
-            write<yoi::indexT>(fp, value.next_hash);
-        }
+        template <> void write(FILE *fp, const CodegenObjectCacheEntry &value);
 
-        template <> void read(FILE *fp, CodegenObjectCache &value) {
-            uint64_t len;
-            read<uint64_t>(fp, len);
-            for (auto i = 0; i < len; i++) {
-                yoi::wstr key;
-                CodegenObjectCacheEntry entry;
-                read(fp, key);
-                read(fp, entry);
-                value.cache.insert({key, entry});
-            }
-            read<uint64_t>(fp, len);
-            value.free_list.reserve(len);
-            for (auto i = 0; i < len; i++) {
-                yoi::indexT item;
-                read(fp, item);
-                value.free_list.push_back(item);
-            }
-            read<yoi::indexT>(fp, value.next_hash);
-        }
+        template <> void read(FILE *fp, CodegenObjectCacheEntry &value);
+
+        template <> void write(FILE *fp, const std::vector<yoi::indexT> &value);
+
+        template <> void read(FILE *fp, std::vector<yoi::indexT> &value);
     } // namespace serialization
 
 } // namespace yoi

@@ -39,24 +39,25 @@ void printUsage(const char* programName) {
     std::cout << "Made with love by Jerry Chou (This project is licensed under the MIT license.)\n";
     std::cerr << "Usage: " << programName << " [options] <input_file> ...\n"
               << "Options:\n"
-              << "  -o <path>, --output <path>      Set output file path (e.g., build/my_app).\n"
-              << "                                  If <path> is a directory (ends with / or \\), input filename is used.\n"
-              << "                                  If not specified, derived from input_file in the current directory.\n"
-              << "  --build-type <type>             Specify build type (executable, static-lib, shared-lib). Default: executable\n"
-              << "  --build-mode <mode>             Specify build mode (debug, release). Default: debug\n"
-              << "  --linker <linker>               Specify object linker (cc, cl, none). Default: cc (cl on Windows platform)\n"
-              << "                                  'none' will generate .o file but skip final linking.\n"
-              << "  --clean, --remove-intermediate  Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
-              << "                                  Default: do not preserve intermediate files.\n"
-              << "  -I <path>, --include <path>     Add an include directory to search for header files and dynamic libraries.\n"
-              << "  -D <k> <v>, --define <k> <v>    Add a macro definition.\n"
-              << "  -W <key>, --warning <key>       Enable warning for a specific category.\n"
-              << "  -S <key>, --suppress <key>      Suppress warning for a specific category.\n"
-              << "  -E <key>, --error <key>         Treat error for a specific category as a warning.\n"
-              << "  --preserve-intermediate         Explicitly preserve intermediate files.\n"
-              << "  --whereami, -w                  Print the path to the hoshi-lang installation directory.\n"
-              << "  --build-number                  Print the build number of hoshi-lang.\n"
-              << "  -h, --help                      Display this help message.\n";
+              << "  -o <path>, --output <path>          Set output file path (e.g., build/my_app).\n"
+              << "                                      If <path> is a directory (ends with / or \\), input filename is used.\n"
+              << "                                      If not specified, derived from input_file in the current directory.\n"
+              << "  --build-type <type>                 Specify build type (executable, static-lib, shared-lib). Default: executable\n"
+              << "  --build-mode <mode>                 Specify build mode (debug, release). Default: debug\n"
+              << "  --linker <linker>                   Specify object linker (cc, cl, none). Default: cc (cl on Windows platform)\n"
+              << "                                      'none' will generate .o file but skip final linking.\n"
+              << "  --clean, --remove-intermediate      Remove intermediate files (.yoi, .ll, .o) after compilation.\n"
+              << "                                      Default: do not preserve intermediate files.\n"
+              << "  -I <path>, --include <path>         Add an include directory to search for header files and dynamic libraries.\n"
+              << "  -D <k> <v>, --define <k> <v>        Add a macro definition.\n"
+              << "  -W <key>, --warning <key>           Enable warning for a specific category.\n"
+              << "  -S <key>, --suppress <key>          Suppress warning for a specific category.\n"
+              << "  -E <key>, --error <key>             Treat error for a specific category as a warning.\n"
+              << "  -C <path>, --project-cache <path>   Set project cache directory.\n"
+              << "  --preserve-intermediate             Explicitly preserve intermediate files.\n"
+              << "  --whereami, -w                      Print the path to the hoshi-lang installation directory.\n"
+              << "  --build-number                      Print the build number of hoshi-lang.\n"
+              << "  -h, --help                          Display this help message.\n";
 }
 
 int main(int argc, const char **argv) {
@@ -66,6 +67,7 @@ int main(int argc, const char **argv) {
     std::string outputPathStr; 
     yoi::IRBuildConfig::BuildType buildType = yoi::IRBuildConfig::BuildType::executable;
     yoi::IRBuildConfig::BuildMode buildMode = yoi::IRBuildConfig::BuildMode::debug;
+    yoi::wstr projectCacheDir;
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = strcmp(YOI_PLATFORM, "win32") == 0 ? yoi::IRBuildConfig::UseObjectLinker::cl : yoi::IRBuildConfig::UseObjectLinker::cc;
@@ -133,6 +135,14 @@ int main(int argc, const char **argv) {
             }
         } else if (arg == "--clean" || arg == "--remove-intermediate") {
             preserveIntermediateFiles = false;
+        } else if (arg == "-C" || arg == "--project-cache") {
+            if (i + 1 < argc) {
+                projectCacheDir = yoi::string2wstring(argv[++i]);
+            } else {
+                std::cerr << "Error: " << arg << " requires a path argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
         } else if (arg == "-I" || arg == "--include") {
             yoi::wstr includeDir = yoi::string2wstring(argv[++i]);
             includeDirs.push_back(includeDir);
@@ -264,9 +274,9 @@ int main(int argc, const char **argv) {
     int exitCode = 0; 
 
     
+    std::shared_ptr<yoi::compilerContext> compilerCtx =
+        std::make_shared<yoi::compilerContext>();
     try {
-        std::shared_ptr<yoi::compilerContext> compilerCtx =
-            std::make_shared<yoi::compilerContext>();
         compilerCtx->initializeSharedObjects();
 
         
@@ -277,7 +287,9 @@ int main(int argc, const char **argv) {
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 
+                                        .setImmediatelyClearupCache(!preserveIntermediateFiles)
                                         .setSearchPaths(includeDirs)
+                                        .setBuildCachePath(projectCacheDir)
                                         .setMarco(L"platform", yoi::string2wstring(YOI_PLATFORM))
                                         .setMarco(L"arch", yoi::string2wstring(YOI_ARCH))
                                         .setMarco(L"hoshi_feature_version", yoi::string2wstring(HOSHI_LANG_VERSION))
@@ -310,29 +322,26 @@ int main(int argc, const char **argv) {
         yoi_file.close();
 
         yoi::LLVMCodegen llvmCodegen(compilerCtx, unifiedModule);
-        llvmCodegen.generate();
-        std::error_code ec_ll;
-        llvm::raw_fd_stream ll_file(llvmIRFile.string(), ec_ll);
-        if (ec_ll) {
-            throw std::runtime_error("Could not open LLVM IR output file '" + llvmIRFile.string() + "': " + ec_ll.message());
-        }
-        llvmCodegen.getModule()->print(ll_file, nullptr);
-        ll_file.close();
+        std::cout << "Generating target object files...\n";
 
+        yoi::vec<yoi::wstr> objectFileNames;
+
+        TIMER("Generating target object files", objectFileNames = llvmCodegen.generate());
         
-        std::cout << "Generating target object code...\n";
-        TIMER("Generating target object code", llvmCodegen.generateTargetObjectCode(yoi::string2wstring(objectFile.string())));
-
+        if (preserveIntermediateFiles) {
+            // For debug verification, we print the IR of the main input module
+            llvmCodegen.dumpIR(L"builtin", llvmIRFile.string());
+        }
         
         if (useObjectLinker != yoi::IRBuildConfig::UseObjectLinker::none) {
             yoi::ObjectLinker *objectLinker = nullptr;
             switch (useObjectLinker) {
                 case yoi::IRBuildConfig::UseObjectLinker::cc: {
-                    objectLinker = new yoi::ccObjectLinker(yoi::string2wstring(objectFile.string()), compilerCtx->getBuildConfig());
+                    objectLinker = new yoi::ccObjectLinker(objectFileNames, compilerCtx->getBuildConfig());
                     break;
                 }
                 case yoi::IRBuildConfig::UseObjectLinker::cl: {
-                    objectLinker = new yoi::clObjectLinker(yoi::string2wstring(objectFile.string()), compilerCtx->getBuildConfig());
+                    objectLinker = new yoi::clObjectLinker(objectFileNames, compilerCtx->getBuildConfig());
                     break;
                 }
                 default:
@@ -353,6 +362,13 @@ int main(int argc, const char **argv) {
         }
         std::cout << "Compilation successful!\n";
 
+        if (compilerCtx->getBuildConfig()->immediatelyClearupCache) {
+            std::error_code ec_remove;
+            std::filesystem::remove_all(compilerCtx->getBuildConfig()->buildCachePath, ec_remove);
+            if (ec_remove) {
+                std::cerr << "Warning: Could not remove cache file '" << yoi::wstring2string(compilerCtx->getBuildConfig()->buildCachePath) << "': " << ec_remove.message() << "\n";
+            }
+        }
     } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exitCode = 1; 
