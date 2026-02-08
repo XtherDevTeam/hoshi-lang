@@ -287,7 +287,7 @@ int main(int argc, const char **argv) {
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 
-                                        .setImmediatelyClearupCache(!preserveIntermediateFiles)
+                                        .setImmediatelyClearupCache(projectCacheDir.empty())
                                         .setSearchPaths(includeDirs)
                                         .setBuildCachePath(projectCacheDir)
                                         .setMarco(L"platform", yoi::string2wstring(YOI_PLATFORM))

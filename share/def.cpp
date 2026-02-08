@@ -15,7 +15,8 @@ namespace yoi {
         {"NULLABLE_VALUE_SUPPLY_TO_RAW", ExceptionHandleType::Suppress},
         {"INTERNAL", ExceptionHandleType::Panic},
         {"UCRT_NOT_FOUND", ExceptionHandleType::Warning},
-        {"ELYSIA_RUNTIME_NOT_FOUND", ExceptionHandleType::Warning}
+        {"ELYSIA_RUNTIME_NOT_FOUND", ExceptionHandleType::Warning},
+        {"MODULE_NOT_MODIFIED", ExceptionHandleType::Suppress},
     };
 
     void parseString(std::wistream &input, wstr &value) {

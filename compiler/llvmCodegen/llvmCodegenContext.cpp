@@ -2396,7 +2396,7 @@ namespace yoi {
             SubFeatures.AddFeature(F.first(), F.second);
         }
         auto Features = SubFeatures.getString();
-        printf("Target triple %s, using CPU %s with features %s\n", TargetTriple.c_str(), CPU.str().c_str(), !Features.empty() ? Features.c_str() : "N/A");
+        // printf("Target triple %s, using CPU %s with features %s\n", TargetTriple.c_str(), CPU.str().c_str(), !Features.empty() ? Features.c_str() : "N/A");
 
         llvm::TargetOptions Opt;
         auto RM = std::optional<llvm::Reloc::Model>(llvm::Reloc::PIC_);
@@ -4108,6 +4108,7 @@ namespace yoi {
             codegenTaskDispatcher.dispatch([this, module]() {
                 yoi::indexT last_write_time = std::filesystem::last_write_time(module.second->modulePath).time_since_epoch().count();
                 if (last_write_time == codegenObjectCache.get_entry(module.second->modulePath).getLastModification()) {
+                    warning(0, 0, "llvmCodegen: skipping module " + wstring2string(module.second->modulePath), "MODULE_NOT_MODIFIED");
                     return;
                 }
 
