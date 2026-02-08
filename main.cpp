@@ -321,7 +321,7 @@ int main(int argc, const char **argv) {
 
         
         std::cout << "Generating target object code...\n";
-        llvmCodegen.generateTargetObjectCode(yoi::string2wstring(objectFile.string()));
+        TIMER("Generating target object code", llvmCodegen.generateTargetObjectCode(yoi::string2wstring(objectFile.string())));
 
         
         if (useObjectLinker != yoi::IRBuildConfig::UseObjectLinker::none) {
@@ -356,10 +356,10 @@ int main(int argc, const char **argv) {
     } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exitCode = 1; 
-    } catch (const std::exception& e) {
+    } /* catch (const std::exception& e) {
         std::cerr << "An unexpected error occurred: " << e.what() << std::endl;
         exitCode = 1; 
-    }
+    } */
     
     if (!preserveIntermediateFiles && exitCode == 0) {
         for (const auto& file : intermediateFilesToClean) {

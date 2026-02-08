@@ -9,6 +9,7 @@
 #include "compiler/ir/IRLinker.hpp"
 #include "share/def.hpp"
 #include <algorithm>
+#include <iostream>
 #include <llvm/Passes/PassBuilder.h>
 #include <llvm/Passes/OptimizationLevel.h>
 #include <llvm/MC/TargetRegistry.h>
@@ -136,18 +137,18 @@ namespace yoi {
     }
 
     void LLVMCodegen::generate() {
-        declareRuntimeFunctions();
-        generateBasicTypesAndFunctions();
-        generateDeclarations();
-        generateForeignStructTypes();
-        generateImportFunctionImplementations();
-        generateImplementations();
-        generateDescription();
-        generateExportFunctionDecls();
-        generateMainFunction();
-        generateRTTIImplmentation();
+        TIMER("declareRuntimeFunctions", declareRuntimeFunctions());
+        TIMER("generateBasicTypesAndFunctions", generateBasicTypesAndFunctions());
+        TIMER("generateDeclarations", generateDeclarations());
+        TIMER("generateForeignStructTypes", generateForeignStructTypes());
+        TIMER("generateImportFunctionImplementations", generateImportFunctionImplementations());
+        TIMER("generateImplementations", generateImplementations());
+        TIMER("generateDescription", generateDescription());
+        TIMER("generateExportFunctionDecls", generateExportFunctionDecls());
+        TIMER("generateMainFunction", generateMainFunction());
+        TIMER("generateRTTIImplmentation", generateRTTIImplmentation());
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
-            DBuilder->finalize();
+            TIMER("DBuilder->finalize()", DBuilder->finalize());
         }
     }
 
@@ -266,13 +267,17 @@ namespace yoi {
     // --- DECLARATION PHASE ---
 
     void LLVMCodegen::generateDeclarations() {
-        generateStructDeclarations();
+        generateStructShallowDeclarations();
         generateGlobalDeclarations();
         generateFunctionDeclarations();
         generateImportFunctionDeclarations();
+        generateStructDeclarations();
+        generateStructGCFunctionDeclarations();
+        generateInterfaceObjectGCFunctionDeclarations();
+        generateRTTIDeclaration();
     }
 
-    void LLVMCodegen::generateStructDeclarations() {
+    void LLVMCodegen::generateStructShallowDeclarations() {
         for (auto& structDefPair : yoiModule->structTable) {
             auto structDef = structDefPair.second;
             auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, yoiModule->structTable.getIndex(structDef->name));
@@ -323,13 +328,8 @@ namespace yoi {
     // --- IMPLEMENTATION PHASE ---
 
     void LLVMCodegen::generateImplementations() {
-        generateStructImplementations();
-        generateStructGCFunctionDeclarations();
-        generateInterfaceObjectGCFunctionDeclarations();
         generateStructGCFunctionImplementations();
         generateInterfaceObjectGCFunctionImplementations();
-        generateInterfaceImplementationGCFunctions(); // Generates wrappers for specific interface implementations
-        generateRTTIDeclaration();
         generateFunctionImplementations();
 
         for (auto &arr : arrayToGenerateImplementations) {
@@ -337,7 +337,7 @@ namespace yoi {
         }
     }
 
-    void LLVMCodegen::generateStructImplementations() {
+    void LLVMCodegen::generateStructDeclarations() {
         for (auto& structDefPair : yoiModule->structTable) {
             auto structDef = structDefPair.second;
             auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, yoiModule->structTable.getIndex(structDef->name));
@@ -466,57 +466,6 @@ namespace yoi {
 
             Builder->SetInsertPoint(continueBlock);
             Builder->CreateRetVoid();
-        }
-    }
-
-    void LLVMCodegen::generateInterfaceImplementationGCFunctions() {
-        // These are the "interfaceImpl" wrappers, taking an i8* (the concrete object)
-        // and calling the concrete struct's actual GC function.
-        // These are placed into the interface object's GC function slots (indices 2 and 3).
-        for (const auto& implPair : yoiModule->interfaceImplementationTable) {
-            const auto& implDef = implPair.second;
-
-            auto structModuleId = yoiModule->identifier;
-            auto* structType = structTypeMap.at(implDef->implStructIndex);
-            auto structYoiType = managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)});
-            auto* structPtrType = llvm::PointerType::get(structType, 0);
-
-            /*auto structIncName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_increase";
-            auto* structIncFunc = functionMap.at(string2wstring(structIncName));
-            auto structDecName = "struct_" + std::to_string(structModuleId) + "_" + std::to_string(implDef->implStructIndex) + "_gc_refcount_decrease";
-            auto* structDecFunc = functionMap.at(string2wstring(structDecName));*/
-
-            // Using implDef->name as part of the wrapper name for uniqueness
-            auto wrapperBaseName = wstring2string(implDef->name);
-            auto* wrapperFuncType = llvm::FunctionType::get(Builder->getVoidTy(), { llvm::PointerType::get(Builder->getInt8Ty(), 0) }, false);
-
-            // --- Generate Increase Wrapper ---
-            auto incWrapperName = wrapperBaseName + "_gc_refcount_increase";
-            if (!functionMap.contains(yoi::string2wstring(incWrapperName))) {
-                // Takes i8* as the concrete object pointer
-                auto* incWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, incWrapperName, TheModule.get());
-                // incWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline); // no line for implementation functions
-                functionMap[string2wstring(incWrapperName)] = incWrapperFunc;
-
-                auto* incEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", incWrapperFunc);
-                Builder->SetInsertPoint(incEntryBlock);
-                Builder->CreateRetVoid();
-            }
-            
-            // --- Generate Decrease Wrapper ---
-            auto decWrapperName = wrapperBaseName + "_gc_refcount_decrease";
-            if (!functionMap.contains(yoi::string2wstring(decWrapperName))) {
-                auto* decWrapperFunc = llvm::Function::Create(wrapperFuncType, llvm::Function::InternalLinkage, decWrapperName, TheModule.get());
-                // decWrapperFunc->addFnAttr(llvm::Attribute::AlwaysInline);
-                functionMap[string2wstring(decWrapperName)] = decWrapperFunc;
-
-                auto* decEntryBlock = llvm::BasicBlock::Create(*TheContext, "entry", decWrapperFunc);
-                Builder->SetInsertPoint(decEntryBlock);
-                llvm::Value* thisAsI8_dec = decWrapperFunc->arg_begin();
-                llvm::Value* castedThis_dec = Builder->CreateBitCast(thisAsI8_dec, structPtrType, "casted_this");
-                callGcFunction(castedThis_dec, structYoiType, false);
-                Builder->CreateRetVoid();
-            }
         }
     }
 
@@ -2363,17 +2312,7 @@ namespace yoi {
         return Builder->CreateLoad(objType->getElementType(2), valuePtr, "unboxed_val");
     }
 
-    void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease, bool forceForPermanent, bool forceForBorrow) {
-        // No GC for the none object singleton
-        if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
-            return;
-        }
-        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !forceForPermanent) {
-            return;
-        }
-        if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
-            return;
-        
+    llvm::Function *LLVMCodegen::getGcFunction(const std::shared_ptr<IRValueType> &yoiType, bool isIncrease) {
         auto finalType = managedPtr(*yoiType);
 
         if (yoiType->type == IRValueType::valueType::interfaceObject && yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {
@@ -2406,12 +2345,28 @@ namespace yoi {
                 case IRValueType::valueType::interfaceObject:
                     funcNameBase = "interface_" + std::to_string(finalType->typeAffiliateModule) + "_" + std::to_string(finalType->typeIndex);
                     break;
-                default: return; // No GC needed for raw types or unhandled types
+                default: return nullptr; // No GC needed for raw types or unhandled types
             }
         }
 
         auto funcName = funcNameBase + (isIncrease ? "_gc_refcount_increase" : "_gc_refcount_decrease");
         auto* gcFunc = functionMap.at(string2wstring(funcName));
+        return gcFunc;
+    }
+
+    void LLVMCodegen::callGcFunction(llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease, bool forceForPermanent, bool forceForBorrow) {
+        // No GC for the none object singleton
+        if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
+            return;
+        }
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !forceForPermanent) {
+            return;
+        }
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
+            return;
+        
+        auto gcFunc = getGcFunction(yoiType, isIncrease);
+        if (gcFunc == nullptr) return;
 
         auto f = [&]() {
             auto* ptrArg = Builder->CreateBitCast(objectPtr, gcFunc->getFunctionType()->getParamType(0));
@@ -3947,6 +3902,10 @@ namespace yoi {
                                                yoi::indexT implIndex) {
 
         auto implDef = yoiModule->interfaceImplementationTable[implIndex];
+        auto structYoiType = managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)});
+
+        auto structGcFunc = getGcFunction(structYoiType, false);
+        yoi_assert(structGcFunc != nullptr, 0, 0, "llvmCodegen: expected gc function for struct but received nullptr");
 
         auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject,
                                             implDef->implInterfaceIndex.first,
@@ -3993,17 +3952,9 @@ namespace yoi {
         Builder->CreateStore(castedStructPtr, thisPtrField);
 
         // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
-        auto incWrapperName = wstring2string(implDef->name) + "_gc_refcount_increase";
-        auto decWrapperName = wstring2string(implDef->name) + "_gc_refcount_decrease";
-        auto *incWrapperFunc = functionMap.at(string2wstring(incWrapperName));
-        auto *decWrapperFunc = functionMap.at(string2wstring(decWrapperName));
-
-        auto *incVTableSlot =
-            Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 3, "gc_inc_slot");
-        Builder->CreateStore(incWrapperFunc, incVTableSlot);
         auto *decVTableSlot =
             Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 4, "gc_dec_slot");
-        Builder->CreateStore(decWrapperFunc, decVTableSlot);
+        Builder->CreateStore(structGcFunc, decVTableSlot);
 
         // Populate user method pointers starting at index 5
         for (size_t i = 0; i < implDef->virtualMethods.size(); ++i) {

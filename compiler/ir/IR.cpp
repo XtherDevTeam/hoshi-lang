@@ -1633,4 +1633,12 @@ namespace yoi {
         return std::make_shared<IREnumerationType>(name, valueToIndexMap);
     }
     IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes) : type(type), bracedTypes(bracedTypes) {}
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildCachePath(const yoi::wstr &buildCachePath) {
+        this->buildCachePath = buildCachePath;
+        return *this;
+    }
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setImmediatelyClearupCache(bool immediatelyClearupCache) {
+        this->immediatelyClearupCache = immediatelyClearupCache;
+        return *this;
+    }
 } // namespace yoi

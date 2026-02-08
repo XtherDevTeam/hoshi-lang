@@ -25,6 +25,12 @@
 #include <stack>
 #include <vector>
 
+#ifdef LLVM_CODEGEN_DEBUG
+#define TIMER(X, Y) { auto start = std::chrono::high_resolution_clock::now(); Y; auto end = std::chrono::high_resolution_clock::now(); std::cout << X << " took " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms" << std::endl; }
+#else
+#define TIMER(X, Y) Y
+#endif
+
 namespace yoi {
 
     class LLVMCodegen {
@@ -157,16 +163,15 @@ namespace yoi {
         void generateBasicTypesAndFunctions();
 
         void generateDeclarations();
-        void generateStructDeclarations();
+        void generateStructShallowDeclarations();
         void generateGlobalDeclarations();
         void generateFunctionDeclarations();
         void generateImportFunctionDeclarations();
 
         void generateImplementations();
-        void generateStructImplementations();
+        void generateStructDeclarations();
         void generateStructGCFunctionDeclarations();
         void generateStructGCFunctionImplementations();
-        void generateInterfaceImplementationGCFunctions();
         void generateInterfaceObjectGCFunctionDeclarations();
         void generateInterfaceObjectGCFunctionImplementations();
         void generateForeignStructTypes();
@@ -200,6 +205,7 @@ namespace yoi {
         llvm::Value *unboxValue(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType);
         llvm::Value *
         loadArrayElement(const std::shared_ptr<IRValueType> &type, llvm::Value *arrayPtr, llvm::Value *index);
+        llvm::Function *getGcFunction(const std::shared_ptr<IRValueType> &yoiType, bool isIncrease);
         void callGcFunction(llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease, bool forceForPermanent = false, bool forceForBorrow = false);
         llvm::Value *
         handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign = false);
