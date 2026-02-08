@@ -47,6 +47,8 @@ var annotated_dup =
       [ "ccObjectLinker", "classyoi_1_1ccObjectLinker.html", "classyoi_1_1ccObjectLinker" ],
       [ "clObjectLinker", "classyoi_1_1clObjectLinker.html", "classyoi_1_1clObjectLinker" ],
       [ "codeBlock", "classyoi_1_1codeBlock.html", "classyoi_1_1codeBlock" ],
+      [ "CodegenObjectCache", "classyoi_1_1CodegenObjectCache.html", "classyoi_1_1CodegenObjectCache" ],
+      [ "CodegenObjectCacheEntry", "structyoi_1_1CodegenObjectCacheEntry.html", "structyoi_1_1CodegenObjectCacheEntry" ],
       [ "compilerContext", "classyoi_1_1compilerContext.html", "classyoi_1_1compilerContext" ],
       [ "constructorDecl", "classyoi_1_1constructorDecl.html", "classyoi_1_1constructorDecl" ],
       [ "constructorDef", "classyoi_1_1constructorDef.html", "classyoi_1_1constructorDef" ],

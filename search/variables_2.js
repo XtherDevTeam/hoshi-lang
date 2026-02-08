@@ -10,12 +10,14 @@ var searchData=
   ['bracedtypes_7',['bracedTypes',['../classyoi_1_1IRValueType.html#a21bb7cd94ccf7693a8b55c8eafe3be43',1,'yoi::IRValueType']]],
   ['breakstmtval_8',['breakStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a942bac490b1e365d8c7d0284c958f639',1,'yoi::inCodeBlockStmt::vValue']]],
   ['breaktarget_9',['breakTarget',['../structyoi_1_1IRBuilder_1_1LoopContext.html#ac141a0c50bb60433a9666dbb26453a0f',1,'yoi::IRBuilder::LoopContext']]],
-  ['buildarch_10',['buildarch',['../structyoi_1_1IRBuildConfig.html#a2c8321663f9f80d832a940ba78027260',1,'yoi::IRBuildConfig::buildArch'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2c8321663f9f80d832a940ba78027260',1,'yoi::IRBuildConfig::Builder::buildArch']]],
-  ['buildconfig_11',['buildConfig',['../classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb',1,'yoi::compilerContext']]],
-  ['builder_12',['builder',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ab0708ed361783f62b8b04af22cec0c9b',1,'yoi::LLVMCodegen::ValueStackWithPhi::builder'],['../classyoi_1_1LLVMCodegen.html#a8a540edd6c6be1f119a8f3bcdf0e2dad',1,'yoi::LLVMCodegen::Builder']]],
-  ['buildmode_13',['buildmode',['../structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a',1,'yoi::IRBuildConfig::buildMode'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2d2af0daacf38ca61cfda1b702a40bdf',1,'yoi::IRBuildConfig::Builder::buildMode']]],
-  ['buildplatform_14',['buildplatform',['../structyoi_1_1IRBuildConfig.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::buildPlatform'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::Builder::buildPlatform']]],
-  ['buildtype_15',['buildtype',['../structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71',1,'yoi::IRBuildConfig::buildType'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1f633ce5c87a96842f9a6886a2310739',1,'yoi::IRBuildConfig::Builder::buildType']]],
-  ['builtinmodulebuilder_16',['builtinModuleBuilder',['../classyoi_1_1compilerContext.html#ac28385e81d6cab2c31e6a73b2f3d9580',1,'yoi::compilerContext']]],
-  ['builtinmodulecontext_17',['builtinModuleContext',['../classyoi_1_1compilerContext.html#a0fcef451b02b4d81c9661f95bafb7839',1,'yoi::compilerContext']]]
+  ['build_5fconfig_10',['build_config',['../classyoi_1_1CodegenObjectCache.html#a1ad62e00375d8c0fcc76224f4e46f4a0',1,'yoi::CodegenObjectCache']]],
+  ['buildarch_11',['buildarch',['../structyoi_1_1IRBuildConfig.html#a2c8321663f9f80d832a940ba78027260',1,'yoi::IRBuildConfig::buildArch'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2c8321663f9f80d832a940ba78027260',1,'yoi::IRBuildConfig::Builder::buildArch']]],
+  ['buildcachepath_12',['buildcachepath',['../structyoi_1_1IRBuildConfig.html#aa4fa04b7c455057982b3edd359a97da8',1,'yoi::IRBuildConfig::buildCachePath'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#aa4fa04b7c455057982b3edd359a97da8',1,'yoi::IRBuildConfig::Builder::buildCachePath']]],
+  ['buildconfig_13',['buildConfig',['../classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb',1,'yoi::compilerContext']]],
+  ['builder_14',['builder',['../classyoi_1_1LLVMCodegen.html#a8a540edd6c6be1f119a8f3bcdf0e2dad',1,'yoi::LLVMCodegen::Builder'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ab0708ed361783f62b8b04af22cec0c9b',1,'yoi::LLVMCodegen::ValueStackWithPhi::builder']]],
+  ['buildmode_15',['buildmode',['../structyoi_1_1IRBuildConfig.html#a0f6ff3c058ae6df26288239c4291112a',1,'yoi::IRBuildConfig::buildMode'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a2d2af0daacf38ca61cfda1b702a40bdf',1,'yoi::IRBuildConfig::Builder::buildMode']]],
+  ['buildplatform_16',['buildplatform',['../structyoi_1_1IRBuildConfig.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::buildPlatform'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#ab5581c9fd0b7cdfb797b3067628ee026',1,'yoi::IRBuildConfig::Builder::buildPlatform']]],
+  ['buildtype_17',['buildtype',['../structyoi_1_1IRBuildConfig.html#a984823ab6e576ff2b3ecbd5e086bed71',1,'yoi::IRBuildConfig::buildType'],['../structyoi_1_1IRBuildConfig_1_1Builder.html#a1f633ce5c87a96842f9a6886a2310739',1,'yoi::IRBuildConfig::Builder::buildType']]],
+  ['builtinmodulebuilder_18',['builtinModuleBuilder',['../classyoi_1_1compilerContext.html#ac28385e81d6cab2c31e6a73b2f3d9580',1,'yoi::compilerContext']]],
+  ['builtinmodulecontext_19',['builtinModuleContext',['../classyoi_1_1compilerContext.html#a0fcef451b02b4d81c9661f95bafb7839',1,'yoi::compilerContext']]]
 ];

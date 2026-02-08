@@ -7,9 +7,10 @@ var searchData=
   ['nanoseconds_4',['nanoseconds',['../structYoiIntAndIntObject.html#a2bbdb97031ca626c3da8fbd604c90371',1,'YoiIntAndIntObject']]],
   ['newexpr_5',['newExpr',['../classyoi_1_1primary.html#ab680483a779de354d82c9a89f71e8991',1,'yoi::primary']]],
   ['next_6',['next',['../structHPerfPage.html#aa8fba4de541e336e458b83e4669abfcf',1,'HPerfPage::next'],['../structHPerfContext.html#a7c4a6341626e89a8103940d8a28b2ef2',1,'HPerfContext::next'],['../structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1',1,'AllocatedMemoryList::next'],['../structruntime__signal__handler__info.html#ad764cf5efeb0bae8647823eae340a4fc',1,'runtime_signal_handler_info::next']]],
-  ['nexttypeid_7',['nextTypeId',['../classyoi_1_1LLVMCodegen.html#a4bb5ce97f9b3a8dd56defafb829a63b7',1,'yoi::LLVMCodegen']]],
-  ['node_8',['node',['../classyoi_1_1basicLiterals.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::basicLiterals::node'],['../classyoi_1_1identifier.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::identifier::node']]],
-  ['noneobjectsingleton_9',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]],
-  ['nsec_10',['nsec',['../structHPerfTimestamp.html#ac0e88cdc312d554a027e8644f84eb10d',1,'HPerfTimestamp']]],
-  ['num_5fevents_11',['num_events',['../structHPerfPage.html#aece8d1b36b0d05cacc28cb3ef4736f00',1,'HPerfPage::num_events'],['../structHPerfContext.html#aece8d1b36b0d05cacc28cb3ef4736f00',1,'HPerfContext::num_events']]]
+  ['next_5fhash_7',['next_hash',['../classyoi_1_1CodegenObjectCache.html#a066b971ffd1dbd4a9f6aab1140e35f25',1,'yoi::CodegenObjectCache']]],
+  ['nexttypeid_8',['nextTypeId',['../classyoi_1_1LLVMCodegen.html#a4bb5ce97f9b3a8dd56defafb829a63b7',1,'yoi::LLVMCodegen']]],
+  ['node_9',['node',['../classyoi_1_1basicLiterals.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::basicLiterals::node'],['../classyoi_1_1identifier.html#a9660c975b0d355c5a478628f3369aceb',1,'yoi::identifier::node']]],
+  ['noneobjectsingleton_10',['noneObjectSingleton',['../classyoi_1_1LLVMCodegen.html#adb316995d0049e0e85cac93cf4ee0427',1,'yoi::LLVMCodegen']]],
+  ['nsec_11',['nsec',['../structHPerfTimestamp.html#ac0e88cdc312d554a027e8644f84eb10d',1,'HPerfTimestamp']]],
+  ['num_5fevents_12',['num_events',['../structHPerfPage.html#aece8d1b36b0d05cacc28cb3ef4736f00',1,'HPerfPage::num_events'],['../structHPerfContext.html#aece8d1b36b0d05cacc28cb3ef4736f00',1,'HPerfContext::num_events']]]
 ];

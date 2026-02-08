@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['yoi_5farch_0',['YOI_ARCH',['../def_8hpp.html#a33f92dd81296c001a9ef7eb731c7920a',1,'def.hpp']]],
-  ['yoi_5fdylib_5fsuffix_1',['YOI_DYLIB_SUFFIX',['../def_8hpp.html#aeeae3414d9d18975fedb7091a16421f9',1,'def.hpp']]],
-  ['yoi_5fplatform_2',['YOI_PLATFORM',['../def_8hpp.html#a245bc66c9343610dd3565b85b598fa4f',1,'def.hpp']]]
+  ['wai_5ffree_0',['WAI_FREE',['../whereami_8cpp.html#a98f334c08ee3125a5b327006826b0faa',1,'whereami.cpp']]],
+  ['wai_5ffuncspec_1',['WAI_FUNCSPEC',['../whereami_8h.html#af4a5433582844c6d1f4e5f48e911fe02',1,'whereami.h']]],
+  ['wai_5fmalloc_2',['WAI_MALLOC',['../whereami_8cpp.html#a39b37162eaf1ae5b907b22c1d0eaeb14',1,'whereami.cpp']]],
+  ['wai_5fprefix_3',['WAI_PREFIX',['../whereami_8h.html#aca46f8ead8100022a86fa699ccffab93',1,'whereami.h']]],
+  ['wai_5frealloc_4',['WAI_REALLOC',['../whereami_8cpp.html#af54ad0f7a94f67e1ba5f927387794bb4',1,'whereami.cpp']]]
 ];
