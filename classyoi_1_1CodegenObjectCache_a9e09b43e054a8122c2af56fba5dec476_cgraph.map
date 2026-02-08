@@ -1,9 +1,17 @@
 <map id="register_entry" name="register_entry">
-<area shape="rect" id="Node000001" title="register a new entry to the cache" alt="" coords="5,77,119,102"/>
-<area shape="rect" id="Node000002" href="$structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="167,5,389,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,74,166,55,193,47,194,52,167,60,105,79"/>
-<area shape="rect" id="Node000003" href="$structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="167,69,389,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="119,87,153,87,153,92,119,92"/>
-<area shape="rect" id="Node000004" href="$structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="167,133,389,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="105,100,167,119,194,127,193,132,166,124,103,105"/>
+<area shape="rect" id="Node000001" title="register a new entry to the cache" alt="" coords="5,141,119,166"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="167,141,345,166"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,151,153,151,153,156,119,156"/>
+<area shape="rect" id="Node000003" href="$structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="393,5,616,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="270,139,322,98,392,55,409,48,411,52,395,60,325,102,273,143"/>
+<area shape="rect" id="Node000004" href="$structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="393,69,616,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="306,138,412,110,414,115,307,143"/>
+<area shape="rect" id="Node000005" href="$structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="393,133,616,173"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="345,151,380,151,380,156,345,156"/>
+<area shape="rect" id="Node000006" href="$structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="393,197,616,237"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="307,164,414,191,412,196,306,169"/>
+<area shape="rect" id="Node000007" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="433,262,576,287"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="273,164,324,205,358,228,394,247,420,256,419,261,392,252,355,232,321,209,270,168"/>
+<area shape="rect" id="Node000008" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="664,262,867,287"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="576,272,650,272,650,277,576,277"/>
 </map>

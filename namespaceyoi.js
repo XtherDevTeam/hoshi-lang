@@ -2,14 +2,20 @@ var namespaceyoi =
 [
     [ "serialization", "namespaceyoi_1_1serialization.html", [
       [ "read", "namespaceyoi_1_1serialization.html#a0666324bdba1d169a6cbfe7b2f729314", null ],
+      [ "read", "namespaceyoi_1_1serialization.html#a0666324bdba1d169a6cbfe7b2f729314", null ],
+      [ "read", "namespaceyoi_1_1serialization.html#a4b22e89c9305dd92f3819f1b67625e91", null ],
       [ "read", "namespaceyoi_1_1serialization.html#a4b22e89c9305dd92f3819f1b67625e91", null ],
       [ "read", "namespaceyoi_1_1serialization.html#a9f81a071377b8ad56985b3abc93cb948", null ],
       [ "read", "namespaceyoi_1_1serialization.html#af2b57229dc8c3f56a50eaefd5c6c7d48", null ],
       [ "read", "namespaceyoi_1_1serialization.html#a4675f5ed618ffaa4a0a984f447380547", null ],
+      [ "read", "namespaceyoi_1_1serialization.html#a4675f5ed618ffaa4a0a984f447380547", null ],
       [ "write", "namespaceyoi_1_1serialization.html#ae409a244ab50a3d2c144ba3b5c68719f", null ],
+      [ "write", "namespaceyoi_1_1serialization.html#ae409a244ab50a3d2c144ba3b5c68719f", null ],
+      [ "write", "namespaceyoi_1_1serialization.html#ace67d5131b9b2dc2adb351ad6684ebe8", null ],
       [ "write", "namespaceyoi_1_1serialization.html#ace67d5131b9b2dc2adb351ad6684ebe8", null ],
       [ "write", "namespaceyoi_1_1serialization.html#a423abb71dcd4555dece85b2cadd45997", null ],
       [ "write", "namespaceyoi_1_1serialization.html#afe1fcf8df04b5200c6005d9b215f183b", null ],
+      [ "write", "namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7", null ],
       [ "write", "namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7", null ]
     ] ],
     [ "abstractExpr", "classyoi_1_1abstractExpr.html", "classyoi_1_1abstractExpr" ],
@@ -28,6 +34,7 @@ var namespaceyoi =
     [ "codeBlock", "classyoi_1_1codeBlock.html", "classyoi_1_1codeBlock" ],
     [ "CodegenObjectCache", "classyoi_1_1CodegenObjectCache.html", "classyoi_1_1CodegenObjectCache" ],
     [ "CodegenObjectCacheEntry", "structyoi_1_1CodegenObjectCacheEntry.html", "structyoi_1_1CodegenObjectCacheEntry" ],
+    [ "CodegenTaskDispatcher", "classyoi_1_1CodegenTaskDispatcher.html", "classyoi_1_1CodegenTaskDispatcher" ],
     [ "compilerContext", "classyoi_1_1compilerContext.html", "classyoi_1_1compilerContext" ],
     [ "constructorDecl", "classyoi_1_1constructorDecl.html", "classyoi_1_1constructorDecl" ],
     [ "constructorDef", "classyoi_1_1constructorDef.html", "classyoi_1_1constructorDef" ],

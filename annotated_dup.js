@@ -49,6 +49,7 @@ var annotated_dup =
       [ "codeBlock", "classyoi_1_1codeBlock.html", "classyoi_1_1codeBlock" ],
       [ "CodegenObjectCache", "classyoi_1_1CodegenObjectCache.html", "classyoi_1_1CodegenObjectCache" ],
       [ "CodegenObjectCacheEntry", "structyoi_1_1CodegenObjectCacheEntry.html", "structyoi_1_1CodegenObjectCacheEntry" ],
+      [ "CodegenTaskDispatcher", "classyoi_1_1CodegenTaskDispatcher.html", "classyoi_1_1CodegenTaskDispatcher" ],
       [ "compilerContext", "classyoi_1_1compilerContext.html", "classyoi_1_1compilerContext" ],
       [ "constructorDecl", "classyoi_1_1constructorDecl.html", "classyoi_1_1constructorDecl" ],
       [ "constructorDef", "classyoi_1_1constructorDef.html", "classyoi_1_1constructorDef" ],

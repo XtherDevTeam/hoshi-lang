@@ -8,11 +8,12 @@ var searchData=
   ['codeblock_5',['codeBlock',['../classyoi_1_1codeBlock.html',1,'yoi']]],
   ['codegenobjectcache_6',['CodegenObjectCache',['../classyoi_1_1CodegenObjectCache.html',1,'yoi']]],
   ['codegenobjectcacheentry_7',['CodegenObjectCacheEntry',['../structyoi_1_1CodegenObjectCacheEntry.html',1,'yoi']]],
-  ['compilercontext_8',['compilerContext',['../classyoi_1_1compilerContext.html',1,'yoi']]],
-  ['constructordecl_9',['constructorDecl',['../classyoi_1_1constructorDecl.html',1,'yoi']]],
-  ['constructordef_10',['constructorDef',['../classyoi_1_1constructorDef.html',1,'yoi']]],
-  ['continuestmt_11',['continueStmt',['../classyoi_1_1continueStmt.html',1,'yoi']]],
-  ['contributedinstructionset_12',['ContributedInstructionSet',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html',1,'yoi::IRFunctionOptimizer::SimulationStack::Item']]],
-  ['controlflowanalysis_13',['ControlFlowAnalysis',['../structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html',1,'yoi::LLVMCodegen']]],
-  ['customize_5ft_14',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html',1,'magic_enum::customize']]]
+  ['codegentaskdispatcher_8',['CodegenTaskDispatcher',['../classyoi_1_1CodegenTaskDispatcher.html',1,'yoi']]],
+  ['compilercontext_9',['compilerContext',['../classyoi_1_1compilerContext.html',1,'yoi']]],
+  ['constructordecl_10',['constructorDecl',['../classyoi_1_1constructorDecl.html',1,'yoi']]],
+  ['constructordef_11',['constructorDef',['../classyoi_1_1constructorDef.html',1,'yoi']]],
+  ['continuestmt_12',['continueStmt',['../classyoi_1_1continueStmt.html',1,'yoi']]],
+  ['contributedinstructionset_13',['ContributedInstructionSet',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html',1,'yoi::IRFunctionOptimizer::SimulationStack::Item']]],
+  ['controlflowanalysis_14',['ControlFlowAnalysis',['../structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html',1,'yoi::LLVMCodegen']]],
+  ['customize_5ft_15',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html',1,'magic_enum::customize']]]
 ];

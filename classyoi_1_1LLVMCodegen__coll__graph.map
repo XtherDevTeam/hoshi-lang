@@ -1,8 +1,7 @@
 <map id="LLVMCodegen" name="LLVMCodegen">
-<area shape="rect" id="Node000001" title=" " alt="" coords="26,181,139,207"/>
-<area shape="rect" id="Node000002" href="$structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html" title=" " alt="" coords="5,5,160,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,45,77,80,76,119,83,181,78,181,71,119,71,79,75,44"/>
-<area shape="rect" id="Node000003" href="$structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html" title=" " alt="" coords="221,93,365,119"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="125,34,266,91,264,96,123,38"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="253,126,112,184,110,179,251,122"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="127,93,240,119"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1CodegenObjectCache.html" title=" " alt="" coords="5,5,167,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,42,112,68,129,81,149,91,147,96,127,85,108,71,92,45"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1CodegenTaskDispatcher.html" title=" " alt="" coords="191,5,370,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,45,253,71,235,85,215,96,213,91,232,81,249,67,268,42"/>
 </map>

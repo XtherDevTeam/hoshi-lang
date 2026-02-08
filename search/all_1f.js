@@ -1,4 +1,31 @@
 var searchData=
 [
-  ['xorstart_0',['xorStart',['../classyoi_1_1lexer.html#a6bd6ac4da70d5ee139b48a91301df5ee',1,'yoi::lexer']]]
+  ['wai_5ffree_0',['WAI_FREE',['../whereami_8cpp.html#a98f334c08ee3125a5b327006826b0faa',1,'whereami.cpp']]],
+  ['wai_5ffuncspec_1',['WAI_FUNCSPEC',['../whereami_8h.html#af4a5433582844c6d1f4e5f48e911fe02',1,'whereami.h']]],
+  ['wai_5fmalloc_2',['WAI_MALLOC',['../whereami_8cpp.html#a39b37162eaf1ae5b907b22c1d0eaeb14',1,'whereami.cpp']]],
+  ['wai_5fprefix_3',['WAI_PREFIX',['../whereami_8h.html#aca46f8ead8100022a86fa699ccffab93',1,'whereami.h']]],
+  ['wai_5frealloc_4',['WAI_REALLOC',['../whereami_8cpp.html#af54ad0f7a94f67e1ba5f927387794bb4',1,'whereami.cpp']]],
+  ['wait_5',['wait',['../classyoi_1_1CodegenTaskDispatcher.html#aa3b21853f890838c88d047d6c2786917',1,'yoi::CodegenTaskDispatcher']]],
+  ['waitcondition_6',['waitCondition',['../classyoi_1_1CodegenTaskDispatcher.html#aef5563eddb00fdc2e3626cb4aacdeb89',1,'yoi::CodegenTaskDispatcher']]],
+  ['waitmutex_7',['waitMutex',['../classyoi_1_1CodegenTaskDispatcher.html#aecf3f64959032c594ac7b8182aed0271',1,'yoi::CodegenTaskDispatcher']]],
+  ['warning_8',['warning',['../namespaceyoi.html#a2d71150c6b3a47496cfc00a017d8617f',1,'yoi::warning(yoi::indexT line, yoi::indexT col, const std::string &amp;msg, const std::string &amp;label)'],['../namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'yoi::Warning']]],
+  ['wchar_9',['wchar',['../namespaceyoi.html#a1a472f9b454d139c84efb5ab01cbf684',1,'yoi']]],
+  ['what_20is_20export_20wrapper_10',['What is export wrapper?',['../md_docs_2Wrapper.html#autotoc_md146',1,'']]],
+  ['when_20there_20s_20a_20tt_20export_20wrapper_20tt_20there_20must_20be_20a_20tt_20import_20wrapper_20tt_11',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md147',1,'']]],
+  ['whereami_2ecpp_12',['whereami.cpp',['../whereami_8cpp.html',1,'']]],
+  ['whereami_2eh_13',['whereami.h',['../whereami_8h.html',1,'']]],
+  ['whereishoshilang_14',['whereIsHoshiLang',['../namespaceyoi.html#a5a075458dd6b09c03a78a7fabbe026aa',1,'yoi']]],
+  ['whilestmt_15',['whilestmt',['../classyoi_1_1whileStmt.html',1,'whileStmt'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaf95500e8a7762c39754fbf16df53cb7e',1,'yoi::inCodeBlockStmt::whileStmt']]],
+  ['whilestmtval_16',['whileStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90',1,'yoi::inCodeBlockStmt::vValue']]],
+  ['with_20templates_17',['Generic Programming with Templates',['../md_docs_2Template.html',1,'']]],
+  ['workerloop_18',['workerLoop',['../classyoi_1_1CodegenTaskDispatcher.html#af65127c174a8db29f8c57fd6af1c6b4a',1,'yoi::CodegenTaskDispatcher']]],
+  ['workers_19',['workers',['../classyoi_1_1CodegenTaskDispatcher.html#ab6da9a4f1f511b6cd59b3f3cc63c6a98',1,'yoi::CodegenTaskDispatcher']]],
+  ['wrapinterfaceobjectifregressed_20',['wrapInterfaceObjectIfRegressed',['../classyoi_1_1LLVMCodegen.html#a2ba11d9b5eca345f8c4ac0bf82cf1931',1,'yoi::LLVMCodegen']]],
+  ['wrapper_21',['What is export wrapper?',['../md_docs_2Wrapper.html#autotoc_md146',1,'']]],
+  ['wrapper_20实现_20ffi_20的必经之路_22',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]],
+  ['wrapper_20tt_20there_20must_20be_20a_20tt_20import_20wrapper_20tt_23',['When there&apos;s a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;',['../md_docs_2Wrapper.html#autotoc_md147',1,'']]],
+  ['wrapper_2emd_24',['Wrapper.md',['../Wrapper_8md.html',1,'']]],
+  ['write_25',['write',['../namespaceyoi_1_1serialization.html#ae409a244ab50a3d2c144ba3b5c68719f',1,'yoi::serialization::write(FILE *fp, const CodegenObjectCache &amp;value)'],['../namespaceyoi_1_1serialization.html#ace67d5131b9b2dc2adb351ad6684ebe8',1,'yoi::serialization::write(FILE *fp, const CodegenObjectCacheEntry &amp;value)'],['../namespaceyoi_1_1serialization.html#a423abb71dcd4555dece85b2cadd45997',1,'yoi::serialization::write(FILE *fp, const std::vector&lt; yoi::indexT &gt; &amp;value)'],['../namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7',1,'yoi::serialization::write(FILE *fp, const yoi::wstr &amp;value)'],['../namespaceyoi_1_1serialization.html#afe1fcf8df04b5200c6005d9b215f183b',1,'yoi::serialization::write(FILE *fp, const T &amp;value)'],['../namespaceyoi_1_1serialization.html#ae409a244ab50a3d2c144ba3b5c68719f',1,'yoi::serialization::write(FILE *fp, const CodegenObjectCache &amp;value)'],['../namespaceyoi_1_1serialization.html#ace67d5131b9b2dc2adb351ad6684ebe8',1,'yoi::serialization::write(FILE *fp, const CodegenObjectCacheEntry &amp;value)'],['../namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7',1,'yoi::serialization::write(FILE *fp, const yoi::wstr &amp;value)']]],
+  ['wstr_26',['wstr',['../namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4',1,'yoi']]],
+  ['wstring2string_27',['wstring2string',['../namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0',1,'yoi']]]
 ];

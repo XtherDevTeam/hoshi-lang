@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['yoi_5fargc_0',['yoi_argc',['../runtime_8cpp.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.cpp'],['../runtime_8h.html#ae9124faa3d68ed08c39e2d26d1c0b456',1,'yoi_argc:&#160;runtime.h']]],
-  ['yoi_5fargv_1',['yoi_argv',['../runtime_8cpp.html#a94feceb3276d8fc7af31fe14a61f230a',1,'yoi_argv:&#160;runtime.cpp'],['../runtime_8h.html#a94feceb3276d8fc7af31fe14a61f230a',1,'yoi_argv:&#160;runtime.h']]],
-  ['yoi_5fbuild_5ftype_2',['yoi_build_type',['../runtime_8h.html#a8506dd167261ce1a75b51555563a23ac',1,'runtime.h']]],
-  ['yoi_5fdesc_3',['yoi_desc',['../runtime_8h.html#a1c18168e5d958536dbec6f1977be0c42',1,'runtime.h']]],
-  ['yoimodule_4',['yoimodule',['../classyoi_1_1LLVMCodegen.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::yoiModule'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ae04f61451d5da8c8a7360234980e6b10',1,'yoi::LLVMCodegen::ValueStackWithPhi::yoiModule']]],
-  ['yoitype_5',['yoiType',['../structyoi_1_1LLVMCodegen_1_1StackValue.html#adb8cb6e2c96d78accc69d49343f886d2',1,'yoi::LLVMCodegen::StackValue']]]
+  ['waitcondition_0',['waitCondition',['../classyoi_1_1CodegenTaskDispatcher.html#aef5563eddb00fdc2e3626cb4aacdeb89',1,'yoi::CodegenTaskDispatcher']]],
+  ['waitmutex_1',['waitMutex',['../classyoi_1_1CodegenTaskDispatcher.html#aecf3f64959032c594ac7b8182aed0271',1,'yoi::CodegenTaskDispatcher']]],
+  ['whilestmtval_2',['whileStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90',1,'yoi::inCodeBlockStmt::vValue']]],
+  ['workers_3',['workers',['../classyoi_1_1CodegenTaskDispatcher.html#ab6da9a4f1f511b6cd59b3f3cc63c6a98',1,'yoi::CodegenTaskDispatcher']]]
 ];

@@ -23,6 +23,7 @@ var classyoi_1_1IRFunctionDefinition =
     [ "attrs", "classyoi_1_1IRFunctionDefinition.html#acd5a2dc9a674e5a9ccaa521079fac0e1", null ],
     [ "codeBlock", "classyoi_1_1IRFunctionDefinition.html#a7816a05aba34a5bf72f22bfc1905ff95", null ],
     [ "debugInfo", "classyoi_1_1IRFunctionDefinition.html#a5b00116518529facdc2737f6899b4b0a", null ],
+    [ "linkedModuleId", "classyoi_1_1IRFunctionDefinition.html#ae081ad4950b3e8cdadc31107d2f305cf", null ],
     [ "name", "classyoi_1_1IRFunctionDefinition.html#a9d24a0275ba98a7726bfe14c798f9850", null ],
     [ "returnType", "classyoi_1_1IRFunctionDefinition.html#a11ea29649c52a300ccc326831b8bf9b2", null ],
     [ "variableTable", "classyoi_1_1IRFunctionDefinition.html#a5d2c4ad0d183ce3d05d814b2bc552492", null ]

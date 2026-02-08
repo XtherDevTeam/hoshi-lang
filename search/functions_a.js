@@ -16,10 +16,11 @@ var searchData=
   ['linkstringliterals_13',['linkStringLiterals',['../classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e',1,'yoi::IRLinker']]],
   ['linkstructsandinterfaces_14',['linkStructsAndInterfaces',['../classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752',1,'yoi::IRLinker']]],
   ['llvmcodegen_15',['LLVMCodegen',['../classyoi_1_1LLVMCodegen.html#abe737b08bbea2ab093a1cd472ab6d60b',1,'yoi::LLVMCodegen']]],
-  ['loadarrayelement_16',['loadArrayElement',['../classyoi_1_1LLVMCodegen.html#a194b0d71e92a857182fa141896bcd171',1,'yoi::LLVMCodegen']]],
-  ['loadmemberop_17',['loadMemberOp',['../classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95',1,'yoi::IRBuilder']]],
-  ['loadop_18',['loadOp',['../classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a',1,'yoi::IRBuilder']]],
-  ['log2_19',['log2',['../namespacemagic__enum_1_1detail.html#aa5cd07d5e927019f4334ceff84b6efa3',1,'magic_enum::detail']]],
-  ['lookup_20',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
-  ['lookupname_21',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]]
+  ['llvmmodulecontext_16',['LLVMModuleContext',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2f1e789ad71b7b1a9ee3b60136037a5f',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
+  ['loadarrayelement_17',['loadArrayElement',['../classyoi_1_1LLVMCodegen.html#a4f2b59b3cde85f85039438386a163a19',1,'yoi::LLVMCodegen']]],
+  ['loadmemberop_18',['loadMemberOp',['../classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95',1,'yoi::IRBuilder']]],
+  ['loadop_19',['loadOp',['../classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a',1,'yoi::IRBuilder']]],
+  ['log2_20',['log2',['../namespacemagic__enum_1_1detail.html#aa5cd07d5e927019f4334ceff84b6efa3',1,'magic_enum::detail']]],
+  ['lookup_21',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
+  ['lookupname_22',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]]
 ];

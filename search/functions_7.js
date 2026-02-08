@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['handlebinaryop_0',['handleBinaryOp',['../classyoi_1_1LLVMCodegen.html#ab831ee0db5ff27f6e64c08db17ab7c42',1,'yoi::LLVMCodegen']]],
+  ['handlebinaryop_0',['handleBinaryOp',['../classyoi_1_1LLVMCodegen.html#a3a86cd480d5f788754513158c552b2e9',1,'yoi::LLVMCodegen']]],
   ['handlebinaryoperatoroverload_1',['handleBinaryOperatorOverload',['../classyoi_1_1visitor.html#a027fbc7de87978eea4c23d96f9374829',1,'yoi::visitor']]],
-  ['handlecomparison_2',['handleComparison',['../classyoi_1_1LLVMCodegen.html#afca9d4a2daf7898f37a12b1c2079fce6',1,'yoi::LLVMCodegen']]],
-  ['handleforeigntypeconv_3',['handleforeigntypeconv',['../classyoi_1_1LLVMCodegen.html#a3767428a09aaa4e50145ae1615083854',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign=false)'],['../classyoi_1_1LLVMCodegen.html#a7ffc2d88378f6a1270662c1be20f7db0',1,'yoi::LLVMCodegen::handleForeignTypeConv(llvm::Value *val, const std::shared_ptr&lt; IRValueType &gt; &amp;foreignType, bool convertToForeign=false)']]],
+  ['handlecomparison_2',['handleComparison',['../classyoi_1_1LLVMCodegen.html#ab3d5fbcc57a4904649d5c361d5cf448f',1,'yoi::LLVMCodegen']]],
+  ['handleforeigntypeconv_3',['handleforeigntypeconv',['../classyoi_1_1LLVMCodegen.html#a7003027008466ee731e3733e2e78eae9',1,'yoi::LLVMCodegen::handleForeignTypeConv(LLVMModuleContext &amp;llvmModCtx, llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign=false)'],['../classyoi_1_1LLVMCodegen.html#ad92af66dbc1ed7c6b73d58fff2d86cf3',1,'yoi::LLVMCodegen::handleForeignTypeConv(LLVMModuleContext &amp;llvmModCtx, llvm::Value *val, const std::shared_ptr&lt; IRValueType &gt; &amp;foreignType, bool convertToForeign=false)']]],
   ['handleinstruction_4',['handleInstruction',['../classyoi_1_1IRFunctionOptimizer.html#a2f1d31a93d08df2ccb81d4df99d78dba',1,'yoi::IRFunctionOptimizer']]],
-  ['handleintrinsiccall_5',['handleIntrinsicCall',['../classyoi_1_1LLVMCodegen.html#a5cd97c6c14d91fae1df60efce6e3ec69',1,'yoi::LLVMCodegen']]],
+  ['handleintrinsiccall_5',['handleIntrinsicCall',['../classyoi_1_1LLVMCodegen.html#acb1d2bcc6909530ac229f609e4d4005d',1,'yoi::LLVMCodegen']]],
   ['handleinvocationextern_6',['handleInvocationExtern',['../classyoi_1_1visitor.html#a22788e819000478d460ec00a8f0b965b',1,'yoi::visitor']]],
   ['handlesubscript_7',['handleSubscript',['../classyoi_1_1visitor.html#a2bd3ba2f7ba493347451cd5e3ad3116d',1,'yoi::visitor']]],
   ['handleunaryoperatoroverload_8',['handleUnaryOperatorOverload',['../classyoi_1_1visitor.html#a23db2dd11a5dcbde5d0f2184028c0816',1,'yoi::visitor']]],

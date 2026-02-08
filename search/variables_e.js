@@ -1,7 +1,7 @@
 var searchData=
 [
   ['object_5ffilename_0',['object_filename',['../structyoi_1_1CodegenObjectCacheEntry.html#a26dae856a1bba56a85ee3c7c1eb4dc23',1,'yoi::CodegenObjectCacheEntry']]],
-  ['objectpath_1',['objectPath',['../classyoi_1_1ObjectLinker.html#a45bc2529ea77b1646d1a3e3d7e0faa8c',1,'yoi::ObjectLinker']]],
+  ['objectpaths_1',['objectPaths',['../classyoi_1_1ObjectLinker.html#a6c861c390f46736688309aa1def900ff',1,'yoi::ObjectLinker']]],
   ['ok_2',['ok',['../structYoiResultUnsignedAndIntObject.html#a25289c36b71273042f3ef19affbab763',1,'YoiResultUnsignedAndIntObject']]],
   ['op_3',['op',['../classyoi_1_1abstractExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::abstractExpr::op'],['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op'],['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op']]],
   ['opcode_4',['opcode',['../classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d',1,'yoi::IR']]],
