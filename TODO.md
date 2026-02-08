@@ -51,4 +51,4 @@
 - [x] 接口优化导致内存泄漏
 - [x] operator[] 重载导致 noneObject 存在栈上
 - [x] operator[] 重载在存在参数类型不一致时无法自动转换
-- [ ] 傻逼 llvm 又报 All node shall be resolved.
+- [x] llvm 又报 All node shall be resolved.

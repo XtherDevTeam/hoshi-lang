@@ -720,6 +720,7 @@ namespace yoi {
         }
 
         generateCodeBlock(llvmModCtx, *funcDef.codeBlock[0], 0, 0);
+        llvmModCtx.DBuilder->finalize();
         if (llvm::verifyFunction(*llvmModCtx.currentFunction, &llvm::errs())) {
             llvmModCtx.TheModule->print(llvm::errs(), nullptr);
             panic(funcDef.debugInfo.line, funcDef.debugInfo.column, "LLVM function verification failed for: " + wstring2string(funcDef.name));
