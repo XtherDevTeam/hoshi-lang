@@ -205,12 +205,22 @@ namespace yoi {
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *incC = llvmModCtx.TheModule->getOrInsertComdat(incFuncName);
+            incC->setSelectionKind(llvm::Comdat::Any);
+            incFunction->setComdat(incC);
+#endif
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto decFuncName = "basic_" + typeName + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *decC = llvmModCtx.TheModule->getOrInsertComdat(decFuncName);
+            decC->setSelectionKind(llvm::Comdat::Any);
+            decFunction->setComdat(decC);
+#endif
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
 
             // generate basic type dyn array function
@@ -438,6 +448,11 @@ namespace yoi {
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *incC = llvmModCtx.TheModule->getOrInsertComdat(incFuncName);
+            incC->setSelectionKind(llvm::Comdat::Any);
+            incFunction->setComdat(incC);
+#endif
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             // --- Generate gc_refcount_decrease ---
@@ -445,6 +460,11 @@ namespace yoi {
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *decC = llvmModCtx.TheModule->getOrInsertComdat(decFuncName);
+            decC->setSelectionKind(llvm::Comdat::Any);
+            decFunction->setComdat(decC);
+#endif
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
         }
     }
@@ -529,12 +549,22 @@ namespace yoi {
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmInterfacePtrType}, false);
             auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *incC = llvmModCtx.TheModule->getOrInsertComdat(incFuncName);
+            incC->setSelectionKind(llvm::Comdat::Any);
+            incFunction->setComdat(incC);
+#endif
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmInterfacePtrType}, false);
             auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
+#ifdef _WIN32
+            llvm::Comdat *decC = llvmModCtx.TheModule->getOrInsertComdat(decFuncName);
+            decC->setSelectionKind(llvm::Comdat::Any);
+            decFunction->setComdat(decC);
+#endif
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
         }
     }

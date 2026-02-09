@@ -19,12 +19,16 @@ struct BufferedStream {
     buf_capacity: int,
     cursor: int,      // Index within the current buffer
     abs_pos: int,     // Absolute position in file of the start of the buffer
+    mark_pos: int,
     constructor(f: file.AbstractFile),
     always_inline peek() : char,
     always_inline advance() : char,
     seek_rel(offset: int) : none,
     extract_str(length: int) : str.Str,
-    fill_buffer() : none
+    fill_buffer() : none,
+    set_mark() : none,
+    unset_mark() : none,
+    rewind_to_mark() : none
 }
 
 impl BufferedStream {
@@ -35,22 +39,55 @@ impl BufferedStream {
         this.buf_size = 0
         this.cursor = 0
         this.abs_pos = 0
+        this.mark_pos = -1
         this.fill_buffer()
     },
     fill_buffer() : none {
-        // If we have unconsumed bytes, move them to start (simplified ring buffer)
-        // For simplicity in this document, we assume strict forward parsing.
+        let preserve_start = 0
+        let preserve_len = 0
         
-        let read_struct = this.file.read(this.buf_capacity)
+        if (this.mark_pos >= 0 && this.mark_pos < this.buf_size) {
+            preserve_start = this.mark_pos
+            preserve_len = this.buf_size - preserve_start
+        }
         
-        // We copy to our internal raw array to avoid object overhead
-        runtime.memcpy(
-            runtime.runtime_get_string_array_data_pointer(this.buffer), 
-            runtime.runtime_get_string_array_data_pointer(read_struct.data), 
-            read_struct.size
-        )
-        this.buf_size = read_struct.size
-        this.cursor = 0
+        let dest_ptr = runtime.runtime_get_string_array_data_pointer(this.buffer)
+        
+        // Move preserved data to start if needed
+        if (preserve_len > 0) {
+            runtime.memcpy(
+                dest_ptr, 
+                dest_ptr + preserve_start, 
+                preserve_len
+            )
+        }
+        
+        // Read new data
+        let to_read = this.buf_capacity - preserve_len
+        let read_struct = this.file.read(to_read)
+        
+        if (read_struct.size > 0) {
+            runtime.memcpy(
+                dest_ptr + preserve_len, 
+                runtime.runtime_get_string_array_data_pointer(read_struct.data), 
+                read_struct.size
+            )
+        }
+        
+        this.buf_size = preserve_len + read_struct.size
+        
+        // Adjust cursor and mark
+        if (this.mark_pos >= 0) {
+            this.cursor -= this.mark_pos
+            this.mark_pos = 0
+            // abs_pos follows cursor logic, so it remains valid relative to the file stream
+            // if we consider abs_pos as the "virtual" file position.
+            // But if we shifted data, the byte at buffer[0] is now the byte at old buffer[mark_pos].
+            // If abs_pos tracks cursor, it is fine.
+        } else {
+            this.cursor = 0
+            // If strictly forward (no mark), we effectively consumed everything.
+        }
     },
     always_inline peek() : char {
         if (this.cursor >= this.buf_size) {
@@ -70,9 +107,42 @@ impl BufferedStream {
         return c
     },
     seek_rel(offset: int) : none {
-        this.cursor += offset
-        this.abs_pos += offset
-        // Note: For safety in production, check if we crossed a buffer boundary. 
+        if (this.cursor + offset >= this.buf_size) {
+             // Basic safe implementation: loop advance
+             // This ensures refill triggers correctly and marks are respected if active
+             for (let i = 0; i < offset; i += 1) {
+                 this.advance()
+             }
+        } else {
+            this.cursor += offset
+            this.abs_pos += offset
+        }
+    },
+    set_mark() : none {
+        this.mark_pos = this.cursor
+    },
+    unset_mark() : none {
+        this.mark_pos = -1
+    },
+    rewind_to_mark() : none {
+        if (this.mark_pos >= 0) {
+            this.cursor = this.mark_pos
+            // abs_pos should be updated to match cursor?
+            // If abs_pos tracks cursor, we simply assume it must be recalculated or kept in sync?
+            // advance() maintains abs_pos.
+            // If we rewind relative to buffer, we don't easily know the abs_pos decrement 
+            // unless we track it.
+            // But Numeric doesn't use abs_pos for logic, only for potential length calc?
+            // Actually Numeric uses len = cursor - start_idx.
+            // If we rewind, abs_pos is de-synced?
+            // "abs_pos += 1" in advance.
+            // If we rewind, we should decrement abs_pos?
+            // We don't verify abs_pos correctness in Numeric logic, but for general correctness:
+            // this.abs_pos -= (old_cursor - new_cursor)
+            // But checking old cursor `this.cursor` vs `this.mark_pos`.
+            let diff = this.cursor - this.mark_pos
+            this.abs_pos -= diff
+        }
     },
     extract_str(length: int) : str.Str {
         let s = str.Str((length + 1) as unsigned)
@@ -366,7 +436,7 @@ impl Numeric : JSONValue {
         let stream = dyn_cast<BufferedStream>(raw_file)
         
         // 1. Scan length directly in buffer without allocating
-        let start_idx = stream.cursor
+        stream.set_mark()
         let c = stream.peek()
         let is_deci = 0 // 0 = int, 1 = deci
         
@@ -382,12 +452,12 @@ impl Numeric : JSONValue {
             c = stream.peek()
         }
         
-        let len = stream.cursor - start_idx
+        let len = stream.cursor - stream.mark_pos
         
-        // 2. Rewind cursor simply by subtraction (since we haven't refilled buffer yet in this loop)
-        // Note: For safety in production, check if we crossed a buffer boundary. 
-        // For this design, we assume numbers fit in the 4KB buffer.
-        stream.cursor = start_idx
+        // 2. Rewind cursor to mark
+        // Safe even if buffer refilled because mark_pos would be 0 and content preserved
+        stream.rewind_to_mark()
+        stream.unset_mark() // Extract str will consume, so we can unset mark or just let next read overwrite
         
         // 3. Extract exact string (Single Allocation)
         let num_str = stream.extract_str(len)
