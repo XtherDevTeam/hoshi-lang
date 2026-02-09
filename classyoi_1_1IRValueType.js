@@ -42,6 +42,7 @@ var classyoi_1_1IRValueType =
     [ "IRValueType", "classyoi_1_1IRValueType.html#a436f3d9eb1f056028904a37fd4812064", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a0a8161a9919991b3b5d4199f96536c29", null ],
     [ "addAttribute", "classyoi_1_1IRValueType.html#ae7365b3474d1261d1f650848fb3b61ae", null ],
+    [ "calculateDimensionSize", "classyoi_1_1IRValueType.html#a3c436802db5bd7456c54243ef6e50101", null ],
     [ "getArrayType", "classyoi_1_1IRValueType.html#a2de748b29cbc22e987c06acf975d332d", null ],
     [ "getBasicObjectType", "classyoi_1_1IRValueType.html#ab18b33867fcbdc188340e5773519a560", null ],
     [ "getBasicRawType", "classyoi_1_1IRValueType.html#a2ff0cd5f22ebfe149bebca1e86e7840c", null ],

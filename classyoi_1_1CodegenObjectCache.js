@@ -11,6 +11,6 @@ var classyoi_1_1CodegenObjectCache =
     [ "build_config", "classyoi_1_1CodegenObjectCache.html#a1ad62e00375d8c0fcc76224f4e46f4a0", null ],
     [ "cache", "classyoi_1_1CodegenObjectCache.html#af886fb67c9a5c2437ff6f5aa414d4968", null ],
     [ "cacheMutex", "classyoi_1_1CodegenObjectCache.html#abacb1d4abeeb3bc9be36750da37df29e", null ],
-    [ "free_list", "classyoi_1_1CodegenObjectCache.html#a20f4a484ee9f18c8aab5cd6383e059f0", null ],
+    [ "free_list", "classyoi_1_1CodegenObjectCache.html#ad3050e203697c982b8ab01169a1df069", null ],
     [ "next_hash", "classyoi_1_1CodegenObjectCache.html#a066b971ffd1dbd4a9f6aab1140e35f25", null ]
 ];

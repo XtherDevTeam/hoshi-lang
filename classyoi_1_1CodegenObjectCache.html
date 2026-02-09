@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:af886fb67c9a5c2437ff6f5aa414d4968" id="r_af886fb67c9a5c2437ff6f5aa414d4968"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, <a class="el" href="structyoi_1_1CodegenObjectCacheEntry.html">CodegenObjectCacheEntry</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1CodegenObjectCache.html#af886fb67c9a5c2437ff6f5aa414d4968">cache</a></td></tr>
 <tr class="separator:af886fb67c9a5c2437ff6f5aa414d4968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20f4a484ee9f18c8aab5cd6383e059f0" id="r_a20f4a484ee9f18c8aab5cd6383e059f0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1CodegenObjectCache.html#a20f4a484ee9f18c8aab5cd6383e059f0">free_list</a></td></tr>
-<tr class="separator:a20f4a484ee9f18c8aab5cd6383e059f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3050e203697c982b8ab01169a1df069" id="r_ad3050e203697c982b8ab01169a1df069"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1CodegenObjectCache.html#ad3050e203697c982b8ab01169a1df069">free_list</a></td></tr>
+<tr class="separator:ad3050e203697c982b8ab01169a1df069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ad62e00375d8c0fcc76224f4e46f4a0" id="r_a1ad62e00375d8c0fcc76224f4e46f4a0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structyoi_1_1IRBuildConfig.html">IRBuildConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1CodegenObjectCache.html#a1ad62e00375d8c0fcc76224f4e46f4a0">build_config</a></td></tr>
 <tr class="separator:a1ad62e00375d8c0fcc76224f4e46f4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a066b971ffd1dbd4a9f6aab1140e35f25" id="r_a066b971ffd1dbd4a9f6aab1140e35f25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1CodegenObjectCache.html#a066b971ffd1dbd4a9f6aab1140e35f25">next_hash</a> = 0</td></tr>
@@ -172,11 +172,11 @@ Private Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the entry </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00159">159</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">182</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>.</p>
+<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04092">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04081">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -239,7 +239,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the entry </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00151">151</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00174">174</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, and <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>.</p>
 
@@ -269,31 +269,41 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00103">103</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00122">122</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00146">CodegenObjectCache::register_entry()</a>.</p>
+<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00060">CodegenObjectCache::free_list</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00037">LLVMCodegen::LLVMCodegen()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_cgraph.png" border="0" usemap="#aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_cgraph" id="aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_cgraph">
 <area shape="rect" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="5,141,148,166"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a9e09b43e054a8122c2af56fba5dec476" title="register a new entry to the cache" alt="" coords="196,141,309,166"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="196,141,375,166"/>
 <area shape="poly" title=" " alt="" coords="148,151,182,151,182,156,148,156"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="357,141,536,166"/>
-<area shape="poly" title=" " alt="" coords="309,151,344,151,344,156,309,156"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="584,5,807,45"/>
-<area shape="poly" title=" " alt="" coords="461,139,513,98,583,55,600,48,602,52,585,60,516,102,464,143"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="584,69,807,109"/>
-<area shape="poly" title=" " alt="" coords="497,138,603,110,604,115,498,143"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="584,133,807,173"/>
-<area shape="poly" title=" " alt="" coords="536,151,570,151,570,156,536,156"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="584,197,807,237"/>
-<area shape="poly" title=" " alt="" coords="498,164,604,191,603,196,497,169"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="624,262,767,287"/>
-<area shape="poly" title=" " alt="" coords="464,164,515,205,549,228,585,247,611,256,609,261,583,252,546,232,512,209,460,168"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="855,262,1057,287"/>
-<area shape="poly" title=" " alt="" coords="767,272,841,272,841,277,767,277"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="423,5,645,45"/>
+<area shape="poly" title=" " alt="" coords="299,139,351,98,421,55,438,48,441,52,424,60,354,102,303,143"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="423,69,645,109"/>
+<area shape="poly" title=" " alt="" coords="335,138,442,110,443,115,337,143"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="423,133,645,173"/>
+<area shape="poly" title=" " alt="" coords="375,151,409,151,409,156,375,156"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="423,197,645,237"/>
+<area shape="poly" title=" " alt="" coords="337,164,443,191,442,196,335,169"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="463,262,605,287"/>
+<area shape="poly" title=" " alt="" coords="302,164,354,205,388,228,424,247,450,256,448,261,422,252,385,232,350,209,299,168"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="693,262,896,287"/>
+<area shape="poly" title=" " alt="" coords="605,272,680,272,680,277,605,277"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_icgraph.png" border="0" usemap="#aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_icgraph" id="aclassyoi_1_1CodegenObjectCache_a76177449455834a0dfce98de7d8e7d0f_icgraph">
+<area shape="rect" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="293,5,436,31"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#abe737b08bbea2ab093a1cd472ab6d60b" title=" " alt="" coords="5,5,245,31"/>
+<area shape="poly" title=" " alt="" coords="279,21,246,21,246,15,279,15"/>
 </map>
 </div>
 
@@ -325,11 +335,9 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>the index of the new entry </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>the object filename will be generated based on the hash of the source file </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00146">146</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00169">169</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00103">CodegenObjectCache::purge_and_update()</a>.</p>
+<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -350,16 +358,6 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="273,164,324,205,358,228,394,247,420,256,419,261,392,252,355,232,321,209,270,168"/>
 <area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="664,262,867,287"/>
 <area shape="poly" title=" " alt="" coords="576,272,650,272,650,277,576,277"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classyoi_1_1CodegenObjectCache_a9e09b43e054a8122c2af56fba5dec476_icgraph.png" border="0" usemap="#aclassyoi_1_1CodegenObjectCache_a9e09b43e054a8122c2af56fba5dec476_icgraph" alt=""/></div>
-<map name="aclassyoi_1_1CodegenObjectCache_a9e09b43e054a8122c2af56fba5dec476_icgraph" id="aclassyoi_1_1CodegenObjectCache_a9e09b43e054a8122c2af56fba5dec476_icgraph">
-<area shape="rect" title="register a new entry to the cache" alt="" coords="196,5,309,31"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a76177449455834a0dfce98de7d8e7d0f" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="5,5,148,31"/>
-<area shape="poly" title=" " alt="" coords="182,21,148,21,148,15,182,15"/>
 </map>
 </div>
 
@@ -389,11 +387,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">125</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">148</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00061">CodegenObjectCache::build_config</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00060">CodegenObjectCache::free_list</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00062">CodegenObjectCache::next_hash</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00076">CodegenObjectCacheEntry::setAbsPathOnDisk()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00086">CodegenObjectCacheEntry::setHash()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00185">CodegenObjectCacheEntry::setLastModification()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00081">CodegenObjectCacheEntry::setObjectFilename()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00061">CodegenObjectCache::build_config</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00060">CodegenObjectCache::free_list</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00062">CodegenObjectCache::next_hash</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00095">CodegenObjectCacheEntry::setAbsPathOnDisk()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00105">CodegenObjectCacheEntry::setHash()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00208">CodegenObjectCacheEntry::setLastModification()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00100">CodegenObjectCacheEntry::setObjectFilename()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00159">CodegenObjectCache::get_entry()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00146">CodegenObjectCache::register_entry()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00122">CodegenObjectCache::purge_and_update()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00169">CodegenObjectCache::register_entry()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -419,17 +417,19 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1CodegenObjectCache_aa271f9c3811013d8919f48d69ee5a9f7_icgraph.png" border="0" usemap="#aclassyoi_1_1CodegenObjectCache_aa271f9c3811013d8919f48d69ee5a9f7_icgraph" alt=""/></div>
 <map name="aclassyoi_1_1CodegenObjectCache_aa271f9c3811013d8919f48d69ee5a9f7_icgraph" id="aclassyoi_1_1CodegenObjectCache_aa271f9c3811013d8919f48d69ee5a9f7_icgraph">
-<area shape="rect" title=" " alt="" coords="524,31,703,56"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a7a38342b1165a978cc39b8af28388a60" title="get the entry from the cache" alt="" coords="377,5,461,31"/>
-<area shape="poly" title=" " alt="" coords="510,33,461,26,462,21,511,27"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a9e09b43e054a8122c2af56fba5dec476" title="register a new entry to the cache" alt="" coords="363,55,476,80"/>
-<area shape="poly" title=" " alt="" coords="510,59,477,63,476,58,510,53"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a13ad4db0b1bfc054c3dfc346e4c80bb1" title=" " alt="" coords="108,5,315,31"/>
-<area shape="poly" title=" " alt="" coords="363,21,315,21,315,15,363,15"/>
+<area shape="rect" title=" " alt="" coords="587,55,765,80"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a7a38342b1165a978cc39b8af28388a60" title="get the entry from the cache" alt="" coords="425,5,509,31"/>
+<area shape="poly" title=" " alt="" coords="608,54,509,30,510,25,609,49"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a76177449455834a0dfce98de7d8e7d0f" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="396,55,539,80"/>
+<area shape="poly" title=" " alt="" coords="572,70,539,70,539,65,572,65"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a9e09b43e054a8122c2af56fba5dec476" title="register a new entry to the cache" alt="" coords="411,104,524,129"/>
+<area shape="poly" title=" " alt="" coords="609,86,523,107,521,101,608,81"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a13ad4db0b1bfc054c3dfc346e4c80bb1" title=" " alt="" coords="125,5,331,31"/>
+<area shape="poly" title=" " alt="" coords="412,21,332,21,332,15,412,15"/>
 <area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
-<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a76177449455834a0dfce98de7d8e7d0f" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="140,55,283,80"/>
-<area shape="poly" title=" " alt="" coords="349,70,283,70,283,65,349,65"/>
+<area shape="poly" title=" " alt="" coords="110,21,60,21,60,15,110,15"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#abe737b08bbea2ab093a1cd472ab6d60b" title=" " alt="" coords="108,55,348,80"/>
+<area shape="poly" title=" " alt="" coords="382,70,348,70,348,65,382,65"/>
 </map>
 </div>
 
@@ -459,7 +459,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00167">167</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00190">190</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>, and <a class="el" href="codegenObjectCache_8hpp_source.html#l00060">CodegenObjectCache::free_list</a>.</p>
 
@@ -490,7 +490,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the <a class="el" href="classyoi_1_1CodegenObjectCache.html">CodegenObjectCache</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00173">173</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00196">196</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00061">CodegenObjectCache::build_config</a>.</p>
 
@@ -543,11 +543,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00178">178</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="codegenObjectCache_8cpp_source.html#l00201">201</a> of file <a class="el" href="codegenObjectCache_8cpp_source.html">codegenObjectCache.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">CodegenObjectCache::cache</a>, and <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">CodegenObjectCache::cacheMutex</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04092">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04081">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -578,7 +578,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="codegenObjectCache_8hpp_source.html#l00061">61</a> of file <a class="el" href="codegenObjectCache_8hpp_source.html">codegenObjectCache.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00173">CodegenObjectCache::setBuildConfig()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00196">CodegenObjectCache::setBuildConfig()</a>.</p>
 
 </div>
 </div>
@@ -596,7 +596,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="codegenObjectCache_8hpp_source.html#l00059">59</a> of file <a class="el" href="codegenObjectCache_8hpp_source.html">codegenObjectCache.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00159">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00151">CodegenObjectCache::get_entry_index()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00103">CodegenObjectCache::purge_and_update()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00167">CodegenObjectCache::remove_entry()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00178">CodegenObjectCache::update_last_modification()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00174">CodegenObjectCache::get_entry_index()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00122">CodegenObjectCache::purge_and_update()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00190">CodegenObjectCache::remove_entry()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00201">CodegenObjectCache::update_last_modification()</a>.</p>
 
 </div>
 </div>
@@ -622,25 +622,25 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="codegenObjectCache_8hpp_source.html#l00063">63</a> of file <a class="el" href="codegenObjectCache_8hpp_source.html">codegenObjectCache.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00159">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00151">CodegenObjectCache::get_entry_index()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00103">CodegenObjectCache::purge_and_update()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00146">CodegenObjectCache::register_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00167">CodegenObjectCache::remove_entry()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00178">CodegenObjectCache::update_last_modification()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00174">CodegenObjectCache::get_entry_index()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00122">CodegenObjectCache::purge_and_update()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00169">CodegenObjectCache::register_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00190">CodegenObjectCache::remove_entry()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00201">CodegenObjectCache::update_last_modification()</a>.</p>
 
 </div>
 </div>
-<a id="a20f4a484ee9f18c8aab5cd6383e059f0" name="a20f4a484ee9f18c8aab5cd6383e059f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20f4a484ee9f18c8aab5cd6383e059f0">&#9670;&#160;</a></span>free_list</h2>
+<a id="ad3050e203697c982b8ab01169a1df069" name="ad3050e203697c982b8ab01169a1df069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3050e203697c982b8ab01169a1df069">&#9670;&#160;</a></span>free_list</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&gt; free_list</td>
+          <td class="memname">std::set&lt;<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&gt; free_list</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="codegenObjectCache_8hpp_source.html#l00060">60</a> of file <a class="el" href="codegenObjectCache_8hpp_source.html">codegenObjectCache.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00167">CodegenObjectCache::remove_entry()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00122">CodegenObjectCache::purge_and_update()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>, and <a class="el" href="codegenObjectCache_8cpp_source.html#l00190">CodegenObjectCache::remove_entry()</a>.</p>
 
 </div>
 </div>
@@ -658,7 +658,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="codegenObjectCache_8hpp_source.html#l00062">62</a> of file <a class="el" href="codegenObjectCache_8hpp_source.html">codegenObjectCache.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00125">CodegenObjectCache::register_entry_unlocked()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="codegenObjectCache_8cpp_source.html#l00148">CodegenObjectCache::register_entry_unlocked()</a>.</p>
 
 </div>
 </div>

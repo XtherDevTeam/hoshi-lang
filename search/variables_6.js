@@ -9,7 +9,7 @@ var searchData=
   ['foreigntypemap_6',['foreignTypeMap',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2fc0d3dcf33e94609178b838639127e4',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
   ['foreigntypetable_7',['foreignTypeTable',['../classyoi_1_1IRFFITable.html#a8d63d2a6e1a648a133f9594383a83ef5',1,'yoi::IRFFITable']]],
   ['forstmtval_8',['forStmtVal',['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a34ad018dbaf263f8c11bfac5317aeb8b',1,'yoi::inCodeBlockStmt::vValue']]],
-  ['free_5flist_9',['free_list',['../classyoi_1_1CodegenObjectCache.html#a20f4a484ee9f18c8aab5cd6383e059f0',1,'yoi::CodegenObjectCache']]],
+  ['free_5flist_9',['free_list',['../classyoi_1_1CodegenObjectCache.html#ad3050e203697c982b8ab01169a1df069',1,'yoi::CodegenObjectCache']]],
   ['from_10',['from',['../classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4',1,'yoi::exportDecl']]],
   ['from_5fpath_11',['from_path',['../classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299',1,'yoi::importDecl']]],
   ['func_12',['func',['../classyoi_1_1primary.html#a419f7a5d3a7f40d75326ac74d842a9f7',1,'yoi::primary::func'],['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func']]],

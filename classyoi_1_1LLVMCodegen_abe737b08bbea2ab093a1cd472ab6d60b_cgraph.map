@@ -1,24 +1,38 @@
 <map id="LLVMCodegen" name="LLVMCodegen">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,119,102"/>
-<area shape="rect" id="Node000002" href="$namespaceyoi_1_1serialization.html#a4675f5ed618ffaa4a0a984f447380547" title=" " alt="" coords="196,5,327,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,74,185,47,186,52,103,79"/>
-<area shape="rect" id="Node000003" href="$classyoi_1_1CodegenObjectCache.html#a61a542ceeb511ab5bc4a9321fa217eb4" title="set the build config" alt="" coords="167,69,356,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="119,87,153,87,153,92,119,92"/>
-<area shape="rect" id="Node000004" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="203,134,320,159"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="104,100,167,119,200,128,198,133,166,124,103,105"/>
-<area shape="rect" id="Node000005" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="404,134,489,159"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="320,144,390,144,390,149,320,149"/>
-<area shape="rect" id="Node000006" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="537,97,672,137"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="489,136,523,130,524,135,490,141"/>
-<area shape="rect" id="Node000010" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="720,158,863,183"/>
-<area shape="poly" id="edge11_Node000005_Node000010" title=" " alt="" coords="490,147,706,162,706,167,489,152"/>
-<area shape="rect" id="Node000007" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="720,105,863,130"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="672,115,706,115,706,120,672,120"/>
-<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="673,134,734,152,732,157,672,139"/>
-<area shape="rect" id="Node000008" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="911,105,1113,130"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="863,115,897,115,897,120,863,120"/>
-<area shape="rect" id="Node000009" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1161,105,1352,130"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1114,115,1147,115,1147,120,1114,120"/>
-<area shape="rect" id="Node000011" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="911,158,1113,183"/>
-<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="863,168,897,168,897,173,863,173"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,342,119,367"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1CodegenObjectCache.html#a76177449455834a0dfce98de7d8e7d0f" title="purge the cache, add the entries that previously not in the cache, remove the entries that are not in..." alt="" coords="167,188,356,228"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,340,220,234,224,238,82,344"/>
+<area shape="rect" id="Node000010" href="$namespaceyoi_1_1serialization.html#a4675f5ed618ffaa4a0a984f447380547" title=" " alt="" coords="433,420,564,460"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="81,365,119,390,168,412,232,428,299,437,419,441,419,446,299,442,231,433,166,417,117,395,78,370"/>
+<area shape="rect" id="Node000014" href="$classyoi_1_1CodegenObjectCache.html#a61a542ceeb511ab5bc4a9321fa217eb4" title="set the build config" alt="" coords="167,363,356,403"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="120,360,154,365,153,370,119,365"/>
+<area shape="rect" id="Node000015" href="$namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="203,313,320,338"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="119,344,189,333,190,339,120,349"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="404,156,593,196"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="356,193,390,188,391,193,356,198"/>
+<area shape="rect" id="Node000004" href="$structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="641,184,864,224"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="594,184,628,188,627,193,593,189"/>
+<area shape="rect" id="Node000005" href="$structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="641,248,864,288"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="544,194,642,234,665,241,664,246,640,238,542,198"/>
+<area shape="rect" id="Node000006" href="$structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="641,5,864,45"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="517,154,569,105,603,78,640,55,655,48,657,53,643,60,606,82,573,109,520,158"/>
+<area shape="rect" id="Node000007" href="$structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="641,69,864,109"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="557,153,679,111,681,116,559,158"/>
+<area shape="rect" id="Node000008" href="$namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="912,313,1055,338"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="576,153,641,143,715,139,792,146,830,155,865,170,903,196,934,231,957,267,974,299,969,301,953,270,930,234,900,200,863,174,828,160,791,151,715,144,641,148,577,159"/>
+<area shape="rect" id="Node000009" href="$classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1103,313,1305,338"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1055,323,1089,323,1089,328,1055,328"/>
+<area shape="rect" id="Node000011" href="$namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="912,398,1055,423"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="564,433,898,413,898,418,564,439"/>
+<area shape="rect" id="Node000012" href="$classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1103,398,1305,423"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1055,408,1089,408,1089,413,1055,413"/>
+<area shape="rect" id="Node000013" href="$classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1353,398,1544,423"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1306,408,1339,408,1339,413,1306,413"/>
+<area shape="rect" id="Node000016" href="$namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="456,313,541,338"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="320,323,442,323,442,328,320,328"/>
+<area shape="poly" id="edge19_Node000016_Node000008" title=" " alt="" coords="542,323,898,323,898,328,542,328"/>
+<area shape="rect" id="Node000017" href="$namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="685,363,820,403"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="542,332,673,362,671,367,541,337"/>
+<area shape="poly" id="edge18_Node000017_Node000008" title=" " alt="" coords="820,363,918,339,919,344,821,369"/>
+<area shape="poly" id="edge17_Node000017_Node000011" title=" " alt="" coords="821,388,899,398,898,403,820,393"/>
 </map>
