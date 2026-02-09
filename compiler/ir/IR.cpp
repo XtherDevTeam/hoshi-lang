@@ -1601,18 +1601,33 @@ namespace yoi {
             ss.unget();
         return ss.str();
     }
+    
     std::shared_ptr<IREnumerationType> IREnumerationType::Builder::yield() {
         return std::make_shared<IREnumerationType>(name, valueToIndexMap);
     }
+
     IRValueType::IRValueType(valueType type, const yoi::vec<yoi::IRValueType> &bracedTypes) : type(type), bracedTypes(bracedTypes) {}
+
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildCachePath(const yoi::wstr &buildCachePath) {
         if (!buildCachePath.empty()) {
             this->buildCachePath = buildCachePath;
         }
         return *this;
     }
+
     IRBuildConfig::Builder &IRBuildConfig::Builder::setImmediatelyClearupCache(bool immediatelyClearupCache) {
         this->immediatelyClearupCache = immediatelyClearupCache;
         return *this;
+    }
+
+    yoi::indexT IRValueType::calculateDimensionSize() const {
+        if (dimensions.empty()) {
+            return 1;
+        }
+        yoi::indexT size = 1;
+        for (auto &dimension : dimensions) {
+            size *= dimension;
+        }
+        return size;
     }
 } // namespace yoi

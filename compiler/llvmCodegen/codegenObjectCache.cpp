@@ -12,8 +12,9 @@ namespace yoi {
         template <> void write(FILE *fp, const yoi::wstr &value) {
             // general serialization helper for wstr
             // read length first
-            write<uint64_t>(fp, value.size());
-            fwrite(value.data(), sizeof(yoi::wstr::value_type), value.size(), fp);
+            std::string s = wstring2string(value);
+            write<uint64_t>(fp, s.size());
+            fwrite(s.data(), sizeof(std::string::value_type), s.size(), fp);
         }
 
         template <> void read(FILE *fp, yoi::wstr &value) {
@@ -21,8 +22,10 @@ namespace yoi {
             // read length first
             uint64_t len;
             read<uint64_t>(fp, len);
-            value.resize(len);
-            fread(value.data(), sizeof(yoi::wstr::value_type), len, fp);
+            std::string s;
+            s.resize(len);
+            fread(s.data(), sizeof(std::string::value_type), len, fp);
+            value = string2wstring(s);
         }
 
         template <> void write(FILE *fp, const CodegenObjectCacheEntry &value) {
@@ -63,13 +66,29 @@ namespace yoi {
                 value.cache.insert({key, entry});
             }
             read<uint64_t>(fp, len);
-            value.free_list.reserve(len);
             for (auto i = 0; i < len; i++) {
                 yoi::indexT item;
                 read(fp, item);
-                value.free_list.push_back(item);
+                value.free_list.insert(item);
             }
             read<yoi::indexT>(fp, value.next_hash);
+        }
+
+        template <> void write(FILE *fp, const std::set<yoi::indexT> &value) {
+            write<uint64_t>(fp, value.size());
+            for (auto &item : value) {
+                write(fp, item);
+            }
+        }
+
+        template <> void read(FILE *fp, std::set<yoi::indexT> &value) {
+            uint64_t len;
+            read<uint64_t>(fp, len);
+            for (auto i = 0; i < len; i++) {
+                yoi::indexT item;
+                read(fp, item);
+                value.insert(item);
+            }
         }
     } // namespace serialization
 
@@ -115,10 +134,14 @@ namespace yoi {
             }
         }
         for (auto &item : to_be_removed) {
+            if (std::filesystem::exists(cache[item].object_filename)) {
+                std::filesystem::remove(cache[item].object_filename);
+            }
+            free_list.insert(cache[item].hash);
             cache.erase(item);
         }
         for (auto &item : to_be_added) {
-            register_entry(item);
+            register_entry_unlocked(item);
         }
     }
 
@@ -131,8 +154,8 @@ namespace yoi {
         if (free_list.empty()) {
             hash = next_hash++;
         } else {
-            hash = free_list.back();
-            free_list.pop_back();
+            hash = *free_list.begin();
+            free_list.erase(free_list.begin());
         }
         if (!std::filesystem::exists(build_config->buildCachePath)) {
             std::filesystem::create_directories(build_config->buildCachePath);
@@ -166,7 +189,7 @@ namespace yoi {
 
     void CodegenObjectCache::remove_entry(const yoi::wstr &abs_path_on_disk) {
         std::lock_guard<std::mutex> lock(cacheMutex);
-        free_list.push_back(cache.at(abs_path_on_disk).hash);
+        free_list.insert(cache.at(abs_path_on_disk).hash);
         cache.erase(abs_path_on_disk);
     }
 

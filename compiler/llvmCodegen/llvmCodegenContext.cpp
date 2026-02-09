@@ -47,6 +47,14 @@ namespace yoi {
             
             serialization::read(cache_file, codegenObjectCache);
             fclose(cache_file);
+
+            yoi::vec<yoi::wstr> source_files;
+            for (auto &module : this->compilerCtx->getCompiledModules()) {
+                if (module.second->modulePath == L"builtin")
+                    continue;
+                source_files.push_back(module.second->modulePath);
+            }
+            codegenObjectCache.purge_and_update(source_files);
         }
     }
 
@@ -66,13 +74,13 @@ namespace yoi {
         llvm::FunctionType* allocType = llvm::FunctionType::get(i8PtrTy, {sizeTy, i8PtrTy}, false);
         llvm::FunctionType* funcType = llvm::FunctionType::get(i8PtrTy, {sizeTy}, false);
         llvmModCtx.runtimeFunctions[L"runtime_object_alloc_report"] = llvm::Function::Create(allocType, llvm::Function::ExternalLinkage, "runtime_object_alloc_report", llvmModCtx.TheModule.get());
-        llvmModCtx.runtimeFunctions[L"object_alloc"] = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "object_alloc", llvmModCtx.TheModule.get());
+        llvmModCtx.runtimeFunctions[L"object_alloc"] = llvm::Function::Create(funcType, llvm::Function::LinkOnceODRLinkage, "object_alloc", llvmModCtx.TheModule.get());
         llvmModCtx.runtimeFunctions[L"object_alloc"]->addFnAttr(llvm::Attribute::AlwaysInline);
 
         // void runtime_finalize_object(void* objectPtr) -> void (i8*)
         llvm::FunctionType* finalizeType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {i8PtrTy}, false);
         llvmModCtx.runtimeFunctions[L"runtime_finalize_object_report"] = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "runtime_finalize_object_report", llvmModCtx.TheModule.get());
-        llvmModCtx.runtimeFunctions[L"finalize_object"] = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "finalize_object", llvmModCtx.TheModule.get());
+        llvmModCtx.runtimeFunctions[L"finalize_object"] = llvm::Function::Create(finalizeType, llvm::Function::LinkOnceODRLinkage, "finalize_object", llvmModCtx.TheModule.get());
         llvmModCtx.runtimeFunctions[L"finalize_object"]->addFnAttr(llvm::Attribute::AlwaysInline);
 
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
@@ -195,13 +203,13 @@ namespace yoi {
 
             auto incFuncName = "basic_" + typeName + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, llvmModCtx.TheModule.get());
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto decFuncName = "basic_" + typeName + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, llvmModCtx.TheModule.get());
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
 
@@ -362,6 +370,8 @@ namespace yoi {
     // --- IMPLEMENTATION PHASE ---
 
     void LLVMCodegen::generateImplementations(LLVMModuleContext &llvmModCtx) {
+        generateRuntimeFunctionImplementations(llvmModCtx);
+        generateBasicTypeImplementations(llvmModCtx);
         generateStructGCFunctionImplementations(llvmModCtx);
         generateInterfaceObjectGCFunctionImplementations(llvmModCtx);
         generateFunctionImplementations(llvmModCtx);
@@ -426,14 +436,14 @@ namespace yoi {
             // --- Generate gc_refcount_increase ---
             auto incFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, llvmModCtx.TheModule.get());
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             // --- Generate gc_refcount_decrease ---
             auto decFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmStructPtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, llvmModCtx.TheModule.get());
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
         }
@@ -443,8 +453,8 @@ namespace yoi {
         for (auto& structDefPair : yoiModule->structTable) {
             auto moduleID = yoiModule->identifier;
             auto structDef = structDefPair.second;
-            if (compilerCtx->getImportedModule(structDef->linkedModuleId)->modulePath != llvmModCtx.absolute_path)
-                continue;
+            // if (compilerCtx->getImportedModule(structDef->linkedModuleId)->modulePath != llvmModCtx.absolute_path)
+            //    continue;
             auto structIdx = yoiModule->structTable.getIndex(structDef->name);
             auto key = std::make_tuple(IRValueType::valueType::structObject, moduleID, structIdx);
             auto* llvmStructType = llvmModCtx.structTypeMap.at(key);
@@ -517,13 +527,13 @@ namespace yoi {
 
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmInterfacePtrType}, false);
-            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::ExternalLinkage, incFuncName, llvmModCtx.TheModule.get());
+            auto* incFunction = llvm::Function::Create(incFuncType, llvm::Function::LinkOnceODRLinkage, incFuncName, llvmModCtx.TheModule.get());
             incFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(incFuncName)] = incFunction;
 
             auto decFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_decrease";
             auto* decFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmInterfacePtrType}, false);
-            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::ExternalLinkage, decFuncName, llvmModCtx.TheModule.get());
+            auto* decFunction = llvm::Function::Create(decFuncType, llvm::Function::LinkOnceODRLinkage, decFuncName, llvmModCtx.TheModule.get());
             decFunction->addFnAttr(llvm::Attribute::AlwaysInline);
             llvmModCtx.functionMap[string2wstring(decFuncName)] = decFunction;
         }
@@ -532,8 +542,8 @@ namespace yoi {
     void LLVMCodegen::generateInterfaceObjectGCFunctionImplementations(LLVMModuleContext &llvmModCtx) {
         for (const auto& interfaceDefPair : yoiModule->interfaceTable) {
             auto interfaceDef = interfaceDefPair.second;
-            if (compilerCtx->getImportedModule(interfaceDef->linkedModuleId)->modulePath != llvmModCtx.absolute_path)
-                continue;
+            // if (compilerCtx->getImportedModule(interfaceDef->linkedModuleId)->modulePath != llvmModCtx.absolute_path)
+            //    continue;
             auto interfaceIdx = yoiModule->interfaceTable.getIndex(interfaceDef->name);
             auto moduleID = yoiModule->identifier;
             auto key = std::make_tuple(IRValueType::valueType::interfaceObject, moduleID, interfaceIdx);
@@ -2344,27 +2354,6 @@ namespace yoi {
         return gcFunc;
     }
 
-    void LLVMCodegen::callGcFunction(LLVMModuleContext &llvmModCtx, llvm::Value* objectPtr, const std::shared_ptr<IRValueType>& yoiType, bool isIncrease, bool forceForPermanent, bool forceForBorrow) {
-        // No GC for the none object singleton
-        if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
-            return;
-        }
-        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !forceForPermanent) {
-            return;
-        }
-        if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
-            return;
-        
-        auto gcFunc = getGcFunction(llvmModCtx, yoiType, isIncrease);
-        if (gcFunc == nullptr) return;
-
-        auto f = [&]() {
-            auto* ptrArg = llvmModCtx.Builder->CreateBitCast(objectPtr, gcFunc->getFunctionType()->getParamType(0));
-            llvmModCtx.Builder->CreateCall(gcFunc, ptrArg);
-        };
-        generateIfTargetNotNull(llvmModCtx, objectPtr, yoiType, f);
-    }
-
     void LLVMCodegen::generateDescription(LLVMModuleContext &llvmModCtx) {
         auto* descStr = llvm::ConstantDataArray::getString(*llvmModCtx.TheContext,
             std::string("hoshi-lang-")
@@ -4166,5 +4155,31 @@ namespace yoi {
                 llvmModuleContext[modulePath]->TheModule->print(os, nullptr);
             }
         }
+    }
+
+
+    void LLVMCodegen::callGcFunction(LLVMModuleContext &llvmModCtx,
+                                       llvm::Value *objectPtr,
+                                       const std::shared_ptr<IRValueType> &yoiType,
+                                       bool isIncrease,
+                                       bool forceForPermanent,
+                                       bool forceForBorrow) {
+        if (yoiType->type == IRValueType::valueType::none || yoiType->hasAttribute(IRValueType::ValueAttr::Raw) || yoiType->isBasicRawType()) {
+            return;
+        }
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !forceForPermanent) {
+            return;
+        }
+        if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
+            return;
+        
+        auto gcFunc = getGcFunction(llvmModCtx, yoiType, isIncrease);
+        if (gcFunc == nullptr) return;
+
+        auto f = [&]() {
+            auto* ptrArg = llvmModCtx.Builder->CreateBitCast(objectPtr, gcFunc->getFunctionType()->getParamType(0));
+            llvmModCtx.Builder->CreateCall(gcFunc, ptrArg);
+        };
+        generateIfTargetNotNull(llvmModCtx, objectPtr, yoiType, f);
     }
 } // namespace yoi

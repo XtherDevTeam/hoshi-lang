@@ -57,7 +57,7 @@ namespace yoi {
     class CodegenObjectCache {
       public:
         std::map<yoi::wstr, CodegenObjectCacheEntry> cache;
-        std::vector<yoi::indexT> free_list;
+        std::set<yoi::indexT> free_list;
         std::shared_ptr<IRBuildConfig> build_config;
         yoi::indexT next_hash = 0;
         mutable std::mutex cacheMutex;
@@ -123,9 +123,9 @@ namespace yoi {
 
         template <> void read(FILE *fp, CodegenObjectCacheEntry &value);
 
-        template <> void write(FILE *fp, const std::vector<yoi::indexT> &value);
+        template <> void write(FILE *fp, const std::set<yoi::indexT> &value);
 
-        template <> void read(FILE *fp, std::vector<yoi::indexT> &value);
+        template <> void read(FILE *fp, std::set<yoi::indexT> &value);
     } // namespace serialization
 
 } // namespace yoi

@@ -17,7 +17,7 @@ namespace yoi {
 
     class CodegenTaskDispatcher {
     public:
-        explicit CodegenTaskDispatcher(size_t threadCount = std::thread::hardware_concurrency());
+        explicit CodegenTaskDispatcher(size_t threadCount = 0);
         ~CodegenTaskDispatcher();
 
         // Disable copy and move

@@ -192,6 +192,8 @@ namespace yoi {
         IRValueType &removeAttribute(ValueAttr attr);
 
         bool hasAttribute(ValueAttr attr) const;
+
+        yoi::indexT calculateDimensionSize() const;
     };
 
     class IROperand {

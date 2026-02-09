@@ -58,6 +58,12 @@ struct YoiCharObject {
     wchar_t value;
 };
 
+struct YoiShortObject {
+    unsigned long long gc_refcount;
+    unsigned long long type_id;
+    int16_t value;
+};
+
 struct AllocatedMemoryList {
     AllocatedMemoryList *prev;
     AllocatedMemoryList *next;
@@ -93,9 +99,7 @@ extern "C" void runtime_exec_permit_free(void *ptr);
 
 #endif
 
-#define GC_WRAPPER_DECL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj);      \
-                                                                                            \
-extern "C" void basic_##X##_gc_refcount_decrease(U* obj);                                   \
+
 
 #define GC_WRAPPER_IMPL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj) {     \
     obj->gc_refcount++;                                                                     \
@@ -109,14 +113,31 @@ extern "C" void basic_##X##_gc_refcount_decrease(U* obj) {                      
 }
 
 
-GC_WRAPPER_DECL(int, YoiIntegerObject);
+#define GC_WRAPPER_INLINE(X, U) static inline void basic_##X##_gc_refcount_increase(U* obj) {     \
+    if (!obj) return; \
+    obj->gc_refcount++;                                                                     \
+}                                                                                           \
+                                                                                            \
+static inline void basic_##X##_gc_refcount_decrease(U* obj) {                                  \
+    if (!obj) return; \
+    obj->gc_refcount--;                                                                     \
+    if (obj->gc_refcount <= 0) {                                                            \
+        runtime_finalize_object((YoiObject*)obj);                                            \
+    }                                                                                       \
+}
 
-GC_WRAPPER_DECL(decimal, YoiDecimalObject);
+GC_WRAPPER_INLINE(int, YoiIntegerObject);
 
-GC_WRAPPER_DECL(bool, YoiBooleanObject);
+GC_WRAPPER_INLINE(decimal, YoiDecimalObject);
 
-GC_WRAPPER_DECL(char, YoiCharObject);
+GC_WRAPPER_INLINE(bool, YoiBooleanObject);
 
-GC_WRAPPER_DECL(string, YoiStringObject);
+GC_WRAPPER_INLINE(char, YoiCharObject);
+
+GC_WRAPPER_INLINE(string, YoiStringObject);
+
+GC_WRAPPER_INLINE(unsigned, YoiUnsignedObject);
+
+GC_WRAPPER_INLINE(short, YoiShortObject);
 
 #endif //HOSHI_LANG_MEMORY_H
