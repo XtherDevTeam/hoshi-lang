@@ -19,7 +19,7 @@ namespace yoi {
 
         AST(lexer::token token);
 
-        const std::tuple<yoi::indexT, yoi::indexT> &getLocation();
+        std::tuple<yoi::indexT, yoi::indexT> getLocation();
 
         yoi::indexT getLine();
 

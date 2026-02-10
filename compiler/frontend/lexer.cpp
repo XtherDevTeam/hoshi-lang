@@ -89,6 +89,7 @@ namespace yoi {
             return curToken = {line, col, token::tokenKind::eof, token::vBasicValue{false}};
         } else {
             panic(line, col, "hoshi::lexer::scan() - undefined token");
+            return {};
         }
     }
 

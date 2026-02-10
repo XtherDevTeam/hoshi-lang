@@ -66,7 +66,7 @@ namespace yoi {
 
     std::wstring get_line_hint_for_error(const std::wstring &file, yoi::indexT line, yoi::indexT col);
 
-    void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
+    [[noreturn]] void panic(yoi::indexT line, yoi::indexT col, const std::string &msg);
 
     void warning(yoi::indexT line, yoi::indexT col, const std::string &msg, const std::string &label);
 

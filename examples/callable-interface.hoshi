@@ -3,7 +3,8 @@ use console "console"
 struct A {
     a: int,
     constructor(a: int),
-    static c() : none
+    static c() : none,
+    d() : none
 }
 
 impl A {
@@ -12,6 +13,10 @@ impl A {
     },
     static c() : none {
         console.print("A.c(): static method called.\n")
+    },
+    d() : none {
+        console.print("A.d(): instance method called.\n")
+        this.a = 233
     }
 }
 
@@ -27,6 +32,7 @@ func main() : int {
     console.print("callable-interface-validation: start\n")
     let a = A(10)
     call(func A.c)
+    call(a.d)
     call(func example)
     call(func[] () : none {
         console.print("Lambda called.\n")

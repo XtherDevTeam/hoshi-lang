@@ -797,6 +797,21 @@ namespace yoi {
             case globalStmt::vKind::letStmt:
                 finalizeAST(ptr->value.letStmtVal);
                 break;
+            case globalStmt::vKind::importDecl:
+                finalizeAST(ptr->value.importDeclVal);
+                break;
+            case globalStmt::vKind::exportDecl:
+                finalizeAST(ptr->value.exportDeclVal);
+                break;
+            case globalStmt::vKind::funcDefStmt:
+                finalizeAST(ptr->value.funcDefStmtVal);
+                break;
+            case globalStmt::vKind::typeAliasStmt:
+                finalizeAST(ptr->value.typeAliasStmtVal);
+                break;
+            case globalStmt::vKind::enumerationDef:
+                finalizeAST(ptr->value.enumerationDefVal);
+                break;
         }
         delete ptr;
     }
@@ -876,8 +891,14 @@ namespace yoi {
             case inCodeBlockStmt::vKind::codeBlock:
                 finalizeAST(ptr->value.codeBlockVal);
                 break;
+            case inCodeBlockStmt::vKind::forStmt:
+                finalizeAST(ptr->value.forStmtVal);
+                break;
             case inCodeBlockStmt::vKind::rExpr:
                 finalizeAST(ptr->value.rExprVal);
+                break;
+            case inCodeBlockStmt::vKind::tryCatchStmt:
+            case inCodeBlockStmt::vKind::throwStmt:
                 break;
         }
         delete ptr;
@@ -983,7 +1004,7 @@ namespace yoi {
         delete ptr;
     }
 
-    const std::tuple<yoi::indexT, yoi::indexT> &AST::getLocation() {
+    std::tuple<yoi::indexT, yoi::indexT> AST::getLocation() {
         return {token.line, token.col};
     }
 

@@ -380,18 +380,21 @@ namespace yoi {
          * @param funcIndex The index of the function in the module's function table.
          * @param moduleIndex The index of the module where the implementation will be created.
          * @return std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>>
+         * @note If hasThis is true, the function is a member function and has a this pointer, make sure the object has been pushed onto the stack before invoking the method.
          */
         std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>>
-        createCallableImplementationForFunction(const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex);
+        createCallableImplementationForFunction(const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex, bool hasThis);
 
         /**
          * @brief Create a Callable Instance For Function object
          *
-         * @param implIndex
-         * @param callableInterfaceIndex
+         * @param implIndex The index of the callable implementation in the module's implementation table.
+         * @param callableInterfaceIndex The index of the callable interface in the module's interface table.
+         * @param moduleIndex The index of the module where the implementation will be created.
+         * @param hasThis The index of the module where the implementation will be created.
+         * @note If hasThis is true, the action will pop the this pointer from the stack, and push the struct created into the stack.
          */
-        void
-        createCallableInstanceForFunction(yoi::indexT implIndex, std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex, yoi::indexT moduleIndex);
+        void createCallableInstanceForFunction(yoi::indexT implIndex, std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex, yoi::indexT moduleIndex, bool hasThis);
 
         /**
          * @brief Create a Lambda Unnamed Struct object

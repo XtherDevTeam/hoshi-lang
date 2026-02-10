@@ -125,6 +125,7 @@ namespace yoi {
             return moduleContext->getIRBuilder().getCurrentInsertionPoint();
         } catch (std::out_of_range &e) {
             panic(identifier->node.line, identifier->node.col, "Undefined identifier: " + wstring2string(id));
+            return 0;
         }
     }
 
@@ -1009,6 +1010,7 @@ namespace yoi {
                     auto structDef =
                         moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->structTable[objectType->typeIndex];
                     auto &memberName = currentTermNode->id->getId().get().strVal;
+                    bool isResolved = false;
                     try {
                         auto nameInfo = structDef->lookupName(memberName);
                         if (nameInfo.type != IRStructDefinition::nameInfo::nameType::field) {
@@ -1027,11 +1029,21 @@ namespace yoi {
                         } else {
                             moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, nameInfo.index}, fieldType);
                         }
+                        isResolved = true;
                     } catch (std::out_of_range &) {
-                        panic(currentTermNode->getLine(),
-                              currentTermNode->getColumn(),
-                              "Struct '" + wstring2string(structDef->name) + "' has no field named '" + wstring2string(memberName) + "'.");
+                        // ignore
                     }
+                    // now we attempt to resolve it as a method, check whether it is a method name
+                    if (auto methodName = structDef->name + L"::" + memberName; !isResolved && moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionOverloadIndexies.contains(methodName)) {
+                        // exists
+                        auto &funcIndexies = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionOverloadIndexies[methodName];
+                        yoi_assert(funcIndexies.size() == 1, (*it)->getLine(), (*it)->getColumn(), "Multiple overloads found for method: " + wstring2string(methodName));
+                        auto &funcDef = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionTable[funcIndexies.front()];
+                        auto impl = createCallableImplementationForFunction(funcDef, funcIndexies.front(), objectType->typeAffiliateModule, true);
+                        createCallableInstanceForFunction(impl.first, impl.second, objectType->typeAffiliateModule, true);
+                        isResolved = true;
+                    }
+                    yoi_assert(isResolved, currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on a unknown struct fields or methods");
                 } else {
                     panic(
                         currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on a non-struct or non-array type is not allowed.");
@@ -1241,6 +1253,9 @@ namespace yoi {
                 visit(inCodeBlockStmt->getValue().rExprVal);
                 // balance the stack
                 moduleContext->getIRBuilder().popOp();
+                break;
+            default:
+                panic(inCodeBlockStmt->getLine(), inCodeBlockStmt->getColumn(), "Invalid in code block stmt");
                 break;
         }
     }
@@ -1802,6 +1817,7 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::identifierWithTemplateArg *identifierWithTemplateArg, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
             panic(identifierWithTemplateArg->getLine(), identifierWithTemplateArg->getColumn(), "Invalid visit of identifier with template arg.");
+            return 0;
         } else {
             return visit(identifierWithTemplateArg->id, isStoreOp);
         }
@@ -3031,6 +3047,8 @@ namespace yoi {
     yoi::indexT visitor::visitExtern(yoi::identifierWithTemplateArg *identifierWithTemplateArg, yoi::indexT targetModule, bool isStoreOp) {
         if (identifierWithTemplateArg->hasTemplateArg()) {
             // TODO: what the heck is this
+            panic(identifierWithTemplateArg->getLine(), identifierWithTemplateArg->getColumn(), "Invalid visit of identifier with template arg.");
+            return 0;
         } else {
             return visitExtern(identifierWithTemplateArg->id, targetModule);
         }
@@ -5210,8 +5228,8 @@ namespace yoi {
         switch (strategy) {
             case CreateStrategy::Plain: {
                 auto funcDef = targetedModule->functionTable[funcIndex];
-                auto impl = createCallableImplementationForFunction(funcDef, funcIndex, targetModule == -1 ? currentModuleIndex : targetModule);
-                createCallableInstanceForFunction(impl.first, impl.second, targetModule == -1 ? currentModuleIndex : targetModule);
+                auto impl = createCallableImplementationForFunction(funcDef, funcIndex, targetModule == -1 ? currentModuleIndex : targetModule, false);
+                createCallableInstanceForFunction(impl.first, impl.second, targetModule == -1 ? currentModuleIndex : targetModule, false);
                 break;
             }
             case CreateStrategy::IncludeThis: {
@@ -5228,12 +5246,18 @@ namespace yoi {
     }
 
     std::pair<yoi::indexT, std::pair<yoi::indexT, yoi::indexT>> visitor::createCallableImplementationForFunction(
-        const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex) {
+        const std::shared_ptr<IRFunctionDefinition> &func, yoi::indexT funcIndex, yoi::indexT moduleIndex, bool hasThis) {
         auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
+        auto objectType = hasThis ? func->argumentTypes[0] : nullptr;
 
-        auto callableInterface = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(func->argumentTypes, func->returnType)};
+        yoi::vec<std::shared_ptr<yoi::IRValueType>> argTypes;
+        for (auto index = hasThis ? 1 : 0; index < func->argumentTypes.size(); index++) {
+            argTypes.push_back(func->argumentTypes[index]);
+        }
 
-        auto uniqueName = L"callableWrapper#" + func->name + getFuncUniqueNameStr(func->argumentTypes);
+        auto callableInterface = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(argTypes, func->returnType)};
+
+        auto uniqueName = L"callableWrapper#" + func->name + getFuncUniqueNameStr(argTypes);
         if (targetedModule->structTable.contains(uniqueName)) {
             auto interfaceImplName = getInterfaceImplName(
                 callableInterface,
@@ -5242,13 +5266,19 @@ namespace yoi {
         }
 
         yoi::indexT structTypeIndex = targetedModule->structTable.put_create(uniqueName, {});
-        yoi::wstr constructorName = uniqueName + L"::constructor#";
+        yoi::wstr constructorName = hasThis ? uniqueName + L"::constructor#" + getTypeSpecUniqueNameStr(objectType) : uniqueName + L"::constructor#";
         yoi::indexT constructorIndex = targetedModule->functionTable.put_create(constructorName, {});
         yoi::wstr callableName = uniqueName + L"::operator()" + getFuncUniqueNameStr(func->argumentTypes);
         yoi::indexT callableIndex = targetedModule->functionTable.put_create(callableName, {});
 
         IRStructDefinition::Builder builder;
-        builder.setName(uniqueName).addMethod(L"constructor#", constructorIndex);
+        
+        if (hasThis) {
+            builder.addField(L"object_this", objectType);
+        }
+
+        auto constructorUniqueName = hasThis ? L"constructor#" + getTypeSpecUniqueNameStr(objectType) : L"constructor#";
+        builder.setName(uniqueName).addMethod(constructorUniqueName, constructorIndex);
         builder.setName(uniqueName).addMethod(L"operator()" + getFuncUniqueNameStr(func->argumentTypes), callableIndex);
         targetedModule->structTable[structTypeIndex] = builder.yield();
 
@@ -5257,6 +5287,9 @@ namespace yoi {
         IRFunctionDefinition::Builder constructorBuilder;
         constructorBuilder.setName(constructorName);
         constructorBuilder.addArgument(L"this", structType);
+        if (hasThis) {
+            constructorBuilder.addArgument(L"object_this", objectType);
+        }
         constructorBuilder.setReturnType(structType);
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Preserve);
@@ -5265,7 +5298,7 @@ namespace yoi {
         IRFunctionDefinition::Builder callableBuilder;
         callableBuilder.setName(callableName);
         callableBuilder.addArgument(L"this", structType);
-        for (yoi::indexT argIndex = 0; argIndex < func->argumentTypes.size(); argIndex++) {
+        for (yoi::indexT argIndex = hasThis ? 1 : 0; argIndex < func->argumentTypes.size(); argIndex++) {
             auto arg = func->argumentTypes[argIndex];
             callableBuilder.addArgument(L"param" + std::to_wstring(argIndex), arg);
         }
@@ -5276,6 +5309,15 @@ namespace yoi {
 
         moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), targetedModule, targetedModule->functionTable[constructorIndex]});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        // setup this
+        if (hasThis) {
+            moduleContext->getIRBuilder().loadOp(
+            IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)1}}, objectType, moduleIndex);
+            moduleContext->getIRBuilder().loadOp(
+            IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, structType, moduleIndex);
+            moduleContext->getIRBuilder().storeOp(
+                IR::Opcode::store_member, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, moduleIndex);
+        }
         moduleContext->getIRBuilder().loadOp(
             IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, structType, moduleIndex);
         moduleContext->getIRBuilder().retOp();
@@ -5284,7 +5326,13 @@ namespace yoi {
 
         moduleContext->pushIRBuilder(IRBuilder{moduleContext->getCompilerContext(), targetedModule, targetedModule->functionTable[callableIndex]});
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-        for (yoi::indexT argIndex = 0; argIndex < func->argumentTypes.size(); argIndex++) {
+        if (hasThis) {
+            moduleContext->getIRBuilder().loadOp(
+            IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, structType, moduleIndex);
+            moduleContext->getIRBuilder().loadOp(
+            IR::Opcode::load_member, {IROperand::operandType::index, IROperand::operandValue{(yoi::indexT)0}}, objectType, moduleIndex);
+        }
+        for (yoi::indexT argIndex = hasThis ? 1 : 0; argIndex < func->argumentTypes.size(); argIndex++) {
             auto arg = func->argumentTypes[argIndex];
             moduleContext->getIRBuilder().loadOp(
                 IR::Opcode::load_local, {IROperand::operandType::index, (yoi::indexT)(argIndex + 1)}, arg, moduleIndex);
@@ -5313,12 +5361,22 @@ namespace yoi {
 
     void visitor::createCallableInstanceForFunction(yoi::indexT implIndex,
                                                     std::pair<yoi::indexT, yoi::indexT> callableInterfaceIndex,
-                                                    yoi::indexT moduleIndex) {
+                                                    yoi::indexT moduleIndex, bool hasThis) {
         auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
         auto implDef = targetedModule->interfaceImplementationTable[implIndex];
         auto structIndex = implDef->implStructIndex;
         // moduleContext->getCompilerContext()->getImportedModule(std::get<1>(structIndex))->structTable[std]
-        moduleContext->getIRBuilder().newStructOp(std::get<2>(structIndex), true, std::get<1>(structIndex));
+        if (hasThis) {
+            auto objectPtrOnStack = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            moduleContext->getIRBuilder().newStructOp(std::get<2>(structIndex), true, std::get<1>(structIndex));
+            // since we gained the object ptr, the next thing we wish to do is to invoke the constructor
+            auto constructorIndex = targetedModule->structTable[std::get<2>(structIndex)]->nameIndexMap.at(L"constructor#" + getTypeSpecUniqueNameStr(objectPtrOnStack));
+            moduleContext->getIRBuilder().invokeDanglingOp(constructorIndex.index, 2, objectPtrOnStack, true, moduleIndex);
+            // now we have the newly created struct on the stack
+            // we can safely construct interface impl now
+        } else {
+            moduleContext->getIRBuilder().newStructOp(std::get<2>(structIndex), true, std::get<1>(structIndex));
+        }
         moduleContext->getIRBuilder().constructInterfaceImplOp(callableInterfaceIndex, implIndex, true, moduleIndex);
     }
 

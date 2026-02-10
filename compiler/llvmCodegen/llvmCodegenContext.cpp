@@ -2639,6 +2639,7 @@ namespace yoi {
                 rawMemory = llvmModCtx.Builder->CreateAlloca(llvmType, nullptr, "yoi_to_foreign_alloca");
                 copyToOne(srcObjectToCopy, rawMemory);
             }
+            return rawMemory;
         } else {
             llvm::Value *rawMemory = llvmModCtx.Builder->CreateAlloca(objectLLVMType, nullptr, "foreign_to_yoi_alloca");
             // convert foreign type to yoi type
@@ -3360,7 +3361,8 @@ namespace yoi {
                     currentSize += 64;
                     break;
                 }
-                case IRValueType::valueType::none: {
+                case IRValueType::valueType::none: 
+                default: {
                     // 'none' object only has a refcount.
                     break;
                 }
