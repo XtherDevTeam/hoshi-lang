@@ -1038,7 +1038,7 @@ namespace yoi {
                         // exists
                         auto &funcIndexies = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionOverloadIndexies[methodName];
                         yoi_assert(funcIndexies.size() == 1, (*it)->getLine(), (*it)->getColumn(), "Multiple overloads found for method: " + wstring2string(methodName));
-                        auto &funcDef = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionTable[funcIndexies.front()];
+                        auto funcDef = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->functionTable[funcIndexies.front()];
                         auto impl = createCallableImplementationForFunction(funcDef, funcIndexies.front(), objectType->typeAffiliateModule, true);
                         createCallableInstanceForFunction(impl.first, impl.second, objectType->typeAffiliateModule, true);
                         isResolved = true;
