@@ -124,7 +124,7 @@ var searchData=
   ['getliterals_121',['getLiterals',['../classyoi_1_1primary.html#adc3349b1fe94a6cc6c528cdf6e5bd5b8',1,'yoi::primary']]],
   ['getllvmmodulecontext_122',['getLLVMModuleContext',['../classyoi_1_1LLVMCodegen.html#ade78ce2de0d65a242c80bc477fa55e0c',1,'yoi::LLVMCodegen']]],
   ['getlocalvar_123',['getLocalVar',['../classyoi_1_1IRBuilder.html#a1129711e4ce2d628837b5918d70a912f',1,'yoi::IRBuilder']]],
-  ['getlocation_124',['getLocation',['../classyoi_1_1AST.html#a151bbe35ebb8c1e71c1adf419951e51e',1,'yoi::AST']]],
+  ['getlocation_124',['getLocation',['../classyoi_1_1AST.html#adfd59476ee451d0a6404eb90a5823c43',1,'yoi::AST']]],
   ['getlvaluetype_125',['getLvalueType',['../classyoi_1_1IROperand.html#ab688433f0a92cc8d78c3322fc01ed5a5',1,'yoi::IROperand']]],
   ['getmangledtemplatename_126',['getMangledTemplateName',['../classyoi_1_1visitor.html#a87b778b9418b7357fbda584bbca711d3',1,'yoi::visitor']]],
   ['getmemberexpr_127',['getmemberexpr',['../classyoi_1_1typeSpec.html#afbac91ceef39b6d23690ccc452d39494',1,'yoi::typeSpec::getMemberExpr()'],['../classyoi_1_1primary.html#a9991d58b6ac9fc7f7cf1eef8a7c576d2',1,'yoi::primary::getMemberExpr()']]],

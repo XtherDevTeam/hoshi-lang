@@ -271,7 +271,7 @@ var NAVTREEINDEX =
 "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9e",
 "classyoi_1_1leftExpr.html#a660d12634bc6f49dbc492979216c1f58",
 "classyoi_1_1primary.html#a7c5b16e16f18c32ee534a784374cdbb7",
-"classyoi_1_1visitor.html#a3b839db7f6dd34f648ae7333a033eb4c",
+"classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc",
 "def_8hpp.html#a49de16146e5ab66039f7f95b79a82023",
 "index.html#autotoc_md158",
 "md_docs_2Template.html",

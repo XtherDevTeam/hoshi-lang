@@ -1,5 +1,7 @@
 <map id="invokeDanglingOp" name="invokeDanglingOp">
-<area shape="rect" id="Node000001" title="invoke a function with the given arguments, but the last param will be taken as the first param." alt="" coords="213,5,355,31"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="5,5,165,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,21,165,21,165,15,199,15"/>
+<area shape="rect" id="Node000001" title="invoke a function with the given arguments, but the last param will be taken as the first param." alt="" coords="247,42,388,67"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a98cc5ac69d76de34878b17059a901f6d" title="Create a Callable Instance For Function object." alt="" coords="5,5,199,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,46,199,41,199,36,233,41"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#adbe931fe8efc4d4ce9c053094a9d98f1" title=" " alt="" coords="22,70,182,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="233,68,183,75,182,70,232,63"/>
 </map>
