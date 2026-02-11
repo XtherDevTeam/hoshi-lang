@@ -8,6 +8,8 @@
 #include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include "share/def.hpp"
+#include <ranges>
+#include <utility>
 
 namespace yoi {
 
@@ -314,6 +316,8 @@ namespace yoi {
                 break;
             }
         }
+        // record the origin index into IRMetadata
+        newType->metadata.setMetadata(L"linkMetadata", std::make_pair(oldType->typeAffiliateModule, oldType->typeIndex));
         return newType;
     }
     void IRLinker::createEntryFunction() {
@@ -323,10 +327,10 @@ namespace yoi {
         auto entryIndex = this->finalModule->functionTable.put_create(L"yoimiya_entry", entry);
         IRBuilder builder(compilerCtx, finalModule, entry);
         builder.switchCodeBlock(builder.createCodeBlock());
-        for (auto &initIdx: globInitializerIndexes) {
-            if (finalModule->functionTable[initIdx]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Unreachable))
+        for (auto &globInitializerIndex : std::ranges::reverse_view(globInitializerIndexes)) {
+            if (finalModule->functionTable[globInitializerIndex]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Unreachable))
                 continue;
-            builder.invokeOp(initIdx, 0, compilerCtx->getIntObjectType());
+            builder.invokeOp(globInitializerIndex, 0, compilerCtx->getIntObjectType());
         }
         if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
             try {

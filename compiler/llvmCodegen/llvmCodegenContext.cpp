@@ -353,9 +353,21 @@ namespace yoi {
             auto globalName = wstring2string(globalPair.first);
             // All globals are pointers to objects.
             auto globalType = yoiTypeToLLVMType(llvmModCtx, globalPair.second);
-            auto initializer = llvm::ConstantPointerNull::get(llvm::cast<llvm::PointerType>(globalType));
-            auto* globalVar = new llvm::GlobalVariable(*llvmModCtx.TheModule, globalType, false, llvm::GlobalValue::CommonLinkage, initializer, globalName);
+            auto* globalVar = new llvm::GlobalVariable(*llvmModCtx.TheModule, globalType, false, llvm::GlobalValue::ExternalLinkage, nullptr, globalName);
             llvmModCtx.globalValues[yoiModule->globalVariables.getIndex(globalPair.first)] = globalVar;
+        }
+    }
+
+    void LLVMCodegen::generateGlobalInitializers(LLVMModuleContext &llvmModCtx) {
+        for (auto& globalPair : yoiModule->globalVariables) {
+            auto linkMetadata = globalPair.second->metadata.getMetadata<std::pair<yoi::indexT, yoi::indexT>>(L"linkMetadata");
+            if (compilerCtx->getImportedModule(linkMetadata.first)->modulePath != llvmModCtx.absolute_path) {
+                continue;
+            }
+            printf("global(%llu): %s initialized\n", yoiModule->globalVariables.getIndex(globalPair.first), wstring2string(globalPair.first).c_str());
+            // null initializer
+            auto initializer = llvm::Constant::getNullValue(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+            llvmModCtx.globalValues[yoiModule->globalVariables.getIndex(globalPair.first)]->setInitializer(initializer);
         }
     }
 
@@ -385,6 +397,7 @@ namespace yoi {
         generateStructGCFunctionImplementations(llvmModCtx);
         generateInterfaceObjectGCFunctionImplementations(llvmModCtx);
         generateFunctionImplementations(llvmModCtx);
+        generateGlobalInitializers(llvmModCtx);
     }
 
     void LLVMCodegen::generateStructDeclarations(LLVMModuleContext &llvmModCtx) {

@@ -3,14 +3,15 @@ use fs "fs"
 use str "str"
 use runtime "runtime"
 
+let stdout = fs.stdout() as file.AbstractFile
+let stdin = fs.stdin() as file.AbstractFile
+
 func print(s: str.Str) : none {
-    let stdout = fs.stdout() as file.AbstractFile
     stdout.write(s.data)
     stdout.flush()
 }
 
 func print(args: ...str.Stringable) : none {
-    let stdout = fs.stdout() as file.AbstractFile
     let strings = new str.Str[args.length]()
     for (let i = 0; i < args.length; i += 1) {
         strings[i] = args[i].to_string()
@@ -21,7 +22,6 @@ func print(args: ...str.Stringable) : none {
 }
 
 func input() : str.Str {
-    let stdin = fs.stdin() as file.AbstractFile
     let buffer = str.Str("")
     let ch : char = 0
     while (ch == '\r' || ch == '\n') {

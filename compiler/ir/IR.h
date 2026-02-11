@@ -42,7 +42,7 @@ namespace yoi {
             std::map<yoi::wstr, yoi::wstr> marcos;
             yoi::wstr buildCachePath{
               (std::filesystem::temp_directory_path() / 
-                (L"session" + std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count()))).wstring()};
+                (L"zyy-" + std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count()))).wstring()};
             bool immediatelyClearupCache{true};
 
             Builder() = default;

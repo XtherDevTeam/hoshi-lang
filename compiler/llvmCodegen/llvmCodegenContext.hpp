@@ -183,6 +183,7 @@ namespace yoi {
         void generateDeclarations(LLVMModuleContext &llvmModCtx);
         void generateStructShallowDeclarations(LLVMModuleContext &llvmModCtx);
         void generateGlobalDeclarations(LLVMModuleContext &llvmModCtx);
+        void generateGlobalInitializers(LLVMModuleContext &llvmModCtx);
         void generateFunctionDeclarations(LLVMModuleContext &llvmModCtx);
         void generateImportFunctionDeclarations(LLVMModuleContext &llvmModCtx);
 
