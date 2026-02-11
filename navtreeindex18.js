@@ -1,5 +1,7 @@
 var NAVTREEINDEX18 =
 {
+"structmagic__enum_1_1detail_1_1is__reflected.html":[31,0,0,1,5],
+"structmagic__enum_1_1detail_1_1is__scoped__enum.html":[31,0,0,1,6],
 "structmagic__enum_1_1detail_1_1is__scoped__enum.html":[30,0,0,2,6],
 "structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html":[31,0,0,1,7],
 "structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html":[30,0,0,2,7],
@@ -247,7 +249,5 @@ var NAVTREEINDEX18 =
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[31,0,1,70,0,10],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850":[30,0,1,71,0,10],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#aa3de8ea8cda0e2c99a64c165aaf99727":[30,0,1,71,0,1],
-"structyoi_1_1IRFunctionDefinition_1_1Builder.html#aa3de8ea8cda0e2c99a64c165aaf99727":[31,0,1,70,0,1],
-"structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8":[31,0,1,70,0,5],
-"structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8":[30,0,1,71,0,5]
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#aa3de8ea8cda0e2c99a64c165aaf99727":[31,0,1,70,0,1]
 };

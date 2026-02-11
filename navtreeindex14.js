@@ -1,5 +1,7 @@
 var NAVTREEINDEX14 =
 {
+"index.html#autotoc_md156":[0,3,2],
+"index.html#autotoc_md157":[0,3,3],
 "index.html#autotoc_md158":[0,3,4],
 "index.html#autotoc_md159":[0,3,5],
 "index.html#autotoc_md160":[0,3,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX14 =
 "md_docs_2String.html#autotoc_md118":[19,0,1],
 "md_docs_2String.html#autotoc_md119":[19,1],
 "md_docs_2String.html#autotoc_md120":[19,2],
-"md_docs_2Structured_01Bindings.html":[20],
-"md_docs_2Structured_01Bindings.html#autotoc_md122":[20,0],
-"md_docs_2Structured_01Bindings.html#autotoc_md123":[20,1]
+"md_docs_2Structured_01Bindings.html":[20]
 };

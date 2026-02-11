@@ -155,6 +155,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:afd05efbde7875059ed6865ec70f59038"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32a2da9d3d4118301291878c7a18892d" id="r_a32a2da9d3d4118301291878c7a18892d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d">generateGlobalDeclarations</a> (<a class="el" href="classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html">LLVMModuleContext</a> &amp;<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">llvmModCtx</a>)</td></tr>
 <tr class="separator:a32a2da9d3d4118301291878c7a18892d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5ae90a71d85660f942839c1287c7ff6" id="r_af5ae90a71d85660f942839c1287c7ff6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#af5ae90a71d85660f942839c1287c7ff6">generateGlobalInitializers</a> (<a class="el" href="classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html">LLVMModuleContext</a> &amp;<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">llvmModCtx</a>)</td></tr>
+<tr class="separator:af5ae90a71d85660f942839c1287c7ff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77e7d124e7761e04d2768530a9f3a132" id="r_a77e7d124e7761e04d2768530a9f3a132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132">generateFunctionDeclarations</a> (<a class="el" href="classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html">LLVMModuleContext</a> &amp;<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">llvmModCtx</a>)</td></tr>
 <tr class="separator:a77e7d124e7761e04d2768530a9f3a132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2829388a5928eff71081206affb54c12" id="r_a2829388a5928eff71081206affb54c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1LLVMCodegen.html#a2829388a5928eff71081206affb54c12">generateImportFunctionDeclarations</a> (<a class="el" href="classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html">LLVMModuleContext</a> &amp;<a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">llvmModCtx</a>)</td></tr>
@@ -401,11 +403,11 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">3923</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">3936</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l04193">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03767">LLVMCodegen::ensureObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02345">LLVMCodegen::getGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>, <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l04206">LLVMCodegen::callGcFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03780">LLVMCodegen::ensureObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02358">LLVMCodegen::getGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a4d16c68067bcf187f2e47023d469c194">IRValueType::virtualMethod</a>, <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04001">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04014">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -519,11 +521,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04193">4193</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04206">4206</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">IRValueType::Borrow</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03777">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02345">LLVMCodegen::getGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa6aa9a689ad05ca4dde261bc73f5f5475">IRValueType::Borrow</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03790">LLVMCodegen::generateIfTargetNotNull()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02358">LLVMCodegen::getGcFunction()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a334c4a4c42fdb79d7ebc3e73b517e6f8">IRValueType::none</a>, <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc">IRValueType::PermanentInCurrentScope</a>, and <a class="el" href="classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa65e65c8ab0d8609ce12fc68a03cb8e00">IRValueType::Raw</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">LLVMCodegen::actualizeInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">LLVMCodegen::actualizeInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00485">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -615,7 +617,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03011">3011</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03024">3024</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -688,7 +690,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02304">2304</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02317">2317</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -738,7 +740,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03557">3557</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03570">3570</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -845,7 +847,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04182">4182</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04195">4195</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00168">LLVMCodegen::llvmModuleContext</a>.</p>
 
@@ -903,11 +905,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03767">3767</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03780">3780</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">LLVMCodegen::actualizeInterfaceObject()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">LLVMCodegen::actualizeInterfaceObject()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -950,9 +952,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">4113</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">4126</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00047">LLVMCodegen::codegenObjectCache</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00048">LLVMCodegen::codegenTaskDispatcher</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="codegenTaskDispatcher_8cpp_source.html#l00031">CodegenTaskDispatcher::dispatch()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03654">LLVMCodegen::generateArrayGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02387">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02493">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02710">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02666">LLVMCodegen::generateMainFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03393">LLVMCodegen::generateRTTIImplmentation()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02400">LLVMCodegen::generateTargetObjectCode()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00213">CodegenObjectCacheEntry::getLastModification()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00114">CodegenObjectCacheEntry::getObjectFilename()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00168">LLVMCodegen::llvmModuleContext</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00201">CodegenObjectCache::update_last_modification()</a>, <a class="el" href="codegenTaskDispatcher_8cpp_source.html#l00040">CodegenTaskDispatcher::wait()</a>, <a class="el" href="def_8cpp_source.html#l00111">yoi::warning()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00012">yoi::serialization::write()</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00047">LLVMCodegen::codegenObjectCache</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00048">LLVMCodegen::codegenTaskDispatcher</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="codegenTaskDispatcher_8cpp_source.html#l00031">CodegenTaskDispatcher::dispatch()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03667">LLVMCodegen::generateArrayGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02400">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02506">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02723">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02679">LLVMCodegen::generateMainFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03406">LLVMCodegen::generateRTTIImplmentation()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02413">LLVMCodegen::generateTargetObjectCode()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00182">CodegenObjectCache::get_entry()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00213">CodegenObjectCacheEntry::getLastModification()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00114">CodegenObjectCacheEntry::getObjectFilename()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00168">LLVMCodegen::llvmModuleContext</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00201">CodegenObjectCache::update_last_modification()</a>, <a class="el" href="codegenTaskDispatcher_8cpp_source.html#l00040">CodegenTaskDispatcher::wait()</a>, <a class="el" href="def_8cpp_source.html#l00111">yoi::warning()</a>, <a class="el" href="codegenObjectCache_8cpp_source.html#l00012">yoi::serialization::write()</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00063">main()</a>.</p>
 <div class="dynheader">
@@ -960,159 +962,162 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1LLVMCodegen_a13ad4db0b1bfc054c3dfc346e4c80bb1_cgraph.png" border="0" usemap="#aclassyoi_1_1LLVMCodegen_a13ad4db0b1bfc054c3dfc346e4c80bb1_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1LLVMCodegen_a13ad4db0b1bfc054c3dfc346e4c80bb1_cgraph" id="aclassyoi_1_1LLVMCodegen_a13ad4db0b1bfc054c3dfc346e4c80bb1_cgraph">
-<area shape="rect" title=" " alt="" coords="5,1450,85,1475"/>
-<area shape="rect" href="classyoi_1_1CodegenTaskDispatcher.html#a17a7964b99958447f16943ab5f7cf6d9" title="Dispatch a task to the thread pool." alt="" coords="141,5,348,45"/>
-<area shape="poly" title=" " alt="" coords="44,1450,45,1193,54,750,64,518,80,311,102,151,115,96,131,63,141,52,145,55,136,65,120,98,107,152,85,311,70,518,59,750,50,1193,49,1450"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9e0fabaaf63d00d563cf68227c21d754" title=" " alt="" coords="1091,539,1391,565"/>
-<area shape="poly" title=" " alt="" coords="44,1450,47,1326,59,1127,69,1020,85,921,105,838,117,805,131,779,178,720,232,669,293,627,358,592,428,565,501,543,575,527,651,516,800,507,941,510,1063,521,1160,534,1159,540,1063,526,940,516,800,512,651,522,576,533,502,548,430,570,360,597,295,632,235,673,182,723,136,781,122,807,110,839,90,922,75,1021,64,1127,52,1326,49,1450"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="2051,1170,2193,1195"/>
-<area shape="poly" title=" " alt="" coords="54,1474,83,1526,106,1554,135,1576,192,1604,242,1620,289,1627,334,1628,431,1619,488,1614,553,1612,1570,1612,1794,1623,1858,1623,1916,1618,1965,1608,2001,1590,2023,1563,2042,1522,2060,1470,2076,1412,2100,1296,2114,1209,2120,1209,2105,1297,2081,1414,2065,1472,2047,1524,2027,1566,2004,1594,1967,1613,1917,1623,1858,1628,1794,1628,1570,1617,553,1617,488,1620,432,1624,335,1633,289,1633,241,1625,190,1609,132,1581,102,1558,79,1529,50,1477"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1747,221,2003,246"/>
-<area shape="poly" title=" " alt="" coords="44,1450,48,1223,61,837,72,636,87,455,106,316,118,269,131,239,174,184,217,144,263,116,311,97,362,87,419,82,553,80,1242,80,1321,84,1387,94,1444,110,1497,129,1605,172,1670,193,1747,212,1766,216,1765,221,1746,217,1669,198,1604,177,1495,134,1443,115,1386,99,1321,89,1242,85,553,85,420,87,363,92,312,103,265,121,221,149,178,188,136,241,123,270,111,317,92,456,77,636,66,838,53,1223,49,1450"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a35803c6481343b9ff363e92650ea592c" title=" " alt="" coords="163,791,326,817"/>
-<area shape="poly" title=" " alt="" coords="48,1449,233,829,238,831,53,1450"/>
-<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1182,1247,1299,1273"/>
-<area shape="poly" title=" " alt="" coords="50,1449,79,1397,102,1368,132,1346,170,1329,215,1316,322,1298,446,1288,579,1285,841,1287,953,1287,1042,1283,1168,1268,1169,1273,1043,1288,953,1292,841,1293,579,1291,446,1294,323,1303,216,1321,172,1334,135,1350,106,1372,83,1400,54,1451"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a99e3ae7244894d2a2f0a62ee3f881064" title=" " alt="" coords="1797,1653,1952,1678"/>
-<area shape="poly" title=" " alt="" coords="51,1475,59,1508,75,1552,99,1596,116,1615,135,1631,190,1662,239,1680,285,1686,331,1686,430,1672,488,1666,553,1663,1242,1663,1783,1663,1783,1668,1242,1668,553,1668,488,1671,431,1678,332,1691,285,1692,238,1685,187,1667,132,1636,112,1619,95,1599,70,1554,54,1510,46,1476"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2435047aabb27016228a5b8258aae9fb" title=" " alt="" coords="791,1247,1005,1273"/>
-<area shape="poly" title=" " alt="" coords="46,1449,54,1416,69,1371,94,1326,112,1306,132,1290,176,1265,222,1245,269,1229,318,1216,419,1202,519,1199,614,1204,702,1214,838,1241,837,1247,701,1220,614,1209,519,1204,419,1207,320,1221,271,1234,223,1250,178,1270,135,1294,115,1310,99,1329,74,1374,59,1417,51,1451"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a21a7b0b11e917edd55e405244f9389ad" title=" " alt="" coords="149,251,340,277"/>
-<area shape="poly" title=" " alt="" coords="44,1450,47,1270,58,965,69,798,84,640,104,505,117,450,131,406,149,370,172,336,217,284,221,288,176,340,153,372,136,408,122,451,110,506,89,641,74,798,63,965,52,1271,49,1450"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="404,337,705,362"/>
-<area shape="poly" title=" " alt="" coords="45,1449,53,1275,70,988,97,705,113,602,122,567,131,544,161,505,196,472,237,443,280,419,369,384,451,362,453,367,370,389,282,424,239,448,200,476,165,509,136,547,127,568,118,603,102,706,76,988,58,1275,50,1450"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ad53a3c899751cf3124e212374f0687e6" title=" " alt="" coords="753,1349,1043,1374"/>
-<area shape="poly" title=" " alt="" coords="56,1448,88,1418,109,1402,132,1391,221,1364,312,1345,405,1334,497,1329,585,1328,667,1332,802,1344,801,1350,666,1337,585,1334,497,1334,406,1339,313,1350,222,1369,134,1396,112,1407,91,1422,60,1451"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a413f9d11c2b3de2c9398c1ec9b618853" title=" " alt="" coords="161,1767,328,1793"/>
-<area shape="poly" title=" " alt="" coords="49,1475,50,1527,61,1602,71,1643,87,1683,108,1720,135,1753,150,1763,147,1768,132,1757,103,1723,82,1685,66,1645,56,1603,45,1527,44,1476"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9d55fbb78a566a0f9771db145260c45b" title=" " alt="" coords="1773,1487,1977,1513"/>
-<area shape="poly" title=" " alt="" coords="86,1467,286,1494,419,1506,553,1511,899,1511,1377,1507,1758,1500,1759,1505,1377,1512,899,1516,553,1516,418,1511,286,1499,86,1472"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ac76ac2e07d9c164f2a4dfcea04f756b3" title=" " alt="" coords="1143,1450,1338,1475"/>
-<area shape="poly" title=" " alt="" coords="85,1460,1130,1460,1130,1465,85,1465"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a7a38342b1165a978cc39b8af28388a60" title="get the entry from the cache" alt="" coords="150,1703,339,1743"/>
-<area shape="poly" title=" " alt="" coords="51,1475,57,1515,72,1571,97,1630,114,1658,135,1682,150,1694,147,1698,131,1686,110,1661,92,1633,66,1572,52,1516,45,1476"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#adb039e5c75af2114e364ac171cef5234" title=" " alt="" coords="133,1817,356,1857"/>
-<area shape="poly" title=" " alt="" coords="51,1475,60,1543,78,1642,103,1740,119,1778,135,1804,139,1807,135,1811,131,1807,114,1781,98,1742,73,1644,55,1544,46,1476"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a16086c3d97adc8a5ea18a2a352db46db" title=" " alt="" coords="133,1881,356,1921"/>
-<area shape="poly" title=" " alt="" coords="50,1475,58,1555,74,1673,100,1791,116,1837,135,1868,138,1871,135,1874,131,1871,112,1839,95,1792,69,1674,53,1556,45,1476"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#af172e0d0ba18883fb56f8feb863333eb" title="update the last modification time of an entry" alt="" coords="147,1945,342,1985"/>
-<area shape="poly" title=" " alt="" coords="50,1475,56,1565,70,1703,82,1775,96,1841,114,1895,135,1932,138,1935,135,1939,131,1935,109,1897,91,1842,76,1776,65,1704,51,1566,45,1476"/>
-<area shape="rect" href="classyoi_1_1CodegenTaskDispatcher.html#aa3b21853f890838c88d047d6c2786917" title="Wait for all dispatched tasks to complete." alt="" coords="141,2009,348,2049"/>
-<area shape="poly" title=" " alt="" coords="50,1475,54,1577,67,1733,78,1816,92,1891,112,1954,123,1978,135,1996,138,1999,135,2003,131,1999,118,1980,107,1956,87,1893,72,1817,61,1734,49,1577,44,1476"/>
-<area shape="rect" href="namespaceyoi.html#a2d71150c6b3a47496cfc00a017d8617f" title=" " alt="" coords="1189,1349,1292,1374"/>
-<area shape="poly" title=" " alt="" coords="85,1450,133,1441,271,1425,388,1414,587,1406,787,1401,904,1395,1042,1384,1175,1368,1176,1373,1043,1389,904,1401,787,1407,587,1412,388,1420,271,1430,134,1447,86,1456"/>
-<area shape="rect" href="namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7" title=" " alt="" coords="1503,1537,1634,1577"/>
-<area shape="poly" title=" " alt="" coords="60,1474,91,1503,112,1518,134,1530,194,1551,247,1563,294,1570,338,1571,433,1566,553,1561,899,1561,1490,1556,1490,1561,899,1567,553,1567,433,1571,338,1576,293,1575,246,1569,193,1556,132,1534,109,1523,88,1507,56,1478"/>
-<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1504,639,1633,665"/>
-<area shape="poly" title=" " alt="" coords="1357,562,1392,575,1407,585,1417,597,1426,608,1440,618,1491,637,1489,642,1437,622,1422,611,1413,600,1404,589,1389,580,1356,567"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="2051,386,2193,411"/>
-<area shape="poly" title=" " alt="" coords="1391,539,1522,526,1676,506,1840,479,2002,443,2080,415,2082,420,2003,448,1841,484,1677,512,1523,531,1391,544"/>
-<area shape="poly" title=" " alt="" coords="1368,562,1537,584,1726,619,1816,641,1896,667,1960,696,1985,712,2005,729,2026,762,2046,811,2080,934,2105,1061,2120,1156,2114,1156,2100,1062,2075,935,2041,813,2022,765,2001,732,1982,716,1958,701,1894,672,1815,646,1725,624,1536,590,1367,567"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="2241,386,2444,411"/>
-<area shape="poly" title=" " alt="" coords="2194,396,2228,396,2228,401,2194,401"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2492,386,2683,411"/>
-<area shape="poly" title=" " alt="" coords="2444,396,2478,396,2478,401,2444,401"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="2241,1170,2444,1195"/>
-<area shape="poly" title=" " alt="" coords="2194,1180,2228,1180,2228,1185,2194,1185"/>
-<area shape="poly" title=" " alt="" coords="1958,244,2004,263,2037,288,2066,317,2108,373,2104,376,2062,321,2033,292,2001,268,1956,248"/>
-<area shape="poly" title=" " alt="" coords="1916,244,1963,268,1986,286,2005,308,2022,340,2037,381,2063,484,2083,606,2099,738,2116,989,2123,1156,2117,1156,2111,989,2093,738,2078,607,2058,485,2032,383,2017,342,2000,311,1982,290,1960,273,1913,248"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322" title=" " alt="" coords="461,842,648,867"/>
-<area shape="poly" title=" " alt="" coords="324,814,463,837,462,842,323,819"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6f7e98e515f69b944d1a159e4fe24a8d" title=" " alt="" coords="785,791,1011,817"/>
-<area shape="poly" title=" " alt="" coords="326,801,771,801,771,807,326,807"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132" title=" " alt="" coords="446,1043,663,1069"/>
-<area shape="poly" title=" " alt="" coords="253,816,271,859,303,918,348,979,375,1007,405,1030,434,1043,432,1048,403,1034,371,1011,344,983,298,920,267,861,248,818"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d" title=" " alt="" coords="453,893,657,918"/>
-<area shape="poly" title=" " alt="" coords="269,815,329,846,405,877,442,887,441,892,403,883,327,851,266,819"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2829388a5928eff71081206affb54c12" title=" " alt="" coords="1439,741,1699,766"/>
-<area shape="poly" title=" " alt="" coords="266,789,326,758,364,743,403,732,555,707,710,694,864,689,1014,692,1155,700,1282,711,1478,736,1477,741,1282,717,1155,705,1014,697,864,695,710,699,555,713,405,737,366,748,329,763,269,793"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab778771ecd84fa13e688fd24d204da4a" title=" " alt="" coords="1747,321,2002,361"/>
-<area shape="poly" title=" " alt="" coords="248,790,266,746,298,683,343,616,371,585,402,559,472,512,538,474,600,443,660,419,718,401,776,388,889,373,1007,370,1134,370,1276,368,1438,357,1591,346,1733,341,1734,346,1591,351,1439,363,1276,373,1134,375,1007,375,890,379,776,393,720,406,662,424,602,448,540,479,475,517,406,563,375,589,347,619,302,686,271,748,253,792"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ae8614dbe0b91ace1906cff958299dab4" title=" " alt="" coords="1149,589,1332,614"/>
-<area shape="poly" title=" " alt="" coords="256,789,315,735,357,705,403,682,499,649,600,625,701,608,802,597,987,588,1135,591,1135,597,988,594,802,602,702,613,601,630,501,654,405,686,360,710,318,739,260,793"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a59caa25e3c068e765370eefbe8665437" title=" " alt="" coords="455,994,655,1019"/>
-<area shape="poly" title=" " alt="" coords="262,815,322,867,405,928,460,960,513,986,510,991,458,965,403,933,319,871,258,819"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#acd34d2aae130c5303efaa8be9260e1d0" title=" " alt="" coords="1473,372,1665,412"/>
-<area shape="poly" title=" " alt="" coords="251,789,273,756,307,711,351,665,403,626,442,606,490,587,609,551,750,517,904,486,1212,436,1459,402,1459,408,1213,441,905,492,751,522,610,556,492,592,444,611,405,630,354,669,311,715,278,759,256,792"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#afd05efbde7875059ed6865ec70f59038" title=" " alt="" coords="1749,791,2000,817"/>
-<area shape="poly" title=" " alt="" coords="326,790,404,783,578,777,753,777,1043,777,1419,786,1736,796,1735,801,1419,791,1043,783,753,783,579,782,404,788,326,796"/>
-<area shape="poly" title=" " alt="" coords="955,789,1497,665,1499,670,956,794"/>
-<area shape="poly" title=" " alt="" coords="1012,809,1097,809,1193,804,1293,789,1390,762,1404,754,1413,745,1423,736,1438,727,1476,713,1509,705,1568,699,1626,694,1660,687,1698,675,1789,637,1857,601,1921,558,2001,501,2053,459,2096,420,2099,424,2056,463,2004,505,1924,563,1859,606,1791,642,1700,680,1661,692,1627,699,1568,704,1510,710,1477,718,1440,732,1426,740,1417,749,1407,758,1392,766,1294,794,1193,809,1097,815,1012,814"/>
-<area shape="poly" title=" " alt="" coords="1012,813,1091,820,1264,825,1554,833,1705,840,1840,850,1945,864,1981,874,2004,884,2035,913,2060,947,2080,984,2095,1023,2114,1098,2122,1156,2116,1157,2109,1099,2090,1024,2075,986,2056,949,2031,916,2001,889,1979,879,1944,870,1840,855,1705,845,1554,838,1264,830,1091,825,1011,818"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9a37f305e4ae13b66ce6140c14d2e347" title=" " alt="" coords="1169,943,1312,969"/>
-<area shape="poly" title=" " alt="" coords="929,814,1200,935,1198,940,927,819"/>
-<area shape="poly" title=" " alt="" coords="1312,943,1449,931,1534,930,1627,933,1724,944,1821,963,1916,994,1961,1013,2004,1036,2039,1063,2069,1095,2110,1156,2105,1159,2064,1098,2035,1067,2001,1041,1959,1018,1914,999,1820,969,1723,949,1627,939,1534,935,1449,937,1313,948"/>
-<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="1471,994,1666,1019"/>
-<area shape="poly" title=" " alt="" coords="1313,964,1473,989,1472,995,1312,970"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1526,1234,1611,1259"/>
-<area shape="poly" title=" " alt="" coords="1258,967,1545,1223,1541,1227,1255,971"/>
-<area shape="poly" title=" " alt="" coords="1612,1240,1782,1224,2002,1199,2037,1194,2037,1199,2003,1204,1783,1229,1612,1246"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1807,1271,1942,1311"/>
-<area shape="poly" title=" " alt="" coords="1612,1250,1794,1277,1794,1282,1611,1255"/>
-<area shape="poly" title=" " alt="" coords="1879,1270,2000,829,2111,424,2116,425,2005,830,1884,1271"/>
-<area shape="poly" title=" " alt="" coords="1941,1271,2002,1250,2049,1226,2090,1200,2092,1205,2051,1230,2004,1254,1943,1276"/>
-<area shape="poly" title=" " alt="" coords="645,1066,754,1079,996,1099,1239,1105,1570,1105,1704,1111,1837,1127,1957,1146,2051,1164,2050,1170,1956,1151,1836,1132,1704,1117,1570,1111,1239,1111,996,1105,753,1084,644,1071"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af0a237f11cfdd9e3772dfe4caa894c45" title=" " alt="" coords="834,1043,962,1069"/>
-<area shape="poly" title=" " alt="" coords="664,1053,820,1053,820,1059,664,1059"/>
-<area shape="poly" title=" " alt="" coords="657,903,1239,903,1570,903,1673,910,1809,928,1933,951,1978,963,2004,974,2027,993,2047,1015,2079,1065,2102,1115,2116,1156,2111,1157,2097,1117,2075,1068,2043,1018,2023,997,2001,978,1976,968,1932,956,1808,933,1673,915,1570,908,1239,908,657,908"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="823,994,973,1019"/>
-<area shape="poly" title=" " alt="" coords="600,916,842,988,840,993,598,921"/>
-<area shape="poly" title=" " alt="" coords="974,1007,1219,1018,1539,1037,1834,1060,1941,1073,2004,1087,2033,1101,2060,1120,2102,1158,2098,1162,2056,1124,2030,1106,2002,1092,1940,1078,1834,1065,1539,1042,1218,1024,973,1012"/>
-<area shape="poly" title=" " alt="" coords="973,1004,1458,1004,1458,1009,973,1009"/>
-<area shape="poly" title=" " alt="" coords="974,1009,1010,1017,1044,1030,1059,1040,1069,1051,1078,1063,1092,1074,1146,1104,1204,1131,1320,1176,1428,1210,1513,1232,1511,1237,1426,1215,1318,1181,1202,1136,1144,1109,1089,1078,1074,1067,1065,1055,1056,1044,1041,1034,1008,1022,973,1014"/>
-<area shape="poly" title=" " alt="" coords="974,1002,1011,1011,1044,1030,1060,1047,1068,1065,1072,1101,1075,1138,1081,1157,1093,1176,1114,1196,1138,1214,1188,1240,1186,1245,1135,1218,1110,1200,1089,1179,1076,1159,1069,1139,1067,1102,1063,1067,1055,1050,1041,1034,1009,1016,973,1008"/>
-<area shape="poly" title=" " alt="" coords="1299,1255,1512,1246,1513,1252,1300,1260"/>
-<area shape="poly" title=" " alt="" coords="1616,738,1697,723,1747,718,1800,716,1854,720,1908,730,1958,749,2004,778,2027,805,2047,847,2065,898,2080,955,2105,1069,2120,1156,2114,1157,2100,1070,2075,956,2060,900,2042,849,2022,808,2001,782,1956,754,1906,735,1853,725,1800,721,1747,723,1698,728,1617,743"/>
-<area shape="poly" title=" " alt="" coords="1962,359,2054,380,2053,386,1961,364"/>
-<area shape="poly" title=" " alt="" coords="1324,611,1490,637,1489,643,1323,617"/>
-<area shape="poly" title=" " alt="" coords="644,1017,821,1042,820,1048,643,1022"/>
-<area shape="poly" title=" " alt="" coords="655,1004,809,1004,809,1009,655,1009"/>
-<area shape="poly" title=" " alt="" coords="1665,390,2037,395,2037,400,1665,396"/>
-<area shape="poly" title=" " alt="" coords="1973,815,2004,834,2037,871,2063,913,2083,958,2098,1004,2116,1091,2122,1156,2117,1157,2111,1092,2093,1006,2078,960,2058,915,2033,874,2001,838,1970,819"/>
-<area shape="poly" title=" " alt="" coords="1951,1657,1978,1647,2001,1631,2022,1600,2042,1553,2060,1495,2076,1431,2100,1303,2115,1209,2120,1210,2106,1304,2081,1432,2065,1496,2047,1555,2027,1602,2005,1635,1981,1652,1953,1662"/>
-<area shape="poly" title=" " alt="" coords="989,1245,1090,1233,1362,1213,1629,1198,2037,1182,2037,1188,1630,1203,1362,1218,1091,1239,990,1250"/>
-<area shape="poly" title=" " alt="" coords="1005,1257,1168,1257,1168,1263,1005,1263"/>
-<area shape="poly" title=" " alt="" coords="340,259,404,257,1733,233,1733,238,404,263,340,264"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="431,171,678,197"/>
-<area shape="poly" title=" " alt="" coords="284,249,403,213,475,197,476,202,405,219,285,254"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="1441,5,1696,45"/>
-<area shape="poly" title=" " alt="" coords="259,249,319,203,359,178,403,157,463,143,563,128,843,93,1427,35,1428,41,843,99,564,133,464,149,405,163,362,182,322,207,262,253"/>
-<area shape="poly" title=" " alt="" coords="276,274,334,298,405,321,449,332,448,337,403,327,333,303,274,279"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="459,272,651,312"/>
-<area shape="poly" title=" " alt="" coords="341,270,445,279,445,285,340,275"/>
-<area shape="poly" title=" " alt="" coords="1661,43,1741,67,1831,101,1922,147,1965,176,2004,207,2042,248,2072,293,2113,372,2108,374,2068,295,2037,251,2001,211,1962,180,1919,152,1829,106,1739,72,1660,48"/>
-<area shape="poly" title=" " alt="" coords="651,288,1239,281,1570,281,1693,276,1791,269,1837,269,1886,275,1941,287,2004,307,2032,320,2059,338,2101,374,2098,378,2056,342,2030,325,2002,312,1939,292,1885,280,1837,275,1791,274,1694,281,1570,287,1239,287,651,293"/>
-<area shape="poly" title=" " alt="" coords="652,293,682,304,707,324,720,343,730,366,741,425,745,494,744,570,741,718,745,781,756,828,781,875,812,918,874,983,870,987,808,922,776,878,751,830,739,782,736,719,739,570,739,494,736,425,724,368,715,345,703,327,679,308,650,298"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="839,326,957,351"/>
-<area shape="poly" title=" " alt="" coords="651,302,826,326,825,332,651,308"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1151,326,1330,351"/>
-<area shape="poly" title=" " alt="" coords="957,336,1138,336,1138,341,957,341"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1183,489,1298,514"/>
-<area shape="poly" title=" " alt="" coords="927,349,1202,480,1200,485,925,354"/>
-<area shape="poly" title=" " alt="" coords="1299,502,1345,510,1392,526,1407,535,1418,545,1440,567,1535,630,1532,634,1437,571,1414,549,1404,539,1390,530,1344,515,1298,507"/>
-<area shape="poly" title=" " alt="" coords="1298,492,2037,406,2037,411,1299,497"/>
-<area shape="poly" title=" " alt="" coords="1298,491,1361,486,1441,482,1533,484,1633,493,1734,513,1833,545,1880,567,1925,592,1967,623,2005,658,2030,697,2051,754,2070,823,2086,899,2109,1048,2121,1156,2116,1157,2103,1049,2081,900,2065,825,2046,756,2025,700,2001,662,1963,627,1922,597,1878,571,1831,550,1733,518,1632,499,1533,489,1441,488,1362,491,1299,496"/>
-<area shape="poly" title=" " alt="" coords="1003,1346,1244,1313,1344,1296,1389,1283,1402,1264,1412,1239,1422,1175,1423,1097,1419,1013,1414,928,1413,848,1419,779,1426,751,1436,728,1452,708,1472,692,1514,668,1517,672,1475,696,1456,712,1441,731,1431,753,1424,780,1418,848,1420,928,1424,1013,1428,1097,1427,1175,1417,1240,1407,1267,1392,1287,1345,1301,1245,1318,1003,1351"/>
-<area shape="poly" title=" " alt="" coords="978,1371,1091,1384,1189,1387,1320,1387,1623,1381,2002,1367,2023,1352,2042,1334,2073,1290,2096,1246,2110,1208,2115,1210,2101,1248,2078,1293,2046,1337,2026,1356,2004,1372,1624,1386,1320,1392,1189,1393,1090,1389,977,1377"/>
-<area shape="poly" title=" " alt="" coords="984,1346,1042,1327,1055,1318,1065,1309,1075,1299,1089,1290,1128,1275,1168,1266,1169,1271,1130,1280,1092,1294,1078,1303,1069,1313,1059,1322,1044,1332,986,1351"/>
-<area shape="poly" title=" " alt="" coords="1968,1485,2001,1466,2028,1438,2051,1405,2070,1369,2085,1333,2105,1263,2115,1209,2120,1210,2110,1265,2090,1335,2075,1372,2056,1408,2032,1441,2004,1470,1971,1489"/>
-<area shape="poly" title=" " alt="" coords="1338,1466,1503,1472,1698,1470,1793,1464,1879,1454,1950,1438,1979,1427,2001,1415,2026,1395,2048,1370,2081,1313,2102,1256,2114,1209,2119,1210,2107,1257,2086,1315,2052,1373,2030,1398,2004,1420,1981,1432,1952,1443,1880,1459,1793,1469,1698,1475,1503,1477,1338,1471"/>
-<area shape="poly" title=" " alt="" coords="1270,1448,1326,1420,1389,1384,1474,1323,1541,1267,1545,1271,1478,1327,1392,1389,1329,1425,1272,1452"/>
-<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="460,1785,649,1825"/>
-<area shape="poly" title=" " alt="" coords="321,1740,466,1779,465,1784,320,1745"/>
-<area shape="poly" title=" " alt="" coords="605,1783,674,1759,753,1739,888,1718,995,1711,1239,1713,1570,1713,1638,1717,1699,1727,1804,1747,1852,1751,1899,1744,1948,1725,2001,1689,2014,1674,2027,1654,2049,1601,2068,1535,2083,1462,2105,1316,2116,1209,2121,1210,2110,1316,2088,1463,2073,1536,2054,1603,2031,1657,2018,1677,2004,1693,1951,1730,1901,1750,1852,1756,1803,1753,1698,1732,1638,1723,1570,1719,1239,1719,995,1717,889,1723,754,1744,676,1764,607,1788"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="787,1753,1009,1793"/>
-<area shape="poly" title=" " alt="" coords="649,1794,773,1782,773,1788,650,1799"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="787,1817,1009,1857"/>
-<area shape="poly" title=" " alt="" coords="650,1811,773,1823,773,1828,649,1817"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="787,1881,1009,1921"/>
-<area shape="poly" title=" " alt="" coords="614,1823,754,1867,789,1876,787,1881,753,1872,612,1828"/>
-<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="787,1945,1009,1985"/>
-<area shape="poly" title=" " alt="" coords="582,1823,657,1877,704,1906,754,1931,775,1939,773,1944,752,1936,702,1911,654,1882,579,1828"/>
-<area shape="poly" title=" " alt="" coords="1292,1361,1448,1366,1656,1366,1762,1362,1859,1354,1942,1340,2001,1320,2036,1297,2065,1266,2089,1234,2106,1206,2110,1209,2093,1237,2070,1270,2040,1301,2004,1325,1943,1345,1860,1359,1762,1367,1656,1372,1448,1372,1292,1367"/>
-<area shape="poly" title=" " alt="" coords="1292,1355,1341,1346,1389,1327,1404,1315,1413,1303,1422,1289,1437,1276,1474,1260,1512,1251,1513,1256,1476,1265,1440,1281,1426,1293,1417,1306,1408,1319,1392,1332,1342,1351,1293,1361"/>
-<area shape="poly" title=" " alt="" coords="1292,1349,1438,1327,1630,1307,1794,1293,1794,1299,1630,1312,1439,1332,1293,1355"/>
-<area shape="poly" title=" " alt="" coords="1635,1570,1716,1582,1813,1584,1863,1579,1912,1567,1959,1549,2001,1523,2035,1490,2062,1451,2082,1407,2097,1362,2113,1275,2118,1209,2123,1209,2118,1276,2102,1363,2087,1409,2066,1453,2039,1494,2004,1527,1961,1554,1914,1573,1864,1584,1813,1589,1715,1587,1634,1575"/>
+<area shape="rect" title=" " alt="" coords="5,1359,85,1385"/>
+<area shape="rect" href="classyoi_1_1CodegenTaskDispatcher.html#a17a7964b99958447f16943ab5f7cf6d9" title="Dispatch a task to the thread pool." alt="" coords="141,55,348,95"/>
+<area shape="poly" title=" " alt="" coords="44,1359,47,1126,58,728,68,520,84,334,104,191,117,142,131,112,141,101,145,105,136,115,122,144,109,192,89,335,74,520,63,728,52,1126,49,1359"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9e0fabaaf63d00d563cf68227c21d754" title=" " alt="" coords="1091,246,1391,271"/>
+<area shape="poly" title=" " alt="" coords="44,1359,44,1132,52,747,62,547,78,369,88,295,100,234,115,189,131,162,167,139,213,122,268,111,332,106,402,106,477,109,636,127,798,154,950,185,1180,240,1179,245,949,190,797,159,635,132,476,115,402,111,332,111,269,117,214,127,169,143,135,166,120,191,106,236,94,296,83,370,68,547,58,747,49,1132,49,1359"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="2051,1131,2193,1157"/>
+<area shape="poly" title=" " alt="" coords="59,1383,90,1416,111,1433,134,1446,194,1467,246,1479,293,1485,338,1485,433,1477,553,1471,1570,1471,1793,1482,1857,1482,1915,1478,1965,1468,2001,1451,2033,1423,2058,1388,2078,1349,2092,1309,2110,1231,2117,1170,2122,1171,2116,1232,2098,1310,2082,1351,2062,1391,2037,1426,2004,1456,1966,1473,1916,1483,1857,1487,1793,1487,1570,1476,553,1476,433,1482,338,1490,293,1490,245,1485,193,1472,132,1451,108,1437,86,1420,55,1387"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1747,474,2003,499"/>
+<area shape="poly" title=" " alt="" coords="44,1359,50,1226,64,1010,75,894,90,785,108,692,131,624,183,528,209,490,237,459,269,431,306,404,403,351,444,334,493,320,610,300,746,290,890,288,1036,293,1174,303,1295,317,1391,333,1481,353,1550,372,1616,397,1700,435,1724,451,1748,466,1753,468,1752,473,1746,471,1721,456,1697,440,1614,402,1548,377,1479,358,1390,339,1294,323,1173,309,1036,299,890,294,746,295,611,305,494,325,446,339,405,356,309,409,273,435,241,462,213,494,188,530,136,627,113,693,95,786,80,895,69,1011,55,1227,50,1359"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a35803c6481343b9ff363e92650ea592c" title=" " alt="" coords="163,637,326,662"/>
+<area shape="poly" title=" " alt="" coords="47,1358,78,1210,131,993,186,810,232,675,237,676,191,812,136,994,83,1212,52,1359"/>
+<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1182,1057,1299,1082"/>
+<area shape="poly" title=" " alt="" coords="52,1358,83,1316,106,1294,132,1275,185,1260,295,1237,609,1177,1090,1092,1168,1079,1169,1084,1091,1097,610,1182,296,1242,187,1265,134,1280,109,1298,87,1320,57,1361"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a99e3ae7244894d2a2f0a62ee3f881064" title=" " alt="" coords="1797,1741,1952,1766"/>
+<area shape="poly" title=" " alt="" coords="50,1385,54,1479,66,1622,77,1697,92,1764,111,1819,123,1839,135,1854,185,1891,232,1910,278,1916,325,1913,428,1892,487,1883,553,1879,1242,1879,1326,1875,1411,1866,1576,1836,1719,1800,1823,1768,1825,1773,1721,1805,1577,1842,1412,1872,1326,1881,1242,1884,553,1884,488,1888,429,1898,326,1918,278,1921,231,1915,183,1895,132,1858,118,1842,106,1821,87,1766,72,1697,61,1623,48,1479,44,1385"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2435047aabb27016228a5b8258aae9fb" title=" " alt="" coords="791,1309,1005,1334"/>
+<area shape="poly" title=" " alt="" coords="85,1360,133,1351,308,1333,484,1323,777,1318,778,1323,484,1329,309,1339,134,1356,86,1365"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a21a7b0b11e917edd55e405244f9389ad" title=" " alt="" coords="149,1005,340,1030"/>
+<area shape="poly" title=" " alt="" coords="45,1359,52,1313,67,1245,92,1170,110,1133,131,1098,166,1062,205,1035,208,1039,170,1066,135,1102,115,1136,97,1172,72,1247,57,1314,51,1359"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="404,1106,705,1131"/>
+<area shape="poly" title=" " alt="" coords="45,1359,49,1317,62,1259,73,1228,88,1198,108,1171,132,1149,173,1124,218,1106,266,1096,314,1090,407,1091,486,1101,485,1106,407,1096,315,1095,267,1101,220,1112,176,1129,135,1153,112,1175,93,1201,78,1230,67,1261,54,1318,50,1360"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ad53a3c899751cf3124e212374f0687e6" title=" " alt="" coords="753,1055,1043,1081"/>
+<area shape="poly" title=" " alt="" coords="46,1358,54,1325,70,1281,95,1236,112,1216,132,1199,155,1187,182,1177,249,1164,328,1157,412,1154,578,1153,649,1150,705,1142,788,1115,858,1084,860,1089,790,1120,706,1147,650,1155,578,1158,412,1160,328,1162,250,1169,184,1182,157,1192,135,1204,116,1220,100,1239,75,1283,59,1327,52,1360"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a413f9d11c2b3de2c9398c1ec9b618853" title=" " alt="" coords="161,1410,328,1435"/>
+<area shape="poly" title=" " alt="" coords="86,1380,182,1404,180,1409,85,1385"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9d55fbb78a566a0f9771db145260c45b" title=" " alt="" coords="1773,1570,1977,1595"/>
+<area shape="poly" title=" " alt="" coords="51,1384,58,1419,73,1464,98,1510,115,1530,135,1546,171,1560,228,1573,394,1590,611,1600,860,1603,1369,1596,1758,1585,1759,1590,1369,1602,860,1608,611,1605,393,1595,227,1578,169,1566,132,1550,111,1534,94,1513,68,1466,53,1420,46,1385"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ac76ac2e07d9c164f2a4dfcea04f756b3" title=" " alt="" coords="1143,1309,1338,1334"/>
+<area shape="poly" title=" " alt="" coords="86,1370,475,1368,755,1360,1042,1344,1142,1333,1143,1339,1043,1349,755,1366,475,1374,86,1375"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#a7a38342b1165a978cc39b8af28388a60" title="get the entry from the cache" alt="" coords="150,1979,339,2019"/>
+<area shape="poly" title=" " alt="" coords="50,1385,59,1482,76,1634,102,1790,118,1853,136,1899,166,1938,201,1969,198,1973,162,1941,131,1901,113,1855,96,1791,71,1635,53,1483,45,1385"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#adb039e5c75af2114e364ac171cef5234" title=" " alt="" coords="133,1612,356,1652"/>
+<area shape="poly" title=" " alt="" coords="51,1385,57,1425,72,1480,97,1540,114,1567,135,1592,150,1603,147,1608,131,1595,110,1570,92,1542,66,1482,52,1426,45,1386"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a16086c3d97adc8a5ea18a2a352db46db" title=" " alt="" coords="133,1676,356,1716"/>
+<area shape="poly" title=" " alt="" coords="49,1385,51,1437,62,1511,73,1552,88,1592,109,1629,135,1662,140,1666,136,1670,131,1666,104,1632,83,1594,68,1553,57,1512,46,1437,44,1385"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#af172e0d0ba18883fb56f8feb863333eb" title="update the last modification time of an entry" alt="" coords="147,1740,342,1780"/>
+<area shape="poly" title=" " alt="" coords="51,1385,60,1455,77,1558,103,1660,118,1700,135,1726,139,1730,135,1734,131,1730,113,1702,98,1662,72,1559,55,1456,45,1385"/>
+<area shape="rect" href="classyoi_1_1CodegenTaskDispatcher.html#aa3b21853f890838c88d047d6c2786917" title="Wait for all dispatched tasks to complete." alt="" coords="141,1804,348,1844"/>
+<area shape="poly" title=" " alt="" coords="50,1385,58,1467,73,1589,85,1652,99,1711,116,1758,135,1790,138,1794,135,1797,131,1794,111,1761,94,1712,80,1654,68,1590,52,1467,45,1385"/>
+<area shape="rect" href="namespaceyoi.html#a2d71150c6b3a47496cfc00a017d8617f" title=" " alt="" coords="1189,1106,1292,1131"/>
+<area shape="poly" title=" " alt="" coords="64,1357,95,1338,132,1322,217,1296,289,1279,354,1268,415,1262,543,1254,705,1236,875,1216,949,1206,1042,1186,1124,1161,1195,1134,1197,1139,1126,1166,1043,1191,949,1211,875,1221,706,1241,543,1259,416,1267,355,1274,290,1284,218,1301,134,1327,97,1343,66,1362"/>
+<area shape="rect" href="namespaceyoi_1_1serialization.html#a2c5567e83ac0cf268f14d5302c8c27a7" title=" " alt="" coords="1503,1511,1634,1551"/>
+<area shape="poly" title=" " alt="" coords="54,1384,82,1438,105,1467,135,1490,192,1517,242,1533,289,1540,334,1540,431,1529,488,1524,553,1521,899,1521,1490,1527,1490,1532,899,1527,553,1527,488,1529,432,1535,335,1545,288,1545,241,1538,190,1522,132,1494,102,1471,78,1441,49,1386"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1504,449,1633,474"/>
+<area shape="poly" title=" " alt="" coords="1271,269,1327,298,1392,334,1475,389,1541,438,1538,442,1472,393,1389,338,1325,302,1268,274"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="2051,246,2193,271"/>
+<area shape="poly" title=" " alt="" coords="1391,256,2037,256,2037,261,1391,261"/>
+<area shape="poly" title=" " alt="" coords="1338,269,1507,296,1706,337,1802,363,1888,393,1957,425,1984,443,2005,461,2021,484,2036,514,2061,590,2081,683,2096,785,2115,981,2122,1118,2117,1118,2110,982,2090,785,2075,684,2056,592,2031,516,2016,487,2001,465,1981,447,1955,430,1886,397,1801,368,1705,343,1506,301,1337,274"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="2241,246,2444,271"/>
+<area shape="poly" title=" " alt="" coords="2194,256,2228,256,2228,261,2194,261"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2492,246,2683,271"/>
+<area shape="poly" title=" " alt="" coords="2444,256,2478,256,2478,261,2444,261"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="2241,1131,2444,1157"/>
+<area shape="poly" title=" " alt="" coords="2194,1141,2228,1141,2228,1147,2194,1147"/>
+<area shape="poly" title=" " alt="" coords="1888,472,2095,279,2098,283,1892,476"/>
+<area shape="poly" title=" " alt="" coords="1900,497,1954,536,1982,562,2005,593,2041,664,2068,739,2089,816,2104,891,2120,1026,2123,1118,2118,1118,2114,1026,2099,892,2084,817,2063,741,2036,666,2000,596,1978,566,1950,540,1897,502"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322" title=" " alt="" coords="461,466,648,491"/>
+<area shape="poly" title=" " alt="" coords="254,635,313,574,355,538,403,508,447,492,449,497,405,513,358,542,316,578,258,639"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6f7e98e515f69b944d1a159e4fe24a8d" title=" " alt="" coords="785,474,1011,499"/>
+<area shape="poly" title=" " alt="" coords="249,635,268,597,301,545,346,493,373,470,403,452,462,431,524,420,587,417,650,421,709,430,764,442,851,467,850,472,763,447,708,435,649,426,587,423,525,425,463,436,405,457,376,475,350,497,305,548,273,600,254,638"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132" title=" " alt="" coords="446,637,663,662"/>
+<area shape="poly" title=" " alt="" coords="326,647,432,647,432,652,326,652"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d" title=" " alt="" coords="453,853,657,878"/>
+<area shape="poly" title=" " alt="" coords="255,661,275,697,308,746,352,797,378,819,405,838,440,852,438,857,403,842,374,823,348,800,304,749,271,700,250,664"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2829388a5928eff71081206affb54c12" title=" " alt="" coords="1439,1207,1699,1233"/>
+<area shape="poly" title=" " alt="" coords="253,662,270,706,302,769,347,834,374,864,405,889,446,909,485,916,522,916,558,912,595,908,631,909,669,921,707,946,722,964,730,983,733,1020,735,1057,742,1074,755,1092,795,1125,837,1153,883,1177,931,1197,1031,1226,1133,1242,1234,1248,1329,1247,1414,1241,1484,1232,1484,1237,1414,1246,1329,1252,1234,1254,1133,1247,1029,1231,929,1202,881,1182,835,1158,791,1129,751,1095,737,1077,730,1058,727,1020,725,984,718,967,704,950,666,925,631,915,595,913,559,917,522,921,484,922,444,914,403,893,371,868,343,838,297,771,266,708,248,664"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab778771ecd84fa13e688fd24d204da4a" title=" " alt="" coords="1747,67,2002,107"/>
+<area shape="poly" title=" " alt="" coords="246,636,262,583,292,507,313,465,338,423,368,385,402,351,441,324,477,306,511,295,545,289,617,282,658,275,705,263,812,225,895,192,979,163,1090,136,1262,110,1436,94,1598,86,1733,83,1734,88,1598,91,1436,99,1263,115,1091,141,981,168,897,197,814,230,706,268,659,280,618,287,546,295,512,300,479,311,444,328,406,356,372,388,342,426,317,467,296,509,267,585,252,637"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ae8614dbe0b91ace1906cff958299dab4" title=" " alt="" coords="1149,347,1332,373"/>
+<area shape="poly" title=" " alt="" coords="248,635,265,591,296,530,317,497,342,466,370,438,403,415,451,390,501,370,605,340,713,322,820,315,922,316,1017,322,1166,342,1165,348,1016,327,922,321,820,320,714,327,606,345,502,375,453,395,405,420,374,442,346,469,322,500,301,532,270,593,253,637"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a59caa25e3c068e765370eefbe8665437" title=" " alt="" coords="455,687,655,713"/>
+<area shape="poly" title=" " alt="" coords="324,660,463,683,462,688,323,665"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#acd34d2aae130c5303efaa8be9260e1d0" title=" " alt="" coords="1473,19,1665,59"/>
+<area shape="poly" title=" " alt="" coords="245,636,255,570,280,469,300,414,327,359,361,308,402,263,462,217,527,176,594,141,665,111,738,86,812,66,961,37,1107,21,1242,16,1362,18,1459,24,1459,30,1361,24,1242,22,1107,27,962,42,813,71,740,91,667,116,597,145,529,180,465,221,406,267,365,311,332,361,305,416,285,471,260,571,250,637"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#afd05efbde7875059ed6865ec70f59038" title=" " alt="" coords="1749,1258,2000,1283"/>
+<area shape="poly" title=" " alt="" coords="251,662,265,716,293,794,314,836,339,877,370,915,405,946,445,966,484,972,522,970,559,962,596,956,633,955,670,965,707,992,729,1021,737,1053,736,1084,731,1116,725,1147,725,1177,733,1206,755,1233,774,1243,805,1252,898,1266,1022,1275,1166,1280,1473,1279,1735,1273,1736,1279,1473,1285,1165,1285,1021,1280,897,1272,804,1258,772,1248,752,1237,728,1208,719,1178,720,1147,725,1115,731,1084,732,1053,724,1024,703,995,668,970,632,961,596,961,560,968,522,975,484,978,444,971,403,950,366,918,335,880,309,839,288,796,260,717,246,663"/>
+<area shape="poly" title=" " alt="" coords="1011,480,1490,462,1490,467,1012,485"/>
+<area shape="poly" title=" " alt="" coords="967,471,2039,271,2040,277,968,477"/>
+<area shape="poly" title=" " alt="" coords="912,498,940,528,982,567,1034,606,1092,636,1131,648,1178,657,1292,666,1561,670,1698,673,1824,684,1879,694,1929,708,1971,727,2004,750,2041,792,2070,840,2091,892,2106,945,2121,1044,2124,1118,2119,1118,2116,1045,2100,946,2086,894,2065,842,2037,795,2001,754,1968,731,1927,713,1878,700,1823,690,1698,678,1561,675,1292,672,1178,662,1130,654,1090,641,1031,610,979,571,937,532,908,501"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9a37f305e4ae13b66ce6140c14d2e347" title=" " alt="" coords="1169,753,1312,778"/>
+<area shape="poly" title=" " alt="" coords="914,498,1045,629,1068,656,1092,681,1147,717,1199,745,1197,749,1144,721,1089,685,1064,660,1041,633,911,502"/>
+<area shape="poly" title=" " alt="" coords="1312,756,1476,745,1680,740,1781,743,1873,753,1950,770,1980,781,2004,795,2040,829,2067,870,2088,915,2103,961,2119,1050,2124,1117,2118,1118,2114,1051,2098,962,2083,916,2063,872,2036,833,2001,800,1978,786,1948,775,1873,758,1781,749,1680,745,1476,750,1313,761"/>
+<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="1471,702,1666,727"/>
+<area shape="poly" title=" " alt="" coords="1312,752,1472,727,1473,732,1313,757"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1526,1005,1611,1030"/>
+<area shape="poly" title=" " alt="" coords="1274,776,1331,803,1392,841,1440,879,1484,921,1550,993,1546,996,1480,925,1436,883,1389,845,1328,808,1272,781"/>
+<area shape="poly" title=" " alt="" coords="1612,1020,1784,1048,1894,1070,2003,1098,2079,1124,2077,1129,2002,1103,1892,1076,1783,1054,1611,1026"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1807,991,1942,1031"/>
+<area shape="poly" title=" " alt="" coords="1611,1014,1794,1010,1794,1015,1612,1019"/>
+<area shape="poly" title=" " alt="" coords="1880,990,2110,284,2115,285,1885,991"/>
+<area shape="poly" title=" " alt="" coords="1943,1023,2004,1047,2057,1083,2100,1120,2096,1124,2054,1087,2001,1052,1941,1028"/>
+<area shape="poly" title=" " alt="" coords="604,634,693,618,749,612,808,610,870,614,931,624,990,644,1044,674,1058,687,1066,702,1070,733,1073,763,1080,776,1092,789,1114,799,1150,808,1256,823,1546,843,1837,863,1943,877,1980,886,2004,897,2031,920,2053,947,2086,1008,2108,1069,2119,1117,2114,1119,2103,1070,2082,1010,2048,950,2027,923,2001,901,1979,891,1942,882,1836,868,1546,848,1256,828,1149,813,1113,804,1089,793,1076,779,1068,764,1064,733,1060,704,1054,690,1041,678,988,649,930,630,869,619,808,615,749,617,694,623,605,639"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af0a237f11cfdd9e3772dfe4caa894c45" title=" " alt="" coords="834,687,962,713"/>
+<area shape="poly" title=" " alt="" coords="642,660,821,686,820,691,641,665"/>
+<area shape="poly" title=" " alt="" coords="647,875,754,888,990,898,1385,912,1591,922,1776,936,1920,953,1971,964,2004,976,2043,1007,2074,1045,2098,1084,2113,1118,2109,1120,2093,1087,2070,1048,2039,1011,2001,981,1969,969,1919,959,1775,941,1590,927,1384,917,990,903,753,893,646,881"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="823,853,973,878"/>
+<area shape="poly" title=" " alt="" coords="657,863,809,863,809,868,657,868"/>
+<area shape="poly" title=" " alt="" coords="974,875,1091,889,1264,893,1552,894,1703,898,1838,904,1943,915,1980,923,2004,932,2028,951,2049,973,2082,1023,2104,1075,2117,1117,2112,1119,2099,1077,2077,1026,2045,976,2025,955,2001,937,1979,928,1942,921,1838,910,1703,903,1552,900,1264,898,1090,895,973,880"/>
+<area shape="poly" title=" " alt="" coords="973,859,1009,849,1041,831,1052,821,1058,810,1063,786,1070,761,1077,750,1089,739,1117,726,1155,717,1250,707,1357,704,1458,706,1458,711,1357,709,1251,712,1156,722,1119,732,1092,744,1081,753,1074,763,1068,787,1063,812,1056,824,1044,836,1011,854,974,864"/>
+<area shape="poly" title=" " alt="" coords="930,876,1002,905,1091,934,1208,961,1325,982,1513,1009,1512,1014,1324,988,1207,966,1090,939,1001,910,928,881"/>
+<area shape="poly" title=" " alt="" coords="911,877,939,909,981,952,1033,997,1092,1035,1130,1050,1169,1059,1168,1064,1128,1055,1089,1040,1030,1002,977,956,935,913,907,880"/>
+<area shape="poly" title=" " alt="" coords="1299,1058,1512,1024,1513,1029,1300,1063"/>
+<area shape="poly" title=" " alt="" coords="1699,1217,1845,1209,1925,1199,2002,1186,2042,1174,2080,1160,2082,1165,2044,1179,2003,1191,1925,1205,1846,1214,1699,1223"/>
+<area shape="poly" title=" " alt="" coords="1980,105,2004,117,2038,143,2067,174,2109,233,2105,236,2063,177,2034,147,2001,121,1978,109"/>
+<area shape="poly" title=" " alt="" coords="1276,370,1439,427,1499,443,1497,448,1438,432,1274,375"/>
+<area shape="poly" title=" " alt="" coords="655,697,821,697,821,703,655,703"/>
+<area shape="poly" title=" " alt="" coords="591,710,648,736,707,774,722,790,731,805,740,818,755,831,781,844,810,853,808,858,779,849,752,836,736,822,726,807,718,793,704,778,645,741,589,715"/>
+<area shape="poly" title=" " alt="" coords="1657,16,1735,6,1825,4,1872,9,1918,18,1962,32,2004,53,2028,70,2048,91,2081,140,2103,190,2117,232,2112,234,2098,192,2076,143,2044,95,2024,74,2001,57,1960,37,1917,23,1871,14,1825,10,1736,11,1658,21"/>
+<area shape="poly" title=" " alt="" coords="1948,1256,2001,1236,2055,1202,2097,1165,2100,1169,2058,1206,2004,1241,1950,1261"/>
+<area shape="poly" title=" " alt="" coords="1889,1739,1944,1685,1974,1648,2000,1607,2028,1547,2051,1485,2085,1359,2106,1248,2116,1170,2121,1171,2111,1249,2090,1360,2056,1486,2033,1549,2005,1609,1979,1651,1948,1689,1893,1743"/>
+<area shape="poly" title=" " alt="" coords="986,1331,1217,1360,1363,1374,1516,1384,1666,1388,1803,1384,1864,1377,1918,1368,1964,1355,2001,1339,2024,1323,2044,1303,2076,1257,2098,1209,2112,1169,2117,1171,2103,1211,2080,1260,2048,1307,2027,1327,2004,1344,1966,1360,1920,1373,1865,1383,1804,1389,1666,1394,1515,1389,1363,1379,1217,1365,985,1337"/>
+<area shape="poly" title=" " alt="" coords="915,1307,974,1257,1009,1223,1040,1187,1054,1161,1061,1137,1069,1114,1089,1093,1127,1074,1168,1066,1169,1071,1129,1079,1092,1097,1074,1117,1066,1139,1059,1163,1045,1190,1013,1227,978,1261,918,1311"/>
+<area shape="poly" title=" " alt="" coords="247,1004,264,958,295,894,316,860,341,827,370,798,403,774,429,762,462,754,539,747,630,748,727,753,823,758,912,757,987,747,1017,737,1041,723,1055,709,1062,693,1064,658,1067,622,1074,604,1089,587,1137,561,1203,539,1283,522,1373,509,1562,492,1733,485,1733,491,1563,498,1374,514,1284,527,1204,544,1139,565,1092,592,1079,607,1072,623,1070,658,1067,694,1059,712,1044,728,1019,742,988,752,913,762,823,763,727,759,630,754,540,752,462,759,431,767,405,778,373,802,345,831,320,863,300,896,269,960,252,1005"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="431,1005,678,1030"/>
+<area shape="poly" title=" " alt="" coords="340,1015,417,1015,417,1020,340,1020"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af5ae90a71d85660f942839c1287c7ff6" title=" " alt="" coords="1473,1410,1664,1435"/>
+<area shape="poly" title=" " alt="" coords="325,1028,563,1066,707,1093,730,1124,738,1157,737,1189,731,1222,725,1254,725,1286,733,1316,755,1345,795,1375,832,1391,869,1397,907,1395,990,1383,1038,1379,1091,1380,1460,1412,1460,1417,1091,1385,1038,1384,991,1388,908,1400,869,1402,831,1396,792,1379,751,1349,728,1318,719,1286,720,1254,726,1221,732,1189,733,1157,725,1126,704,1097,562,1072,324,1033"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="1747,131,2002,171"/>
+<area shape="poly" title=" " alt="" coords="245,1004,256,938,283,837,303,781,330,724,362,671,402,624,440,593,478,574,515,565,552,560,589,555,626,547,664,530,703,502,720,481,728,459,735,437,751,413,789,380,825,357,860,341,894,329,964,303,1001,282,1041,252,1055,234,1063,217,1072,200,1089,186,1140,167,1209,153,1290,144,1379,138,1566,136,1733,141,1733,146,1566,141,1379,144,1290,149,1209,158,1142,172,1092,190,1076,204,1067,219,1059,237,1045,255,1004,286,967,307,896,334,862,346,828,361,792,384,755,417,740,439,733,461,725,483,707,506,667,535,628,552,590,561,553,565,516,570,480,579,443,597,406,627,367,674,334,727,308,783,288,839,261,939,250,1005"/>
+<area shape="poly" title=" " alt="" coords="272,1028,332,1056,405,1084,467,1101,466,1106,403,1089,330,1061,270,1033"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="459,788,651,828"/>
+<area shape="poly" title=" " alt="" coords="251,1003,273,969,307,925,351,878,403,839,444,821,446,826,405,844,354,882,311,928,278,972,256,1006"/>
+<area shape="poly" title=" " alt="" coords="1628,1433,1708,1444,1806,1446,1857,1441,1908,1430,1956,1413,2001,1389,2027,1367,2049,1340,2068,1311,2083,1280,2103,1219,2114,1170,2119,1171,2108,1220,2087,1282,2072,1313,2054,1343,2031,1370,2004,1393,1959,1418,1909,1435,1858,1446,1806,1451,1708,1449,1628,1438"/>
+<area shape="poly" title=" " alt="" coords="1953,168,2004,187,2051,211,2092,236,2090,241,2049,216,2002,192,1951,173"/>
+<area shape="poly" title=" " alt="" coords="617,786,664,761,685,744,703,724,721,689,728,655,726,623,721,590,717,558,718,526,728,493,751,461,787,435,823,424,860,424,897,429,933,435,969,435,1005,426,1041,402,1056,382,1063,361,1062,317,1061,295,1062,273,1071,252,1089,233,1122,214,1164,199,1214,188,1270,181,1397,176,1537,181,1681,193,1818,209,2037,241,2037,247,1818,214,1680,198,1537,187,1397,182,1270,187,1215,194,1165,204,1124,219,1092,237,1075,255,1068,274,1066,295,1067,317,1068,362,1061,385,1044,406,1007,431,970,440,933,440,896,434,860,429,824,429,789,439,755,465,733,496,723,526,723,558,727,589,732,622,733,656,726,691,708,727,689,748,667,765,620,790"/>
+<area shape="poly" title=" " alt="" coords="651,821,809,848,808,853,650,827"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="839,795,957,821"/>
+<area shape="poly" title=" " alt="" coords="651,805,825,805,825,811,651,811"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1151,854,1330,879"/>
+<area shape="poly" title=" " alt="" coords="957,815,1153,849,1152,854,957,821"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1183,601,1298,626"/>
+<area shape="poly" title=" " alt="" coords="956,800,1000,788,1041,767,1057,751,1065,733,1073,714,1089,694,1140,656,1193,629,1195,634,1143,661,1093,698,1078,717,1070,735,1062,754,1044,772,1002,793,958,805"/>
+<area shape="poly" title=" " alt="" coords="1298,605,1344,595,1389,579,1414,562,1437,542,1533,479,1536,484,1440,546,1417,566,1392,584,1345,600,1299,610"/>
+<area shape="poly" title=" " alt="" coords="1298,605,1704,558,1904,531,1971,519,2001,510,2027,487,2049,459,2067,428,2082,396,2103,334,2114,285,2119,286,2108,336,2087,398,2072,431,2054,462,2031,490,2004,514,1972,524,1905,536,1705,563,1299,610"/>
+<area shape="poly" title=" " alt="" coords="1298,609,1471,607,1693,608,1894,618,1964,628,1989,635,2004,643,2018,658,2031,678,2054,731,2072,796,2088,869,2110,1013,2121,1117,2116,1118,2105,1013,2083,870,2067,798,2049,733,2026,681,2014,662,2001,648,1987,640,1963,634,1893,624,1693,613,1471,612,1298,615"/>
+<area shape="poly" title=" " alt="" coords="912,1053,976,988,1011,941,1040,890,1054,846,1058,806,1051,732,1047,696,1050,661,1062,625,1089,588,1117,566,1157,546,1208,529,1264,513,1384,487,1490,469,1491,475,1385,492,1266,518,1209,534,1160,551,1120,570,1093,591,1067,627,1055,662,1053,696,1056,731,1063,806,1059,847,1045,892,1016,944,980,991,916,1057"/>
+<area shape="poly" title=" " alt="" coords="991,1078,1044,1098,1059,1109,1068,1122,1077,1133,1092,1142,1128,1153,1172,1162,1281,1173,1409,1178,1548,1177,1823,1165,2037,1149,2037,1155,1823,1171,1548,1183,1409,1183,1281,1179,1171,1167,1127,1158,1090,1147,1074,1137,1064,1125,1055,1113,1041,1102,989,1083"/>
+<area shape="poly" title=" " alt="" coords="1043,1066,1168,1067,1168,1072,1043,1071"/>
+<area shape="poly" title=" " alt="" coords="1961,1568,1982,1558,2001,1544,2036,1500,2064,1451,2084,1398,2099,1344,2115,1244,2118,1170,2124,1171,2120,1245,2104,1345,2089,1400,2068,1453,2040,1503,2005,1547,1985,1562,1963,1572"/>
+<area shape="poly" title=" " alt="" coords="1338,1326,1501,1333,1695,1335,1789,1332,1876,1324,1948,1312,2001,1294,2038,1268,2068,1234,2091,1199,2107,1168,2112,1171,2095,1202,2072,1238,2041,1272,2004,1298,1950,1317,1876,1330,1790,1337,1695,1341,1501,1339,1338,1331"/>
+<area shape="poly" title=" " alt="" coords="1254,1307,1542,1037,1546,1041,1257,1311"/>
+<area shape="rect" href="classyoi_1_1CodegenObjectCache.html#aa271f9c3811013d8919f48d69ee5a9f7" title=" " alt="" coords="460,2012,649,2052"/>
+<area shape="poly" title=" " alt="" coords="340,2006,446,2018,446,2023,339,2012"/>
+<area shape="poly" title=" " alt="" coords="649,2036,915,2050,1239,2057,1570,2057,1649,2053,1716,2040,1773,2019,1823,1989,1868,1950,1911,1902,1955,1844,2000,1777,2025,1726,2046,1655,2065,1569,2080,1476,2104,1296,2116,1170,2121,1171,2109,1296,2086,1476,2070,1570,2051,1656,2030,1728,2005,1780,1959,1847,1916,1905,1872,1954,1826,1993,1775,2024,1717,2046,1650,2058,1570,2063,1239,2063,914,2055,649,2041"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a12d734632a81cc9d926a23231b55d96c" title=" " alt="" coords="787,2161,1009,2201"/>
+<area shape="poly" title=" " alt="" coords="585,2050,659,2099,706,2125,754,2147,777,2155,775,2160,752,2152,703,2129,656,2103,582,2054"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a3c1c951522e5caaf1c09100c4bbd4a1d" title=" " alt="" coords="787,1919,1009,1959"/>
+<area shape="poly" title=" " alt="" coords="615,2009,753,1968,788,1959,789,1965,754,1973,617,2015"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a50774521817fa5c8bee34e4ee519fa3c" title=" " alt="" coords="787,1983,1009,2023"/>
+<area shape="poly" title=" " alt="" coords="649,2021,773,2011,773,2016,650,2027"/>
+<area shape="rect" href="structyoi_1_1CodegenObjectCacheEntry.html#a75ea2fe7c2b8df3c04f3aa4129b58f37" title=" " alt="" coords="787,2097,1009,2137"/>
+<area shape="poly" title=" " alt="" coords="637,2050,804,2092,803,2097,635,2055"/>
+<area shape="poly" title=" " alt="" coords="1292,1118,2037,1139,2037,1144,1292,1123"/>
+<area shape="poly" title=" " alt="" coords="1292,1115,1341,1109,1389,1092,1404,1082,1413,1071,1422,1059,1437,1047,1474,1032,1512,1022,1513,1027,1476,1037,1440,1052,1426,1063,1417,1074,1407,1086,1392,1097,1342,1114,1292,1121"/>
+<area shape="poly" title=" " alt="" coords="1292,1108,1390,1092,1698,1040,1793,1023,1794,1028,1699,1045,1391,1097,1293,1113"/>
+<area shape="poly" title=" " alt="" coords="1635,1542,1716,1553,1813,1553,1863,1547,1912,1535,1959,1517,2001,1490,2035,1456,2062,1416,2082,1371,2097,1325,2113,1237,2118,1170,2123,1171,2119,1238,2102,1326,2087,1373,2067,1418,2039,1459,2004,1494,1961,1521,1914,1540,1864,1553,1813,1559,1716,1558,1634,1548"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1154,124 +1159,127 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">161</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02387">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02493">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02474">LLVMCodegen::generateForeignStructTypes()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02710">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02666">LLVMCodegen::generateMainFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03393">LLVMCodegen::generateRTTIImplmentation()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00033">TIMER</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02400">LLVMCodegen::generateDescription()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02506">LLVMCodegen::generateExportFunctionDecls()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02487">LLVMCodegen::generateForeignStructTypes()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02723">LLVMCodegen::generateImportFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02679">LLVMCodegen::generateMainFunction()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03406">LLVMCodegen::generateRTTIImplmentation()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00033">TIMER</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1LLVMCodegen_aba19ab98a38e87929e2acaba894cd72b_cgraph.png" border="0" usemap="#aclassyoi_1_1LLVMCodegen_aba19ab98a38e87929e2acaba894cd72b_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1LLVMCodegen_aba19ab98a38e87929e2acaba894cd72b_cgraph" id="aclassyoi_1_1LLVMCodegen_aba19ab98a38e87929e2acaba894cd72b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,183,85,208"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a35803c6481343b9ff363e92650ea592c" title=" " alt="" coords="147,639,310,664"/>
-<area shape="poly" title=" " alt="" coords="54,207,220,625,215,627,49,209"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a99e3ae7244894d2a2f0a62ee3f881064" title=" " alt="" coords="1717,5,1871,31"/>
-<area shape="poly" title=" " alt="" coords="48,182,59,156,76,123,101,89,132,62,184,34,231,16,275,7,318,4,408,10,521,15,1187,15,1703,15,1703,21,1187,21,521,21,408,15,318,10,276,12,233,21,186,39,135,67,104,93,81,126,64,158,53,184"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2435047aabb27016228a5b8258aae9fb" title=" " alt="" coords="759,56,973,81"/>
-<area shape="poly" title=" " alt="" coords="52,181,82,138,105,116,132,98,182,82,248,70,326,63,412,58,589,56,746,60,745,66,589,62,412,64,326,68,249,76,183,87,134,103,108,120,86,142,56,184"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6e9d821fa8764e6348d1f436d765e772" title=" " alt="" coords="1387,107,1590,132"/>
-<area shape="poly" title=" " alt="" coords="65,180,96,163,133,149,239,124,325,115,521,117,867,117,1373,117,1373,122,867,122,521,122,325,120,240,129,134,154,98,168,68,185"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a21a7b0b11e917edd55e405244f9389ad" title=" " alt="" coords="133,1260,324,1285"/>
-<area shape="poly" title=" " alt="" coords="51,208,136,726,225,1246,220,1247,131,726,46,209"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ad53a3c899751cf3124e212374f0687e6" title=" " alt="" coords="721,335,1011,360"/>
-<area shape="poly" title=" " alt="" coords="86,200,783,329,782,335,85,205"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a413f9d11c2b3de2c9398c1ec9b618853" title=" " alt="" coords="145,688,312,713"/>
-<area shape="poly" title=" " alt="" coords="50,208,55,301,69,442,80,515,95,583,113,638,135,675,138,678,135,682,131,678,108,640,90,584,75,516,64,442,50,301,45,209"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9d55fbb78a566a0f9771db145260c45b" title=" " alt="" coords="1692,157,1896,183"/>
-<area shape="poly" title=" " alt="" coords="85,189,273,176,396,170,521,167,1187,167,1679,167,1679,173,1187,173,521,173,396,175,273,181,86,195"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322" title=" " alt="" coords="429,489,616,515"/>
-<area shape="poly" title=" " alt="" coords="238,637,291,582,328,551,371,525,415,510,417,515,373,530,332,555,294,586,242,640"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6f7e98e515f69b944d1a159e4fe24a8d" title=" " alt="" coords="753,765,979,791"/>
-<area shape="poly" title=" " alt="" coords="301,662,326,675,342,693,350,711,357,729,373,744,424,767,478,784,534,794,590,800,696,799,786,790,786,795,697,805,589,805,533,800,477,789,422,772,371,748,353,732,345,714,338,695,322,679,299,666"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132" title=" " alt="" coords="414,539,631,564"/>
-<area shape="poly" title=" " alt="" coords="248,636,302,605,371,574,406,564,408,569,373,579,304,610,251,641"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d" title=" " alt="" coords="421,440,625,465"/>
-<area shape="poly" title=" " alt="" coords="234,637,253,603,283,559,322,513,345,493,371,476,406,461,408,466,373,480,349,497,326,517,287,562,257,606,239,640"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2829388a5928eff71081206affb54c12" title=" " alt="" coords="1664,664,1924,689"/>
-<area shape="poly" title=" " alt="" coords="310,654,558,667,865,674,1187,674,1650,674,1650,679,1187,679,865,679,558,672,310,659"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab778771ecd84fa13e688fd24d204da4a" title=" " alt="" coords="1059,1018,1313,1058"/>
-<area shape="poly" title=" " alt="" coords="309,662,326,675,345,703,353,731,353,760,349,788,346,815,346,842,355,868,374,894,409,924,447,950,529,993,618,1024,709,1044,801,1055,889,1059,972,1058,1045,1054,1045,1059,972,1064,889,1065,800,1060,708,1049,616,1029,527,998,444,955,406,928,370,897,350,870,341,843,341,815,344,787,348,759,348,732,340,705,322,679,305,666"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ae8614dbe0b91ace1906cff958299dab4" title=" " alt="" coords="775,856,957,881"/>
-<area shape="poly" title=" " alt="" coords="306,662,326,675,340,692,347,709,350,744,353,777,360,792,374,807,420,837,471,859,525,874,580,883,635,887,687,887,780,880,780,886,688,893,634,892,579,888,524,879,469,864,417,841,370,811,356,795,348,778,344,744,341,710,335,694,322,679,303,666"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a59caa25e3c068e765370eefbe8665437" title=" " alt="" coords="423,588,623,613"/>
-<area shape="poly" title=" " alt="" coords="303,636,434,613,435,618,304,641"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#acd34d2aae130c5303efaa8be9260e1d0" title=" " alt="" coords="1393,1119,1585,1159"/>
-<area shape="poly" title=" " alt="" coords="310,662,326,675,343,699,355,722,361,746,363,770,358,818,347,864,336,910,332,955,335,977,343,999,355,1020,374,1041,395,1054,431,1065,537,1082,676,1095,832,1104,1133,1113,1314,1119,1379,1126,1379,1131,1313,1125,1133,1119,832,1109,675,1100,536,1087,429,1070,393,1058,370,1045,351,1023,338,1001,330,979,327,956,330,910,341,863,353,817,358,770,356,747,350,724,339,701,322,679,307,666"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#afd05efbde7875059ed6865ec70f59038" title=" " alt="" coords="1061,715,1311,740"/>
-<area shape="poly" title=" " alt="" coords="282,661,325,674,349,684,373,693,462,709,553,720,736,734,906,736,1047,733,1047,738,906,742,736,739,553,726,461,714,371,698,347,689,323,679,280,667"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9a37f305e4ae13b66ce6140c14d2e347" title=" " alt="" coords="1115,613,1257,639"/>
-<area shape="poly" title=" " alt="" coords="893,763,1145,642,1147,647,895,768"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1972,1044,2115,1069"/>
-<area shape="poly" title=" " alt="" coords="980,787,1616,853,1707,875,1776,897,1843,926,1925,969,1976,1001,2018,1033,2015,1037,1973,1005,1923,974,1840,931,1774,902,1705,880,1616,858,979,792"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1972,436,2115,461"/>
-<area shape="poly" title=" " alt="" coords="979,780,1224,786,1519,788,1659,785,1780,778,1872,767,1903,759,1923,750,1954,723,1979,689,1999,651,2013,611,2032,534,2038,475,2044,475,2037,535,2019,613,2003,653,1983,692,1958,726,1925,755,1905,764,1873,772,1781,784,1659,790,1519,793,1224,791,979,785"/>
-<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1424,867,1553,892"/>
-<area shape="poly" title=" " alt="" coords="896,788,969,818,1059,845,1153,861,1248,870,1410,877,1410,883,1247,876,1152,866,1058,850,967,823,894,793"/>
-<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="1391,563,1586,588"/>
-<area shape="poly" title=" " alt="" coords="1257,611,1398,588,1399,593,1258,617"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1446,461,1531,487"/>
-<area shape="poly" title=" " alt="" coords="1211,611,1449,490,1451,495,1214,616"/>
-<area shape="poly" title=" " alt="" coords="1258,633,1388,643,1469,645,1558,643,1650,635,1744,619,1836,595,1923,561,1954,542,1982,518,2023,470,2027,474,1985,522,1957,546,1925,566,1837,600,1745,625,1651,640,1558,648,1469,651,1387,649,1257,638"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1727,511,1861,551"/>
-<area shape="poly" title=" " alt="" coords="1532,479,1713,514,1712,519,1531,484"/>
-<area shape="poly" title=" " alt="" coords="1531,469,1958,450,1958,455,1532,475"/>
-<area shape="poly" title=" " alt="" coords="1826,550,1877,593,1904,620,1926,651,1953,702,1976,755,2010,863,2031,960,2042,1030,2036,1031,2026,961,2005,865,1971,757,1949,704,1922,654,1900,624,1874,596,1823,554"/>
-<area shape="poly" title=" " alt="" coords="1861,510,1923,490,1996,464,1998,469,1925,495,1863,515"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="2163,1044,2365,1069"/>
-<area shape="poly" title=" " alt="" coords="2115,1054,2149,1054,2149,1059,2115,1059"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2413,1044,2604,1069"/>
-<area shape="poly" title=" " alt="" coords="2366,1054,2399,1054,2399,1059,2366,1059"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="2163,436,2365,461"/>
-<area shape="poly" title=" " alt="" coords="2115,446,2149,446,2149,451,2115,451"/>
-<area shape="poly" title=" " alt="" coords="631,547,653,539,671,525,690,502,697,477,697,451,694,425,691,398,691,372,700,346,720,321,758,299,811,284,874,274,943,269,1079,267,1185,269,1490,269,1616,272,1714,286,1809,314,1925,362,1977,392,2019,425,2016,429,1974,397,1923,367,1807,319,1713,291,1615,277,1490,274,1185,274,1079,272,943,274,875,279,812,289,760,304,723,325,704,349,697,373,696,398,699,424,703,451,702,478,694,504,675,529,655,543,633,552"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af0a237f11cfdd9e3772dfe4caa894c45" title=" " alt="" coords="802,513,930,539"/>
-<area shape="poly" title=" " alt="" coords="632,541,788,529,788,534,632,546"/>
-<area shape="poly" title=" " alt="" coords="530,438,556,399,598,347,654,293,686,269,720,250,786,224,843,209,896,202,946,202,1052,211,1113,216,1185,218,1490,218,1557,215,1616,209,1718,196,1765,195,1814,202,1867,220,1925,250,1948,267,1968,288,2000,335,2023,382,2037,422,2032,424,2018,384,1996,337,1964,291,1945,271,1923,255,1865,225,1813,208,1765,201,1718,201,1617,214,1558,221,1490,223,1185,223,1113,221,1051,216,946,207,896,207,844,214,787,229,722,255,689,274,657,297,602,350,560,402,534,441"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="791,563,941,588"/>
-<area shape="poly" title=" " alt="" coords="625,456,651,464,675,476,692,494,700,514,707,532,723,549,749,562,778,570,776,575,747,567,720,553,702,535,695,516,688,497,672,480,649,468,624,461"/>
-<area shape="poly" title=" " alt="" coords="942,573,1378,573,1378,578,942,578"/>
-<area shape="poly" title=" " alt="" coords="941,561,1432,480,1433,486,942,566"/>
-<area shape="poly" title=" " alt="" coords="941,569,976,562,1009,549,1024,538,1033,526,1042,513,1057,501,1141,463,1216,439,1284,427,1350,425,1489,433,1570,438,1664,439,1794,438,1924,439,1958,441,1958,446,1924,445,1794,443,1664,445,1570,443,1489,438,1350,430,1285,433,1217,444,1143,467,1060,506,1046,517,1037,529,1028,542,1012,554,978,567,942,574"/>
-<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1127,360,1245,385"/>
-<area shape="poly" title=" " alt="" coords="941,575,977,567,1009,549,1023,533,1030,516,1033,479,1035,441,1042,421,1057,403,1083,385,1112,376,1114,381,1085,390,1060,407,1047,424,1040,442,1038,479,1036,517,1028,536,1012,553,979,572,942,580"/>
-<area shape="poly" title=" " alt="" coords="1226,383,1438,454,1436,459,1224,388"/>
-<area shape="poly" title=" " alt="" coords="1884,662,1922,642,1962,604,1993,558,2016,512,2031,474,2036,476,2021,514,1998,560,1966,607,1926,647,1886,666"/>
-<area shape="poly" title=" " alt="" coords="1314,1042,1664,1054,1959,1055,1959,1060,1664,1059,1314,1047"/>
-<area shape="poly" title=" " alt="" coords="934,879,1059,895,1186,901,1313,895,1410,887,1411,892,1314,901,1186,906,1058,901,933,884"/>
-<area shape="poly" title=" " alt="" coords="622,587,672,574,696,562,720,549,788,532,789,538,722,554,699,566,674,579,623,592"/>
-<area shape="poly" title=" " alt="" coords="623,591,777,579,777,585,623,596"/>
-<area shape="poly" title=" " alt="" coords="1585,1136,1744,1125,1835,1114,1923,1098,1964,1086,2001,1072,2003,1077,1965,1091,1925,1103,1835,1120,1745,1131,1585,1141"/>
-<area shape="poly" title=" " alt="" coords="1312,736,1471,745,1650,747,1736,743,1813,734,1876,720,1923,700,1949,677,1972,650,1991,620,2005,588,2026,525,2036,475,2041,476,2031,527,2010,590,1995,623,1976,653,1953,681,1925,704,1878,725,1814,739,1736,748,1650,752,1471,750,1312,741"/>
-<area shape="poly" title=" " alt="" coords="1872,21,1901,31,1926,48,1962,91,1991,141,2012,194,2026,248,2042,348,2045,422,2040,422,2037,349,2021,249,2006,195,1986,143,1958,94,1922,52,1898,36,1871,26"/>
-<area shape="poly" title=" " alt="" coords="973,62,1218,56,1515,55,1657,58,1780,66,1872,78,1905,86,1926,96,1962,130,1990,171,2010,216,2025,264,2041,354,2045,422,2040,422,2036,355,2020,265,2005,218,1985,174,1958,133,1922,100,1903,91,1871,83,1779,71,1657,64,1515,60,1218,61,973,68"/>
-<area shape="poly" title=" " alt="" coords="882,79,1164,349,1160,353,879,83"/>
-<area shape="poly" title=" " alt="" coords="1539,104,1620,90,1669,86,1721,85,1775,89,1828,99,1879,117,1926,144,1957,173,1982,207,2002,246,2018,285,2036,362,2043,422,2038,422,2031,363,2012,287,1998,248,1978,210,1953,176,1922,148,1877,122,1827,104,1774,94,1721,90,1669,91,1620,96,1540,109"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1666,1019,1922,1044"/>
-<area shape="poly" title=" " alt="" coords="324,1266,571,1252,879,1230,1157,1202,1256,1186,1312,1169,1328,1155,1335,1139,1343,1121,1360,1105,1430,1071,1505,1048,1581,1034,1652,1028,1652,1033,1582,1040,1507,1053,1432,1076,1363,1110,1348,1124,1340,1141,1332,1158,1315,1174,1257,1191,1158,1208,880,1236,571,1257,324,1271"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="399,1336,646,1361"/>
-<area shape="poly" title=" " alt="" coords="268,1283,373,1314,443,1331,442,1336,371,1319,267,1288"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="1361,1255,1616,1295"/>
-<area shape="poly" title=" " alt="" coords="325,1270,1348,1272,1348,1278,324,1276"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="372,1385,673,1411"/>
-<area shape="poly" title=" " alt="" coords="245,1283,298,1328,334,1352,373,1372,395,1379,393,1384,371,1376,332,1356,295,1332,242,1287"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="427,1151,619,1191"/>
-<area shape="poly" title=" " alt="" coords="266,1257,450,1193,452,1198,268,1262"/>
-<area shape="poly" title=" " alt="" coords="1919,1041,1958,1045,1958,1051,1919,1047"/>
-<area shape="poly" title=" " alt="" coords="1827,1016,1877,989,1901,970,1922,947,1958,886,1986,820,2007,752,2021,684,2037,561,2040,475,2045,476,2042,562,2027,685,2012,753,1991,822,1963,889,1926,950,1905,974,1880,994,1830,1021"/>
-<area shape="poly" title=" " alt="" coords="1616,1280,1690,1277,1769,1267,1849,1247,1887,1232,1923,1213,1959,1184,1989,1149,2012,1112,2029,1081,2033,1083,2017,1115,1993,1152,1963,1188,1925,1218,1889,1236,1850,1252,1770,1272,1690,1283,1616,1286"/>
-<area shape="poly" title=" " alt="" coords="619,1175,875,1187,1185,1194,1490,1194,1614,1195,1712,1192,1758,1186,1806,1175,1923,1137,1975,1109,2016,1077,2020,1081,1977,1113,1925,1142,1808,1181,1759,1191,1712,1197,1614,1200,1490,1199,1185,1199,874,1192,619,1180"/>
-<area shape="poly" title=" " alt="" coords="529,1150,599,982,655,867,719,753,783,664,841,597,845,600,787,668,724,755,659,869,604,984,534,1152"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="807,1133,925,1159"/>
-<area shape="poly" title=" " alt="" coords="619,1162,793,1149,793,1154,619,1167"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1097,1133,1275,1159"/>
-<area shape="poly" title=" " alt="" coords="925,1143,1083,1143,1083,1149,925,1149"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1129,968,1243,993"/>
-<area shape="poly" title=" " alt="" coords="879,1131,951,1069,1002,1034,1058,1004,1114,987,1116,992,1060,1008,1005,1038,954,1074,882,1135"/>
-<area shape="poly" title=" " alt="" coords="1243,973,1367,967,1537,965,1632,968,1731,975,1829,987,1925,1005,1968,1018,2007,1035,2005,1040,1966,1023,1923,1010,1828,993,1730,981,1632,974,1537,970,1368,972,1244,979"/>
-<area shape="poly" title=" " alt="" coords="1243,968,1361,946,1451,934,1531,929,1670,922,1732,911,1794,889,1856,852,1922,795,1953,757,1978,715,1997,670,2012,624,2031,539,2038,474,2043,475,2036,539,2017,626,2002,672,1983,718,1957,760,1926,799,1860,856,1796,894,1734,916,1670,927,1531,934,1452,939,1362,951,1244,973"/>
-<area shape="poly" title=" " alt="" coords="1243,969,1278,960,1312,946,1326,937,1335,928,1345,918,1360,909,1409,891,1411,896,1363,914,1349,923,1339,932,1329,942,1315,951,1280,965,1244,974"/>
-<area shape="poly" title=" " alt="" coords="1011,337,1195,334,1425,340,1549,348,1676,360,1802,378,1925,402,2002,428,2001,433,1923,407,1801,383,1675,365,1548,353,1424,345,1195,339,1011,343"/>
-<area shape="poly" title=" " alt="" coords="903,358,983,391,1090,444,1207,514,1263,555,1315,600,1372,665,1419,736,1455,802,1479,853,1474,855,1450,804,1414,739,1367,668,1311,604,1260,559,1204,518,1088,448,980,396,901,363"/>
-<area shape="poly" title=" " alt="" coords="1011,356,1114,364,1114,370,1010,361"/>
-<area shape="poly" title=" " alt="" coords="1890,180,1926,200,1951,224,1972,252,2006,314,2027,374,2040,422,2035,423,2022,376,2001,316,1968,255,1947,228,1922,204,1887,185"/>
+<area shape="rect" title=" " alt="" coords="5,680,85,705"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a35803c6481343b9ff363e92650ea592c" title=" " alt="" coords="147,580,310,605"/>
+<area shape="poly" title=" " alt="" coords="69,677,191,609,194,614,71,682"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a99e3ae7244894d2a2f0a62ee3f881064" title=" " alt="" coords="1665,25,1819,50"/>
+<area shape="poly" title=" " alt="" coords="44,679,44,561,52,376,62,278,78,188,101,115,115,87,131,67,178,31,222,11,266,3,310,5,406,22,460,30,521,34,1187,34,1651,35,1651,40,1187,39,521,39,460,36,405,27,309,10,266,9,223,16,180,35,135,70,119,90,106,117,83,190,68,279,57,376,49,562,49,679"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2435047aabb27016228a5b8258aae9fb" title=" " alt="" coords="759,936,973,961"/>
+<area shape="poly" title=" " alt="" coords="82,703,134,721,519,842,809,929,807,934,518,847,132,726,81,708"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6e9d821fa8764e6348d1f436d765e772" title=" " alt="" coords="1361,74,1564,100"/>
+<area shape="poly" title=" " alt="" coords="44,679,45,570,55,400,66,310,81,229,103,162,116,136,131,117,178,82,222,62,266,54,310,56,406,73,460,81,521,84,867,84,1347,84,1347,90,867,90,521,90,460,86,405,78,310,61,266,60,224,67,181,86,135,121,121,139,108,164,86,230,71,311,61,400,51,570,49,679"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a21a7b0b11e917edd55e405244f9389ad" title=" " alt="" coords="133,1168,324,1193"/>
+<area shape="poly" title=" " alt="" coords="51,705,78,837,103,930,136,1023,174,1097,212,1155,208,1158,169,1099,131,1025,98,932,72,838,46,706"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ad53a3c899751cf3124e212374f0687e6" title=" " alt="" coords="721,758,1011,784"/>
+<area shape="poly" title=" " alt="" coords="86,694,719,754,719,760,85,699"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a413f9d11c2b3de2c9398c1ec9b618853" title=" " alt="" coords="145,986,312,1012"/>
+<area shape="poly" title=" " alt="" coords="49,705,53,753,65,823,76,861,91,899,110,934,135,965,153,978,149,983,131,969,106,937,86,901,71,863,60,824,48,754,44,706"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9d55fbb78a566a0f9771db145260c45b" title=" " alt="" coords="1640,126,1844,152"/>
+<area shape="poly" title=" " alt="" coords="48,678,91,558,130,470,183,376,213,329,247,285,285,245,325,208,369,178,417,155,467,140,521,135,1187,135,1626,136,1626,141,1187,140,521,140,468,146,418,160,372,183,329,213,289,248,252,289,218,332,187,378,135,472,96,560,53,680"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322" title=" " alt="" coords="429,530,616,556"/>
+<area shape="poly" title=" " alt="" coords="305,577,432,555,433,561,305,582"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a6f7e98e515f69b944d1a159e4fe24a8d" title=" " alt="" coords="753,630,979,656"/>
+<area shape="poly" title=" " alt="" coords="292,603,372,615,565,631,739,638,738,644,564,636,372,620,291,608"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132" title=" " alt="" coords="414,432,631,457"/>
+<area shape="poly" title=" " alt="" coords="239,578,291,523,329,493,371,467,400,456,402,461,373,472,332,497,295,527,242,581"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d" title=" " alt="" coords="421,481,625,506"/>
+<area shape="poly" title=" " alt="" coords="248,577,302,547,371,517,407,507,408,512,373,522,305,551,251,582"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a2829388a5928eff71081206affb54c12" title=" " alt="" coords="1612,176,1872,201"/>
+<area shape="poly" title=" " alt="" coords="231,579,245,532,272,465,314,393,340,359,370,330,433,283,491,247,545,222,599,204,655,194,716,188,865,186,1187,186,1598,186,1598,191,1187,191,865,191,717,193,656,199,600,209,547,226,493,252,436,287,374,334,344,363,318,396,277,467,250,533,236,580"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab778771ecd84fa13e688fd24d204da4a" title=" " alt="" coords="1059,1290,1313,1330"/>
+<area shape="poly" title=" " alt="" coords="236,605,274,753,327,975,332,1012,333,1046,330,1105,332,1132,338,1158,351,1184,373,1210,429,1222,546,1241,722,1268,890,1286,1045,1298,1045,1304,889,1291,721,1274,545,1246,428,1227,371,1215,346,1187,333,1159,326,1132,325,1105,328,1046,327,1013,321,976,269,755,231,606"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ae8614dbe0b91ace1906cff958299dab4" title=" " alt="" coords="775,846,957,872"/>
+<area shape="poly" title=" " alt="" coords="261,603,823,839,821,843,259,608"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a59caa25e3c068e765370eefbe8665437" title=" " alt="" coords="423,580,623,605"/>
+<area shape="poly" title=" " alt="" coords="310,590,409,590,409,595,310,595"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#acd34d2aae130c5303efaa8be9260e1d0" title=" " alt="" coords="1367,1175,1559,1215"/>
+<area shape="poly" title=" " alt="" coords="240,604,291,682,329,731,374,776,431,822,492,865,622,941,758,1006,895,1058,1029,1101,1153,1134,1263,1159,1353,1176,1352,1181,1262,1164,1151,1139,1027,1106,894,1064,756,1010,620,946,489,870,428,826,370,780,325,734,286,685,235,607"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#afd05efbde7875059ed6865ec70f59038" title=" " alt="" coords="1061,226,1311,252"/>
+<area shape="poly" title=" " alt="" coords="235,578,286,504,325,459,370,418,459,358,535,320,616,294,721,268,804,252,889,242,1047,234,1047,239,890,247,805,258,722,274,617,299,537,325,462,362,374,423,329,463,290,507,240,581"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a9a37f305e4ae13b66ce6140c14d2e347" title=" " alt="" coords="1115,480,1257,505"/>
+<area shape="poly" title=" " alt="" coords="893,628,1144,509,1147,513,896,633"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1920,1152,2063,1177"/>
+<area shape="poly" title=" " alt="" coords="937,653,1109,690,1212,716,1314,746,1446,785,1501,809,1566,850,1581,865,1591,879,1600,893,1614,908,1682,957,1741,987,1801,1016,1874,1061,1925,1102,1968,1140,1965,1144,1922,1106,1870,1065,1798,1021,1738,992,1679,962,1610,912,1595,896,1586,882,1577,868,1562,855,1499,814,1444,790,1313,751,1211,721,1108,695,936,658"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1920,480,2063,505"/>
+<area shape="poly" title=" " alt="" coords="971,628,1058,618,1183,606,1288,600,1468,594,1555,589,1646,580,1750,563,1871,537,1913,524,1950,508,1953,513,1914,529,1873,542,1751,568,1647,585,1555,595,1468,600,1289,606,1183,612,1059,623,972,633"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1398,864,1527,889"/>
+<area shape="poly" title=" " alt="" coords="902,653,1113,733,1314,814,1362,839,1408,857,1406,862,1360,844,1312,819,1111,738,901,658"/>
+<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="1365,429,1560,454"/>
+<area shape="poly" title=" " alt="" coords="1256,477,1378,454,1379,460,1257,482"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1420,530,1505,556"/>
+<area shape="poly" title=" " alt="" coords="1257,503,1407,530,1406,536,1256,508"/>
+<area shape="poly" title=" " alt="" coords="1258,490,1906,490,1906,495,1258,495"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1675,858,1809,898"/>
+<area shape="poly" title=" " alt="" coords="1477,554,1717,845,1713,849,1472,557"/>
+<area shape="poly" title=" " alt="" coords="1506,538,1666,528,1872,508,1906,504,1907,509,1872,514,1667,533,1506,544"/>
+<area shape="poly" title=" " alt="" coords="1810,884,1843,896,1874,914,1899,939,1920,968,1953,1030,1975,1090,1987,1138,1982,1139,1970,1092,1948,1032,1915,971,1895,943,1870,919,1841,900,1809,889"/>
+<area shape="poly" title=" " alt="" coords="1809,868,1842,856,1870,837,1901,801,1927,759,1946,714,1961,669,1979,583,1986,518,1992,519,1985,584,1966,670,1951,716,1931,761,1906,804,1874,841,1844,861,1811,873"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="2111,1152,2313,1177"/>
+<area shape="poly" title=" " alt="" coords="2063,1162,2097,1162,2097,1167,2063,1167"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2361,1152,2552,1177"/>
+<area shape="poly" title=" " alt="" coords="2314,1162,2347,1162,2347,1167,2314,1167"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="2111,480,2313,505"/>
+<area shape="poly" title=" " alt="" coords="2063,490,2097,490,2097,495,2063,495"/>
+<area shape="poly" title=" " alt="" coords="631,439,672,423,687,409,695,392,703,374,720,358,783,324,839,301,891,288,942,282,1050,283,1185,287,1464,287,1583,285,1677,288,1721,294,1767,307,1817,327,1873,355,1907,380,1937,409,1978,466,1974,470,1932,413,1904,384,1871,360,1815,332,1766,312,1720,300,1676,293,1583,290,1464,292,1185,292,1049,288,942,287,892,293,840,306,785,329,723,363,707,377,700,394,692,412,675,428,632,444"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af0a237f11cfdd9e3772dfe4caa894c45" title=" " alt="" coords="802,432,930,457"/>
+<area shape="poly" title=" " alt="" coords="632,442,788,442,788,447,632,447"/>
+<area shape="poly" title=" " alt="" coords="624,484,672,467,687,456,695,444,704,430,720,418,785,387,841,364,893,350,944,341,1050,337,1185,338,1464,338,1582,339,1674,347,1763,368,1873,409,1925,437,1967,468,1964,473,1922,441,1871,414,1761,373,1673,352,1581,344,1464,343,1185,343,1050,342,944,347,895,355,843,369,787,391,723,423,708,434,700,447,690,460,675,472,626,489"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="791,530,941,556"/>
+<area shape="poly" title=" " alt="" coords="612,504,778,528,777,533,611,509"/>
+<area shape="poly" title=" " alt="" coords="891,528,965,496,1011,479,1058,466,1134,452,1211,444,1352,437,1352,443,1211,449,1134,458,1059,471,1012,484,967,501,894,533"/>
+<area shape="poly" title=" " alt="" coords="941,540,1406,540,1406,546,941,546"/>
+<area shape="poly" title=" " alt="" coords="894,528,948,501,1009,468,1032,449,1042,440,1058,433,1119,414,1181,400,1245,390,1310,385,1439,384,1564,394,1681,411,1786,432,1939,473,1938,478,1785,437,1680,416,1564,399,1439,389,1310,390,1246,396,1182,405,1120,419,1060,438,1045,445,1035,453,1012,472,951,506,897,533"/>
+<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1127,632,1245,657"/>
+<area shape="poly" title=" " alt="" coords="908,553,1133,625,1131,630,907,558"/>
+<area shape="poly" title=" " alt="" coords="1221,629,1413,558,1415,563,1223,634"/>
+<area shape="poly" title=" " alt="" coords="1840,199,1874,218,1901,246,1923,277,1957,346,1978,413,1989,465,1984,466,1973,414,1952,348,1919,280,1897,249,1870,223,1837,204"/>
+<area shape="poly" title=" " alt="" coords="1314,1324,1435,1332,1577,1330,1652,1323,1727,1311,1801,1293,1871,1269,1901,1252,1929,1231,1970,1186,1974,1190,1932,1234,1904,1256,1873,1274,1802,1299,1728,1317,1653,1329,1578,1336,1435,1338,1313,1330"/>
+<area shape="poly" title=" " alt="" coords="957,860,1059,863,1384,872,1384,877,1059,868,957,865"/>
+<area shape="poly" title=" " alt="" coords="622,583,672,566,687,555,696,544,705,531,720,517,770,485,820,460,822,465,773,490,723,521,709,534,700,547,691,559,675,571,624,588"/>
+<area shape="poly" title=" " alt="" coords="611,577,777,553,778,558,612,582"/>
+<area shape="poly" title=" " alt="" coords="1559,1187,1906,1167,1906,1172,1559,1192"/>
+<area shape="poly" title=" " alt="" coords="1311,228,1459,222,1622,223,1701,228,1771,237,1830,250,1873,269,1899,288,1920,312,1953,366,1975,421,1987,466,1982,467,1970,423,1948,369,1916,315,1895,292,1871,273,1828,255,1770,242,1700,233,1622,229,1459,228,1312,233"/>
+<area shape="poly" title=" " alt="" coords="1820,41,1849,51,1874,68,1912,114,1941,167,1963,223,1977,281,1987,337,1992,388,1994,466,1988,466,1986,388,1981,337,1972,282,1958,225,1936,169,1908,117,1870,72,1846,55,1819,46"/>
+<area shape="poly" title=" " alt="" coords="973,949,1122,949,1294,944,1377,938,1452,929,1516,916,1563,899,1578,888,1587,875,1596,860,1610,844,1647,815,1681,794,1744,766,1804,736,1836,713,1870,683,1905,641,1936,595,1977,516,1981,519,1940,598,1910,644,1874,686,1839,717,1807,740,1746,770,1684,799,1650,820,1614,848,1600,863,1592,878,1582,892,1565,904,1517,921,1453,934,1377,943,1294,949,1122,954,973,954"/>
+<area shape="poly" title=" " alt="" coords="910,933,960,913,1009,882,1063,829,1109,770,1145,713,1170,668,1175,671,1150,716,1113,773,1067,833,1012,887,962,918,912,938"/>
+<area shape="poly" title=" " alt="" coords="1564,79,1650,77,1740,81,1820,91,1851,101,1874,113,1911,151,1940,196,1961,246,1976,297,1986,347,1991,394,1994,466,1988,466,1986,394,1981,348,1971,298,1956,247,1935,199,1907,154,1870,117,1849,106,1819,97,1740,86,1650,83,1564,84"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1614,1074,1870,1100"/>
+<area shape="poly" title=" " alt="" coords="276,1165,372,1146,542,1126,717,1110,1060,1091,1366,1083,1600,1083,1600,1088,1366,1089,1060,1097,717,1116,543,1131,372,1151,277,1170"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="399,1325,646,1350"/>
+<area shape="poly" title=" " alt="" coords="241,1192,293,1251,330,1284,373,1311,389,1318,387,1323,371,1316,327,1288,289,1255,237,1195"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af5ae90a71d85660f942839c1287c7ff6" title=" " alt="" coords="1367,973,1558,998"/>
+<area shape="poly" title=" " alt="" coords="241,1166,295,1122,331,1098,371,1079,455,1057,567,1038,698,1023,840,1011,1125,994,1354,986,1354,991,1125,999,841,1016,699,1028,568,1043,456,1062,373,1084,334,1103,298,1126,245,1170"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="1615,1356,1869,1396"/>
+<area shape="poly" title=" " alt="" coords="238,1192,255,1228,284,1275,323,1323,347,1344,373,1361,441,1391,501,1407,556,1413,609,1411,722,1396,788,1389,865,1386,1187,1386,1601,1378,1601,1384,1187,1391,865,1391,789,1394,723,1401,609,1416,555,1418,500,1412,439,1396,371,1365,344,1348,320,1327,279,1278,250,1230,233,1194"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="372,1276,673,1301"/>
+<area shape="poly" title=" " alt="" coords="251,1191,305,1223,373,1254,430,1270,428,1275,371,1259,302,1227,249,1196"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="427,1160,619,1200"/>
+<area shape="poly" title=" " alt="" coords="324,1178,413,1178,413,1183,324,1183"/>
+<area shape="poly" title=" " alt="" coords="1801,1097,1873,1117,1948,1144,1946,1149,1871,1122,1800,1102"/>
+<area shape="poly" title=" " alt="" coords="1842,1072,1870,1053,1883,1036,1896,1012,1919,951,1937,877,1953,795,1975,634,1985,519,1991,519,1980,634,1958,796,1943,878,1924,953,1901,1015,1888,1039,1874,1057,1845,1077"/>
+<area shape="poly" title=" " alt="" coords="1558,992,1634,991,1717,980,1759,969,1799,954,1836,934,1870,908,1891,879,1911,837,1944,725,1969,607,1984,519,1989,519,1974,608,1949,726,1916,838,1896,882,1874,912,1839,938,1801,959,1760,974,1718,985,1634,996,1558,997"/>
+<area shape="poly" title=" " alt="" coords="1812,1354,1842,1340,1870,1322,1904,1291,1934,1254,1975,1188,1979,1191,1938,1258,1908,1294,1874,1327,1845,1345,1814,1359"/>
+<area shape="poly" title=" " alt="" coords="596,1198,657,1213,722,1224,851,1241,952,1248,1185,1250,1464,1250,1596,1242,1726,1223,1842,1200,1932,1178,1933,1183,1843,1205,1727,1229,1597,1247,1464,1255,1185,1255,952,1253,851,1246,721,1230,656,1218,594,1203"/>
+<area shape="poly" title=" " alt="" coords="523,1160,536,1066,550,999,569,924,594,844,627,764,669,687,719,617,739,598,762,582,809,558,811,563,765,587,743,602,723,621,673,690,632,766,599,846,574,925,555,1000,542,1067,529,1160"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="807,1189,925,1214"/>
+<area shape="poly" title=" " alt="" coords="619,1184,793,1195,793,1200,619,1189"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1097,1189,1275,1214"/>
+<area shape="poly" title=" " alt="" coords="925,1199,1083,1199,1083,1204,925,1204"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1129,1037,1243,1062"/>
+<area shape="poly" title=" " alt="" coords="893,1187,1145,1066,1147,1071,895,1191"/>
+<area shape="poly" title=" " alt="" coords="1244,1056,1612,1110,1907,1151,1906,1156,1612,1115,1243,1061"/>
+<area shape="poly" title=" " alt="" coords="1244,1051,1391,1058,1578,1057,1671,1051,1754,1040,1823,1022,1850,1011,1870,997,1883,983,1896,963,1918,910,1937,844,1952,770,1974,625,1985,519,1990,519,1979,626,1957,771,1942,845,1923,911,1900,965,1888,986,1874,1001,1852,1015,1825,1027,1756,1045,1671,1057,1578,1063,1391,1063,1244,1056"/>
+<area shape="poly" title=" " alt="" coords="1206,1035,1428,894,1431,899,1209,1039"/>
+<area shape="poly" title=" " alt="" coords="1011,766,1190,753,1296,741,1409,724,1526,701,1644,671,1760,634,1871,589,1899,573,1926,553,1968,513,1971,517,1929,557,1902,577,1873,593,1762,639,1646,676,1528,706,1410,729,1297,746,1190,758,1011,771"/>
+<area shape="poly" title=" " alt="" coords="918,781,1059,812,1234,842,1385,864,1384,869,1233,847,1058,818,917,786"/>
+<area shape="poly" title=" " alt="" coords="899,756,1139,660,1141,665,900,761"/>
+<area shape="poly" title=" " alt="" coords="1846,146,1874,162,1906,196,1931,235,1951,278,1966,321,1985,403,1992,466,1986,466,1979,404,1961,323,1946,280,1927,238,1901,199,1870,167,1843,151"/>
 </map>
 </div>
 
@@ -1323,7 +1331,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03605">3605</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03618">3618</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -1393,11 +1401,11 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03654">3654</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03667">3667</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1459,7 +1467,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">179</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02935">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02948">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -1541,7 +1549,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1632,7 +1640,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00789">789</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00802">802</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l00508">IRCodeBlock::getIRArray()</a>.</p>
 <div class="dynheader">
@@ -1674,9 +1682,9 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">319</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l00061">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00362">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02810">LLVMCodegen::generateImportFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00534">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03430">LLVMCodegen::generateRTTIDeclaration()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00390">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00437">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00332">LLVMCodegen::generateStructShallowDeclarations()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l00061">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00374">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02823">LLVMCodegen::generateImportFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00547">LLVMCodegen::generateInterfaceObjectGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03443">LLVMCodegen::generateRTTIDeclaration()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00403">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00450">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00332">LLVMCodegen::generateStructShallowDeclarations()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1789,11 +1797,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02387">2387</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02400">2400</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1847,11 +1855,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02493">2493</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02506">2506</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1919,7 +1927,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02474">2474</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02487">2487</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
@@ -1983,7 +1991,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00653">653</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00666">666</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01359">IRValueType::addAttribute()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, <a class="el" href="def_8cpp_source.html#l00081">yoi::set_current_file_path()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -2043,9 +2051,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00362">362</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00374">374</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7">IRFunctionDefinition::AlwaysInline</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02197">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445abfb0ca5162a37ff39298b24afdb84ff7">IRFunctionDefinition::AlwaysInline</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02210">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a4bed942140642650ca78039de000796a">IRFunctionDefinition::Unreachable</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -2105,7 +2113,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00770">770</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00783">783</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -2133,9 +2141,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00637">637</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00650">650</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2181,7 +2189,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">351</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02142">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02155">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -2228,6 +2236,66 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="222,32,188,27,189,21,222,26"/>
 <area shape="rect" href="classyoi_1_1LLVMCodegen.html#aba19ab98a38e87929e2acaba894cd72b" title=" " alt="" coords="108,55,188,80"/>
 <area shape="poly" title=" " alt="" coords="222,59,189,64,188,59,222,54"/>
+<area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af5ae90a71d85660f942839c1287c7ff6" name="af5ae90a71d85660f942839c1287c7ff6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5ae90a71d85660f942839c1287c7ff6">&#9670;&#160;</a></span>generateGlobalInitializers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">void</a> generateGlobalInitializers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html">LLVMModuleContext</a> &amp;&#160;</td>
+          <td class="paramname"><em>llvmModCtx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00361">361</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_cgraph.png" border="0" usemap="#aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_cgraph" alt=""/></div>
+<map name="aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_cgraph" id="aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,196,31"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="244,5,387,31"/>
+<area shape="poly" title=" " alt="" coords="196,15,230,15,230,21,196,21"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="435,5,637,31"/>
+<area shape="poly" title=" " alt="" coords="387,15,421,15,421,21,387,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_icgraph.png" border="0" usemap="#aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_icgraph" alt=""/></div>
+<map name="aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_icgraph" id="aclassyoi_1_1LLVMCodegen_af5ae90a71d85660f942839c1287c7ff6_icgraph">
+<area shape="rect" title=" " alt="" coords="475,31,665,56"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a21a7b0b11e917edd55e405244f9389ad" title=" " alt="" coords="236,31,427,56"/>
+<area shape="poly" title=" " alt="" coords="461,46,427,46,427,41,461,41"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a13ad4db0b1bfc054c3dfc346e4c80bb1" title=" " alt="" coords="108,5,188,31"/>
+<area shape="poly" title=" " alt="" coords="225,31,188,26,189,21,226,26"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aba19ab98a38e87929e2acaba894cd72b" title=" " alt="" coords="108,55,188,80"/>
+<area shape="poly" title=" " alt="" coords="223,60,189,65,188,60,222,55"/>
 <area shape="rect" href="main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
@@ -2287,9 +2355,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03777">3777</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03790">3790</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04193">LLVMCodegen::callGcFunction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04206">LLVMCodegen::callGcFunction()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2343,64 +2411,67 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">382</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">394</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00637">LLVMCodegen::generateFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00572">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00650">LLVMCodegen::generateFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00361">LLVMCodegen::generateGlobalInitializers()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00585">LLVMCodegen::generateInterfaceObjectGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00485">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1LLVMCodegen_a21a7b0b11e917edd55e405244f9389ad_cgraph.png" border="0" usemap="#aclassyoi_1_1LLVMCodegen_a21a7b0b11e917edd55e405244f9389ad_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1LLVMCodegen_a21a7b0b11e917edd55e405244f9389ad_cgraph" id="aclassyoi_1_1LLVMCodegen_a21a7b0b11e917edd55e405244f9389ad_cgraph">
-<area shape="rect" title=" " alt="" coords="5,419,196,444"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1304,271,1560,296"/>
-<area shape="poly" title=" " alt="" coords="196,416,433,391,576,382,719,378,995,378,1050,376,1105,369,1214,349,1310,322,1384,298,1385,303,1312,328,1215,354,1106,375,1050,381,995,383,719,383,576,387,434,397,197,421"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="271,469,518,495"/>
-<area shape="poly" title=" " alt="" coords="176,441,307,464,306,470,175,447"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="593,418,848,458"/>
-<area shape="poly" title=" " alt="" coords="196,430,580,434,580,439,196,435"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="244,519,545,544"/>
-<area shape="poly" title=" " alt="" coords="122,442,176,474,245,505,274,513,273,518,243,510,173,479,119,446"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="299,253,491,293"/>
-<area shape="poly" title=" " alt="" coords="124,416,343,297,346,302,127,421"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1608,271,1751,296"/>
-<area shape="poly" title=" " alt="" coords="1560,281,1594,281,1594,286,1560,286"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1608,156,1751,181"/>
-<area shape="poly" title=" " alt="" coords="1522,268,1559,256,1612,224,1654,189,1657,193,1615,228,1561,260,1524,273"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1799,271,2001,296"/>
-<area shape="poly" title=" " alt="" coords="1751,281,1785,281,1785,286,1751,286"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2049,271,2240,296"/>
-<area shape="poly" title=" " alt="" coords="2002,281,2035,281,2035,286,2002,286"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1799,156,2001,181"/>
-<area shape="poly" title=" " alt="" coords="1751,166,1785,166,1785,171,1751,171"/>
-<area shape="poly" title=" " alt="" coords="848,441,996,440,1176,429,1273,417,1370,401,1466,379,1559,350,1608,327,1649,302,1652,306,1610,332,1561,355,1468,384,1371,406,1273,423,1177,434,996,445,848,446"/>
-<area shape="poly" title=" " alt="" coords="491,275,848,291,1304,305,1432,310,1488,310,1560,305,1613,296,1614,302,1560,310,1488,315,1432,315,1304,310,848,296,491,280"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="1139,55,1256,80"/>
-<area shape="poly" title=" " alt="" coords="445,250,592,194,742,139,808,118,895,97,1016,78,1125,68,1125,73,1017,83,897,102,810,123,744,144,594,199,447,255"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="645,209,796,235"/>
-<area shape="poly" title=" " alt="" coords="490,255,631,233,632,238,491,260"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1343,5,1521,31"/>
-<area shape="poly" title=" " alt="" coords="1249,52,1303,39,1346,31,1347,36,1305,45,1250,57"/>
-<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1375,55,1489,80"/>
-<area shape="poly" title=" " alt="" coords="1256,65,1361,65,1361,70,1256,70"/>
-<area shape="poly" title=" " alt="" coords="1450,78,1655,259,1651,263,1446,82"/>
-<area shape="poly" title=" " alt="" coords="1491,75,1561,97,1609,121,1650,146,1648,151,1606,125,1559,102,1489,81"/>
-<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1615,55,1744,80"/>
-<area shape="poly" title=" " alt="" coords="1489,65,1601,65,1601,70,1489,70"/>
-<area shape="poly" title=" " alt="" coords="795,216,822,210,847,200,861,187,869,172,878,158,895,145,953,128,1032,120,1124,118,1225,120,1429,136,1595,155,1594,160,1428,141,1225,126,1124,123,1032,125,954,134,897,150,882,161,874,175,865,190,849,204,824,215,797,221"/>
-<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="896,160,1091,185"/>
-<area shape="poly" title=" " alt="" coords="791,207,908,185,909,191,792,212"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1155,212,1240,237"/>
-<area shape="poly" title=" " alt="" coords="797,232,896,243,993,249,1090,243,1141,235,1142,241,1091,249,993,254,896,249,796,237"/>
-<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="935,209,1052,235"/>
-<area shape="poly" title=" " alt="" coords="796,219,921,219,921,225,796,225"/>
-<area shape="poly" title=" " alt="" coords="1235,209,1303,191,1380,180,1457,173,1594,167,1594,172,1458,178,1381,186,1305,197,1236,214"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1365,206,1499,246"/>
-<area shape="poly" title=" " alt="" coords="1240,222,1351,223,1351,228,1240,228"/>
-<area shape="poly" title=" " alt="" coords="1500,239,1611,265,1610,270,1499,244"/>
-<area shape="poly" title=" " alt="" coords="1499,208,1610,182,1611,187,1500,213"/>
-<area shape="poly" title=" " alt="" coords="1052,220,1141,221,1141,227,1052,225"/>
+<area shape="rect" title=" " alt="" coords="5,189,196,214"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5" title=" " alt="" coords="1304,253,1560,278"/>
+<area shape="poly" title=" " alt="" coords="196,206,434,219,719,227,995,227,1166,234,1319,248,1319,254,1165,239,995,232,719,232,433,225,196,211"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3" title=" " alt="" coords="271,102,518,127"/>
+<area shape="poly" title=" " alt="" coords="125,186,179,161,243,137,284,127,285,133,245,143,181,166,128,191"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#af5ae90a71d85660f942839c1287c7ff6" title=" " alt="" coords="625,417,816,442"/>
+<area shape="poly" title=" " alt="" coords="117,212,171,256,207,280,245,302,342,341,442,372,538,395,621,412,620,417,537,400,441,377,340,346,243,306,204,285,168,260,114,216"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0ef741374c7a5739fad96aa527b11ba4" title=" " alt="" coords="593,39,848,79"/>
+<area shape="poly" title=" " alt="" coords="111,187,164,136,201,108,243,87,327,62,415,48,501,43,579,44,579,49,501,48,416,54,329,67,245,92,204,113,167,140,115,191"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a0c85284af87b3f920c52198aeaf932ec" title=" " alt="" coords="244,267,545,293"/>
+<area shape="poly" title=" " alt="" coords="138,212,245,245,314,262,313,267,243,251,136,217"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a89d7f9e680b37323f1f2e57906062d17" title=" " alt="" coords="299,152,491,192"/>
+<area shape="poly" title=" " alt="" coords="196,189,285,180,285,186,196,195"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1608,179,1751,205"/>
+<area shape="poly" title=" " alt="" coords="1508,250,1559,237,1637,208,1639,213,1561,243,1510,255"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1608,339,1751,365"/>
+<area shape="poly" title=" " alt="" coords="1515,276,1561,288,1607,308,1647,330,1645,335,1605,313,1559,293,1514,281"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1799,179,2001,205"/>
+<area shape="poly" title=" " alt="" coords="1751,189,1785,189,1785,195,1751,195"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2049,179,2240,205"/>
+<area shape="poly" title=" " alt="" coords="2002,189,2035,189,2035,195,2002,195"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1799,339,2001,365"/>
+<area shape="poly" title=" " alt="" coords="1751,349,1785,349,1785,355,1751,355"/>
+<area shape="poly" title=" " alt="" coords="816,428,961,427,1146,421,1353,407,1560,381,1626,366,1627,371,1560,387,1353,412,1147,426,961,432,816,433"/>
+<area shape="poly" title=" " alt="" coords="810,36,961,13,1054,5,1155,3,1259,9,1364,24,1466,52,1514,72,1561,95,1579,111,1588,129,1595,147,1610,165,1620,171,1617,176,1606,169,1590,150,1583,131,1575,114,1559,100,1512,77,1464,57,1363,30,1258,14,1155,8,1055,11,962,18,811,41"/>
+<area shape="poly" title=" " alt="" coords="490,155,718,128,855,118,992,113,1199,113,1382,109,1461,116,1561,139,1586,150,1609,164,1628,172,1626,177,1607,169,1583,155,1559,144,1460,121,1382,115,1199,119,992,119,855,123,719,133,491,160"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a57fd3fb9ba2a88cb82df15880a027019" title=" " alt="" coords="1139,159,1256,185"/>
+<area shape="poly" title=" " alt="" coords="491,169,1125,169,1125,175,491,175"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aa295ccedc902e897ac398e6e3a5f1472" title=" " alt="" coords="645,317,796,342"/>
+<area shape="poly" title=" " alt="" coords="439,190,682,308,680,313,436,195"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9" title=" " alt="" coords="1343,203,1521,229"/>
+<area shape="poly" title=" " alt="" coords="1257,180,1351,198,1350,203,1256,186"/>
+<area shape="rect" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8" title=" " alt="" coords="1375,154,1489,179"/>
+<area shape="poly" title=" " alt="" coords="1256,168,1361,166,1361,171,1256,173"/>
+<area shape="poly" title=" " alt="" coords="1490,170,1594,181,1594,186,1489,175"/>
+<area shape="poly" title=" " alt="" coords="1490,166,1527,173,1561,188,1598,219,1629,256,1653,293,1669,325,1665,328,1648,296,1625,259,1595,223,1559,193,1525,178,1489,171"/>
+<area shape="rect" href="namespaceyoi.html#a134082ec04392c8d0e1fdf698a3fd3bd" title=" " alt="" coords="1615,130,1744,155"/>
+<area shape="poly" title=" " alt="" coords="1489,159,1601,148,1601,153,1490,164"/>
+<area shape="poly" title=" " alt="" coords="779,339,896,360,993,369,1092,375,1286,375,1460,368,1594,358,1594,363,1460,373,1286,381,1091,380,992,375,896,365,778,345"/>
+<area shape="rect" href="namespacemagic__enum.html#afcecaf171f24cd960a7aac300c792f59" title=" " alt="" coords="896,317,1091,342"/>
+<area shape="poly" title=" " alt="" coords="796,327,882,327,882,332,796,332"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1155,339,1240,365"/>
+<area shape="poly" title=" " alt="" coords="797,339,896,351,993,353,1091,351,1141,350,1141,356,1091,356,993,358,896,356,796,345"/>
+<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="935,267,1052,293"/>
+<area shape="poly" title=" " alt="" coords="791,314,921,290,922,296,792,319"/>
+<area shape="poly" title=" " alt="" coords="1240,351,1304,352,1560,352,1594,351,1594,357,1560,357,1304,357,1240,356"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1365,303,1499,343"/>
+<area shape="poly" title=" " alt="" coords="1240,344,1351,330,1351,335,1240,349"/>
+<area shape="poly" title=" " alt="" coords="1499,308,1530,299,1559,287,1612,251,1655,213,1658,217,1616,255,1561,292,1531,304,1501,313"/>
+<area shape="poly" title=" " alt="" coords="1500,328,1595,339,1594,345,1499,333"/>
+<area shape="poly" title=" " alt="" coords="1053,290,1092,302,1160,331,1158,336,1090,307,1051,295"/>
 </map>
 </div>
 <div class="dynheader">
@@ -2444,7 +2515,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02810">2810</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02823">2823</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
@@ -2504,11 +2575,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02710">2710</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02723">2723</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2600,7 +2671,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00828">828</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00841">841</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IR_8cpp_source.html#l01359">IRValueType::addAttribute()</a>, <a class="el" href="IRLinker_8hpp_source.html#l00012">ENTRY_MODULE_ID_CONST</a>, <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, <a class="el" href="def_8cpp_source.html#l00081">yoi::set_current_file_path()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a965799a0adcadb1e15dfb16a3708a71b">IRValueType::stringObject</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -2665,7 +2736,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00534">534</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00547">547</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>.</p>
 
@@ -2727,11 +2798,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00572">572</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00585">585</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2789,9 +2860,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02666">2666</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02679">2679</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2833,7 +2904,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03430">3430</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03443">3443</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>.</p>
 
@@ -2891,11 +2962,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03393">3393</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03406">3406</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2953,7 +3024,7 @@ Here is the caller graph for this function:</div>
 
 <p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, and <a class="el" href="structyoi_1_1IRBuildConfig.html#a7dc2a1e0a369fb339abb8c28dbb71593aad42f6697b035b7580e4fef93be20b4d">IRBuildConfig::debug</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2998,9 +3069,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00390">390</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00403">403</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l02197">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02142">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l02210">LLVMCodegen::getFunctionType()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02155">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00319">LLVMCodegen::generateDeclarations()</a>.</p>
 <div class="dynheader">
@@ -3079,7 +3150,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00437">437</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00450">450</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
 
@@ -3141,11 +3212,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">472</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l00485">485</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l04193">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb">IRFunctionDefinition::Finalizer</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02142">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l04206">LLVMCodegen::callGcFunction()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb">IRFunctionDefinition::Finalizer</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a7ad1670edae17aaec62cf0cf29266ee7">IRValueType::structObject</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l02155">LLVMCodegen::yoiTypeToLLVMType()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00382">LLVMCodegen::generateImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00394">LLVMCodegen::generateImplementations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3301,11 +3372,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02400">2400</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02413">2413</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3379,7 +3450,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04062">4062</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04075">4075</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -3423,11 +3494,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02935">2935</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02948">2948</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04033">LLVMCodegen::handleIntrinsicCall()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04046">LLVMCodegen::handleIntrinsicCall()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3511,7 +3582,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03117">3117</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03130">3130</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
@@ -3621,9 +3692,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02197">2197</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02210">2210</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00362">LLVMCodegen::generateFunctionDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00390">LLVMCodegen::generateStructDeclarations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00374">LLVMCodegen::generateFunctionDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00403">LLVMCodegen::generateStructDeclarations()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3688,11 +3759,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02345">2345</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02358">2358</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00145">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">LLVMCodegen::actualizeInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04193">LLVMCodegen::callGcFunction()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">LLVMCodegen::actualizeInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04206">LLVMCodegen::callGcFunction()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3777,7 +3848,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02207">2207</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02220">2220</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -3805,7 +3876,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04090">4090</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04103">4103</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00168">LLVMCodegen::llvmModuleContext</a>.</p>
 
@@ -3891,7 +3962,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02212">2212</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02225">2225</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, and <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -3974,7 +4045,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02257">2257</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02270">2270</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, and <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>.</p>
 <div class="dynheader">
@@ -4051,7 +4122,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02878">2878</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02891">2891</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -4134,7 +4205,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02578">2578</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02591">2591</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, and <a class="el" href="IR_8h_source.html#l00137">IRValueType::typeAffiliateModule</a>.</p>
 <div class="dynheader">
@@ -4184,9 +4255,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04033">4033</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04046">4046</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02935">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">LLVMCodegen::compilerCtx</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l02948">LLVMCodegen::getArrayLLVMType()</a>, <a class="el" href="classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a8b0f368e62695dc13b998050ea15a2c5">IRFunctionDefinition::Intrinsic</a>, <a class="el" href="classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e318f753738b08a41de81b9e8fe1db1">IR::invoke_imported</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -4270,7 +4341,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03058">3058</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03071">3071</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 <div class="dynheader">
@@ -4340,7 +4411,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02860">2860</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02873">2873</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -4378,9 +4449,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">4027</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04040">4040</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04001">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">LLVMCodegen::StackValue::yoiType</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04014">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">LLVMCodegen::StackValue::yoiType</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -4487,7 +4558,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03629">3629</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l03642">3642</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
@@ -4543,7 +4614,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02333">2333</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02346">2346</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 </div>
 </div>
@@ -4581,7 +4652,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04012">4012</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04025">4025</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a838125064f81b909c03de6bbbbd552a5">IRValueType::interfaceObject</a>, <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>.</p>
 <div class="dynheader">
@@ -4646,11 +4717,11 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04001">4001</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l04014">4014</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="IR_8h_source.html#l00144">IRValueType::attributes</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">LLVMCodegen::StackValue::yoiType</a>.</p>
+<p class="reference">References <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="IR_8h_source.html#l00144">IRValueType::attributes</a>, <a class="el" href="def_8hpp_source.html#l00306">yoi::managedPtr()</a>, <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">LLVMCodegen::yoiModule</a>, and <a class="el" href="llvmCodegenContext_8hpp_source.html#l00063">LLVMCodegen::StackValue::yoiType</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04027">LLVMCodegen::promiseInterfaceObjectIfInterface()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04040">LLVMCodegen::promiseInterfaceObjectIfInterface()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -4747,11 +4818,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02142">2142</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8cpp_source.html#l02155">2155</a> of file <a class="el" href="llvmCodegenContext_8cpp_source.html">llvmCodegenContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="magic__enum_8h_source.html#l01279">magic_enum::enum_name()</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a">IRValueType::foreignFloatType</a>, <a class="el" href="def_8cpp_source.html#l00099">yoi::panic()</a>, <a class="el" href="def_8cpp_source.html#l00151">yoi::wstring2string()</a>, and <a class="el" href="def_8cpp_source.html#l00138">yoi::yoi_assert()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00390">LLVMCodegen::generateStructDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00403">LLVMCodegen::generateStructDeclarations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00485">LLVMCodegen::generateStructGCFunctionImplementations()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -4834,7 +4905,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00047">47</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00037">LLVMCodegen::LLVMCodegen()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l00037">LLVMCodegen::LLVMCodegen()</a>.</p>
 
 </div>
 </div>
@@ -4860,7 +4931,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00048">48</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>.</p>
 
 </div>
 </div>
@@ -4886,7 +4957,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00164">164</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00061">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04033">LLVMCodegen::handleIntrinsicCall()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l00061">LLVMCodegen::declareRuntimeFunctions()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00161">LLVMCodegen::generate()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00179">LLVMCodegen::generateBasicTypeDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00236">LLVMCodegen::generateBasicTypeImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00361">LLVMCodegen::generateGlobalInitializers()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00134">LLVMCodegen::generateRuntimeFunctionImplementations()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04046">LLVMCodegen::handleIntrinsicCall()</a>.</p>
 
 </div>
 </div>
@@ -4960,7 +5031,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00168">168</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04182">LLVMCodegen::dumpIR()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04113">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04090">LLVMCodegen::getLLVMModuleContext()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l04195">LLVMCodegen::dumpIR()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04126">LLVMCodegen::generate()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04103">LLVMCodegen::getLLVMModuleContext()</a>.</p>
 
 </div>
 </div>
@@ -4986,7 +5057,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="llvmCodegenContext_8hpp_source.html#l00165">165</a> of file <a class="el" href="llvmCodegenContext_8hpp_source.html">llvmCodegenContext.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03923">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03798">LLVMCodegen::ValueStackWithPhi::enterNode()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00362">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00390">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00437">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00472">LLVMCodegen::generateStructGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00332">LLVMCodegen::generateStructShallowDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04012">LLVMCodegen::unwrapInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04001">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="llvmCodegenContext_8cpp_source.html#l03936">LLVMCodegen::actualizeInterfaceObject()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l03811">LLVMCodegen::ValueStackWithPhi::enterNode()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00374">LLVMCodegen::generateFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00351">LLVMCodegen::generateGlobalDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00361">LLVMCodegen::generateGlobalInitializers()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00403">LLVMCodegen::generateStructDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00450">LLVMCodegen::generateStructGCFunctionDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00485">LLVMCodegen::generateStructGCFunctionImplementations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l00332">LLVMCodegen::generateStructShallowDeclarations()</a>, <a class="el" href="llvmCodegenContext_8cpp_source.html#l04025">LLVMCodegen::unwrapInterfaceObject()</a>, and <a class="el" href="llvmCodegenContext_8cpp_source.html#l04014">LLVMCodegen::wrapInterfaceObjectIfRegressed()</a>.</p>
 
 </div>
 </div>

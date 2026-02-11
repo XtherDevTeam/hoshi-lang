@@ -1,5 +1,7 @@
 var NAVTREEINDEX19 =
 {
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8":[31,0,1,70,0,5],
+"structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8":[30,0,1,71,0,5],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#acd5a2dc9a674e5a9ccaa521079fac0e1":[30,0,1,71,0,8],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#acd5a2dc9a674e5a9ccaa521079fac0e1":[31,0,1,70,0,8],
 "structyoi_1_1IRFunctionDefinition_1_1Builder.html#acf5c7ad03ee58817810b7b700cc59194":[30,0,1,71,0,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX19 =
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#af831040d48c061a9b0c1981c27908b14":[31,0,1,96,3,5],
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#af831040d48c061a9b0c1981c27908b14":[30,0,1,97,3,5],
 "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#afe7836394bb27a03e8598d2d13e466ba":[30,0,1,97,3,15],
-"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#afe7836394bb27a03e8598d2d13e466ba":[31,0,1,96,3,15],
-"structyoi_1_1ifStmt_1_1ifBlock.html":[30,0,1,47,0],
-"structyoi_1_1ifStmt_1_1ifBlock.html":[31,0,1,46,0]
+"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#afe7836394bb27a03e8598d2d13e466ba":[31,0,1,96,3,15]
 };

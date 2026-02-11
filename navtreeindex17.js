@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"parser_8hpp.html#ad18cd7dc20ba62f0c0d9e86364e6e101":[32,0,1,0,5,66],
+"parser_8hpp.html#ad36c647b0695dda56ddc3eacbfbecdda":[32,0,1,0,5,68],
 "parser_8hpp.html#ad6bed038de518d556d4d6d26fffe1075":[32,0,1,0,5,6],
 "parser_8hpp.html#ad81e77c726a919762e6e2d6664b16fa7":[32,0,1,0,5,56],
 "parser_8hpp.html#add54fcea8dc58f89d04c81c9e671bdfa":[32,0,1,0,5,5],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structmagic__enum_1_1detail_1_1has__is__flags.html":[30,0,0,2,3],
 "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[31,0,0,1,4],
 "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html":[30,0,0,2,4],
-"structmagic__enum_1_1detail_1_1is__reflected.html":[30,0,0,2,5],
-"structmagic__enum_1_1detail_1_1is__reflected.html":[31,0,0,1,5],
-"structmagic__enum_1_1detail_1_1is__scoped__enum.html":[31,0,0,1,6]
+"structmagic__enum_1_1detail_1_1is__reflected.html":[30,0,0,2,5]
 };
