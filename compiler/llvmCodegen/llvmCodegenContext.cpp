@@ -320,9 +320,11 @@ namespace yoi {
         declareRuntimeFunctions(llvmModCtx);
         generateBasicTypeDeclarations(llvmModCtx);
         generateStructShallowDeclarations(llvmModCtx);
+        generateDataStructShallowDeclarations(llvmModCtx);
         generateGlobalDeclarations(llvmModCtx);
         generateFunctionDeclarations(llvmModCtx);
         generateStructDeclarations(llvmModCtx);
+        generateDataStructDeclarations(llvmModCtx);
         generateStructGCFunctionDeclarations(llvmModCtx);
         generateInterfaceObjectGCFunctionDeclarations(llvmModCtx);
         generateImportFunctionDeclarations(llvmModCtx);
@@ -739,7 +741,7 @@ namespace yoi {
         auto& names = varTableRef.getReversedVariableNameMap();
         for (yoi::indexT i = 0; i < vars.size(); ++i) {
             vars[i] = managedPtr(IRValueType{*(vars[i])}.addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
-            auto* llvmType = yoiTypeToLLVMType(llvmModCtx, vars[i]);
+            auto* llvmType = yoiTypeToLLVMType(llvmModCtx, vars[i], vars[i]->isBasicRawType() || vars[i]->hasAttribute(IRValueType::ValueAttr::Raw));
             auto* alloca = llvmModCtx.Builder->CreateAlloca(llvmType, nullptr, wstring2string(names.at(i)));
             llvmModCtx.Builder->CreateStore(llvm::Constant::getNullValue(llvmType), alloca);
             llvmModCtx.namedValues[i] = alloca;
@@ -785,6 +787,9 @@ namespace yoi {
             auto varIndex = pair.first;
             auto* alloca = pair.second;
             auto varYoiType = llvmModCtx.currentFunctionDef->variableTable.get(varIndex);
+
+            if (varYoiType->isBasicRawType() || varYoiType->hasAttribute(IRValueType::ValueAttr::Raw))
+                continue;
 
             // Load the final pointer value from the local variable
             auto* objPtr = llvmModCtx.Builder->CreateLoad(alloca->getAllocatedType(), alloca, "cleanup_load");
@@ -1491,6 +1496,46 @@ namespace yoi {
                 llvmModCtx.valueStackPhi.push_back({bitcast, yoiType});
                 break;
             }
+            case IR::Opcode::new_datastruct: {
+                // default to Raw when initializing
+                auto moduleIndex = instr.operands[0].value.symbolIndex;
+                auto dataStructIndex = instr.operands[1].value.symbolIndex;
+                auto key = std::make_tuple(IRValueType::valueType::datastructObject, yoiModule->identifier, dataStructIndex);
+                
+                auto dataRegionType = llvmModCtx.dataStructDataRegionMap.at(dataStructIndex);
+                // alloca
+                auto* allocCall = llvmModCtx.Builder->CreateAlloca(dataRegionType, nullptr, "datastruct_alloc");
+                auto *load = llvmModCtx.Builder->CreateLoad(dataRegionType, allocCall, "datastruct_load");
+
+                auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::datastructObject, yoiModule->identifier, dataStructIndex);
+                yoiType->addAttribute(IRValueType::ValueAttr::Raw);
+                llvmModCtx.valueStackPhi.push_back({load, yoiType});
+                break;
+            }
+            case IR::Opcode::initialize_field: {
+                yoi::vec<StackValue> values(instr.operands[0].value.symbolIndex);
+                for (yoi::indexT i = instr.operands[0].value.symbolIndex - 1; i >= 0; i--) {
+                    values[i] = llvmModCtx.valueStackPhi.back();
+                    llvmModCtx.valueStackPhi.pop_back();
+                }
+                auto top = llvmModCtx.valueStackPhi.back();
+                auto dataRegionType = llvmModCtx.dataStructDataRegionMap.at(top.yoiType->typeIndex);
+                llvm::Value *dataRegionPtr = top.llvmValue;
+                if (top.yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                    dataRegionPtr = top.llvmValue;
+                } else {
+                    auto objectTypeKey = std::make_tuple(IRValueType::valueType::datastructObject, yoiModule->identifier, top.yoiType->typeIndex);
+                    auto *objectType = llvmModCtx.structTypeMap.at(objectTypeKey);
+                    dataRegionPtr = llvmModCtx.Builder->CreateStructGEP(objectType, top.llvmValue, 2, "datastruct_ptr");
+                }
+                for (yoi::indexT i = 0; i < instr.operands[0].value.symbolIndex; i++) {
+                    auto value = unboxValue(llvmModCtx, values[i].llvmValue, values[i].yoiType);
+                    auto fieldPtr = llvmModCtx.Builder->CreateStructGEP(dataRegionType, dataRegionPtr, i, "field_ptr");
+                    llvmModCtx.Builder->CreateStore(value, fieldPtr);
+                }
+                // no stack operation required
+                break;
+            }
             case IR::Opcode::construct_interface_impl: {
                 auto interfaceImplIndex = instr.operands[1].value.symbolIndex;
                 auto interfaceImplDef = yoiModule->interfaceImplementationTable[interfaceImplIndex];
@@ -2126,6 +2171,9 @@ namespace yoi {
             auto key = std::make_tuple(typeEnum, typeModule, typeIndex);
             if (llvmModCtx.foreignTypeMap.count(key)) {
                 return llvmModCtx.foreignTypeMap.at(key);
+            }
+            if (type->type == IRValueType::valueType::datastructObject) {
+                return llvmModCtx.dataStructDataRegionMap.at(type->typeIndex);
             }
 
             yoi_assert(type->isForeignBasicType(), 0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
@@ -4191,5 +4239,44 @@ namespace yoi {
             llvmModCtx.Builder->CreateCall(gcFunc, ptrArg);
         };
         generateIfTargetNotNull(llvmModCtx, objectPtr, yoiType, f);
+    }
+
+    void LLVMCodegen::generateDataStructShallowDeclarations(LLVMModuleContext &llvmModCtx) {
+        for (auto& datastructDefPair : yoiModule->dataStructTable) {
+            auto dataStructDef = datastructDefPair.second;
+            auto key = std::make_tuple(IRValueType::valueType::datastructObject, yoiModule->identifier, yoiModule->dataStructTable.getIndex(dataStructDef->name));
+            auto dataRegionStructName = "datastruct.data." + std::to_string(yoiModule->identifier) + "." + wstring2string(dataStructDef->name);
+            auto objectStructName = "datastruct." + std::to_string(yoiModule->identifier) + "." + wstring2string(dataStructDef->name);
+            llvmModCtx.structTypeMap[key] = llvm::StructType::create(*llvmModCtx.TheContext, objectStructName);
+            llvmModCtx.dataStructDataRegionMap[yoiModule->dataStructTable.getIndex(datastructDefPair.first)] = llvm::StructType::create(*llvmModCtx.TheContext, dataRegionStructName);
+            auto typeIdKey = std::make_tuple(IRValueType::valueType::datastructObject, yoiModule->identifier, yoiModule->dataStructTable.getIndex(dataStructDef->name), 0);
+            llvmModCtx.typeIDMap[typeIdKey] = llvmModCtx.nextTypeId++;
+        }
+    }
+
+    void LLVMCodegen::generateDataStructDeclarations(LLVMModuleContext &llvmModCtx) {
+        for (auto &datastructDefPair : yoiModule->dataStructTable) {
+            auto structDef = datastructDefPair.second;
+            auto key = std::make_tuple(IRValueType::valueType::datastructObject, yoiModule->identifier, yoiModule->dataStructTable.getIndex(structDef->name));
+            auto *llvmDataRegionStructType = llvmModCtx.dataStructDataRegionMap.at(yoiModule->dataStructTable.getIndex(datastructDefPair.first));
+            auto *llvmObjectType = llvmModCtx.structTypeMap.at(key);
+
+            std::vector<llvm::Type*> fieldTypes;
+            fieldTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // gc_refcount
+            fieldTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // typeid
+            fieldTypes.push_back(llvmDataRegionStructType);
+            if (llvmObjectType->isOpaque()) {
+                llvmObjectType->setBody(fieldTypes);
+            }
+
+            // setup data region
+            std::vector<llvm::Type*> dataRegionFieldTypes;
+            for (const auto& fieldType : structDef->fieldTypes) {
+                dataRegionFieldTypes.push_back(yoiTypeToLLVMType(llvmModCtx, fieldType, true));
+            }
+            if (llvmDataRegionStructType->isOpaque()) {
+                llvmDataRegionStructType->setBody(dataRegionFieldTypes);
+            }
+        }
     }
 } // namespace yoi

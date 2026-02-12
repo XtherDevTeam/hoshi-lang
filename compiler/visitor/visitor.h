@@ -278,6 +278,8 @@ namespace yoi {
 
         void visit(yoi::enumerationDefinition *enumerationDefinition);
 
+        void visit(yoi::dataStructDefStmt *dataStructDefStmt);
+
         /**
          * @brief Visits a list of argument expressions and returns their types.
          * @param args The AST node for the argument list.
@@ -412,6 +414,15 @@ namespace yoi {
          * @return false The marco doesn't satisfy the condition
          */
         bool checkMarcoSatisfaction(yoi::marcoDescriptor *desc);
+
+        /**
+         * @brief Construct data struct and initialize with given parameters
+         *
+         * @param datastructIndex The index of the data struct in the module's struct table.
+         * @param moduleIndex The index of the module where the struct will be created.
+         * @param args The arguments to initialize the struct.
+         */
+        void constructDataStruct(yoi::indexT datastructIndex, yoi::indexT moduleIndex, yoi::invocationArguments *args);
 
         std::shared_ptr<IRValueType> mapEnumTypeToBasicType(yoi::indexT targetModule, yoi::indexT targetEnumType);
     };

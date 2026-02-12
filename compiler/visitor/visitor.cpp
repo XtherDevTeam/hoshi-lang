@@ -959,21 +959,34 @@ namespace yoi {
             // Not a type name, so it's an instance member expression.
         }
 
-        if (staticTypeBase && staticTypeBase->type == IRValueType::valueType::structObject) {
+        if (staticTypeBase) {
             auto memberNameNode = *(++it);
             yoi_assert(!memberNameNode->getSubscript().empty() && memberNameNode->getSubscript().front()->isInvocation(),
                        memberNameNode->getLine(),
                        memberNameNode->getColumn(),
                        "Static member access must be a method call.");
-
             auto &invocation = memberNameNode->getSubscript().front();
-            if (!handleInvocationExtern(
-                    memberNameNode->id->getId().node.strVal, invocation->args, staticTypeBase->typeAffiliateModule, staticTypeBase, true,
-                    memberNameNode->id->hasTemplateArg() ? &memberNameNode->id->getArg() : nullptr))
-                panic(memberNameNode->getLine(),
-                      memberNameNode->getColumn(),
-                      "No matching static method found for: " + wstring2string(memberNameNode->id->getId().get().strVal));
-            // After a static call, subsequent member accesses operate on its return value.
+
+            switch (staticTypeBase->type) {
+                case IRValueType::valueType::structObject: {
+                    if (!handleInvocationExtern(
+                            memberNameNode->id->getId().node.strVal, invocation->args, staticTypeBase->typeAffiliateModule, staticTypeBase, true,
+                            memberNameNode->id->hasTemplateArg() ? &memberNameNode->id->getArg() : nullptr))
+                        panic(memberNameNode->getLine(),
+                            memberNameNode->getColumn(),
+                            "No matching static method found for: " + wstring2string(memberNameNode->id->getId().get().strVal));
+                    // After a static call, subsequent member accesses operate on its return value.
+                    break;
+                }
+                case IRValueType::valueType::datastructObject: {
+                    constructDataStruct(staticTypeBase->typeIndex, staticTypeBase->typeAffiliateModule, invocation->args);
+                    break;
+                }
+                default:
+                    panic(memberNameNode->getLine(),
+                        memberNameNode->getColumn(),
+                        "Static member access must be a method call.");
+            }
         } else {
             // 3. It's an instance member expression. Visit the base instance.
             bool isFinalTerm = (it + 1 == memberExpr->getTerms().end());
@@ -1397,12 +1410,20 @@ namespace yoi {
                 moduleContext->getIRBuilder().restoreState();
             }
 
-            // Attempt 2: Free Function (handles regular, variadic, and implicit template functions)
+            // Attempt 2: Data struct constructor
+            if (!resolved) {
+                if (irModule->dataStructTable.contains(baseName)) {
+                    constructDataStruct(irModule->dataStructTable.getIndex(baseName), irModule->identifier, args);
+                    resolved = true;
+                }
+            }
+
+            // Attempt 3: Free Function (handles regular, variadic, and implicit template functions)
             if (!resolved) {
                 resolved = handleInvocationExtern(baseName, args, currentModuleIndex);
             }
 
-            // Attempt 3: Interface Constructor
+            // Attempt 4: Interface Constructor
             if (!resolved) {
                 if (irModule->interfaceTable.contains(baseName)) {
                     moduleContext->getIRBuilder().saveState();
@@ -1427,7 +1448,7 @@ namespace yoi {
                 }
             }
 
-            // Attempt 4: Imported Function
+            // Attempt 5: Imported Function
             if (!resolved) {
                 if (irModule->externTable.contains(baseName)) {
                     moduleContext->getIRBuilder().saveState();
@@ -1463,7 +1484,7 @@ namespace yoi {
                 }
             }
 
-            // Attempt 5: type alias
+            // Attempt 6: type alias
             if (auto it = irModule->typeAliases.find(baseName); it != irModule->typeAliases.end()) {
                 if (it->second.type == IRValueType::valueType::structObject) {
                     auto targetModule = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
@@ -1667,12 +1688,20 @@ namespace yoi {
                 }
             }
 
-            // Attempt 2: Extern Free Function (regular or variadic)
+            // Attempt 2: Data struct constructor
+            if (!resolved) {
+                if (targetedModule->dataStructTable.contains(baseName)) {
+                    constructDataStruct(targetedModule->dataStructTable.getIndex(baseName), targetedModule->identifier, args);
+                    resolved = true;
+                }
+            }
+
+            // Attempt 4: Extern Free Function (regular or variadic)
             if (!resolved) {
                 resolved = handleInvocationExtern(baseName, args, targetModule);
             }
 
-            // Attempt 3: Extern Interface Constructor
+            // Attempt 5: Extern Interface Constructor
             if (!resolved) {
                 if (targetedModule->interfaceTable.contains(baseName)) {
                     moduleContext->getIRBuilder().saveState();
@@ -1710,7 +1739,7 @@ namespace yoi {
                 }
             }
 
-            // Attempt 4: FFI Imported Function (via an extern module)
+            // Attempt 6: FFI Imported Function (via an extern module)
             if (!resolved) {
                 if (targetedModule->externTable.contains(baseName)) {
                     moduleContext->getIRBuilder().saveState();
@@ -1732,7 +1761,7 @@ namespace yoi {
                 }
             }
 
-            // Attempt 5: Type alias
+            // Attempt 7: Type alias
             if (auto it = targetedModule->typeAliases.find(baseName); it != targetedModule->typeAliases.end()) {
                 if (it->second.type == IRValueType::valueType::structObject) {
                     auto targetModule = moduleContext->getCompilerContext()->getImportedModule(it->second.typeAffiliateModule);
@@ -1839,6 +1868,12 @@ namespace yoi {
         try {
             auto typeIndex = irModule->structTable.getIndex(typeName);
             return IRValueType{IRValueType::valueType::structObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
+        } catch (std::out_of_range &e) {
+            // let it go
+        }
+        try {
+            auto typeIndex = irModule->dataStructTable.getIndex(typeName);
+            return IRValueType{IRValueType::valueType::datastructObject, static_cast<yoi::indexT>(currentModuleIndex), typeIndex};
         } catch (std::out_of_range &e) {
             // let it go
         }
@@ -2479,6 +2514,10 @@ namespace yoi {
                 visit(globalStmt->value.enumerationDefVal);
                 break;
             }
+            case globalStmt::vKind::dataStructDefStmt: {
+                visit(globalStmt->value.dataStructDefStmtVal);
+                break;
+            }
             default: {
                 panic(globalStmt->getLine(), globalStmt->getColumn(), "Unsupported global statement type");
             }
@@ -2682,6 +2721,8 @@ namespace yoi {
         IRExternEntry ex = getExternEntry(targetModule, identifier->node.strVal);
         if (ex.type == IRExternEntry::externType::structType)
             return {IRValueType::valueType::structObject, ex.affiliateModule, ex.itemIndex};
+        if (ex.type == IRExternEntry::externType::datastructType)
+            return {IRValueType::valueType::datastructObject, ex.affiliateModule, ex.itemIndex};
         else if (ex.type == IRExternEntry::externType::interfaceType)
             return {IRValueType::valueType::interfaceObject, ex.affiliateModule, ex.itemIndex};
         else
@@ -2842,6 +2883,11 @@ namespace yoi {
         try {
             auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->structTable.getIndex(identifier);
             return {IRExternEntry::externType::structType, identifier, moduleIndex, res};
+        } catch (std::out_of_range &) {
+        }
+        try {
+            auto res = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->dataStructTable.getIndex(identifier);
+            return {IRExternEntry::externType::datastructType, identifier, moduleIndex, res};
         } catch (std::out_of_range &) {
         }
         try {
@@ -5388,5 +5434,39 @@ namespace yoi {
         }
         moduleContext->getIRBuilder().pushTempVar(managedPtr(IRValueType{IRValueType::valueType::bracedInitalizerList, bracedTypes}));
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    void visitor::visit(yoi::dataStructDefStmt *dataStructDefStmt) {
+        auto placeholder = irModule->dataStructTable.put_create(dataStructDefStmt->id->get().strVal, {});
+        auto builder = IRDataStructDefinition::Builder()
+            .setName(dataStructDefStmt->id->get().strVal);
+
+        for (auto &i : dataStructDefStmt->getInner().getInner()) {
+            auto &id = i->getVar().id->get().strVal;
+            auto spec = parseTypeSpec(i->getVar().spec);
+            builder.addField(id, managedPtr(spec));
+        }
+
+        irModule->dataStructTable[placeholder] = builder.yield();
+    }
+
+    void
+    visitor::constructDataStruct(yoi::indexT datastructIndex, yoi::indexT moduleIndex, yoi::invocationArguments *args) {
+        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(moduleIndex);
+        auto datastructDef = targetedModule->dataStructTable[datastructIndex];
+        
+        moduleContext->getIRBuilder().newDataStructOp(datastructIndex, true, moduleIndex);
+
+        if (args->arg.empty()) {
+            return;
+        }
+
+        yoi_assert(args->arg.size() == datastructDef->fieldTypes.size(), args->getLine(), args->getColumn(), "expected " + std::to_string(datastructDef->fields.size()) + " arguments to construct data struct " + yoi::wstring2string(datastructDef->name) + ", got " + std::to_string(args->arg.size()));
+        for (yoi::indexT i = 0; i < args->arg.size(); i++) {
+            visit(args->arg[i]);
+            tryCastTo(datastructDef->fieldTypes[i]);
+        }
+        moduleContext->getIRBuilder().initializeFieldsOp(args->arg.size());
+            
     }
 } // namespace yoi

@@ -316,7 +316,9 @@ namespace yoi {
             push_string,
             store_global,
             store_local,
-            store_member,
+            store_member,             // only for struct
+            store_field,              // only for data struct
+            initialize_field,         // once and for all initialization of data struct fields, push the struct itself as a result. act like constructor
             invoke,
             new_struct,
             construct_interface_impl,
@@ -804,6 +806,7 @@ namespace yoi {
             globalVar,
             function,
             structType,
+            datastructType,
             interfaceType,
             interfaceImplType,
             importedFunction,
@@ -833,6 +836,7 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, std::shared_ptr<IREnumerationType>> enumerationTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceInstanceDefinition>> interfaceTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRInterfaceImplementationDefinition>> interfaceImplementationTable;
+        yoi::indexTable<yoi::wstr, std::shared_ptr<IRDataStructDefinition>> dataStructTable;
 
         std::map<yoi::wstr, yoi::funcDefStmt *> funcTemplateAsts;
         std::map<yoi::wstr, yoi::structDefStmt *> structTemplateAsts;
@@ -994,6 +998,10 @@ namespace yoi {
         void retOp(bool returnWithNone = false);
 
         void newStructOp(yoi::indexT structIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+
+        void newDataStructOp(yoi::indexT structIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
+
+        void initializeFieldsOp(yoi::indexT parameterCount);
 
         void newInterfaceOp(yoi::indexT interfaceIndex, bool isExternal = false, yoi::indexT moduleIndex = -1);
 

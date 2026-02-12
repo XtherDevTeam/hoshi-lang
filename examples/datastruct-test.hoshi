@@ -8,5 +8,7 @@ datastruct T {
 }
 
 func main() : int {
+    let t = Test()
+    
     return 0
 }

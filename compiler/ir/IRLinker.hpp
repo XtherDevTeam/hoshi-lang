@@ -32,6 +32,7 @@ namespace yoi {
 
         // Remapping tables: map<old_module_id, map<old_index, new_index>>
         std::map<indexT, std::map<indexT, indexT>> structRemapping;
+        std::map<indexT, std::map<indexT, indexT>> datastructRemapping;
         std::map<indexT, std::map<indexT, indexT>> interfaceRemapping;
         std::map<indexT, std::map<indexT, indexT>> interfaceImplRemapping;
         std::map<indexT, std::map<indexT, indexT>> globalRemapping;
@@ -46,6 +47,7 @@ namespace yoi {
 
         void linkStringLiterals();
         void linkStructsAndInterfaces();
+        void linkDataStructs();
         void linkInterfaceImplementations();
         void linkGlobals();
         void linkFunctions();

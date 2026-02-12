@@ -4193,6 +4193,19 @@ namespace yoi {
                 simulationStack.push(compilerCtx->getIntObjectType(), {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
+            case IR::Opcode::new_datastruct: {
+                auto typeMod = ins.operands[0].value.symbolIndex;
+                auto typeIndex = ins.operands[1].value.symbolIndex;
+                auto type = managedPtr(IRValueType{IRValueType::valueType::datastructObject, typeMod, typeIndex});
+                simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
+                break;
+            }
+            case IR::Opcode::initialize_field: {
+                for (yoi::indexT i = 0; i < ins.operands[0].value.symbolIndex; i++) {
+                    simulationStack.pop();
+                }
+                break;
+            }
             default: {
                 // pass
                 break;

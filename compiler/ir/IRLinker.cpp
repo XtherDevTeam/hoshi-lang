@@ -31,6 +31,7 @@ namespace yoi {
         // 3. Functions: Depend on everything.
         linkStringLiterals();
         linkStructsAndInterfaces();
+        linkDataStructs();
         linkGlobals();
         linkFunctions();
         linkInterfaceImplementations();
@@ -226,6 +227,7 @@ namespace yoi {
             case IR::Opcode::store_global:
             case IR::Opcode::load_global:
             case IR::Opcode::new_struct:
+            case IR::Opcode::new_datastruct:
             case IR::Opcode::new_array_struct:
             case IR::Opcode::new_array_interface:
             case IR::Opcode::new_dynamic_array_struct:
@@ -247,6 +249,9 @@ namespace yoi {
                     case IR::Opcode::new_array_struct:
                     case IR::Opcode::new_dynamic_array_struct:
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
+                        break;
+                    case IR::Opcode::new_datastruct:
+                        newInstr.operands[1].value.symbolIndex = datastructRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::invoke_virtual:
                     case IR::Opcode::new_array_interface:
@@ -293,6 +298,12 @@ namespace yoi {
         switch (oldType->type) {
             case IRValueType::valueType::structObject: {
                 auto newIndex = structRemapping[oldType->typeAffiliateModule][oldType->typeIndex];
+                newType->typeAffiliateModule = ENTRY_MODULE_ID_CONST;
+                newType->typeIndex = newIndex;
+                break;
+            }
+            case IRValueType::valueType::datastructObject: {
+                auto newIndex = datastructRemapping[oldType->typeAffiliateModule][oldType->typeIndex];
                 newType->typeAffiliateModule = ENTRY_MODULE_ID_CONST;
                 newType->typeIndex = newIndex;
                 break;
@@ -379,6 +390,10 @@ namespace yoi {
                 auto newIndex = structRemapping[std::get<1>(key)][std::get<2>(key)];
                 return std::make_tuple(IRValueType::valueType::structObject, ENTRY_MODULE_ID_CONST, newIndex);
             }
+            case IRValueType::valueType::datastructObject: {
+                auto newIndex = datastructRemapping[std::get<1>(key)][std::get<2>(key)];
+                return std::make_tuple(IRValueType::valueType::datastructObject, ENTRY_MODULE_ID_CONST, newIndex);
+            }
             case IRValueType::valueType::interfaceObject: {
                 auto newIndex = interfaceRemapping[std::get<1>(key)][std::get<2>(key)];
                 return std::make_tuple(IRValueType::valueType::interfaceObject, ENTRY_MODULE_ID_CONST, newIndex);
@@ -404,6 +419,24 @@ namespace yoi {
         for (auto &func : finalModule->functionTable) {
             for (auto &var : func.second->variableTable.getVariables()) {
                 link(var->metadata);
+            }
+        }
+    }
+
+    void IRLinker::linkDataStructs() {
+        for (const auto& modPair : compilerCtx->getCompiledModules()) {
+            indexT modId = modPair.first;
+            const auto& srcModule = modPair.second;
+            for (const auto& dataStructPair : srcModule->dataStructTable) {
+                auto &dataStruct = dataStructPair.second;
+                dataStruct->linkedModuleId = modId;
+                datastructRemapping[modId][srcModule->dataStructTable.getIndex(dataStructPair.first)] = finalModule->dataStructTable.put_create(dataStructPair.first, managedPtr(* dataStruct));
+            }
+        }
+
+        for (auto &dataStructPair : finalModule->dataStructTable) {
+            for (auto &field : dataStructPair.second->fieldTypes) {
+                *field = *patchType(field);
             }
         }
     }

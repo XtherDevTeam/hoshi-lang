@@ -150,6 +150,7 @@ namespace yoi {
                 typeIDMap; // Maps (type_enum, module_id, type_idx, size) to type ID (if no array, size = 0)
             yoi::vec<std::tuple<std::shared_ptr<IRValueType>, llvm::StructType *, llvm::Type *>>
                 arrayToGenerateImplementations; // Array types to generate GC functions for
+            std::map<yoi::indexT, llvm::StructType *> dataStructDataRegionMap;
 
             ControlFlowAnalysis controlFlowAnalysis;
             
@@ -182,6 +183,7 @@ namespace yoi {
 
         void generateDeclarations(LLVMModuleContext &llvmModCtx);
         void generateStructShallowDeclarations(LLVMModuleContext &llvmModCtx);
+        void generateDataStructShallowDeclarations(LLVMModuleContext &llvmModCtx);
         void generateGlobalDeclarations(LLVMModuleContext &llvmModCtx);
         void generateGlobalInitializers(LLVMModuleContext &llvmModCtx);
         void generateFunctionDeclarations(LLVMModuleContext &llvmModCtx);
@@ -189,6 +191,7 @@ namespace yoi {
 
         void generateImplementations(LLVMModuleContext &llvmModCtx);
         void generateStructDeclarations(LLVMModuleContext &llvmModCtx);
+        void generateDataStructDeclarations(LLVMModuleContext &llvmModCtx);
         void generateStructGCFunctionDeclarations(LLVMModuleContext &llvmModCtx);
         void generateStructGCFunctionImplementations(LLVMModuleContext &llvmModCtx);
         void generateInterfaceObjectGCFunctionDeclarations(LLVMModuleContext &llvmModCtx);

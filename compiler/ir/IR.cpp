@@ -351,7 +351,8 @@ namespace yoi {
         switch (op) {
             case IR::Opcode::store_local:
             case IR::Opcode::store_element:
-            case IR::Opcode::store_member: {
+            case IR::Opcode::store_member: 
+            case IR::Opcode::store_field: {
                 // fetch rhs from tempVarStack
                 tempVarStack.pop_back();
                 insert({op, {operand}, currentDebugInfo});
@@ -456,6 +457,15 @@ namespace yoi {
                   currentDebugInfo});
         tempVarStack.emplace_back(
             managedPtr(IRValueType{IRValueType::valueType::structObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
+    }
+
+    void IRBuilder::newDataStructOp(yoi::indexT structIndex, bool isExternal, yoi::indexT moduleIndex) {
+        insert(IR{IR::Opcode::new_datastruct,
+                  {IROperand(IROperand::operandType::index, isExternal ? moduleIndex : currentModule->identifier),
+                   IROperand(IROperand::operandType::index, structIndex)},
+                  currentDebugInfo});
+        tempVarStack.emplace_back(
+            managedPtr(IRValueType{IRValueType::valueType::datastructObject, isExternal ? moduleIndex : currentModule->identifier, structIndex}));
     }
 
     void IRBuilder::constructInterfaceImplOp(const std::pair<yoi::indexT, yoi::indexT> &interfaceId,
@@ -1658,5 +1668,12 @@ namespace yoi {
         }
         ss << yoi::wstr(indent, L' ') << L'}' << L'\n';
         return ss.str();
+    }
+
+    void IRBuilder::initializeFieldsOp(yoi::indexT parameterCount) {
+        for (yoi::indexT i = 0; i < parameterCount; i++) {
+            popFromTempVarStack();
+        }
+        insert(IR{IR::Opcode::initialize_field, {{IROperand::operandType::index, parameterCount}}, currentDebugInfo});
     }
 } // namespace yoi
