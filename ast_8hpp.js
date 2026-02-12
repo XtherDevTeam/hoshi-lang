@@ -47,6 +47,7 @@ var ast_8hpp =
     [ "structDefInnerPair", "classyoi_1_1structDefInnerPair.html", "classyoi_1_1structDefInnerPair" ],
     [ "structDefInner", "classyoi_1_1structDefInner.html", "classyoi_1_1structDefInner" ],
     [ "structDefStmt", "classyoi_1_1structDefStmt.html", "classyoi_1_1structDefStmt" ],
+    [ "dataStructDefStmt", "classyoi_1_1dataStructDefStmt.html", "classyoi_1_1dataStructDefStmt" ],
     [ "implInnerPair", "classyoi_1_1implInnerPair.html", "classyoi_1_1implInnerPair" ],
     [ "implInner", "classyoi_1_1implInner.html", "classyoi_1_1implInner" ],
     [ "implStmt", "classyoi_1_1implStmt.html", "classyoi_1_1implStmt" ],

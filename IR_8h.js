@@ -19,6 +19,8 @@ var IR_8h =
     [ "Argument", "structyoi_1_1IRTemplateBuilder_1_1Argument.html", "structyoi_1_1IRTemplateBuilder_1_1Argument" ],
     [ "IRFunctionTemplate", "classyoi_1_1IRFunctionTemplate.html", "classyoi_1_1IRFunctionTemplate" ],
     [ "Builder", "classyoi_1_1IRFunctionTemplate_1_1Builder.html", "classyoi_1_1IRFunctionTemplate_1_1Builder" ],
+    [ "IRDataStructDefinition", "classyoi_1_1IRDataStructDefinition.html", "classyoi_1_1IRDataStructDefinition" ],
+    [ "Builder", "structyoi_1_1IRDataStructDefinition_1_1Builder.html", "structyoi_1_1IRDataStructDefinition_1_1Builder" ],
     [ "IRStructDefinition", "classyoi_1_1IRStructDefinition.html", "classyoi_1_1IRStructDefinition" ],
     [ "nameInfo", "structyoi_1_1IRStructDefinition_1_1nameInfo.html", "structyoi_1_1IRStructDefinition_1_1nameInfo" ],
     [ "Builder", "structyoi_1_1IRStructDefinition_1_1Builder.html", "structyoi_1_1IRStructDefinition_1_1Builder" ],

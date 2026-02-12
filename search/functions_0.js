@@ -8,7 +8,7 @@ var searchData=
   ['addcall_5',['addCall',['../structyoi_1_1CallGraph.html#a6c608d0782ac71b58de7aecbeacf8bdb',1,'yoi::CallGraph']]],
   ['addexportedfunction_6',['addExportedFunction',['../classyoi_1_1IRFFITable.html#a98aa4386a5704453af091d889e32d6e8',1,'yoi::IRFFITable']]],
   ['addexternentryifnotexists_7',['addExternEntryIfNotExists',['../classyoi_1_1visitor.html#a5f284f16d2778edc374e0538cfa904ca',1,'yoi::visitor']]],
-  ['addfield_8',['addField',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a742b4c00189dd1ba83c5cb5026825501',1,'yoi::IRStructDefinition::Builder']]],
+  ['addfield_8',['addfield',['../structyoi_1_1IRDataStructDefinition_1_1Builder.html#a801f0737f3170690ac5a7dc668e867cd',1,'yoi::IRDataStructDefinition::Builder::addField()'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a742b4c00189dd1ba83c5cb5026825501',1,'yoi::IRStructDefinition::Builder::addField()']]],
   ['addforeigntype_9',['addForeignType',['../classyoi_1_1IRFFITable.html#a12b6db2175dbae2719869a0faf537bf9',1,'yoi::IRFFITable']]],
   ['addimportedfunction_10',['addImportedFunction',['../classyoi_1_1IRFFITable.html#a3b5aefa6ed075b8c5133c81438b20817',1,'yoi::IRFFITable']]],
   ['addmethod_11',['addmethod',['../structyoi_1_1IRStructDefinition_1_1Builder.html#a3cb27bf09f0585919f5d34ca3f35c405',1,'yoi::IRStructDefinition::Builder::addMethod()'],['../structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html#ae47d421959b4a7d8568a902f2f8fd0d6',1,'yoi::IRInterfaceInstanceDefinition::Builder::addMethod()']]],

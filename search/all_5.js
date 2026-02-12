@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['6_20function_20and_20method_20calls_0',['3.6. Function and Method Calls',['../md_docs_2IR.html#autotoc_md54',1,'']]],
-  ['6_20operator_20overloading_1',['6. Operator Overloading',['../md_docs_2Spec.html#autotoc_md112',1,'']]]
+  ['6_20function_20and_20method_20calls_0',['3.6. Function and Method Calls',['../md_docs_2IR.html#autotoc_md60',1,'']]],
+  ['6_20operator_20overloading_1',['6. Operator Overloading',['../md_docs_2Spec.html#autotoc_md118',1,'']]]
 ];

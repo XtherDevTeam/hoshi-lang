@@ -92,6 +92,7 @@ var structyoi_1_1lexer_1_1token =
       [ "kInterfaceOf", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aca0b47910794c206dc4e0c2a7c6b88d7", null ],
       [ "kAlias", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a9c807a1ee63fc31d3ee50d7c33b1f076", null ],
       [ "kEnum", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a57aeb634ac17cdd0c8f3e6c82b16cf99", null ],
+      [ "kDataStruct", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a28dcff6216fb3f3425c7a2bf41a2c762", null ],
       [ "eof", "structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b", null ]
     ] ],
     [ "token", "structyoi_1_1lexer_1_1token.html#ad854e194dde5dc5422ee0f3221e48ba5", null ],

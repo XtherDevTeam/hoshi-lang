@@ -15,6 +15,7 @@ var hierarchy =
       [ "constructorDecl", "classyoi_1_1constructorDecl.html", null ],
       [ "constructorDef", "classyoi_1_1constructorDef.html", null ],
       [ "continueStmt", "classyoi_1_1continueStmt.html", null ],
+      [ "dataStructDefStmt", "classyoi_1_1dataStructDefStmt.html", null ],
       [ "defTemplateArg", "classyoi_1_1defTemplateArg.html", null ],
       [ "defTemplateArgSpec", "classyoi_1_1defTemplateArgSpec.html", null ],
       [ "definitionArguments", "classyoi_1_1definitionArguments.html", null ],
@@ -92,6 +93,7 @@ var hierarchy =
       [ "is_unscoped_enum< T, true >", "structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html", null ]
     ] ],
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html", null ],
+    [ "Builder", "structyoi_1_1IRDataStructDefinition_1_1Builder.html", null ],
     [ "Builder", "classyoi_1_1IREnumerationType_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRFunctionDefinition_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRInterfaceImplementationDefinition_1_1Builder.html", null ],
@@ -163,6 +165,7 @@ var hierarchy =
     [ "IRBuildConfig", "structyoi_1_1IRBuildConfig.html", null ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html", null ],
     [ "IRCodeBlock", "classyoi_1_1IRCodeBlock.html", null ],
+    [ "IRDataStructDefinition", "classyoi_1_1IRDataStructDefinition.html", null ],
     [ "IRDebugInfo", "structyoi_1_1IRDebugInfo.html", null ],
     [ "IREnumerationType", "classyoi_1_1IREnumerationType.html", null ],
     [ "IRExternEntry", "classyoi_1_1IRExternEntry.html", null ],

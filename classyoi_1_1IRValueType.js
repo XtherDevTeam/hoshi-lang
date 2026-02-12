@@ -32,7 +32,8 @@ var classyoi_1_1IRValueType =
       [ "incompleteTemplateType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a37c4a7c49cb62ac501ade9d30774d6f8", null ],
       [ "foreignInt32Type", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc", null ],
       [ "foreignFloatType", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a", null ],
-      [ "bracedInitalizerList", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae198d05becf132c4afeaddcf20abe82a", null ]
+      [ "bracedInitalizerList", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ae198d05becf132c4afeaddcf20abe82a", null ],
+      [ "datastructObject", "classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85a17aa3980624aab6c5562d3918021f95a", null ]
     ] ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a6d7221323dc3b6b044bb6d83741fd032", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html#a2351ecb8c77551226cb2c4bf95de4d04", null ],

@@ -6,6 +6,7 @@ var classyoi_1_1globalStmt =
       [ "funcDefStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87", null ],
       [ "interfaceDefStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea68398d9b72fed7f20446726901c874e5", null ],
       [ "structDefStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2c20afdf1688ddbb342927c36509c891", null ],
+      [ "dataStructDefStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea416d4bfacccc9770c74d984b66cd862d", null ],
       [ "implStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200", null ],
       [ "letStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99", null ],
       [ "importDecl", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5", null ],
