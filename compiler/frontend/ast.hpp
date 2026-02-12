@@ -116,6 +116,8 @@ namespace yoi {
 
     class structDefStmt;
 
+    class dataStructDefStmt;
+    
     class implInnerPair;
 
     class implInner;
@@ -681,6 +683,16 @@ namespace yoi {
         structDefInner &getInner();
     };
 
+    class dataStructDefStmt : public AST {
+      public:
+        identifier *id;
+        structDefInner *inner;
+
+        identifier &getId();
+
+        structDefInner &getInner();
+    };
+
     class implInnerPair : public AST {
       public:
         // constructor
@@ -757,6 +769,7 @@ namespace yoi {
             funcDefStmt,
             interfaceDefStmt,
             structDefStmt,
+            dataStructDefStmt,
             implStmt,
             letStmt,
             importDecl,
@@ -771,6 +784,7 @@ namespace yoi {
             useStmt *useStmtVal;
             interfaceDefStmt *interfaceDefStmtVal;
             structDefStmt *structDefStmtVal;
+            dataStructDefStmt *dataStructDefStmtVal;
             implStmt *implStmtVal;
             letStmt *letStmtVal;
             funcDefStmt *funcDefStmtVal;

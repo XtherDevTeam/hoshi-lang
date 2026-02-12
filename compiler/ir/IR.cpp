@@ -788,7 +788,8 @@ namespace yoi {
         return *this;
     }
 
-    IRStructDefinition::Builder &IRStructDefinition::Builder::setStoredTemplateArgs(const yoi::vec<yoi::wstr> &paramNames, const yoi::vec<std::shared_ptr<IRValueType>> &args) {
+    IRStructDefinition::Builder &IRStructDefinition::Builder::setStoredTemplateArgs(const yoi::vec<yoi::wstr> &paramNames,
+                                                                                    const yoi::vec<std::shared_ptr<IRValueType>> &args) {
         this->templateParamNames = paramNames;
         this->storedTemplateArgs = args;
         return *this;
@@ -805,9 +806,13 @@ namespace yoi {
     }
 
     std::shared_ptr<IRStructDefinition> IRStructDefinition::Builder::yield() {
-        return std::make_shared<IRStructDefinition>(std::move(name), std::move(nameIndexMap), std::move(fieldTypes),
-                                                    std::move(templateParamNames), std::move(storedTemplateArgs),
-                                                    std::move(templateMethodDecls), std::move(templateMethodDefs));
+        return std::make_shared<IRStructDefinition>(std::move(name),
+                                                    std::move(nameIndexMap),
+                                                    std::move(fieldTypes),
+                                                    std::move(templateParamNames),
+                                                    std::move(storedTemplateArgs),
+                                                    std::move(templateMethodDecls),
+                                                    std::move(templateMethodDefs));
     }
 
     yoi::indexT IRStringLiteralPool::addStringLiteral(const wstr &str) {
@@ -885,8 +890,17 @@ namespace yoi {
     }
 
     std::shared_ptr<IRBuildConfig> IRBuildConfig::Builder::yield() {
-        return managedPtr(IRBuildConfig{
-            buildType, buildMode, useObjectLinker, buildPlatform, buildArch, preserveIntermediateFiles, searchPaths, additionalLinkingFiles, marcos, buildCachePath, immediatelyClearupCache});
+        return managedPtr(IRBuildConfig{buildType,
+                                        buildMode,
+                                        useObjectLinker,
+                                        buildPlatform,
+                                        buildArch,
+                                        preserveIntermediateFiles,
+                                        searchPaths,
+                                        additionalLinkingFiles,
+                                        marcos,
+                                        buildCachePath,
+                                        immediatelyClearupCache});
     }
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setBuildMode(BuildMode buildMode) {
@@ -1223,43 +1237,21 @@ namespace yoi {
     void IRBuilder::dynCastOp(const std::shared_ptr<IRValueType> &type) {
         IR::Opcode op;
         vec<IROperand> operand;
+
+        op = IR::Opcode::dyn_cast_any;
+        operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
+        operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
+        operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+
         if (type->isDynamicArrayType() || type->isArrayType()) {
             yoi::indexT size = 1;
             for (auto &dim : type->dimensions) {
                 size *= dim;
             }
 
-            op = IR::Opcode::dyn_cast_any;
-            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->type));
-            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(type->typeAffiliateModule));
-            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
             operand.emplace_back(IROperand::operandType::index, size);
         } else {
-            switch (type->type) {
-                case IRValueType::valueType::integerObject:
-                    op = IR::Opcode::dyn_cast_int;
-                    break;
-                case IRValueType::valueType::booleanObject:
-                    op = IR::Opcode::dyn_cast_bool;
-                    break;
-                case IRValueType::valueType::decimalObject:
-                    op = IR::Opcode::dyn_cast_deci;
-                    break;
-                case IRValueType::valueType::stringObject:
-                    op = IR::Opcode::dyn_cast_str;
-                    break;
-                case IRValueType::valueType::characterObject:
-                    op = IR::Opcode::dyn_cast_char;
-                    break;
-                case IRValueType::valueType::structObject:
-                    op = IR::Opcode::dyn_cast_struct;
-                    break;
-                default:
-                    /* TODO: add more dynamic cast opcodes */
-                    break;
-            }
-            operand.emplace_back(IROperand::operandType::index, type->typeAffiliateModule);
-            operand.emplace_back(IROperand::operandType::index, type->typeIndex);
+            operand.emplace_back(IROperand::operandType::index, static_cast<yoi::indexT>(0));
         }
         insert(IR(op, operand, currentDebugInfo));
         tempVarStack.pop_back();
@@ -1601,7 +1593,7 @@ namespace yoi {
             ss.unget();
         return ss.str();
     }
-    
+
     std::shared_ptr<IREnumerationType> IREnumerationType::Builder::yield() {
         return std::make_shared<IREnumerationType>(name, valueToIndexMap);
     }
@@ -1629,5 +1621,42 @@ namespace yoi {
             size *= dimension;
         }
         return size;
+    }
+
+    IRDataStructDefinition::IRDataStructDefinition(const yoi::wstr &name,
+                                                   const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes,
+                                                   const std::map<yoi::wstr, yoi::indexT> &fields,
+                                                   yoi::indexT linkedModuleId)
+        : name(name), fieldTypes(fieldTypes), fields(fields), linkedModuleId(linkedModuleId) {}
+
+    IRDataStructDefinition::Builder &IRDataStructDefinition::Builder::setName(const yoi::wstr &name) {
+        this->name = name;
+        return *this;
+    }
+
+    IRDataStructDefinition::Builder &IRDataStructDefinition::Builder::addField(const yoi::wstr &fieldName,
+                                                                               const std::shared_ptr<IRValueType> &fieldType) {
+        this->fieldTypes.push_back(fieldType);
+        this->fields[fieldName] = this->fieldTypes.size() - 1;
+        return *this;
+    }
+
+    IRDataStructDefinition::Builder &IRDataStructDefinition::Builder::setLinkedModuleId(yoi::indexT linkedModuleId) {
+        this->linkedModuleId = linkedModuleId;
+        return *this;
+    }
+
+    std::shared_ptr<IRDataStructDefinition> IRDataStructDefinition::Builder::yield() {
+        return std::make_shared<IRDataStructDefinition>(name, fieldTypes, fields, linkedModuleId);
+    }
+
+    yoi::wstr IRDataStructDefinition::to_string(yoi::indexT indent) {
+        std::wstringstream ss;
+        ss << yoi::wstr(indent, L' ') << L"datastruct " << name << L" {\n";
+        for (auto &field : fieldTypes) {
+            ss << yoi::wstr(indent + 4, L' ') << field->to_string() << L'\n';
+        }
+        ss << yoi::wstr(indent, L' ') << L'}' << L'\n';
+        return ss.str();
     }
 } // namespace yoi

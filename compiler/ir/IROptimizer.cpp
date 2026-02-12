@@ -1728,42 +1728,6 @@ namespace yoi {
                     simulationStack.pop();
                     break;
                 }
-                case IR::Opcode::dyn_cast_int:
-                case IR::Opcode::dyn_cast_bool:
-                case IR::Opcode::dyn_cast_deci:
-                case IR::Opcode::dyn_cast_char:
-                case IR::Opcode::dyn_cast_str: {
-                    std::shared_ptr<IRValueType> value_type;
-                    switch (ins.opcode) {
-                        case IR::Opcode::dyn_cast_int:
-                            value_type = compilerCtx->getIntObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_bool:
-                            value_type = compilerCtx->getBoolObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_char:
-                            value_type = compilerCtx->getCharObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_deci:
-                            value_type = compilerCtx->getDeciObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_str:
-                            value_type = compilerCtx->getStrObjectType();
-                            break;
-                        default:
-                            break;
-                    }
-                    simulationStack.pop();
-                    simulationStack.push(value_type, {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
-                case IR::Opcode::dyn_cast_struct: {
-                    auto structType = managedPtr(
-                        IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
-                    simulationStack.pop();
-                    simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
-                    break;
-                }
                 case IR::Opcode::dyn_cast_any: {
                     auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                        ins.operands[1].value.symbolIndex,
@@ -2461,7 +2425,11 @@ namespace yoi {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
                     auto varType = getVarType(ins.operands[0].value.symbolIndex);
-                    varType->attributes = value.type->attributes; // Rule 1: Direct propagation
+                    // varType->attributes = value.type->attributes; // Rule 1: Direct propagation
+                    // deprecated: we no longer inherit Nullable attributes from parent sign
+                    // unless they are passed to another function as a parameter, or
+                    // they got direct assignment, thus we need another label to mark this para-state.
+                    
                     break;
                 }
                 case IR::Opcode::load_local: {
@@ -2649,43 +2617,6 @@ namespace yoi {
                     simulationStack.push(resultType, {});
                     break;
                 }
-                // Dynamic Casts: Results are always nullable.
-                case IR::Opcode::dyn_cast_int:
-                case IR::Opcode::dyn_cast_bool:
-                case IR::Opcode::dyn_cast_deci:
-                case IR::Opcode::dyn_cast_char:
-                case IR::Opcode::dyn_cast_str:
-                case IR::Opcode::dyn_cast_struct: {
-                    simulationStack.pop();
-                    std::shared_ptr<IRValueType> resultType;
-                    switch (ins.opcode) {
-                        case IR::Opcode::dyn_cast_int:
-                            resultType = compilerCtx->getIntObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_bool:
-                            resultType = compilerCtx->getBoolObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_deci:
-                            resultType = compilerCtx->getDeciObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_char:
-                            resultType = compilerCtx->getCharObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_str:
-                            resultType = compilerCtx->getStrObjectType();
-                            break;
-                        case IR::Opcode::dyn_cast_struct:
-                            resultType = managedPtr(IRValueType{
-                                IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
-                            break;
-                        default:
-                            break;
-                    }
-                    auto finalType = std::make_shared<IRValueType>(*resultType);
-                    finalType->addAttribute(IRValueType::ValueAttr::Nullable);
-                    simulationStack.push(finalType, {});
-                    break;
-                }
                 case IR::Opcode::dyn_cast_any: {
                     auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                        ins.operands[1].value.symbolIndex,
@@ -2728,7 +2659,7 @@ namespace yoi {
                 // Other instructions with stack effects
                 case IR::Opcode::direct_assign: {
                     simulationStack.pop(); // rhs
-                    auto lhs = simulationStack.peek(0);
+                    auto lhs = simulationStack.peek(0);  
                     simulationStack.pop(); // lhs
                     simulationStack.push(std::make_shared<IRValueType>(*lhs.type), {});
                     break;
@@ -4211,35 +4142,6 @@ namespace yoi {
                                          SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
-            case IR::Opcode::dyn_cast_int:
-            case IR::Opcode::dyn_cast_bool:
-            case IR::Opcode::dyn_cast_deci:
-            case IR::Opcode::dyn_cast_char:
-            case IR::Opcode::dyn_cast_str: {
-                std::shared_ptr<IRValueType> value_type;
-                switch (ins.opcode) {
-                    case IR::Opcode::dyn_cast_int:
-                        value_type = compilerCtx->getIntObjectType();
-                        break;
-                    case IR::Opcode::dyn_cast_bool:
-                        value_type = compilerCtx->getBoolObjectType();
-                        break;
-                    case IR::Opcode::dyn_cast_char:
-                        value_type = compilerCtx->getCharObjectType();
-                        break;
-                    case IR::Opcode::dyn_cast_deci:
-                        value_type = compilerCtx->getDeciObjectType();
-                        break;
-                    case IR::Opcode::dyn_cast_str:
-                        value_type = compilerCtx->getStrObjectType();
-                        break;
-                    default:
-                        break;
-                }
-                simulationStack.pop();
-                simulationStack.push(value_type, {currentCodeBlockIndex, {insIndex}, false});
-                break;
-            }
             case IR::Opcode::dyn_cast_any: {
                 auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                    ins.operands[1].value.symbolIndex,
@@ -4248,13 +4150,6 @@ namespace yoi {
                 type->addAttribute(IRValueType::ValueAttr::Nullable);
                 simulationStack.pop();
                 simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
-                break;
-            }
-            case IR::Opcode::dyn_cast_struct: {
-                auto structType = managedPtr(
-                    IRValueType{IRValueType::valueType::structObject, ins.operands[0].value.symbolIndex, ins.operands[1].value.symbolIndex});
-                simulationStack.pop();
-                simulationStack.push(structType, {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
             case IR::Opcode::pointer_cast: {

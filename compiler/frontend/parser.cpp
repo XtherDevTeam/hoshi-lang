@@ -1228,6 +1228,45 @@ namespace yoi {
         o = new structDefStmt{node_start_token, id, inner};
     }
 
+    void parse(dataStructDefStmt *&o, lexer &lex) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kDataStruct) {
+            lex.scan();
+        } else {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+
+        identifier *id = nullptr;
+        structDefInner *inner = nullptr;
+
+        parse(id, lex);
+        if (!id) {
+            panic(lex.line, lex.col, "expected datastruct name after `datastruct`");
+            o = nullptr;
+            return;
+        }
+        parse(inner, lex);
+        if (!inner) {
+            finalizeAST(id);
+            panic(lex.line, lex.col, "expected datastruct body after identifier");
+            o = nullptr;
+            return;
+        }
+
+        for (auto &pair : inner->getInner()) {
+            if (pair->kind != 0) {
+                finalizeAST(id);
+                finalizeAST(inner);
+                panic(lex.line, lex.col, "datastruct can only contain fields, no methods or constructors allowed");
+                o = nullptr;
+                return;
+            }
+        }
+
+        o = new dataStructDefStmt{node_start_token, id, inner};
+    }
+
     void parse(implStmt *&o, lexer &lex) {
         if (lex.curToken.kind == lexer::token::tokenKind::kImpl) {
             lex.scan();
@@ -1432,6 +1471,13 @@ namespace yoi {
         parse(c, lex);
         if (c) {
             o = new globalStmt{node_start_token, globalStmt::vKind::structDefStmt, marco, {c}};
+            return;
+        }
+
+        dataStructDefStmt *ds = nullptr;
+        parse(ds, lex);
+        if (ds) {
+            o = new globalStmt{node_start_token, globalStmt::vKind::dataStructDefStmt, marco, {ds}};
             return;
         }
 

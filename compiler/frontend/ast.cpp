@@ -337,6 +337,14 @@ namespace yoi {
         return *inner;
     }
 
+    identifier &dataStructDefStmt::getId() {
+        return *id;
+    }
+
+    structDefInner &dataStructDefStmt::getInner() {
+        return *inner;
+    }
+
     constructorDef &implInnerPair::getConstructor() {
         return *con;
     }
@@ -741,6 +749,12 @@ namespace yoi {
         delete ptr;
     }
 
+    void finalizeAST(dataStructDefStmt *ptr) {
+        finalizeAST(ptr->id);
+        finalizeAST(ptr->inner);
+        delete ptr;
+    }
+
     void finalizeAST(implInnerPair *ptr) {
         if (ptr->isConstructor()) {
             finalizeAST(ptr->con);
@@ -790,6 +804,9 @@ namespace yoi {
                 break;
             case globalStmt::vKind::structDefStmt:
                 finalizeAST(ptr->value.structDefStmtVal);
+                break;
+            case globalStmt::vKind::dataStructDefStmt:
+                finalizeAST(ptr->value.dataStructDefStmtVal);
                 break;
             case globalStmt::vKind::implStmt:
                 finalizeAST(ptr->value.implStmtVal);

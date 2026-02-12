@@ -230,8 +230,7 @@ namespace yoi {
             case IR::Opcode::new_array_interface:
             case IR::Opcode::new_dynamic_array_struct:
             case IR::Opcode::new_dynamic_array_interface:
-            case IR::Opcode::construct_interface_impl: 
-            case IR::Opcode::dyn_cast_struct: {
+            case IR::Opcode::construct_interface_impl: {
                 auto moduleId = instr.operands[0].value.symbolIndex;
                 auto symbolIndex = instr.operands[1].value.symbolIndex;
                 newInstr.operands[0].value.symbolIndex = ENTRY_MODULE_ID_CONST;
@@ -247,7 +246,6 @@ namespace yoi {
                     case IR::Opcode::new_struct:
                     case IR::Opcode::new_array_struct:
                     case IR::Opcode::new_dynamic_array_struct:
-                    case IR::Opcode::dyn_cast_struct:
                         newInstr.operands[1].value.symbolIndex = structRemapping.at(moduleId).at(symbolIndex);
                         break;
                     case IR::Opcode::invoke_virtual:

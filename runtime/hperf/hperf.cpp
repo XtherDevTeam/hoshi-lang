@@ -176,7 +176,7 @@ void hperf_write_report(const char *filename) {
                                     R"({"type": "mem-free", "timestamp": {"sec": %llu, "nsec": %llu}, "ptr": %zu})",
                                     event->timestamp.sec,
                                     event->timestamp.nsec,
-                                    data->ptr);
+                                    (size_t)(data->ptr));
                             break;
                         }
                     }

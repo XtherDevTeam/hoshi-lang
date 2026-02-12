@@ -107,6 +107,7 @@ namespace yoi {
                 kInterfaceOf,
                 kAlias,
                 kEnum,
+                kDataStruct,
                 eof,
             } kind;
 

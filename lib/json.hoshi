@@ -163,20 +163,20 @@ impl BufferedStream {
 impl BufferedStream : file.AbstractFile {
     /* AbstractFile Implementation Proxies */
     read(size: int): file.ReadBufferView { return this.file.read(size) },
-    write(data: char[]) : int { return this.file.write(data) },
-    write(data: char[], size: int) : int { return this.file.write(data, size) },
-    write(data: char[], start: int, size: int) : int { return this.file.write(data, start, size) },
+    write(data: char[]) : int { return this.file.write(data) + 0 },
+    write(data: char[], size: int) : int { return this.file.write(data, size) + 0 },
+    write(data: char[], start: int, size: int) : int { return this.file.write(data, start, size) + 0 },
     close() : none { this.file.close() },
-    seek(offset: int, whence: int) : int { return this.file.seek(offset, whence) },
-    tell() : int { return this.abs_pos }, /* Return tracked abs_pos */
+    seek(offset: int, whence: int) : int { return this.file.seek(offset, whence) + 0 },
+    tell() : int { return this.abs_pos + 0 }, /* Return tracked abs_pos */
     flush() : none { this.file.flush() },
-    is_eof() : bool { return this.file.is_eof() },
-    size() : int { return this.file.size() },
-    is_seekable() : bool { return this.file.is_seekable() },
-    is_readable() : bool { return this.file.is_readable() },
-    is_writable() : bool { return this.file.is_writable() },
-    is_closed() : bool { return this.file.is_closed() },
-    getch() : char { return this.advance() },
+    is_eof() : bool { return this.file.is_eof() == true },
+    size() : int { return this.file.size() + 0 },
+    is_seekable() : bool { return this.file.is_seekable() == true },
+    is_readable() : bool { return this.file.is_readable() == true },
+    is_writable() : bool { return this.file.is_writable() == true },
+    is_closed() : bool { return this.file.is_closed() == true },
+    getch() : char { return this.advance() + '\0' },
     putch(c: char) : none { this.file.putch(c) }
 }
 

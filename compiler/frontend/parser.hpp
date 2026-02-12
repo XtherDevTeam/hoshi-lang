@@ -91,6 +91,8 @@ namespace yoi {
 
     void parse(structDefInnerPair *&o, lexer &lex);
 
+    void parse(dataStructDefStmt *&o, lexer &lex);
+    
     void parse(structDefInner *&o, lexer &lex);
 
     void parse(structDefStmt *&o, lexer &lex);

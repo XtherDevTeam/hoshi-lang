@@ -132,6 +132,7 @@ namespace yoi {
             foreignInt32Type,
             foreignFloatType,
             bracedInitalizerList, // placeholder for basic casts
+            datastructObject
         } type;
 
         yoi::indexT typeAffiliateModule;
@@ -349,13 +350,8 @@ namespace yoi {
             pop_exception_handler,
             typeid_object_non_stack,
             typeid_interface_impl,
-            dyn_cast_int,
-            dyn_cast_deci,
-            dyn_cast_bool,
-            dyn_cast_char,
-            dyn_cast_str,
-            dyn_cast_struct,
             dyn_cast_any,
+            new_datastruct,
             nop,
             FINAL,
         } opcode;
@@ -554,6 +550,40 @@ namespace yoi {
             Builder &setTemplateDefinition(const std::shared_ptr<IRFunctionDefinition> &templateDefinition);
 
             std::shared_ptr<IRFunctionTemplate> yield();
+        };
+    };
+
+    class IRDataStructDefinition {
+      public:
+        yoi::wstr name;
+        yoi::vec<std::shared_ptr<IRValueType>> fieldTypes;
+
+        std::map<yoi::wstr, yoi::indexT> fields;
+
+        yoi::indexT linkedModuleId;
+
+        IRDataStructDefinition(const yoi::wstr &name,
+                               const yoi::vec<std::shared_ptr<IRValueType>> &fieldTypes,
+                               const std::map<yoi::wstr, yoi::indexT> &fields,
+                               yoi::indexT linkedModuleId);
+
+        yoi::wstr to_string(yoi::indexT indent = 0);
+
+        struct Builder {
+            yoi::wstr name;
+            yoi::vec<std::shared_ptr<IRValueType>> fieldTypes;
+            std::map<yoi::wstr, yoi::indexT> fields;
+            yoi::indexT linkedModuleId;
+
+            Builder() = default;
+
+            Builder &setName(const yoi::wstr &name);
+
+            Builder &addField(const yoi::wstr &fieldName, const std::shared_ptr<IRValueType> &fieldType);
+
+            Builder &setLinkedModuleId(yoi::indexT linkedModuleId);
+
+            std::shared_ptr<IRDataStructDefinition> yield();
         };
     };
 

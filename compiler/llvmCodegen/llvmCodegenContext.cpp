@@ -1924,12 +1924,6 @@ namespace yoi {
                 llvmModCtx.valueStackPhi.push_back(lhs);
                 break;
             }
-            case IR::Opcode::dyn_cast_int:
-            case IR::Opcode::dyn_cast_bool:
-            case IR::Opcode::dyn_cast_deci:
-            case IR::Opcode::dyn_cast_str:
-            case IR::Opcode::dyn_cast_char:
-            case IR::Opcode::dyn_cast_struct:
             case IR::Opcode::dyn_cast_any: {
                 std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT> structTypeKey;
                 std::tuple<IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT> structTypeIDKey;
@@ -1939,41 +1933,12 @@ namespace yoi {
                 auto structTypeIndex = instr.operands[1].value.symbolIndex;
                 std::shared_ptr<IRValueType> structYoiType;
 
-                switch (instr.opcode) {
-                    case IR::Opcode::dyn_cast_int:
-                        structTypeKey = std::make_tuple(IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::integerObject, instr.operands[0].value.symbolIndex, structTypeIndex});
-                        break;
-                    case IR::Opcode::dyn_cast_bool:
-                        structTypeKey = std::make_tuple(IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::booleanObject, instr.operands[0].value.symbolIndex, structTypeIndex});
-                        break;
-                    case IR::Opcode::dyn_cast_deci:
-                        structTypeKey = std::make_tuple(IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::decimalObject, instr.operands[0].value.symbolIndex, structTypeIndex});
-                        break;
-                    case IR::Opcode::dyn_cast_char:
-                        structTypeKey = std::make_tuple(IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::characterObject, instr.operands[0].value.symbolIndex, structTypeIndex});
-                        break;
-                    case IR::Opcode::dyn_cast_str:
-                        structTypeKey = std::make_tuple(yoi::IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{yoi::IRValueType::valueType::stringObject, instr.operands[0].value.symbolIndex, structTypeIndex});
-                        break;
-                    case IR::Opcode::dyn_cast_any:
-                        structTypeIDKey = std::make_tuple(static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, instr.operands[3].value.symbolIndex);
-                        structYoiType = managedPtr(IRValueType{static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{instr.operands[3].value.symbolIndex}});
-                        break;
-                    default:
-                        structTypeKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex);
-                        structTypeIDKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex, 0);
-                        structYoiType = managedPtr(IRValueType{IRValueType::valueType::structObject, yoiModule->identifier, structTypeIndex});
-                        break;
+                structTypeIDKey = std::make_tuple(static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, instr.operands[3].value.symbolIndex);
+                if (instr.operands[3].value.symbolIndex) {
+                    structYoiType = managedPtr(IRValueType{static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex, yoi::vec<yoi::indexT>{instr.operands[3].value.symbolIndex}});
+                } else {
+                    structYoiType = managedPtr(IRValueType{static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex});
+                    structTypeKey = std::make_tuple(static_cast<IRValueType::valueType>(instr.operands[0].value.symbolIndex), instr.operands[1].value.symbolIndex, instr.operands[2].value.symbolIndex);
                 }
 
                 if (interfaceRhs.yoiType->metadata.hasMetadata(L"regressed_interface_impl")) {

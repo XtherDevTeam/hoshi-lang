@@ -1,0 +1,12 @@
+datastruct Test {
+    s: char[256],
+    t: unsigned
+}
+datastruct T {
+    field1: int,
+    field2: Test
+}
+
+func main() : int {
+    return 0
+}
