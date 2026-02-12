@@ -15,7 +15,7 @@ var searchData=
   ['finalizeast_5fvec_12',['finalizeAST_vec',['../namespaceyoi.html#ae8f13fcf89f8c2aab98a389953ee95f2',1,'yoi']]],
   ['finalized_13',['Finalized',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4a65457a3fa7904cfb30c890a602332205',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
   ['finalizenode_14',['finalizeNode',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a4e6642764fa367ea8ba3448d573da8ee',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
-  ['finalizer_15',['finalizer',['../classyoi_1_1structDefInnerPair.html#ac7fd0d057faa8aae6bbd922474c7b6e1',1,'yoi::structDefInnerPair::finalizer'],['../classyoi_1_1implInnerPair.html#a39cd50860dcd616b8b933ad301d6f48e',1,'yoi::implInnerPair::finalizer'],['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb',1,'yoi::IRFunctionDefinition::Finalizer']]],
+  ['finalizer_15',['finalizer',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445ad98b2083fa7bf5995545ff404d0424bb',1,'yoi::IRFunctionDefinition::Finalizer'],['../classyoi_1_1structDefInnerPair.html#ac7fd0d057faa8aae6bbd922474c7b6e1',1,'yoi::structDefInnerPair::finalizer'],['../classyoi_1_1implInnerPair.html#a39cd50860dcd616b8b933ad301d6f48e',1,'yoi::implInnerPair::finalizer']]],
   ['finalizerdecl_16',['finalizerDecl',['../classyoi_1_1finalizerDecl.html',1,'yoi']]],
   ['finalizerdef_17',['finalizerDef',['../classyoi_1_1finalizerDef.html',1,'yoi']]],
   ['finalizers_20in_20hoshi_20lang_18',['Finalizers in Hoshi-lang',['../md_docs_2Finalizers.html',1,'']]],

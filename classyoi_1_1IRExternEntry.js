@@ -4,6 +4,7 @@ var classyoi_1_1IRExternEntry =
       [ "globalVar", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7afd997be2a00c7a4a5920fd759028457c", null ],
       [ "function", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ac1c425268e68385d1ab5074c17a94f14", null ],
       [ "structType", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7af3dfe2dc33df285b284ccbbb4f65d086", null ],
+      [ "datastructType", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7aac5e78e5ca82328bafdc8d56acb963be", null ],
       [ "interfaceType", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a0c5d7016abfdbaccbdf367f28a4ee66a", null ],
       [ "interfaceImplType", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7a809f0d53d1c38ccf8fc891eebe7e2d94", null ],
       [ "importedFunction", "classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7ae1ba02628d51e174be444553adcd7293", null ]

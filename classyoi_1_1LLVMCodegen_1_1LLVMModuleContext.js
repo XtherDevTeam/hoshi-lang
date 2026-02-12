@@ -13,6 +13,7 @@ var classyoi_1_1LLVMCodegen_1_1LLVMModuleContext =
     [ "controlFlowAnalysis", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#aedf385aeacf87a77a4e85a99d90cad85", null ],
     [ "currentFunction", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac4cc9579c633f4e6815f1fc0ff61fd17", null ],
     [ "currentFunctionDef", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a3c53a3337666534e9cf2e72bfe2b2e78", null ],
+    [ "dataStructDataRegionMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ae3d11d356064e35aee66957e7769933e", null ],
     [ "DBuilder", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac412d01f461e3cd9e8f953c7d24699ec", null ],
     [ "foreignTypeMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2fc0d3dcf33e94609178b838639127e4", null ],
     [ "functionMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a56a60014fed123cda714f6f5210be904", null ],

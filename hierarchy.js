@@ -141,6 +141,7 @@ var hierarchy =
     [ "indexPool< T >", "classyoi_1_1indexPool.html", null ],
     [ "indexPool< yoi::wstr >", "classyoi_1_1indexPool.html", null ],
     [ "indexTable< A, B >", "classyoi_1_1indexTable.html", null ],
+    [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRDataStructDefinition > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IREnumerationType > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRExternEntry > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRFunctionDefinition > >", "classyoi_1_1indexTable.html", null ],

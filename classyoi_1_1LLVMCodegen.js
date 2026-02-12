@@ -20,6 +20,8 @@ var classyoi_1_1LLVMCodegen =
     [ "generateBasicTypeDeclarations", "classyoi_1_1LLVMCodegen.html#a6f7e98e515f69b944d1a159e4fe24a8d", null ],
     [ "generateBasicTypeImplementations", "classyoi_1_1LLVMCodegen.html#ab81ed44f76ecd4a70ff2f5b598b91ce5", null ],
     [ "generateCodeBlock", "classyoi_1_1LLVMCodegen.html#a49b14ee079820c182d10f066868718e4", null ],
+    [ "generateDataStructDeclarations", "classyoi_1_1LLVMCodegen.html#a74b20c5a98cb2bc42887d19d73f31071", null ],
+    [ "generateDataStructShallowDeclarations", "classyoi_1_1LLVMCodegen.html#a9227b7766bad8a8a9c785e585a6a1372", null ],
     [ "generateDeclarations", "classyoi_1_1LLVMCodegen.html#a35803c6481343b9ff363e92650ea592c", null ],
     [ "generateDescription", "classyoi_1_1LLVMCodegen.html#a99e3ae7244894d2a2f0a62ee3f881064", null ],
     [ "generateExportFunctionDecls", "classyoi_1_1LLVMCodegen.html#a2435047aabb27016228a5b8258aae9fb", null ],
