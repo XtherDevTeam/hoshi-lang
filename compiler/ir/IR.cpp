@@ -724,6 +724,9 @@ namespace yoi {
             case valueType::incompleteTemplateType:
                 res = L"incomplete_template_type#" + std::to_wstring(typeIndex);
                 break;
+            case valueType::datastructObject:
+                res = L"datastruct#" + std::to_wstring(typeAffiliateModule) + L"#" + std::to_wstring(typeIndex);
+                break;
             default:
                 res = L"unknown";
                 break;
@@ -1675,5 +1678,18 @@ namespace yoi {
             popFromTempVarStack();
         }
         insert(IR{IR::Opcode::initialize_field, {{IROperand::operandType::index, parameterCount}}, currentDebugInfo});
+    }
+
+    void IRBuilder::loadFieldOp(yoi::vec<yoi::IROperand> &accessors,
+                                const std::shared_ptr<IRValueType> &expectedType) {
+        popFromTempVarStack();
+        insert(IR{IR::Opcode::load_field, accessors, currentDebugInfo});
+        pushTempVar(expectedType);
+    }
+
+    void IRBuilder::storeFieldOp(yoi::vec<yoi::IROperand> &accessors) {
+        popFromTempVarStack();
+        insert(IR{IR::Opcode::store_field, accessors, currentDebugInfo});
+        popFromTempVarStack();
     }
 } // namespace yoi

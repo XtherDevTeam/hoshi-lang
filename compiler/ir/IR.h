@@ -318,6 +318,7 @@ namespace yoi {
             store_local,
             store_member,             // only for struct
             store_field,              // only for data struct
+            load_field,               // only for data struct
             initialize_field,         // once and for all initialization of data struct fields, push the struct itself as a result. act like constructor
             invoke,
             new_struct,
@@ -945,11 +946,15 @@ namespace yoi {
 
         void loadOp(IR::Opcode op, const yoi::IROperand &source, const std::shared_ptr<IRValueType> &expectedType, yoi::indexT moduleIndex = -1);
 
+        void loadFieldOp(yoi::vec<yoi::IROperand> &accessors, const std::shared_ptr<IRValueType> &expectedType);
+
         void loadMemberOp(const yoi::IROperand &memberIndex, const std::shared_ptr<IRValueType> &memberType);
 
         void storeOp(IR::Opcode op, const yoi::IROperand &operand, yoi::indexT moduleIndex = -1);
 
         void storeMemberOp(const yoi::IROperand &memberIndex);
+
+        void storeFieldOp(yoi::vec<yoi::IROperand> &accessors);
 
         /**
          * @brief Invoke a function with the given arguments.

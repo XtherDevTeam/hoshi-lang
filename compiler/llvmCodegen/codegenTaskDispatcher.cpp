@@ -9,11 +9,7 @@ namespace yoi {
     CodegenTaskDispatcher::CodegenTaskDispatcher(size_t threadCount) {
         // automatically use hardware cores from system info
         if (threadCount == 0)
-            #ifdef RELEASE
             threadCount = std::thread::hardware_concurrency();
-            #else
-            threadCount = 1;
-            #endif
         for (size_t i = 0; i < threadCount; ++i) {
             workers.emplace_back(&CodegenTaskDispatcher::workerLoop, this);
         }

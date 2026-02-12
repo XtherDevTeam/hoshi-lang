@@ -1,14 +1,21 @@
+use console "console"
+
 datastruct Test {
     s: char[256],
     t: unsigned
 }
+
 datastruct T {
     field1: int,
     field2: Test
 }
 
 func main() : int {
-    let t = Test()
-    
+    let t = T(2213, Test())
+    console.print("t.field1 before assign: ", t.field1, "\n")
+    t.field1 = 233333
+    t.field2.t = 233333
+    console.print("t.field1 after assign: ", t.field1, "\n")
+    console.print("t.field2.t after assign: ", t.field2.t, "\n")
     return 0
 }

@@ -139,12 +139,16 @@ namespace yoi {
             std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                     llvm::StructType *>
                 arrayTypeMap; // Maps (type_enum, module_id, type_idx, size) to LLVM array type
+            std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
+                    llvm::DIType *>
+                arrayDataRegionDITypeMap; // Maps (type_enum, module_id, type_idx, size) to LLVM array data region type
             std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT>,
                     llvm::DIType *>
                 structTypeDIMap; // Maps (type_enum, module_id, type_idx) to LLVM DI type
             std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                     llvm::DIType *>
                 arrayTypeDIMap; // Maps (type_enum, module_id, type_idx, size) to LLVM DI type
+            std::map<yoi::indexT, llvm::DIType *> dataStructDataRegionTypeDIMap;
             std::map<std::tuple<yoi::IRValueType::valueType, yoi::indexT, yoi::indexT, yoi::indexT>,
                     yoi::indexT>
                 typeIDMap; // Maps (type_enum, module_id, type_idx, size) to type ID (if no array, size = 0)

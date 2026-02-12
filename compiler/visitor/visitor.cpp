@@ -998,6 +998,7 @@ namespace yoi {
         }
 
         // 4. Loop through the rest of the terms (.b, .c(), .d[i], etc.)
+        yoi::vec<IROperand> accessors;
         for (it++; it != memberExpr->getTerms().end(); it++) {
             if (it == memberExpr->getTerms().end()) {
                 break;
@@ -1008,6 +1009,7 @@ namespace yoi {
 
             // The type of the object we are operating on (result of the previous term)
             auto objectType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            // only when it is a data struct, we need to handle the accessors
 
             // A. Handle the base of the current term (the identifier itself).
             // It's either a field access or a method name.
@@ -1056,7 +1058,32 @@ namespace yoi {
                         createCallableInstanceForFunction(impl.first, impl.second, objectType->typeAffiliateModule, true);
                         isResolved = true;
                     }
-                    yoi_assert(isResolved, currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on a unknown struct fields or methods");
+                    yoi_assert(isResolved, currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on unknown struct fields or methods: " + wstring2string(currentTermNode->id->getId().get().strVal));
+                } else if (objectType->type == IRValueType::valueType::datastructObject) {
+                    auto structDef = moduleContext->getCompilerContext()->getImportedModule(objectType->typeAffiliateModule)->dataStructTable[objectType->typeIndex];
+                    yoi_assert(structDef->fields.contains(currentTermNode->id->getId().get().strVal), currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on unknown data struct fields or methods: " + wstring2string(currentTermNode->id->getId().get().strVal));
+                    auto fieldIndex = structDef->fields[currentTermNode->id->getId().get().strVal];
+                    if (accessors.empty()) {
+                        moduleContext->getIRBuilder().pushTempVar(structDef->fieldTypes[fieldIndex]);
+                    } else {
+                        moduleContext->getIRBuilder().popFromTempVarStack();
+                        moduleContext->getIRBuilder().pushTempVar(structDef->fieldTypes[fieldIndex]);
+                    }
+                    accessors.emplace_back(IROperand::operandType::index, fieldIndex);
+
+                    if (isFinalTerm) {
+                        auto fieldType = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                        moduleContext->getIRBuilder().popFromTempVarStack();
+                        if (isStoreOp) {
+                            moduleContext->getIRBuilder().restoreStateTemporarily();
+                            tryCastTo(fieldType);
+                            moduleContext->getIRBuilder().commitState();
+                            moduleContext->getIRBuilder().storeFieldOp(accessors);
+                        } else {
+                            moduleContext->getIRBuilder().loadFieldOp(accessors, fieldType);
+                            accessors.clear();
+                        }
+                    }
                 } else {
                     panic(
                         currentTermNode->getLine(), currentTermNode->getColumn(), "Member access on a non-struct or non-array type is not allowed.");

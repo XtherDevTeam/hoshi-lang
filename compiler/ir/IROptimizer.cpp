@@ -4206,6 +4206,21 @@ namespace yoi {
                 }
                 break;
             }
+            case IR::Opcode::store_field: {
+                simulationStack.pop();
+                simulationStack.pop();
+                break;
+            }
+            case IR::Opcode::load_field: {
+                auto type = simulationStack.peek(0).type;
+                simulationStack.pop();
+                for (auto &operand : ins.operands) {
+                    auto def = compilerCtx->getImportedModule(type->typeAffiliateModule)->dataStructTable[type->typeIndex];
+                    type = def->fieldTypes[operand.value.symbolIndex];
+                }
+                simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
+                break;
+            }
             default: {
                 // pass
                 break;
