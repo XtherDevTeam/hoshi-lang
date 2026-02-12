@@ -55,6 +55,7 @@ var classyoi_1_1IR =
       [ "store_local", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a50512c9023eb20bf4f03342eed515474", null ],
       [ "store_member", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1321d275f0b1aa703525e2afcaf38101", null ],
       [ "store_field", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2a41b7774eb9ab9f06e2f2dc23f178ef", null ],
+      [ "load_field", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8ca9aebc765145e8dd8bb1e66784415d", null ],
       [ "initialize_field", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acaf8be808be520bb8736d0f8c14088d3", null ],
       [ "invoke", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5fb833d20ef9f93596f4117a81523536", null ],
       [ "new_struct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a575bed12f80e59cc6fde5bf832f3a8cb", null ],

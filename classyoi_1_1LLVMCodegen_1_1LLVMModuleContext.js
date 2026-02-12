@@ -2,6 +2,7 @@ var classyoi_1_1LLVMCodegen_1_1LLVMModuleContext =
 [
     [ "LLVMModuleContext", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2f1e789ad71b7b1a9ee3b60136037a5f", null ],
     [ "absolute_path", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac53d3ef365b2a993294a4b7923b064f0", null ],
+    [ "arrayDataRegionDITypeMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a68dcecdaf70440b01fc2fcd0f9541fb2", null ],
     [ "arrayToGenerateImplementations", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a52d825b5aeaa7283b9b13ea3055a87fc", null ],
     [ "arrayTypeDIMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ace32b6d8fae5f03431b356f018c582ac", null ],
     [ "arrayTypeMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#aea4b67ab5b7e7033f4deb399da0b4443", null ],
@@ -14,6 +15,7 @@ var classyoi_1_1LLVMCodegen_1_1LLVMModuleContext =
     [ "currentFunction", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac4cc9579c633f4e6815f1fc0ff61fd17", null ],
     [ "currentFunctionDef", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a3c53a3337666534e9cf2e72bfe2b2e78", null ],
     [ "dataStructDataRegionMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ae3d11d356064e35aee66957e7769933e", null ],
+    [ "dataStructDataRegionTypeDIMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a543b466249d5b689df92593ac26e0214", null ],
     [ "DBuilder", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac412d01f461e3cd9e8f953c7d24699ec", null ],
     [ "foreignTypeMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2fc0d3dcf33e94609178b838639127e4", null ],
     [ "functionMap", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a56a60014fed123cda714f6f5210be904", null ],
