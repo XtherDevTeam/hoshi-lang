@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('md_docs_2Nullable_01Check_01_6_01Raw_0
   <div class="headertitle"><div class="title">Nullable Check</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md91"></a> 在 <code>load_xxx</code> <code>store_xxx</code> 命令中，为了确定减小GC计数的指针不为 <code>nullptr</code>，在此之前会对指针进行一次 ICMP_EQ 比较和跳转，由原本的 1 条指令完成的工作现在增加到4条指令。因此在 IROptimizer 之后，llvmCodegen 之前引入 Nullable Check Pass。</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md90"></a> 在 <code>load_xxx</code> <code>store_xxx</code> 命令中，为了确定减小GC计数的指针不为 <code>nullptr</code>，在此之前会对指针进行一次 ICMP_EQ 比较和跳转，由原本的 1 条指令完成的工作现在增加到4条指令。因此在 IROptimizer 之后，llvmCodegen 之前引入 Nullable Check Pass。</p>
 <p>对一个 <code>Function</code> 单位的数据流，有如下规则：</p>
 <ol type="1">
 <li>对于 <code>store_xxx</code> 指令，若右值为 <code>Nullable</code>，则 <code>Nullable</code> 属性将传递给左值，进入变量表。<ul>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('md_docs_2Nullable_01Check_01_6_01Raw_0
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md92"></a>
+<h1><a class="anchor" id="autotoc_md91"></a>
 Raw Check</h1>
 <p>在进行计算时，小对象的创建和销毁十分频繁，为优化程序性能，在 IROptimizer 后，llvmCodegen 前引入 Raw Check Pass。</p>
 <p>对一个 <code>Function</code> 单位的数据流，有如下规则：</p>
@@ -130,12 +130,12 @@ Raw Check</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md93"></a>
+<h1><a class="anchor" id="autotoc_md92"></a>
 Inter-functional call graph building and raw check</h1>
 <p>在先前的优化中，跨函数代码并未加入代码之中，而是采用保守的优化策略，视为 Nullable 变量，故引入 Call Graph 分析。</p>
 <p>函数按从 Call Graph 的 BFS 起点开始调用 Optimizer，大体逻辑不变，加入对返回值的 Nullable 和 Raw 分析。 同时依据函数返回值的 Nullable 和 Raw 属性确定栈上返回值的 Nullable 和 Raw。</p>
 <p>在初始态，所有的参数和返回值均被推断为 Rawable 和 Non-nullable，直到出现不符合推断信息时，删去 Raw 或添加 Nullable</p>
-<h1><a class="anchor" id="autotoc_md94"></a>
+<h1><a class="anchor" id="autotoc_md93"></a>
 IRValueType 属性的增加和改写</h1>
 <p>对于设置某一属性为 (真/假)，其含义为在 IRValueType 中 (增加/删除) 对该属性的定义 </p>
 </div></div><!-- contents -->

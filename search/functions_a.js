@@ -20,9 +20,10 @@ var searchData=
   ['llvmmodulecontext_17',['LLVMModuleContext',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2f1e789ad71b7b1a9ee3b60136037a5f',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
   ['loadarrayelement_18',['loadArrayElement',['../classyoi_1_1LLVMCodegen.html#a4f2b59b3cde85f85039438386a163a19',1,'yoi::LLVMCodegen']]],
   ['loadfieldop_19',['loadFieldOp',['../classyoi_1_1IRBuilder.html#a57a61de621491190c2dd56b4b45d66c9',1,'yoi::IRBuilder']]],
-  ['loadmemberop_20',['loadMemberOp',['../classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95',1,'yoi::IRBuilder']]],
-  ['loadop_21',['loadOp',['../classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a',1,'yoi::IRBuilder']]],
-  ['log2_22',['log2',['../namespacemagic__enum_1_1detail.html#aa5cd07d5e927019f4334ceff84b6efa3',1,'magic_enum::detail']]],
-  ['lookup_23',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
-  ['lookupname_24',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]]
+  ['loadifdatastructobject_20',['loadIfDataStructObject',['../classyoi_1_1LLVMCodegen.html#a2bbbfd685e3fb848cfb60855ad433e33',1,'yoi::LLVMCodegen']]],
+  ['loadmemberop_21',['loadMemberOp',['../classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95',1,'yoi::IRBuilder']]],
+  ['loadop_22',['loadOp',['../classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a',1,'yoi::IRBuilder']]],
+  ['log2_23',['log2',['../namespacemagic__enum_1_1detail.html#aa5cd07d5e927019f4334ceff84b6efa3',1,'magic_enum::detail']]],
+  ['lookup_24',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
+  ['lookupname_25',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]]
 ];

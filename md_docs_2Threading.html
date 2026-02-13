@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('md_docs_2Threading.html',''); initResi
   <div class="headertitle"><div class="title">Threading in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md136"></a> Hoshi-lang provides basic support for multi-threaded programming through the <code>threading</code> standard library module.</p>
-<h1><a class="anchor" id="autotoc_md137"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md135"></a> Hoshi-lang provides basic support for multi-threaded programming through the <code>threading</code> standard library module.</p>
+<h1><a class="anchor" id="autotoc_md136"></a>
 &lt;tt&gt;Thread&lt;/tt&gt; Struct</h1>
 <p>The <code>Thread</code> struct represents a single thread of execution. It is created with a callable object (a function or a lambda) that will be executed in the new thread.</p>
-<h2><a class="anchor" id="autotoc_md138"></a>
+<h2><a class="anchor" id="autotoc_md137"></a>
 Methods</h2>
 <ul>
 <li><code>constructor(callableObject: func () : none)</code>: Creates a new <code>Thread</code> with the given callable object.</li>
@@ -105,7 +105,7 @@ Methods</h2>
 <li><code>join() : none</code>: Waits for the thread to complete its execution.</li>
 <li><code>ping() : int</code>: Checks if the thread is still running.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md139"></a>
+<h2><a class="anchor" id="autotoc_md138"></a>
 Example</h2>
 <div class="fragment"><div class="line">use threading &quot;threading&quot;</div>
 <div class="line">use runtime &quot;runtime&quot;</div>
@@ -122,10 +122,10 @@ Example</h2>
 <div class="line">    th.join()</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md140"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md139"></a>
 &lt;tt&gt;Mutex&lt;/tt&gt; Struct</h1>
 <p>The <code>Mutex</code> struct provides a mutual exclusion mechanism to protect shared data from being simultaneously accessed by multiple threads.</p>
-<h2><a class="anchor" id="autotoc_md141"></a>
+<h2><a class="anchor" id="autotoc_md140"></a>
 Methods</h2>
 <ul>
 <li><code>constructor()</code>: Creates a new <code>Mutex</code>.</li>
@@ -133,7 +133,7 @@ Methods</h2>
 <li><code>unlock() : none</code>: Releases the mutex lock.</li>
 <li><code>try_lock() : bool</code>: Attempts to acquire the mutex lock without blocking. Returns <code>true</code> if the lock was acquired successfully, and <code>false</code> otherwise.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md142"></a>
+<h2><a class="anchor" id="autotoc_md141"></a>
 Example</h2>
 <div class="fragment"><div class="line">use threading &quot;threading&quot;</div>
 <div class="line">use runtime &quot;runtime&quot;</div>
@@ -145,7 +145,7 @@ Example</h2>
 <div class="line">    mutex.unlock()</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md143"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md142"></a>
 &lt;tt&gt;current_tid()&lt;/tt&gt;</h1>
 <p>The <code>current_tid()</code> function returns the ID of the currently executing thread.</p>
 <div class="fragment"><div class="line">use threading &quot;threading&quot;</div>

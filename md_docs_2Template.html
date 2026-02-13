@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('md_docs_2Template.html',''); initResiz
   <div class="headertitle"><div class="title">Generic Programming with Templates</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md130"></a> Hoshi-lang supports generic programming using <code>template</code>s, which allow you to write code that can work with different data types. Templates can be applied to functions, structs, and interfaces.</p>
-<h1><a class="anchor" id="autotoc_md131"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md129"></a> Hoshi-lang supports generic programming using <code>template</code>s, which allow you to write code that can work with different data types. Templates can be applied to functions, structs, and interfaces.</p>
+<h1><a class="anchor" id="autotoc_md130"></a>
 Function Templates</h1>
 <p>Function templates allow you to create functions that can operate on different types.</p>
 <div class="fragment"><div class="line">func add&lt;T&gt;(a: T, b: T) : T {</div>
@@ -106,13 +106,13 @@ Function Templates</h1>
 <div class="line">    let y = add(3.0, 4.0) // Implicit specialization</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md132"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md131"></a>
 Implicit vs. Explicit Specialization</h2>
 <ul>
 <li><b>Explicit Specialization:</b> You explicitly provide the template arguments (e.g., <code>&lt;int&gt;</code>).</li>
 <li><b>Implicit Specialization:</b> The compiler deduces the template arguments from the function's arguments.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md133"></a>
+<h1><a class="anchor" id="autotoc_md132"></a>
 Struct Templates</h1>
 <p>Struct templates allow you to create generic data structures.</p>
 <div class="fragment"><div class="line">struct Container&lt;T&gt; {</div>
@@ -130,7 +130,7 @@ Struct Templates</h1>
 <div class="line">    let c = Container&lt;int&gt;(123)</div>
 <div class="line">    return 0</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md134"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md133"></a>
 Interface Templates</h1>
 <p>Interface templates allow you to define generic contracts.</p>
 <div class="fragment"><div class="line">interface Result&lt;T&gt; {</div>

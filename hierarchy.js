@@ -216,6 +216,7 @@ var hierarchy =
     [ "pair", null, [
       [ "customize_t", "classmagic__enum_1_1customize_1_1customize__t.html", null ]
     ] ],
+    [ "Point", "structPoint.html", null ],
     [ "PossibleValue", "unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html", null ],
     [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", null ],
     [ "SimulationStack", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html", null ],

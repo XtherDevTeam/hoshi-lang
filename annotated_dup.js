@@ -173,6 +173,7 @@ var annotated_dup =
     [ "HPerfEventMemFree", "structHPerfEventMemFree.html", "structHPerfEventMemFree" ],
     [ "HPerfPage", "structHPerfPage.html", "structHPerfPage" ],
     [ "HPerfTimestamp", "structHPerfTimestamp.html", "structHPerfTimestamp" ],
+    [ "Point", "structPoint.html", "structPoint" ],
     [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", "structruntime__signal__handler__info" ],
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", "structThreadStarterArgs" ],
     [ "utf8Unicode", "classutf8Unicode.html", "classutf8Unicode" ],

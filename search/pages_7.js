@@ -6,5 +6,5 @@ var searchData=
   ['hoshi_20lang_20arrays_3',['Hoshi-lang Arrays',['../md_docs_2Array.html',1,'']]],
   ['hoshi_20lang_20intermediate_20representation_20ir_20handbook_4',['The Hoshi-lang Intermediate Representation (IR) Handbook',['../md_docs_2IR.html',1,'']]],
   ['hoshi_20lang_20language_20specification_5',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
-  ['hoshi_20lang_20programming_20language_6',['The Hoshi-lang Programming Language',['../index.html',1,'']]]
+  ['hoshi_20lang_20programming_20language_6',['The hoshi-lang Programming Language',['../index.html',1,'']]]
 ];

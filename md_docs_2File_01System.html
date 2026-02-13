@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('md_docs_2File_01System.html',''); init
   <div class="headertitle"><div class="title">File System in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md28"></a> Hoshi-lang provides a set of standard library modules for interacting with the file system.</p>
-<h1><a class="anchor" id="autotoc_md29"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md27"></a> Hoshi-lang provides a set of standard library modules for interacting with the file system.</p>
+<h1><a class="anchor" id="autotoc_md28"></a>
 &lt;tt&gt;file&lt;/tt&gt; Module</h1>
 <p>The <code>file</code> module defines the <code>AbstractFile</code> interface, which provides a common set of methods for interacting with file-like objects.</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 &lt;tt&gt;AbstractFile&lt;/tt&gt; Interface</h2>
 <ul>
 <li><code>read(size: int): char[]</code>: Reads a specified number of bytes from the file.</li>
@@ -114,10 +114,10 @@ $(document).ready(function(){initNavTree('md_docs_2File_01System.html',''); init
 <li><code>is_closed() : bool</code>: Returns <code>true</code> if the file is closed.</li>
 <li><code>getch() : char</code>: Reads a single character from the file.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md31"></a>
+<h1><a class="anchor" id="autotoc_md30"></a>
 &lt;tt&gt;fs&lt;/tt&gt; Module</h1>
 <p>The <code>fs</code> module provides functions for interacting with the file system.</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Functions</h2>
 <ul>
 <li><code>open(path: str.Str, mode: str.Str) : lang.Result&lt;OSFile, str.Str&gt;</code>: Opens a file and returns a <code>Result</code> containing an <code>OSFile</code> object on success, or an error string on failure.</li>
@@ -125,16 +125,16 @@ Functions</h2>
 <li><code>stdout() : OSFile</code>: Returns a handle to the standard output stream.</li>
 <li><code>stderr() : OSFile</code>: Returns a handle to the standard error stream.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 &lt;tt&gt;OSFile&lt;/tt&gt; Struct</h2>
 <p>The <code>OSFile</code> struct is a concrete implementation of the <code>AbstractFile</code> interface for operating system files.</p>
-<h1><a class="anchor" id="autotoc_md34"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 &lt;tt&gt;io&lt;/tt&gt; Module</h1>
 <p>The <code>io</code> module provides an <code>ArrayBuffer</code> struct that implements the <code>AbstractFile</code> interface for in-memory I/O.</p>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 &lt;tt&gt;ArrayBuffer&lt;/tt&gt; Struct</h2>
 <p>The <code>ArrayBuffer</code> struct allows you to treat a byte array as a file.</p>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Example</h2>
 <div class="fragment"><div class="line">use fs &quot;fs&quot;</div>
 <div class="line">use file &quot;file&quot;</div>

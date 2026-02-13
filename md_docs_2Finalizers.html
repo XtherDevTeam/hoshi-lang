@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('md_docs_2Finalizers.html',''); initRes
   <div class="headertitle"><div class="title">Finalizers in Hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md37"></a> Finalizers in Hoshi-lang are special methods that are called just before an object is deallocated by the garbage collector. They are similar to destructors in other languages and are useful for releasing resources held by an object.</p>
-<h1><a class="anchor" id="autotoc_md38"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md36"></a> Finalizers in Hoshi-lang are special methods that are called just before an object is deallocated by the garbage collector. They are similar to destructors in other languages and are useful for releasing resources held by an object.</p>
+<h1><a class="anchor" id="autotoc_md37"></a>
 Syntax</h1>
 <p>A finalizer is defined using the <code>finalizer</code> keyword within a <code>struct</code> definition and implemented in an <code>impl</code> block.</p>
 <div class="fragment"><div class="line">struct MyFile {</div>
@@ -111,7 +111,7 @@ Syntax</h1>
 <div class="line">        // close file handle</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md39"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md38"></a>
 Execution</h1>
 <p>When an object's reference count reaches zero, the garbage collector will call the object's <code>finalizer</code> method before freeing the object's memory. This ensures that any resources held by the object are properly released. </p>
 </div></div><!-- contents -->
