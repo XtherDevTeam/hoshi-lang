@@ -1,0 +1,40 @@
+
+❯ time javac benchmark/datastruct/Datastruct.java
+javac benchmark/datastruct/Datastruct.java  0.35s user 0.04s system 129% cpu 0.306 total
+❯ cd benchmark/datastruct
+❯ time java Datastruct
+Java (Heap Object): 0.006649459s
+Final Sum: 50000015000000
+java Datastruct  0.04s user 0.02s system 98% cpu 0.064 total
+❯ cd ..
+❯ time python datastruct/datastruct.py
+Python (Legacy Class): 0.7591s
+Final Sum: 50000015000000
+python datastruct/datastruct.py  0.77s user 0.01s system 97% cpu 0.804 total
+❯ g++ -std=c++2a datastruct/datastruct.cpp -o datastruct.e
+❯ time ./datastruct.e
+C++ (Value Type/Stack): 0.0248122s
+Final Sum: 50000015000000
+./datastruct.e  0.03s user 0.00s system 9% cpu 0.332 total
+❯ hoshi_lang datastruct/datastruct.hoshi --build-mode release -o datastruct-e
+Linking Yoi IR modules...
+Generating target object files...
+Creating cache for file: /Users/chou/Desktop/project/hoshi-lang/benchmark/datastruct/datastruct.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/console.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/str.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/runtime.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/vec.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/fs.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/file.hoshi
+Creating cache for file: /Users/chou/.hoshi/bin/../lib/math.hoshi
+Creating cache for file: builtin
+Linking final darwin executable...
+Compilation successful!
+❯ time ./datastruct-e
+Starting Benchmark:  10000000  iterations
+------------------------------------------
+Legacy Struct (Heap) Time:  0s 237ms 
+New Datastruct (Stack) Time:  0s 0ms 
+------------------------------------------
+Validation: Success (Results match)
+./datastruct-e  0.24s user 0.00s system 43% cpu 0.564 total

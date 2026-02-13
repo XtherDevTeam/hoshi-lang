@@ -3056,6 +3056,9 @@ namespace yoi {
             case IRValueType::valueType::none:
                 res = L"none";
                 break;
+            case IRValueType::valueType::datastructObject:
+                res += L"datastructObject#" + std::to_wstring(type->typeAffiliateModule) + L"#" + std::to_wstring(type->typeIndex);
+                break;
             default:
                 panic(moduleContext->getIRBuilder().getCurrentDebugInfo().line,
                       moduleContext->getIRBuilder().getCurrentDebugInfo().column,

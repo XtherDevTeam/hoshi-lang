@@ -52,5 +52,3 @@ Depending on the Nullable type or not, the copy can either be a Raw value on sta
 For a data struct, it can be recognized as a basic type just like `int`, `float`, `char`, etc. That entitled it the ability to be optimized by the existing object optimization system.
 
 It would first be marked as a stack Raw value type until it is assigned with `null`, other Nullable value, or escape analysis determines it needs to be heap allocated, at which point it will be marked as a heap object.
-
-# The validation of the performance of data struct

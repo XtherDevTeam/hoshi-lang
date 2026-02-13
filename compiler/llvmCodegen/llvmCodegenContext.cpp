@@ -1074,9 +1074,13 @@ namespace yoi {
                 auto varIndex = instr.operands[0].value.symbolIndex;
                 auto* alloca = llvmModCtx.namedValues.at(varIndex);
                 auto yoiType = llvmModCtx.currentFunctionDef->variableTable.get(varIndex);
-                auto loadedPtr = llvmModCtx.Builder->CreateLoad(yoiTypeToLLVMType(llvmModCtx, yoiType, yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)), alloca, "loadtmp");
-                callGcFunction(llvmModCtx, loadedPtr, yoiType, true);
-                llvmModCtx.valueStackPhi.push_back({loadedPtr, yoiType});
+                if (yoiType->type == IRValueType::valueType::datastructObject && yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                    llvmModCtx.valueStackPhi.push_back({alloca, yoiType});
+                } else {
+                    auto loadedPtr = llvmModCtx.Builder->CreateLoad(yoiTypeToLLVMType(llvmModCtx, yoiType, yoiType->isBasicRawType() || yoiType->hasAttribute(IRValueType::ValueAttr::Raw)), alloca, "loadtmp");
+                    callGcFunction(llvmModCtx, loadedPtr, yoiType, true);
+                    llvmModCtx.valueStackPhi.push_back({loadedPtr, yoiType});
+                }
                 break;
             }
             case IR::Opcode::store_local: {
@@ -1098,7 +1102,14 @@ namespace yoi {
                 // Store new value
                 if (llvmModCtx.currentFunctionDef->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Raw)) {
                     auto unboxedVal = unboxValue(llvmModCtx, valToStore.llvmValue, valToStore.yoiType);
-                    llvmModCtx.Builder->CreateStore(unboxedVal, alloca);
+                    if (yoiType->type == IRValueType::valueType::datastructObject && yoiType->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                        // create MemCpy
+                        auto fieldType = yoiTypeToLLVMType(llvmModCtx, yoiType, true);
+                        auto fieldSize = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(fieldType);
+                        llvmModCtx.Builder->CreateMemCpy(alloca, llvm::MaybeAlign(8), unboxedVal, llvm::MaybeAlign(8), fieldSize);
+                    } else {
+                        llvmModCtx.Builder->CreateStore(unboxedVal, alloca);
+                    }
                 } else {
                     auto object = ensureObject(llvmModCtx, valToStore.yoiType, valToStore.llvmValue);
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
@@ -1276,7 +1287,9 @@ namespace yoi {
                     arg = promiseInterfaceObjectIfInterface(llvmModCtx, arg);
 
                     if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                        args.push_back(unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType));
+                        args.push_back(
+                            loadIfDataStructObject(llvmModCtx, funcDef->argumentTypes[argCount - i - 1], 
+                                unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType)));
                         callGcFunction(llvmModCtx, arg.llvmValue, arg.yoiType, false);
                     } else if (funcDef->argumentTypes[argCount - i - 1]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
                         auto object = ensureObject(llvmModCtx, arg.yoiType, arg.llvmValue);
@@ -1327,7 +1340,7 @@ namespace yoi {
                     arg = promiseInterfaceObjectIfInterface(llvmModCtx, arg);
 
                     if (funcDef->argumentTypes[0]->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                        postponed = unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType);
+                        postponed = loadIfDataStructObject(llvmModCtx, funcDef->argumentTypes[0], unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType));
                         callGcFunction(llvmModCtx, arg.llvmValue, arg.yoiType, false);
                     } else if (funcDef->argumentTypes[0]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
                         auto object = ensureObject(llvmModCtx, arg.yoiType, arg.llvmValue);
@@ -1350,7 +1363,7 @@ namespace yoi {
                     arg = promiseInterfaceObjectIfInterface(llvmModCtx, arg);
 
                     if (funcDef->argumentTypes[argCount - i]->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                        args.push_back(unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType));
+                        args.push_back(loadIfDataStructObject(llvmModCtx, funcDef->argumentTypes[argCount - i], unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType)));
                         callGcFunction(llvmModCtx, arg.llvmValue, arg.yoiType, false);
                     } else if (funcDef->argumentTypes[argCount - i]->hasAttribute(IRValueType::ValueAttr::Borrow)) {
                         auto object = ensureObject(llvmModCtx, arg.yoiType, arg.llvmValue);
@@ -1737,7 +1750,7 @@ namespace yoi {
                     auto paramDef = interfaceDef->methodMap[methodVTableIndex]->argumentTypes[paramIndex];
                     auto object = (paramDef->hasAttribute(IRValueType::ValueAttr::Nullable) || (!paramDef->isBasicType() && !paramDef->isBasicRawType()) || !paramDef->dimensions.empty()) 
                         ? ensureObject(llvmModCtx, arg.yoiType, arg.llvmValue) 
-                        : std::pair{managedPtr(arg.yoiType->getBasicRawType()), unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType)};
+                        : std::pair{managedPtr(arg.yoiType->getBasicRawType()), loadIfDataStructObject(llvmModCtx, paramDef, unboxValue(llvmModCtx, arg.llvmValue, arg.yoiType))};
                     finalArgs.push_back(object.second);
                     // default to borrow
                     if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !object.first->hasAttribute(IRValueType::ValueAttr::Raw));
@@ -3382,138 +3395,111 @@ namespace yoi {
                         return di_i64_u;
                     case IRValueType::valueType::shortObject:
                         return di_i16;
+                    case IRValueType::valueType::datastructObject: {
+                        // it doesn't follow the general rule, so we need to handle it separately.
+                        if (llvmModCtx.dataStructDataRegionTypeDIMap.count(type->typeIndex) && type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            return llvmModCtx.DBuilder->createPointerType(llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex], 64);
+                        } else if (llvmModCtx.dataStructDataRegionTypeDIMap.count(type->typeIndex) && !type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            return llvmModCtx.structTypeDIMap[key];
+                        }
+
+                        auto dataStructDef = yoiModule->dataStructTable[type->typeIndex];
+                        auto* diDataRegionType = llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex];
+
+                        // generate the data region if not exists
+                        if (!diDataRegionType) {
+                            std::string dataRegionTypeName = "yoi.data_region." + wstring2string(type->to_string());
+                            llvm::SmallVector<llvm::Metadata *, 8> dataRegionMemberTypes;
+
+                            auto *llvmDataRegionType = llvmModCtx.dataStructDataRegionMap.at(type->typeIndex);
+                            auto *layout = &llvmModCtx.TheModule->getDataLayout();
+                            auto *structLayout = layout->getStructLayout(llvmDataRegionType);
+
+                            for (yoi::indexT i = 0; i < dataStructDef->fieldTypes.size(); i++) {
+                                auto memberType = managedPtr(*dataStructDef->fieldTypes[i]);
+                                memberType->addAttribute(IRValueType::ValueAttr::Raw);
+
+                                auto memberTypeDI = getDIType(llvmModCtx, memberType);
+                                uint64_t fieldSize = memberTypeDI->getSizeInBits();
+                                uint64_t fieldOffset = structLayout->getElementOffsetInBits(i);
+
+                                // find the field name
+                                std::string fieldName = "field" + std::to_string(i);
+                                for (auto &fieldPair : dataStructDef->fields) {
+                                    if (fieldPair.second == i) {
+                                        fieldName = wstring2string(fieldPair.first);
+                                        break;
+                                    }
+                                }
+
+                                auto memberDIType = llvmModCtx.DBuilder->createMemberType(llvmModCtx.compileUnits[L"builtin"],
+                                                                                          fieldName,
+                                                                                          nullptr,
+                                                                                          0,
+                                                                                          fieldSize,
+                                                                                          memberTypeDI->getAlignInBits(), // alignment
+                                                                                          fieldOffset,
+                                                                                          llvm::DINode::FlagZero,
+                                                                                          memberTypeDI);
+                                dataRegionMemberTypes.push_back(memberDIType);
+                            }
+
+                            diDataRegionType = llvmModCtx.DBuilder->createStructType(llvmModCtx.compileUnits[L"builtin"],
+                                                                                     dataRegionTypeName,
+                                                                                     llvmModCtx.compileUnits[L"builtin"]->getFile(),
+                                                                                     1, // Line number
+                                                                                     structLayout->getSizeInBits(),
+                                                                                     structLayout->getAlignment().value() * 8, // Use ABI alignment
+                                                                                     llvm::DINode::FlagZero,
+                                                                                     nullptr,
+                                                                                     llvmModCtx.DBuilder->getOrCreateArray(dataRegionMemberTypes));
+                            llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex] = diDataRegionType;
+                        }
+
+                        if (type->hasAttribute(IRValueType::ValueAttr::Raw)) {
+                            return diDataRegionType;
+                        }
+
+                        // generate the struct type
+                        std::string structTypeName = "yoi." + wstring2string(type->to_string());
+                        llvm::SmallVector<llvm::Metadata *, 8> objectMemberTypes;
+
+                        // All our objects start with a refcount.
+                        objectMemberTypes.push_back(llvmModCtx.DBuilder->createMemberType(
+                            llvmModCtx.compileUnits[L"builtin"], "refcount", nullptr, 0, 64, 64, 0, llvm::DINode::FlagZero, di_i64));
+                        objectMemberTypes.push_back(llvmModCtx.DBuilder->createMemberType(
+                            llvmModCtx.compileUnits[L"builtin"], "typeid", nullptr, 0, 64, 64, 64, llvm::DINode::FlagZero, di_i64));
+                        uint64_t objectCurrentSize = 128; // Keep track of struct size
+
+                        objectMemberTypes.push_back(llvmModCtx.DBuilder->createMemberType(llvmModCtx.compileUnits[L"builtin"],
+                                                                                          "value",
+                                                                                          nullptr,
+                                                                                          0,
+                                                                                          diDataRegionType->getSizeInBits(),
+                                                                                          diDataRegionType->getAlignInBits(),
+                                                                                          objectCurrentSize,
+                                                                                          llvm::DINode::FlagZero,
+                                                                                          diDataRegionType));
+                        objectCurrentSize += diDataRegionType->getSizeInBits();
+
+                        auto diStructType = llvmModCtx.DBuilder->createStructType(llvmModCtx.compileUnits[L"builtin"],
+                                                                                  structTypeName,
+                                                                                  llvmModCtx.compileUnits[L"builtin"]->getFile(),
+                                                                                  1,                 // Line number
+                                                                                  objectCurrentSize, // Size in bits
+                                                                                  64,                // Alignment in bits
+                                                                                  llvm::DINode::FlagZero,
+                                                                                  nullptr,
+                                                                                  llvmModCtx.DBuilder->getOrCreateArray(objectMemberTypes));
+
+                        auto diStructTypePtr = llvmModCtx.DBuilder->createPointerType(diStructType, 64);
+                        llvmModCtx.structTypeDIMap[key] = diStructTypePtr;
+                        return diStructTypePtr;
+                    }
                     default:
                         panic(0, 0, "LLVM Codegen: Unhandled or unmapped raw type: " + std::string(magic_enum::enum_name(type->type)));
                         break;
                 }
-            } else if (type->type == IRValueType::valueType::datastructObject) {
-                // it doesn't follow the general rule, so we need to handle it separately.
-                if (llvmModCtx.dataStructDataRegionTypeDIMap.count(type->typeIndex) && type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                    return llvmModCtx.DBuilder->createPointerType(llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex], 64);
-                } else if (llvmModCtx.dataStructDataRegionTypeDIMap.count(type->typeIndex) && !type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                    return llvmModCtx.structTypeDIMap[key];
-                }
-
-                auto dataStructDef = yoiModule->dataStructTable[type->typeIndex];
-                auto* diDataRegionType = llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex];
-
-                // generate the data region if not exists
-                if (!diDataRegionType) {
-                    std::string dataRegionTypeName = "yoi.data_region." + wstring2string(type->to_string());
-                    llvm::SmallVector<llvm::Metadata*, 8> dataRegionMemberTypes;
-                    
-                    auto *llvmDataRegionType = llvmModCtx.dataStructDataRegionMap.at(type->typeIndex);
-                    auto *layout = &llvmModCtx.TheModule->getDataLayout();
-                    auto *structLayout = layout->getStructLayout(llvmDataRegionType);
-
-                    for (yoi::indexT i = 0; i < dataStructDef->fieldTypes.size(); i++) {
-                        auto memberType = managedPtr(*dataStructDef->fieldTypes[i]);
-                        memberType->addAttribute(IRValueType::ValueAttr::Raw);
-                        
-                        auto memberTypeDI = getDIType(llvmModCtx, memberType);
-                        uint64_t fieldSize = memberTypeDI->getSizeInBits();
-                        uint64_t fieldOffset = structLayout->getElementOffsetInBits(i);
-
-                        // find the field name
-                        std::string fieldName = "field" + std::to_string(i);
-                        for (auto& fieldPair : dataStructDef->fields) {
-                            if (fieldPair.second == i) {
-                                fieldName = wstring2string(fieldPair.first);
-                                break;
-                            }
-                        }
-
-                        auto memberDIType = llvmModCtx.DBuilder->createMemberType(
-                            llvmModCtx.compileUnits[L"builtin"],
-                            fieldName,
-                            nullptr,
-                            0,
-                            fieldSize,
-                            memberTypeDI->getAlignInBits(), // alignment
-                            fieldOffset,
-                            llvm::DINode::FlagZero,
-                            memberTypeDI
-                        );
-                        dataRegionMemberTypes.push_back(memberDIType);
-                    }
-
-                diDataRegionType = llvmModCtx.DBuilder->createStructType(
-                    llvmModCtx.compileUnits[L"builtin"],
-                    dataRegionTypeName,
-                    llvmModCtx.compileUnits[L"builtin"]->getFile(),
-                    1, // Line number
-                    structLayout->getSizeInBits(),
-                    structLayout->getAlignment().value() * 8, // Use ABI alignment
-                    llvm::DINode::FlagZero,
-                    nullptr,
-                    llvmModCtx.DBuilder->getOrCreateArray(dataRegionMemberTypes)
-                );
-                    llvmModCtx.dataStructDataRegionTypeDIMap[type->typeIndex] = diDataRegionType;
-                }
-
-                if (type->hasAttribute(IRValueType::ValueAttr::Raw)) {
-                    return diDataRegionType;
-                }
-
-                // generate the struct type
-                std::string structTypeName = "yoi." + wstring2string(type->to_string());
-                llvm::SmallVector<llvm::Metadata*, 8> objectMemberTypes;
-
-                // All our objects start with a refcount.
-                objectMemberTypes.push_back(llvmModCtx.DBuilder->createMemberType(
-                    llvmModCtx.compileUnits[L"builtin"],
-                    "refcount",
-                    nullptr,
-                    0,
-                    64,
-                    64,
-                    0,
-                    llvm::DINode::FlagZero,
-                    di_i64
-                ));
-                objectMemberTypes.push_back(llvmModCtx.DBuilder->createMemberType(
-                    llvmModCtx.compileUnits[L"builtin"],
-                    "typeid",
-                    nullptr,
-                    0,
-                    64,
-                    64,
-                    64,
-                    llvm::DINode::FlagZero,
-                    di_i64
-                ));
-                uint64_t objectCurrentSize = 128; // Keep track of struct size
-
-                objectMemberTypes.push_back(
-                    llvmModCtx.DBuilder->createMemberType(
-                        llvmModCtx.compileUnits[L"builtin"],
-                        "value",
-                        nullptr,
-                        0,
-                        diDataRegionType->getSizeInBits(),
-                        diDataRegionType->getAlignInBits(),
-                        objectCurrentSize,
-                        llvm::DINode::FlagZero,
-                        diDataRegionType
-                    )
-                );
-                objectCurrentSize += diDataRegionType->getSizeInBits();
-
-                auto diStructType = llvmModCtx.DBuilder->createStructType(
-                    llvmModCtx.compileUnits[L"builtin"],
-                    structTypeName,
-                    llvmModCtx.compileUnits[L"builtin"]->getFile(),
-                    1, // Line number
-                    objectCurrentSize, // Size in bits
-                    64, // Alignment in bits
-                    llvm::DINode::FlagZero,
-                    nullptr,
-                    llvmModCtx.DBuilder->getOrCreateArray(objectMemberTypes)
-                );
-
-                auto diStructTypePtr = llvmModCtx.DBuilder->createPointerType(diStructType, 64);
-                llvmModCtx.structTypeDIMap[key] = diStructTypePtr;
-                return diStructTypePtr;
             }
 
             if (llvmModCtx.structTypeDIMap.count(key)) {
@@ -4522,5 +4508,13 @@ namespace yoi {
                 llvmDataRegionStructType->setBody(dataRegionFieldTypes);
             }
         }
+    }
+    llvm::Value *LLVMCodegen::loadIfDataStructObject(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, llvm::Value *value) {
+        if (type->type == IRValueType::valueType::datastructObject) {
+            // data region def
+            auto dataRegionDef = llvmModCtx.dataStructDataRegionMap[type->typeIndex];
+            return llvmModCtx.Builder->CreateLoad(dataRegionDef, value, "datastruct_load");
+        }
+        return value;
     }
 } // namespace yoi

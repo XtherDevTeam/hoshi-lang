@@ -2751,8 +2751,8 @@ namespace yoi {
         AnalysisState entryState;
         for (yoi::indexT i = 0; i < targetFunction->variableTable.getVariables().size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
-            if (varType->isBasicType() && !varType->isArrayType() && !varType->isDynamicArrayType() &&
-                !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization))
+            if (varType->isBasicRawType() || (varType->isBasicType() && !varType->isArrayType() && !varType->isDynamicArrayType() &&
+                !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)))
                 varType->addAttribute(IRValueType::ValueAttr::Raw);
             else
                 varType->removeAttribute(IRValueType::ValueAttr::Raw);
@@ -2910,6 +2910,33 @@ namespace yoi {
                     auto newType = std::make_shared<IRValueType>(*compilerCtx->getUnsignedObjectType());
                     newType->addAttribute(IRValueType::ValueAttr::Raw);
                     simulationStack.push(newType, {});
+                    break;
+                }
+                case IR::Opcode::new_datastruct: {
+                    auto moduleId = ins.operands[0].value.symbolIndex;
+                    auto typeIndex = ins.operands[1].value.symbolIndex;
+                    auto newType = std::make_shared<IRValueType>(IRValueType::valueType::datastructObject, moduleId, typeIndex);
+                    newType->addAttribute(IRValueType::ValueAttr::Raw);
+                    simulationStack.push(newType, {});
+                    break;
+                }
+                case IR::Opcode::load_field: {
+                    auto type = simulationStack.peek(0).type;
+                    simulationStack.pop();
+                    for (auto &operand : ins.operands) {
+                        auto def = compilerCtx->getImportedModule(type->typeAffiliateModule)->dataStructTable[type->typeIndex];
+                        type = def->fieldTypes[operand.value.symbolIndex];
+                    }
+                    auto resultType = managedPtr(*type);
+                    if (resultType->isBasicType()) {
+                        resultType->addAttribute(IRValueType::ValueAttr::Raw);
+                    }
+                    simulationStack.push(resultType, {});
+                    break;
+                }
+                case IR::Opcode::store_field: {
+                    simulationStack.pop(); // value
+                    simulationStack.pop(); // object
                     break;
                 }
                 // Rule 2: store_local propagates Raw attribute.

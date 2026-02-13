@@ -1,0 +1,121 @@
+use console "console"
+use str "str"
+use runtime "runtime"
+
+struct Time {
+    seconds: int,
+    nanoseconds: int,
+    constructor(seconds: int, nanoseconds: int),
+    static operator-(t1: Time, t2: Time) : Time
+}
+
+impl Time {
+    constructor(seconds: int, nanoseconds: int) {
+        this.seconds = seconds
+        this.nanoseconds = nanoseconds
+    },
+    static operator-(t1: Time, t2: Time) : Time {
+        let s = t1.seconds - t2.seconds
+        let ns = t1.nanoseconds - t2.nanoseconds
+        if (ns < 0) {
+            ns += 1000000000
+            s -= 1
+        }
+        return Time(s, ns)
+    }
+}
+
+struct Duration {
+    time: Time,
+    constructor(time: Time),
+    static monotonic_now() : Duration,
+    to_string() : str.Str,
+    static operator-(d1: Duration, d2: Duration) : Duration
+}
+
+import noffi runtime_time_monotonic_now() : Time from "builtin"
+
+impl Duration {
+    constructor(time: Time) { this.time = time },
+    static monotonic_now() : Duration {
+        return Duration(runtime_time_monotonic_now())
+    },
+    to_string() : str.Str {
+        // Simplified formatting
+        return str.format("{}s {}ms", this.time.seconds, this.time.nanoseconds / 1000000)
+    },
+    static operator-(d1: Duration, d2: Duration) : Duration {
+        return Duration(d1.time - d2.time)
+    }
+}
+
+struct LegacyParticle {
+    x: int,
+    y: int,
+    z: int,
+    constructor(x: int, y: int, z: int)
+}
+
+impl LegacyParticle {
+    constructor(x: int, y: int, z: int) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+}
+
+datastruct FastParticle {
+    x: int,
+    y: int,
+    z: int
+}
+
+func process_legacy(p: LegacyParticle) : int {
+    return p.x + p.y + p.z
+}
+
+func process_fast(p: FastParticle) : int {
+    return p.x + p.y + p.z
+}
+
+func main() : int {
+    let iterations = 10000000
+    
+    console.print("Starting Benchmark: ", iterations, " iterations\n")
+    console.print("------------------------------------------\n")
+
+    let start_legacy = Duration.monotonic_now()
+    let sum_legacy = 0
+    
+    for (let i = 0; i < iterations; i += 1) {
+        let p = LegacyParticle(i, 1, 1) 
+        sum_legacy += process_legacy(p)
+    }
+    
+    let end_legacy = Duration.monotonic_now()
+    let diff_legacy = end_legacy - start_legacy
+    console.print("Legacy Struct (Heap) Time: ", diff_legacy.to_string(), "\n")
+
+    let start_fast = Duration.monotonic_now()
+    let sum_fast = 0
+    
+    for (let i = 0; i < iterations; i += 1) {
+        let p = FastParticle()
+        p.x = i
+        p.y = 1
+        p.z = 1
+        
+        sum_fast += process_fast(p)
+    }
+    
+    let end_fast = Duration.monotonic_now()
+    let diff_fast = end_fast - start_fast
+    console.print("New Datastruct (Stack) Time: ", diff_fast.to_string(), "\n")
+
+    console.print("------------------------------------------\n")
+    if (sum_legacy == sum_fast) {
+        console.print("Validation: Success (Results match)\n")
+    }
+    
+    return 0
+}

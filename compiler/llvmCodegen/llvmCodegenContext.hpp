@@ -216,6 +216,8 @@ namespace yoi {
         void generateRTTIDeclaration(LLVMModuleContext &llvmModCtx);
         void generateRTTIImplmentation(LLVMModuleContext &llvmModCtx);
 
+        llvm::Value *loadIfDataStructObject(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, llvm::Value *value);
+
         std::shared_ptr<IRValueType> normalizeForeignType(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type);
         llvm::Type *yoiTypeToLLVMType(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);
         llvm::Type *getArrayLLVMType(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, bool enforceForeignType = false);

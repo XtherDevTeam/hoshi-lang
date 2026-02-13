@@ -629,7 +629,7 @@ namespace yoi {
         return type == valueType::integerObject || type == valueType::decimalObject || type == valueType::booleanObject ||
                type == valueType::stringObject || type == valueType::characterObject || type == valueType::foreignFloatType ||
                type == valueType::foreignInt32Type || type == valueType::shortObject || type == valueType::unsignedObject ||
-               type == valueType::pointer;
+               type == valueType::pointer || type == valueType::datastructObject;
     }
 
     bool IRValueType::isForeignBasicType() const {

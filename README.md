@@ -1,10 +1,10 @@
-# The Hoshi-lang Programming Language
+# The hoshi-lang Programming Language
 
 ## Intro
 
 > This is one of my practice during Senior High School period. `hoshi` means both $\mathop{desire}\limits^{欲しい}$ and $\mathop{stars}\limits^{星}$ in Japanese, which also represents my silly wishes: I hope some day I would become the stars I once live up to.
 
-Hoshi-lang is a statically-typed, general-purpose programming language with a focus on performance, safety, and modern language features. It is designed to be a simple yet powerful tool for building a wide range of applications.
+hoshi-lang is a statically-typed, general-purpose programming language with a focus on performance, safety, and modern language features. It is designed to be a simple yet powerful tool for building a wide range of applications.
 
 This project is currently under active development and is a personal exploration into language design and implementation.
 
@@ -12,7 +12,7 @@ This project is currently under active development and is a personal exploration
 
 ## Features
 
-*   **Object-Oriented:** Hoshi-lang's OOP is based on a composition model using `interface`, `struct`, and `impl`.
+*   **Object-Oriented:** hoshi-lang's OOP is based on a composition model using `interface`, `struct`, and `impl`.
 *   **Generic Programming:** Supports generic programming with `template`s for both functions and structs.
 *   **Operator Overloading:** Allows for custom behavior for operators like `+`, `-`, `*`, `/`, etc.
 *   **Memory Safety:** Automatic Reference Counting (ARC) for memory management.
@@ -63,7 +63,7 @@ func main() : int {
 
 ### Object Layout
 
-In Hoshi-lang, **all data types are heap-allocated objects**. This includes primitives like `int`, `bool`, etc., which are "boxed" into object wrappers. The compiler and runtime manage these objects through pointers.
+In hoshi-lang, **all data types are heap-allocated objects**. This includes primitives like `int`, `bool`, etc., which are "boxed" into object wrappers. The compiler and runtime manage these objects through pointers.
 
 All objects share a common header:
 
@@ -100,7 +100,7 @@ The compiler is responsible for generating calls to the appropriate `_gc_refcoun
 
 ### Callable Objects & Lambda Expressions
 
-Hoshi-lang now supports callable objects and lambda expressions, allowing for more flexible and functional programming styles.
+hoshi-lang now supports callable objects and lambda expressions, allowing for more flexible and functional programming styles.
 
 ```rust
 func test_lambda(x: int, y: int, f: func (int, int) : int) : int {
@@ -119,7 +119,7 @@ func main() : int {
 
 ### Threading
 
-Hoshi-lang now has basic support for multi-threading.
+hoshi-lang now has basic support for multi-threading.
 
 ```rust
 use threading "threading"
@@ -164,7 +164,7 @@ func main() : int {
 
 ## Standard Library
 
-Hoshi-lang's standard library is growing and currently includes:
+hoshi-lang's standard library is growing and currently includes:
 
 *   `console`: For console input and output.
 *   `file`: An interface for file-like objects.
@@ -208,26 +208,71 @@ cmake --build . --config Release
 *   `-o <output_file>`: Specify the output file name.
 *   `-D <key> <value>`: Define a macro.
 
+## Benchmarks
+
+Below are benchmark results comparing hoshi-lang with other popular languages across various tasks. All benchmarks were performed on a macOS system with an Apple M1 chip.
+
+### Performance Comparisons
+
+The following table shows execution times for several computational benchmarks. Lower values are better.
+
+| Benchmark | hoshi-lang | C++ (Clang++) | Python 3 | Java (OpenJDK) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Fib(40)** | **0.34s** | 0.58s | 10.23s | - |
+| **Basic Type Loop** | **0.35s** | 0.54s | 9.53s | - |
+| **JSON Parsing** | **0.34s** | - | - | - |
+| **String Ops** | **0.18s** | 0.39s (O3) | 0.19s | 1.15s |
+
+### Data Structures: Stack vs. Heap
+
+With the introduction of `datastruct`, hoshi-lang now supports stack-allocated value types, significantly improving performance for small, short-lived data structures by eliminating heap allocation and ARC overhead.
+
+| Language | Implementation | Result (10M iterations) |
+| :--- | :--- | :--- |
+| **hoshi-lang** | **Datastruct (Stack)** | **< 1ms** |
+| hoshi-lang | Legacy Struct (Heap) | 237ms |
+| C++ | Value Type (Stack) | 24ms |
+| Java | Heap Object | 6ms |
+| Python | Legacy Class | 759ms |
+
+### Binary Size
+
+The following sizes were measured for minimal programs in release mode.
+
+| Program | Binary Size (Release) |
+| :--- | :--- |
+| `size1.hoshi` (Minimal) | ~39 KB |
+| `size2.hoshi` (Basic Logic) | ~39 KB |
+| `size3.hoshi` (Standard Lib) | ~58 KB |
+
 ## Documentation
 
-*   [Syntax Definition](/Syntax.bnf)
-*   [IR Handbook](/docs/IR.md)
-*   [Language Specification](/docs/Spec.md)
-*   [Callable Objects & Lambda Expressions](/docs/Callable%20&%20Lambda.md)
-*   [Console I/O](/docs/Console.md)
-*   [File System](/docs/File%20System.md)
-*   [Finalizers](/docs/Finalizers.md)
-*   [HashMap](/docs/HashMap.md)
-*   [JSON](/docs/JSON.md)
-*   [Macros](/docs/Macros.md)
-*   [Math](/docs/Math.md)
-*   [Nullable and Raw Check Passes](/docs/Nullable%20Check%20&%20Raw%20Check.md)
-*   [Result Type](/docs/Result.md)
-*   [Runtime](/docs/Runtime.md)
-*   [String](/docs/String.md)
-*   [Structured Bindings](/docs/Structured%20Bindings.md)
-*   [Threading](/docs/Threading.md)
-*   [Type Aliases](/docs/Type%20Aliases.md)
-*   [Vector](/docs/Vector.md)
-*   [Wrapper](/docs/Wrapper.md)
-*   [TODO List](/TODO.md)
+*   [Syntax Definition](Syntax.bnf)
+*   [Language Specification](docs/Spec.md)
+*   [IR Handbook](docs/IR.md)
+*   [Data Structures (Value Types)](docs/Datastruct.md)
+*   [Arithmetic and Array](docs/Array.md)
+*   [Callable Objects & Lambda Expressions](docs/Callable%20&%20Lambda.md)
+*   [Console I/O](docs/Console.md)
+*   [Direct Assignment](docs/Direct%20Assignment.md)
+*   [File System](docs/File%20System.md)
+*   [Finalizers](docs/Finalizers.md)
+*   [HashMap](docs/HashMap.md)
+*   [Interface and Implementation](docs/Interface.md)
+*   [JSON Parsing](docs/JSON.md)
+*   [Macros](docs/Macros.md)
+*   [Mathematical Functions](docs/Math.md)
+*   [Null Values and Safety](docs/Null.md)
+*   [Nullable and Raw Check Passes](docs/Nullable%20Check%20&%20Raw%20Check.md)
+*   [Operator Overloading](docs/Operator%20Overloading.md)
+*   [Result Type](docs/Result.md)
+*   [Runtime Functions](docs/Runtime.md)
+*   [String Library](docs/String.md)
+*   [Structured Bindings](docs/Structured%20Bindings.md)
+*   [Templates and Generics](docs/Template.md)
+*   [Optimization Strategy](docs/The%20Optimization%20Strategy%20of%20Interface%20Allocation%20and%20Virtual%20Invocation%20Reduction.md)
+*   [Threading](docs/Threading.md)
+*   [Type Aliases](docs/Type%20Aliases.md)
+*   [Vector Implementation](docs/Vector.md)
+*   [Wrapper Objects](docs/Wrapper.md)
+*   [TODO List](TODO.md)
