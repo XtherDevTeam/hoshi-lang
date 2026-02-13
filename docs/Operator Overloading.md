@@ -38,7 +38,7 @@ To overload an operator, you define a `static` method with the corresponding `op
 
 For binary operators (e.g., `+`, `-`, `*`), the overloaded method must be `static` and take two arguments, representing the left-hand side (LHS) and right-hand side (RHS) of the operation.
 
-```rust
+```hoshi
 struct MyInt {
     val: int,
     constructor(val: int),
@@ -74,7 +74,7 @@ For unary operators (e.g., `-`, `~`, `++`, `--`), the overloaded method must be 
 
 You can make a `struct` callable like a function by overloading the `()` operator. The method can take any number of arguments.
 
-```rust
+```hoshi
 struct Callable {
     constructor(),
     operator()() : none
@@ -101,7 +101,7 @@ The subscript operator `[]` can be overloaded to provide custom indexing for you
 -   **Getter:** A `static` method named `operator[]` that takes the object and the index as arguments.
 -   **Setter:** A `static` method named `operator[]` that takes the new value, the object, and the index as arguments.
 
-```rust
+```hoshi
 struct MyArray<T> {
     data: T[],
     static operator[](self: MyArray<T>, i: int) : T,

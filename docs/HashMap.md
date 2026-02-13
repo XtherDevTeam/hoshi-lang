@@ -20,7 +20,7 @@ The `HashMap<K, V>` struct is a generic hash map implementation. The key type `K
 
 ### Example
 
-```rust
+```hoshi
 use hashMap "hashMap"
 use str "str"
 

@@ -4,13 +4,13 @@ The `alias` keyword in Hoshi-lang allows you to create a new name for an existin
 
 ## Syntax
 
-```rust
+```hoshi
 alias NewTypeName = ExistingType
 ```
 
 ## Example
 
-```rust
+```hoshi
 use hashMap "hashMap"
 use str "str"
 

@@ -6,14 +6,14 @@ Structured bindings in Hoshi-lang provide a convenient way to unpack the element
 
 You can unpack the elements of an array into variables using the `let [ ... ]` syntax.
 
-```rust
+```hoshi
 let [a, b, c] = int[3](10, 20, 30)
 // a is 10, b is 20, c is 30
 ```
 
 You can also use `...` to ignore the rest of the elements.
 
-```rust
+```hoshi
 let [x, y, ...] = int[5](1, 2, 3, 4, 5)
 // x is 1, y is 2
 
@@ -25,7 +25,7 @@ let [..., z] = int[5](1, 2, 3, 4, 5)
 
 You can unpack the fields of a struct into variables in the same way.
 
-```rust
+```hoshi
 struct Point {
     x: int,
     y: int,

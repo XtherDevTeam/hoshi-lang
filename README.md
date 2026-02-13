@@ -26,7 +26,7 @@ This project is currently under active development and is a personal exploration
 
 ## Syntax
 
-```rust
+```hoshi
 use lang "builtin"
 use io "std/io"
 
@@ -102,7 +102,7 @@ The compiler is responsible for generating calls to the appropriate `_gc_refcoun
 
 hoshi-lang now supports callable objects and lambda expressions, allowing for more flexible and functional programming styles.
 
-```rust
+```hoshi
 func test_lambda(x: int, y: int, f: func (int, int) : int) : int {
     return f(x, y)
 }
@@ -121,7 +121,7 @@ func main() : int {
 
 hoshi-lang now has basic support for multi-threading.
 
-```rust
+```hoshi
 use threading "threading"
 use runtime "runtime"
 
@@ -143,7 +143,7 @@ func main() : int {
 
 You can now de-structure arrays and structs into individual variables.
 
-```rust
+```hoshi
 let [x, y] = Point(1, 2)
 let [a, b, c] = int[3](10, 20, 30)
 ```
@@ -152,7 +152,7 @@ let [a, b, c] = int[3](10, 20, 30)
 
 The `alias` keyword can be used to create a new name for an existing type.
 
-```rust
+```hoshi
 alias Map = hashMap.HashMap<str.Str, int>
 
 func main() : int {

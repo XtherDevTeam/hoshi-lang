@@ -21,7 +21,7 @@ The `Vec<T>` struct is a generic dynamic array implementation.
 
 ### Example
 
-```rust
+```hoshi
 use vec "vec"
 
 func main() : int {

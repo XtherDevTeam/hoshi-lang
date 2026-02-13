@@ -13,7 +13,7 @@ The `print` function is used to print text to the console.
 
 ### Example
 
-```rust
+```hoshi
 use console "console"
 use str "str"
 
@@ -35,7 +35,7 @@ The `input` function is used to read a line of text from the console.
 
 ### Example
 
-```rust
+```hoshi
 use console "console"
 use str "str"
 

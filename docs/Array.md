@@ -8,7 +8,7 @@ Fixed-size arrays have a length that is known at compile time. They are declared
 
 ### Declaration and Initialization
 
-```rust
+```hoshi
 // An array of 5 integers, initialized with values
 let arr1 = int[5](1, 2, 3, 4, 5)
 
@@ -23,7 +23,7 @@ let arr3 = int[10]()
 
 Elements are accessed using zero-based indexing.
 
-```rust
+```hoshi
 let first = arr1[0] // first will be 1
 arr1[0] = 100      // Modify the first element
 ```
@@ -34,7 +34,7 @@ Dynamic arrays is a sort of array which length cannot be predicted in compile-ti
 
 ### Declaration and Initialization
 
-```rust
+```hoshi
 // A dynamic array with 3 initial elements
 let dyn_arr1 = new int[3](1, 2, 3)
 
@@ -46,7 +46,7 @@ let dyn_arr2 = new int[3](10)
 
 Both fixed-size and dynamic arrays have a read-only `.length` property that returns the number of elements in the array.
 
-```rust
+```hoshi
 let arr = int[5]()
 let len1 = arr.length // len1 will be 5
 

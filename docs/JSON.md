@@ -21,7 +21,7 @@ The `JSONValue` interface is a marker interface for the different types of JSON 
 
 ## Example
 
-```rust
+```hoshi
 use json "json"
 use str "str"
 

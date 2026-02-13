@@ -6,7 +6,7 @@ Hoshi-lang supports generic programming using `template`s, which allow you to wr
 
 Function templates allow you to create functions that can operate on different types.
 
-```rust
+```hoshi
 func add<T>(a: T, b: T) : T {
     return a + b
 }
@@ -27,7 +27,7 @@ func main() : int {
 
 Struct templates allow you to create generic data structures.
 
-```rust
+```hoshi
 struct Container<T> {
     item: T,
     constructor(item: T)
@@ -49,7 +49,7 @@ func main() : int {
 
 Interface templates allow you to define generic contracts.
 
-```rust
+```hoshi
 interface Result<T> {
     get() : T
 }

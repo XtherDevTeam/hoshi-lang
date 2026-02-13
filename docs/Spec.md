@@ -42,7 +42,7 @@ Hoshi-lang is a statically-typed language. The following are the built-in types:
 
 Structs are user-defined data types that can contain fields and methods.
 
-```rust
+```hoshi
 struct Point {
     x: int,
     y: int,
@@ -54,7 +54,7 @@ struct Point {
 
 Interfaces define a contract of methods that a `struct` can implement.
 
-```rust
+```hoshi
 interface Greeter {
     say() : none
 }
@@ -64,7 +64,7 @@ interface Greeter {
 
 Functions are defined with the `func` keyword.
 
-```rust
+```hoshi
 func add(a: int, b: int) : int {
     return a + b
 }

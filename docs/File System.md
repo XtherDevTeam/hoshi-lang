@@ -47,7 +47,7 @@ The `ArrayBuffer` struct allows you to treat a byte array as a file.
 
 ### Example
 
-```rust
+```hoshi
 use fs "fs"
 use file "file"
 use str "str"

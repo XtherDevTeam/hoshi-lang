@@ -45,7 +45,7 @@ func[capture_list](parameters) : return_type {
 
 Here is an example of how to define and use a lambda expression:
 
-```rust
+```hoshi
 use lang "builtin"
 import puts(str: ptr) : int32 from "builtin"
 

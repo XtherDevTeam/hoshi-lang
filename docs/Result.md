@@ -23,7 +23,7 @@ The `Result<T, E>` struct is an enumeration with two variants:
 
 ### Example
 
-```rust
+```hoshi
 use lang "builtin"
 use str "str"
 

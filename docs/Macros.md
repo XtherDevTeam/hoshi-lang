@@ -6,7 +6,7 @@ Hoshi-lang has a simple conditional compilation feature that works like a macro 
 
 The syntax for a macro is a double-bracketed expression:
 
-```rust
+```hoshi
 [[<key> <operator> <value>]]
 ```
 
@@ -35,7 +35,7 @@ You can define your own macros using the `-D` or `--define` flag when compiling:
 
 ## Example
 
-```rust
+```hoshi
 use runtime "runtime"
 
 func main() : int {

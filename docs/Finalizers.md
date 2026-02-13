@@ -6,7 +6,7 @@ Finalizers in Hoshi-lang are special methods that are called just before an obje
 
 A finalizer is defined using the `finalizer` keyword within a `struct` definition and implemented in an `impl` block.
 
-```rust
+```hoshi
 struct MyFile {
     file_handle: int,
     constructor(path: string),

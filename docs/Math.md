@@ -13,7 +13,7 @@ The `math` standard library module provides a collection of common mathematical 
 
 ## Example
 
-```rust
+```hoshi
 use math "math"
 
 func main() : int {

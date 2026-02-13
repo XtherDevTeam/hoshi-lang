@@ -380,7 +380,7 @@ These instructions pop one or two values, unbox them, perform the operation, and
 ## 4. Full Example
 
 **hoshi-lang Code:**
-```rust
+```hoshi
 func add(a: int, b: int) : int {
     return a + b
 }

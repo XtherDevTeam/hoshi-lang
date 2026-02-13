@@ -15,7 +15,7 @@ The `Thread` struct represents a single thread of execution. It is created with 
 
 ### Example
 
-```rust
+```hoshi
 use threading "threading"
 use runtime "runtime"
 
@@ -46,7 +46,7 @@ The `Mutex` struct provides a mutual exclusion mechanism to protect shared data 
 
 ### Example
 
-```rust
+```hoshi
 use threading "threading"
 use runtime "runtime"
 
@@ -63,7 +63,7 @@ func main() : int {
 
 The `current_tid()` function returns the ID of the currently executing thread.
 
-```rust
+```hoshi
 use threading "threading"
 use runtime "runtime"
 

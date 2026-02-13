@@ -45,7 +45,7 @@ The `Stringable` interface is implemented by types that can be converted to a `S
 
 The `format` function formats a string with a variable number of arguments.
 
-```rust
+```hoshi
 use str "str"
 
 func main() : int {
