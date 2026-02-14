@@ -115,6 +115,12 @@ YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_handle_obj) {
     return yoi_result;
 }
 
+extern "C" uint64_t runtime_thread_hardware_concurrency() {
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    return (uint64_t)sysinfo.dwNumberOfProcessors;
+}
+
 YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock() {
     auto* cs = (CRITICAL_SECTION*) malloc(sizeof(CRITICAL_SECTION));
     if (!cs) {
@@ -249,6 +255,7 @@ void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsig
 #else // POSIX (-nix) Implementation
 
 #include <pthread.h>
+#include <unistd.h>
 
 void* thread_starter_wrapper(void* args) {
     auto* starter_args = (ThreadStarterArgs*)args;
@@ -467,6 +474,10 @@ void runtime_thread_condition_wait(YoiUnsignedObject *condition_handle, YoiUnsig
 
     if (--mutex_handle->gc_refcount == 0)
         runtime_finalize_object((YoiObject *)mutex_handle);
+}
+
+extern "C" uint64_t runtime_thread_hardware_concurrency() {
+    return (uint64_t)sysconf(_SC_NPROCESSORS_ONLN);
 }
 
 

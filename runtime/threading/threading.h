@@ -42,6 +42,8 @@ extern "C" YoiIntegerObject *runtime_thread_join(YoiUnsignedObject *thread_handl
 
 extern "C" uint64_t runtime_get_thread_id();
 
+extern "C" uint64_t runtime_thread_hardware_concurrency();
+
 extern "C" YoiIntegerObject *runtime_ping_thread(YoiUnsignedObject *thread_id_obj);
 
 extern "C" YoiResultUnsignedAndIntObject *runtime_thread_new_mutex_lock();

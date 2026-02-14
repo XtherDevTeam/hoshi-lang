@@ -1,0 +1,8 @@
+use threading "threading"
+use console "console"
+
+func main() : int {
+    let count = threading.hardware_concurrency()
+    console.print("Hardware concurrency: ", count, "\n")
+    return 0
+}

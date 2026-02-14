@@ -37,6 +37,10 @@ func current_tid() : unsigned {
     return runtime.runtime_get_thread_id()
 }
 
+func hardware_concurrency() : unsigned {
+    return runtime.runtime_thread_hardware_concurrency()
+}
+
 struct Mutex {
     mutex_handle: unsigned,
     constructor(),
