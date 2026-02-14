@@ -8,6 +8,7 @@ var threading_8cpp =
     [ "runtime_thread_condition_wait", "threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f", null ],
     [ "runtime_thread_finalize_condition", "threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a", null ],
     [ "runtime_thread_finalize_mutex_lock", "threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a", null ],
+    [ "runtime_thread_hardware_concurrency", "threading_8cpp.html#ac03e22d827776b4c333c47a3da06033f", null ],
     [ "runtime_thread_join", "threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5", null ],
     [ "runtime_thread_mutex_lock", "threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b", null ],
     [ "runtime_thread_mutex_try_lock", "threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2", null ],
