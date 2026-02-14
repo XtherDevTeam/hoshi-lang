@@ -153,30 +153,16 @@ long get_tm_gmtoff(struct tm *t) {
 
 void YoiIntAndIntObject::gc_refcount_decrease(YoiIntAndIntObject *obj) {
     if (--obj->gc_refcount == 0) {
-        if (--obj->seconds->gc_refcount == 0) {
-            runtime_finalize_object((YoiObject *)obj->seconds);
-        }
-        if (--obj->nanoseconds->gc_refcount == 0) {
-            runtime_finalize_object((YoiObject *)obj->nanoseconds);
-        }
         runtime_finalize_object((YoiObject *)obj);
     }
 }
 
 YoiIntAndIntObject *YoiIntAndIntObject::create(int64_t seconds, int64_t nanoseconds) {
-    YoiIntegerObject *seconds_obj = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
-    seconds_obj->gc_refcount = 1;
-    seconds_obj->type_id = 0;
-    seconds_obj->value = seconds;
-    YoiIntegerObject *nanoseconds_obj = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
-    nanoseconds_obj->gc_refcount = 1;
-    nanoseconds_obj->type_id = 0;
-    nanoseconds_obj->value = nanoseconds;
-    YoiIntAndIntObject *obj = (YoiIntAndIntObject *)runtime_object_alloc(sizeof(YoiIntAndIntObject));
+    auto *obj = (YoiIntAndIntObject *)runtime_object_alloc(sizeof(YoiIntAndIntObject));
     obj->gc_refcount = 1;
     obj->type_id = 0;
-    obj->seconds = seconds_obj;
-    obj->nanoseconds = nanoseconds_obj;
+    obj->seconds = seconds;
+    obj->nanoseconds = nanoseconds;
     return obj;
 }
 

@@ -1732,7 +1732,9 @@ namespace yoi {
                     auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                        ins.operands[1].value.symbolIndex,
                                                        ins.operands[2].value.symbolIndex,
-                                                       yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                                                       ins.operands[3].value.symbolIndex 
+                                                       ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
+                                                       : yoi::vec<yoi::indexT>{}});
                     simulationStack.pop();
                     simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
                     break;
@@ -2623,7 +2625,9 @@ namespace yoi {
                     auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                        ins.operands[1].value.symbolIndex,
                                                        ins.operands[2].value.symbolIndex,
-                                                       yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                                                       ins.operands[3].value.symbolIndex
+                                                       ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
+                                                       : yoi::vec<yoi::indexT>{}});
                     type->addAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.pop();
                     simulationStack.push(type, {});
@@ -4178,7 +4182,9 @@ namespace yoi {
                 auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                    ins.operands[1].value.symbolIndex,
                                                    ins.operands[2].value.symbolIndex,
-                                                   yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}});
+                                                   ins.operands[3].value.symbolIndex 
+                                                   ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
+                                                   : yoi::vec<yoi::indexT>{}});
                 type->addAttribute(IRValueType::ValueAttr::Nullable);
                 simulationStack.pop();
                 simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});

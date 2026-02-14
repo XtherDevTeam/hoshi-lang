@@ -23,8 +23,8 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 struct YoiIntAndIntObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
-    YoiIntegerObject *seconds;
-    YoiIntegerObject *nanoseconds;
+    unsigned long long seconds;
+    unsigned long long nanoseconds;
 
     static void gc_refcount_decrease(YoiIntAndIntObject *obj);
 

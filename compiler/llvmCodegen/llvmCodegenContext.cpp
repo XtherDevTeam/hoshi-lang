@@ -1570,6 +1570,7 @@ namespace yoi {
                     } else {
                         llvmModCtx.Builder->CreateStore(value, fieldPtr);
                     }
+                    callGcFunction(llvmModCtx, values[i].llvmValue, values[i].yoiType, false);
                 }
                 // no stack operation required
                 break;
@@ -1606,6 +1607,8 @@ namespace yoi {
                 } else {
                     llvmModCtx.Builder->CreateStore(val, fieldPtr);
                 }
+
+                callGcFunction(llvmModCtx, srcValue.llvmValue, srcValue.yoiType, false);
                 break;
             }
             case IR::Opcode::load_field: {
