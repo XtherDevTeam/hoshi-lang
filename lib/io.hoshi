@@ -3,8 +3,8 @@ use runtime "runtime"
 
 struct ArrayBuffer {
     buf: char[],
-    size: unsigned,
-    current_pos: int,
+    datafield size: unsigned,
+    datafield current_pos: int,
     constructor(size: int),
     constructor(buf: char[])
 }

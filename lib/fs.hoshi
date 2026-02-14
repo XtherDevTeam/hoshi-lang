@@ -231,9 +231,9 @@ impl Path : str.Stringable {
 }
 
 struct OSFile {
-    fp: unsigned,
-    isText: bool,
-    noFinalizer: bool,
+    datafield fp: unsigned,
+    datafield isText: bool,
+    datafield noFinalizer: bool,
     path: str.Str,
     constructor(fp: unsigned, isText: bool, path: str.Str),
     constructor(fp: unsigned, isText: bool, path: str.Str, noFinalizer: bool),

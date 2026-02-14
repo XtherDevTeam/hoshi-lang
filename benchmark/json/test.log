@@ -5,4 +5,4 @@ Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features
 Linking final darwin executable...
 Compilation successful!
 ❯ time ./jsonlib
-./jsonlib  0.34s user 0.00s system 49% cpu 0.682 total
+./jsonlib  6.09s user 0.02s system 93% cpu 6.512 total

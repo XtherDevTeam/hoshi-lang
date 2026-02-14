@@ -15,11 +15,11 @@ use vec "vec"
 struct BufferedStream {
     file: file.AbstractFile,
     buffer: char[],
-    buf_size: int,
-    buf_capacity: int,
-    cursor: int,      // Index within the current buffer
-    abs_pos: int,     // Absolute position in file of the start of the buffer
-    mark_pos: int,
+    datafield buf_size: int,
+    datafield buf_capacity: int,
+    datafield cursor: int,      // Index within the current buffer
+    datafield abs_pos: int,     // Absolute position in file of the start of the buffer
+    datafield mark_pos: int,
     constructor(f: file.AbstractFile),
     always_inline peek() : char,
     always_inline advance() : char,

@@ -5,7 +5,7 @@ enum Whence {
 }
 
 struct ReadBufferView {
-    size: int,
+    datafield size: int,
     data: char[],
     constructor(size: int, data: char[])
 }

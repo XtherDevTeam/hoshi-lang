@@ -65,17 +65,6 @@ namespace yoi {
          */
         yoi::IRExternEntry getExternEntry(yoi::indexT moduleIndex, const yoi::wstr &identifier) const;
 
-        /**
-         * Add an extern entry to the module if it does not exist.
-         * @param moduleIndex the index of module begin imported
-         * @param identifier the identifier of the extern entry
-         * @return the index of the extern entry in the module's extern table
-         * @throws std::runtime_error if the identifier is not found in the module
-         * @deprecated Extern entries are not used anymore, use getExternEntry to get the direct entry instead.
-         */
-        [[deprecated("Extern entries are not used anymore, use getExternEntry to get the direct entry instead.")]] yoi::indexT
-        addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier);
-
         bool isVisitingGlobalScope() const;
 
         void emitBasicCastInBasicArithOpByLhsAndRhs(yoi::indexT lhs, yoi::indexT rhs);

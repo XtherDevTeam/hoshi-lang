@@ -1,0 +1,25 @@
+use runtime "runtime.hoshi"
+
+struct Test {
+    datafield x: int,
+    datafield y: int,
+    constructor(x: int, y: int)
+}
+
+impl Test {
+    constructor(x: int, y: int) {
+        this.x = x
+        this.y = y
+    }
+}
+
+func main() : int {
+    let T = Test(1,2)
+    runtime.runtime_debug_print_int_1(T.x)
+    runtime.runtime_debug_print_int_1(T.y)
+    T.x = 3
+    T.y = 4
+    runtime.runtime_debug_print_int_1(T.x)
+    runtime.runtime_debug_print_int_1(T.y)
+    return 0
+}

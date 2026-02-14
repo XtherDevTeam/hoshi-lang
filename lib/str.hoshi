@@ -4,8 +4,8 @@ use runtime "runtime"
 
 struct Str {
     data: char[],
-    length: unsigned,
-    capacity: unsigned,
+    datafield length: unsigned,
+    datafield capacity: unsigned,
     push(ch: char) : none,
     pop() : none,
     size() : int,

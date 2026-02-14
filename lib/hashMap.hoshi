@@ -16,7 +16,7 @@ impl HashMapNode<> {
 
 struct HashMap<K, V> {
     buckets: HashMapNode<K, V>[],
-    size: int,
+    datafield size: int,
     constructor(),
     static operator[](this: HashMap<K, V>, key: K) : V,
     static operator[](value: V, this: HashMap<K, V>, key: K) : none,

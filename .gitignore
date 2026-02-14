@@ -6,3 +6,4 @@ tools/vscode_extension
 *.log
 .cache
 !benchmark/*/test.log
+project_cache

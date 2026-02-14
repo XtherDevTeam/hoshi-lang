@@ -1016,25 +1016,31 @@ namespace yoi {
         constructorDecl *con = nullptr;
         finalizerDecl *fin = nullptr;
         lexer::token node_start_token = lex.curToken;
+        structDefInnerPair::Modifier mod{structDefInnerPair::Modifier::None};
+
+        if (lex.curToken.kind == lexer::token::tokenKind::kDataField) {
+            mod = structDefInnerPair::Modifier::DataField;
+            lex.scan();
+        }
 
         parse(con, lex);
         if (con) {
-            o = new structDefInnerPair{node_start_token, 1, nullptr, con, nullptr, nullptr};
+            o = new structDefInnerPair{node_start_token, 1, mod, nullptr, con, nullptr, nullptr};
             return;
         }
         parse(method, lex);
         if (method) {
-            o = new structDefInnerPair{node_start_token, 2, nullptr, nullptr, method, nullptr};
+            o = new structDefInnerPair{node_start_token, 2, mod, nullptr, nullptr, method, nullptr};
             return;
         }
         parse(fin, lex);
         if (fin) {
-            o = new structDefInnerPair{node_start_token, 3, nullptr, nullptr, nullptr, fin};
+            o = new structDefInnerPair{node_start_token, 3, mod, nullptr, nullptr, nullptr, fin};
             return;
         }
         parse(var, lex);
         if (var) {
-            o = new structDefInnerPair{node_start_token, 0, var, nullptr, nullptr, nullptr};
+            o = new structDefInnerPair{node_start_token, 0, mod, var, nullptr, nullptr, nullptr};
             return;
         }
         o = nullptr;

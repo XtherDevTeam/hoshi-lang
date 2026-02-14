@@ -770,7 +770,7 @@ namespace yoi {
         r += yoi::wstr(indent, L' ') + L"struct " + name + L" {\n";
         for (auto &i : nameIndexMap) {
             if (i.second.type == nameInfo::nameType::field) {
-                r += yoi::wstr(indent + 4, L' ') + i.first + L" " + fieldTypes[i.second.index]->to_string() + L"\n";
+                r += yoi::wstr(indent + 4, L' ') + i.first + L" " + fieldTypes[i.second.index]->to_string(true) + L"\n";
             }
         }
         r += yoi::wstr(indent, L' ') + L"}\n";

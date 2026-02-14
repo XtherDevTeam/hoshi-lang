@@ -2069,6 +2069,9 @@ namespace yoi {
                     case 0: {
                         auto memberName = i->getVar().getId().get().strVal;
                         auto memberType = managedPtr(parseTypeSpec(i->getVar().spec));
+                        if (i->modifier == structDefInnerPair::Modifier::DataField) {
+                            memberType->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+                        }
                         builder.addField(memberName, memberType);
                         break;
                     }
@@ -2932,18 +2935,6 @@ namespace yoi {
                                 yoi::wstring2string(identifier));
     }
 
-    yoi::indexT visitor::addExternEntryIfNotExists(yoi::indexT moduleIndex, const yoi::wstr &identifier) {
-        // extern entry format: moduleIndex#identifier
-        yoi::wstr key = std::to_wstring(moduleIndex) + L"#" + identifier;
-        try {
-            auto it = irModule->externTable.getIndex(key);
-            return it;
-        } catch (std::runtime_error &) {
-            // not found, add a new entry
-            return irModule->externTable.put(key, managedPtr(getExternEntry(moduleIndex, identifier)));
-        }
-    }
-
     bool visitor::isVisitingGlobalScope() const {
         return moduleContext->getIRBuilder().irFuncDefinition()->name == L"yoimiya_glob_initializer";
     }
@@ -3324,6 +3315,9 @@ namespace yoi {
             if (field->kind == 0) {
                 auto memberName = field->getVar().getId().get().strVal;
                 auto memberType = managedPtr(parseTypeSpec(field->getVar().spec));
+                if (field->modifier == structDefInnerPair::Modifier::DataField) {
+                    memberType->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+                }
                 builder.addField(memberName, memberType);
             } else if (field->kind == 2 && field->getMethod().getName().hasDefTemplateArg()) {
                 // Generic method declaration

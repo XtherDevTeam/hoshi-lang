@@ -2443,7 +2443,9 @@ namespace yoi {
                     auto structDef = compilerCtx->getImportedModule(structObj.type->typeAffiliateModule)->structTable[structObj.type->typeIndex];
                     auto memberIndex = ins.operands[0].value.symbolIndex;
                     auto memberType = std::make_shared<IRValueType>(*structDef->fieldTypes[memberIndex]);
-                    memberType->addAttribute(IRValueType::ValueAttr::Nullable);
+                    if (!memberType->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
+                        memberType->addAttribute(IRValueType::ValueAttr::Nullable);
+                    }
                     simulationStack.push(memberType, {});
                     break;
                 }
@@ -3915,6 +3917,9 @@ namespace yoi {
                 auto structDef = targetModule->structTable[type];
                 auto memberIndex = ins.operands[0].value.symbolIndex;
                 auto memberDef = managedPtr(*structDef->fieldTypes[memberIndex]);
+                if (memberDef->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
+                    memberDef->addAttribute(IRValueType::ValueAttr::Raw);
+                }
                 simulationStack.pop();
                 simulationStack.push(
                     memberDef, value.contributedInstructions + SimulationStack::Item::ContributedInstructionSet{currentCodeBlockIndex, {insIndex}});
@@ -4435,7 +4440,11 @@ namespace yoi {
             for (auto &struct_type : irModule->structTable) {
                 for (auto &field : struct_type.second->fieldTypes) {
                     field = managedPtr(*field);
-                    field->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
+                    if (field->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
+                        field->addAttribute(IRValueType::ValueAttr::Raw);
+                    } else {
+                        field->removeAttribute(IRValueType::ValueAttr::Raw).addAttribute(IRValueType::ValueAttr::Nullable);
+                    }
                 }
             }
         }

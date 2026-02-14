@@ -72,6 +72,8 @@ TEST_CASES = {
     "global-var": {"type": "executable", "return_code": 0},
     "libfs": {"type": "executable", "return_code": 0},
     "struct-template-method": {"type": "executable", "return_code": 0},
+    "datastruct-test": {"type": "executable", "return_code": 0},
+    "datafield": {"type": "executable", "return_code": 0},
 }
 
 

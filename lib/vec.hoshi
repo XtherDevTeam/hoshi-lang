@@ -1,8 +1,8 @@
 import puts(str: ptr) : int32 from "builtin"
 
 struct Vec<T> {
-    length: int,
-    capacity: int,
+    datafield length: int,
+    datafield capacity: int,
     data: T[],
     push(x: T) : none,
     pop() : none,

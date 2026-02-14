@@ -413,7 +413,7 @@ namespace yoi {
             fieldTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // gc_refcount
             fieldTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // typeid
             for (const auto& fieldType : structDef->fieldTypes) {
-                fieldTypes.push_back(yoiTypeToLLVMType(llvmModCtx, fieldType));
+                fieldTypes.push_back(yoiTypeToLLVMType(llvmModCtx, fieldType, fieldType->isBasicType() && fieldType->hasAttribute(IRValueType::ValueAttr::Raw)));
             }
             if (llvmStructType->isOpaque()) {
                 llvmStructType->setBody(fieldTypes);
@@ -1161,11 +1161,15 @@ namespace yoi {
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
                 if (structVal.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope))
                     memberYoiType = managedPtr(IRValueType{*memberYoiType}.addAttribute(IRValueType::ValueAttr::PermanentInCurrentScope));
-                memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
-                memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw); // workaround for incorrect optimization labelling
+                
+                // memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
+                // memberYoiType->removeAttribute(IRValueType::ValueAttr::Raw); // workaround for incorrect optimization labelling
 
-                llvm::Type* loadedType = yoiTypeToLLVMType(llvmModCtx, memberYoiType);
-                auto* loadedMember = llvmModCtx.Builder->CreateLoad(loadedType, gep, "loadmember");
+                llvm::Type* loadedType = yoiTypeToLLVMType(llvmModCtx, memberYoiType, memberYoiType->isBasicType() && memberYoiType->hasAttribute(IRValueType::ValueAttr::Raw));
+                auto* loadedMember = 
+                    memberYoiType->type == IRValueType::valueType::datastructObject
+                    ? gep
+                    : llvmModCtx.Builder->CreateLoad(loadedType, gep, "loadmember");
                 callGcFunction(llvmModCtx, loadedMember, memberYoiType, true); // Create new reference for the loaded member
                 llvmModCtx.valueStackPhi.push_back({loadedMember, memberYoiType});
 
@@ -1187,16 +1191,29 @@ namespace yoi {
 
                 auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
                 auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
-                memberYoiType->addAttribute(IRValueType::ValueAttr::Nullable);
 
                 auto* oldMemberPtr = llvmModCtx.Builder->CreateLoad(yoiTypeToLLVMType(llvmModCtx, memberYoiType), gep, "old_member_ptr");
                 callGcFunction(llvmModCtx, oldMemberPtr, memberYoiType, false, true);
 
-                auto object = ensureObject(llvmModCtx, valueToStore.yoiType, valueToStore.llvmValue);
-                if (object.first->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
-                    callGcFunction(llvmModCtx, object.second, valueToStore.yoiType, true, true, true);
+                if (memberYoiType->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
+                    auto value = unboxValue(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType);
 
-                llvmModCtx.Builder->CreateStore(object.second, gep);
+                    if (valueToStore.yoiType->type == IRValueType::valueType::datastructObject) {
+                        // create MemCpy
+                        auto datastructDef = llvmModCtx.dataStructDataRegionMap[valueToStore.yoiType->typeIndex];
+                        auto size = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(datastructDef);
+                        
+                        llvmModCtx.Builder->CreateMemCpy(gep, llvm::MaybeAlign(8), value, llvm::MaybeAlign(8), size);
+                    } else {
+                        llvmModCtx.Builder->CreateStore(value, gep);
+                    }
+                } else {
+                    auto object = ensureObject(llvmModCtx, valueToStore.yoiType, valueToStore.llvmValue);
+                    llvmModCtx.Builder->CreateStore(object.second, gep);
+                }
+
+                if (valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
+                    callGcFunction(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType, true, true, true);
 
                 callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
                 break;
