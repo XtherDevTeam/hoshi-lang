@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('md_docs_2The_01Optimization_01Strategy
   <div class="headertitle"><div class="title">The Optimization Strategy of Interface Allocation and Virtual Invocation Reduction 接口分配和虚函数调用消除优化策略</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md134"></a> 接口的创建和使用主要有如下两个场景：接口创建并成为一个局部变量或结构体成员，并以此身份参与虚函数调用；接口经 construct_interface_impl 创建后立即进行虚函数调用。对于这两种场景，在综合考虑后，我们所采用的实现策略命名为“接口的延迟实例化”。</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md137"></a> 接口的创建和使用主要有如下两个场景：接口创建并成为一个局部变量或结构体成员，并以此身份参与虚函数调用；接口经 construct_interface_impl 创建后立即进行虚函数调用。对于这两种场景，在综合考虑后，我们所采用的实现策略命名为“接口的延迟实例化”。</p>
 <p>在创建接口时，我们赋予接口一组记录了实现类型信息的元数据，此时，接口对象并未真正创建，栈值仍为对应类型对象，直至发生控制流变换并存在多个来自不同控制分支的栈值发生合并为一个栈值时，对应元数据被特殊标记，并实例化成为对应接口对象。</p>
 <p>对于接口对象引入外部控制流时，存在两种情况：接口对象此时由 construct_interface_impl 贡献，其延迟创建的开销不变；而对于由 load_local 贡献的接口对象，若存在有效元数据（即退化）时，存在较大开销，在某些情况会存在负优化的现象，故不对涉及外部控制流的接口对象局部变量进行优化。</p>
 <p>特殊地，当栈值存入一个局部变量时，对于 IROptimizer 阶段，我们会对对应元数据和变量具有的元数据进行比较，若变量未具有对应元数据，我们对该变量进行标记，若变量已经具有了不一致的元数据或元数据被特殊标记，我们将其特殊标记，最后合并信息时，若变量元数据有效，其类型将被退化成对应实现的类型信息；对于 LLVMCodegen 阶段，我们检测是否存在有效的元数据，若存在，接口便以对应类型的形式存入局部变量。</p>

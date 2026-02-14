@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>hoshi-lang: Hoshi-lang Language Specification</title>
+<title>hoshi-lang: The purposal of introducing data fields in legacy struct</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_docs_2Data_01Fields_01in_01Legacy_01Struct.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -90,73 +90,42 @@ $(document).ready(function(){initNavTree('md_docs_2Spec.html',''); initResizable
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Hoshi-lang Language Specification</div></div>
+  <div class="headertitle"><div class="title">The purposal of introducing data fields in legacy struct</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md111"></a> This document provides a specification of the Hoshi-lang programming language.</p>
-<h1><a class="anchor" id="autotoc_md112"></a>
-1. Lexical Structure</h1>
-<h2><a class="anchor" id="autotoc_md113"></a>
-1.1. Identifiers</h2>
-<p>Identifiers start with a letter or underscore, followed by any number of letters, numbers, or underscores.</p>
-<h2><a class="anchor" id="autotoc_md114"></a>
-1.2. Keywords</h2>
-<p>The following are reserved keywords and cannot be used as identifiers:</p>
-<p><code>use</code>, <code>interface</code>, <code>struct</code>, <code>impl</code>, <code>func</code>, <code>let</code>, <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>return</code>, <code>true</code>, <code>false</code>, <code>null</code>, <code>typeid</code>, <code>interfaceof</code>, <code>dyn_cast</code>, <code>template</code>, <code>operator</code>, <code>alias</code>, <code>finalizer</code>, <code>callable</code></p>
-<h2><a class="anchor" id="autotoc_md115"></a>
-1.3. Literals</h2>
-<ul>
-<li><b>Integer Literals:</b> e.g., <code>123</code>, <code>-456</code></li>
-<li><b>Unsigned Integer Literals:</b> e.g., <code>123u</code></li>
-<li><b>Short Integer Literals:</b> e.g., <code>123s</code></li>
-<li><b>Decimal Literals:</b> e.g., <code>3.14</code>, <code>-0.01</code></li>
-<li><b>Boolean Literals:</b> <code>true</code>, <code>false</code></li>
-<li><b>String Literals:</b> e.g., <code>"hello"</code></li>
-<li><b>Character Literals:</b> e.g., &lsquo;'a&rsquo;<code></code></li>
-<li><code> **Null Literal:**</code>null`</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md116"></a>
-2. Types</h1>
-<p>Hoshi-lang is a statically-typed language. The following are the built-in types:</p>
-<ul>
-<li><code>int</code>: A 64-bit signed integer.</li>
-<li><code>unsigned</code>: A 64-bit unsigned integer.</li>
-<li><code>short</code>: A 16-bit signed integer.</li>
-<li><code>deci</code>: A 64-bit floating-point number.</li>
-<li><code>bool</code>: A boolean value (<code>true</code> or <code>false</code>).</li>
-<li><code>string</code>: A string of characters.</li>
-<li><code>char</code>: A single character.</li>
-<li><code>ptr</code>: A raw pointer.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md117"></a>
-3. Structs</h1>
-<p>Structs are user-defined data types that can contain fields and methods.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md21"></a> With the sucessful implementation of data struct and its affiliated optimization, we significantly improved the performance of hoshi-lang over <em>certain</em> fields like scientific calculations. However, there is also limitation which it cannot incorporate methods as legacy struct does. Therefore, we acknowledge the essentiality of introducing data fields into legacy struct to further reducing redundant object allocation and improving the performance of hoshi-lang.</p>
+<h1><a class="anchor" id="autotoc_md22"></a>
+The syntax of data fields in legacy struct</h1>
+<p>Suppose we have a struct <code><a class="el" href="structPoint.html">Point</a></code> defined as follows:</p>
 <div class="fragment"><div class="line">struct Point {</div>
-<div class="line">    x: int,</div>
-<div class="line">    y: int,</div>
-<div class="line">    constructor(x: int, y: int)</div>
+<div class="line">    x: deci,</div>
+<div class="line">    y: deci,</div>
+<div class="line">    constructor(x: deci, y: deci)</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md118"></a>
-4. Interfaces</h1>
-<p>Interfaces define a contract of methods that a <code>struct</code> can implement.</p>
-<div class="fragment"><div class="line">interface Greeter {</div>
-<div class="line">    say() : none</div>
+<div class="line"> </div>
+<div class="line">impl Point {</div>
+<div class="line">    constructor(x: deci, y: deci) {</div>
+<div class="line">        this.x = x</div>
+<div class="line">        this.y = y</div>
+<div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md119"></a>
-5. Functions</h1>
-<p>Functions are defined with the <code>func</code> keyword.</p>
-<div class="fragment"><div class="line">func add(a: int, b: int) : int {</div>
-<div class="line">    return a + b</div>
+</div><!-- fragment --><p>To employ data fields in legacy struct, we simply add <code>data</code> keyword before the field declaration:</p>
+<div class="fragment"><div class="line">struct Point {</div>
+<div class="line">    data x: deci,</div>
+<div class="line">    data y: deci,</div>
+<div class="line">    constructor(x: deci, y: deci)</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md120"></a>
-6. Operator Overloading</h1>
-<p>See Operator Overloading.</p>
-<h1><a class="anchor" id="autotoc_md121"></a>
-7. Interface Templates</h1>
-<p>See <a class="el" href="Template_8md.html">Generic Programming with Templates</a>.</p>
-<h1><a class="anchor" id="autotoc_md122"></a>
-8. Standard Library</h1>
-<p>See Standard Library. </p>
+<div class="line"> </div>
+<div class="line">impl Point {</div>
+<div class="line">    constructor(x: deci, y: deci) {</div>
+<div class="line">        this.x = x</div>
+<div class="line">        this.y = y</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md23"></a>
+Underlying mechanisms</h1>
+<p>When compiler encounter such field declaration, it will automatically attach a Metadata named STRUCT_DATAFIELD with <code>true</code> as value into its <code>IRValueType</code>. Through checking the existence of this metadata, in <code>performStructNullablePass()</code> method, we first determine the field type. If it is a data field, we will perform the propagation of Raw value on specific field, otherwise Nullable value propagation will be performed.</p>
+<p>With additional modification on the handling logic of <code>store_member</code> <code>load_member</code> in both IROptimizer and llvmCodegen, the fields will no longer maintain its own object reference, it would be a direct 8-bytes value storage in the struct. At the same time, it loses the ability to hold <code>null</code> value and be referenced. Instead, every assignment would be copy-constructed as Raw value, thus enabling the produced result to be further optimized by IROptimizer and llvmCodegen. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

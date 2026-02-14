@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['v_20tt_20struct_0',['&lt;tt&gt;HashMap&lt;K, V&gt;&lt;/tt&gt; Struct',['../md_docs_2HashMap.html#autotoc_md40',1,'']]],
+  ['v_20tt_20struct_0',['&lt;tt&gt;HashMap&lt;K, V&gt;&lt;/tt&gt; Struct',['../md_docs_2HashMap.html#autotoc_md43',1,'']]],
   ['valid_1',['valid',['../structmagic__enum_1_1detail_1_1valid__count__t.html#a8a33c3505934390e2133ae070114ab90',1,'magic_enum::detail::valid_count_t']]],
   ['valid_5fcount_2',['valid_count',['../namespacemagic__enum_1_1detail.html#a1a1c1be86da61e6587099e935900d22c',1,'magic_enum::detail::valid_count(bool *valid, std::size_t &amp;count) noexcept'],['../namespacemagic__enum_1_1detail.html#a4f9b397c9e174897dc6a26a313a6b52d',1,'magic_enum::detail::valid_count() noexcept']]],
   ['valid_5fcount_5ft_3',['valid_count_t',['../structmagic__enum_1_1detail_1_1valid__count__t.html',1,'magic_enum::detail']]],
@@ -29,7 +29,7 @@ var searchData=
   ['vbool_26',['vBool',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a22dcd3dcdb72b540bca86cd2fee0f88d',1,'yoi::lexer::token::vBasicValue']]],
   ['vdeci_27',['vdeci',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a910d6aeb33c20d91e42bd068a0e6cf4b',1,'yoi::lexer::token::vBasicValue::vDeci'],['../namespaceyoi.html#a4f8b4bf5f8be4bc3b3b336238b9812e3',1,'yoi::vdeci']]],
   ['vec_28',['vec',['../namespaceyoi.html#a467112ed789564244f414efb801bf606',1,'yoi']]],
-  ['vec_20t_20tt_20struct_29',['&lt;tt&gt;Vec&lt;T&gt;&lt;/tt&gt; Struct',['../md_docs_2Vector.html#autotoc_md147',1,'']]],
+  ['vec_20t_20tt_20struct_29',['&lt;tt&gt;Vec&lt;T&gt;&lt;/tt&gt; Struct',['../md_docs_2Vector.html#autotoc_md150',1,'']]],
   ['vector_20in_20hoshi_20lang_30',['Vector in Hoshi-lang',['../md_docs_2Vector.html',1,'']]],
   ['vector_2emd_31',['Vector.md',['../Vector_8md.html',1,'']]],
   ['vint_32',['vInt',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#acf5e9e3964380dd92ca4dd1939a22b9a',1,'yoi::lexer::token::vBasicValue']]],
@@ -43,8 +43,8 @@ var searchData=
   ['visitor_2ecpp_40',['visitor.cpp',['../visitor_8cpp.html',1,'']]],
   ['visitor_2eh_41',['visitor.h',['../visitor_8h.html',1,'']]],
   ['vkind_42',['vkind',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9e',1,'yoi::globalStmt::vKind'],['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9e',1,'yoi::inCodeBlockStmt::vKind'],['../classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9e',1,'yoi::letAssignmentPairLHS::vKind']]],
-  ['vs_20explicit_20specialization_43',['Implicit vs. Explicit Specialization',['../md_docs_2Template.html#autotoc_md131',1,'']]],
-  ['vs_20heap_44',['Data Structures: Stack vs. Heap',['../index.html#autotoc_md172',1,'']]],
+  ['vs_20explicit_20specialization_43',['Implicit vs. Explicit Specialization',['../md_docs_2Template.html#autotoc_md134',1,'']]],
+  ['vs_20heap_44',['Data Structures: Stack vs. Heap',['../index.html#autotoc_md175',1,'']]],
   ['vshort_45',['vShort',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a4c4ee34a24d33067423078ea59d4e5e0',1,'yoi::lexer::token::vBasicValue']]],
   ['vsruntimepath_46',['vsRuntimePath',['../classyoi_1_1clObjectLinker.html#ab1bc2294433b7d30f032e3d229686c1c',1,'yoi::clObjectLinker']]],
   ['vuint_47',['vUint',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a6eb2a02a0c9dc7191f12c86ca7b7f32c',1,'yoi::lexer::token::vBasicValue']]],

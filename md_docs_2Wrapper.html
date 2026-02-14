@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('md_docs_2Wrapper.html',''); initResiza
   <div class="headertitle"><div class="title">Export Wrapper - 实现 FFI 的必经之路</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md150"></a> 假设有一程序如下</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md153"></a> 假设有一程序如下</p>
 <div class="fragment"><div class="line">func test(a: int, b: int) : int {</div>
 <div class="line">    return a + b</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>在经过编译后，所生成的函数签名应为 <code>YoiIntegerObject* 0_test#int#int(YoiIntegerObject *a, YoiIntegerObject *b)</code>。显而易见，经过了 <code>name mangling</code> 函数名称显然不能直接被外部库使用 <code>extern "C"</code> 直接使用，更不用提 <code>Everything is object</code> 设计理念之下参数和返回值是 <code><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a></code> 指针这种问题了。</p>
 <p>如何使 hoshi-lang 程序被外界的动态库以一种更友好的方式，在不要求外部程序主动使用 hoshi-lang 对象管理逻辑的情况下调用 hoshi-lang 接口呢？这时候就要用到 <code>export</code> 关键字了。</p>
-<h2><a class="anchor" id="autotoc_md151"></a>
+<h2><a class="anchor" id="autotoc_md154"></a>
 What is export wrapper?</h2>
 <p><code>export-as</code> 是用于实现 <code>hoshi-lang</code> 导出函数的关键字。它接受一个 普通函数、实例化模板函数、普通结构体、实例化结构体 作为输入，然后在 llvmCodegen 过程中将输入转换为 <code>cdecl</code> 标准的函数或结构体。</p>
 <p>假设我有如下代码</p>
@@ -109,7 +109,7 @@ What is export wrapper?</h2>
 <div class="line"> </div>
 <div class="line">export test as test</div>
 </div><!-- fragment --><p>此时，原 test 函数的 name mangling 不会被改变，对应地，一个签名名为 <code>int test(int a, int b)</code> 的 <code>wrapper</code> 函数在 llvmCodegen 阶段被生成，它将正常的参数接收并调用运行时函数转换为 <code><a class="el" href="structYoiIntegerObject.html">YoiIntegerObject</a> *</code>，增加引用计数后传入 原 test 函数，接受返回值，并解引用 YoiIntegerObject* 对象，减少引用计数后返回 <code>int</code> 类型返回值。</p>
-<h2><a class="anchor" id="autotoc_md152"></a>
+<h2><a class="anchor" id="autotoc_md155"></a>
 When there's a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;import wrapper&lt;/tt&gt;</h2>
 <p>与 <code>export wrapper</code> 相反，hoshi-lang 也存在用于声明外部函数的 wrapper，此即 <code>import wrapper</code>。</p>
 <p>假设我有如下静态库 <code>libfoobar.so</code> 中的如下函数签名</p>
@@ -117,7 +117,7 @@ When there's a &lt;tt&gt;export wrapper&lt;/tt&gt;, there must be a &lt;tt&gt;im
 </div><!-- fragment --><p>如何调用这个函数呢？有如下代码：</p>
 <div class="fragment"><div class="line">import fopen(path: str, flags: str) : int from &quot;libfoobar.so&quot;</div>
 </div><!-- fragment --><p>其中由于 hoshi-lang 不存在指针的语言设计，FILE* 被替换为了等长的 <code>int</code> 也就是 <code>i64</code>。</p>
-<h2><a class="anchor" id="autotoc_md153"></a>
+<h2><a class="anchor" id="autotoc_md156"></a>
 复杂类型的 export 和 import</h2>
 <p>对于基础类型，hoshi-lang 会自动进行 wrapper 的生成，对于复杂类型如 structObject 需要用户声明 export struct 后才会进行对应 cdecl 的 struct wrapper 创建。</p>
 <p>如下</p>

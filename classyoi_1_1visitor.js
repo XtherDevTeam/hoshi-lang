@@ -2,7 +2,6 @@ var classyoi_1_1visitor =
 [
     [ "OverloadResult", "structyoi_1_1visitor_1_1OverloadResult.html", "structyoi_1_1visitor_1_1OverloadResult" ],
     [ "visitor", "classyoi_1_1visitor.html#a72c90e14641c7e57aef4dfee95e26c77", null ],
-    [ "addExternEntryIfNotExists", "classyoi_1_1visitor.html#a5f284f16d2778edc374e0538cfa904ca", null ],
     [ "canCastTo", "classyoi_1_1visitor.html#aae5daf604de8d70a7f06d0e5b5b3c3fb", null ],
     [ "checkMarcoSatisfaction", "classyoi_1_1visitor.html#a87f9e0165bcc1efb98600218aa102587", null ],
     [ "constructDataStruct", "classyoi_1_1visitor.html#ae344ea9355f7f94da2c3434c628f7260", null ],

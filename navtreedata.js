@@ -56,176 +56,179 @@ var NAVTREE =
         [ "Example", "md_docs_2Console.html#autotoc_md20", null ]
       ] ]
     ] ],
+    [ "The purposal of introducing data fields in legacy struct", "md_docs_2Data_01Fields_01in_01Legacy_01Struct.html", [
+      [ "The syntax of data fields in legacy struct", "md_docs_2Data_01Fields_01in_01Legacy_01Struct.html#autotoc_md22", null ],
+      [ "Underlying mechanisms", "md_docs_2Data_01Fields_01in_01Legacy_01Struct.html#autotoc_md23", null ]
+    ] ],
     [ "Data struct in hoshi-lang", "md_docs_2Datastruct.html", [
-      [ "Syntax", "md_docs_2Datastruct.html#autotoc_md22", null ],
-      [ "Memory Layout", "md_docs_2Datastruct.html#autotoc_md23", null ],
-      [ "Underlying mechanism", "md_docs_2Datastruct.html#autotoc_md24", null ],
-      [ "The integration with existing object optimization system", "md_docs_2Datastruct.html#autotoc_md25", null ]
+      [ "Syntax", "md_docs_2Datastruct.html#autotoc_md25", null ],
+      [ "Memory Layout", "md_docs_2Datastruct.html#autotoc_md26", null ],
+      [ "Underlying mechanism", "md_docs_2Datastruct.html#autotoc_md27", null ],
+      [ "The integration with existing object optimization system", "md_docs_2Datastruct.html#autotoc_md28", null ]
     ] ],
     [ "直接赋值 (Direct assignment)", "md_docs_2Direct_01Assignment.html", null ],
     [ "File System in Hoshi-lang", "md_docs_2File_01System.html", [
-      [ "<tt>file</tt> Module", "md_docs_2File_01System.html#autotoc_md28", [
-        [ "<tt>AbstractFile</tt> Interface", "md_docs_2File_01System.html#autotoc_md29", null ]
+      [ "<tt>file</tt> Module", "md_docs_2File_01System.html#autotoc_md31", [
+        [ "<tt>AbstractFile</tt> Interface", "md_docs_2File_01System.html#autotoc_md32", null ]
       ] ],
-      [ "<tt>fs</tt> Module", "md_docs_2File_01System.html#autotoc_md30", [
-        [ "Functions", "md_docs_2File_01System.html#autotoc_md31", null ],
-        [ "<tt>OSFile</tt> Struct", "md_docs_2File_01System.html#autotoc_md32", null ]
+      [ "<tt>fs</tt> Module", "md_docs_2File_01System.html#autotoc_md33", [
+        [ "Functions", "md_docs_2File_01System.html#autotoc_md34", null ],
+        [ "<tt>OSFile</tt> Struct", "md_docs_2File_01System.html#autotoc_md35", null ]
       ] ],
-      [ "<tt>io</tt> Module", "md_docs_2File_01System.html#autotoc_md33", [
-        [ "<tt>ArrayBuffer</tt> Struct", "md_docs_2File_01System.html#autotoc_md34", null ],
-        [ "Example", "md_docs_2File_01System.html#autotoc_md35", null ]
+      [ "<tt>io</tt> Module", "md_docs_2File_01System.html#autotoc_md36", [
+        [ "<tt>ArrayBuffer</tt> Struct", "md_docs_2File_01System.html#autotoc_md37", null ],
+        [ "Example", "md_docs_2File_01System.html#autotoc_md38", null ]
       ] ]
     ] ],
     [ "Finalizers in Hoshi-lang", "md_docs_2Finalizers.html", [
-      [ "Syntax", "md_docs_2Finalizers.html#autotoc_md37", null ],
-      [ "Execution", "md_docs_2Finalizers.html#autotoc_md38", null ]
+      [ "Syntax", "md_docs_2Finalizers.html#autotoc_md40", null ],
+      [ "Execution", "md_docs_2Finalizers.html#autotoc_md41", null ]
     ] ],
     [ "HashMap in Hoshi-lang", "md_docs_2HashMap.html", [
-      [ "<tt>HashMap<K, V></tt> Struct", "md_docs_2HashMap.html#autotoc_md40", [
-        [ "Methods", "md_docs_2HashMap.html#autotoc_md41", null ],
-        [ "Example", "md_docs_2HashMap.html#autotoc_md42", null ]
+      [ "<tt>HashMap<K, V></tt> Struct", "md_docs_2HashMap.html#autotoc_md43", [
+        [ "Methods", "md_docs_2HashMap.html#autotoc_md44", null ],
+        [ "Example", "md_docs_2HashMap.html#autotoc_md45", null ]
       ] ]
     ] ],
     [ "接口设计", "md_docs_2Interface.html", [
-      [ "new 语句设计", "md_docs_2Interface.html#autotoc_md44", null ]
+      [ "new 语句设计", "md_docs_2Interface.html#autotoc_md47", null ]
     ] ],
     [ "The Hoshi-lang Intermediate Representation (IR) Handbook", "md_docs_2IR.html", [
-      [ "1. Introduction", "md_docs_2IR.html#autotoc_md46", [
-        [ "1.1. Purpose", "md_docs_2IR.html#autotoc_md47", null ],
-        [ "1.2. Execution Model", "md_docs_2IR.html#autotoc_md48", null ]
+      [ "1. Introduction", "md_docs_2IR.html#autotoc_md49", [
+        [ "1.1. Purpose", "md_docs_2IR.html#autotoc_md50", null ],
+        [ "1.2. Execution Model", "md_docs_2IR.html#autotoc_md51", null ]
       ] ],
-      [ "2. Core Concepts", "md_docs_2IR.html#autotoc_md49", [
-        [ "2.1. <tt>IRModule</tt>", "md_docs_2IR.html#autotoc_md50", null ],
-        [ "2.2. <tt>IRValueType</tt>", "md_docs_2IR.html#autotoc_md51", null ]
+      [ "2. Core Concepts", "md_docs_2IR.html#autotoc_md52", [
+        [ "2.1. <tt>IRModule</tt>", "md_docs_2IR.html#autotoc_md53", null ],
+        [ "2.2. <tt>IRValueType</tt>", "md_docs_2IR.html#autotoc_md54", null ]
       ] ],
-      [ "3. Instruction Set Reference", "md_docs_2IR.html#autotoc_md53", [
-        [ "3.1. Stack and Memory Operations", "md_docs_2IR.html#autotoc_md54", null ],
-        [ "3.2. Arithmetic and Logical Operations", "md_docs_2IR.html#autotoc_md55", null ],
-        [ "3.3. Control Flow", "md_docs_2IR.html#autotoc_md56", null ],
-        [ "3.4. Object and Array Lifecycle", "md_docs_2IR.html#autotoc_md57", null ],
-        [ "3.5. Type Operations", "md_docs_2IR.html#autotoc_md58", null ],
-        [ "3.6. Function and Method Calls", "md_docs_2IR.html#autotoc_md59", null ],
-        [ "1.2. Execution Model", "md_docs_2IR.html#autotoc_md60", null ]
+      [ "3. Instruction Set Reference", "md_docs_2IR.html#autotoc_md56", [
+        [ "3.1. Stack and Memory Operations", "md_docs_2IR.html#autotoc_md57", null ],
+        [ "3.2. Arithmetic and Logical Operations", "md_docs_2IR.html#autotoc_md58", null ],
+        [ "3.3. Control Flow", "md_docs_2IR.html#autotoc_md59", null ],
+        [ "3.4. Object and Array Lifecycle", "md_docs_2IR.html#autotoc_md60", null ],
+        [ "3.5. Type Operations", "md_docs_2IR.html#autotoc_md61", null ],
+        [ "3.6. Function and Method Calls", "md_docs_2IR.html#autotoc_md62", null ],
+        [ "1.2. Execution Model", "md_docs_2IR.html#autotoc_md63", null ]
       ] ],
-      [ "2. Core Concepts", "md_docs_2IR.html#autotoc_md61", [
-        [ "2.1. <tt>IRModule</tt>", "md_docs_2IR.html#autotoc_md62", null ],
-        [ "2.2. <tt>IRFunctionDefinition</tt>", "md_docs_2IR.html#autotoc_md63", null ],
-        [ "2.3. <tt>IRCodeBlock</tt>", "md_docs_2IR.html#autotoc_md64", null ],
-        [ "2.4. <tt>IRValueType</tt>", "md_docs_2IR.html#autotoc_md65", null ],
-        [ "2.5. <tt>IROperand</tt>", "md_docs_2IR.html#autotoc_md66", null ]
+      [ "2. Core Concepts", "md_docs_2IR.html#autotoc_md64", [
+        [ "2.1. <tt>IRModule</tt>", "md_docs_2IR.html#autotoc_md65", null ],
+        [ "2.2. <tt>IRFunctionDefinition</tt>", "md_docs_2IR.html#autotoc_md66", null ],
+        [ "2.3. <tt>IRCodeBlock</tt>", "md_docs_2IR.html#autotoc_md67", null ],
+        [ "2.4. <tt>IRValueType</tt>", "md_docs_2IR.html#autotoc_md68", null ],
+        [ "2.5. <tt>IROperand</tt>", "md_docs_2IR.html#autotoc_md69", null ]
       ] ],
-      [ "3. Instruction Set Reference", "md_docs_2IR.html#autotoc_md68", [
-        [ "3.1. Stack and Memory Operations", "md_docs_2IR.html#autotoc_md69", null ],
-        [ "3.2. Arithmetic and Logical Operations", "md_docs_2IR.html#autotoc_md70", null ],
-        [ "3.3. Control Flow", "md_docs_2IR.html#autotoc_md71", null ],
-        [ "3.4. Object Lifecycle", "md_docs_2IR.html#autotoc_md72", null ],
-        [ "3.5. Function and Method Calls", "md_docs_2IR.html#autotoc_md73", null ]
+      [ "3. Instruction Set Reference", "md_docs_2IR.html#autotoc_md71", [
+        [ "3.1. Stack and Memory Operations", "md_docs_2IR.html#autotoc_md72", null ],
+        [ "3.2. Arithmetic and Logical Operations", "md_docs_2IR.html#autotoc_md73", null ],
+        [ "3.3. Control Flow", "md_docs_2IR.html#autotoc_md74", null ],
+        [ "3.4. Object Lifecycle", "md_docs_2IR.html#autotoc_md75", null ],
+        [ "3.5. Function and Method Calls", "md_docs_2IR.html#autotoc_md76", null ]
       ] ],
-      [ "4. Full Example", "md_docs_2IR.html#autotoc_md75", null ]
+      [ "4. Full Example", "md_docs_2IR.html#autotoc_md78", null ]
     ] ],
     [ "JSON in Hoshi-lang", "md_docs_2JSON.html", [
-      [ "<tt>parse</tt> Function", "md_docs_2JSON.html#autotoc_md77", null ],
-      [ "<tt>JSONValue</tt> Interface", "md_docs_2JSON.html#autotoc_md78", null ],
-      [ "Example", "md_docs_2JSON.html#autotoc_md79", null ]
+      [ "<tt>parse</tt> Function", "md_docs_2JSON.html#autotoc_md80", null ],
+      [ "<tt>JSONValue</tt> Interface", "md_docs_2JSON.html#autotoc_md81", null ],
+      [ "Example", "md_docs_2JSON.html#autotoc_md82", null ]
     ] ],
     [ "Macros in Hoshi-lang", "md_docs_2Macros.html", [
-      [ "Syntax", "md_docs_2Macros.html#autotoc_md81", null ],
-      [ "Pre-defined Macros", "md_docs_2Macros.html#autotoc_md82", null ],
-      [ "Custom Macros", "md_docs_2Macros.html#autotoc_md83", null ],
-      [ "Example", "md_docs_2Macros.html#autotoc_md84", null ]
+      [ "Syntax", "md_docs_2Macros.html#autotoc_md84", null ],
+      [ "Pre-defined Macros", "md_docs_2Macros.html#autotoc_md85", null ],
+      [ "Custom Macros", "md_docs_2Macros.html#autotoc_md86", null ],
+      [ "Example", "md_docs_2Macros.html#autotoc_md87", null ]
     ] ],
     [ "Math in Hoshi-lang", "md_docs_2Math.html", [
-      [ "Functions", "md_docs_2Math.html#autotoc_md86", null ],
-      [ "Example", "md_docs_2Math.html#autotoc_md87", null ]
+      [ "Functions", "md_docs_2Math.html#autotoc_md89", null ],
+      [ "Example", "md_docs_2Math.html#autotoc_md90", null ]
     ] ],
     [ "The implementation of null literal in hoshi-lang", "md_docs_2Null.html", [
-      [ "Pointer Object in hoshi-lang", "md_docs_2Null.html#autotoc_md89", null ]
+      [ "Pointer Object in hoshi-lang", "md_docs_2Null.html#autotoc_md92", null ]
     ] ],
     [ "Nullable Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html", [
-      [ "Raw Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md91", null ],
-      [ "Inter-functional call graph building and raw check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md92", null ],
-      [ "IRValueType 属性的增加和改写", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md93", null ]
+      [ "Raw Check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md94", null ],
+      [ "Inter-functional call graph building and raw check", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md95", null ],
+      [ "IRValueType 属性的增加和改写", "md_docs_2Nullable_01Check_01_6_01Raw_01Check.html#autotoc_md96", null ]
     ] ],
     [ "Operator Overloading", "md_docs_2Operator_01Overloading.html", [
-      [ "Overloadable Operators", "md_docs_2Operator_01Overloading.html#autotoc_md95", null ],
-      [ "Defining Operator Overloads", "md_docs_2Operator_01Overloading.html#autotoc_md96", [
-        [ "Binary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md97", null ],
-        [ "Unary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md98", null ],
-        [ "Callable Objects (operator())", "md_docs_2Operator_01Overloading.html#autotoc_md99", null ],
-        [ "Subscript Operator (operator[])", "md_docs_2Operator_01Overloading.html#autotoc_md100", null ]
+      [ "Overloadable Operators", "md_docs_2Operator_01Overloading.html#autotoc_md98", null ],
+      [ "Defining Operator Overloads", "md_docs_2Operator_01Overloading.html#autotoc_md99", [
+        [ "Binary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md100", null ],
+        [ "Unary Operators", "md_docs_2Operator_01Overloading.html#autotoc_md101", null ],
+        [ "Callable Objects (operator())", "md_docs_2Operator_01Overloading.html#autotoc_md102", null ],
+        [ "Subscript Operator (operator[])", "md_docs_2Operator_01Overloading.html#autotoc_md103", null ]
       ] ]
     ] ],
     [ "Result Type in Hoshi-lang", "md_docs_2Result.html", [
-      [ "<tt>Result<T, E></tt> Struct", "md_docs_2Result.html#autotoc_md102", [
-        [ "Methods", "md_docs_2Result.html#autotoc_md103", null ],
-        [ "Static Methods", "md_docs_2Result.html#autotoc_md104", null ],
-        [ "Example", "md_docs_2Result.html#autotoc_md105", null ]
+      [ "<tt>Result<T, E></tt> Struct", "md_docs_2Result.html#autotoc_md105", [
+        [ "Methods", "md_docs_2Result.html#autotoc_md106", null ],
+        [ "Static Methods", "md_docs_2Result.html#autotoc_md107", null ],
+        [ "Example", "md_docs_2Result.html#autotoc_md108", null ]
       ] ]
     ] ],
     [ "Runtime in Hoshi-lang", "md_docs_2Runtime.html", [
-      [ "Functions", "md_docs_2Runtime.html#autotoc_md107", null ]
+      [ "Functions", "md_docs_2Runtime.html#autotoc_md110", null ]
     ] ],
     [ "Hoshi-lang Language Specification", "md_docs_2Spec.html", [
-      [ "1. Lexical Structure", "md_docs_2Spec.html#autotoc_md109", [
-        [ "1.1. Identifiers", "md_docs_2Spec.html#autotoc_md110", null ],
-        [ "1.2. Keywords", "md_docs_2Spec.html#autotoc_md111", null ],
-        [ "1.3. Literals", "md_docs_2Spec.html#autotoc_md112", null ]
+      [ "1. Lexical Structure", "md_docs_2Spec.html#autotoc_md112", [
+        [ "1.1. Identifiers", "md_docs_2Spec.html#autotoc_md113", null ],
+        [ "1.2. Keywords", "md_docs_2Spec.html#autotoc_md114", null ],
+        [ "1.3. Literals", "md_docs_2Spec.html#autotoc_md115", null ]
       ] ],
-      [ "2. Types", "md_docs_2Spec.html#autotoc_md113", null ],
-      [ "3. Structs", "md_docs_2Spec.html#autotoc_md114", null ],
-      [ "4. Interfaces", "md_docs_2Spec.html#autotoc_md115", null ],
-      [ "5. Functions", "md_docs_2Spec.html#autotoc_md116", null ],
-      [ "6. Operator Overloading", "md_docs_2Spec.html#autotoc_md117", null ],
-      [ "7. Interface Templates", "md_docs_2Spec.html#autotoc_md118", null ],
-      [ "8. Standard Library", "md_docs_2Spec.html#autotoc_md119", null ]
+      [ "2. Types", "md_docs_2Spec.html#autotoc_md116", null ],
+      [ "3. Structs", "md_docs_2Spec.html#autotoc_md117", null ],
+      [ "4. Interfaces", "md_docs_2Spec.html#autotoc_md118", null ],
+      [ "5. Functions", "md_docs_2Spec.html#autotoc_md119", null ],
+      [ "6. Operator Overloading", "md_docs_2Spec.html#autotoc_md120", null ],
+      [ "7. Interface Templates", "md_docs_2Spec.html#autotoc_md121", null ],
+      [ "8. Standard Library", "md_docs_2Spec.html#autotoc_md122", null ]
     ] ],
     [ "String in Hoshi-lang", "md_docs_2String.html", [
-      [ "<tt>Str</tt> Struct", "md_docs_2String.html#autotoc_md121", [
-        [ "Methods", "md_docs_2String.html#autotoc_md122", null ],
-        [ "Static Methods", "md_docs_2String.html#autotoc_md123", null ]
+      [ "<tt>Str</tt> Struct", "md_docs_2String.html#autotoc_md124", [
+        [ "Methods", "md_docs_2String.html#autotoc_md125", null ],
+        [ "Static Methods", "md_docs_2String.html#autotoc_md126", null ]
       ] ],
-      [ "<tt>Stringable</tt> Interface", "md_docs_2String.html#autotoc_md124", null ],
-      [ "<tt>format</tt> Function", "md_docs_2String.html#autotoc_md125", null ]
+      [ "<tt>Stringable</tt> Interface", "md_docs_2String.html#autotoc_md127", null ],
+      [ "<tt>format</tt> Function", "md_docs_2String.html#autotoc_md128", null ]
     ] ],
     [ "Structured Bindings in Hoshi-lang", "md_docs_2Structured_01Bindings.html", [
-      [ "Array Destructuring", "md_docs_2Structured_01Bindings.html#autotoc_md127", null ],
-      [ "Struct Destructuring", "md_docs_2Structured_01Bindings.html#autotoc_md128", null ]
+      [ "Array Destructuring", "md_docs_2Structured_01Bindings.html#autotoc_md130", null ],
+      [ "Struct Destructuring", "md_docs_2Structured_01Bindings.html#autotoc_md131", null ]
     ] ],
     [ "Generic Programming with Templates", "md_docs_2Template.html", [
-      [ "Function Templates", "md_docs_2Template.html#autotoc_md130", [
-        [ "Implicit vs. Explicit Specialization", "md_docs_2Template.html#autotoc_md131", null ]
+      [ "Function Templates", "md_docs_2Template.html#autotoc_md133", [
+        [ "Implicit vs. Explicit Specialization", "md_docs_2Template.html#autotoc_md134", null ]
       ] ],
-      [ "Struct Templates", "md_docs_2Template.html#autotoc_md132", null ],
-      [ "Interface Templates", "md_docs_2Template.html#autotoc_md133", null ]
+      [ "Struct Templates", "md_docs_2Template.html#autotoc_md135", null ],
+      [ "Interface Templates", "md_docs_2Template.html#autotoc_md136", null ]
     ] ],
     [ "The Optimization Strategy of Interface Allocation and Virtual Invocation Reduction 接口分配和虚函数调用消除优化策略", "md_docs_2The_01Optimization_01Strategy_01of_01Interface_01Allocation_01and_01Virtual_01Invocation_01Reduction.html", null ],
     [ "Threading in Hoshi-lang", "md_docs_2Threading.html", [
-      [ "<tt>Thread</tt> Struct", "md_docs_2Threading.html#autotoc_md136", [
-        [ "Methods", "md_docs_2Threading.html#autotoc_md137", null ],
-        [ "Example", "md_docs_2Threading.html#autotoc_md138", null ]
-      ] ],
-      [ "<tt>Mutex</tt> Struct", "md_docs_2Threading.html#autotoc_md139", [
+      [ "<tt>Thread</tt> Struct", "md_docs_2Threading.html#autotoc_md139", [
         [ "Methods", "md_docs_2Threading.html#autotoc_md140", null ],
         [ "Example", "md_docs_2Threading.html#autotoc_md141", null ]
       ] ],
-      [ "<tt>current_tid()</tt>", "md_docs_2Threading.html#autotoc_md142", null ]
+      [ "<tt>Mutex</tt> Struct", "md_docs_2Threading.html#autotoc_md142", [
+        [ "Methods", "md_docs_2Threading.html#autotoc_md143", null ],
+        [ "Example", "md_docs_2Threading.html#autotoc_md144", null ]
+      ] ],
+      [ "<tt>current_tid()</tt>", "md_docs_2Threading.html#autotoc_md145", null ]
     ] ],
     [ "Type Aliases in Hoshi-lang", "md_docs_2Type_01Aliases.html", [
-      [ "Syntax", "md_docs_2Type_01Aliases.html#autotoc_md144", null ],
-      [ "Example", "md_docs_2Type_01Aliases.html#autotoc_md145", null ]
+      [ "Syntax", "md_docs_2Type_01Aliases.html#autotoc_md147", null ],
+      [ "Example", "md_docs_2Type_01Aliases.html#autotoc_md148", null ]
     ] ],
     [ "Vector in Hoshi-lang", "md_docs_2Vector.html", [
-      [ "<tt>Vec<T></tt> Struct", "md_docs_2Vector.html#autotoc_md147", [
-        [ "Methods", "md_docs_2Vector.html#autotoc_md148", null ],
-        [ "Example", "md_docs_2Vector.html#autotoc_md149", null ]
+      [ "<tt>Vec<T></tt> Struct", "md_docs_2Vector.html#autotoc_md150", [
+        [ "Methods", "md_docs_2Vector.html#autotoc_md151", null ],
+        [ "Example", "md_docs_2Vector.html#autotoc_md152", null ]
       ] ]
     ] ],
     [ "Export Wrapper - 实现 FFI 的必经之路", "md_docs_2Wrapper.html", null ],
     [ "Referenced third party codes", "md_THIRDPARTY.html", null ],
     [ "TODO List", "md_TODO.html", [
-      [ "Known issues", "md_TODO.html#autotoc_md177", null ]
+      [ "Known issues", "md_TODO.html#autotoc_md180", null ]
     ] ],
-    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -277,17 +280,17 @@ var NAVTREEINDEX =
 "classyoi_1_1implInner.html",
 "classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4",
 "classyoi_1_1moduleContext.html#af6a622e483813b2016dcd89c0218eb69",
-"classyoi_1_1visitor.html#a0150d4511bf27c613ff807fdf60156e3",
-"codegenObjectCache_8hpp.html#a4b22e89c9305dd92f3819f1b67625e91",
-"globals.html",
-"md_docs_2IR.html#autotoc_md54",
-"namespacemembers_g.html",
-"parser_8cpp.html#abb81eeeb360b95fd38513a5592dd0f11",
-"structYoiIntAndIntObject.html#a2bbdb97031ca626c3da8fbd604c90371",
-"structyoi_1_1IRBuildConfig_1_1Builder.html#a1a4a88a36dafa67834472e12d3d32b23",
-"structyoi_1_1IRStructDefinition_1_1Builder.html#a742b4c00189dd1ba83c5cb5026825501",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aabd2d9fe8746b83f7e3c224be63c9251",
-"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90"
+"classyoi_1_1useStmt.html#a78b26ec447880f90eeabf8fdf19a6f08",
+"codegenObjectCache_8cpp.html#ae409a244ab50a3d2c144ba3b5c68719f",
+"functions_w.html",
+"md_docs_2IR.html",
+"namespacemembers_func_p.html",
+"parser_8cpp.html#a593016858b72a9dd30871113f07ffa26",
+"structYoiCharObject.html#a37a445c311302c7c39cb0694c2504ad8",
+"structyoi_1_1IRBuildConfig.html#adf6b227fb18251b1811b85d01fb907ff",
+"structyoi_1_1IRStructDefinition_1_1Builder.html#a1c0dad859c2a9feb09ecf53f8280538f",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81",
+"unionyoi_1_1globalStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

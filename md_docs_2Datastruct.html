@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('md_docs_2Datastruct.html',''); initRes
   <div class="headertitle"><div class="title">Data struct in hoshi-lang</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md21"></a> Originally, the struct implementation in hoshi-lang is to recognize every field as a nullable field, thus causing a significant overhead in memory usage and performance degradation. Naturally, we would like to devise a new struct that preserve every field as value type, so as to maintain the memory layout of the struct and avoid the overhead of null checking, and the overhead of pointer indirection.</p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md24"></a> Originally, the struct implementation in hoshi-lang is to recognize every field as a nullable field, thus causing a significant overhead in memory usage and performance degradation. Naturally, we would like to devise a new struct that preserve every field as value type, so as to maintain the memory layout of the struct and avoid the overhead of null checking, and the overhead of pointer indirection.</p>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Syntax</h1>
 <p>To define a data struct, it follows:</p>
 <div class="fragment"><div class="line">datastruct Test {</div>
@@ -107,7 +107,7 @@ Syntax</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>Through this, we defined data structs named Test and T.</p>
 <p>Note: no methods or constructors are allowed in a data struct.</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 Memory Layout</h1>
 <p>For Test, it owns a memory layout of 288 bytes, with <code>s</code> taking 256 bytes and <code>t</code> taking 8 bytes.</p>
 <p>For T, it owns a memory layout of 288 bytes, with <code>field1</code> taking 8 bytes and <code>field2</code> taking 264 bytes.</p>
@@ -131,12 +131,12 @@ Memory Layout</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">field2   </td><td class="markdownTableBodyNone">24   </td><td class="markdownTableBodyNone">264   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Underlying mechanism</h1>
 <p>For a data struct, it only has a object header per instance, and the fields are laid out contiguously in memory.</p>
 <p>When attempting to acquire a field to assign as variable, a copy will be performed.</p>
 <p>Depending on the Nullable type or not, the copy can either be a Raw value on stack or a new object on the heap.</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md28"></a>
 The integration with existing object optimization system</h1>
 <p>For a data struct, it can be recognized as a basic type just like <code>int</code>, <code>float</code>, <code>char</code>, etc. That entitled it the ability to be optimized by the existing object optimization system.</p>
 <p>It would first be marked as a stack Raw value type until it is assigned with <code>null</code>, other Nullable value, or escape analysis determines it needs to be heap allocated, at which point it will be marked as a heap object. </p>

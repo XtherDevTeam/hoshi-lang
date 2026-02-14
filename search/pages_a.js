@@ -8,6 +8,7 @@ var searchData=
   ['lang_20programming_20language_5',['The hoshi-lang Programming Language',['../index.html',1,'']]],
   ['language_6',['The hoshi-lang Programming Language',['../index.html',1,'']]],
   ['language_20specification_7',['Hoshi-lang Language Specification',['../md_docs_2Spec.html',1,'']]],
-  ['list_8',['list',['../deprecated.html',1,'Deprecated List'],['../md_TODO.html',1,'TODO List']]],
-  ['literal_20in_20hoshi_20lang_9',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]]
+  ['legacy_20struct_8',['The purposal of introducing data fields in legacy struct',['../md_docs_2Data_01Fields_01in_01Legacy_01Struct.html',1,'']]],
+  ['list_9',['TODO List',['../md_TODO.html',1,'']]],
+  ['literal_20in_20hoshi_20lang_10',['The implementation of null literal in hoshi-lang',['../md_docs_2Null.html',1,'']]]
 ];
