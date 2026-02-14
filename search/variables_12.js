@@ -2,7 +2,7 @@ var searchData=
 [
   ['searchpaths_0',['searchpaths',['../structyoi_1_1IRBuildConfig_1_1Builder.html#ad377858d628ceb6a9d78f47158131a55',1,'yoi::IRBuildConfig::Builder::searchPaths'],['../structyoi_1_1IRBuildConfig.html#ad377858d628ceb6a9d78f47158131a55',1,'yoi::IRBuildConfig::searchPaths']]],
   ['sec_1',['sec',['../structHPerfTimestamp.html#af92d4c67a912ba0afdefd1874276d3c6',1,'HPerfTimestamp']]],
-  ['seconds_2',['seconds',['../structYoiIntAndIntObject.html#ac35084375896844209683a3d74a8ec35',1,'YoiIntAndIntObject']]],
+  ['seconds_2',['seconds',['../structYoiIntAndIntObject.html#a35116f6887ccc75b641dc8609d8c8eef',1,'YoiIntAndIntObject']]],
   ['self_3',['self',['../structruntime__signal__handler__info.html#aee2c25b6bd9b4ac3870d0a246cc3664d',1,'runtime_signal_handler_info']]],
   ['sharedvaluetype_4',['sharedvaluetype',['../classyoi_1_1BuiltinModuleBuilder.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::BuiltinModuleBuilder::sharedValueType'],['../classyoi_1_1compilerContext.html#aeb909bccf279ecfe16362628c660a1f8',1,'yoi::compilerContext::sharedValueType']]],
   ['shortv_5',['shortV',['../unionyoi_1_1IROperand_1_1operandValue.html#a1d78086a52b0038ae55146e56a22bd06',1,'yoi::IROperand::operandValue']]],

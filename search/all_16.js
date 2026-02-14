@@ -9,7 +9,7 @@ var searchData=
   ['names_5ft_6',['names_t',['../namespacemagic__enum_1_1detail.html#a403958fcd1868f0cf75af3d255c1b48f',1,'magic_enum::detail']]],
   ['names_5fv_7',['names_v',['../namespacemagic__enum_1_1detail.html#a1cca286e38a67a2227eb2d9e620d1a98',1,'magic_enum::detail']]],
   ['nametype_8',['nameType',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0',1,'yoi::IRStructDefinition::nameInfo']]],
-  ['nanoseconds_9',['nanoseconds',['../structYoiIntAndIntObject.html#a2bbdb97031ca626c3da8fbd604c90371',1,'YoiIntAndIntObject']]],
+  ['nanoseconds_9',['nanoseconds',['../structYoiIntAndIntObject.html#ae66e9e637f4fc07ce7629e2d4a7e1468',1,'YoiIntAndIntObject']]],
   ['negate_10',['negate',['../classyoi_1_1IRFunctionOptimizer.html#a623d68a3d810f761f59e0fea09eb46d6',1,'yoi::IRFunctionOptimizer::negate()'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a2d11beba811e6ec7b47d7a801cf8173f',1,'yoi::IR::negate']]],
   ['new_20语句设计_11',['new 语句设计',['../md_docs_2Interface.html#autotoc_md47',1,'']]],
   ['new_5farray_5fbool_12',['new_array_bool',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a1e2d436e4754683077c29a65380d6949',1,'yoi::IR']]],

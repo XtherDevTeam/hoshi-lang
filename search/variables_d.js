@@ -4,7 +4,7 @@ var searchData=
   ['namedvalues_1',['namedValues',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a1fdc1fa70853fed7583972fb179826a2',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
   ['nameindexmap_2',['nameindexmap',['../classyoi_1_1IRStructDefinition.html#ad661f5d7ca3f0d517973fe899e5f402a',1,'yoi::IRStructDefinition::nameIndexMap'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#ad661f5d7ca3f0d517973fe899e5f402a',1,'yoi::IRStructDefinition::Builder::nameIndexMap']]],
   ['names_5fv_3',['names_v',['../namespacemagic__enum_1_1detail.html#a1cca286e38a67a2227eb2d9e620d1a98',1,'magic_enum::detail']]],
-  ['nanoseconds_4',['nanoseconds',['../structYoiIntAndIntObject.html#a2bbdb97031ca626c3da8fbd604c90371',1,'YoiIntAndIntObject']]],
+  ['nanoseconds_4',['nanoseconds',['../structYoiIntAndIntObject.html#ae66e9e637f4fc07ce7629e2d4a7e1468',1,'YoiIntAndIntObject']]],
   ['newexpr_5',['newExpr',['../classyoi_1_1primary.html#ab680483a779de354d82c9a89f71e8991',1,'yoi::primary']]],
   ['next_6',['next',['../structHPerfPage.html#aa8fba4de541e336e458b83e4669abfcf',1,'HPerfPage::next'],['../structHPerfContext.html#a7c4a6341626e89a8103940d8a28b2ef2',1,'HPerfContext::next'],['../structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1',1,'AllocatedMemoryList::next'],['../structruntime__signal__handler__info.html#ad764cf5efeb0bae8647823eae340a4fc',1,'runtime_signal_handler_info::next']]],
   ['next_5fhash_7',['next_hash',['../classyoi_1_1CodegenObjectCache.html#a066b971ffd1dbd4a9f6aab1140e35f25',1,'yoi::CodegenObjectCache']]],
