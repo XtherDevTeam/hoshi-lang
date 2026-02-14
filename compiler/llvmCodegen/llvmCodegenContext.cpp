@@ -2039,6 +2039,8 @@ namespace yoi {
                 auto lhsLLVMType = llvmModCtx.structTypeMap.at(std::make_tuple(lhsType->type, lhsType->typeAffiliateModule, lhsType->typeIndex));
                 auto rhsLLVMType = llvmModCtx.structTypeMap.at(std::make_tuple(rhsType->type, rhsType->typeAffiliateModule, rhsType->typeIndex));
 
+                yoi_assert(!lhsType->metadata.hasMetadata(L"STRUCT_DATAFIELD"), instr.debugInfo.line, instr.debugInfo.column, "direct assignment to a data field in legacy struct is prohibited");
+
                 if (lhsType->type == IRValueType::valueType::structObject) {
                     // reduce refcount of object inside the lhs
                     yoi::indexT fieldIndex = 2;

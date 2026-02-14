@@ -166,7 +166,7 @@ void hperf_write_report(const char *filename) {
                                 R"({"type": "mem-alloc", "timestamp": {"sec": %llu, "nsec": %llu}, "ptr": %zu, "size": %lu})",
                                 event->timestamp.sec,
                                 event->timestamp.nsec,
-                                data->ptr,
+                                (size_t)data->ptr,
                                 data->size);
                             break;
                         }
