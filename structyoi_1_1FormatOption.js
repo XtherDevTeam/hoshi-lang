@@ -9,8 +9,9 @@ var structyoi_1_1FormatOption =
       [ "Tab", "structyoi_1_1FormatOption.html#af711604d06a4aae686e576846bdc7814a5c6ba25104401c9ee0650230fc6ba413", null ]
     ] ],
     [ "FormatOption", "structyoi_1_1FormatOption.html#ad6602f035f8d8907fa7ce320c7e923f3", null ],
-    [ "FormatOption", "structyoi_1_1FormatOption.html#a60be7bc3afc9e53ec72c6bcb0531bd8c", null ],
+    [ "FormatOption", "structyoi_1_1FormatOption.html#a7168ec26042b9c7719b51b679c2ecb21", null ],
     [ "Attached", "structyoi_1_1FormatOption.html#ab8a140fca39974bd0e12d402013c6387", null ],
     [ "indentSize", "structyoi_1_1FormatOption.html#a6dbd9835a5d9457c94b7b27fdd980ada", null ],
+    [ "maxWidth", "structyoi_1_1FormatOption.html#a22780129854e1085d833501dccd5c135", null ],
     [ "Space", "structyoi_1_1FormatOption.html#a8a10227f47f57f662ffa4dc8a70ab688", null ]
 ];
