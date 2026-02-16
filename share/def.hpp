@@ -11,6 +11,7 @@
 #include <sstream>
 #include <stack>
 #include <memory>
+#include <mutex>
 #include "magic_enum.h"
 #include <share/utfutils.hpp>
 #include <share/whereami.h>
@@ -50,7 +51,8 @@ namespace yoi {
     using indexT = uint64_t;
     template<typename t>
     using vec = std::vector<t>;
-    extern yoi::wstr __current_file_path;
+    extern thread_local yoi::wstr __current_file_path;
+    extern std::mutex consoleMutex;
 
     enum class ExceptionHandleType {
         Suppress,

@@ -39,7 +39,7 @@ namespace yoi {
         : compilerCtx(std::move(compilerCtx)),
         yoiModule(yoiModule) {
 
-        codegenObjectCache.setBuildConfig(this->compilerCtx->getBuildConfig());
+        codegenObjectCache.setCompilerCtx(this->compilerCtx);
 
         auto cache_path = std::filesystem::path(this->compilerCtx->getBuildConfig()->buildCachePath);
         if (std::filesystem::exists(cache_path / "hoshi.cache.tsuki")) {
@@ -61,10 +61,10 @@ namespace yoi {
 
     void LLVMCodegen::declareRuntimeFunctions(LLVMModuleContext &llvmModCtx) {
         // void* runtime_object_alloc(unsigned long long sizeOfObject) -> i8* (i64)
-        llvm::Type* i8PtrTy = llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+        llvm::Type* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
         llvm::Type* sizeTy = llvmModCtx.Builder->getInt64Ty();
 
-        llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), {sizeTy, sizeTy}, false);
+        llvm::FunctionType *mallocFuncType = llvm::FunctionType::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0), {sizeTy, sizeTy}, false);
         llvmModCtx.runtimeFunctions[L"mi_calloc"] = llvm::Function::Create(mallocFuncType, llvm::Function::ExternalLinkage, "mi_calloc", llvmModCtx.TheModule.get());
         llvmModCtx.runtimeFunctions[L"mi_calloc"]->setCallingConv(llvm::CallingConv::C);
 
@@ -86,7 +86,7 @@ namespace yoi {
 
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             // void runtime_debug_report_current_function(const char *function_name);
-            llvm::Type* constCharPtrTy = llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+            llvm::Type* constCharPtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             llvm::FunctionType* debugReportType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {constCharPtrTy}, false);
             llvmModCtx.runtimeFunctions[L"runtime_debug_report_current_function"] = llvm::Function::Create(debugReportType, llvm::Function::ExternalLinkage, "runtime_debug_report_current_function", llvmModCtx.TheModule.get());
             llvmModCtx.runtimeFunctions[L"runtime_debug_report_current_function"]->setCallingConv(llvm::CallingConv::C);
@@ -133,7 +133,7 @@ namespace yoi {
     }
 
     void LLVMCodegen::generateRuntimeFunctionImplementations(LLVMModuleContext &llvmModCtx) {
-        llvm::Type* i8PtrTy = llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+        llvm::Type* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
         llvm::Type* sizeTy = llvmModCtx.Builder->getInt64Ty();
 
         // object_alloc
@@ -184,7 +184,7 @@ namespace yoi {
             {compilerCtx->getDeciObjectType(), llvmModCtx.Builder->getDoubleTy()},
             {compilerCtx->getBoolObjectType(), llvmModCtx.Builder->getInt1Ty()},
             {compilerCtx->getCharObjectType(), llvmModCtx.Builder->getInt8Ty()},
-            {compilerCtx->getStrObjectType(), llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)},
+            {compilerCtx->getStrObjectType(), llvm::PointerType::get(*llvmModCtx.TheContext, 0)},
             {compilerCtx->getUnsignedObjectType(), llvmModCtx.Builder->getInt64Ty()},
             {compilerCtx->getShortObjectType(), llvmModCtx.Builder->getInt16Ty()}
         };
@@ -196,7 +196,7 @@ namespace yoi {
             auto name = "yoi.basic." + wstring2string(yoiType->to_string());
             auto typeName = wstring2string(yoiType->to_string());
             auto* structType = llvm::StructType::create(*llvmModCtx.TheContext, {llvmModCtx.Builder->getInt64Ty(), llvmModCtx.Builder->getInt64Ty(), rawType}, name);
-            auto* llvmStructPtrType = llvm::PointerType::get(structType, 0);
+            auto* llvmStructPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             llvmModCtx.structTypeMap[key] = structType;
             llvmModCtx.foreignTypeMap[key] = rawType;
             auto typeIdKey = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex, 0);
@@ -240,7 +240,7 @@ namespace yoi {
             {compilerCtx->getDeciObjectType(), llvmModCtx.Builder->getDoubleTy()},
             {compilerCtx->getBoolObjectType(), llvmModCtx.Builder->getInt1Ty()},
             {compilerCtx->getCharObjectType(), llvmModCtx.Builder->getInt8Ty()},
-            {compilerCtx->getStrObjectType(), llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)},
+            {compilerCtx->getStrObjectType(), llvm::PointerType::get(*llvmModCtx.TheContext, 0)},
             {compilerCtx->getUnsignedObjectType(), llvmModCtx.Builder->getInt64Ty()},
             {compilerCtx->getShortObjectType(), llvmModCtx.Builder->getInt16Ty()}
         };
@@ -250,7 +250,7 @@ namespace yoi {
             auto yoiType = pair.first;
             auto key = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex);
             auto* llvmStructType = llvmModCtx.structTypeMap.at(key);
-            auto* llvmStructPtrType = llvm::PointerType::get(llvmStructType, 0);
+            auto* llvmStructPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             auto typeName = wstring2string(yoiType->to_string());
 
             // --- Generate gc_refcount_increase ---
@@ -265,10 +265,10 @@ namespace yoi {
                 std::string debugStr = "Increasing refcount of " + typeName + " object";
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*llvmModCtx.TheContext, debugStr, true);
                 auto* debugStrGlobal = new llvm::GlobalVariable(*llvmModCtx.TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
-                auto* debugStrPtr = llvmModCtx.Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                auto* debugStrPtr = llvmModCtx.Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_debug_print"), debugStrPtr);
                 // address
-                auto* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                auto* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_debug_print_address"), castedPtr);
             }
 
@@ -291,10 +291,10 @@ namespace yoi {
                 std::string debugStr = "Decreasing refcount of " + typeName + " object";
                 auto* debugStrConst = llvm::ConstantDataArray::getString(*llvmModCtx.TheContext, debugStr, true);
                 auto* debugStrGlobal = new llvm::GlobalVariable(*llvmModCtx.TheModule, debugStrConst->getType(), true, llvm::GlobalValue::PrivateLinkage, debugStrConst, "debug_str");
-                auto* debugStrPtr = llvmModCtx.Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                auto* debugStrPtr = llvmModCtx.Builder->CreateBitCast(debugStrGlobal, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_debug_print"), debugStrPtr);
                 // address
-                auto* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                auto* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_debug_print_address"), castedPtr);
             }
             llvm::Value* decRefCountPtr = llvmModCtx.Builder->CreateStructGEP(llvmStructType, thisPtr, 0, "refcount_ptr");
@@ -304,7 +304,7 @@ namespace yoi {
             llvm::Value* shouldFinalize = llvmModCtx.Builder->CreateICmpSLE(beforeDec, llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), "should_finalize");
             llvmModCtx.Builder->CreateCondBr(shouldFinalize, finalizeBlock, continueBlock);
 
-            llvm::Value* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+            llvm::Value* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
             llvmModCtx.Builder->SetInsertPoint(finalizeBlock);
             llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"finalize_object"), castedPtr);
             llvmModCtx.Builder->CreateBr(continueBlock);
@@ -369,7 +369,7 @@ namespace yoi {
             }
             // printf("global(%llu): %s initialized\n", yoiModule->globalVariables.getIndex(globalPair.first), wstring2string(globalPair.first).c_str());
             // null initializer
-            auto initializer = llvm::Constant::getNullValue(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+            auto initializer = llvm::Constant::getNullValue(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
             llvmModCtx.globalValues[yoiModule->globalVariables.getIndex(globalPair.first)]->setInitializer(initializer);
         }
     }
@@ -427,21 +427,21 @@ namespace yoi {
             std::vector<llvm::Type*> memberTypes;
             memberTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // [0] refcount
             memberTypes.push_back(llvmModCtx.Builder->getInt64Ty()); // [1] typeid
-            memberTypes.push_back(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)); // [2] this ptr
-            auto* gcFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), { llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0) }, false);
-            auto* gcFuncPtrType = llvm::PointerType::get(gcFuncType, 0);
+            memberTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0)); // [2] this ptr
+            auto* gcFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), { llvm::PointerType::get(*llvmModCtx.TheContext, 0) }, false);
+            auto* gcFuncPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             memberTypes.push_back(gcFuncPtrType); // [3] gc_refcount_increase vptr
             memberTypes.push_back(gcFuncPtrType); // [4] gc_refcount_decrease vptr
 
             for (const auto& methodPair : interfaceDef->methodMap) {
                 auto funcType = getFunctionType(llvmModCtx, methodPair.second);
                 std::vector<llvm::Type*> virtualArgTypes;
-                virtualArgTypes.push_back(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)); // 'this' is always i8*
+                virtualArgTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0)); // 'this' is always i8*
                 for(size_t i = 1; i < funcType->getNumParams(); ++i) {
                     virtualArgTypes.push_back(funcType->getParamType(i));
                 }
                 auto virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);
-                memberTypes.push_back(llvm::PointerType::get(virtualFuncType, 0));
+                memberTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
             }
 
             if (llvmInterfaceType->isOpaque()) {
@@ -457,7 +457,7 @@ namespace yoi {
             auto moduleID = yoiModule->identifier;
             auto key = std::make_tuple(IRValueType::valueType::structObject, moduleID, structIdx);
             auto* llvmStructType = llvmModCtx.structTypeMap.at(key);
-            auto* llvmStructPtrType = llvm::PointerType::get(llvmStructType, 0);
+            auto* llvmStructPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
 
             // --- Generate gc_refcount_increase ---
             auto incFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_increase";
@@ -494,7 +494,7 @@ namespace yoi {
             auto structIdx = yoiModule->structTable.getIndex(structDef->name);
             auto key = std::make_tuple(IRValueType::valueType::structObject, moduleID, structIdx);
             auto* llvmStructType = llvmModCtx.structTypeMap.at(key);
-            auto* llvmStructPtrType = llvm::PointerType::get(llvmStructType, 0);
+            auto* llvmStructPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
 
             // --- Generate gc_refcount_increase ---
             auto incFuncName = "struct_" + std::to_string(moduleID) + "_" + std::to_string(structIdx) + "_gc_refcount_increase";
@@ -525,7 +525,7 @@ namespace yoi {
             llvmModCtx.Builder->CreateCondBr(shouldFinalize, finalizeBlock, continueBlock);
 
             llvmModCtx.Builder->SetInsertPoint(finalizeBlock);
-            llvm::Value* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+            llvm::Value* castedPtr = llvmModCtx.Builder->CreateBitCast(thisPtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
             // if any finalizer presents, call it
             if (auto funcName = structDef->name + L"::finalizer"; llvmModCtx.functionMap[funcName] != nullptr && yoiModule->functionTable[funcName]->hasAttribute(IRFunctionDefinition::FunctionAttrs::Finalizer)) {
                 llvmModCtx.Builder->CreateCall(llvmModCtx.functionMap[funcName], {castedPtr});
@@ -556,10 +556,10 @@ namespace yoi {
             auto moduleID = yoiModule->identifier;
             auto key = std::make_tuple(IRValueType::valueType::interfaceObject, moduleID, interfaceIdx);
             auto* llvmInterfaceType = llvmModCtx.structTypeMap.at(key);
-            auto* llvmInterfacePtrType = llvm::PointerType::get(llvmInterfaceType, 0);
-            auto* i8PtrTy = llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+            auto* llvmInterfacePtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
+            auto* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             auto* gcFuncTypeForDispatch = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), { i8PtrTy }, false);
-            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(gcFuncTypeForDispatch, 0);
+            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
 
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto* incFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvmInterfacePtrType}, false);
@@ -594,10 +594,10 @@ namespace yoi {
             auto moduleID = yoiModule->identifier;
             auto key = std::make_tuple(IRValueType::valueType::interfaceObject, moduleID, interfaceIdx);
             auto* llvmInterfaceType = llvmModCtx.structTypeMap.at(key);
-            auto* llvmInterfacePtrType = llvm::PointerType::get(llvmInterfaceType, 0);
-            auto* i8PtrTy = llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+            auto* llvmInterfacePtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
+            auto* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             auto* gcFuncTypeForDispatch = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), { i8PtrTy }, false);
-            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(gcFuncTypeForDispatch, 0);
+            auto* gcFuncPtrTypeForDispatch = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
 
             auto incFuncName = "interface_" + std::to_string(moduleID) + "_" + std::to_string(interfaceIdx) + "_gc_refcount_increase";
             auto incFunction = llvmModCtx.functionMap[string2wstring(incFuncName)];
@@ -1513,7 +1513,7 @@ namespace yoi {
                 auto* sizeVal = llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), size);
 
                 auto* allocCall = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"object_alloc"), sizeVal, "newtmp_alloc");
-                auto* bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(structType, 0), "casttmp");
+                auto* bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casttmp");
 
                 auto* refCountPtr = llvmModCtx.Builder->CreateStructGEP(structType, bitcast, 0, "refcount_ptr");
                 llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), refCountPtr);
@@ -1753,7 +1753,7 @@ namespace yoi {
 
                 // Load the concrete `this` pointer from index 2
                 auto concreteThisPtrRaw = unwrapInterfaceObject(llvmModCtx, interfaceShellVal);
-                auto* bitcastedPointer = llvmModCtx.Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(llvmModCtx.Builder->getInt64Ty(), 0), "casted_this");
+                auto* bitcastedPointer = llvmModCtx.Builder->CreateBitCast(concreteThisPtrRaw, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casted_this");
                 // increase the reference count of this pointer, so that when leaving the function, it won't be collected
                 // llvmModCtx.Builder->CreateStore(llvmModCtx.Builder->CreateAdd(oldRefcount, llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1)), bitcastedPointer);
                 // llvmModCtx.Builder->CreateAtomicRMW(llvm::AtomicRMWInst::BinOp::Add, bitcastedPointer, llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), llvm::MaybeAlign(8), llvm::AtomicOrdering::Monotonic);
@@ -1796,12 +1796,12 @@ namespace yoi {
                     auto* funcType = getFunctionType(llvmModCtx, methodDef);
 
                     std::vector<llvm::Type*> virtualArgTypes;
-                    virtualArgTypes.push_back(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                    virtualArgTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                     for (size_t i = 0; i < funcType->getNumParams(); ++i) {
                         virtualArgTypes.push_back(funcType->getParamType(i));
                     }
                     virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);
-                    auto* virtualFuncPtrType = llvm::PointerType::get(virtualFuncType, 0);
+                    auto* virtualFuncPtrType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
                     funcPtrToCall = llvmModCtx.Builder->CreateLoad(virtualFuncPtrType, vtableSlotPtr, "func_ptr");
                 }
 
@@ -2049,14 +2049,14 @@ namespace yoi {
                     yoi::indexT fieldIndex = 2;
                     for (const auto& field : yoiModule->structTable[lhsType->typeIndex]->fieldTypes) {
                         auto fieldPtr = llvmModCtx.Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, fieldIndex, "field_ptr");
-                        auto loadedFieldPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), fieldPtr, "loaded_field_ptr");
+                        auto loadedFieldPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), fieldPtr, "loaded_field_ptr");
                         callGcFunction(llvmModCtx, loadedFieldPtr, field, false);
                         fieldIndex++;
                     }
                     fieldIndex = 2;
                     for (const auto& field : yoiModule->structTable[rhsType->typeIndex]->fieldTypes) {
                         auto fieldPtr = llvmModCtx.Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, fieldIndex, "field_ptr");
-                        auto loadedFieldPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), fieldPtr, "loaded_field_ptr");
+                        auto loadedFieldPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), fieldPtr, "loaded_field_ptr");
                         callGcFunction(llvmModCtx, loadedFieldPtr, field, true);
                         fieldIndex++;
                     }
@@ -2064,21 +2064,21 @@ namespace yoi {
                     // reduce refcount of object inside the lhs
                     // this time, we use implementation-specific vtable slots to reduce refcount
                     auto thisPtr = llvmModCtx.Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, 1, "this_ptr_field");
-                    auto* concreteThisPtrRaw = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), thisPtr, "concrete_this_raw");
+                    auto* concreteThisPtrRaw = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), thisPtr, "concrete_this_raw");
                     auto* implGcDecSlot = llvmModCtx.Builder->CreateStructGEP(lhsLLVMType, lhs.llvmValue, 3, "impl_gc_dec_slot");
-                    auto* implGcDecFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)}, false);
+                    auto* implGcDecFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvm::PointerType::get(*llvmModCtx.TheContext, 0)}, false);
                     llvmModCtx.Builder->CreateCall(implGcDecFuncType, implGcDecSlot, {concreteThisPtrRaw});
                     auto rhsThisPtr = llvmModCtx.Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, 1, "this_ptr_field");
-                    auto* rhsConcreteThisPtrRaw = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), rhsThisPtr, "rhs_concrete_this_raw");
+                    auto* rhsConcreteThisPtrRaw = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), rhsThisPtr, "rhs_concrete_this_raw");
                     auto* implGcIncSlot = llvmModCtx.Builder->CreateStructGEP(rhsLLVMType, rhs.llvmValue, 2, "impl_gc_inc_slot");
-                    auto* implGcIncFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0)}, false);
+                    auto* implGcIncFuncType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {llvm::PointerType::get(*llvmModCtx.TheContext, 0)}, false);
                     llvmModCtx.Builder->CreateCall(implGcIncFuncType, implGcIncSlot, {rhsConcreteThisPtrRaw});
                 }
 
                 auto structTypeSize = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(lhsLLVMType);
                 // offset from 16 bytes to skip the refcount, and memcpy the rhs value to lhs
-                auto* lhsPtr = llvmModCtx.Builder->CreateBitCast(lhs.llvmValue, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), "lhs_ptr");
-                auto* rhsPtr = llvmModCtx.Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), "rhs_ptr");
+                auto* lhsPtr = llvmModCtx.Builder->CreateBitCast(lhs.llvmValue, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "lhs_ptr");
+                auto* rhsPtr = llvmModCtx.Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "rhs_ptr");
                 auto* offsettedLhsPtr = llvmModCtx.Builder->CreateGEP(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), lhsPtr, {llvm::ConstantInt::get(llvmModCtx.Builder->getInt32Ty(), 16, true)});
                 auto* offsettedRhsPtr = llvmModCtx.Builder->CreateGEP(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), rhsPtr, {llvm::ConstantInt::get(llvmModCtx.Builder->getInt32Ty(), 16, true)});
                 llvmModCtx.Builder->CreateMemCpy(offsettedLhsPtr, llvm::MaybeAlign(8), offsettedRhsPtr, llvm::MaybeAlign(8), structTypeSize - 16);
@@ -2109,7 +2109,7 @@ namespace yoi {
                     if (implDef->implStructIndex == structTypeKey) {
                         llvmModCtx.valueStackPhi.push_back({unwrapInterfaceObject(llvmModCtx, interfaceRhs), managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)})});
                     } else {
-                        auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0));
+                        auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                         llvmModCtx.valueStackPhi.push_back({nullValue, managedPtr(IRValueType{std::get<0>(implDef->implStructIndex), std::get<1>(implDef->implStructIndex), std::get<2>(implDef->implStructIndex)})});
                     }
 
@@ -2128,10 +2128,10 @@ namespace yoi {
                     : llvmModCtx.structTypeMap.at(structTypeKey);
                 
                 // offset by 16 bytes to skip the refcount and typeid
-                auto* interfacePtr = llvmModCtx.Builder->CreateBitCast(interfaceRhs.llvmValue, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), "interface_ptr");
+                auto* interfacePtr = llvmModCtx.Builder->CreateBitCast(interfaceRhs.llvmValue, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "interface_ptr");
                 auto* offsettedInterfacePtr = llvmModCtx.Builder->CreateGEP(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), interfacePtr, {llvm::ConstantInt::get(llvmModCtx.Builder->getInt32Ty(), 16, true)});
-                auto* structPtrPtr = llvmModCtx.Builder->CreateBitCast(offsettedInterfacePtr, llvm::PointerType::get(structTypeLLVMType, 0), "struct_ptr");
-                auto* loadedStructPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(structTypeLLVMType, 0), structPtrPtr, "loaded_struct_ptr");
+                auto* structPtrPtr = llvmModCtx.Builder->CreateBitCast(offsettedInterfacePtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "struct_ptr");
+                auto* loadedStructPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), structPtrPtr, "loaded_struct_ptr");
                 // offset by 8 bytes and check typeid
                 auto* typeIdPtr = llvmModCtx.Builder->CreateStructGEP(structTypeLLVMType, loadedStructPtr, 1, "typeid_ptr");
                 auto* loadedTypeId = llvmModCtx.Builder->CreateLoad(llvmModCtx.Builder->getInt64Ty(), typeIdPtr, "loaded_typeid");
@@ -2145,7 +2145,7 @@ namespace yoi {
                 llvmModCtx.Builder->CreateCondBr(typeIdMatch, successBB, failedMatchBB);
                 // failed match
                 llvmModCtx.Builder->SetInsertPoint(failedMatchBB);
-                auto* nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(structTypeLLVMType, 0));
+                auto* nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.Builder->CreateBr(continueBB);
                 // success match
                 llvmModCtx.Builder->SetInsertPoint(successBB);
@@ -2154,7 +2154,7 @@ namespace yoi {
                 llvmModCtx.Builder->CreateBr(continueBB);
                 // in continue block, decrement the interface refcount
                 llvmModCtx.Builder->SetInsertPoint(continueBB);
-                auto *finalValue = llvmModCtx.Builder->CreatePHI(llvm::PointerType::get(structTypeLLVMType, 0), 2, "final_value");
+                auto *finalValue = llvmModCtx.Builder->CreatePHI(llvm::PointerType::get(*llvmModCtx.TheContext, 0), 2, "final_value");
                 finalValue->addIncoming(resultObject, successBB);
                 finalValue->addIncoming(nullValue, failedMatchBB);
                 callGcFunction(llvmModCtx, interfaceRhs.llvmValue, interfaceRhs.yoiType, false);
@@ -2163,13 +2163,13 @@ namespace yoi {
                 break;
             }
             case IR::Opcode::push_null: {
-                auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0));
+                auto nullValue = llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                 llvmModCtx.valueStackPhi.push_back({nullValue, managedPtr(IRValueType{IRValueType::valueType::pointerObject})});
                 break;
             }
             case IR::Opcode::pointer_cast: {
                 auto rhs = llvmModCtx.valueStackPhi.back(); llvmModCtx.valueStackPhi.pop_back();
-                auto value = llvmModCtx.Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), "pointer_cast");
+                auto value = llvmModCtx.Builder->CreateBitCast(rhs.llvmValue, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "pointer_cast");
                 llvmModCtx.valueStackPhi.push_back({value, managedPtr(IRValueType{IRValueType::valueType::pointerObject})});
                 callGcFunction(llvmModCtx, rhs.llvmValue, rhs.yoiType, false);
                 break;
@@ -2302,9 +2302,10 @@ namespace yoi {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (llvmModCtx.structTypeMap.count(key)) {
                 if (type->isArrayType() || type->isDynamicArrayType()) {
-                    return llvm::PointerType::get(getArrayLLVMType(llvmModCtx, type), 0);
+                    getArrayLLVMType(llvmModCtx, type);
+                    return llvm::PointerType::get(*llvmModCtx.TheContext, 0);
                 } else {
-                    return llvm::PointerType::get(llvmModCtx.structTypeMap.at(key), 0);
+                    return llvm::PointerType::get(*llvmModCtx.TheContext, 0);
                 }
             }
         }
@@ -2325,7 +2326,7 @@ namespace yoi {
                 return llvmModCtx.Builder->getInt8Ty();
             case IRValueType::valueType::pointer:
             case IRValueType::valueType::pointerObject: // generic pointer
-                return llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+                return llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             case yoi::IRValueType::valueType::foreignFloatType:
                 return llvmModCtx.Builder->getFloatTy();
             case IRValueType::valueType::foreignInt32Type:
@@ -2333,7 +2334,7 @@ namespace yoi {
             case IRValueType::valueType::none:
                 return llvmModCtx.Builder->getVoidTy();
             case IRValueType::valueType::stringLiteral:
-                return llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0);
+                return llvm::PointerType::get(*llvmModCtx.TheContext, 0);
             default:
                 panic(0, 0, "LLVM Codegen: Unhandled or unmapped yoi::IRValueType: " + std::string(magic_enum::enum_name(type->type)));
                 return nullptr;
@@ -2463,7 +2464,7 @@ namespace yoi {
         auto* sizeVal = llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), size);
 
         auto* allocCall = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"object_alloc"), sizeVal, "new_obj_alloc");
-        auto* newObjPtr = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(objType, 0), "new_obj_ptr");
+        auto* newObjPtr = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "new_obj_ptr");
 
         auto* refCountPtr = llvmModCtx.Builder->CreateStructGEP(objType, newObjPtr, 0, "refcount_ptr");
         llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), refCountPtr);
@@ -2561,7 +2562,7 @@ namespace yoi {
 
     void LLVMCodegen::generateTargetObjectCode(LLVMModuleContext &llvmModCtx, const yoi::wstr &pathToOutput) {
         auto TargetTriple = llvm::sys::getDefaultTargetTriple();
-        llvmModCtx.TheModule->setTargetTriple(TargetTriple);
+        llvmModCtx.TheModule->setTargetTriple(llvm::Triple(TargetTriple));
         std::string Error;
         auto Target = llvm::TargetRegistry::lookupTarget(TargetTriple, Error);
         if (!Target) {
@@ -2585,7 +2586,7 @@ namespace yoi {
         llvm::OptimizationLevel OptLevelPB = compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::release ? llvm::OptimizationLevel::O3 : llvm::OptimizationLevel::O0;
 
         std::unique_ptr<llvm::TargetMachine> TM(
-        Target->createTargetMachine(TargetTriple, CPU, Features, Opt, RM, std::optional<llvm::CodeModel::Model>(), OptLevel));
+        Target->createTargetMachine(llvm::Triple(TargetTriple), CPU, Features, Opt, RM, std::optional<llvm::CodeModel::Model>(), OptLevel));
 
         if (!TM) {
             panic(0, 0, "Could not create TargetMachine for " + TargetTriple);
@@ -2829,7 +2830,7 @@ namespace yoi {
         if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
             yoi::vec<llvm::Type*> argTypes = {
                 llvm::Type::getInt32Ty(*llvmModCtx.TheContext),
-                llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0)
+                llvm::PointerType::get(*llvmModCtx.TheContext, 0)
             };
             llvm::FunctionType *funcType = llvm::FunctionType::get(llvm::Type::getInt32Ty(*llvmModCtx.TheContext), argTypes, false);
             llvm::Function *elysiaMain = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "elysia_main", llvmModCtx.TheModule.get());
@@ -2909,11 +2910,11 @@ namespace yoi {
                         } else if (arg->isBasicType()) {
                             if (arg->isArrayType() || arg->isDynamicArrayType()) {
                                 auto arrayLLVMType = getArrayLLVMType(llvmModCtx, arg);
-                                auto *object = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(arrayLLVMType, 0), it, "loaded_arg");
+                                auto *object = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), it, "loaded_arg");
                                 // struct gep to array data
                                 auto *arrayData = llvmModCtx.Builder->CreateStructGEP(arrayLLVMType, object, 3, "array_data");
                                 // bitcast to pointer type
-                                auto *arrayDataPtr = llvmModCtx.Builder->CreateBitCast(arrayData, llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, managedPtr(arg->getElementType())), 0));
+                                auto *arrayDataPtr = llvmModCtx.Builder->CreateBitCast(arrayData, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
                                 args.push_back(arrayDataPtr);
                             } else {
                                 // auto *argVal = unboxValue(llvmModCtx, it, managedPtr(arg->getBasicRawType()));
@@ -3076,11 +3077,11 @@ namespace yoi {
                     // auto *ptrVal = unboxValue(llvmModCtx, val, managedPtr(compilerCtx->getUnsignedObjectType()->getBasicRawType()));
                     // auto *ptrVal = llvmModCtx.Builder->CreateLoad(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), val, "ptr_val");
                     // bit cast void*
-                    auto *voidPtr = llvmModCtx.Builder->CreateIntToPtr(val, llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), "void_ptr");
+                    auto *voidPtr = llvmModCtx.Builder->CreateIntToPtr(val, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "void_ptr");
                     return voidPtr;
                 } else {
                     // bitcast to i64
-                    auto *voidPtr = llvmModCtx.Builder->CreateBitCast(val, llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), "void_ptr");
+                    auto *voidPtr = llvmModCtx.Builder->CreateBitCast(val, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "void_ptr");
                     auto *int64Val = llvmModCtx.Builder->CreatePtrToInt(voidPtr, llvm::Type::getInt64Ty(*llvmModCtx.TheContext), "int64_val");
                     // create new object
                     // auto *newObj = createBasicObject(llvmModCtx, compilerCtx->getIntObjectType(), int64Val);
@@ -3096,7 +3097,7 @@ namespace yoi {
 
     llvm::Type *LLVMCodegen::getArrayLLVMType(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, bool enforceForeignType) {
         if (enforceForeignType) {
-            return llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, type, true), 0);
+            return llvm::PointerType::get(*llvmModCtx.TheContext, 0);
         } else {
             yoi::indexT size = 1;
             if (type->isArrayType()) {
@@ -3142,11 +3143,11 @@ namespace yoi {
                     baseType = llvm::Type::getInt8Ty(*llvmModCtx.TheContext);
                     break;
                 case IRValueType::valueType::stringObject:
-                    baseType = llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0);
+                    baseType = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
                     break;
                 case IRValueType::valueType::structObject:
                 case IRValueType::valueType::interfaceObject:
-                    baseType = llvm::PointerType::get(llvmModCtx.structTypeMap.at(structKey), 0); // only this is a object
+                    baseType = llvm::PointerType::get(*llvmModCtx.TheContext, 0); // only this is a object
                     break;
                 default:
                     panic(0, 0, "LLVM Codegen: Unhandled or unmapped array type: " + std::string(magic_enum::enum_name(type->type)));
@@ -3208,7 +3209,7 @@ namespace yoi {
                 llvmModCtx.Builder->CreateStore(val, arrayPointer);
             } else {
                 // otherwise, store the pointer directly
-                auto arrayPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, managedPtr(type->getElementType())), 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), index)}, "array_element_ptr");
+                auto arrayPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(*llvmModCtx.TheContext, 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), index)}, "array_element_ptr");
                 llvmModCtx.Builder->CreateStore(i.llvmValue, arrayPointer);
             }
             index ++;
@@ -3819,7 +3820,7 @@ namespace yoi {
 
         llvmModCtx.RTTIEntryType = llvm::StructType::get(*llvmModCtx.TheContext, {
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type id
-            llvm::PointerType::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), // type name
+            llvm::PointerType::get(*llvmModCtx.TheContext, 0), // type name
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type enum
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type affiliate module
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type index
@@ -3870,7 +3871,7 @@ namespace yoi {
                 llvmModCtx.Builder->CreateStore(val, arrayPointer);
             } else {
                 // otherwise, store the pointer directly
-                auto arrayPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, managedPtr(type->getElementType())), 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), index)}, "array_element_ptr");
+                auto arrayPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(*llvmModCtx.TheContext, 0), arrayBasePointer, {llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), index)}, "array_element_ptr");
                 llvmModCtx.Builder->CreateStore(element.llvmValue, arrayPointer);
             }
             index ++;
@@ -3887,14 +3888,14 @@ namespace yoi {
 
         if (auto it = llvmModCtx.functionMap.find(yoi::string2wstring(incFuncName)) == llvmModCtx.functionMap.end()) {
             auto gcIncFuncType = llvm::FunctionType::get(
-                llvm::Type::getVoidTy(*llvmModCtx.TheContext), {llvm::PointerType::get(structType, 0)}, false);
+                llvm::Type::getVoidTy(*llvmModCtx.TheContext), {llvm::PointerType::get(*llvmModCtx.TheContext, 0)}, false);
             auto gcIncFunc =
                 llvm::Function::Create(gcIncFuncType, llvm::Function::ExternalLinkage, incFuncName, llvmModCtx.TheModule.get());
             llvmModCtx.functionMap[yoi::string2wstring(incFuncName)] = gcIncFunc;
         }
         if (auto it = llvmModCtx.functionMap.find(yoi::string2wstring(decFuncName)) == llvmModCtx.functionMap.end()) {
             auto gcDecFuncType = llvm::FunctionType::get(
-                llvm::Type::getVoidTy(*llvmModCtx.TheContext), {llvm::PointerType::get(structType, 0)}, false);
+                llvm::Type::getVoidTy(*llvmModCtx.TheContext), {llvm::PointerType::get(*llvmModCtx.TheContext, 0)}, false);
             auto gcDecFunc =
                 llvm::Function::Create(gcDecFuncType, llvm::Function::ExternalLinkage, decFuncName, llvmModCtx.TheModule.get());
             llvmModCtx.functionMap[yoi::string2wstring(decFuncName)] = gcDecFunc;
@@ -3917,8 +3918,8 @@ namespace yoi {
         } else {
             // otherwise, store the pointer directly
             auto basePointer = llvmModCtx.Builder->CreateStructGEP(arrayLLVMType, arrayPtr, 3, "array_ptr");
-            auto elementPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, managedPtr(type->getElementType())), 0), basePointer, {index}, "array_element_ptr");
-            auto loadedPointer = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(yoiTypeToLLVMType(llvmModCtx, managedPtr(type->getElementType())), 0), elementPointer, "loaded_pointer");
+            auto elementPointer = llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(*llvmModCtx.TheContext, 0), basePointer, {index}, "array_element_ptr");
+            auto loadedPointer = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), elementPointer, "loaded_pointer");
             callGcFunction(llvmModCtx, loadedPointer, managedPtr(type->getElementType().addAttribute(IRValueType::ValueAttr::Nullable)), false);
 
             llvmModCtx.Builder->CreateStore(value, elementPointer);
@@ -4016,12 +4017,12 @@ namespace yoi {
                 // loop block
                 llvmModCtx.Builder->SetInsertPoint(loopBlock);
                 auto elementPointer =
-                    llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(baseType, 0),
+                    llvmModCtx.Builder->CreateGEP(llvm::PointerType::get(*llvmModCtx.TheContext, 0),
                                        arrayPointer,
                                        {llvmModCtx.Builder->CreateLoad(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), currentIndex)},
                                        "element_ptr");
                 auto elementPointerVal =
-                    llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), 0),
+                    llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0),
                                         elementPointer,
                                         "element_ptr_val"); // just too lazy, so I use int64*
                 callGcFunction(llvmModCtx, elementPointerVal, managedPtr(type->getElementType().addAttribute(IRValueType::ValueAttr::Nullable)), false);
@@ -4218,7 +4219,7 @@ namespace yoi {
         auto *sizeVal = llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), size);
 
         auto *allocCall = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"object_alloc"), sizeVal, "newinterface_alloc");
-        auto *bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(interfaceLLVMType, 0), "casttmp");
+        auto *bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casttmp");
 
         auto *refCountPtr = llvmModCtx.Builder->CreateStructGEP(interfaceLLVMType, bitcast, 0, "refcount_ptr");
         llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), refCountPtr);
@@ -4247,7 +4248,7 @@ namespace yoi {
             llvmModCtx.Builder->CreateStructGEP(interfaceLLVMType, interfaceShellVal.llvmValue, 2, "this_ptr_field");
         auto [objectType, objectValue] = ensureObject(llvmModCtx, structInstanceVal.yoiType, structInstanceVal.llvmValue);
         auto *castedStructPtr =
-            llvmModCtx.Builder->CreateBitCast(objectValue, llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), "casted_this");
+            llvmModCtx.Builder->CreateBitCast(objectValue, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casted_this");
         llvmModCtx.Builder->CreateStore(castedStructPtr, thisPtrField);
 
         // Populate GC function pointers at indices 3 and 4 with pointers to the interfaceImpl wrappers
@@ -4297,7 +4298,7 @@ namespace yoi {
         }
         auto interfaceType = llvmModCtx.structTypeMap.at({objectVal.yoiType->type, objectVal.yoiType->typeAffiliateModule, objectVal.yoiType->typeIndex});
         auto *thisPtrField = llvmModCtx.Builder->CreateStructGEP(interfaceType, objectVal.llvmValue, 2);
-        auto *thisPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(llvmModCtx.Builder->getInt8Ty(), 0), thisPtrField);
+        auto *thisPtr = llvmModCtx.Builder->CreateLoad(llvm::PointerType::get(*llvmModCtx.TheContext, 0), thisPtrField);
         return thisPtr;
     }
     LLVMCodegen::StackValue LLVMCodegen::promiseInterfaceObjectIfInterface(LLVMModuleContext &llvmModCtx, const StackValue &objectVal) {
@@ -4398,26 +4399,64 @@ namespace yoi {
             generateDeclarations(*llvmModuleContext[module.second->modulePath]);
         }
         
-        for (auto &module : compilerCtx->getCompiledModules()) {
-            if (module.second->modulePath == L"builtin") {
+        std::set<yoi::indexT> dirtyModules;
+        auto &allModules = compilerCtx->getCompiledModules();
+
+        // Identify initially dirty modules (disk changes)
+        for (auto const &[id, module] : allModules) {
+            if (module->modulePath == L"builtin") continue;
+            yoi::indexT last_write_time = std::filesystem::last_write_time(module->modulePath).time_since_epoch().count();
+            if (last_write_time != codegenObjectCache.get_entry(module->modulePath).getLastModification()) {
+                dirtyModules.insert(id);
+            }
+        }
+
+        // Bidirectional transitive invalidation
+        std::queue<yoi::indexT> q;
+        for (auto id : dirtyModules) q.push(id);
+
+        while (!q.empty()) {
+            yoi::indexT u = q.front();
+            q.pop();
+
+            auto const &uMod = allModules.at(u);
+            
+            for (auto const &[name, v] : uMod->moduleImports) {
+                if (v != HOSHI_COMPILER_CTX_GLOB_ID_CONST && dirtyModules.find(v) == dirtyModules.end()) {
+                    dirtyModules.insert(v);
+                    q.push(v);
+                }
+            }
+
+            for (auto v : uMod->dependentModules) {
+                if (dirtyModules.find(v) == dirtyModules.end()) {
+                    dirtyModules.insert(v);
+                    q.push(v);
+                }
+            }
+        }
+
+        for (auto &pair : allModules) {
+            if (pair.second->modulePath == L"builtin") {
                 continue;
             }
-            codegenTaskDispatcher.dispatch([this, module]() {
-                yoi::indexT last_write_time = std::filesystem::last_write_time(module.second->modulePath).time_since_epoch().count();
-                if (last_write_time == codegenObjectCache.get_entry(module.second->modulePath).getLastModification()) {
-                    warning(0, 0, "llvmCodegen: skipping module " + wstring2string(module.second->modulePath), "MODULE_NOT_MODIFIED");
+            auto id = pair.first;
+            auto module = pair.second;
+            codegenTaskDispatcher.dispatch([this, id, module, &dirtyModules]() {
+                set_current_file_path(module->modulePath);
+                if (dirtyModules.find(id) == dirtyModules.end()) {
+                    warning(0, 0, "llvmCodegen: skipping module " + wstring2string(module->modulePath), "MODULE_NOT_MODIFIED");
                     return;
                 }
 
-                auto cache_entry = codegenObjectCache.get_entry(module.second->modulePath);
+                auto cache_entry = codegenObjectCache.get_entry(module->modulePath);
                 
-                generateImplementations(*llvmModuleContext[module.second->modulePath]);
-                llvmModuleContext[module.second->modulePath]->DBuilder->finalize();
-                generateTargetObjectCode(*llvmModuleContext[module.second->modulePath], cache_entry.getObjectFilename());
+                generateImplementations(*llvmModuleContext[module->modulePath]);
+                llvmModuleContext[module->modulePath]->DBuilder->finalize();
+                generateTargetObjectCode(*llvmModuleContext[module->modulePath], cache_entry.getObjectFilename());
 
-                // update last modification time thread-safely
-                last_write_time = std::filesystem::last_write_time(module.second->modulePath).time_since_epoch().count();
-                codegenObjectCache.update_last_modification(module.second->modulePath, last_write_time);
+                yoi::indexT last_write_time = std::filesystem::last_write_time(module->modulePath).time_since_epoch().count();
+                codegenObjectCache.update_last_modification(module->modulePath, last_write_time);
             });
         }
 
@@ -4439,7 +4478,6 @@ namespace yoi {
         llvmModuleContext[L"builtin"]->DBuilder->finalize();
         generateTargetObjectCode(*llvmModuleContext[L"builtin"], codegenObjectCache.get_entry(L"builtin").getObjectFilename());
 
-        // save codegen object cache
         auto cache_path = std::filesystem::path(compilerCtx->getBuildConfig()->buildCachePath);
         if (!compilerCtx->getBuildConfig()->immediatelyClearupCache) {
             auto cache_file = fopen((cache_path / "hoshi.cache.tsuki").string().c_str(), "wb+");

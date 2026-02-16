@@ -5,6 +5,7 @@
 #ifndef HOSHI_LANG_CODEGENOBJECTCACHE_HPP
 #define HOSHI_LANG_CODEGENOBJECTCACHE_HPP
 
+#include "compiler/compilerContext.h"
 #include "compiler/ir/IR.h"
 #include <memory>
 #include <mutex>
@@ -40,6 +41,7 @@ namespace yoi {
         // to further accelerate the compilation, we save the last modification time of the source file, if the last modification time is the same as
         // the last compilation, we can skip the codegen as they exposed the same implementations.
         yoi::indexT last_modification;
+        std::set<yoi::indexT> depend_by; // the modules which depend on this module
 
         CodegenObjectCacheEntry() = default;
 
@@ -47,18 +49,20 @@ namespace yoi {
         CodegenObjectCacheEntry setObjectFilename(const yoi::wstr &object_filename);
         CodegenObjectCacheEntry setHash(yoi::indexT hash);
         CodegenObjectCacheEntry setLastModification(yoi::indexT last_modification);
+        CodegenObjectCacheEntry setDependBy(const std::set<yoi::indexT> &depend_by);
 
         const yoi::wstr &getAbsPathOnDisk() const;
         const yoi::wstr &getObjectFilename() const;
         yoi::indexT getHash() const;
         yoi::indexT getLastModification() const;
+        const std::set<yoi::indexT> &getDependBy() const;
     };
 
     class CodegenObjectCache {
       public:
+        std::shared_ptr<compilerContext> compilerCtx;
         std::map<yoi::wstr, CodegenObjectCacheEntry> cache;
         std::set<yoi::indexT> free_list;
-        std::shared_ptr<IRBuildConfig> build_config;
         yoi::indexT next_hash = 0;
         mutable std::mutex cacheMutex;
 
@@ -67,7 +71,7 @@ namespace yoi {
          * @param build_config the build config
          * @return the CodegenObjectCache
          */
-        CodegenObjectCache &setBuildConfig(const std::shared_ptr<IRBuildConfig> &build_config);
+        CodegenObjectCache &setCompilerCtx(const std::shared_ptr<compilerContext> &compilerCtx);
 
         /**
          * @brief purge the cache, add the entries that previously not in the cache, remove the entries that are not in the source_files

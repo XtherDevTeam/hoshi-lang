@@ -33,6 +33,7 @@ namespace yoi {
             write(fp, value.object_filename);
             write(fp, value.hash);
             write(fp, value.last_modification);
+            write(fp, value.depend_by);
         }
 
         template <> void read(FILE *fp, CodegenObjectCacheEntry &value) {
@@ -40,6 +41,7 @@ namespace yoi {
             read(fp, value.object_filename);
             read(fp, value.hash);
             read(fp, value.last_modification);
+            read(fp, value.depend_by);
         }
 
         template <> void write(FILE *fp, const CodegenObjectCache &value) {
@@ -122,15 +124,15 @@ namespace yoi {
     void CodegenObjectCache::purge_and_update(const yoi::vec<yoi::wstr> &source_files) {
         std::lock_guard<std::mutex> lock(cacheMutex);
         std::set<yoi::wstr> source_set(source_files.begin(), source_files.end());
-        yoi::vec<yoi::wstr> to_be_removed, to_be_added;
+        std::set<yoi::wstr> to_be_removed, to_be_added;
         for (auto &item : cache) {
             if (source_set.find(item.first) == source_set.end()) {
-                to_be_removed.push_back(item.first);
+                to_be_removed.insert(item.first);
             }
         }
         for (auto &item : source_files) {
             if (cache.find(item) == cache.end()) {
-                to_be_added.push_back(item);
+                to_be_added.insert(item);
             }
         }
         for (auto &item : to_be_removed) {
@@ -157,11 +159,14 @@ namespace yoi {
             hash = *free_list.begin();
             free_list.erase(free_list.begin());
         }
-        if (!std::filesystem::exists(build_config->buildCachePath)) {
-            std::filesystem::create_directories(build_config->buildCachePath);
+        if (!std::filesystem::exists(compilerCtx->getBuildConfig()->buildCachePath)) {
+            std::filesystem::create_directories(compilerCtx->getBuildConfig()->buildCachePath);
         }
-        yoi::wstr object_filename = build_config->buildCachePath + L"/" + std::to_wstring(hash) + L".o";
-        printf("Creating cache for file: %s\n", yoi::wstring2string(abs_path_on_disk).c_str());
+        yoi::wstr object_filename = compilerCtx->getBuildConfig()->buildCachePath + L"/" + std::to_wstring(hash) + L".o";
+        {
+            std::lock_guard<std::mutex> lock(consoleMutex);
+            printf("Creating cache for file: %s\n", yoi::wstring2string(abs_path_on_disk).c_str());
+        }
         cache[abs_path_on_disk] = CodegenObjectCacheEntry().setAbsPathOnDisk(abs_path_on_disk).setObjectFilename(object_filename).setHash(hash).setLastModification(0);
         return hash;
     }
@@ -193,11 +198,6 @@ namespace yoi {
         cache.erase(abs_path_on_disk);
     }
 
-    CodegenObjectCache &CodegenObjectCache::setBuildConfig(const std::shared_ptr<IRBuildConfig> &build_config) {
-        this->build_config = build_config;
-        return *this;
-    }
-
     void CodegenObjectCache::update_last_modification(const yoi::wstr &abs_path_on_disk, yoi::indexT last_modification) {
         std::lock_guard<std::mutex> lock(cacheMutex);
         if (cache.find(abs_path_on_disk) != cache.end()) {
@@ -212,5 +212,10 @@ namespace yoi {
 
     yoi::indexT CodegenObjectCacheEntry::getLastModification() const {
         return last_modification;
+    }
+
+    CodegenObjectCache &CodegenObjectCache::setCompilerCtx(const std::shared_ptr<compilerContext> &compilerCtx) {
+        this->compilerCtx = compilerCtx;
+        return *this;
     }
 } // namespace yoi

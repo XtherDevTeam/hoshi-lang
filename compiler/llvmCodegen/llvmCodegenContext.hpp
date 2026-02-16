@@ -24,11 +24,10 @@
 
 #include <map>
 #include <memory>
-#include <stack>
 #include <vector>
 
 #ifdef LLVM_CODEGEN_DEBUG
-#define TIMER(X, Y) { auto start = std::chrono::high_resolution_clock::now(); Y; auto end = std::chrono::high_resolution_clock::now(); std::cout << X << " took " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms" << std::endl; }
+#define TIMER(X, Y) { auto start = std::chrono::high_resolution_clock::now(); Y; auto end = std::chrono::high_resolution_clock::now(); std::lock_guard<std::mutex> lock(yoi::consoleMutex); std::cout << X << " took " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms" << std::endl; }
 #else
 #define TIMER(X, Y) Y
 #endif

@@ -9,7 +9,8 @@
 #include <share/def.hpp>
 
 namespace yoi {
-    yoi::wstr __current_file_path = L"";
+    thread_local yoi::wstr __current_file_path = L"";
+    std::mutex consoleMutex;
 
     std::map<std::string, ExceptionHandleType> exception_categories = {
         {"NULLABLE_VALUE_SUPPLY_TO_RAW", ExceptionHandleType::Suppress},
@@ -124,6 +125,7 @@ namespace yoi {
             message += " near line " + std::to_string(line) + " col " + std::to_string(col);
         }
 
+        std::lock_guard<std::mutex> lock(consoleMutex);
         std::cerr << "[hoshi-lang warning] " << message << std::endl;
     }
 

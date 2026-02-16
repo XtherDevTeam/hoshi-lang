@@ -830,6 +830,7 @@ namespace yoi {
         bool compiled;
         yoi::wstr modulePath;
         std::map<yoi::wstr, yoi::indexT> moduleImports;
+        std::set<yoi::indexT> dependentModules;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRFunctionDefinition>> functionTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRStructDefinition>> structTable;
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> globalVariables;

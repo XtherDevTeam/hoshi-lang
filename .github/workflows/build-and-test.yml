@@ -22,19 +22,19 @@ jobs:
         run: |
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
-          sudo ./llvm.sh 20 all
-          echo "LLVM_PATH=$(llvm-config-20 --prefix)" >> $GITHUB_ENV
+          sudo ./llvm.sh 21 all
+          echo "LLVM_PATH=$(llvm-config-21 --prefix)" >> $GITHUB_ENV
 
       - name: Further setup for Linux
         if: runner.os == 'Linux'
         run: |
-          sudo apt install libzstd-dev zlib1g-dev zlib1g llvm-20-dev llvm-20-linker-tools libpolly-20-dev -y
+          sudo apt install libzstd-dev zlib1g-dev zlib1g llvm-21-dev llvm-21-linker-tools libpolly-21-dev -y
 
       - name: Install LLVM and Clang (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install llvm@20 zstd zlib
-          echo "LLVM_PATH=$(brew --prefix llvm@20)" >> $GITHUB_ENV
+          brew install llvm@21 zstd zlib
+          echo "LLVM_PATH=$(brew --prefix llvm@21)" >> $GITHUB_ENV
           echo "LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib" >> $GITHUB_ENV
 
       - name: Setup PATH
@@ -88,17 +88,17 @@ jobs:
 
       - name: Install LLVM and Clang (Windows)
         run: |
-          curl -L -o llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/clang+llvm-20.1.8-x86_64-pc-windows-msvc.tar.xz
+          curl -L -o llvm.tar.xz https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/clang+llvm-21.1.8-x86_64-pc-windows-msvc.tar.xz
           tar -xf llvm.tar.xz
         shell: bash
 
       - name: Setup PATH Step 1
         run: |
-          echo "LLVM_PATH=$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
+          echo "LLVM_PATH=$PWD/clang+llvm-21.1.8-x86_64-pc-windows-msvc" >> $env:GITHUB_ENV
       
       - name: Setup PATH Step 2
         run: |
-          echo "$PWD/clang+llvm-20.1.8-x86_64-pc-windows-msvc/bin" >> $env:GITHUB_PATH
+          echo "$PWD/clang+llvm-21.1.8-x86_64-pc-windows-msvc/bin" >> $env:GITHUB_PATH
 
       - name: Verify Clang Path
         run: |

@@ -1882,6 +1882,7 @@ namespace yoi {
     yoi::indexT visitor::visit(yoi::useStmt *useStmt) {
         auto index = moduleContext->getCompilerContext()->compileModule(useStmt->path.strVal);
         irModule->moduleImports[useStmt->name->get().strVal] = index;
+        moduleContext->getCompilerContext()->getImportedModule(index)->dependentModules.insert(currentModuleIndex);
         return moduleContext->getIRBuilder().getCurrentInsertionPoint();
     }
 
