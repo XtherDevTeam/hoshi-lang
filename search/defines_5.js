@@ -1,12 +1,15 @@
 var searchData=
 [
-  ['magic_5fenum_5fassert_0',['MAGIC_ENUM_ASSERT',['../magic__enum_8h.html#a84725b380b1cb7360f1cc10f3182fc8e',1,'magic_enum.h']]],
-  ['magic_5fenum_5ffor_5feach_5f256_1',['MAGIC_ENUM_FOR_EACH_256',['../magic__enum_8h.html#a851238e6f0b3143bb4e7651e49a2e829',1,'magic_enum.h']]],
-  ['magic_5fenum_5frange_5fmax_2',['MAGIC_ENUM_RANGE_MAX',['../magic__enum_8h.html#a60b5d28d5f88bcb69e8f0f868f5d32fb',1,'magic_enum.h']]],
-  ['magic_5fenum_5frange_5fmin_3',['MAGIC_ENUM_RANGE_MIN',['../magic__enum_8h.html#a04478a8f6e74ba88296c303ca5d9ee29',1,'magic_enum.h']]],
-  ['magic_5fenum_5fv_4',['MAGIC_ENUM_V',['../magic__enum_8h.html#af39eaae0020d827410ae67df2773ad7d',1,'magic_enum.h']]],
-  ['magic_5fenum_5fversion_5fmajor_5',['MAGIC_ENUM_VERSION_MAJOR',['../magic__enum_8h.html#a2b1e2194fd5bc90499887460e8318e30',1,'magic_enum.h']]],
-  ['magic_5fenum_5fversion_5fminor_6',['MAGIC_ENUM_VERSION_MINOR',['../magic__enum_8h.html#ae60129f9fd71fa854fd4c84803732e14',1,'magic_enum.h']]],
-  ['magic_5fenum_5fversion_5fpatch_7',['MAGIC_ENUM_VERSION_PATCH',['../magic__enum_8h.html#ab1a8c0173da51fc4cd6a763ba9be51bd',1,'magic_enum.h']]],
-  ['max_5ftime_5fstr_5flen_8',['MAX_TIME_STR_LEN',['../time_8h.html#a429b8d0285e7ff4197c2170a1ee06b59',1,'time.h']]]
+  ['libfs_5fexport_0',['LIBFS_EXPORT',['../fs_8h.html#ab8b0851dd1d3c6165994bd0e7357ee5e',1,'fs.h']]],
+  ['libsig_5ferr_5fcant_5fcatch_5fkill_1',['LIBSIG_ERR_CANT_CATCH_KILL',['../signal_8h.html#ad421e605e427ec17be6fe0ff832efe15',1,'signal.h']]],
+  ['libsig_5ferr_5fraise_5ffail_2',['LIBSIG_ERR_RAISE_FAIL',['../signal_8h.html#ac6d1a8485ceac8af948229cda2d2e633',1,'signal.h']]],
+  ['libsig_5ferr_5fregister_5ffail_3',['LIBSIG_ERR_REGISTER_FAIL',['../signal_8h.html#a41ebf6a6677d8be9cacdc0f7c273f700',1,'signal.h']]],
+  ['libsig_5ferr_5funsupported_4',['LIBSIG_ERR_UNSUPPORTED',['../signal_8h.html#a9a89ab0729ddd05d355a08655486dfb2',1,'signal.h']]],
+  ['libsig_5fexport_5',['LIBSIG_EXPORT',['../signal_8h.html#a6311055a021fa8d36820eaeea164d246',1,'signal.h']]],
+  ['libsig_5finternal_5falrm_6',['LIBSIG_INTERNAL_ALRM',['../signal_8h.html#ad10773e96447bd5b583c1132279e0659',1,'signal.h']]],
+  ['libsig_5finternal_5fkill_7',['LIBSIG_INTERNAL_KILL',['../signal_8h.html#ae0f03e22bb0a09d5f9859020614efb2d',1,'signal.h']]],
+  ['libsig_5fsuccess_8',['LIBSIG_SUCCESS',['../signal_8h.html#ab0142d834722cd0711dce0b2b7e0033f',1,'signal.h']]],
+  ['libtime_5fexport_9',['LIBTIME_EXPORT',['../time_8h.html#a8bc0d639b8a5b493d758c552f8e73398',1,'time.h']]],
+  ['libtime_5fffi_10',['LIBTIME_FFI',['../time_8h.html#aa7ca06f3a2546c84085a302b283ef933',1,'time.h']]],
+  ['libtime_5fnoffi_11',['LIBTIME_NOFFI',['../time_8h.html#ad8f5fa66a1d2c1eec5890c40fe0fe156',1,'time.h']]]
 ];

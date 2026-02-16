@@ -1,5 +1,6 @@
 var def_8cpp =
 [
+    [ "escapeString", "def_8cpp.html#a800a1b5e25ba1e21ba4ccf25e437bbcf", null ],
     [ "get_line_hint_for_error", "def_8cpp.html#a9b1a87fa4d0a59f9b776d685d6873353", null ],
     [ "panic", "def_8cpp.html#af1b2d50f7eb8d8e78be001987ad48ab6", null ],
     [ "parseString", "def_8cpp.html#a3e22de04e90e79c45c3e57ed7705df7d", null ],

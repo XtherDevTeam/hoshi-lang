@@ -7,10 +7,10 @@ var indexSectionsWithContent =
   4: "abcdefghijlmnoprstuvwxy~",
   5: "_abcdefghiklmnopqrstuvwxyz",
   6: "cdefinprtuvwy",
-  7: "bcefhmnopstuv",
+  7: "bcefhimnopstuv",
   8: "abcdefghijklmnprstuvw",
   9: "o",
-  10: "_eghlmpstwy",
+  10: "_efghlmpstwy",
   11: "abcdefghijlmnoprstvw实接的直"
 };
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['modifier_0',['Modifier',['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd',1,'yoi::structDefInnerPair']]]
+  ['indenttype_0',['IndentType',['../structyoi_1_1FormatOption.html#af711604d06a4aae686e576846bdc7814',1,'yoi::FormatOption']]]
 ];

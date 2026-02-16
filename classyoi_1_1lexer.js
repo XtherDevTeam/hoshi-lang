@@ -1,5 +1,6 @@
 var classyoi_1_1lexer =
 [
+    [ "Comment", "structyoi_1_1lexer_1_1Comment.html", "structyoi_1_1lexer_1_1Comment" ],
     [ "lexerState", "structyoi_1_1lexer_1_1lexerState.html", "structyoi_1_1lexer_1_1lexerState" ],
     [ "token", "structyoi_1_1lexer_1_1token.html", "structyoi_1_1lexer_1_1token" ],
     [ "lexer", "classyoi_1_1lexer.html#a3e70362cee7281a81eeda9cf15c431b9", null ],
@@ -37,6 +38,7 @@ var classyoi_1_1lexer =
     [ "strStart", "classyoi_1_1lexer.html#a4245a46d19c13a95a71ce94fb24daa75", null ],
     [ "xorStart", "classyoi_1_1lexer.html#a6bd6ac4da70d5ee139b48a91301df5ee", null ],
     [ "col", "classyoi_1_1lexer.html#a9cff40af0d1128b9faf8081323556836", null ],
+    [ "comments", "classyoi_1_1lexer.html#a7919012f8c552f9eb3c6761d5e9aa47f", null ],
     [ "curCh", "classyoi_1_1lexer.html#ad3281169ac4394122a244c3b432b98f2", null ],
     [ "curToken", "classyoi_1_1lexer.html#a3c5b49a9b525e2fbc1f1f37bb2574150", null ],
     [ "line", "classyoi_1_1lexer.html#aa8d76d83ac34f1a589e4fb9aafdc5933", null ],

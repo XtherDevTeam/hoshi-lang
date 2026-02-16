@@ -105,6 +105,7 @@ var hierarchy =
     [ "CodegenObjectCache", "classyoi_1_1CodegenObjectCache.html", null ],
     [ "CodegenObjectCacheEntry", "structyoi_1_1CodegenObjectCacheEntry.html", null ],
     [ "CodegenTaskDispatcher", "classyoi_1_1CodegenTaskDispatcher.html", null ],
+    [ "Comment", "structyoi_1_1lexer_1_1Comment.html", null ],
     [ "ContributedInstructionSet", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html", null ],
     [ "ControlFlowAnalysis", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html", null ],
     [ "enable_if_enum< bool, R >", "structmagic__enum_1_1detail_1_1enable__if__enum.html", null ],
@@ -127,6 +128,8 @@ var hierarchy =
       ] ],
       [ "supported< T >", "structmagic__enum_1_1detail_1_1supported.html", null ]
     ] ],
+    [ "FormatOption", "structyoi_1_1FormatOption.html", null ],
+    [ "Formatter", "classyoi_1_1Formatter.html", null ],
     [ "FunctionAnalysisInfo", "structyoi_1_1FunctionAnalysisInfo.html", null ],
     [ "HPerfContext", "structHPerfContext.html", null ],
     [ "HPerfEvent", "structHPerfEvent.html", null ],

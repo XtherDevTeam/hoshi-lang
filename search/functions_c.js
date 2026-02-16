@@ -7,9 +7,10 @@ var searchData=
   ['newdatastructop_4',['newDataStructOp',['../classyoi_1_1IRBuilder.html#a20a5dd74e8b6aa3d73ed5836269fb0c2',1,'yoi::IRBuilder']]],
   ['newdynamicarrayop_5',['newDynamicArrayOp',['../classyoi_1_1IRBuilder.html#ad3c80f3275dce944c8129d1d5e67e62a',1,'yoi::IRBuilder']]],
   ['newinterfaceop_6',['newInterfaceOp',['../classyoi_1_1IRBuilder.html#a78476b4c465330bc3d6b743e7515e0ac',1,'yoi::IRBuilder']]],
-  ['newstructop_7',['newStructOp',['../classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5',1,'yoi::IRBuilder']]],
-  ['normalizeforeignbasictype_8',['normalizeForeignBasicType',['../classyoi_1_1compilerContext.html#af2b0dba20d94b4acc3d17e44fa88d991',1,'yoi::compilerContext']]],
-  ['normalizeforeigntype_9',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#abd22b89e0736cb49d3f9da78c2f867a3',1,'yoi::LLVMCodegen']]],
-  ['notequal_10',['notEqual',['../classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180',1,'yoi::IRFunctionOptimizer']]],
-  ['notstart_11',['notStart',['../classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24',1,'yoi::lexer']]]
+  ['newline_7',['newLine',['../classyoi_1_1Formatter.html#a24d44c9238b3bd0440c8e28f37616318',1,'yoi::Formatter']]],
+  ['newstructop_8',['newStructOp',['../classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5',1,'yoi::IRBuilder']]],
+  ['normalizeforeignbasictype_9',['normalizeForeignBasicType',['../classyoi_1_1compilerContext.html#af2b0dba20d94b4acc3d17e44fa88d991',1,'yoi::compilerContext']]],
+  ['normalizeforeigntype_10',['normalizeForeignType',['../classyoi_1_1LLVMCodegen.html#abd22b89e0736cb49d3f9da78c2f867a3',1,'yoi::LLVMCodegen']]],
+  ['notequal_11',['notEqual',['../classyoi_1_1IRFunctionOptimizer.html#aedd0f56a959d8cfb9470e91eb59e6180',1,'yoi::IRFunctionOptimizer']]],
+  ['notstart_12',['notStart',['../classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24',1,'yoi::lexer']]]
 ];

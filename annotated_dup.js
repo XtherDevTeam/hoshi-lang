@@ -69,6 +69,8 @@ var annotated_dup =
       [ "finalizerDecl", "classyoi_1_1finalizerDecl.html", null ],
       [ "finalizerDef", "classyoi_1_1finalizerDef.html", "classyoi_1_1finalizerDef" ],
       [ "forEachStmt", "classyoi_1_1forEachStmt.html", "classyoi_1_1forEachStmt" ],
+      [ "FormatOption", "structyoi_1_1FormatOption.html", "structyoi_1_1FormatOption" ],
+      [ "Formatter", "classyoi_1_1Formatter.html", "classyoi_1_1Formatter" ],
       [ "forStmt", "classyoi_1_1forStmt.html", "classyoi_1_1forStmt" ],
       [ "funcDefStmt", "classyoi_1_1funcDefStmt.html", "classyoi_1_1funcDefStmt" ],
       [ "funcExpr", "classyoi_1_1funcExpr.html", "classyoi_1_1funcExpr" ],
