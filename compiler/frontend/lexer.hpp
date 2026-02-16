@@ -14,6 +14,14 @@ namespace yoi {
     class lexer {
         std::wstringstream stream;
     public:
+        struct Comment {
+            uint64_t line, col;
+            wstr text;
+            bool isMultiLine;
+        };
+
+        vec<Comment> comments;
+
         struct token {
             uint64_t line, col;
             enum class tokenKind {

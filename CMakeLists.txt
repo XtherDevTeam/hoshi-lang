@@ -91,30 +91,38 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
 
+add_executable(hoshi-format formatter.cpp ${HOSHI_LANG_INCLUDE})
+
 add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLUDE})
 
 # add -fno-builtin to avoid linking with system libraries for elysia_runtime
 set_target_properties(elysia_runtime PROPERTIES COMPILE_FLAGS "-fno-builtin -static")
 
 target_link_options(hoshi_lang PRIVATE ${LLVM_LDFLAGS_LIST})
+target_link_options(hoshi-format PRIVATE ${LLVM_LDFLAGS_LIST})
 
 target_link_libraries(elysia_runtime ${CMAKE_DL_LIBS} pthread)
 
 target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
+target_link_libraries(hoshi-format PRIVATE ${llvm_components_list})
 
 if (WIN32)
     
 else()
     target_link_libraries(hoshi_lang PRIVATE ${llvm_system_libs_list})
+    target_link_libraries(hoshi-format PRIVATE ${llvm_system_libs_list})
 endif()
 
 target_link_directories(hoshi_lang PRIVATE ${llvm_libdir})
+target_link_directories(hoshi-format PRIVATE ${llvm_libdir})
 
 if (WIN32)
     set(WINDOWS_SYSTEM_LIBS ntdll.lib shell32.lib user32.lib advapi32.lib)
     target_link_libraries(hoshi_lang PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components_list})
+    target_link_libraries(hoshi-format PRIVATE ${WINDOWS_SYSTEM_LIBS} ${llvm_components_list})
 else()
     target_link_libraries(hoshi_lang PRIVATE ${llvm_components_list})
+    target_link_libraries(hoshi-format PRIVATE ${llvm_components_list})
 endif()
 
 # if build in release mode, add CXX marco definition ELYSIA_RUNTIME_BUILD_TYPE_RELEASE

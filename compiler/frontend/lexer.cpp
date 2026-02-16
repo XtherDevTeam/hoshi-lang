@@ -369,27 +369,37 @@ namespace yoi {
 
     lexer::token lexer::slashStart() {
         lexer::token tok{line, col, token::tokenKind::slash};
+        uint64_t startLine = line, startCol = col;
         getCh();
         if (curCh == '=') {
             tok.kind = token::tokenKind::divisionAssignment;
             getCh();
         } else if (curCh == '/') {
+            wstr commentText = L"//";
             getCh();
-            while (curCh and curCh != '\n')
+            while (curCh and curCh != '\n') {
+                commentText += curCh;
                 getCh();
+            }
+            comments.push_back({startLine, startCol, commentText, false});
             return scan(); // 单行注释解析
         } else if (curCh == '*') {
+            wstr commentText = L"/*";
             getCh();
             while (curCh) {
+                commentText += curCh;
                 if (curCh == '*') {
                     getCh();
                     if (curCh == '/') {
+                        commentText += curCh;
                         getCh();
                         break;
                     }
+                } else {
+                    getCh();
                 }
-                getCh();
             }
+            comments.push_back({startLine, startCol, commentText, true});
             return scan(); // 多行注释解析
         }
         return tok;

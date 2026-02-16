@@ -36,6 +36,7 @@
     - [x] 函数签名信息推断，在只存在一个函数的情况下省略参数类型信息
 - [x] 支持带 this 指针非静态 callable 创建
 - [x] `braced initializer list` 支持
+- [x] 加入 `hoshi-format` 工具
 
 # Known issues
 

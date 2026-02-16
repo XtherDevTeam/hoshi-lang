@@ -81,6 +81,35 @@ namespace yoi {
 
     }
 
+    wstr escapeString(const wstr &value) {
+        wstr result;
+        for (auto ch : value) {
+            switch (ch) {
+                case L'\\': result += L"\\\\"; break;
+                case L'\"': result += L"\\\""; break;
+                case L'\'': result += L"\\\'"; break;
+                case L'\b': result += L"\\b"; break;
+                case L'\f': result += L"\\f"; break;
+                case L'\n': result += L"\\n"; break;
+                case L'\r': result += L"\\r"; break;
+                case L'\t': result += L"\\t"; break;
+                case L'\033': result += L"\\e"; break;
+                case L'\0': result += L"\\0"; break;
+                default:
+                    if (ch < 32 || ch > 126) {
+                        wchar_t buf[7];
+                        swprintf(buf, 7, L"\\u%04x", (unsigned int)ch);
+                        result += buf;
+                    } else {
+                        result += ch;
+                    }
+                    break;
+            }
+        }
+        return result;
+    }
+
+
     void set_current_file_path(const std::wstring &path) {
         __current_file_path = path;
     }

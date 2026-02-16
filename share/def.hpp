@@ -64,6 +64,22 @@ namespace yoi {
 
     void parseString(std::wistream &input, wstr &value);
 
+    wstr escapeString(const wstr &value);
+
+    template<typename T>
+    std::basic_string<T> trim(const std::basic_string<T> &str) {
+        auto start = str.begin();
+        while (start != str.end() && std::isspace(*start))
+            ++start;
+
+        auto end = str.end();
+        do {
+            --end;
+        } while (end != start && std::isspace(*end));
+
+        return {start, end + 1};
+    }
+
     void set_current_file_path(const std::wstring &path);
 
     std::wstring get_line_hint_for_error(const std::wstring &file, yoi::indexT line, yoi::indexT col);
