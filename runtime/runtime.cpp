@@ -3,7 +3,9 @@
 #include "runtime/memory/memory.h"
 
 // mimalloc requirement
+#ifdef _WIN32
 #pragma comment(lib, "Advapi32.lib")
+#endif
 
 #include <cstdio>
 #include <cstring>
