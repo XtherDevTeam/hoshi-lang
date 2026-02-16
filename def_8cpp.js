@@ -10,6 +10,7 @@ var def_8cpp =
     [ "whereIsHoshiLang", "def_8cpp.html#a5a075458dd6b09c03a78a7fabbe026aa", null ],
     [ "wstring2string", "def_8cpp.html#a013871d7f7daabfe45cda14e4dade8b0", null ],
     [ "yoi_assert", "def_8cpp.html#a85b420532ed69057ad764f367d13c152", null ],
-    [ "__current_file_path", "def_8cpp.html#a147de820f25f66f42a6fd04341fcfd0a", null ],
+    [ "__current_file_path", "def_8cpp.html#a787bc350c77e6250bd7bbbd0f5bb838b", null ],
+    [ "consoleMutex", "def_8cpp.html#a4327aa168cabfce647c9b5d5f1c81185", null ],
     [ "exception_categories", "def_8cpp.html#ada400d4d6310d67a7f568f860146d8a9", null ]
 ];

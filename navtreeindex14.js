@@ -1,5 +1,8 @@
 var NAVTREEINDEX14 =
 {
+"functions_vars_x.html":[32,3,2,22],
+"functions_vars_y.html":[32,3,2,23],
+"functions_vars_z.html":[32,3,2,24],
 "functions_w.html":[32,3,0,22],
 "functions_x.html":[32,3,0,23],
 "functions_y.html":[32,3,0,24],
@@ -246,8 +249,5 @@ var NAVTREEINDEX14 =
 "md_docs_2Finalizers.html":[8],
 "md_docs_2Finalizers.html#autotoc_md40":[8,0],
 "md_docs_2Finalizers.html#autotoc_md41":[8,1],
-"md_docs_2HashMap.html":[9],
-"md_docs_2HashMap.html#autotoc_md43":[9,0],
-"md_docs_2HashMap.html#autotoc_md44":[9,0,0],
-"md_docs_2HashMap.html#autotoc_md45":[9,0,1]
+"md_docs_2HashMap.html":[9]
 };

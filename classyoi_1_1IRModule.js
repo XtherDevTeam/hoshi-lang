@@ -3,6 +3,7 @@ var classyoi_1_1IRModule =
     [ "to_string", "classyoi_1_1IRModule.html#a61fa8c172e7397d729af1135ec6076a6", null ],
     [ "compiled", "classyoi_1_1IRModule.html#aea0f7db75b1a951e55a41705d88c694e", null ],
     [ "dataStructTable", "classyoi_1_1IRModule.html#ad1a8b92c22beb7d3db47942f06b089c3", null ],
+    [ "dependentModules", "classyoi_1_1IRModule.html#a1b1fe146e380de7e9dc097c4fe417d7b", null ],
     [ "enumerationTable", "classyoi_1_1IRModule.html#ae124aa6c0bc800d5f654173ea226da88", null ],
     [ "externTable", "classyoi_1_1IRModule.html#aebd43dc6de0e8fffae2eea221cf7516d", null ],
     [ "funcTemplateAsts", "classyoi_1_1IRModule.html#aa2d453f8ba0f6a5a75c7b81f84cd9899", null ],

@@ -155,6 +155,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a02df2d9d7dc7d8d5a35488c94c980882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace33bfc510d44a5d29e335aa473ee2f5" id="r_ace33bfc510d44a5d29e335aa473ee2f5"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRModule.html#ace33bfc510d44a5d29e335aa473ee2f5">moduleImports</a></td></tr>
 <tr class="separator:ace33bfc510d44a5d29e335aa473ee2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b1fe146e380de7e9dc097c4fe417d7b" id="r_a1b1fe146e380de7e9dc097c4fe417d7b"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRModule.html#a1b1fe146e380de7e9dc097c4fe417d7b">dependentModules</a></td></tr>
+<tr class="separator:a1b1fe146e380de7e9dc097c4fe417d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4784182209a2bae606dc64727a4eb7f" id="r_ab4784182209a2bae606dc64727a4eb7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoi_1_1indexTable.html">yoi::indexTable</a>&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRFunctionDefinition.html">IRFunctionDefinition</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRModule.html#ab4784182209a2bae606dc64727a4eb7f">functionTable</a></td></tr>
 <tr class="separator:ab4784182209a2bae606dc64727a4eb7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c9fc7ca3838d23c357b08dde983dba4" id="r_a8c9fc7ca3838d23c357b08dde983dba4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoi_1_1indexTable.html">yoi::indexTable</a>&lt; <a class="el" href="namespaceyoi.html#ad4e272cc9cf89fa5396bd5396154bde4">yoi::wstr</a>, std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRStructDefinition.html">IRStructDefinition</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1IRModule.html#a8c9fc7ca3838d23c357b08dde983dba4">structTable</a></td></tr>
@@ -212,7 +214,7 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="IR_8cpp_source.html#l00099">99</a> of file <a class="el" href="IR_8cpp_source.html">IR.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="IR_8h_source.html#l00833">IRModule::functionTable</a>, <a class="el" href="IR_8h_source.html#l00839">IRModule::interfaceImplementationTable</a>, <a class="el" href="IR_8h_source.html#l00838">IRModule::interfaceTable</a>, and <a class="el" href="IR_8h_source.html#l00834">IRModule::structTable</a>.</p>
+<p class="reference">References <a class="el" href="IR_8h_source.html#l00834">IRModule::functionTable</a>, <a class="el" href="IR_8h_source.html#l00840">IRModule::interfaceImplementationTable</a>, <a class="el" href="IR_8h_source.html#l00839">IRModule::interfaceTable</a>, and <a class="el" href="IR_8h_source.html#l00835">IRModule::structTable</a>.</p>
 
 </div>
 </div>
@@ -245,7 +247,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00840">840</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00841">841</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+
+</div>
+</div>
+<a id="a1b1fe146e380de7e9dc097c4fe417d7b" name="a1b1fe146e380de7e9dc097c4fe417d7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b1fe146e380de7e9dc097c4fe417d7b">&#9670;&#160;</a></span>dependentModules</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::set&lt;<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&gt; dependentModules</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00833">833</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -261,7 +279,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00837">837</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00838">838</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -277,7 +295,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00836">836</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00837">837</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +311,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00842">842</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00843">843</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -309,7 +327,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00849">849</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00850">850</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -325,7 +343,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00833">833</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00834">834</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00099">IRModule::to_string()</a>.</p>
 
@@ -343,7 +361,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00835">835</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00836">836</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -375,7 +393,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00839">839</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00840">840</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00099">IRModule::to_string()</a>.</p>
 
@@ -393,7 +411,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00838">838</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00839">839</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00099">IRModule::to_string()</a>.</p>
 
@@ -443,7 +461,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00851">851</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00852">852</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -459,7 +477,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00834">834</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00835">835</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="IR_8cpp_source.html#l00099">IRModule::to_string()</a>.</p>
 
@@ -477,7 +495,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00843">843</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00844">844</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -493,7 +511,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00845">845</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00846">846</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -509,7 +527,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00844">844</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00845">845</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -525,7 +543,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00846">846</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00847">847</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -541,7 +559,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00848">848</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00849">849</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>
@@ -557,7 +575,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00847">847</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IR_8h_source.html#l00848">848</a> of file <a class="el" href="IR_8h_source.html">IR.h</a>.</p>
 
 </div>
 </div>

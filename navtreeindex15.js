@@ -1,5 +1,8 @@
 var NAVTREEINDEX15 =
 {
+"md_docs_2HashMap.html#autotoc_md43":[9,0],
+"md_docs_2HashMap.html#autotoc_md44":[9,0,0],
+"md_docs_2HashMap.html#autotoc_md45":[9,0,1],
 "md_docs_2IR.html":[11],
 "md_docs_2IR.html#autotoc_md49":[11,0],
 "md_docs_2IR.html#autotoc_md50":[11,0,0],
@@ -232,22 +235,19 @@ var NAVTREEINDEX15 =
 "namespacemagic__enum_1_1detail.html#aeb24ce9f57fa538036bc1b5e7612f045":[31,0,0,2,24],
 "namespacemagic__enum_1_1detail.html#aecb503bf656bb14b3d2d3fa9198c3f04":[31,0,0,2,31],
 "namespacemagic__enum_1_1detail.html#aeed0690739f2ba6e082f95b0c719afaf":[31,0,0,2,30],
-"namespacemembers.html":[31,1,0,0],
 "namespacemembers.html":[31,1,0],
+"namespacemembers.html":[31,1,0,0],
 "namespacemembers_a.html":[31,1,0,1],
 "namespacemembers_c.html":[31,1,0,2],
 "namespacemembers_d.html":[31,1,0,3],
 "namespacemembers_e.html":[31,1,0,4],
 "namespacemembers_enum.html":[31,1,4],
 "namespacemembers_f.html":[31,1,0,5],
-"namespacemembers_func.html":[31,1,1,0],
 "namespacemembers_func.html":[31,1,1],
+"namespacemembers_func.html":[31,1,1,0],
 "namespacemembers_func_e.html":[31,1,1,1],
 "namespacemembers_func_f.html":[31,1,1,2],
 "namespacemembers_func_g.html":[31,1,1,3],
 "namespacemembers_func_i.html":[31,1,1,4],
-"namespacemembers_func_l.html":[31,1,1,5],
-"namespacemembers_func_m.html":[31,1,1,6],
-"namespacemembers_func_n.html":[31,1,1,7],
-"namespacemembers_func_o.html":[31,1,1,8]
+"namespacemembers_func_l.html":[31,1,1,5]
 };
