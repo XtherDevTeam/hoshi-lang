@@ -3,10 +3,12 @@
 //
 
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <share/def.hpp>
+#include <stdlib.h>
 
 namespace yoi {
     thread_local yoi::wstr __current_file_path = L"";
@@ -170,11 +172,15 @@ namespace yoi {
         std::string path;
         int length, dirnameLength;
 
-        length = wai_getExecutablePath(nullptr, 0, &dirnameLength);
-        path.resize(length + 1);
-        wai_getExecutablePath(path.data(), length, &dirnameLength);
-        path[length] = '\0';
-        return yoi::string2wstring(
-            path.substr(0, path.rfind(std::filesystem::path::preferred_separator)));
+        if (auto e = getenv("HOSHI_HOME"); e != nullptr) {
+            return string2wstring(e) + L"/bin";
+        } else {
+            length = wai_getExecutablePath(nullptr, 0, &dirnameLength);
+            path.resize(length + 1);
+            wai_getExecutablePath(path.data(), length, &dirnameLength);
+            path[length] = '\0';
+            return yoi::string2wstring(
+                path.substr(0, path.rfind(std::filesystem::path::preferred_separator)));
+        }
     }
 } // namespace yoi
