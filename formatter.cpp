@@ -18,6 +18,7 @@ void printUsage(const char* programName) {
               << "  --indent-size <n>                   Set indentation size (default: 4).\n"
               << "  --indent-type <space|tab>           Set indentation type (default: space).\n"
               << "  --brace-style <attached|newline>    Set brace style (default: attached).\n"
+              << "  --max-width <n>                     Set maximum line width (default: 80).\n"
               << "  -h, --help                          Display this help message.\n";
 }
 
@@ -48,6 +49,9 @@ int main(int argc, const char **argv) {
                 else if (style == "newline") opt.braceType = yoi::FormatOption::BraceType::NewLine;
                 else { std::cerr << "Error: Invalid brace-style '" << style << "'.\n"; return 1; }
             } else { std::cerr << "Error: --brace-style requires attached|newline.\n"; return 1; }
+        } else if (arg == "--max-width") {
+            if (i + 1 < argc) opt.maxWidth = std::stoul(argv[++i]);
+            else { std::cerr << "Error: --max-width requires a number.\n"; return 1; }
         } else if (arg == "-h" || arg == "--help") {
             printUsage(argv[0]);
             return 0;

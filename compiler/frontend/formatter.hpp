@@ -19,10 +19,11 @@ namespace yoi {
             Attached,
             NewLine
         } braceType{FormatOption::BraceType::Attached};
+        size_t maxWidth{80};
 
         FormatOption() = default;
 
-        FormatOption(IndentType indentType, size_t indentSize, BraceType braceType);
+        FormatOption(IndentType indentType, size_t indentSize, BraceType braceType, size_t maxWidth = 80);
     };
 
     void formatToken(std::wostream &os, FormatOption option, const lexer::token &token);
@@ -39,14 +40,18 @@ namespace yoi {
 
     private:
         size_t indentLevel{0};
+        size_t currentColumn{0};
         size_t lastCommentIdx{0};
         uint64_t lastLine{0};
         void indent();
         void newLine();
+        void write(const yoi::wstr &s);
         bool printComments(AST *node);
         bool printComments(uint64_t line, uint64_t col);
+        bool willFit(invocationArguments *node);
 
     public:
+        void format(const lexer::token &token);
         void format(basicLiterals *node);
 
         void format(identifier *node);

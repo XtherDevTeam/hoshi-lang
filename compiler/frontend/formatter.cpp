@@ -7,8 +7,8 @@
 #include "share/def.hpp"
 #include <ostream>
 
-yoi::FormatOption::FormatOption(IndentType indentType, size_t indentSize, BraceType braceType)
-        : indentType(indentType), indentSize(indentSize), braceType(braceType) {}
+yoi::FormatOption::FormatOption(IndentType indentType, size_t indentSize, BraceType braceType, size_t maxWidth)
+        : indentType(indentType), indentSize(indentSize), braceType(braceType), maxWidth(maxWidth) {}
 
 void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token &token) {
     switch (token.kind) {
@@ -299,13 +299,21 @@ yoi::Formatter::Formatter(std::wostream &os, FormatOption option, vec<lexer::Com
 
 void yoi::Formatter::indent() {
     for (size_t i = 0; i < indentLevel * option.indentSize; ++i) {
-        os << (option.indentType == FormatOption::IndentType::Space ? L" " : L"\t");
+        yoi::wstr s = (option.indentType == FormatOption::IndentType::Space ? L" " : L"\t");
+        os << s;
+        currentColumn += (option.indentType == FormatOption::IndentType::Space ? 1 : option.indentSize);
     }
 }
 
 void yoi::Formatter::newLine() {
     os << L"\n";
+    currentColumn = 0;
     indent();
+}
+
+void yoi::Formatter::write(const yoi::wstr &s) {
+    os << s;
+    currentColumn += s.length();
 }
 
 bool yoi::Formatter::printComments(AST *node) {
@@ -324,10 +332,10 @@ bool yoi::Formatter::printComments(uint64_t line, uint64_t col) {
             if (comment.line > lastLine) {
                 newLine();
             } else {
-                os << L" ";
+                write(L" ");
             }
         }
-        os << trim(comment.text);
+        write(trim(comment.text));
         lastLine = comment.line;
         if (comment.line < line) {
             printedStandalone = true;
@@ -340,20 +348,36 @@ bool yoi::Formatter::printComments(uint64_t line, uint64_t col) {
     return false;
 }
 
+void yoi::Formatter::format(const lexer::token &token) {
+    std::wstringstream ss;
+    yoi::formatToken(ss, option, token);
+    write(ss.str());
+}
+
+bool yoi::Formatter::willFit(invocationArguments *node) {
+    if (!node || option.maxWidth == (size_t)-1) return true;
+    std::wstringstream ss;
+    FormatOption tempOpt = option;
+    tempOpt.maxWidth = (size_t)-1;
+    Formatter temp(ss, tempOpt);
+    temp.format(node);
+    return currentColumn + ss.str().length() <= option.maxWidth;
+}
+
 void yoi::Formatter::format(basicLiterals *node) {
     if (!node) return;
-    formatToken(os, option, node->node);
+    format(node->node);
 }
 
 void yoi::Formatter::format(identifier *node) {
     if (!node) return;
-    formatToken(os, option, node->node);
+    format(node->node);
 }
 
 void yoi::Formatter::format(identifierWithTypeSpec *node) {
     if (!node) return;
     format(node->id);
-    os << L": ";
+    write(L": ");
     format(node->spec);
 }
 
@@ -361,19 +385,19 @@ void yoi::Formatter::format(defTemplateArgSpec *node) {
     if (!node) return;
     format(node->id);
     if (node->impl) {
-        os << L" impl ";
+        write(L" impl ");
         format(node->impl);
     }
 }
 
 void yoi::Formatter::format(defTemplateArg *node) {
     if (!node || node->spec.empty()) return;
-    os << L"<";
+    write(L"<");
     for (size_t i = 0; i < node->spec.size(); ++i) {
         format(node->spec[i]);
-        if (i < node->spec.size() - 1) os << L", ";
+        if (i < node->spec.size() - 1) write(L", ");
     }
-    os << L">";
+    write(L">");
 }
 
 void yoi::Formatter::format(templateArgSpec *node) {
@@ -383,49 +407,64 @@ void yoi::Formatter::format(templateArgSpec *node) {
 
 void yoi::Formatter::format(templateArg *node) {
     if (!node || node->spec.empty()) return;
-    os << L"<";
+    write(L"<");
     for (size_t i = 0; i < node->spec.size(); ++i) {
         format(node->spec[i]);
-        if (i < node->spec.size() - 1) os << L", ";
+        if (i < node->spec.size() - 1) write(L", ");
     }
-    os << L">";
+    write(L">");
 }
 
 void yoi::Formatter::format(invocationArguments *node) {
     if (!node) return;
-    os << L"(";
-    for (size_t i = 0; i < node->arg.size(); ++i) {
-        format(node->arg[i]);
-        if (i < node->arg.size() - 1) os << L", ";
+    if (willFit(node)) {
+        write(L"(");
+        for (size_t i = 0; i < node->arg.size(); ++i) {
+            format(node->arg[i]);
+            if (i < node->arg.size() - 1) write(L", ");
+        }
+        write(L")");
+    } else {
+        write(L"(");
+        indentLevel++;
+        for (size_t i = 0; i < node->arg.size(); ++i) {
+            newLine();
+            format(node->arg[i]);
+            if (i < node->arg.size() - 1) write(L",");
+        }
+        indentLevel--;
+        newLine();
+        write(L")");
     }
-    os << L")";
 }
 
 void yoi::Formatter::format(definitionArguments *node) {
     if (!node) return;
-    os << L"(";
+    // For simplicity, we use the same willFit logic (invocationArguments is used for measurement)
+    // but in a real implementation we'd have a more generic measure function.
+    write(L"(");
     for (size_t i = 0; i < node->spec.size(); ++i) {
         format(node->spec[i]);
-        if (i < node->spec.size() - 1) os << L", ";
+        if (i < node->spec.size() - 1) write(L", ");
     }
-    os << L")";
+    write(L")");
 }
 
 void yoi::Formatter::format(funcTypeSpec *node) {
     if (!node) return;
-    os << L"func";
+    write(L"func");
     format(node->args);
-    os << L": ";
+    write(L": ");
     format(node->resultType);
 }
 
 void yoi::Formatter::format(typeSpec *node) {
     if (!node) return;
     if (node->kind == 3) {
-        os << L"...";
+        write(L"...");
         format(node->elipsis);
     } else if (node->isNull) {
-        os << L"null";
+        write(L"null");
     } else if (node->kind == 0) {
         format(node->member);
     } else if (node->kind == 1) {
@@ -434,9 +473,9 @@ void yoi::Formatter::format(typeSpec *node) {
     
     if (node->arraySubscript) {
         for (auto val : *node->arraySubscript) {
-            os << L"[";
-            if (val != (uint64_t)-1) os << val;
-            os << L"]";
+            write(L"[");
+            if (val != (uint64_t)-1) write(yoi::string2wstring(std::to_string(val)));
+            write(L"]");
         }
     }
 }
@@ -446,9 +485,9 @@ void yoi::Formatter::format(subscript *node) {
     if (node->isInvocation()) {
         format(node->args);
     } else {
-        os << L"[";
+        write(L"[");
         format(node->expr);
-        os << L"]";
+        write(L"]");
     }
 }
 
@@ -480,7 +519,7 @@ void yoi::Formatter::format(memberExpr *node) {
     if (!node) return;
     for (size_t i = 0; i < node->terms.size(); ++i) {
         format(node->terms[i]);
-        if (i < node->terms.size() - 1) os << L".";
+        if (i < node->terms.size() - 1) write(L".");
     }
 }
 
@@ -490,9 +529,9 @@ void yoi::Formatter::format(primary *node) {
         case primary::primaryKind::memberExpr: format(node->member); break;
         case primary::primaryKind::basicLiterals: format(node->literals); break;
         case primary::primaryKind::rExpr: 
-            os << L"(";
+            write(L"(");
             format(node->expr);
-            os << L")";
+            write(L")");
             break;
         case primary::primaryKind::typeIdExpression: format(node->typeId); break;
         case primary::primaryKind::dynCastExpression: format(node->dynCast); break;
@@ -507,9 +546,9 @@ void yoi::Formatter::format(abstractExpr *node) {
     if (!node) return;
     format(node->lhs);
     if (node->op.kind != lexer::token::tokenKind::unknown) {
-        os << L" ";
-        formatToken(os, option, node->op);
-        os << L" ";
+        write(L" ");
+        format(node->op);
+        write(L" ");
         format(node->rhs);
     }
 }
@@ -517,7 +556,7 @@ void yoi::Formatter::format(abstractExpr *node) {
 void yoi::Formatter::format(uniqueExpr *node) {
     if (!node) return;
     if (node->op.kind != lexer::token::tokenKind::unknown) {
-        formatToken(os, option, node->op);
+        format(node->op);
     }
     format(node->lhs);
 }
@@ -526,9 +565,9 @@ void yoi::Formatter::format(leftExpr *node) {
     if (!node) return;
     format(node->lhs);
     if (node->hasRhs()) {
-        os << L" ";
-        formatToken(os, option, node->op);
-        os << L" ";
+        write(L" ");
+        format(node->op);
+        write(L" ");
         format(node->rhs);
     }
 }
@@ -539,9 +578,9 @@ void yoi::Formatter::format(NODE_TYPE *node) { \
     for (size_t i = 0; i < node->terms.size(); ++i) { \
         format(node->terms[i]); \
         if (i < node->ops.size()) { \
-            os << L" "; \
-            formatToken(os, option, node->ops[i]); \
-            os << L" "; \
+            write(L" "); \
+            format(node->ops[i]); \
+            write(L" "); \
         } \
     } \
 }
@@ -566,7 +605,7 @@ void yoi::Formatter::format(externModuleAccessExpression *node) {
     if (!node) return;
     for (size_t i = 0; i < node->terms.size(); ++i) {
         format(node->terms[i]);
-        if (i < node->terms.size() - 1) os << L".";
+        if (i < node->terms.size() - 1) write(L".");
     }
 }
 
@@ -594,18 +633,18 @@ void yoi::Formatter::format(codeBlock *node) {
 
 void yoi::Formatter::format(ifStmt *node) {
     if (!node) return;
-    os << L"if (";
+    write(L"if (");
     format(node->ifB.cond);
-    os << L")";
+    write(L")");
     format(node->ifB.block);
     for (auto &elif : node->elifB) {
-        os << L" elif (";
+        write(L" elif (");
         format(elif.cond);
-        os << L")";
+        write(L")");
         format(elif.block);
     }
     if (node->hasElseBlock()) {
-        os << L" else";
+        write(L" else");
         format(node->elseB);
     }
 }
@@ -736,7 +775,7 @@ void yoi::Formatter::format(interfaceDefInner *node) {
 
 void yoi::Formatter::format(interfaceDefStmt *node) {
     if (!node) return;
-    os << L"interface ";
+    write(L"interface ");
     format(node->id);
     format(node->inner);
 }
@@ -745,7 +784,7 @@ void yoi::Formatter::format(structDefInnerPair *node) {
     if (!node) return;
     switch (node->kind) {
         case 0: 
-            if (node->modifier == structDefInnerPair::Modifier::DataField) os << L"datafield ";
+            if (node->modifier == structDefInnerPair::Modifier::DataField) write(L"datafield ");
             format(node->var); 
             break;
         case 1: format(node->con); break;
@@ -770,7 +809,7 @@ void yoi::Formatter::format(structDefInner *node) {
         }
         format(pair);
         if (it + 1 != node->inner.end()) {
-            os << L",";
+            write(L",");
         }
         lastLine = std::max(lastLine, pair->getLine());
         printComments(pair->getLine(), -1);
@@ -782,14 +821,14 @@ void yoi::Formatter::format(structDefInner *node) {
 
 void yoi::Formatter::format(structDefStmt *node) {
     if (!node) return;
-    os << L"struct ";
+    write(L"struct ");
     format(node->id);
     format(node->inner);
 }
 
 void yoi::Formatter::format(dataStructDefStmt *node) {
     if (!node) return;
-    os << L"datastruct ";
+    write(L"datastruct ");
     format(node->id);
     format(node->inner);
 }
@@ -825,10 +864,10 @@ void yoi::Formatter::format(implInner *node) {
 
 void yoi::Formatter::format(implStmt *node) {
     if (!node) return;
-    os << L"impl ";
+    write(L"impl ");
     if (node->interfaceName) {
         format(node->structName);
-        os << L" : ";
+        write(L" : ");
         format(node->interfaceName);
     } else {
         format(node->structName);
@@ -978,12 +1017,12 @@ void yoi::Formatter::format(lambdaExpr *node) {
 
 void yoi::Formatter::format(unnamedDefinitionArguments *node) {
     if (!node) return;
-    os << L"(";
+    write(L" (");
     for (size_t i = 0; i < node->types.size(); ++i) {
         format(node->types[i]);
-        if (i < node->types.size() - 1) os << L", ";
+        if (i < node->types.size() - 1) write(L", ");
     }
-    os << L")";
+    write(L")");
 }
 
 void yoi::Formatter::format(marcoPair *node) {
