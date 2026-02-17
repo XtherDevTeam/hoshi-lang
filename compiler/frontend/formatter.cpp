@@ -18,7 +18,7 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
             os << token.strVal;
             break;
         case lexer::token::tokenKind::character:
-            os << '\'' << yoi::escapeString(yoi::wstr(1, token.basicVal.vShort)) << '\'';
+            os << '\'' << yoi::escapeString(token.strVal) << '\'';
             break;
         case lexer::token::tokenKind::string:
             os << '\"' << yoi::escapeString(token.strVal) << '\"';
@@ -454,7 +454,7 @@ void yoi::Formatter::format(funcTypeSpec *node) {
     if (!node) return;
     write(L"func");
     format(node->args);
-    write(L": ");
+    write(L" : ");
     format(node->resultType);
 }
 
@@ -673,7 +673,7 @@ void yoi::Formatter::format(forEachStmt *node) {
     if (!node) return;
     os << L"forEach (";
     format(node->var);
-    os << L": ";
+    os << L" : ";
     format(node->container);
     os << L")";
     format(node->block);
@@ -730,14 +730,14 @@ void yoi::Formatter::format(useStmt *node) {
 
 void yoi::Formatter::format(funcDefStmt *node) {
     if (!node) return;
+    os << L"func ";
     for (auto &attr : node->attrs) {
         formatToken(os, option, attr);
         os << L" ";
     }
-    os << L"func ";
     format(node->id);
     format(node->args);
-    os << L": ";
+    os << L" : ";
     format(node->resultType);
     format(node->block);
 }
@@ -1003,12 +1003,12 @@ void yoi::Formatter::format(newExpression *node) {
 
 void yoi::Formatter::format(lambdaExpr *node) {
     if (!node) return;
-    os << L"func [";
+    os << L"func[";
     for (size_t i = 0; i < node->captures.size(); ++i) {
         format(node->captures[i]);
         if (i < node->captures.size() - 1) os << L", ";
     }
-    os << L"]";
+    os << L"] ";
     format(node->args);
     os << L": ";
     format(node->resultType);
@@ -1144,7 +1144,6 @@ void yoi::Formatter::format(hoshiModule *node) {
         printComments((*it)->getLine(), -1);
     }
     printComments(-1, -1);
-    os << L"\n";
 }
 
 void yoi::Formatter::format(innerMethodDecl *node) {
@@ -1156,7 +1155,7 @@ void yoi::Formatter::format(innerMethodDecl *node) {
     format(node->name);
     format(node->args);
     if (node->resultType) {
-        os << L": ";
+        os << L" : ";
         format(node->resultType);
     }
 }

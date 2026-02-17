@@ -13,7 +13,7 @@ enum TestEnum {
 
 func main() : int {
     if (TestEnum.A != 1048576) {
-        runtime.puts("TestEnum.A is not 1048576")   
+        runtime.puts("TestEnum.A is not 1048576")
         return 1
     }
     let status = ServerState.Running

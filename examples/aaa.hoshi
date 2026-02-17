@@ -16,7 +16,7 @@ impl Point {
 }
 
 impl Point : Addable {
-    add() : int {
+    add(): int {
         return this.x + this.y
     }
 }
