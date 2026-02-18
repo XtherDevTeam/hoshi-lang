@@ -186,6 +186,8 @@ namespace yoi {
             tok.kind = token::tokenKind::kDataStruct;
         } else if (tempStr == L"datafield") {
             tok.kind = token::tokenKind::kDataField;
+        } else if (tempStr == L"yield") {
+            tok.kind = token::tokenKind::kYield;
         } else if (tempStr == L"operator") {
             scan();
             return operatorStart();

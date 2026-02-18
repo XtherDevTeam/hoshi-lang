@@ -4413,25 +4413,33 @@ namespace yoi {
 
         // Bidirectional transitive invalidation
         std::queue<yoi::indexT> q;
-        for (auto id : dirtyModules) q.push(id);
 
+        for (auto id : dirtyModules) q.push(id);
         while (!q.empty()) {
             yoi::indexT u = q.front();
             q.pop();
 
             auto const &uMod = allModules.at(u);
-            
-            for (auto const &[name, v] : uMod->moduleImports) {
-                if (v != HOSHI_COMPILER_CTX_GLOB_ID_CONST && dirtyModules.find(v) == dirtyModules.end()) {
-                    dirtyModules.insert(v);
-                    q.push(v);
-                }
-            }
 
             for (auto v : uMod->dependentModules) {
                 if (dirtyModules.find(v) == dirtyModules.end()) {
                     dirtyModules.insert(v);
                     q.push(v);
+                }
+            }
+        }
+
+        for (auto id : dirtyModules) q.push(id);
+        while (!q.empty()) {
+            yoi::indexT u = q.front();
+            q.pop();
+
+            auto const &uMod = allModules.at(u);
+
+            for (auto v : uMod->moduleImports) {
+                if (dirtyModules.find(v.second) == dirtyModules.end()) {
+                    dirtyModules.insert(v.second);
+                    q.push(v.second);
                 }
             }
         }

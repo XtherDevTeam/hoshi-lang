@@ -215,6 +215,8 @@ namespace yoi {
         void format(constructorDecl *node);
 
         void format(constructorDef *node);
+
+        void format(yieldStmt *node);
     };
 }
 

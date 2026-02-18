@@ -468,6 +468,7 @@ namespace yoi {
             NoRawAndNullOptimization,
             Intrinsic,
             Throws,
+            Generator
         };
 
         yoi::wstr name;

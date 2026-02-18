@@ -1866,6 +1866,7 @@ namespace yoi {
         codeBlock *codeBlockVal = nullptr;
         tryCatchStmt *tryCatchStmtVal = nullptr;
         throwStmt *throwStmtVal = nullptr;
+        yieldStmt *yieldStmtVal = nullptr;
         rExpr *rExprVal = nullptr;
 
         lexer::token node_start_token = lex.curToken;
@@ -1932,6 +1933,12 @@ namespace yoi {
         parse(codeBlockVal, lex);
         if (codeBlockVal) {
             o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::codeBlock, marco, {codeBlockVal}};
+            return;
+        }
+
+        parse(yieldStmtVal, lex);
+        if (yieldStmtVal) {
+            o = new inCodeBlockStmt{node_start_token, inCodeBlockStmt::vKind::yieldStmt, marco, {yieldStmtVal}};
             return;
         }
 
@@ -2850,6 +2857,23 @@ namespace yoi {
         lex.scan();
         lex.dropState();
         o = new bracedInitalizerList{node_start_token, expressions};
+    }
+
+    void parse(yieldStmt *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kYield) {
+            o = nullptr;
+            return;
+        }
+        yoi::lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        rExpr *expr = nullptr;
+        parse(expr, lex);
+        if (!expr) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected rExpr after `yield` in yieldStmt");
+            return;
+        }
+        o = new yieldStmt{node_start_token, expr};
     }
 } // namespace yoi
 

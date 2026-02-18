@@ -117,6 +117,7 @@ namespace yoi {
                 kEnum,
                 kDataStruct,
                 kDataField,
+                kYield,
                 eof,
             } kind;
 

@@ -716,6 +716,7 @@ void yoi::Formatter::format(inCodeBlockStmt *node) {
         case inCodeBlockStmt::vKind::tryCatchStmt: format((tryCatchStmt *)node->value.ptr); break;
         case inCodeBlockStmt::vKind::throwStmt: format((throwStmt *)node->value.ptr); break;
         case inCodeBlockStmt::vKind::rExpr: format(node->value.rExprVal); break;
+        case inCodeBlockStmt::vKind::yieldStmt: format(node->value.yieldStmtVal); break;
     }
 }
 
@@ -879,7 +880,7 @@ void yoi::Formatter::format(letAssignmentPair *node) {
     if (!node) return;
     format(node->lhs);
     if (node->type) {
-        os << L": ";
+        os << L" : ";
         format(node->type);
     }
     if (node->rhs) {
@@ -1010,7 +1011,7 @@ void yoi::Formatter::format(lambdaExpr *node) {
     }
     os << L"] ";
     format(node->args);
-    os << L": ";
+    os << L" : ";
     format(node->resultType);
     format(node->block);
 }
@@ -1169,7 +1170,7 @@ void yoi::Formatter::format(innerMethodDef *node) {
     format(node->name);
     format(node->args);
     if (node->resultType) {
-        os << L": ";
+        os << L" : ";
         format(node->resultType);
     }
     format(node->block);
@@ -1188,4 +1189,10 @@ void yoi::Formatter::format(constructorDef *node) {
     if (node->tempArgs) format(node->tempArgs);
     format(node->args);
     format(node->block);
+}
+
+void yoi::Formatter::format(yieldStmt *node) {
+    if (!node) return;
+    os << L"yield ";
+    format(node->expr);
 }

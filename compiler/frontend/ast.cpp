@@ -1242,4 +1242,11 @@ namespace yoi {
             finalizeAST(expr);
         delete ptr;
     }
+    
+    void finalizeAST(yieldStmt *ptr) {
+        if (ptr->expr) {
+            finalizeAST(ptr->expr);
+        }
+        delete ptr;
+    }
 } // namespace yoi

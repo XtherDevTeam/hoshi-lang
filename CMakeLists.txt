@@ -91,7 +91,11 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
 
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
 
+target_compile_definitions(hoshi_lang PRIVATE DISABLE_SYMBOL_TRACING_FEATURE)
+
 add_executable(hoshi-format formatter.cpp ${HOSHI_LANG_INCLUDE})
+
+target_compile_definitions(hoshi-format PRIVATE ENABLE_SYMBOL_TRACING_FEATURE)
 
 add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLUDE})
 

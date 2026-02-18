@@ -196,6 +196,8 @@ namespace yoi {
 
     class bracedInitalizerList;
 
+    class yieldStmt;
+
     class bracedInitalizerList : public AST {
       public:
         yoi::vec<yoi::rExpr *> exprs;
@@ -893,6 +895,7 @@ namespace yoi {
             codeBlock,
             tryCatchStmt,
             throwStmt,
+            yieldStmt,
             rExpr,
         } kind;
 
@@ -907,6 +910,7 @@ namespace yoi {
             breakStmt *breakStmtVal;
             letStmt *letStmtVal;
             codeBlock *codeBlockVal;
+            yieldStmt *yieldStmtVal;
             rExpr *rExprVal;
             forStmt *forStmtVal;
             void *ptr;
@@ -1062,6 +1066,11 @@ namespace yoi {
       public:
         identifier *name;
         lexer::token value; // optional
+    };
+
+    class yieldStmt : public AST {
+      public:
+        rExpr *expr;
     };
 
     void finalizeAST(exportDecl *ptr);
@@ -1225,6 +1234,8 @@ namespace yoi {
     void finalizeAST(enumerationPair *ptr);
 
     void finalizeAST(bracedInitalizerList *ptr);
+
+    void finalizeAST(yieldStmt *ptr);
 } // namespace yoi
 #endif // HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop
