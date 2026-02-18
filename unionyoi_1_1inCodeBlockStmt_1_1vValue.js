@@ -11,5 +11,6 @@ var unionyoi_1_1inCodeBlockStmt_1_1vValue =
     [ "ptr", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#add9af9569af79ec26dd741fb226b38ba", null ],
     [ "returnStmtVal", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a4c2ef546adead0ff4686bcac2590e7c1", null ],
     [ "rExprVal", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2dfcfa8f7a03e306419b7a727e14bdaa", null ],
-    [ "whileStmtVal", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90", null ]
+    [ "whileStmtVal", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a2ed54e21b2b0ae184f8e3a2cf9b11a90", null ],
+    [ "yieldStmtVal", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a1e51e97d7c931de36fea8521b0e4ba2a", null ]
 ];

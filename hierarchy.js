@@ -84,7 +84,8 @@ var hierarchy =
       [ "uniqueExpr", "classyoi_1_1uniqueExpr.html", null ],
       [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", null ],
       [ "useStmt", "classyoi_1_1useStmt.html", null ],
-      [ "whileStmt", "classyoi_1_1whileStmt.html", null ]
+      [ "whileStmt", "classyoi_1_1whileStmt.html", null ],
+      [ "yieldStmt", "classyoi_1_1yieldStmt.html", null ]
     ] ],
     [ "bool_constant", null, [
       [ "has_is_flags< T, std::void_t< decltype(customize::enum_range< T >::is_flags)> >", "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html", null ],

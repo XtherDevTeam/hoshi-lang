@@ -8,7 +8,7 @@ var indexSectionsWithContent =
   5: "_abcdefghiklmnopqrstuvwxyz",
   6: "cdefinprtuvwy",
   7: "bcefhimnopstuv",
-  8: "abcdefghijklmnprstuvw",
+  8: "abcdefghijklmnprstuvwy",
   9: "o",
   10: "_efghlmpstwy",
   11: "abcdefghijlmnoprstvw实接的直"

@@ -85,6 +85,7 @@ var classyoi_1_1Formatter =
     [ "format", "classyoi_1_1Formatter.html#acf5c9d7de50a3759910a2a92a0d82cb1", null ],
     [ "format", "classyoi_1_1Formatter.html#a57bace59919bbe57c9ffa96e821a0cf6", null ],
     [ "format", "classyoi_1_1Formatter.html#a352efa049f968cc87662ce155a0884bb", null ],
+    [ "format", "classyoi_1_1Formatter.html#acc2d63a19ea7017cc891f3afa2219620", null ],
     [ "indent", "classyoi_1_1Formatter.html#a189eba34a209327583f582f69ce4dfe4", null ],
     [ "newLine", "classyoi_1_1Formatter.html#a24d44c9238b3bd0440c8e28f37616318", null ],
     [ "printComments", "classyoi_1_1Formatter.html#acc65edb30bbbf0427808e8792bdcc85d", null ],

@@ -13,6 +13,7 @@ var classyoi_1_1inCodeBlockStmt =
       [ "codeBlock", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaff6bdb31a97ea58712d35004a9ec0fea", null ],
       [ "tryCatchStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea9c7f1419b92e397caf445a6c53793eb9", null ],
       [ "throwStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7", null ],
+      [ "yieldStmt", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa10f4454acc5ff676371e8b759cd0f81", null ],
       [ "rExpr", "classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea10ebdc819dc33de0b62a6e2f74d5870c", null ]
     ] ],
     [ "getKind", "classyoi_1_1inCodeBlockStmt.html#a4cd86c482e3b1e5d5242551d7c334f9d", null ],

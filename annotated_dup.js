@@ -164,7 +164,8 @@ var annotated_dup =
       [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", "classyoi_1_1unnamedDefinitionArguments" ],
       [ "useStmt", "classyoi_1_1useStmt.html", "classyoi_1_1useStmt" ],
       [ "visitor", "classyoi_1_1visitor.html", "classyoi_1_1visitor" ],
-      [ "whileStmt", "classyoi_1_1whileStmt.html", "classyoi_1_1whileStmt" ]
+      [ "whileStmt", "classyoi_1_1whileStmt.html", "classyoi_1_1whileStmt" ],
+      [ "yieldStmt", "classyoi_1_1yieldStmt.html", "classyoi_1_1yieldStmt" ]
     ] ],
     [ "AllocatedMemoryList", "structAllocatedMemoryList.html", "structAllocatedMemoryList" ],
     [ "HPerfContext", "structHPerfContext.html", "structHPerfContext" ],

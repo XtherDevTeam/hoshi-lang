@@ -85,6 +85,7 @@ var ast_8hpp =
     [ "unnamedDefinitionArguments", "classyoi_1_1unnamedDefinitionArguments.html", "classyoi_1_1unnamedDefinitionArguments" ],
     [ "enumerationDefinition", "classyoi_1_1enumerationDefinition.html", "classyoi_1_1enumerationDefinition" ],
     [ "enumerationPair", "classyoi_1_1enumerationPair.html", "classyoi_1_1enumerationPair" ],
+    [ "yieldStmt", "classyoi_1_1yieldStmt.html", "classyoi_1_1yieldStmt" ],
     [ "finalizeAST", "ast_8hpp.html#a30a0b5978f8b8e8c023debb9ac86e21c", null ],
     [ "finalizeAST", "ast_8hpp.html#ab5309c729caab758c7f25ac61cd34d53", null ],
     [ "finalizeAST", "ast_8hpp.html#ac59b996aa6858ed5c3f3fb4416d9031b", null ],
@@ -165,5 +166,6 @@ var ast_8hpp =
     [ "finalizeAST", "ast_8hpp.html#a4b3d708e6e43dd3c1a4acbc0f671ef45", null ],
     [ "finalizeAST", "ast_8hpp.html#ac401c077074f29513030701ef718fc20", null ],
     [ "finalizeAST", "ast_8hpp.html#a6810d05945e9ffd02c155c63845bc30f", null ],
-    [ "finalizeAST", "ast_8hpp.html#a50a63064721d63461fe152a633004009", null ]
+    [ "finalizeAST", "ast_8hpp.html#a50a63064721d63461fe152a633004009", null ],
+    [ "finalizeAST", "ast_8hpp.html#aed7adb79d19f7e7ab303ece0047d8654", null ]
 ];
