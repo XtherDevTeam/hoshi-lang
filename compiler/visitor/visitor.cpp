@@ -5522,7 +5522,7 @@ namespace yoi {
         auto ctxIndex = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().lookup(L"__context__");
         auto ctxType = moduleContext->getIRBuilder().irFuncDefinition()->returnType;
         moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, ctxIndex}, ctxType);
-        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, yoi::indexT(0)}, moduleContext->getCompilerContext()->getUnsignedObjectType());
+        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}}, moduleContext->getCompilerContext()->getUnsignedObjectType());
 
         if (stmt->expr) {
             visit(stmt->expr);
@@ -5587,10 +5587,10 @@ namespace yoi {
             builtinModule->functionTable[generatorConstructorIndex]
         });
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(1)}, moduleContext->getCompilerContext()->getUnsignedObjectType());
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
-        moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, yoi::indexT(0)});
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{yoi::indexT(1)}}, moduleContext->getCompilerContext()->getUnsignedObjectType());
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}}, generatorContextType);
+        moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}});
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}}, generatorContextType);
         moduleContext->getIRBuilder().retOp();
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
@@ -5603,10 +5603,10 @@ namespace yoi {
         moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
         // in the first suspend, we just only return the allocated generator context, but doing nothing.
         // we only begin yielding value after first resume.
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}}, generatorContextType);
         moduleContext->getIRBuilder().resumeOp();
-        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
-        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, yoi::indexT(1)}, yieldType);
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, IROperand::operandValue{yoi::indexT(0)}}, generatorContextType);
+        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, IROperand::operandValue{yoi::indexT(1)}}, yieldType);
         moduleContext->getIRBuilder().retOp();
         moduleContext->getIRBuilder().yield();
         moduleContext->popIRBuilder();
