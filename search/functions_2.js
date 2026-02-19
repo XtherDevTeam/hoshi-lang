@@ -38,8 +38,10 @@ var searchData=
   ['createcodeblock_35',['createCodeBlock',['../classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9',1,'yoi::IRBuilder']]],
   ['createdynamicarrayobject_36',['createDynamicArrayObject',['../classyoi_1_1LLVMCodegen.html#a2fab73b4608faf6b7bdf188c53c9bf8c',1,'yoi::LLVMCodegen']]],
   ['createentryfunction_37',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
-  ['createlambdaunnamedstruct_38',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
-  ['createlocalvar_39',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
-  ['createscope_40',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
-  ['customize_5ft_41',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
+  ['creategeneratorcontext_38',['createGeneratorContext',['../classyoi_1_1LLVMCodegen.html#a29a453731be05572154276e1b4f12820',1,'yoi::LLVMCodegen']]],
+  ['createlambdaunnamedstruct_39',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
+  ['createlocalvar_40',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
+  ['createscope_41',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
+  ['createstructobject_42',['createStructObject',['../classyoi_1_1LLVMCodegen.html#a9ee5b8fa544f607ff11c3b50bb08ba54',1,'yoi::LLVMCodegen']]],
+  ['customize_5ft_43',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
 ];

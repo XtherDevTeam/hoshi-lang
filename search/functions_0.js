@@ -6,7 +6,7 @@ var searchData=
   ['addattr_3',['addAttr',['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#acf5c7ad03ee58817810b7b700cc59194',1,'yoi::IRFunctionDefinition::Builder']]],
   ['addattribute_4',['addAttribute',['../classyoi_1_1IRValueType.html#ae7365b3474d1261d1f650848fb3b61ae',1,'yoi::IRValueType']]],
   ['addcall_5',['addCall',['../structyoi_1_1CallGraph.html#a6c608d0782ac71b58de7aecbeacf8bdb',1,'yoi::CallGraph']]],
-  ['addexportedfunction_6',['addExportedFunction',['../classyoi_1_1IRFFITable.html#a98aa4386a5704453af091d889e32d6e8',1,'yoi::IRFFITable']]],
+  ['addexportedfunction_6',['addExportedFunction',['../classyoi_1_1IRFFITable.html#a251a08c5b188ffb5e572f985eb943d61',1,'yoi::IRFFITable']]],
   ['addfield_7',['addfield',['../structyoi_1_1IRDataStructDefinition_1_1Builder.html#a801f0737f3170690ac5a7dc668e867cd',1,'yoi::IRDataStructDefinition::Builder::addField()'],['../structyoi_1_1IRStructDefinition_1_1Builder.html#a742b4c00189dd1ba83c5cb5026825501',1,'yoi::IRStructDefinition::Builder::addField()']]],
   ['addforeigntype_8',['addForeignType',['../classyoi_1_1IRFFITable.html#a12b6db2175dbae2719869a0faf537bf9',1,'yoi::IRFFITable']]],
   ['addimportedfunction_9',['addImportedFunction',['../classyoi_1_1IRFFITable.html#a3b5aefa6ed075b8c5133c81438b20817',1,'yoi::IRFFITable']]],

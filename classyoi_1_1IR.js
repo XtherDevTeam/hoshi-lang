@@ -92,6 +92,9 @@ var classyoi_1_1IR =
       [ "typeid_interface_impl", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad91696d28942cb5539ce5a2031a6da9", null ],
       [ "dyn_cast_any", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942", null ],
       [ "new_datastruct", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a900be26ecd1ce0fd7b51b804b4f5d4c7", null ],
+      [ "yield", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a16f10dfd541c23362492b4e513adf0a1", null ],
+      [ "yield_none", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad806586077350986f2bd9f869cd33e48", null ],
+      [ "resume", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a69f2afc2390cec954f7c208b07212d39", null ],
       [ "nop", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aa571d969c8661fb0342afd08e571dfa0", null ],
       [ "FINAL", "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a6c8361dc2036c0559376fe4957699f69", null ]
     ] ],

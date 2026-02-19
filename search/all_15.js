@@ -60,7 +60,7 @@ var searchData=
   ['mod_57',['mod',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7aad148a3ca8bd0ef3b48c52454c493ec5',1,'yoi::IR::mod'],['../classyoi_1_1IRFunctionOptimizer.html#a870501eab1acb81ee141ef27d6c7bb39',1,'yoi::IRFunctionOptimizer::mod()']]],
   ['model_58',['model',['../md_docs_2IR.html#autotoc_md51',1,'1.2. Execution Model'],['../md_docs_2IR.html#autotoc_md63',1,'1.2. Execution Model']]],
   ['model_20and_20memory_20management_59',['Object Model and Memory Management',['../index.html#autotoc_md161',1,'']]],
-  ['modifier_60',['modifier',['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd',1,'yoi::structDefInnerPair::Modifier'],['../classyoi_1_1structDefInnerPair.html#a4f4af035c16fc1930587243bb704f616',1,'yoi::structDefInnerPair::modifier']]],
+  ['modifier_60',['modifier',['../classyoi_1_1structDefInnerPair.html#a4f4af035c16fc1930587243bb704f616',1,'yoi::structDefInnerPair::modifier'],['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd',1,'yoi::structDefInnerPair::Modifier']]],
   ['module_61',['module',['../md_docs_2File_01System.html#autotoc_md31',1,'&lt;tt&gt;file&lt;/tt&gt; Module'],['../md_docs_2File_01System.html#autotoc_md33',1,'&lt;tt&gt;fs&lt;/tt&gt; Module'],['../md_docs_2File_01System.html#autotoc_md36',1,'&lt;tt&gt;io&lt;/tt&gt; Module']]],
   ['moduleast_62',['moduleAST',['../classyoi_1_1moduleContext.html#affc03367afdb2b7984d698b1af375424',1,'yoi::moduleContext']]],
   ['modulecontext_63',['modulecontext',['../classyoi_1_1moduleContext.html',1,'moduleContext'],['../classyoi_1_1visitor.html#ac4eceba0edc69fec4b80e1ad2d1e6f45',1,'yoi::visitor::moduleContext'],['../classyoi_1_1moduleContext.html#aef836205cda58b0b2eb84c5a29ce5245',1,'yoi::moduleContext::moduleContext()']]],

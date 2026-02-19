@@ -38,7 +38,7 @@ var searchData=
   ['newexpr_35',['newExpr',['../classyoi_1_1primary.html#ab680483a779de354d82c9a89f71e8991',1,'yoi::primary']]],
   ['newexpression_36',['newexpression',['../classyoi_1_1newExpression.html',1,'newExpression'],['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894ab683bb005815a4c57a3120e402b66bf7',1,'yoi::primary::newExpression']]],
   ['newinterfaceop_37',['newInterfaceOp',['../classyoi_1_1IRBuilder.html#a78476b4c465330bc3d6b743e7515e0ac',1,'yoi::IRBuilder']]],
-  ['newline_38',['newline',['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa16c885b2d67a4c187016f935e9a35373',1,'yoi::FormatOption::NewLine'],['../classyoi_1_1Formatter.html#a24d44c9238b3bd0440c8e28f37616318',1,'yoi::Formatter::newLine()']]],
+  ['newline_38',['newline',['../classyoi_1_1Formatter.html#a24d44c9238b3bd0440c8e28f37616318',1,'yoi::Formatter::newLine()'],['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa16c885b2d67a4c187016f935e9a35373',1,'yoi::FormatOption::NewLine']]],
   ['newstructop_39',['newStructOp',['../classyoi_1_1IRBuilder.html#a694ae8e9b02f2fd1b4411f04f7533be5',1,'yoi::IRBuilder']]],
   ['next_40',['next',['../structruntime__signal__handler__info.html#ad764cf5efeb0bae8647823eae340a4fc',1,'runtime_signal_handler_info::next'],['../structHPerfPage.html#aa8fba4de541e336e458b83e4669abfcf',1,'HPerfPage::next'],['../structHPerfContext.html#a7c4a6341626e89a8103940d8a28b2ef2',1,'HPerfContext::next'],['../structAllocatedMemoryList.html#a7cd93cba9430d69a6bc280cb23638ca1',1,'AllocatedMemoryList::next']]],
   ['next_5fhash_41',['next_hash',['../classyoi_1_1CodegenObjectCache.html#a066b971ffd1dbd4a9f6aab1140e35f25',1,'yoi::CodegenObjectCache']]],

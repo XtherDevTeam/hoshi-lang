@@ -210,21 +210,20 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(NODE_TYPE *node) { <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">    if</a> (!node) <span class="keywordflow">return</span>; <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">    for</a> (<span class="keywordtype">size_t</span> <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i</a> = 0; <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i</a> &lt; node-&gt;terms.size(); ++<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i</a>) { <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">        format</a>(node-&gt;terms[<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i</a>]); <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">        if</a> (<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i &lt; node-&gt;</a>ops.size()) { <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">            write</a>(<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">L</a><span class="stringliteral">&quot; &quot;</span>); <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">            format</a>(node-&gt;ops[<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">i</a>]); <a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">\</a></div>
-<div class="line"><a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">            write</a>(<a class="code hl_typedef" href="namespaceyoi.html#a467112ed789564244f414efb801bf606">L</a><span class="stringliteral">&quot; &quot;</span>); \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(NODE_TYPE *node) { \</div>
+<div class="line">    if (!node) <span class="keywordflow">return</span>; \</div>
+<div class="line">    for (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;terms.size(); ++i) { \</div>
+<div class="line">        format(node-&gt;terms[i]); \</div>
+<div class="line">        if (i &lt; node-&gt;ops.size()) { \</div>
+<div class="line">            write(L<span class="stringliteral">&quot; &quot;</span>); \</div>
+<div class="line">            format(node-&gt;ops[i]); \</div>
+<div class="line">            write(L<span class="stringliteral">&quot; &quot;</span>); \</div>
 <div class="line">        } \</div>
 <div class="line">    } \</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassyoi_1_1Formatter_html_a43e5bac20f5556caffbbe0ca0b784c64"><div class="ttname"><a href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a></div><div class="ttdeci">void format(const lexer::token &amp;token)</div><div class="ttdef"><b>Definition</b> <a href="compiler_2frontend_2formatter_8cpp_source.html#l00351">formatter.cpp:351</a></div></div>
-<div class="ttc" id="anamespaceyoi_html_a467112ed789564244f414efb801bf606"><div class="ttname"><a href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a></div><div class="ttdeci">std::vector&lt; t &gt; vec</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00053">def.hpp:53</a></div></div>
+<div class="ttc" id="aclassyoi_1_1Formatter_html_a43e5bac20f5556caffbbe0ca0b784c64"><div class="ttname"><a href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a></div><div class="ttdeci">void format(const lexer::token &amp;token)</div><div class="ttdef"><b>Definition</b> <a href="compiler_2frontend_2formatter_8cpp_source.html#l00357">formatter.cpp:357</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="compiler_2frontend_2formatter_8cpp_source.html#l00575">575</a> of file <a class="el" href="compiler_2frontend_2formatter_8cpp_source.html">formatter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compiler_2frontend_2formatter_8cpp_source.html#l00581">581</a> of file <a class="el" href="compiler_2frontend_2formatter_8cpp_source.html">formatter.cpp</a>.</p>
 
 </div>
 </div>

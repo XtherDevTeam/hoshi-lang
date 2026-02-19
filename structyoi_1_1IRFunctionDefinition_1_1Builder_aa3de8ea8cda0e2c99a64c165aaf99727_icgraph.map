@@ -1,15 +1,29 @@
 <map id="addArgument" name="addArgument">
-<area shape="rect" id="Node000001" title=" " alt="" coords="255,173,365,198"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="255,397,365,422"/>
 <area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a231ba12509219e01ed03011935919225" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="5,5,207,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="293,162,257,110,233,83,205,60,184,48,187,43,208,55,237,79,261,107,297,159"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="306,383,303,318,289,231,276,185,258,139,235,97,205,59,190,48,193,43,209,55,239,94,263,137,281,183,294,230,308,317,312,383"/>
 <area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="10,69,202,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="279,167,244,145,206,124,176,112,178,107,208,119,247,140,282,162"/>
-<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="24,133,188,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="241,177,188,169,189,164,241,172"/>
-<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc" title=" " alt="" coords="14,197,198,237"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="241,199,199,206,198,200,240,193"/>
-<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="43,262,169,287"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="282,208,248,231,208,252,171,264,169,259,206,247,245,226,279,204"/>
-<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="43,311,169,337"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="295,211,259,257,235,281,208,301,171,317,168,312,205,296,232,277,255,254,291,208"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="304,383,297,329,281,259,268,222,251,186,230,153,205,123,189,112,193,107,208,119,235,150,256,184,273,220,286,258,302,328,310,382"/>
+<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa" title="Get or fetch generator context type for specific function." alt="" coords="13,133,199,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="301,384,291,341,272,288,244,234,226,209,205,187,188,176,191,171,208,183,230,206,248,231,277,286,296,340,307,383"/>
+<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="24,197,188,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="297,385,263,318,237,282,205,251,186,240,189,235,208,247,241,279,267,316,301,383"/>
+<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="14,261,198,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="287,388,251,351,205,316,181,304,183,299,208,311,255,347,291,384"/>
+<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a5337c501841fe8add3ffe32aaca18b67" title=" " alt="" coords="24,325,188,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="255,395,170,368,171,363,257,390"/>
+<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a32de0b896fc7e6898a7d2285b625d0dc" title=" " alt="" coords="14,389,198,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="240,412,198,412,198,407,240,407"/>
+<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a13c3cd4936c6a740e5568c06d4a9d19a" title=" " alt="" coords="21,453,191,493"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="257,429,171,456,170,451,255,424"/>
+<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="43,518,169,543"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="292,434,256,472,208,508,171,522,169,517,205,503,252,468,288,431"/>
+<area shape="rect" id="Node000011" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="43,567,169,593"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="300,436,265,497,239,529,208,557,171,574,169,569,205,552,236,526,261,494,296,433"/>
+<area shape="rect" id="Node000012" href="$classyoi_1_1visitor.html#a661aabf57202b10ceb95d44cb8b5d332" title=" " alt="" coords="43,617,169,642"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="305,436,293,474,274,520,246,567,208,606,190,617,170,624,168,619,188,612,205,602,241,563,269,518,288,472,300,434"/>
+<area shape="rect" id="Node000013" href="$classyoi_1_1visitor.html#a615fd8f087f699ae6b65026ec145f9a2" title=" " alt="" coords="43,666,169,691"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="308,436,299,484,281,543,252,603,232,631,208,655,190,667,170,675,168,670,188,662,205,651,228,628,247,601,276,541,294,482,303,435"/>
+<area shape="rect" id="Node000014" href="$classyoi_1_1visitor.html#adb1dc84651b232a35ce406fcc7cd022b" title=" " alt="" coords="43,715,169,741"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="310,436,304,492,288,564,275,602,258,640,236,674,208,705,191,717,171,724,169,719,188,712,205,701,231,671,253,637,270,600,283,563,299,491,305,435"/>
 </map>

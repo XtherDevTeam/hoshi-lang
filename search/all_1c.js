@@ -50,7 +50,7 @@ var searchData=
   ['threading_2eh_47',['threading.h',['../threading_8h.html',1,'']]],
   ['threading_2emd_48',['Threading.md',['../Threading_8md.html',1,'']]],
   ['threadstarterargs_49',['ThreadStarterArgs',['../structThreadStarterArgs.html',1,'']]],
-  ['throws_50',['throws',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584',1,'yoi::IR::throws'],['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a83a5849d32875836435ece98f910621a',1,'yoi::IRFunctionDefinition::Throws']]],
+  ['throws_50',['throws',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a83a5849d32875836435ece98f910621a',1,'yoi::IRFunctionDefinition::Throws'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584',1,'yoi::IR::throws']]],
   ['throwstmt_51',['throwstmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7',1,'yoi::inCodeBlockStmt::throwStmt'],['../classyoi_1_1throwStmt.html',1,'throwStmt']]],
   ['time_2ecpp_52',['time.cpp',['../time_8cpp.html',1,'']]],
   ['time_2eh_53',['time.h',['../time_8h.html',1,'']]],

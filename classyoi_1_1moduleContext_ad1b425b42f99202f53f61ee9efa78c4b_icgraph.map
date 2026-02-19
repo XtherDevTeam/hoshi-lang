@@ -1,22 +1,24 @@
 <map id="popIRBuilder" name="popIRBuilder">
-<area shape="rect" id="Node000001" title=" " alt="" coords="255,269,360,294"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="255,301,360,326"/>
 <area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a231ba12509219e01ed03011935919225" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="5,5,207,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="299,256,289,213,271,160,243,106,226,81,205,59,188,48,191,43,208,55,230,78,248,103,276,158,294,212,304,255"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="301,287,292,239,275,177,247,114,228,85,205,59,189,48,192,43,208,55,232,82,251,111,280,176,297,237,306,286"/>
 <area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="10,69,202,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="294,257,261,190,236,154,205,123,186,112,189,107,208,119,240,151,266,187,299,254"/>
-<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="24,133,188,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="285,260,250,223,205,188,182,176,184,171,208,183,254,219,289,256"/>
-<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="14,197,198,237"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="253,267,169,240,170,235,254,262"/>
-<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="20,261,192,301"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="241,284,192,284,192,279,241,279"/>
-<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a13c3cd4936c6a740e5568c06d4a9d19a" title=" " alt="" coords="21,325,191,365"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="254,301,170,328,169,323,253,296"/>
-<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="43,414,169,439"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="287,307,252,343,208,380,174,400,140,416,138,411,171,396,205,375,248,339,284,303"/>
-<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="43,463,169,489"/>
-<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="300,308,288,342,268,381,242,420,208,453,190,463,170,471,169,466,188,459,205,449,238,416,264,378,283,339,295,306"/>
-<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="43,513,169,538"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="304,308,294,351,276,403,248,456,230,481,208,502,190,513,171,521,169,516,188,509,205,498,226,477,244,454,271,401,289,349,299,307"/>
-<area shape="poly" id="edge8_Node000008_Node000008" title=" " alt="" coords="142,404,132,396,106,393,85,395,74,399,71,405,77,412,73,415,66,406,70,396,83,390,106,387,134,391,145,400"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="297,288,285,251,266,207,240,162,205,123,187,112,190,107,208,119,244,159,271,204,290,249,302,286"/>
+<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa" title="Get or fetch generator context type for specific function." alt="" coords="13,133,199,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="291,290,256,238,232,211,205,188,184,176,187,171,208,183,236,207,260,235,295,287"/>
+<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="24,197,188,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="277,295,243,273,206,252,177,240,179,235,208,247,246,268,280,290"/>
+<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="14,261,198,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="241,305,198,299,198,293,241,300"/>
+<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="20,325,192,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="241,326,193,334,192,329,241,321"/>
+<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a13c3cd4936c6a740e5568c06d4a9d19a" title=" " alt="" coords="21,389,191,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="280,336,246,359,208,380,179,392,177,387,206,375,243,354,277,332"/>
+<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="43,478,169,503"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="294,339,259,390,235,418,208,443,176,465,143,480,141,475,173,460,205,439,231,415,254,387,290,336"/>
+<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="43,527,169,553"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="303,340,292,379,273,427,246,475,228,498,208,517,190,528,170,535,169,530,188,523,205,513,225,494,242,473,269,425,287,378,298,339"/>
+<area shape="rect" id="Node000011" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="43,577,169,602"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="306,340,298,389,281,450,252,512,232,541,208,566,190,578,170,585,169,580,188,573,205,562,228,538,247,510,276,448,292,387,301,339"/>
+<area shape="poly" id="edge9_Node000009_Node000009" title=" " alt="" coords="142,468,132,460,106,457,85,459,74,463,71,469,77,476,73,479,66,470,70,460,83,454,106,451,134,455,145,464"/>
 </map>

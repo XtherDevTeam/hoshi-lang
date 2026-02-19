@@ -8,7 +8,7 @@ var structyoi_1_1IRFunctionDefinition_1_1Builder =
     [ "setReturnType", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#ac5303a8c7498e4ce25396ac512f28df8", null ],
     [ "yield", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a7230431e7597442a893ab480b138745d", null ],
     [ "argumentTypes", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a526e5e098adec9d9723318dcfc4f5100", null ],
-    [ "attrs", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#acd5a2dc9a674e5a9ccaa521079fac0e1", null ],
+    [ "attrs", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#ae643a272623efd1e91bd878d757579ed", null ],
     [ "debugInfo", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a", null ],
     [ "name", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a9d24a0275ba98a7726bfe14c798f9850", null ],
     [ "returnType", "structyoi_1_1IRFunctionDefinition_1_1Builder.html#a11ea29649c52a300ccc326831b8bf9b2", null ]

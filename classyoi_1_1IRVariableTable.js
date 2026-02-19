@@ -10,6 +10,7 @@ var classyoi_1_1IRVariableTable =
     [ "popScope", "classyoi_1_1IRVariableTable.html#a694a296df338771df6e5fef0375e0ad6", null ],
     [ "put", "classyoi_1_1IRVariableTable.html#a3aa702c88da15d9884637cdaa4fb4abf", null ],
     [ "scopeIndex", "classyoi_1_1IRVariableTable.html#abff7e9a3fa68347caea299799b696cd8", null ],
+    [ "set", "classyoi_1_1IRVariableTable.html#a32081aaa884167c89c661ee954cf4ea8", null ],
     [ "to_string", "classyoi_1_1IRVariableTable.html#a61fa8c172e7397d729af1135ec6076a6", null ],
     [ "reversedVariableNameMap", "classyoi_1_1IRVariableTable.html#a8b40e91a9b995575f40178a1ff629075", null ],
     [ "variableNameIndexMap", "classyoi_1_1IRVariableTable.html#a18ff603442c9950b2a248b65a30e9eac", null ],

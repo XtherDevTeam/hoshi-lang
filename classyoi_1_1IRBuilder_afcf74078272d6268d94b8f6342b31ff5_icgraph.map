@@ -1,15 +1,17 @@
 <map id="retOp" name="retOp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="681,141,740,166"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="681,173,740,198"/>
 <area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a231ba12509219e01ed03011935919225" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="432,5,633,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="693,130,667,94,632,59,611,48,613,43,635,55,672,90,698,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="698,161,673,109,654,82,632,59,613,48,616,43,635,55,659,79,678,106,703,159"/>
 <area shape="rect" id="Node000003" href="$classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331" title=" " alt="" coords="440,69,625,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="668,138,632,124,598,112,600,107,634,119,670,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="685,165,661,143,632,124,606,112,609,107,635,119,664,139,689,161"/>
 <area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="437,133,629,173"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="668,156,629,156,629,151,668,151"/>
-<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="469,222,596,247"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="671,174,563,224,561,219,668,169"/>
-<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a1c8d80605fb1b08f95fc5ab1c0f989db" title=" " alt="" coords="469,271,596,297"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="700,180,674,222,656,243,635,261,597,278,595,273,632,256,652,239,670,218,695,177"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="668,180,628,173,629,168,668,175"/>
+<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa" title="Get or fetch generator context type for specific function." alt="" coords="440,197,625,237"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="668,196,626,203,625,198,668,190"/>
+<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="469,286,596,311"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="688,210,635,252,565,288,563,284,632,247,684,205"/>
+<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#a1c8d80605fb1b08f95fc5ab1c0f989db" title=" " alt="" coords="469,335,596,361"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="704,212,680,269,660,299,635,325,617,336,597,343,595,338,615,331,632,321,656,296,675,267,699,210"/>
 <area shape="rect" id="Node000004" href="$classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055" title="Links all compiled modules from the context into a single IRObjectFile." alt="" coords="249,77,384,102"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="426,92,385,92,385,87,426,87"/>
 <area shape="rect" id="Node000005" href="$classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a" title=" " alt="" coords="5,77,201,102"/>
@@ -17,5 +19,5 @@
 <area shape="rect" id="Node000006" href="$main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="76,126,131,151"/>
 <area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="249,108,132,135,131,130,247,103"/>
 <area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="215,78,249,78,249,84,215,83"/>
-<area shape="poly" id="edge9_Node000008_Node000008" title=" " alt="" coords="564,212,555,204,533,201,514,203,504,207,502,213,508,220,503,223,497,214,500,204,513,198,533,195,557,199,567,208"/>
+<area shape="poly" id="edge10_Node000009_Node000009" title=" " alt="" coords="564,276,555,268,533,265,514,267,504,271,502,277,508,284,503,287,497,278,500,268,513,262,533,259,557,263,567,272"/>
 </map>

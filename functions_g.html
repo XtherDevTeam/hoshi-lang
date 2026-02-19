@@ -114,6 +114,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>generateFunctionDeclarations()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a77e7d124e7761e04d2768530a9f3a132">LLVMCodegen</a></li>
 <li>generateFunctionExitCleanup()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#ab0ab73ddbd4fdd2f7bafb8d4f5080b12">LLVMCodegen</a></li>
 <li>generateFunctionImplementations()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aa2f742c4514d88e07c10b66a8151a1c3">LLVMCodegen</a></li>
+<li>generateGeneratorContextInitialization()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aa3f5264a5d5ffee993c12296b7ed56ad">LLVMCodegen</a></li>
 <li>generateGlobalDeclarations()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a32a2da9d3d4118301291878c7a18892d">LLVMCodegen</a></li>
 <li>generateGlobalInitializers()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#af5ae90a71d85660f942839c1287c7ff6">LLVMCodegen</a></li>
 <li>generateIfTargetNotNull()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aabf2547c3622b485c4100535363287a9">LLVMCodegen</a></li>
@@ -186,10 +187,11 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getForeignFloatObjectType()&#160;:&#160;<a class="el" href="classyoi_1_1compilerContext.html#a020ef8d5e11b48b50c9b200d200d0a64">compilerContext</a></li>
 <li>getForeignInt32Object()&#160;:&#160;<a class="el" href="classyoi_1_1BuiltinModuleBuilder.html#a8bac07971cb6f1516043e3a953ebbb75">BuiltinModuleBuilder</a></li>
 <li>getForeignInt32ObjectType()&#160;:&#160;<a class="el" href="classyoi_1_1compilerContext.html#a88c1c50232cc96f7e18138c8058fe281">compilerContext</a></li>
-<li>getFunctionAttributes()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#ad45813249b615c43795636808d1e3f4b">visitor</a></li>
+<li>getFunctionAttributes()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#a8c038ec8891d3c43d9edd64d66c484ce">visitor</a></li>
 <li>getFunctionType()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#af0a237f11cfdd9e3772dfe4caa894c45">LLVMCodegen</a></li>
 <li>getFuncUniqueNameStr()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#a23884ad002c523e22707c030abb11ff2">visitor</a></li>
 <li>getGcFunction()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a08de767823c7d17a8d81bc89fe291cf8">LLVMCodegen</a></li>
+<li>getGeneratorContext()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa">visitor</a></li>
 <li>getGlobalInitializer()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aa80650b680d2e2ba43f2e5c4ebe155ca">LLVMCodegen</a></li>
 <li>getHash()&#160;:&#160;<a class="el" href="structyoi_1_1CodegenObjectCacheEntry.html#a549ab662415b3b415bef977c0dd4ab11">CodegenObjectCacheEntry</a></li>
 <li>getId()&#160;:&#160;<a class="el" href="classyoi_1_1dataStructDefStmt.html#a81fa1a52e7bcd80c72cd39d58cad55c8">dataStructDefStmt</a>, <a class="el" href="classyoi_1_1defTemplateArgSpec.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">defTemplateArgSpec</a>, <a class="el" href="classyoi_1_1funcDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">funcDefStmt</a>, <a class="el" href="classyoi_1_1identifierWithDefTemplateArg.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithDefTemplateArg</a>, <a class="el" href="classyoi_1_1identifierWithTemplateArg.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithTemplateArg</a>, <a class="el" href="classyoi_1_1identifierWithTypeSpec.html#a8fb0b1af1fcb9cdd1af84ec6f61ebe58">identifierWithTypeSpec</a>, <a class="el" href="classyoi_1_1interfaceDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">interfaceDefStmt</a>, <a class="el" href="classyoi_1_1structDefStmt.html#a726b3f8d771b30bcb075ff22577e77a1">structDefStmt</a></li>
@@ -218,13 +220,14 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getLine()&#160;:&#160;<a class="el" href="classyoi_1_1AST.html#aae59fbfe596180f1547a5d365e6baca3">AST</a></li>
 <li>getLinkerPath()&#160;:&#160;<a class="el" href="classyoi_1_1ObjectLinker.html#a804f6ada421031b9fef995fd82c8b0a3">ObjectLinker</a></li>
 <li>getLiterals()&#160;:&#160;<a class="el" href="classyoi_1_1primary.html#adc3349b1fe94a6cc6c528cdf6e5bd5b8">primary</a></li>
+<li>getLLVMCoroIntrinsic()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#aec010d86eec80328d1ce823f60009986">LLVMCodegen</a></li>
 <li>getLLVMModuleContext()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#ade78ce2de0d65a242c80bc477fa55e0c">LLVMCodegen</a></li>
 <li>getLocalVar()&#160;:&#160;<a class="el" href="classyoi_1_1IRBuilder.html#a1129711e4ce2d628837b5918d70a912f">IRBuilder</a></li>
 <li>getLocation()&#160;:&#160;<a class="el" href="classyoi_1_1AST.html#adfd59476ee451d0a6404eb90a5823c43">AST</a></li>
 <li>getLvalueType()&#160;:&#160;<a class="el" href="classyoi_1_1IROperand.html#ab688433f0a92cc8d78c3322fc01ed5a5">IROperand</a></li>
 <li>getMangledTemplateName()&#160;:&#160;<a class="el" href="classyoi_1_1visitor.html#a87b778b9418b7357fbda584bbca711d3">visitor</a></li>
 <li>getMemberExpr()&#160;:&#160;<a class="el" href="classyoi_1_1primary.html#a9991d58b6ac9fc7f7cf1eef8a7c576d2">primary</a>, <a class="el" href="classyoi_1_1typeSpec.html#afbac91ceef39b6d23690ccc452d39494">typeSpec</a></li>
-<li>getMetadata()&#160;:&#160;<a class="el" href="structyoi_1_1IRMetadata.html#a892396828b8a2eda8106d0aa9e11e4c3">IRMetadata</a></li>
+<li>getMetadata()&#160;:&#160;<a class="el" href="structyoi_1_1IRMetadata.html#ae5884cb64715cf84381fdcc6cdbe33f9">IRMetadata</a></li>
 <li>getMethod()&#160;:&#160;<a class="el" href="classyoi_1_1implInnerPair.html#a1a574697b05b1f95436b2afb70fc3afe">implInnerPair</a>, <a class="el" href="classyoi_1_1interfaceDefInnerPair.html#a62ccf4d62fc00543e3fe117e78831807">interfaceDefInnerPair</a>, <a class="el" href="classyoi_1_1structDefInnerPair.html#a62ccf4d62fc00543e3fe117e78831807">structDefInnerPair</a></li>
 <li>getModule()&#160;:&#160;<a class="el" href="classyoi_1_1LLVMCodegen.html#a5f928f8833dd6f40736394e2a632fb8b">LLVMCodegen</a></li>
 <li>getModuleAST()&#160;:&#160;<a class="el" href="classyoi_1_1moduleContext.html#a502bab6b2e893545e3b452ec010e156a">moduleContext</a></li>

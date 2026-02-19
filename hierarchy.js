@@ -155,7 +155,7 @@ var hierarchy =
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRStructDefinition > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::IRValueType > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, std::shared_ptr< yoi::moduleContext > >", "classyoi_1_1indexTable.html", null ],
-    [ "indexTable< yoi::wstr, std::tuple< yoi::indexT, yoi::indexT, yoi::vec< IRFunctionDefinition::FunctionAttrs > > >", "classyoi_1_1indexTable.html", null ],
+    [ "indexTable< yoi::wstr, std::tuple< yoi::indexT, yoi::indexT, std::set< IRFunctionDefinition::FunctionAttrs > > >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::indexT >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::IRFFITable::ImportLibrary >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::IRTemplateBuilder::Argument >", "classyoi_1_1indexTable.html", null ],
