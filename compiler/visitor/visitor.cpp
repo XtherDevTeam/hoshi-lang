@@ -1289,6 +1289,9 @@ namespace yoi {
             case inCodeBlockStmt::vKind::codeBlock:
                 visit(inCodeBlockStmt->getValue().codeBlockVal);
                 break;
+            case inCodeBlockStmt::vKind::yieldStmt:
+                visit(inCodeBlockStmt->getValue().yieldStmtVal);
+                break;
             case inCodeBlockStmt::vKind::rExpr:
                 visit(inCodeBlockStmt->getValue().rExprVal);
                 // balance the stack
@@ -1960,7 +1963,6 @@ namespace yoi {
 
             builder.attrs = getFunctionAttributes(funcDefStmt->attrs);
 
-            builder.setReturnType(managedPtr(funcType));
             std::vector<std::shared_ptr<IRValueType>> argTypes;
             for (auto &i : funcDefStmt->getArgs().get()) {
                 if (&i == &funcDefStmt->getArgs().get().back() && i->spec->kind == 3 /* elipsis */) {
@@ -1980,6 +1982,15 @@ namespace yoi {
                 builder.addArgument(argName, argType);
             }
 
+            if (builder.attrs.contains(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                builder.setReturnType(getGeneratorContext(
+                    std::to_wstring(irModule->identifier) + L"_" + funcName.getId().node.strVal + getFuncUniqueNameStr(argTypes),
+                    managedPtr(funcType)
+                ));
+            } else {
+                builder.setReturnType(managedPtr(funcType));
+            }
+
             builder.setName(funcName.getId().node.strVal + getFuncUniqueNameStr(argTypes));
 
             auto func = builder.yield();
@@ -1988,6 +1999,9 @@ namespace yoi {
             irModule->functionOverloadIndexies[funcName.getId().node.strVal].push_back(funcIndex);
 
             moduleContext->pushIRBuilder({moduleContext->getCompilerContext(), irModule, func});
+            if (builder.attrs.contains(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().put(L"__context__", func->returnType);
+            }
             moduleContext->getIRBuilder().setDebugInfo({irModule->modulePath, funcDefStmt->getLine(), funcDefStmt->getColumn()});
             moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
             visit(funcDefStmt->block, true);
@@ -2295,7 +2309,7 @@ namespace yoi {
 
                     methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
                     methodBuilder.attrs = getFunctionAttributes(i->getMethod().attrs);
-                    methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                    methodBuilder.attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
 
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
@@ -2678,6 +2692,10 @@ namespace yoi {
 
     yoi::indexT visitor::visit(yoi::returnStmt *returnStmt) {
         if (returnStmt->hasValue()) {
+            yoi_assert(!moduleContext->getIRBuilder().irFuncDefinition()->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator),
+                       returnStmt->getLine(),
+                       returnStmt->getColumn(),
+                       "Generator function cannot return a value");
             visit(returnStmt->value);
             // validate type
             auto returnType = moduleContext->getIRBuilder().irFuncDefinition()->returnType;
@@ -3958,21 +3976,25 @@ namespace yoi {
         }
     }
 
-    yoi::vec<IRFunctionDefinition::FunctionAttrs> visitor::getFunctionAttributes(const yoi::vec<lexer::token> &attrs) {
-        yoi::vec<IRFunctionDefinition::FunctionAttrs> res;
+    std::set<IRFunctionDefinition::FunctionAttrs> visitor::getFunctionAttributes(const yoi::vec<lexer::token> &attrs) {
+        std::set<IRFunctionDefinition::FunctionAttrs> res;
         for (auto &attr : attrs) {
             switch (attr.kind) {
                 case lexer::token::tokenKind::kAlwaysInline:
-                    res.push_back(IRFunctionDefinition::FunctionAttrs::AlwaysInline);
+                    res.insert(IRFunctionDefinition::FunctionAttrs::AlwaysInline);
                     break;
                 case lexer::token::tokenKind::kNoFFI:
-                    res.push_back(IRFunctionDefinition::FunctionAttrs::NoFFI);
+                    res.insert(IRFunctionDefinition::FunctionAttrs::NoFFI);
                     break;
                 case lexer::token::tokenKind::kStatic:
-                    res.push_back(IRFunctionDefinition::FunctionAttrs::Static);
+                    res.insert(IRFunctionDefinition::FunctionAttrs::Static);
                     break;
                 case lexer::token::tokenKind::kIntrinsic:
-                    res.push_back(IRFunctionDefinition::FunctionAttrs::Intrinsic);
+                    res.insert(IRFunctionDefinition::FunctionAttrs::Intrinsic);
+                    break;
+                case lexer::token::tokenKind::kGenerator:
+                    res.insert(IRFunctionDefinition::FunctionAttrs::Generator);
+                    break;
                 default:
                     break;
             }
@@ -4588,7 +4610,7 @@ namespace yoi {
                 IRFunctionDefinition::Builder methodBuilder;
                 methodBuilder.setDebugInfo({irModule->modulePath, methodAst.getLine(), methodAst.getColumn()});
                 methodBuilder.attrs = getFunctionAttributes(methodAst.attrs);
-                methodBuilder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                methodBuilder.attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
 
                 yoi::vec<std::shared_ptr<IRValueType>> specializedArgTypes;
 
@@ -4896,7 +4918,7 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> argTypes;
 
         callableBuilder.setDebugInfo({irModule->modulePath, lambdaExpr->getLine(), lambdaExpr->getColumn()});
-        callableBuilder.attrs.push_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+        callableBuilder.attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
         callableBuilder.addArgument(L"this", structType);
         for (auto &i : lambdaExpr->args->spec) {
             auto argType = managedPtr(parseTypeSpec(i->spec));
@@ -5493,5 +5515,102 @@ namespace yoi {
         }
         moduleContext->getIRBuilder().initializeFieldsOp(args->arg.size());
             
+    }
+    
+    yoi::indexT visitor::visit(yoi::yieldStmt *stmt) {
+        yoi_assert(moduleContext->getIRBuilder().irFuncDefinition()->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator), stmt->getLine(), stmt->getColumn(), "yield can only be used in generator function");
+        auto ctxIndex = moduleContext->getIRBuilder().irFuncDefinition()->getVariableTable().lookup(L"__context__");
+        auto ctxType = moduleContext->getIRBuilder().irFuncDefinition()->returnType;
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, ctxIndex}, ctxType);
+        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, yoi::indexT(0)}, moduleContext->getCompilerContext()->getUnsignedObjectType());
+
+        if (stmt->expr) {
+            visit(stmt->expr);
+            moduleContext->getIRBuilder().yieldOp();
+        } else {
+
+            moduleContext->getIRBuilder().yieldOp(true);
+        }
+        return moduleContext->getIRBuilder().getCurrentInsertionPoint();
+    }
+
+    std::shared_ptr<IRValueType> visitor::getGeneratorContext(const yoi::wstr &funcName, const std::shared_ptr<IRValueType> &yieldType) {
+        auto builtinModule = moduleContext->getCompilerContext()->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST);
+        auto generatorContextName = L"GeneratorContext#" + funcName;
+        auto generatorContextIndex = builtinModule->structTable.put_create(generatorContextName, {});
+        auto generatorContextType = managedPtr(IRValueType{
+            IRValueType::valueType::structObject,
+            HOSHI_COMPILER_CTX_GLOB_ID_CONST,
+            generatorContextIndex
+        });
+
+        auto generatorConstructorName = L"constructor#" + getTypeSpecUniqueNameStr(moduleContext->getCompilerContext()->getUnsignedObjectType());
+        auto generatorConstructorIndex = builtinModule->functionTable.put_create(generatorContextName + L"::" + generatorConstructorName, {});
+        auto generatorNextName = L"next#";
+        auto generatorNextIndex = builtinModule->functionTable.put_create(generatorContextName + L"::" + generatorNextName, {});
+
+        auto unsignedDataField = managedPtr(*moduleContext->getCompilerContext()->getUnsignedObjectType());
+        unsignedDataField->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+
+        auto builder = IRStructDefinition::Builder()
+            .setName(generatorContextName)
+            .addField(L"raw_ctx", unsignedDataField)
+            .addField(L"yields", yieldType)
+            .addMethod(generatorConstructorName, generatorConstructorIndex)
+            .addMethod(generatorNextName, generatorNextIndex);
+        
+        builtinModule->structTable[generatorContextIndex] = builder.yield();
+
+        builtinModule->functionTable[generatorConstructorIndex] = IRFunctionDefinition::Builder()
+            .setName(generatorContextName + L"::" + generatorConstructorName)
+            .addArgument(L"this", generatorContextType)
+            .addArgument(L"raw_ctx", moduleContext->getCompilerContext()->getUnsignedObjectType())
+            .setReturnType(generatorContextType)
+            .addAttr(IRFunctionDefinition::FunctionAttrs::Preserve)
+            .setDebugInfo({builtinModule->modulePath, 0, 0})
+            .yield();
+
+        builtinModule->functionTable[generatorNextIndex] = IRFunctionDefinition::Builder()
+            .setName(generatorContextName + L"::" + generatorNextName)
+            .addArgument(L"this", generatorContextType)
+            .setReturnType(yieldType)
+            .addAttr(IRFunctionDefinition::FunctionAttrs::Preserve)
+            .setDebugInfo({builtinModule->modulePath, 0, 0})
+            .yield();
+
+        builtinModule->functionOverloadIndexies[generatorContextName + L"::constructor"].push_back(generatorConstructorIndex);
+        builtinModule->functionOverloadIndexies[generatorContextName + L"::next"].push_back(generatorNextIndex);
+
+        moduleContext->pushIRBuilder(IRBuilder{
+            moduleContext->getCompilerContext(),
+            builtinModule,
+            builtinModule->functionTable[generatorConstructorIndex]
+        });
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(1)}, moduleContext->getCompilerContext()->getUnsignedObjectType());
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().storeMemberOp({IROperand::operandType::index, yoi::indexT(0)});
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().retOp();
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        moduleContext->pushIRBuilder(IRBuilder{
+            moduleContext->getCompilerContext(),
+            builtinModule,
+            builtinModule->functionTable[generatorNextIndex]
+        });
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+        // in the first suspend, we just only return the allocated generator context, but doing nothing.
+        // we only begin yielding value after first resume.
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().resumeOp();
+        moduleContext->getIRBuilder().loadOp(IR::Opcode::load_local, {IROperand::operandType::index, yoi::indexT(0)}, generatorContextType);
+        moduleContext->getIRBuilder().loadMemberOp({IROperand::operandType::index, yoi::indexT(1)}, yieldType);
+        moduleContext->getIRBuilder().retOp();
+        moduleContext->getIRBuilder().yield();
+        moduleContext->popIRBuilder();
+
+        return managedPtr(IRValueType{IRValueType::valueType::structObject, HOSHI_COMPILER_CTX_GLOB_ID_CONST, generatorContextIndex});
     }
 } // namespace yoi

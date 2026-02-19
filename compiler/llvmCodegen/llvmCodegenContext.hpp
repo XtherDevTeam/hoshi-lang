@@ -121,6 +121,12 @@ namespace yoi {
             // Codegen state
             ValueStackWithPhi valueStackPhi;
             llvm::Function *currentFunction = nullptr;
+            llvm::Value *currentGeneratorContextValue = nullptr;
+            struct {
+                llvm::BasicBlock *resumeBB{};
+                llvm::BasicBlock *cleanupBB{};
+                llvm::BasicBlock *suspendBB{};
+            } currentGeneratorContextBasicBlocks;
             std::shared_ptr<yoi::IRFunctionDefinition> currentFunctionDef;
             std::map<yoi::indexT, llvm::AllocaInst *> namedValues; // Maps local var index to AllocaInst
             std::map<yoi::indexT, llvm::BasicBlock *> basicBlockMap; // [from_block, to_block] => target basic block
@@ -214,6 +220,14 @@ namespace yoi {
         void generateDescription(LLVMModuleContext &llvmModCtx);
         void generateRTTIDeclaration(LLVMModuleContext &llvmModCtx);
         void generateRTTIImplmentation(LLVMModuleContext &llvmModCtx);
+        void generateGeneratorContextInitialization(LLVMModuleContext &llvmModCtx);
+        llvm::Value *createGeneratorContext(LLVMModuleContext &llvmModCtx, llvm::Value *coro_handle);
+        void storeYieldValue(LLVMModuleContext &llvmModCtx, llvm::Value *value, const std::shared_ptr<IRValueType> &yoiType);
+        void storeMember(LLVMModuleContext &llvmModCtx, const StackValue &storeValue, const StackValue &structVal, yoi::indexT memberIndex);
+
+        llvm::Value *createStructObject(LLVMModuleContext &llvmModCtx, yoi::indexT moduleIndex, yoi::indexT structIndex);
+
+        llvm::Function *getLLVMCoroIntrinsic(LLVMModuleContext &llvmModCtx, llvm::Intrinsic::ID Id, llvm::ArrayRef<llvm::Type *> Types = {});
 
         llvm::Value *loadIfDataStructObject(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &type, llvm::Value *value);
 

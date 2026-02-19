@@ -161,6 +161,9 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
         case lexer::token::tokenKind::sharp:
             os << L"#";
             break;
+        case lexer::token::tokenKind::kYield:
+            os << L"yield";
+            break;
         case lexer::token::tokenKind::kUse:
             os << L"use";
             break;
@@ -286,6 +289,9 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
             break;
         case lexer::token::tokenKind::kDataField:
             os << L"datafield";
+            break;
+        case lexer::token::tokenKind::kGenerator:
+            os << L"generator";
             break;
         case lexer::token::tokenKind::eof:
             break;

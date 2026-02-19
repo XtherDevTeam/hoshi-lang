@@ -1904,6 +1904,9 @@ namespace yoi {
                         // has predecessor, but no successor, it's the out block but with empty instructions
                         if (targetFunction->returnType->type == IRValueType::valueType::none) {
                             targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetFunction->debugInfo});
+                        } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                            // do nothing
+
                         } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Constructor)) {
                             targetBlock->getIRArray().push_back(
                                 IR{IR::Opcode::load_local,
@@ -1923,6 +1926,8 @@ namespace yoi {
                     // there's no return instruction, add a ret instruction at the end of the block if it returns none
                     if (targetFunction->returnType->type == IRValueType::valueType::none) {
                         targetBlock->getIRArray().push_back(IR{IR::Opcode::ret_none, {}, targetBlock->getIRArray().back().debugInfo});
+                    } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                        // do nothing
                     } else if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Constructor)) {
                         targetBlock->getIRArray().push_back(
                             IR{IR::Opcode::load_local,
@@ -2654,12 +2659,24 @@ namespace yoi {
                     simulationStack.push(resultType, {});
                     break;
                 }
-                case IR::Opcode::ret: {
+                case IR::Opcode::ret: 
+                case IR::Opcode::ret_none: {
                     return terminatorFound();
+                }
+                case IR::Opcode::yield: {
+                    auto item = simulationStack.peek(0);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    globalAnalysisResults[currentFuncId].isYieldValueNullable = item.type->hasAttribute(IRValueType::ValueAttr::Nullable);
+                    break;
+                }
+                case IR::Opcode::yield_none:
+                case IR::Opcode::resume: {
+                    simulationStack.pop();
+                    break;
                 }
                 // Instructions with no stack effect
                 case IR::Opcode::jump:
-                case IR::Opcode::ret_none:
                 case IR::Opcode::nop:
                     break;
                 // Other instructions with stack effects
@@ -2839,6 +2856,17 @@ namespace yoi {
             } else {
                 targetFunction->variableTable.get(varIndex)->removeAttribute(IRValueType::ValueAttr::Raw);
             }
+
+            if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator) && globalAnalysisResults[currentFuncId].isYieldValueRaw) {
+                auto ctxIndex = targetFunction->getVariableTable().lookup(L"__context__");
+                auto ctxType = targetFunction->getVariableTable().get(ctxIndex);
+                auto yieldField = compilerCtx->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->structTable[ctxType->typeIndex]->fieldTypes[1];
+
+                if (yieldField->isBasicType() && yieldField->dimensions.empty()) {
+                    yieldField = managedPtr(*yieldField);
+                    yieldField->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+                }
+            }
         }
 
         return isAlwaysRaw;
@@ -3003,8 +3031,21 @@ namespace yoi {
                     simulationStack.pop(); // array
                     break;
                 }
-                case IR::Opcode::ret: {
+                case IR::Opcode::ret:
+                case IR::Opcode::ret_none: {
                     return terminatorFound();
+                }
+                case IR::Opcode::yield: {
+                    auto item = simulationStack.peek(0);
+                    simulationStack.pop();
+                    simulationStack.pop();
+                    globalAnalysisResults[currentFuncId].isYieldValueRaw = item.type->hasAttribute(IRValueType::ValueAttr::Raw);
+                    break;
+                }
+                case IR::Opcode::yield_none:
+                case IR::Opcode::resume: {
+                    simulationStack.pop();
+                    break;
                 }
                 case IR::Opcode::invoke_dangling:
                 case IR::Opcode::invoke: {
@@ -4259,6 +4300,19 @@ namespace yoi {
                 simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
                 break;
             }
+            case IR::Opcode::yield: {
+                simulationStack.pop();
+                simulationStack.pop();
+                break;
+            }
+            case IR::Opcode::yield_none: {
+                simulationStack.pop();
+                break;
+            }
+            case IR::Opcode::resume: {
+                simulationStack.pop();
+                break;
+            }
             default: {
                 // pass
                 break;
@@ -4292,8 +4346,8 @@ namespace yoi {
             q.emplace(std::get<0>(exportedFunction.second), std::get<1>(exportedFunction.second));
             // add Preserve attribute to exported functions
             auto &func = compilerCtx->getImportedModule(std::get<0>(exportedFunction.second))->functionTable[std::get<1>(exportedFunction.second)];
-            func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
-            func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
+            func->attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
+            func->attrs.insert(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         }
 
         if (compilerCtx->getBuildConfig()->buildType == IRBuildConfig::BuildType::executable) {
@@ -4302,7 +4356,7 @@ namespace yoi {
                 // add Preserve attribute to main function
                 auto &func = compilerCtx->getImportedModule(entryModuleIndex)
                                  ->functionTable[compilerCtx->getImportedModule(entryModuleIndex)->functionTable.getIndex(L"main#")];
-                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                func->attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
             } catch (const std::out_of_range &) {
                 panic(0, 0, "IROptimizer::buildCallGraph(): entry point not found");
             }
@@ -4527,7 +4581,7 @@ namespace yoi {
                 for (yoi::indexT index = 0; index < targetTypes.size(); index++)
                     builder.addArgument(L"param" + std::to_wstring(index),
                                         managedPtr(IRValueType{*targetTypes[index]}.addAttribute(IRValueType::ValueAttr::Borrow)));
-                builder.attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Preserve);
+                builder.attrs.insert(IRFunctionDefinition::FunctionAttrs::Preserve);
                 auto index = compilerCtx->getImportedModule(moduleIndex)->functionTable.put(originalFunc->name + L"wrapper", builder.yield());
                 auto moduleCtx = compilerCtx->getModuleContext(moduleIndex);
                 moduleCtx->pushIRBuilder(IRBuilder(
@@ -4675,6 +4729,9 @@ namespace yoi {
                 continue;
             }
 
+            bool oldYieldValueNullable = functionAnalysisResults.at(funcId).isYieldValueNullable;
+            bool oldYieldValueRaw = functionAnalysisResults.at(funcId).isYieldValueRaw;
+
             IRFunctionOptimizer analyzer{compilerCtx, targetedModule, functionAnalysisResults};
             analyzer.setTargetFunction(func, funcId);
 
@@ -4700,7 +4757,7 @@ namespace yoi {
             }
 
             if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw ||
-                !paramStateComparator(paramStates, currentInfo.paramStates)) {
+                !paramStateComparator(paramStates, currentInfo.paramStates) || oldYieldValueNullable != currentInfo.isYieldValueNullable || oldYieldValueRaw != currentInfo.isYieldValueRaw) {
                 // update the global results
                 currentInfo.isReturnValueNullable = newIsNullable;
                 currentInfo.isReturnValueRaw = newIsRaw;
@@ -4761,6 +4818,17 @@ namespace yoi {
                 returnType->removeAttribute(IRValueType::ValueAttr::Raw);
             }
 
+            if (analysisInfo.isYieldValueRaw && func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                auto ctxIndex = func->getVariableTable().lookup(L"__context__");
+                auto ctxType = func->getVariableTable().get(ctxIndex);
+                auto &yieldField = compilerCtx->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->structTable[ctxType->typeIndex]->fieldTypes[1];
+
+                if (yieldField->isBasicType() && yieldField->dimensions.empty()) {
+                    yieldField = managedPtr(*yieldField);
+                    yieldField->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+                }
+            }
+
             func->returnType = returnType;
         }
 
@@ -4768,9 +4836,8 @@ namespace yoi {
             auto targetedModule = compilerCtx->getImportedModule(funcId.first);
             auto &func = targetedModule->functionTable[funcId.second];
 
-            // skip unreachable/dead functions from being optimized, or just clear their bodies.
             if (callGraph.unreachableFunctions.count(funcId) && !func->hasAttribute(IRFunctionDefinition::FunctionAttrs::Preserve)) {
-                func->attrs.emplace_back(IRFunctionDefinition::FunctionAttrs::Unreachable);
+                func->attrs.insert(IRFunctionDefinition::FunctionAttrs::Unreachable);
                 func->codeBlock.clear();
                 continue;
             }

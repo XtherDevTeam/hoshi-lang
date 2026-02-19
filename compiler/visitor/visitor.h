@@ -134,7 +134,7 @@ namespace yoi {
 
         bool canCastTo(const std::shared_ptr<IRValueType> &fromType, const std::shared_ptr<IRValueType> &toType);
 
-        yoi::vec<IRFunctionDefinition::FunctionAttrs> getFunctionAttributes(const yoi::vec<lexer::token> &attrs);
+        std::set<IRFunctionDefinition::FunctionAttrs> getFunctionAttributes(const yoi::vec<lexer::token> &attrs);
 
         yoi::indexT generateNullInterfaceImplementation(const std::shared_ptr<IRValueType> &structType);
 
@@ -264,6 +264,8 @@ namespace yoi {
         void visit(yoi::inCodeBlockStmt *inCodeBlockStmt);
 
         yoi::indexT visit(yoi::funcExpr *func);
+
+        yoi::indexT visit(yoi::yieldStmt *stmt);
 
         void visit(yoi::enumerationDefinition *enumerationDefinition);
 
@@ -414,6 +416,15 @@ namespace yoi {
         void constructDataStruct(yoi::indexT datastructIndex, yoi::indexT moduleIndex, yoi::invocationArguments *args);
 
         std::shared_ptr<IRValueType> mapEnumTypeToBasicType(yoi::indexT targetModule, yoi::indexT targetEnumType);
+
+        /**
+         * @brief Get or fetch generator context type for specific function
+         * 
+         * @param funcName The name of the function, we do not use the function index cause the function itself needs the generator context type as return value type.
+         * @param yieldType The yield type of the generator
+         * @return std::shared_ptr<IRValueType> The generator context type
+         */
+        std::shared_ptr<IRValueType> getGeneratorContext(const yoi::wstr &funcName, const std::shared_ptr<IRValueType> &yieldType);
     };
 
 } // namespace yoi

@@ -74,6 +74,7 @@ TEST_CASES = {
     "struct-template-method": {"type": "executable", "return_code": 0},
     "datastruct-test": {"type": "executable", "return_code": 0},
     "datafield": {"type": "executable", "return_code": 0},
+    "generator": {"type": "executable", "return_code": 0},
 }
 
 

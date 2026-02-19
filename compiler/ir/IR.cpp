@@ -606,7 +606,7 @@ namespace yoi {
                                                const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
                                                const std::shared_ptr<IRValueType> &returnType,
                                                const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock,
-                                               const yoi::vec<FunctionAttrs> &attrs,
+                                               const std::set<FunctionAttrs> &attrs,
                                                const IRDebugInfo &debugInfo)
         : name(name), returnType(returnType), variableTable(), codeBlock(), debugInfo(debugInfo), attrs(attrs) {
         variableTable.createScope();
@@ -1052,7 +1052,7 @@ namespace yoi {
     void IRFFITable::addExportedFunction(const yoi::wstr &exportName,
                                          yoi::indexT moduleIndex,
                                          yoi::indexT functionIndex,
-                                         const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs) {
+                                         const std::set<IRFunctionDefinition::FunctionAttrs> &attrs) {
         exportedFunctionTable.put_create(exportName, std::make_tuple(moduleIndex, functionIndex, attrs));
     }
 
@@ -1272,7 +1272,7 @@ namespace yoi {
     }
 
     IRFunctionDefinition::Builder &IRFunctionDefinition::Builder::addAttr(FunctionAttrs attr) {
-        attrs.push_back(attr);
+        attrs.insert(attr);
         return *this;
     }
 
@@ -1691,5 +1691,21 @@ namespace yoi {
         popFromTempVarStack();
         insert(IR{IR::Opcode::store_field, accessors, currentDebugInfo});
         popFromTempVarStack();
+    }
+
+    void IRBuilder::resumeOp() {
+        popFromTempVarStack();
+        insert(IR{IR::Opcode::resume, {}, currentDebugInfo});
+    }
+
+    void IRBuilder::yieldOp(bool yieldNone) {
+        if (!yieldNone)
+            popFromTempVarStack();
+        popFromTempVarStack();
+        insert(IR{IR::Opcode::yield, {}, currentDebugInfo});
+    }
+    
+    void IRVariableTable::set(yoi::indexT index, const std::shared_ptr<IRValueType> &type) {
+        variables[index] = type;
     }
 } // namespace yoi

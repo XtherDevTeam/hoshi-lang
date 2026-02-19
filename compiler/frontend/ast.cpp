@@ -911,6 +911,9 @@ namespace yoi {
             case inCodeBlockStmt::vKind::forStmt:
                 finalizeAST(ptr->value.forStmtVal);
                 break;
+            case inCodeBlockStmt::vKind::yieldStmt:
+                finalizeAST(ptr->value.yieldStmtVal);
+                break;
             case inCodeBlockStmt::vKind::rExpr:
                 finalizeAST(ptr->value.rExprVal);
                 break;

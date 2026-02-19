@@ -108,6 +108,7 @@ namespace yoi {
                 kNoFFI,
                 kStatic,
                 kIntrinsic,
+                kGenerator,
                 kAlwaysInline,
                 kNew,
                 kCallable,

@@ -355,6 +355,9 @@ namespace yoi {
             typeid_interface_impl,
             dyn_cast_any,
             new_datastruct,
+            yield,
+            yield_none,
+            resume,
             nop,
             FINAL,
         } opcode;
@@ -440,6 +443,8 @@ namespace yoi {
 
         std::shared_ptr<IRValueType> operator[](const yoi::wstr &name);
 
+        void set(yoi::indexT index, const std::shared_ptr<IRValueType> &type);
+
         yoi::indexT put(const yoi::wstr &name, const std::shared_ptr<IRValueType> &type);
 
         void popScope();
@@ -476,7 +481,7 @@ namespace yoi {
         std::shared_ptr<IRValueType> returnType;
         yoi::vec<std::shared_ptr<IRCodeBlock>> codeBlock;
         IRVariableTable variableTable;
-        yoi::vec<FunctionAttrs> attrs;
+        std::set<FunctionAttrs> attrs;
         IRDebugInfo debugInfo;
 
         yoi::indexT linkedModuleId;
@@ -485,7 +490,7 @@ namespace yoi {
                              const yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> &argumentTypes,
                              const std::shared_ptr<IRValueType> &returnType,
                              const yoi::vec<std::shared_ptr<IRCodeBlock>> &codeBlock,
-                             const yoi::vec<FunctionAttrs> &attrs,
+                             const std::set<FunctionAttrs> &attrs,
                              const IRDebugInfo &debugInfo);
 
         IRVariableTable &getVariableTable();
@@ -498,7 +503,7 @@ namespace yoi {
             yoi::wstr name;
             yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> argumentTypes;
             std::shared_ptr<IRValueType> returnType;
-            yoi::vec<FunctionAttrs> attrs;
+            std::set<FunctionAttrs> attrs;
             IRDebugInfo debugInfo;
 
             Builder() = default;
@@ -1053,6 +1058,17 @@ namespace yoi {
          */
         void bindFieldsOp(yoi::indexT extractFieldCount, ExtractType extractType);
 
+        /**
+         * Takes the value from the temp var stack and also the raw LLVM context pointer and return the control flow to the caller.
+         * @param yieldNone If true, yield None instead of the value from the temp var stack.
+         */
+        void yieldOp(bool yieldNone = false);
+
+        /**
+         * Takes the raw LLVM context pointer and resume the control flow from the yield point.
+         */
+        void resumeOp();
+
         yoi::indexT getCurrentInsertionPoint();
 
         void popFromTempVarStack();
@@ -1077,7 +1093,7 @@ namespace yoi {
             ImportLibrary(const yoi::wstr &libraryPath);
         };
 
-        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, yoi::vec<IRFunctionDefinition::FunctionAttrs>>> exportedFunctionTable;
+        yoi::indexTable<yoi::wstr, std::tuple<yoi::indexT, yoi::indexT, std::set<IRFunctionDefinition::FunctionAttrs>>> exportedFunctionTable;
 
         yoi::indexTable<yoi::wstr, std::shared_ptr<IRValueType>> foreignTypeTable;
 
@@ -1101,7 +1117,7 @@ namespace yoi {
         void addExportedFunction(const yoi::wstr &exportName,
                                  yoi::indexT moduleIndex,
                                  yoi::indexT functionIndex,
-                                 const yoi::vec<IRFunctionDefinition::FunctionAttrs> &attrs);
+                                 const std::set<IRFunctionDefinition::FunctionAttrs> &attrs);
     };
 } // namespace yoi
 

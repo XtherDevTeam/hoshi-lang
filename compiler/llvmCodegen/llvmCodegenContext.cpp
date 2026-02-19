@@ -9,6 +9,13 @@
 #include "compiler/ir/IRLinker.hpp"
 #include "compiler/llvmCodegen/codegenObjectCache.hpp"
 #include "share/def.hpp"
+#include "llvm/IR/Attributes.h"
+#include "llvm/IR/Constant.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/Intrinsics.h"
+#include "llvm/IR/Value.h"
 #include <algorithm>
 #include <cstddef>
 #include <iostream>
@@ -383,6 +390,10 @@ namespace yoi {
             auto funcName = wstring2string(funcDef->name);
             auto* funcType = getFunctionType(llvmModCtx, funcDef);
             auto* function = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, funcName, llvmModCtx.TheModule.get());
+
+            if (funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator)) {
+                function->addFnAttr(llvm::Attribute::PresplitCoroutine);
+            }
 
             if (funcDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::AlwaysInline)) {
                 function->addFnAttr(llvm::Attribute::AlwaysInline);
@@ -776,7 +787,48 @@ namespace yoi {
         }
 
         generateCodeBlock(llvmModCtx, *funcDef.codeBlock[0], 0, 0);
+
+        if (!llvmModCtx.Builder->GetInsertBlock()->getTerminator()) {
+            // A. Create the Final Suspend Block
+            auto finalSuspendBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "final_suspend", llvmModCtx.currentFunction);
+
+            // B. Jump from the last 'resumeBB' to here
+            llvmModCtx.Builder->CreateBr(finalSuspendBB);
+            llvmModCtx.Builder->SetInsertPoint(finalSuspendBB);
+
+            // C. Emit llvm.coro.suspend(token, TRUE)
+            // TRUE means "Final Suspend" (The coroutine is Done)
+            auto coro_suspend = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_suspend);
+            auto suspend_result =
+                llvmModCtx.Builder->CreateCall(coro_suspend,
+                                               {
+                                                   llvm::ConstantTokenNone::get(*llvmModCtx.TheContext),
+                                                   llvm::ConstantInt::get(llvm::Type::getInt1Ty(*llvmModCtx.TheContext), 1) // <--- TRUE HERE
+                                               });
+
+            // D. Create the Trap Block (Resuming a finished coroutine is illegal)
+            auto trapBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "trap", llvmModCtx.currentFunction);
+
+            // E. Create the Switch
+            // 0 (Resume) -> Trap (Cannot resume a finished coroutine)
+            // 1 (Destroy) -> Cleanup (Standard cleanup path)
+            // Default -> Suspend (Return control to caller one last time)
+            auto *switch_inst = llvmModCtx.Builder->CreateSwitch(suspend_result, llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB, 2);
+
+            switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), trapBB);
+            switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 1),
+                                 llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB);
+
+            // F. Implement Trap
+            llvmModCtx.Builder->SetInsertPoint(trapBB);
+            llvmModCtx.Builder->CreateUnreachable();
+        }
+
         llvmModCtx.DBuilder->finalize();
+        if (llvmModCtx.currentFunction->getName() == "0_int_gen#") {
+            // llvmModCtx.TheModule->print(llvm::errs(), nullptr);
+            // continue
+        }
         if (llvm::verifyFunction(*llvmModCtx.currentFunction, &llvm::errs())) {
             llvmModCtx.TheModule->print(llvm::errs(), nullptr);
             panic(funcDef.debugInfo.line, funcDef.debugInfo.column, "LLVM function verification failed for: " + wstring2string(funcDef.name));
@@ -825,6 +877,10 @@ namespace yoi {
         }
 
         llvmModCtx.valueStackPhi.enterNode(toBlock, fromBlock, llvmModCtx.basicBlockMap.at(toBlock), actualFromBlock ? actualFromBlock : llvmModCtx.basicBlockMap.at(fromBlock));
+
+        if (fromBlock == toBlock && toBlock == 0 && llvmModCtx.currentFunctionDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator)) {
+            generateGeneratorContextInitialization(llvmModCtx);
+        }
 
         llvm::BasicBlock *actual_from_block_for_next = llvmModCtx.basicBlockMap.at(toBlock);
 
@@ -1180,45 +1236,10 @@ namespace yoi {
                 auto structVal = llvmModCtx.valueStackPhi.back(); llvmModCtx.valueStackPhi.pop_back();
                 auto valueToStore = llvmModCtx.valueStackPhi.back(); llvmModCtx.valueStackPhi.pop_back();
 
-                valueToStore = promiseInterfaceObjectIfInterface(llvmModCtx, valueToStore);
-
                 auto memberIndex = instr.operands[0].value.symbolIndex;
-                auto llvmMemberIndex = memberIndex + 2; // +2 to skip gc_refcount header and type index
-
-                auto key = std::make_tuple(IRValueType::valueType::structObject, structVal.yoiType->typeAffiliateModule, structVal.yoiType->typeIndex);
-                auto* llvmStructType = llvmModCtx.structTypeMap.at(key);
-                auto* gep = llvmModCtx.Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
-
-                auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
-                auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
-
-                auto* oldMemberPtr = llvmModCtx.Builder->CreateLoad(yoiTypeToLLVMType(llvmModCtx, memberYoiType), gep, "old_member_ptr");
-                callGcFunction(llvmModCtx, oldMemberPtr, memberYoiType, false, true);
-
-                if (memberYoiType->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
-                    auto value = unboxValue(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType);
-
-                    if (valueToStore.yoiType->type == IRValueType::valueType::datastructObject) {
-                        // create MemCpy
-                        auto datastructDef = llvmModCtx.dataStructDataRegionMap[valueToStore.yoiType->typeIndex];
-                        auto size = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(datastructDef);
-                        
-                        llvmModCtx.Builder->CreateMemCpy(gep, llvm::MaybeAlign(8), value, llvm::MaybeAlign(8), size);
-                    } else {
-                        llvmModCtx.Builder->CreateStore(value, gep);
-                    }
-                } else {
-                    auto object = ensureObject(llvmModCtx, valueToStore.yoiType, valueToStore.llvmValue);
-                    llvmModCtx.Builder->CreateStore(object.second, gep);
-                }
-
-                if (valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) && !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
-                    callGcFunction(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType, true, true, true);
-
-                callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
+                storeMember(llvmModCtx, valueToStore, structVal, memberIndex);
                 break;
             }
-
             // Control Flow
             case IR::Opcode::jump: {
                 llvmModCtx.Builder->CreateBr(llvmModCtx.basicBlockMap.at(instr.operands[0].value.codeBlockIndex));
@@ -1506,22 +1527,8 @@ namespace yoi {
             case IR::Opcode::new_struct: {
                 auto moduleIndex = instr.operands[0].value.symbolIndex;
                 auto structIndex = instr.operands[1].value.symbolIndex;
-                auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex);
-                auto* structType = llvmModCtx.structTypeMap.at(key);
-
-                auto size = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(structType);
-                auto* sizeVal = llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), size);
-
-                auto* allocCall = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"object_alloc"), sizeVal, "newtmp_alloc");
-                auto* bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casttmp");
-
-                auto* refCountPtr = llvmModCtx.Builder->CreateStructGEP(structType, bitcast, 0, "refcount_ptr");
-                llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), refCountPtr);
-
-                auto* typeIdPtr = llvmModCtx.Builder->CreateStructGEP(structType, bitcast, 1, "typeid_ptr");
-                auto typeIdKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex, 0);
-                llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), llvmModCtx.typeIDMap[typeIdKey]), typeIdPtr);
-
+                
+                auto bitcast = createStructObject(llvmModCtx, moduleIndex, structIndex);
 
                 auto yoiType = std::make_shared<IRValueType>(IRValueType::valueType::structObject, yoiModule->identifier, structIndex);
                 llvmModCtx.valueStackPhi.push_back({bitcast, yoiType});
@@ -2272,6 +2279,56 @@ namespace yoi {
                 llvmModCtx.valueStackPhi.push_back({llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), typeId, true), managedPtr(compilerCtx->getIntObjectType()->getBasicRawType())});
                 break;
             }
+            case IR::Opcode::yield: {
+                // stack: [value, raw_ctx, ...]
+                auto item = llvmModCtx.valueStackPhi.back();
+                llvmModCtx.valueStackPhi.pop_back();
+                auto raw_ctx = llvmModCtx.valueStackPhi.back();
+                llvmModCtx.valueStackPhi.pop_back();
+                auto raw_ctx_ptr = llvmModCtx.Builder->CreateIntToPtr(unboxValue(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType), llvm::PointerType::get(*llvmModCtx.TheContext, 0));
+                storeYieldValue(llvmModCtx, item.llvmValue, item.yoiType);
+                auto coro_suspend = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_suspend);
+                auto suspend_result = llvmModCtx.Builder->CreateCall(coro_suspend, {
+                    llvm::ConstantTokenNone::get(*llvmModCtx.TheContext), 
+                    llvm::ConstantInt::get(llvm::Type::getInt1Ty(*llvmModCtx.TheContext), 0)});
+                auto *resumeBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "resume_bb", llvmModCtx.currentFunction);
+                auto *switch_inst = llvmModCtx.Builder->CreateSwitch(suspend_result, llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB, 2);
+                switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), resumeBB);
+                switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 1), llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB);
+                callGcFunction(llvmModCtx, item.llvmValue, item.yoiType, false);
+                callGcFunction(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType, false);
+                llvmModCtx.Builder->SetInsertPoint(resumeBB);
+                break;
+            }
+            case IR::Opcode::yield_none: {
+                // stack: [raw_ctx, ...]
+                auto raw_ctx = llvmModCtx.valueStackPhi.back();
+                llvmModCtx.valueStackPhi.pop_back();
+                auto raw_ctx_ptr = llvmModCtx.Builder->CreateIntToPtr(unboxValue(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType), llvm::PointerType::get(*llvmModCtx.TheContext, 0));
+                auto coro_suspend = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_suspend);
+                auto suspend_result = llvmModCtx.Builder->CreateCall(coro_suspend, {
+                    llvm::ConstantTokenNone::get(*llvmModCtx.TheContext), 
+                    llvm::ConstantInt::get(llvm::Type::getInt1Ty(*llvmModCtx.TheContext), 0)});
+                auto *resumeBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "resume_bb", llvmModCtx.currentFunction);
+                auto *switch_inst = llvmModCtx.Builder->CreateSwitch(suspend_result, llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB, 2);
+                switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), resumeBB);
+                switch_inst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 1), llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB);
+                callGcFunction(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType, false);
+                llvmModCtx.Builder->SetInsertPoint(resumeBB);
+                break;
+            }
+            case IR::Opcode::resume: {
+                // stack: [raw_ctx, ...]
+                auto raw_ctx = llvmModCtx.valueStackPhi.back();
+                llvmModCtx.valueStackPhi.pop_back();
+                auto raw_ctx_ptr = llvmModCtx.Builder->CreateIntToPtr(unboxValue(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType), llvm::PointerType::get(*llvmModCtx.TheContext, 0));
+                auto coroResume = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_resume);
+                auto resume_result = llvmModCtx.Builder->CreateCall(coroResume, {
+                    raw_ctx_ptr, 
+                });
+                callGcFunction(llvmModCtx, raw_ctx.llvmValue, raw_ctx.yoiType, false);
+                break;
+            }
             case IR::Opcode::nop:
                 break;
             default:
@@ -2297,7 +2354,7 @@ namespace yoi {
                 return llvmModCtx.dataStructDataRegionMap.at(type->typeIndex);
             }
 
-            yoi_assert(type->isForeignBasicType(), 0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
+            // yoi_assert(type->isForeignBasicType(), 0, 0, "LLVM Codegen: Enforcing foreign type, but type is not a exported type or basic type.");
         } else {
             auto key = std::make_tuple(type->type, type->typeAffiliateModule, type->typeIndex);
             if (llvmModCtx.structTypeMap.count(key)) {
@@ -4584,5 +4641,157 @@ namespace yoi {
             return llvmModCtx.Builder->CreateLoad(dataRegionDef, value, "datastruct_load");
         }
         return value;
+    }
+
+    void LLVMCodegen::generateGeneratorContextInitialization(LLVMModuleContext &llvmModCtx) {
+        yoi_assert(
+            llvmModCtx.currentFunctionDef->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator),
+            llvmModCtx.currentFunctionDef->debugInfo.line,
+            llvmModCtx.currentFunctionDef->debugInfo.column,
+            "Function is not a generator"
+        );
+        
+        // generate the id of coroutine
+        llvm::Function *coroId = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_id, {});
+        auto coro_id = llvmModCtx.Builder->CreateCall(coroId, {
+            llvm::ConstantInt::getIntegerValue(llvm::IntegerType::getInt32Ty(*llvmModCtx.TheContext), llvm::APInt(32, 0)),
+            llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0)),
+            llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0)),
+            llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0))
+        });
+
+        auto previousBlock = llvmModCtx.Builder->GetInsertBlock();
+
+        llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "suspend", llvmModCtx.currentFunction);
+        llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "cleanup", llvmModCtx.currentFunction);
+
+        auto afterSuspendBB = llvm::BasicBlock::Create(*llvmModCtx.TheContext, "after_suspend", llvmModCtx.currentFunction);
+
+        llvm::Function *coroSize = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_size, {llvmModCtx.Builder->getInt64Ty()});
+        llvm::Value *coro_size = llvmModCtx.Builder->CreateCall(coroSize, {}, "size");
+
+        llvm::Value *coro_allocated_mem = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"mi_calloc"], {llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), coro_size});
+        llvm::Function *coroBegin = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_begin);
+        llvm::Value *coro_handle = llvmModCtx.Builder->CreateCall(coroBegin, {coro_id, coro_allocated_mem});
+
+        llvm::Value *allocated_ctx = createGeneratorContext(llvmModCtx, coro_handle);
+        llvmModCtx.currentGeneratorContextValue = allocated_ctx;
+        auto ctxIndex = llvmModCtx.currentFunctionDef->getVariableTable().lookup(L"__context__");
+        auto* alloca = llvmModCtx.namedValues.at(ctxIndex);
+        llvmModCtx.Builder->CreateStore(allocated_ctx, alloca);
+        callGcFunction(llvmModCtx, allocated_ctx, llvmModCtx.currentFunctionDef->returnType, true, true);
+
+        llvm::Function *coroSuspend = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_suspend);
+        llvm::Value *coro_suspend = llvmModCtx.Builder->CreateCall(coroSuspend, {
+                    llvm::ConstantTokenNone::get(*llvmModCtx.TheContext), 
+                    llvm::ConstantInt::get(llvm::Type::getInt1Ty(*llvmModCtx.TheContext), 0)});
+        // switch!
+        auto switchInst = llvmModCtx.Builder->CreateSwitch(coro_suspend, llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB);
+        switchInst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 0), afterSuspendBB);
+        switchInst->addCase(llvm::ConstantInt::get(llvm::Type::getInt8Ty(*llvmModCtx.TheContext), 1), llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB);
+
+        llvmModCtx.Builder->SetInsertPoint(llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB);
+        // coro_end and return our allocated ctx
+        llvm::Function *coroEnd = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_end);
+        llvmModCtx.Builder->CreateCall(coroEnd, {coro_handle, llvm::ConstantInt::get(llvmModCtx.Builder->getInt1Ty(), false), llvm::ConstantTokenNone::get(*llvmModCtx.TheContext)});
+        llvmModCtx.Builder->CreateRet(allocated_ctx);
+
+        llvmModCtx.Builder->SetInsertPoint(llvmModCtx.currentGeneratorContextBasicBlocks.cleanupBB);
+        // proceed with our own cleanup logic
+        generateFunctionExitCleanup(llvmModCtx);
+        llvmModCtx.Builder->CreateBr(llvmModCtx.currentGeneratorContextBasicBlocks.suspendBB);
+
+        // resume logic, which is the program logic
+        llvmModCtx.Builder->SetInsertPoint(afterSuspendBB);
+    }
+
+    llvm::Function *LLVMCodegen::getLLVMCoroIntrinsic(LLVMModuleContext &llvmModCtx, llvm::Intrinsic::ID id, llvm::ArrayRef<llvm::Type *> types) {
+        return llvm::Intrinsic::getOrInsertDeclaration(llvmModCtx.TheModule.get(), id, types);
+    }
+
+    llvm::Value* LLVMCodegen::createGeneratorContext(LLVMModuleContext &llvmModCtx, llvm::Value *coro_handle) {
+        auto ctxType = llvmModCtx.currentFunctionDef->returnType;
+        auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, ctxType->typeIndex);
+        auto *structType = llvmModCtx.structTypeMap.at(key);
+
+        auto *ctxValue = createStructObject(llvmModCtx, yoiModule->identifier, ctxType->typeIndex);
+        // auto *ctxPtr = llvmModCtx.Builder->CreateStructGEP(structType, ctxValue, 2, "ctx_ptr");
+        // llvmModCtx.Builder->CreateStore(coro_handle, ctxPtr);
+        storeMember(llvmModCtx, 
+            {
+                llvmModCtx.Builder->CreatePtrToInt(coro_handle, llvm::IntegerType::getInt64Ty(*llvmModCtx.TheContext)), 
+                managedPtr(IRValueType{IRValueType::valueType::unsignedRaw})}, 
+            {
+                ctxValue,
+                ctxType
+            }, 0);
+
+        return ctxValue;
+    }
+
+    llvm::Value *LLVMCodegen::createStructObject(LLVMModuleContext &llvmModCtx, yoi::indexT moduleIndex, yoi::indexT structIndex) {
+        auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex);
+        auto *structType = llvmModCtx.structTypeMap.at(key);
+
+        auto size = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(structType);
+        auto *sizeVal = llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), size);
+
+        auto *allocCall = llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"object_alloc"), sizeVal, "newtmp_alloc");
+        auto *bitcast = llvmModCtx.Builder->CreateBitCast(allocCall, llvm::PointerType::get(*llvmModCtx.TheContext, 0), "casttmp");
+
+        auto *refCountPtr = llvmModCtx.Builder->CreateStructGEP(structType, bitcast, 0, "refcount_ptr");
+        llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), 1), refCountPtr);
+
+        auto *typeIdPtr = llvmModCtx.Builder->CreateStructGEP(structType, bitcast, 1, "typeid_ptr");
+        auto typeIdKey = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, structIndex, 0);
+        llvmModCtx.Builder->CreateStore(llvm::ConstantInt::get(llvmModCtx.Builder->getInt64Ty(), llvmModCtx.typeIDMap[typeIdKey]), typeIdPtr);
+
+        return bitcast;
+    }
+
+    void LLVMCodegen::storeYieldValue(LLVMModuleContext &llvmModCtx, llvm::Value *value, const std::shared_ptr<IRValueType> &yoiType) {
+        auto key = std::make_tuple(IRValueType::valueType::structObject, yoiModule->identifier, llvmModCtx.currentFunctionDef->returnType->typeIndex);
+        auto *structType = llvmModCtx.structTypeMap.at(key);
+
+        storeMember(llvmModCtx, {value, yoiType}, {llvmModCtx.currentGeneratorContextValue, llvmModCtx.currentFunctionDef->returnType}, 1);
+    }
+
+    void LLVMCodegen::storeMember(LLVMModuleContext &llvmModCtx, const StackValue &storeValue, const StackValue &structVal, yoi::indexT memberIndex) {
+        auto valueToStore = promiseInterfaceObjectIfInterface(llvmModCtx, storeValue);
+
+        auto llvmMemberIndex = memberIndex + 2; // +2 to skip gc_refcount header and type index
+
+        auto key = std::make_tuple(IRValueType::valueType::structObject, structVal.yoiType->typeAffiliateModule, structVal.yoiType->typeIndex);
+        auto *llvmStructType = llvmModCtx.structTypeMap.at(key);
+        auto *gep = llvmModCtx.Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
+
+        auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
+        auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
+
+        auto *oldMemberPtr = llvmModCtx.Builder->CreateLoad(yoiTypeToLLVMType(llvmModCtx, memberYoiType), gep, "old_member_ptr");
+        callGcFunction(llvmModCtx, oldMemberPtr, memberYoiType, false, true);
+
+        if (memberYoiType->metadata.hasMetadata(L"STRUCT_DATAFIELD")) {
+            auto value = unboxValue(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType);
+
+            if (valueToStore.yoiType->type == IRValueType::valueType::datastructObject) {
+                // create MemCpy
+                auto datastructDef = llvmModCtx.dataStructDataRegionMap[valueToStore.yoiType->typeIndex];
+                auto size = llvmModCtx.TheModule->getDataLayout().getTypeAllocSize(datastructDef);
+
+                llvmModCtx.Builder->CreateMemCpy(gep, llvm::MaybeAlign(8), value, llvm::MaybeAlign(8), size);
+            } else {
+                llvmModCtx.Builder->CreateStore(value, gep);
+            }
+        } else {
+            auto object = ensureObject(llvmModCtx, valueToStore.yoiType, valueToStore.llvmValue);
+            llvmModCtx.Builder->CreateStore(object.second, gep);
+        }
+
+        if (valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) &&
+            !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
+            callGcFunction(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType, true, true, true);
+
+        callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
     }
 } // namespace yoi

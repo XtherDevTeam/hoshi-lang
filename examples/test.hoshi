@@ -1,7 +1,7 @@
 use test1 "examples/test1.hoshi"
 
 interface Test {
-    yield() : int
+    yield_value() : int
 }
 
 struct aaa {
@@ -22,7 +22,7 @@ impl aaa {
 }
 
 impl aaa : Test {
-    yield() : int {
+    yield_value() : int {
         return this.x + this.y
     }
 }
@@ -57,7 +57,7 @@ func test2(cond: bool) : int {
 func test3() : int {
     let x = aaa(1, 2)
     let y = Test(x)
-    let res = y.yield() + y.yield()
+    let res = y.yield_value() + y.yield_value()
     return res
 }
 

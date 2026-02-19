@@ -1,0 +1,19 @@
+use runtime "runtime"
+
+func generator int_gen() : int {
+    for (let i = 0; i < 10; i += 1) {
+        yield i
+    }
+    yield -1
+}
+
+func main() : int {
+    let g = int_gen()
+    let v = g.next()
+    while (v != -1) {
+        runtime.runtime_debug_print_int_1(v)
+        v = g.next()
+    }
+    runtime.puts("generator validation passed")
+    return 0
+}

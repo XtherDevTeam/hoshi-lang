@@ -42,6 +42,8 @@ namespace yoi {
         yoi::vec<ParameterState> paramStates;
         bool isReturnValueNullable = false;
         bool isReturnValueRaw = true;
+        bool isYieldValueNullable = false;
+        bool isYieldValueRaw = true;
 
         // For checking if the analysis has reached a fixed point.
         bool operator!=(const FunctionAnalysisInfo &other) const;
