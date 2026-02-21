@@ -176,6 +176,8 @@ namespace yoi {
     void parse(enumerationPair *&o, lexer &lex);
 
     void parse(yieldStmt *&o, lexer &lex);
+
+    void parse(decltypeExpr *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

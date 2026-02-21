@@ -4,6 +4,7 @@
 
 #include "formatter.hpp"
 #include "compiler/compilerContext.h"
+#include "compiler/frontend/lexer.hpp"
 #include "share/def.hpp"
 #include <ostream>
 
@@ -293,6 +294,9 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
         case lexer::token::tokenKind::kGenerator:
             os << L"generator";
             break;
+        case lexer::token::tokenKind::kDecltype:
+            os << "decltype";
+            break;
         case lexer::token::tokenKind::eof:
             break;
     }
@@ -466,15 +470,17 @@ void yoi::Formatter::format(funcTypeSpec *node) {
 
 void yoi::Formatter::format(typeSpec *node) {
     if (!node) return;
-    if (node->kind == 3) {
+    if (node->kind == typeSpec::typeSpecKind::Elipsis) {
         write(L"...");
         format(node->elipsis);
     } else if (node->isNull) {
         write(L"null");
-    } else if (node->kind == 0) {
+    } else if (node->kind == typeSpec::typeSpecKind::Member) {
         format(node->member);
-    } else if (node->kind == 1) {
+    } else if (node->kind == typeSpec::typeSpecKind::Func) {
         format(node->func);
+    } else if (node->kind == typeSpec::typeSpecKind::DecltypeExpr) {
+        format(node->decltypeExpression);
     }
     
     if (node->arraySubscript) {
@@ -1201,4 +1207,10 @@ void yoi::Formatter::format(yieldStmt *node) {
     if (!node) return;
     os << L"yield ";
     format(node->expr);
+}
+
+void yoi::Formatter::format(decltypeExpr *node) {
+    os << "decltype(";
+    format(node->expr);
+    os << ")";
 }

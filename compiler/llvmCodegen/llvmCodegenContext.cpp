@@ -825,10 +825,9 @@ namespace yoi {
         }
 
         llvmModCtx.DBuilder->finalize();
-        if (llvmModCtx.currentFunction->getName() == "0_int_gen#") {
-            // llvmModCtx.TheModule->print(llvm::errs(), nullptr);
-            // continue
-        }
+        // if (llvmModCtx.currentFunction->getName() == "0_int_gen#") {
+        //     llvmModCtx.TheModule->print(llvm::errs(), nullptr);
+        // }
         if (llvm::verifyFunction(*llvmModCtx.currentFunction, &llvm::errs())) {
             llvmModCtx.TheModule->print(llvm::errs(), nullptr);
             panic(funcDef.debugInfo.line, funcDef.debugInfo.column, "LLVM function verification failed for: " + wstring2string(funcDef.name));
@@ -1238,6 +1237,8 @@ namespace yoi {
 
                 auto memberIndex = instr.operands[0].value.symbolIndex;
                 storeMember(llvmModCtx, valueToStore, structVal, memberIndex);
+
+                callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
                 break;
             }
             // Control Flow
@@ -4679,7 +4680,7 @@ namespace yoi {
         auto ctxIndex = llvmModCtx.currentFunctionDef->getVariableTable().lookup(L"__context__");
         auto* alloca = llvmModCtx.namedValues.at(ctxIndex);
         llvmModCtx.Builder->CreateStore(allocated_ctx, alloca);
-        callGcFunction(llvmModCtx, allocated_ctx, llvmModCtx.currentFunctionDef->returnType, true, true);
+        // callGcFunction(llvmModCtx, allocated_ctx, llvmModCtx.currentFunctionDef->returnType, true, true);
 
         llvm::Function *coroSuspend = getLLVMCoroIntrinsic(llvmModCtx, llvm::Intrinsic::coro_suspend);
         llvm::Value *coro_suspend = llvmModCtx.Builder->CreateCall(coroSuspend, {
@@ -4717,15 +4718,17 @@ namespace yoi {
         auto *ctxValue = createStructObject(llvmModCtx, yoiModule->identifier, ctxType->typeIndex);
         // auto *ctxPtr = llvmModCtx.Builder->CreateStructGEP(structType, ctxValue, 2, "ctx_ptr");
         // llvmModCtx.Builder->CreateStore(coro_handle, ctxPtr);
+        auto unsignedRawType = managedPtr(*compilerCtx->getUnsignedObjectType());
+        unsignedRawType->addAttribute(IRValueType::ValueAttr::Raw);
         storeMember(llvmModCtx, 
             {
-                llvmModCtx.Builder->CreatePtrToInt(coro_handle, llvm::IntegerType::getInt64Ty(*llvmModCtx.TheContext)), 
-                managedPtr(IRValueType{IRValueType::valueType::unsignedRaw})}, 
+                llvmModCtx.Builder->CreatePtrToInt(coro_handle, llvm::IntegerType::getInt64Ty(*llvmModCtx.TheContext), "wdnmdnmslwqnmgbd"), 
+                unsignedRawType
+            }, 
             {
                 ctxValue,
                 ctxType
             }, 0);
-
         return ctxValue;
     }
 
@@ -4763,7 +4766,7 @@ namespace yoi {
 
         auto key = std::make_tuple(IRValueType::valueType::structObject, structVal.yoiType->typeAffiliateModule, structVal.yoiType->typeIndex);
         auto *llvmStructType = llvmModCtx.structTypeMap.at(key);
-        auto *gep = llvmModCtx.Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "memberptr");
+        auto *gep = llvmModCtx.Builder->CreateStructGEP(llvmStructType, structVal.llvmValue, llvmMemberIndex, "store_member_memberptr");
 
         auto yoiStructDef = compilerCtx->getIRObjectFile()->compiledModule->structTable[std::get<2>(key)];
         auto memberYoiType = yoiStructDef->fieldTypes[memberIndex];
@@ -4791,7 +4794,5 @@ namespace yoi {
         if (valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::PermanentInCurrentScope) &&
             !valueToStore.yoiType->hasAttribute(IRValueType::ValueAttr::Raw))
             callGcFunction(llvmModCtx, valueToStore.llvmValue, valueToStore.yoiType, true, true, true);
-
-        callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
     }
 } // namespace yoi

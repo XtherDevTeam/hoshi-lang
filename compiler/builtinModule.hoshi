@@ -1,10 +1,10 @@
 R"(struct TypeInfo {
-    id: int,
-    name: string,
-    type_enum: int,
-    module: int,
-    index: int,
-    is_array: int,
+    datafield id: int,
+    datafield name: string,
+    datafield type_enum: int,
+    datafield module: int,
+    datafield index: int,
+    datafield is_array: int,
     constructor(id: int, name: string, type_enum: int, module: int, index: int, is_array: int),
     constructor(id: int)
 }

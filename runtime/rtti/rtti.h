@@ -45,12 +45,12 @@ struct YoiTypeInfo {
 struct YoiTypeInfoObject {
     int64_t gc_refcount;
     int64_t type_info_struct_type_id;
-    YoiIntegerObject *type_id_object;
-    YoiStringObject *type_name_object;
-    YoiIntegerObject *type_enum_object;
-    YoiIntegerObject *type_affiliate_module_object;
-    YoiIntegerObject *type_index_object;
-    YoiIntegerObject *is_array_object;
+    int64_t type_id_object;
+    char *type_name_object;
+    int64_t type_enum_object;
+    int64_t type_affiliate_module_object;
+    int64_t type_index_object;
+    int64_t is_array_object;
 };
 
 extern "C" YoiTypeInfo rtti_table[];

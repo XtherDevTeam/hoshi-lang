@@ -74,6 +74,8 @@ namespace yoi {
 
         void format(typeSpec *node);
 
+        void format(decltypeExpr *node);
+
         void format(subscript *node);
 
         void format(identifierWithTemplateArg *node);

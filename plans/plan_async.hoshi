@@ -1,0 +1,12 @@
+use async_fs "async_fs"
+
+func async example() : int {
+    // after compilation, it would be built into a future object that contain
+    // the original coroutine Raw pointer, and the return-value to be awaited.
+    // In ABI level, it is similar to GeneratorContext, they have the same passes
+    // to convert Rawable value into datafield to avoid overhead.
+    // Default gnerta
+
+    let f = await async_fs.open("example", "r");
+    await f.write()
+}

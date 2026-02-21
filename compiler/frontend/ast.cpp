@@ -527,17 +527,21 @@ namespace yoi {
 
     void finalizeAST(typeSpec *ptr) {
         switch (ptr->kind) {
-            case 0:
+            case typeSpec::typeSpecKind::Member:
                 finalizeAST(ptr->member);
                 break;
-            case 1:
+            case typeSpec::typeSpecKind::Func:
                 finalizeAST(ptr->func);
                 break;
-            case 2:
+            case typeSpec::typeSpecKind::DecltypeExpr:
+                finalizeAST(ptr->decltypeExpression);
+                break;
+            case typeSpec::typeSpecKind::Null:
+            case typeSpec::typeSpecKind::Elipsis:
                 break;
         }
-        if (ptr->arraySubscript)
-            delete ptr->arraySubscript;
+        
+        delete ptr->arraySubscript;
         delete ptr;
     }
 
@@ -1133,6 +1137,7 @@ namespace yoi {
         finalizeAST(ptr->args);
         delete ptr;
     }
+
     primary &abstractExpr::getLhs() const {
         return *lhs;
     }
@@ -1250,6 +1255,11 @@ namespace yoi {
         if (ptr->expr) {
             finalizeAST(ptr->expr);
         }
+        delete ptr;
+    }
+
+    void finalizeAST(decltypeExpr *ptr) {
+        finalizeAST(ptr->expr);
         delete ptr;
     }
 } // namespace yoi

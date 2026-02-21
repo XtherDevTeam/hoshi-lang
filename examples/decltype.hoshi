@@ -1,0 +1,16 @@
+use runtime "runtime"
+use lang "builtin"
+
+func generator gen() : int {
+    yield 0xe1751a
+    yield 0
+}
+
+func main() : int {
+    let x = gen() // GeneratorContext#gen
+    let info : lang.TypeInfo = type_id<decltype(x)>
+    runtime.puts("Deduced type name: ")
+    runtime.puts(info.name)
+    runtime.runtime_debug_print_int_1(x.next())
+    return x.next()
+}

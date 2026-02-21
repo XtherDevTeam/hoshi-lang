@@ -6,6 +6,7 @@
 #include "compiler/builtinModule.hpp"
 #include "compiler/compilerContext.h"
 #include "compiler/frontend/lexer.hpp"
+#include "compiler/frontend/parser.hpp"
 #include "compiler/ir/IR.h"
 #include "compiler/moduleContext.h"
 #include "share/def.hpp"
@@ -1965,7 +1966,7 @@ namespace yoi {
 
             std::vector<std::shared_ptr<IRValueType>> argTypes;
             for (auto &i : funcDefStmt->getArgs().get()) {
-                if (&i == &funcDefStmt->getArgs().get().back() && i->spec->kind == 3 /* elipsis */) {
+                if (&i == &funcDefStmt->getArgs().get().back() && i->spec->kind == typeSpec::typeSpecKind::Elipsis /* elipsis */) {
                     isVaridic = true;
                     builder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = i->getId().node.strVal;
@@ -2038,7 +2039,7 @@ namespace yoi {
 
             methodBuilder.setReturnType(methodResultType);
             for (auto &arg : i->getMethod().getArgs().get()) {
-                if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis /* elipsis */) {
                     isVaridic = true;
                     methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = arg->getId().node.strVal;
@@ -2103,7 +2104,7 @@ namespace yoi {
                         constructorBuilder.addArgument(L"this", thisType);
                         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Constructor);
                         for (auto &arg : i->getConstructor().getArgs().get()) {
-                            if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                                 isVaridic = true;
                                 constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                                 auto argName = arg->getId().node.strVal;
@@ -2155,7 +2156,7 @@ namespace yoi {
                             methodBuilder.addArgument(L"this", thisType);
 
                         for (auto &arg : i->getMethod().getArgs().get()) {
-                            if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                            if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                                 isVaridic = true;
                                 methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                                 auto argName = arg->getId().node.strVal;
@@ -2319,7 +2320,7 @@ namespace yoi {
                         methodBuilder.addArgument(L"this", thisType);
 
                     for (auto &arg : i->getMethod().getArgs().get()) {
-                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                             isVaridic = true;
                             methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                             auto argName = arg->getId().node.strVal;
@@ -2385,7 +2386,7 @@ namespace yoi {
                     bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     for (auto &arg : i->getConstructor().getArgs().get()) {
-                        if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                        if (&arg == &i->getConstructor().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                             isVaridic = true;
                             auto argType = managedPtr(moduleContext->getCompilerContext()->getNullInterfaceType()->getDynamicArrayType());
                             argTypes.push_back(argType);
@@ -2409,7 +2410,7 @@ namespace yoi {
                     bool isVaridic = false;
                     yoi::vec<std::shared_ptr<IRValueType>> argTypes;
                     for (auto &arg : i->getMethod().getArgs().get()) {
-                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3 /* elipsis */) {
+                        if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                             isVaridic = true;
                             auto type =
                                 arg->spec->elipsis ? parseTypeSpec(arg->spec->elipsis) : *moduleContext->getCompilerContext()->getNullInterfaceType();
@@ -2819,7 +2820,7 @@ namespace yoi {
 
     IRValueType visitor::parseTypeSpec(yoi::typeSpec *typeSpec) {
         switch (typeSpec->kind) {
-            case 0: {
+            case typeSpec::typeSpecKind::Member: {
                 // member
                 auto it = typeSpec->member->getTerms().begin();
                 yoi::indexT targetModule = -1, lastModule = -1;
@@ -2850,15 +2851,22 @@ namespace yoi {
                     return lhs;
                 }
             }
-            case 1: {
+            case typeSpec::typeSpecKind::Func: {
                 // func
                 return parseTypeSpec(typeSpec->func);
             }
-            case 2: {
+            case typeSpec::typeSpecKind::Null: {
                 // null
                 return {IRValueType::valueType::null};
             }
-            case 3: {
+            case typeSpec::typeSpecKind::DecltypeExpr: {
+                auto state = moduleContext->getIRBuilder().saveState();
+                visit(typeSpec->decltypeExpression->expr);
+                auto rhs = *moduleContext->getIRBuilder().getRhsFromTempVarStack();
+                moduleContext->getIRBuilder().restoreState();
+                return rhs;
+            }
+            case typeSpec::typeSpecKind::Elipsis: {
                 // elipsis
                 // let it fallback to invalid
             }
@@ -3266,7 +3274,7 @@ namespace yoi {
         for (auto &spec : templateArgs->get()) {
             auto typeSpec = &spec->get();
             // We expect simple identifier type specs, e.g. T, U
-            if (typeSpec->kind == 0 && typeSpec->member && typeSpec->member->getTerms().size() == 1) {
+            if (typeSpec->kind == typeSpec::typeSpecKind::Member && typeSpec->member && typeSpec->member->getTerms().size() == 1) {
                 auto term = typeSpec->member->getTerms()[0];
                 if (!term->hasTemplateArg()) {
                     params.push_back(term->id->get().strVal);
@@ -4211,7 +4219,7 @@ namespace yoi {
                         auto &astArgs = decl ? decl->getMethod().getArgs().get() : def->getMethod().getArgs().get();
                         for (size_t i = 0; i < astArgs.size() && i < argTypes.size(); ++i) {
                              auto &spec = *astArgs[i]->spec;
-                             if (spec.kind == 0 && spec.member && spec.member->getTerms().size() == 1) {
+                             if (spec.kind == typeSpec::typeSpecKind::Member && spec.member && spec.member->getTerms().size() == 1) {
                                   auto term = spec.member->getTerms()[0];
                                   yoi::wstr typeName = term->id->get().strVal;
                                   for (size_t j = 0; j < methodTemplateParams.size(); ++j) {
@@ -4517,7 +4525,7 @@ namespace yoi {
             methodBuilder.setDebugInfo({irModule->modulePath, i->getLine(), i->getColumn()});
             methodBuilder.setReturnType(methodResultType);
             for (auto &arg : i->getMethod().getArgs().get()) {
-                if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == 3) {
+                if (&arg == &i->getMethod().getArgs().get().back() && arg->spec->kind == typeSpec::typeSpecKind::Elipsis) {
                     isVaridic = true;
                     methodBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Variadic);
                     auto argName = arg->getId().node.strVal;

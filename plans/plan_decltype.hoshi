@@ -1,0 +1,16 @@
+use runtime "runtime"
+use lang "builtin"
+
+// technically the value of a generator invocation result cannot be expressed.
+// however, with the introduction of the decltype, we can make it possible.
+func generator gen() : int {
+    yield -1
+}
+
+func main() : int {
+    let x = gen() // GeneratorContext#gen
+    let info : lang.TypeInfo = type_id(decltype(x))
+    runtime.puts("Deduced type name: ")
+    runtime.puts(info.name)
+    return x.next()
+}

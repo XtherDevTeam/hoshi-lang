@@ -1,3 +1,4 @@
+#include <cstdint>
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-use-nodiscard"
 #pragma ide diagnostic ignored "google-explicit-constructor"
@@ -71,6 +72,8 @@ namespace yoi {
     class subscriptExpr;
 
     class memberExpr;
+
+    class decltypeExpr;
 
     class primary;
 
@@ -198,6 +201,8 @@ namespace yoi {
 
     class yieldStmt;
 
+    class decltypeExpr;
+
     class bracedInitalizerList : public AST {
       public:
         yoi::vec<yoi::rExpr *> exprs;
@@ -316,10 +321,17 @@ namespace yoi {
 
     class typeSpec : public AST {
       public:
-        int16_t kind; // 0 is member 1 is func 2 is null, 3 is elipsis
+        enum class typeSpecKind : int16_t {
+            Member,
+            Func,
+            Null,
+            Elipsis,
+            DecltypeExpr
+        } kind; // 0 is member 1 is func 2 is null, 3 is elipsis, 4 is decltypeExpr
         externModuleAccessExpression *member;
         funcTypeSpec *func;
         typeSpec *elipsis;
+        decltypeExpr *decltypeExpression;
         bool isNull;
         yoi::vec<uint64_t> *arraySubscript;
 
@@ -401,7 +413,7 @@ namespace yoi {
             newExpression,
             lambdaExpr,
             funcExpr,
-            bracedInitalizerList,
+            bracedInitalizerList
         } kind;
         memberExpr *member;
         basicLiterals *literals;
@@ -412,6 +424,7 @@ namespace yoi {
         lambdaExpr *lambda;
         funcExpr *func;
         bracedInitalizerList *bracedInitalizer;
+        decltypeExpr *decltypeExpr;
 
         memberExpr &getMemberExpr() const;
 
@@ -595,6 +608,11 @@ namespace yoi {
         identifier &getName();
 
         lexer::token &getPath();
+    };
+
+    class decltypeExpr : public AST {
+      public:
+        rExpr *expr{};
     };
 
     class funcDefStmt : public AST {
@@ -1118,6 +1136,8 @@ namespace yoi {
     void finalizeAST(memberExpr *ptr);
 
     void finalizeAST(primary *ptr);
+
+    void finalizeAST(decltypeExpr *ptr);
 
     void finalizeAST(uniqueExpr *ptr);
 
