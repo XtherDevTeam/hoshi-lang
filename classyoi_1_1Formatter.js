@@ -15,6 +15,7 @@ var classyoi_1_1Formatter =
     [ "format", "classyoi_1_1Formatter.html#a648fbe071e65feeff5f9872077fb2e42", null ],
     [ "format", "classyoi_1_1Formatter.html#a56cd304de3220a8c44102a75dccb3ab4", null ],
     [ "format", "classyoi_1_1Formatter.html#ab28fe8c2f55b525ad1c6448d3447ee95", null ],
+    [ "format", "classyoi_1_1Formatter.html#a4dca54e92ee8875e48bfffdc3b370b53", null ],
     [ "format", "classyoi_1_1Formatter.html#af30dfc889809458af701380dd8a8d17d", null ],
     [ "format", "classyoi_1_1Formatter.html#aefaca1d39575341fcd631c6c1eb67cbc", null ],
     [ "format", "classyoi_1_1Formatter.html#a30a1c207aac1b74c9bb4f1b0e58d2a55", null ],

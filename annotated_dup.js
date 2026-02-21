@@ -55,6 +55,7 @@ var annotated_dup =
       [ "constructorDef", "classyoi_1_1constructorDef.html", "classyoi_1_1constructorDef" ],
       [ "continueStmt", "classyoi_1_1continueStmt.html", null ],
       [ "dataStructDefStmt", "classyoi_1_1dataStructDefStmt.html", "classyoi_1_1dataStructDefStmt" ],
+      [ "decltypeExpr", "classyoi_1_1decltypeExpr.html", "classyoi_1_1decltypeExpr" ],
       [ "definitionArguments", "classyoi_1_1definitionArguments.html", "classyoi_1_1definitionArguments" ],
       [ "defTemplateArg", "classyoi_1_1defTemplateArg.html", "classyoi_1_1defTemplateArg" ],
       [ "defTemplateArgSpec", "classyoi_1_1defTemplateArgSpec.html", "classyoi_1_1defTemplateArgSpec" ],

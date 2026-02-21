@@ -7,12 +7,14 @@ var searchData=
   ['datastructremapping_4',['datastructRemapping',['../classyoi_1_1IRLinker.html#a029e6c80baff44ab2f5c220f19e1264c',1,'yoi::IRLinker']]],
   ['datastructtable_5',['dataStructTable',['../classyoi_1_1IRModule.html#ad1a8b92c22beb7d3db47942f06b089c3',1,'yoi::IRModule']]],
   ['dbuilder_6',['DBuilder',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ac412d01f461e3cd9e8f953c7d24699ec',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
-  ['debuginfo_7',['debuginfo',['../classyoi_1_1IR.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IR::debugInfo'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::Builder::debugInfo'],['../classyoi_1_1IRFunctionDefinition.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::debugInfo']]],
+  ['debuginfo_7',['debuginfo',['../classyoi_1_1IRFunctionDefinition.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::debugInfo'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IRFunctionDefinition::Builder::debugInfo'],['../classyoi_1_1IR.html#a5b00116518529facdc2737f6899b4b0a',1,'yoi::IR::debugInfo']]],
   ['decimal_8',['decimal',['../unionyoi_1_1IROperand_1_1operandValue.html#a160d6366514b7fe5ec086f528835c5ce',1,'yoi::IROperand::operandValue']]],
   ['decivalue_9',['deciValue',['../unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#aed6968ad55daa7546c8e358e813fb55f',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::PossibleValue']]],
-  ['default_5ftag_10',['default_tag',['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize']]],
-  ['depend_5fby_11',['depend_by',['../structyoi_1_1CodegenObjectCacheEntry.html#afb4d10e908b6b66e5678bd9585a82a4e',1,'yoi::CodegenObjectCacheEntry']]],
-  ['dependentmodules_12',['dependentModules',['../classyoi_1_1IRModule.html#a1b1fe146e380de7e9dc097c4fe417d7b',1,'yoi::IRModule']]],
-  ['dimensions_13',['dimensions',['../classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73',1,'yoi::IRValueType']]],
-  ['dyncast_14',['dynCast',['../classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3',1,'yoi::primary']]]
+  ['decltypeexpr_10',['decltypeExpr',['../classyoi_1_1primary.html#a7de9373d9ee62125ba912cb94b2a7bdd',1,'yoi::primary']]],
+  ['decltypeexpression_11',['decltypeExpression',['../classyoi_1_1typeSpec.html#a001bbccdc36cf8bfa8d01dffa7c5f24e',1,'yoi::typeSpec']]],
+  ['default_5ftag_12',['default_tag',['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize']]],
+  ['depend_5fby_13',['depend_by',['../structyoi_1_1CodegenObjectCacheEntry.html#afb4d10e908b6b66e5678bd9585a82a4e',1,'yoi::CodegenObjectCacheEntry']]],
+  ['dependentmodules_14',['dependentModules',['../classyoi_1_1IRModule.html#a1b1fe146e380de7e9dc097c4fe417d7b',1,'yoi::IRModule']]],
+  ['dimensions_15',['dimensions',['../classyoi_1_1IRValueType.html#ad9f072dc105b469e95532614a6170a73',1,'yoi::IRValueType']]],
+  ['dyncast_16',['dynCast',['../classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3',1,'yoi::primary']]]
 ];

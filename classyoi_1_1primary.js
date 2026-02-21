@@ -15,6 +15,7 @@ var classyoi_1_1primary =
     [ "getLiterals", "classyoi_1_1primary.html#adc3349b1fe94a6cc6c528cdf6e5bd5b8", null ],
     [ "getMemberExpr", "classyoi_1_1primary.html#a9991d58b6ac9fc7f7cf1eef8a7c576d2", null ],
     [ "bracedInitalizer", "classyoi_1_1primary.html#ad3e71a6441389af9f38871beb66750f8", null ],
+    [ "decltypeExpr", "classyoi_1_1primary.html#a7de9373d9ee62125ba912cb94b2a7bdd", null ],
     [ "dynCast", "classyoi_1_1primary.html#af9a2b1806dd8953824c96dda458942f3", null ],
     [ "expr", "classyoi_1_1primary.html#a81b237c5abdaf1c7cb969dcdf6e24742", null ],
     [ "func", "classyoi_1_1primary.html#a419f7a5d3a7f40d75326ac74d842a9f7", null ],

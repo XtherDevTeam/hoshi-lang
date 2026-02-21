@@ -81,7 +81,7 @@ var searchData=
   ['stack_78',['stack',['../structyoi_1_1AnalysisState.html#a1b86f7d0813ac28a4d129132996e2cbd',1,'yoi::AnalysisState']]],
   ['stack_20and_20memory_20operations_79',['stack and memory operations',['../md_docs_2IR.html#autotoc_md72',1,'3.1. Stack and Memory Operations'],['../md_docs_2IR.html#autotoc_md57',1,'3.1. Stack and Memory Operations']]],
   ['stack_20vs_20heap_80',['Data Structures: Stack vs. Heap',['../index.html#autotoc_md175',1,'']]],
-  ['stackstate_81',['stackstate',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa',1,'yoi::LLVMCodegen::ValueStackWithPhi::stackState'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4',1,'yoi::LLVMCodegen::ValueStackWithPhi::StackState']]],
+  ['stackstate_81',['stackstate',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4',1,'yoi::LLVMCodegen::ValueStackWithPhi::StackState'],['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa',1,'yoi::LLVMCodegen::ValueStackWithPhi::stackState']]],
   ['stackvalue_82',['StackValue',['../structyoi_1_1LLVMCodegen_1_1StackValue.html',1,'yoi::LLVMCodegen']]],
   ['standard_20library_83',['standard library',['../md_docs_2Spec.html#autotoc_md122',1,'8. Standard Library'],['../index.html#autotoc_md169',1,'Standard Library']]],
   ['stat_5ffunc_84',['stat_func',['../fs_8cpp.html#ad7b8d61359a8fe66187f413470913f9e',1,'fs.cpp']]],

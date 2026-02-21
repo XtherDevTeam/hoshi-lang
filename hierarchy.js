@@ -16,6 +16,7 @@ var hierarchy =
       [ "constructorDef", "classyoi_1_1constructorDef.html", null ],
       [ "continueStmt", "classyoi_1_1continueStmt.html", null ],
       [ "dataStructDefStmt", "classyoi_1_1dataStructDefStmt.html", null ],
+      [ "decltypeExpr", "classyoi_1_1decltypeExpr.html", null ],
       [ "defTemplateArg", "classyoi_1_1defTemplateArg.html", null ],
       [ "defTemplateArgSpec", "classyoi_1_1defTemplateArgSpec.html", null ],
       [ "definitionArguments", "classyoi_1_1definitionArguments.html", null ],
