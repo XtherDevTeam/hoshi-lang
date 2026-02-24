@@ -12,7 +12,8 @@ var classyoi_1_1globalStmt =
       [ "importDecl", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5", null ],
       [ "exportDecl", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea5a76dc0e6abdfb1d3b38d6b64fe0b555", null ],
       [ "typeAliasStmt", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea71126f8b13a7000ae9a312452c259020", null ],
-      [ "enumerationDef", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d", null ]
+      [ "enumerationDef", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d", null ],
+      [ "conceptDef", "classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea723646ba2379f58847f411211799cfcf", null ]
     ] ],
     [ "getKind", "classyoi_1_1globalStmt.html#a8d4dd3d00c7b4c344059f4a8f873edd5", null ],
     [ "getValue", "classyoi_1_1globalStmt.html#a7f2607e2d216a88d2f9ea60d6fa3d341", null ],

@@ -137,6 +137,7 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <li>[x] 支持带 this 指针非静态 callable 创建</li>
 <li>[x] <code>braced initializer list</code> 支持</li>
 <li>[x] 加入 <code>hoshi-format</code> 工具</li>
+<li>[x] 实验性 <code>concept</code> 支持</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md180"></a>
 Known issues</h1>
@@ -156,7 +157,8 @@ Known issues</h1>
 <li>[x] operator[] 重载导致 noneObject 存在栈上</li>
 <li>[x] operator[] 重载在存在参数类型不一致时无法自动转换</li>
 <li>[x] llvm 又报 All node shall be resolved.</li>
-<li>[x] 引入并行编译导致 AlwaysInline 优化失效，考虑使用 LinkOnceODR </li>
+<li>[x] 引入并行编译导致 AlwaysInline 优化失效，考虑使用 LinkOnceODR</li>
+<li>[ ] concept仅能接受一个参数，不支持半实例化 </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

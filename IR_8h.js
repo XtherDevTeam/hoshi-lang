@@ -36,6 +36,7 @@ var IR_8h =
     [ "Builder", "classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder.html", "classyoi_1_1IRInterfaceImplementationTemplate_1_1Builder" ],
     [ "IRStringLiteralPool", "classyoi_1_1IRStringLiteralPool.html", "classyoi_1_1IRStringLiteralPool" ],
     [ "IRExternEntry", "classyoi_1_1IRExternEntry.html", "classyoi_1_1IRExternEntry" ],
+    [ "IRConcept", "classyoi_1_1IRConcept.html", "classyoi_1_1IRConcept" ],
     [ "IRModule", "classyoi_1_1IRModule.html", "classyoi_1_1IRModule" ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html", "classyoi_1_1IRBuilder" ],
     [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", "structyoi_1_1IRBuilder_1_1LoopContext" ],

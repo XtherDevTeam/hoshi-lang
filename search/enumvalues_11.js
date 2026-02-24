@@ -1,7 +1,7 @@
 var searchData=
 [
   ['tab_0',['Tab',['../structyoi_1_1FormatOption.html#af711604d06a4aae686e576846bdc7814a5c6ba25104401c9ee0650230fc6ba413',1,'yoi::FormatOption']]],
-  ['throws_1',['throws',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584',1,'yoi::IR::throws'],['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a83a5849d32875836435ece98f910621a',1,'yoi::IRFunctionDefinition::Throws']]],
+  ['throws_1',['throws',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a83a5849d32875836435ece98f910621a',1,'yoi::IRFunctionDefinition::Throws'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a66b08e840cf1d7ea635bc54470266584',1,'yoi::IR::throws']]],
   ['throwstmt_2',['throwStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea272690f1a3134c11a90f9e15b0eef0c7',1,'yoi::inCodeBlockStmt']]],
   ['tosign_3',['toSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aade2fe32a74d0d7cc7750b400e6651fa',1,'yoi::lexer::token']]],
   ['trycatchstmt_4',['tryCatchStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea9c7f1419b92e397caf445a6c53793eb9',1,'yoi::inCodeBlockStmt']]],

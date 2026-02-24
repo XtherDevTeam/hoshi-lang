@@ -9,8 +9,9 @@ var searchData=
   ['colon_6',['colon',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32acd474d96b7d33934e9dc47b57cb4c445',1,'yoi::lexer::token']]],
   ['comma_7',['comma',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab6d00dc1ba038e5901cd6c06b2daa192',1,'yoi::lexer::token']]],
   ['common_8',['common',['../namespacemagic__enum_1_1detail.html#ad1e8ca7399ef090ef09549302d9d7d40a9efab2399c7c560b34de477b9aa0a465',1,'magic_enum::detail']]],
-  ['construct_5finterface_5fimpl_9',['construct_interface_impl',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b',1,'yoi::IR']]],
-  ['constructor_10',['Constructor',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a678d0a4421b60dc59999ac02837496a6',1,'yoi::IRFunctionDefinition']]],
-  ['continuestmt_11',['continueStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaca1678b14e225ea8391eedc3d41f36d4',1,'yoi::inCodeBlockStmt']]],
-  ['custom_5ftag_12',['custom_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebeda11e69738068f7b315076bccfdf5c9d41',1,'magic_enum::customize::detail']]]
+  ['conceptdef_9',['conceptDef',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea723646ba2379f58847f411211799cfcf',1,'yoi::globalStmt']]],
+  ['construct_5finterface_5fimpl_10',['construct_interface_impl',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7acfbe39a1b1f72923af053e14dda0527b',1,'yoi::IR']]],
+  ['constructor_11',['Constructor',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a678d0a4421b60dc59999ac02837496a6',1,'yoi::IRFunctionDefinition']]],
+  ['continuestmt_12',['continueStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaca1678b14e225ea8391eedc3d41f36d4',1,'yoi::inCodeBlockStmt']]],
+  ['custom_5ftag_13',['custom_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebeda11e69738068f7b315076bccfdf5c9d41',1,'magic_enum::customize::detail']]]
 ];
