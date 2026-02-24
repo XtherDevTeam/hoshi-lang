@@ -18,7 +18,7 @@ namespace yoi {
       public:
         AST();
 
-        AST(lexer::token token);
+        AST(lexer::token token); 
 
         std::tuple<yoi::indexT, yoi::indexT> getLocation();
 
@@ -203,6 +203,14 @@ namespace yoi {
 
     class decltypeExpr;
 
+    class conceptDefinition;
+
+    class conceptStmt;
+
+    class satisfyStmt;
+
+    class satisfyClause;
+
     class bracedInitalizerList : public AST {
       public:
         yoi::vec<yoi::rExpr *> exprs;
@@ -267,11 +275,9 @@ namespace yoi {
     class defTemplateArgSpec : public AST {
       public:
         identifier *id;
-        externModuleAccessExpression *impl;
+        satisfyClause *satisfyCondition;
 
         identifier &getId() const;
-
-        externModuleAccessExpression &getImpl() const;
     };
 
     class defTemplateArg : public AST {
@@ -797,6 +803,7 @@ namespace yoi {
             exportDecl,
             typeAliasStmt,
             enumerationDef,
+            conceptDef,
         } kind;
 
         marcoDescriptor *marco;
@@ -813,6 +820,7 @@ namespace yoi {
             exportDecl *exportDeclVal;
             typeAliasStmt *typeAliasStmtVal;
             enumerationDefinition *enumerationDefVal;
+            conceptDefinition *conceptDefVal;
             void *ptr;
 
             template <typename T> vValue(T *t) : ptr(static_cast<void *>(t)) {}
@@ -1090,6 +1098,49 @@ namespace yoi {
       public:
         rExpr *expr;
     };
+
+    class conceptDefinition : public AST {
+      public:
+        lexer::token name;
+        yoi::vec<lexer::token> typeParams;
+        yoi::vec<identifierWithTypeSpec *> algebraParams;
+
+        yoi::vec<conceptStmt *> conceptBlock;
+    };
+
+    class conceptStmt : public AST {
+      public:
+        enum class Kind {
+            SatisfyStmt,
+            Expression
+        } kind;
+        
+        union ConceptStmtValue {
+            void *storage;
+            satisfyStmt *satisfyStmt;
+            rExpr *expression;
+
+            template<typename T> ConceptStmtValue(T a) : storage((void*)a) {}
+        } value;
+    };
+
+    class satisfyStmt : public AST {
+      public:
+        externModuleAccessExpression *emae;
+    };
+
+    class satisfyClause : public AST {
+      public:
+        yoi::vec<externModuleAccessExpression *> emaes;
+    };
+
+    void finalizeAST(satisfyClause *ptr);
+
+    void finalizeAST(satisfyStmt *ptr);
+
+    void finalizeAST(conceptStmt *ptr);
+
+    void finalizeAST(conceptDefinition *ptr);
 
     void finalizeAST(exportDecl *ptr);
 

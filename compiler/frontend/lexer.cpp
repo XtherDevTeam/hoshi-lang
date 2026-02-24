@@ -192,6 +192,10 @@ namespace yoi {
             tok.kind = token::tokenKind::kYield;
         } else if (tempStr == L"decltype") {
             tok.kind = token::tokenKind::kDecltype;
+        } else if (tempStr == L"concept") {
+            tok.kind = token::tokenKind::kConcept;
+        } else if (tempStr == L"satisfy") {
+            tok.kind = token::tokenKind::kSatisfy;
         } else if (tempStr == L"operator") {
             scan();
             return operatorStart();

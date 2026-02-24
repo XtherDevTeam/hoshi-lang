@@ -1,7 +1,3 @@
-interface Addable {
-    add() : int
-}
-
 struct Point {
     x: int,
     y: int,
@@ -15,16 +11,12 @@ impl Point {
     }
 }
 
-impl Point : Addable {
-    add(): int {
-        return this.x + this.y
-    }
+concept Addable2<T>(a: T) {
+    a.x + a.y
 }
 
-func add_inv<T impl Addable>(a: T) : int {
-    let addable = Addable(a)
-    let res = addable.add()
-    return res
+func add_inv<T satisfy(Addable2<T>)>(a: T) : int {
+    return a.x + a.y
 }
 
 func main() : int {

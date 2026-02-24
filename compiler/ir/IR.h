@@ -526,9 +526,10 @@ namespace yoi {
       public:
         struct Argument {
             std::shared_ptr<IRValueType> templateType;
-            std::pair<yoi::indexT, yoi::indexT> interfaceType;
 
-            Argument(const std::shared_ptr<IRValueType> &templateType, const std::pair<yoi::indexT, yoi::indexT> &interfaceType);
+            yoi::vec<externModuleAccessExpression *> satisfyCondition;
+
+            Argument(const std::shared_ptr<IRValueType> &templateType, const yoi::vec<externModuleAccessExpression *> &satisfyConditions);
 
             Argument(const std::shared_ptr<IRValueType> &templateType);
         };
@@ -539,7 +540,7 @@ namespace yoi {
 
         IRTemplateBuilder &addTemplateArgument(const yoi::wstr &templateName,
                                                const std::shared_ptr<IRValueType> &templateType,
-                                               const std::pair<yoi::indexT, yoi::indexT> &interfaceType = {0, 0});
+                                               const yoi::vec<externModuleAccessExpression *> &satisfyConditions = {});
     };
 
     class IRFunctionTemplate {
@@ -830,6 +831,14 @@ namespace yoi {
         externType getExternType() const;
     };
 
+    class IRConcept {
+      public:
+        yoi::wstr name;
+        yoi::indexT affiliateModule;
+
+        conceptDefinition *def;
+    };
+
     class IRModule : std::enable_shared_from_this<IRModule> {
       public:
         yoi::indexT identifier;
@@ -854,6 +863,7 @@ namespace yoi {
         std::map<yoi::wstr, yoi::typeAliasStmt *> typeAliasTemplateAsts;
         std::map<yoi::wstr, IRValueType> typeAliases;
         std::map<yoi::wstr, yoi::vec<yoi::indexT>> functionOverloadIndexies;
+        std::map<yoi::wstr, std::shared_ptr<IRConcept>> concepts;
 
         IRStringLiteralPool stringLiteralPool;
 

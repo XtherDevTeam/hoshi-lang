@@ -120,6 +120,8 @@ namespace yoi {
                 kDataField,
                 kYield,
                 kDecltype,
+                kConcept,
+                kSatisfy,
                 eof,
             } kind;
 

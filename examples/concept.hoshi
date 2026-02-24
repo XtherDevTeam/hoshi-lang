@@ -1,0 +1,20 @@
+use runtime "runtime"
+
+concept is_addable<A>(a: A, b: A) {
+    a + b
+}
+
+concept custom_concept<A>(a: A, b: A) {
+    satisfy is_addable<A>
+    a - b
+}
+
+func test<A satisfy(custom_concept<A>)>(a: A, b: A) : int {
+    return a + b
+}
+
+func main() : int {
+    let a = 1
+    let b = 2
+    return test(a, b) - 3
+}

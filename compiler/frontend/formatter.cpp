@@ -297,6 +297,12 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
         case lexer::token::tokenKind::kDecltype:
             os << "decltype";
             break;
+        case lexer::token::tokenKind::kConcept:
+            os << "concept";
+            break;
+        case lexer::token::tokenKind::kSatisfy:
+            os << "satisfy";
+            break;
         case lexer::token::tokenKind::eof:
             break;
     }
@@ -394,9 +400,8 @@ void yoi::Formatter::format(identifierWithTypeSpec *node) {
 void yoi::Formatter::format(defTemplateArgSpec *node) {
     if (!node) return;
     format(node->id);
-    if (node->impl) {
-        write(L" impl ");
-        format(node->impl);
+    if (node->satisfyCondition) {
+        format(node->satisfyCondition);
     }
 }
 
@@ -925,6 +930,7 @@ void yoi::Formatter::format(globalStmt *node) {
         case globalStmt::vKind::exportDecl: format(node->value.exportDeclVal); break;
         case globalStmt::vKind::typeAliasStmt: format(node->value.typeAliasStmtVal); break;
         case globalStmt::vKind::enumerationDef: format(node->value.enumerationDefVal); break;
+        case globalStmt::vKind::conceptDef: format(node->value.conceptDefVal); break;
     }
 }
 
@@ -1001,9 +1007,11 @@ void yoi::Formatter::format(typeIdExpression *node) {
         format(node->type);
         os << L">";
     }
-    os << L"(";
-    if (node->expr) format(node->expr);
-    os << L")";
+    if (node->expr) {
+        os << L"(";
+        format(node->expr);
+        os << L")";
+    }
 }
 
 void yoi::Formatter::format(newExpression *node) {
@@ -1212,5 +1220,64 @@ void yoi::Formatter::format(yieldStmt *node) {
 void yoi::Formatter::format(decltypeExpr *node) {
     os << "decltype(";
     format(node->expr);
+    os << ")";
+}
+
+void yoi::Formatter::format(conceptDefinition *node) {
+    if (!node) return;
+    os << L"concept " << node->name.strVal << L"<";
+    for (auto it = node->typeParams.begin(); it != node->typeParams.end(); it++) {
+        if (it != node->typeParams.begin()) {
+            os << ", ";
+        }
+        os << it->strVal;
+    }
+    os << ">(";
+    for (auto it = node->algebraParams.begin(); it != node->algebraParams.end(); it++) {
+        if (it != node->algebraParams.begin()) {
+            os << ", ";
+        }
+        format(*it);
+    }
+    os << ") {";
+    indentLevel++;
+    for (auto it = node->conceptBlock.begin(); it != node->conceptBlock.end(); it++) {
+        newLine();
+        format(*it);
+    }
+    indentLevel--;
+    newLine();
+    os << "}";
+}
+
+void yoi::Formatter::format(conceptStmt *node) {
+    if (!node) return;
+    switch (node->kind) {
+        case conceptStmt::Kind::Expression: {
+            format(node->value.expression);
+            break;
+        }
+        case conceptStmt::Kind::SatisfyStmt: {
+            format(node->value.satisfyStmt);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void yoi::Formatter::format(satisfyStmt *node) {
+    os << L"satisfy ";
+    format(node->emae);
+}
+
+void yoi::Formatter::format(satisfyClause *node) {
+    os << L"satisfy(";
+    for (auto it = node->emaes.begin(); it != node->emaes.end(); it++) {
+        if (it != node->emaes.begin()) {
+            os << ", ";
+        }
+        format(*it);
+    }
     os << ")";
 }

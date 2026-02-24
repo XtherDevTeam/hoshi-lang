@@ -87,7 +87,7 @@ namespace yoi {
 
     void parse(defTemplateArgSpec *&o, lexer &lex) {
         identifier *id = nullptr;
-        externModuleAccessExpression *impl = nullptr;
+        satisfyClause *satisfyCondition = nullptr;
         lexer::token node_start_token = lex.curToken;
 
         parse(id, lex);
@@ -96,16 +96,15 @@ namespace yoi {
             return;
         }
 
-        if (lex.curToken.kind == lexer::token::tokenKind::kImpl) {
-            lex.scan();
-            parse(impl, lex);
-            if (!impl) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kSatisfy) {
+            parse(satisfyCondition, lex);
+            if (!satisfyCondition) {
                 finalizeAST(id);
-                panic(lex.line, lex.col, "expected externModuleAccessExpression after `impl` in defTemplateArgSpec");
+                panic(lex.line, lex.col, "expected satisfyClause after `satisfy` in defTemplateArgSpec");
                 o = nullptr; // Ensure o is null on failure
                 return;
             }
-            o = new defTemplateArgSpec{node_start_token, id, impl};
+            o = new defTemplateArgSpec{node_start_token, id, satisfyCondition};
         } else {
             o = new defTemplateArgSpec{node_start_token, id, nullptr};
         }
@@ -1443,6 +1442,7 @@ namespace yoi {
         importDecl *h = nullptr;
         typeAliasStmt *i = nullptr;
         enumerationDefinition *j = nullptr;
+        conceptDefinition *k = nullptr;
 
         lexer::token node_start_token = lex.curToken;
 
@@ -1512,6 +1512,12 @@ namespace yoi {
         parse(j, lex);
         if (j) {
             o = new globalStmt{node_start_token, globalStmt::vKind::enumerationDef, marco, {j}};
+            return;
+        }
+
+        parse(k, lex);
+        if (k) {
+            o = new globalStmt{node_start_token, globalStmt::vKind::conceptDef, marco, {k}};
             return;
         }
 
@@ -2881,6 +2887,146 @@ namespace yoi {
         }
         lex.scan();
         o = new decltypeExpr{node_start_token, expr};
+    }
+
+    void parse(satisfyStmt *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kSatisfy) {
+            o = nullptr;
+            return;
+        }
+        yoi::lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        externModuleAccessExpression *emae = nullptr;
+        parse(emae, lex);
+        if (!emae) {
+            o = nullptr;
+            panic(lex.line, lex.col, "expected externModuleAccessExpression after `satisfy` in satisfyStmt");
+            return;
+        }
+        o = new satisfyStmt{node_start_token, emae};
+    }
+
+    void parse(conceptStmt *&o, lexer &lex) {
+        yoi::lexer::token node_start_token = lex.curToken;
+        
+        satisfyStmt *s{};
+        parse(s, lex);
+        if (s) {
+            o = new conceptStmt{node_start_token, conceptStmt::Kind::SatisfyStmt, s};
+            return;
+        }
+
+        rExpr *e{};
+        parse(e, lex);
+        if (e) {
+            o = new conceptStmt{node_start_token, conceptStmt::Kind::Expression, e};
+            return;
+        }
+    }
+
+    void parse(conceptDefinition *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kConcept) {
+            o = nullptr;
+            return;
+        }
+        yoi::lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        
+        lexer::token name{};
+        yoi::vec<lexer::token> typeParams;
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::identifier, lex.curToken.line, lex.curToken.col, "expected identifier after `concept` in conceptDefinition");
+        name = lex.curToken;
+        lex.scan();
+        
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::lessThan, lex.curToken.line, lex.curToken.col, "expected `<` after concept name in conceptDefinition");
+        lex.scan();
+        
+        while (lex.curToken.kind == lexer::token::tokenKind::identifier) {
+            typeParams.push_back(lex.curToken);
+            lex.scan();
+            if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                lex.scan();
+            } else {
+                break;
+            }
+        }
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::greaterThan, lex.curToken.line, lex.curToken.col, "expected `>` after type parameters in conceptDefinition");
+        lex.scan();
+
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::leftParentheses, lex.curToken.line, lex.curToken.col, "expected `(` after `>`");
+        lex.scan();
+
+        yoi::vec<identifierWithTypeSpec *> specs;
+        identifierWithTypeSpec *spec{};
+        parse(spec, lex);
+        while (spec) {
+            specs.push_back(spec);
+            if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                lex.scan();
+                spec = nullptr;
+                parse(spec, lex);
+            } else {
+                break;
+            }
+        }
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::rightParentheses, lex.curToken.line, lex.curToken.col, "expected `)` after specs");
+        lex.scan();
+
+        if (lex.curToken.kind != lexer::token::tokenKind::leftBraces) {
+            o = nullptr;
+            for (auto s : specs)
+                finalizeAST(s);
+            panic(lex.line, lex.col, "expected `{` after `)`");
+            return;
+        }
+        lex.scan();
+
+        yoi::vec<conceptStmt *> conceptStmts;
+        conceptStmt *stmt{};
+        parse(stmt, lex);
+        while (stmt) {
+            conceptStmts.push_back(stmt);
+            stmt = nullptr;
+            parse(stmt, lex);
+        }
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::rightBraces, lex.curToken.line, lex.curToken.col, "expected `}` after satisfyClauses");
+        lex.scan();
+
+        o = new conceptDefinition{node_start_token, name, typeParams, specs, conceptStmts};
+    }
+
+    void parse(satisfyClause *&o, lexer &lex) {
+        if (lex.curToken.kind != lexer::token::tokenKind::kSatisfy) {
+            o = nullptr;
+            return;
+        }
+        lexer::token node_start_token = lex.curToken;
+        lex.scan();
+        yoi_assert(lex.curToken.kind == lexer::token::tokenKind::leftParentheses, lex.curToken.line, lex.curToken.col, "expected `(` after `satisfy`");
+        lex.scan();
+
+        yoi::vec<externModuleAccessExpression *> specs;
+        externModuleAccessExpression *spec{};
+        parse(spec, lex);
+        while (spec) {
+            specs.push_back(spec);
+            if (lex.curToken.kind == lexer::token::tokenKind::comma) {
+                lex.scan();
+                spec = nullptr;
+                parse(spec, lex);
+            } else {
+                break;
+            }
+        }
+        if (lex.curToken.kind != lexer::token::tokenKind::rightParentheses) {
+            o = nullptr;
+            for (auto s : specs)
+                finalizeAST(s);
+            panic(lex.line, lex.col, "expected `)` after specs");
+            return;
+        }
+        lex.scan();
+        o = new satisfyClause{node_start_token, specs};
     }
 } // namespace yoi
 

@@ -1,0 +1,27 @@
+use runtime "runtime"
+
+concept is_addable<A>(a: A, b: A) {
+    a + b
+}
+
+concept custom_concept<A>() {
+    satisfy is_addable<A>
+    a - b
+}
+
+struct Test<A satisfy(custom_concept<A>, is_addable<A>)> {
+    a: A,
+    b: A,
+    constructor(a: A, b: A),
+    sum() : A
+}
+
+impl Test<> {
+    constructor(a: A, b: A) {
+        this.a = a
+        this.b = b
+    },
+    sum() : A {
+        return this.a + this.b
+    }
+}

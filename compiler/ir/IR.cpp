@@ -954,10 +954,7 @@ namespace yoi {
         return r;
     }
 
-    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType, const std::pair<yoi::indexT, yoi::indexT> &interfaceType)
-        : templateType(templateType), interfaceType(interfaceType) {}
-
-    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType) : templateType(templateType), interfaceType({0, 0}) {}
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType) : templateType(templateType) {}
 
     IRFunctionTemplate::IRFunctionTemplate(const std::shared_ptr<IRFunctionDefinition> &templateDefinition,
                                            const yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> &templateArguments)
@@ -1012,8 +1009,8 @@ namespace yoi {
 
     IRTemplateBuilder &IRTemplateBuilder::addTemplateArgument(const yoi::wstr &templateName,
                                                               const std::shared_ptr<IRValueType> &templateType,
-                                                              const std::pair<yoi::indexT, yoi::indexT> &interfaceType) {
-        templateArguments.put_create(templateName, {templateType, interfaceType});
+                                                              const yoi::vec<externModuleAccessExpression *> &satisfyConditions) {
+        templateArguments.put_create(templateName, {templateType, satisfyConditions});
         return *this;
     }
 
@@ -1707,5 +1704,10 @@ namespace yoi {
     
     void IRVariableTable::set(yoi::indexT index, const std::shared_ptr<IRValueType> &type) {
         variables[index] = type;
+    }
+
+    IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType,
+                                          const yoi::vec<externModuleAccessExpression *> &satisfyConditions) : templateType(templateType), satisfyCondition(satisfyConditions) {
+            
     }
 } // namespace yoi

@@ -1473,7 +1473,7 @@ namespace yoi {
                             {currentModuleIndex, interfaceIndex}, interfaceImplIndex, true, targetModule->identifier);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
-                    } catch (const std::exception &) {
+                    } catch (const std::out_of_range &) {
                         moduleContext->getIRBuilder().restoreState();
                     }
                 }
@@ -1550,7 +1550,7 @@ namespace yoi {
                             {currentModuleIndex, interfaceIndex}, interfaceImplIndex, true, targetModule->identifier);
                         resolved = true;
                         moduleContext->getIRBuilder().discardState();
-                    } catch (const std::exception &) {
+                    } catch (const std::out_of_range &) {
                         moduleContext->getIRBuilder().restoreState();
                     }
                 } else {
@@ -2564,6 +2564,10 @@ namespace yoi {
                 visit(globalStmt->value.dataStructDefStmtVal);
                 break;
             }
+            case globalStmt::vKind::conceptDef: {
+                visit(globalStmt->value.conceptDefVal);
+                break;
+            }
             default: {
                 panic(globalStmt->getLine(), globalStmt->getColumn(), "Unsupported global statement type");
             }
@@ -3165,13 +3169,8 @@ namespace yoi {
         yoi::indexTable<yoi::wstr, IRTemplateBuilder::Argument> res;
         for (auto &arg : templateArgs.spec) {
             yoi::wstr name = arg->getId().get().strVal;
-            auto index = res.put_create(name, {{}, {-1, -1}});
+            auto index = res.put_create(name, {{}});
             res[index].templateType = managedPtr(IRValueType{IRValueType::valueType::incompleteTemplateType, currentModuleIndex, index});
-
-            if (arg->impl) {
-                auto constraint = parseInterfaceName(arg->impl);
-                res[index].interfaceType = constraint.first;
-            }
         }
         return res;
     }
@@ -3200,6 +3199,11 @@ namespace yoi {
         IRTemplateBuilder specializationContext;
         for (yoi::indexT i = 0; i < astNode->id->arg->get().size(); ++i) {
             auto paramName = astNode->id->arg->get()[i]->id->get().strVal;
+            if (astNode->id->hasDefTemplateArg() && astNode->id->arg->get()[i]->satisfyCondition) {
+                for (auto &c : astNode->id->arg->get()[i]->satisfyCondition->emaes) {
+                    checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                }
+            }
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
         }
 
@@ -3319,6 +3323,12 @@ namespace yoi {
                    "Template argument count mismatch for struct " + wstring2string(templateName));
         for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
             auto paramName = structAst->id->getArg().get()[i]->getId().get().strVal;
+            // TODO: add concept validation logic, partially
+            if (structAst->id->hasDefTemplateArg() && structAst->id->getArg().get()[i]->satisfyCondition) {
+                for (auto &c : structAst->id->getArg().get()[i]->satisfyCondition->emaes) {
+                    checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                }
+            }
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
         }
 
@@ -3419,6 +3429,13 @@ namespace yoi {
 
         yoi_assert(methodParams.size() == methodTemplateArgs.size(), 0, 0, "Method template argument count mismatch");
         for (size_t i = 0; i < methodParams.size(); ++i) {
+            // here we specialize the template arguments of *this method*
+            // still check the concept satisfaction
+            if (decl->getMethod().getName().hasDefTemplateArg() && decl->getMethod().getName().arg->spec[i]->satisfyCondition) {
+                for (auto &c : decl->getMethod().getName().arg->spec[i]->satisfyCondition->emaes) {
+                    checkConceptSatisfaction(c, {methodTemplateArgs[i]});
+                }
+            }
             combinedContext.addTemplateArgument(methodParams[i], methodTemplateArgs[i]);
         }
 
@@ -3514,12 +3531,30 @@ namespace yoi {
         yoi::vec<std::shared_ptr<IRValueType>> genericArgTypes;
 
         if (methodAstNode->kind == 1) {
+            for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
+                // same as above
+                if (methodAstNode->getConstructor().tempArgs && methodAstNode->getConstructor().tempArgs->spec[i]->satisfyCondition) {
+                    for (auto &c : methodAstNode->getConstructor().tempArgs->spec[i]->satisfyCondition->emaes) {
+                        checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                    }
+                }
+            }
+
             baseMethodName = L"constructor";
             for (auto &arg : methodAstNode->getConstructor().getArgs().get()) {
                 genericArgTypes.push_back(managedPtr(parseTypeSpec(&arg->getSpec())));
             }
             genericMethodKey = baseMethodName + getFuncUniqueNameStr(genericArgTypes);
         } else if (methodAstNode->kind == 2) {
+            for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
+                // same as above
+                if (methodAstNode->getMethod().getName().hasDefTemplateArg() && methodAstNode->getMethod().getName().arg->spec[i]->satisfyCondition) {
+                    for (auto &c : methodAstNode->getMethod().getName().arg->spec[i]->satisfyCondition->emaes) {
+                        checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                    }
+                }
+            }
+
             baseMethodName = methodAstNode->getMethod().getName().getId().get().strVal;
             for (auto &arg : methodAstNode->getMethod().getArgs().get()) {
                 genericArgTypes.push_back(managedPtr(parseTypeSpec(&arg->getSpec())));
@@ -4178,7 +4213,7 @@ namespace yoi {
                     result.variadicElementType = managedPtr(result.function->argumentTypes.back()->getElementType());
                 }
                 return result;
-            } catch (const std::exception &) {
+            } catch (const std::out_of_range &) {
                 result.functionIndex = -1;
             }
         }
@@ -4203,32 +4238,37 @@ namespace yoi {
             if (!overload.found()) {
                 // Check if it's a template method
                 if (structType->templateMethodDecls.contains(baseName) || structType->templateMethodDefs.contains(baseName)) {
-                    yoi::structDefInnerPair *decl = structType->templateMethodDecls.contains(baseName) ? structType->templateMethodDecls.at(baseName) : nullptr;
-                    yoi::implInnerPair *def = structType->templateMethodDefs.contains(baseName) ? structType->templateMethodDefs.at(baseName) : nullptr;
+                    yoi::structDefInnerPair *decl =
+                        structType->templateMethodDecls.contains(baseName) ? structType->templateMethodDecls.at(baseName) : nullptr;
+                    yoi::implInnerPair *def =
+                        structType->templateMethodDefs.contains(baseName) ? structType->templateMethodDefs.at(baseName) : nullptr;
 
                     yoi::vec<std::shared_ptr<IRValueType>> concreteMethodTemplateArgs;
                     if (templateArgs) {
-                            concreteMethodTemplateArgs = parseTemplateArgs(*templateArgs);
-                        } else {
-                        // Deduction
+                        // full specialization, if provided
+                        concreteMethodTemplateArgs = parseTemplateArgs(*templateArgs);
+                    } else {
+                        // automatically deduce the template arguments based on the arguments
                         yoi::vec<yoi::wstr> methodTemplateParams;
-                        if (decl) methodTemplateParams = extractTemplateParamsFromTypeArgs(&decl->getMethod().getName().getArg());
-                        else if (def) methodTemplateParams = extractTemplateParamsFromTypeArgs(&def->getMethod().getName().getArg());
+                        if (decl)
+                            methodTemplateParams = extractTemplateParamsFromTypeArgs(&decl->getMethod().getName().getArg());
+                        else if (def)
+                            methodTemplateParams = extractTemplateParamsFromTypeArgs(&def->getMethod().getName().getArg());
 
                         concreteMethodTemplateArgs.resize(methodTemplateParams.size());
                         auto &astArgs = decl ? decl->getMethod().getArgs().get() : def->getMethod().getArgs().get();
                         for (size_t i = 0; i < astArgs.size() && i < argTypes.size(); ++i) {
-                             auto &spec = *astArgs[i]->spec;
-                             if (spec.kind == typeSpec::typeSpecKind::Member && spec.member && spec.member->getTerms().size() == 1) {
-                                  auto term = spec.member->getTerms()[0];
-                                  yoi::wstr typeName = term->id->get().strVal;
-                                  for (size_t j = 0; j < methodTemplateParams.size(); ++j) {
-                                      if (methodTemplateParams[j] == typeName) {
-                                          concreteMethodTemplateArgs[j] = argTypes[i];
-                                          break;
-                                      }
-                                  }
-                             }
+                            auto &spec = *astArgs[i]->spec;
+                            if (spec.kind == typeSpec::typeSpecKind::Member && spec.member && spec.member->getTerms().size() == 1) {
+                                auto term = spec.member->getTerms()[0];
+                                yoi::wstr typeName = term->id->get().strVal;
+                                for (size_t j = 0; j < methodTemplateParams.size(); ++j) {
+                                    if (methodTemplateParams[j] == typeName) {
+                                        concreteMethodTemplateArgs[j] = argTypes[i];
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -4241,10 +4281,12 @@ namespace yoi {
                     }
 
                     if (allDeduced && !concreteMethodTemplateArgs.empty()) {
-                         auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
-                         auto specializedFuncIndex = specializeStructMethodTemplate(structType, decl, def, baseName, concreteMethodTemplateArgs, targetModule);
-                         overload.functionIndex = specializedFuncIndex;
-                         overload.function = targetedModule->functionTable[specializedFuncIndex];
+                        // if all deduced, we can use this to invoke the target
+                        auto targetedModule = moduleContext->getCompilerContext()->getImportedModule(targetModule);
+                        auto specializedFuncIndex =
+                            specializeStructMethodTemplate(structType, decl, def, baseName, concreteMethodTemplateArgs, targetModule);
+                        overload.functionIndex = specializedFuncIndex;
+                        overload.function = targetedModule->functionTable[specializedFuncIndex];
                     }
                 }
             }
@@ -5620,5 +5662,112 @@ namespace yoi {
         moduleContext->popIRBuilder();
 
         return managedPtr(IRValueType{IRValueType::valueType::structObject, HOSHI_COMPILER_CTX_GLOB_ID_CONST, generatorContextIndex});
+    }
+
+    void visitor::visit(yoi::conceptDefinition *conceptDefinition) {
+        auto conceptName = conceptDefinition->name.strVal;
+        irModule->concepts[conceptName] = managedPtr(IRConcept{
+            conceptName,
+            irModule->identifier,
+            conceptDefinition
+        });
+    }
+
+    void visitor::setupTemporaryConceptEvaluationEnvironment(yoi::indexT moduleIndex, const yoi::wstr &conceptName, const std::vector<std::shared_ptr<IRValueType>> &args) {
+        yoi_assert(
+            moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->concepts[conceptName]->def->typeParams.size() == args.size(),
+            moduleContext->getIRBuilder().getCurrentDebugInfo().line,
+            moduleContext->getIRBuilder().getCurrentDebugInfo().column,
+            "Concept type parameter count does not match the number of arguments."
+        );
+
+        IRTemplateBuilder specializationContext;
+        for (yoi::indexT i = 0; i < args.size(); i += 1) {
+            specializationContext.addTemplateArgument(
+                moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->concepts[conceptName]->def->typeParams[i].strVal,
+                args[i]
+            );
+        }
+        moduleContext->pushTemplateBuilder(specializationContext);
+        // specialize the params
+        yoi::vec<std::pair<yoi::wstr, std::shared_ptr<IRValueType>>> params;
+
+        for (yoi::indexT i = 0; i < moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->concepts[conceptName]->def->algebraParams.size(); i += 1) {
+            auto node = moduleContext->getCompilerContext()->getImportedModule(moduleIndex)->concepts[conceptName]->def->algebraParams[i];
+            params.push_back({
+                node->id->node.strVal,
+                managedPtr(parseTypeSpec(node->spec))
+            });
+        }
+        // create fake function and push IRBuilder
+        moduleContext->pushIRBuilder(IRBuilder{
+            moduleContext->getCompilerContext(),
+            moduleContext->getCompilerContext()->getImportedModule(moduleIndex),
+            managedPtr(IRFunctionDefinition{
+                L"temporary",
+                params,
+                {},
+                {},
+                {},
+                {}
+            })
+        });
+        moduleContext->getIRBuilder().switchCodeBlock(moduleContext->getIRBuilder().createCodeBlock());
+    }
+
+    void visitor::ejectTemporaryConceptEvaluationEnvironment() {
+        moduleContext->popTemplateBuilder();
+        moduleContext->popIRBuilder();
+    }
+
+    void visitor::evaluateConstraint(yoi::conceptStmt *stmt, const IRDebugInfo &currentDebugInfo) {
+        switch (stmt->kind) {
+        case yoi::conceptStmt::Kind::SatisfyStmt:
+            break;
+        case yoi::conceptStmt::Kind::Expression:
+            moduleContext->getIRBuilder().saveState();
+            try {
+                visit(stmt->value.expression);
+            } catch (std::runtime_error &e) {
+                panic(currentDebugInfo.line, currentDebugInfo.column, "Constraint evaluation failed: " + std::string(e.what()));
+            }
+            moduleContext->getIRBuilder().restoreState();
+            break;
+        default:
+            break;
+        }
+    }
+
+    std::pair<std::shared_ptr<IRConcept>, templateArg *> visitor::parseConceptName(yoi::externModuleAccessExpression *conceptName) {
+        yoi::indexT currentModIndex = conceptName->getTerms().size() > 1 ? -1 : currentModuleIndex;
+        for (yoi::indexT i = 0; i < conceptName->getTerms().size() - 1; i += 1) {
+            auto term = conceptName->getTerms()[i];
+            yoi_assert(!term->hasTemplateArg(), term->getLine(), term->getColumn(), "template arguments is not allowed except in the last term");
+            yoi_assert(moduleContext->getCompilerContext()->getImportedModule(currentModIndex)->moduleImports.contains(term->id->node.strVal), term->getLine(), term->getColumn(), "module not found");
+            currentModIndex = moduleContext->getCompilerContext()->getImportedModule(currentModIndex)->moduleImports[term->id->node.strVal];
+        }
+        auto name = conceptName->getTerms().back()->id->node.strVal;
+        yoi_assert(moduleContext->getCompilerContext()->getImportedModule(currentModIndex)->concepts.contains(name), conceptName->getLine(), conceptName->getColumn(), "concept not found");
+
+        return {
+            moduleContext->getCompilerContext()->getImportedModule(currentModIndex)->concepts[name],
+            conceptName->getTerms().back()->arg
+        };
+    }
+
+    void visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::vec<std::shared_ptr<IRValueType>> &args) {
+        auto [conceptDef, parsedTemplateArg] = parseConceptName(stmt);
+        
+        setupTemporaryConceptEvaluationEnvironment(currentModuleIndex, conceptDef->name, args);
+        
+        for (auto constraint : conceptDef->def->conceptBlock) {
+            evaluateConstraint(constraint, {
+                __current_file_path,
+                stmt->getLine(),
+                stmt->getColumn()
+            });
+        }
+        
+        ejectTemporaryConceptEvaluationEnvironment();
     }
 } // namespace yoi

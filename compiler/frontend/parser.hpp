@@ -178,6 +178,14 @@ namespace yoi {
     void parse(yieldStmt *&o, lexer &lex);
 
     void parse(decltypeExpr *&o, lexer &lex);
+
+    void parse(satisfyStmt *&o, lexer &lex);
+
+    void parse(conceptStmt *&o, lexer &lex);
+
+    void parse(conceptDefinition *&o, lexer &lex);
+
+    void parse(satisfyClause *&o, lexer &lex);
 }
 
 #endif //HOSHI_LANG_PARSER_HPP

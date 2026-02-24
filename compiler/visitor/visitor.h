@@ -267,6 +267,8 @@ namespace yoi {
 
         yoi::indexT visit(yoi::yieldStmt *stmt);
 
+        void visit(yoi::conceptDefinition *conceptDefinition);
+
         void visit(yoi::enumerationDefinition *enumerationDefinition);
 
         void visit(yoi::dataStructDefStmt *dataStructDefStmt);
@@ -425,6 +427,16 @@ namespace yoi {
          * @return std::shared_ptr<IRValueType> The generator context type
          */
         std::shared_ptr<IRValueType> getGeneratorContext(const yoi::wstr &funcName, const std::shared_ptr<IRValueType> &yieldType);
+
+        void setupTemporaryConceptEvaluationEnvironment(yoi::indexT moduleIndex, const yoi::wstr &conceptName, const std::vector<std::shared_ptr<IRValueType>> &args);
+
+        std::pair<std::shared_ptr<IRConcept>, templateArg *> parseConceptName(yoi::externModuleAccessExpression *conceptName);
+
+        void evaluateConstraint(yoi::conceptStmt *stmt, const IRDebugInfo &currentDebugInfo);
+
+        void ejectTemporaryConceptEvaluationEnvironment();
+
+        void checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::vec<std::shared_ptr<IRValueType>> &args);
     };
 
 } // namespace yoi

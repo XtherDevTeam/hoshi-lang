@@ -219,6 +219,14 @@ namespace yoi {
         void format(constructorDef *node);
 
         void format(yieldStmt *node);
+
+        void format(conceptStmt *node);
+
+        void format(satisfyStmt *node);
+
+        void format(satisfyClause *node);
+
+        void format(conceptDefinition *node);
     };
 }
 

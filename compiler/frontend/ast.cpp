@@ -24,11 +24,6 @@ namespace yoi {
     identifier &defTemplateArgSpec::getId() const {
         return *id;
     }
-
-    externModuleAccessExpression &defTemplateArgSpec::getImpl() const {
-        return *impl;
-    }
-
     vec<defTemplateArgSpec *> &defTemplateArg::get() {
         return spec;
     }
@@ -514,8 +509,8 @@ namespace yoi {
 
     void finalizeAST(defTemplateArgSpec *ptr) {
         finalizeAST(ptr->id);
-        if (ptr->impl)
-            finalizeAST(ptr->impl);
+        if (ptr->satisfyCondition)
+            finalizeAST(ptr->satisfyCondition);
         delete ptr;
     }
 
@@ -832,6 +827,9 @@ namespace yoi {
                 break;
             case globalStmt::vKind::enumerationDef:
                 finalizeAST(ptr->value.enumerationDefVal);
+                break;
+            case globalStmt::vKind::conceptDef:
+                finalizeAST(ptr->value.conceptDefVal);
                 break;
         }
         delete ptr;
@@ -1260,6 +1258,40 @@ namespace yoi {
 
     void finalizeAST(decltypeExpr *ptr) {
         finalizeAST(ptr->expr);
+        delete ptr;
+    }
+
+    void finalizeAST(conceptStmt *ptr) {
+        switch (ptr->kind) {
+            case conceptStmt::Kind::Expression: {
+                finalizeAST(ptr->value.expression);
+                break;
+            }
+            case conceptStmt::Kind::SatisfyStmt: {
+                finalizeAST(ptr->value.satisfyStmt);
+                break;
+            }
+        }
+        delete ptr;
+    }
+
+    void finalizeAST(satisfyStmt *ptr) {
+        finalizeAST(ptr->emae);
+        delete ptr;
+    }
+
+    void finalizeAST(satisfyClause *ptr) {
+        for (auto &i : ptr->emaes)
+            finalizeAST(i);
+        delete ptr;
+    }
+    
+    void finalizeAST(conceptDefinition *ptr) {
+        for (auto &i : ptr->conceptBlock)
+            finalizeAST(i);
+
+        for (auto &i : ptr->algebraParams)
+            finalizeAST(i);
         delete ptr;
     }
 } // namespace yoi
