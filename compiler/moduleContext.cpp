@@ -31,13 +31,16 @@ namespace yoi {
     std::shared_ptr<yoi::compilerContext> moduleContext::getCompilerContext() {
         return compilerContext;
     }
+
     void moduleContext::pushTemplateBuilder(IRTemplateBuilder &builder) {
-        templateBuilders.push_back(&builder);
+        templateBuilders.push_back(builder);
     }
+
     void moduleContext::popTemplateBuilder() {
         templateBuilders.pop_back();
     }
-    std::vector<IRTemplateBuilder *> &moduleContext::getTemplateBuilders() {
+    
+    std::vector<IRTemplateBuilder> &moduleContext::getTemplateBuilders() {
         return templateBuilders;
     }
 } // namespace yoi

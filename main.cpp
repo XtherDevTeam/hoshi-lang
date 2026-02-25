@@ -369,7 +369,7 @@ int main(int argc, const char **argv) {
                 std::cerr << "Warning: Could not remove cache file '" << yoi::wstring2string(compilerCtx->getBuildConfig()->buildCachePath) << "': " << ec_remove.message() << "\n";
             }
         }
-    } catch (const std::runtime_error &e) {
+    } catch (const std::logic_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exitCode = 1; 
     } /* catch (const std::exception& e) {

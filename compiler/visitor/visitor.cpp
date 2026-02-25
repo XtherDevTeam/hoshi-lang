@@ -3157,7 +3157,7 @@ namespace yoi {
             if (moduleContext->getTemplateBuilders().empty()) {
                 throw std::out_of_range("No template builder found");
             }
-            auto &templateBuilder = **moduleContext->getTemplateBuilders().rbegin();
+            auto &templateBuilder = *moduleContext->getTemplateBuilders().rbegin();
             auto res = templateBuilder.templateArguments[typeName];
             return res.templateType;
         } catch (std::out_of_range &e) {
@@ -3201,7 +3201,7 @@ namespace yoi {
             auto paramName = astNode->id->arg->get()[i]->id->get().strVal;
             if (astNode->id->hasDefTemplateArg() && astNode->id->arg->get()[i]->satisfyCondition) {
                 for (auto &c : astNode->id->arg->get()[i]->satisfyCondition->emaes) {
-                    checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                    checkConceptSatisfaction(c, paramName, concreteTemplateArgs[i]);
                 }
             }
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
@@ -3323,10 +3323,10 @@ namespace yoi {
                    "Template argument count mismatch for struct " + wstring2string(templateName));
         for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
             auto paramName = structAst->id->getArg().get()[i]->getId().get().strVal;
-            // TODO: add concept validation logic, partially
+            // concept validation logic, partially
             if (structAst->id->hasDefTemplateArg() && structAst->id->getArg().get()[i]->satisfyCondition) {
                 for (auto &c : structAst->id->getArg().get()[i]->satisfyCondition->emaes) {
-                    checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                    checkConceptSatisfaction(c, paramName, concreteTemplateArgs[i]);
                 }
             }
             specializationContext.addTemplateArgument(paramName, concreteTemplateArgs[i]);
@@ -3432,8 +3432,9 @@ namespace yoi {
             // here we specialize the template arguments of *this method*
             // still check the concept satisfaction
             if (decl->getMethod().getName().hasDefTemplateArg() && decl->getMethod().getName().arg->spec[i]->satisfyCondition) {
+                auto paramName = decl->getMethod().getName().arg->spec[i]->id->get().strVal;
                 for (auto &c : decl->getMethod().getName().arg->spec[i]->satisfyCondition->emaes) {
-                    checkConceptSatisfaction(c, {methodTemplateArgs[i]});
+                    checkConceptSatisfaction(c, paramName, methodTemplateArgs[i]);
                 }
             }
             combinedContext.addTemplateArgument(methodParams[i], methodTemplateArgs[i]);
@@ -3534,8 +3535,9 @@ namespace yoi {
             for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
                 // same as above
                 if (methodAstNode->getConstructor().tempArgs && methodAstNode->getConstructor().tempArgs->spec[i]->satisfyCondition) {
+                    auto paramName = methodAstNode->getConstructor().tempArgs->spec[i]->id->get().strVal;
                     for (auto &c : methodAstNode->getConstructor().tempArgs->spec[i]->satisfyCondition->emaes) {
-                        checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                        checkConceptSatisfaction(c, paramName, concreteTemplateArgs[i]);
                     }
                 }
             }
@@ -3549,8 +3551,9 @@ namespace yoi {
             for (yoi::indexT i = 0; i < concreteTemplateArgs.size(); ++i) {
                 // same as above
                 if (methodAstNode->getMethod().getName().hasDefTemplateArg() && methodAstNode->getMethod().getName().arg->spec[i]->satisfyCondition) {
+                    auto paramName = methodAstNode->getMethod().getName().arg->spec[i]->id->get().strVal;
                     for (auto &c : methodAstNode->getMethod().getName().arg->spec[i]->satisfyCondition->emaes) {
-                        checkConceptSatisfaction(c, {concreteTemplateArgs[i]});
+                        checkConceptSatisfaction(c, paramName, concreteTemplateArgs[i]);
                     }
                 }
             }
@@ -5723,6 +5726,7 @@ namespace yoi {
     void visitor::evaluateConstraint(yoi::conceptStmt *stmt, const IRDebugInfo &currentDebugInfo) {
         switch (stmt->kind) {
         case yoi::conceptStmt::Kind::SatisfyStmt:
+            checkConceptSatisfaction(stmt->value.satisfyStmt->emae);
             break;
         case yoi::conceptStmt::Kind::Expression:
             moduleContext->getIRBuilder().saveState();
@@ -5755,8 +5759,14 @@ namespace yoi {
         };
     }
 
-    void visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::vec<std::shared_ptr<IRValueType>> &args) {
+    void visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt) {
         auto [conceptDef, parsedTemplateArg] = parseConceptName(stmt);
+
+        yoi::vec<std::shared_ptr<IRValueType>> args;
+        
+        for (auto &i : parsedTemplateArg->spec) {
+            args.push_back(managedPtr(parseTypeSpec(i->spec)));
+        }
         
         setupTemporaryConceptEvaluationEnvironment(currentModuleIndex, conceptDef->name, args);
         
@@ -5769,5 +5779,15 @@ namespace yoi {
         }
         
         ejectTemporaryConceptEvaluationEnvironment();
+    }
+
+    void visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt,
+                                           const yoi::wstr &paramName,
+                                           const std::shared_ptr<IRValueType> &args) {
+        IRTemplateBuilder t;
+        t.addTemplateArgument(paramName, args);
+        moduleContext->pushTemplateBuilder(t);
+        checkConceptSatisfaction(stmt);
+        moduleContext->popTemplateBuilder();
     }
 } // namespace yoi

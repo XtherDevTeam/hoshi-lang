@@ -401,6 +401,7 @@ void yoi::Formatter::format(defTemplateArgSpec *node) {
     if (!node) return;
     format(node->id);
     if (node->satisfyCondition) {
+        os << " ";
         format(node->satisfyCondition);
     }
 }

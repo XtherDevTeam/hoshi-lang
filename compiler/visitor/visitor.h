@@ -436,7 +436,9 @@ namespace yoi {
 
         void ejectTemporaryConceptEvaluationEnvironment();
 
-        void checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::vec<std::shared_ptr<IRValueType>> &args);
+        void checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::wstr &paramName, const std::shared_ptr<IRValueType> &args);
+
+        void checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt);
     };
 
 } // namespace yoi

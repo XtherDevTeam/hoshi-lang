@@ -55,4 +55,4 @@
 - [x] operator[] 重载在存在参数类型不一致时无法自动转换
 - [x] llvm 又报 All node shall be resolved.
 - [x] 引入并行编译导致 AlwaysInline 优化失效，考虑使用 LinkOnceODR
-- [ ] concept仅能接受一个参数，不支持半实例化
+- [x] concept仅能接受一个参数，不支持半实例化

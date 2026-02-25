@@ -20,7 +20,7 @@ namespace yoi {
         std::map<yoi::wstr, std::shared_ptr<moduleContext>> referencedModules;
         std::shared_ptr<yoi::compilerContext> compilerContext;
         std::stack<yoi::IRBuilder> IRBuilderStack;
-        std::vector<IRTemplateBuilder *> templateBuilders;
+        std::vector<IRTemplateBuilder> templateBuilders;
     public:
         moduleContext(std::shared_ptr<yoi::compilerContext> compilerContext, yoi::wstr path, yoi::hoshiModule *moduleAST);
 
@@ -36,7 +36,7 @@ namespace yoi {
 
         void popTemplateBuilder();
 
-        std::vector<IRTemplateBuilder *> &getTemplateBuilders();
+        std::vector<IRTemplateBuilder> &getTemplateBuilders();
 
         std::shared_ptr<yoi::compilerContext> getCompilerContext();
     };
