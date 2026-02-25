@@ -132,9 +132,11 @@ jobs:
           if ("${{ matrix.toolchain }}" -eq "mingw") {
             echo "CC=gcc" >> $env:GITHUB_ENV
             echo "CXX=g++" >> $env:GITHUB_ENV
+            echo "BUILD_VARIANT=mingw" >> $env:GITHUB_ENV
           } else {
             echo "CC=clang" >> $env:GITHUB_ENV
             echo "CXX=clang++" >> $env:GITHUB_ENV
+            echo "BUILD_VARIANT=msvc" >> $env:GITHUB_ENV
           }
           mv cmake-build-release cmake-build-release-clang
           make cmake_production

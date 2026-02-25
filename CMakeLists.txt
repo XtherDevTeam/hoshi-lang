@@ -132,9 +132,15 @@ endif()
 # if build in release mode, add CXX marco definition ELYSIA_RUNTIME_BUILD_TYPE_RELEASE
 if (CMAKE_BUILD_TYPE STREQUAL "RELEASE" OR CMAKE_BUILD_TYPE STREQUAL "Release")
     message(STATUS "Build in Release mode")
-    # add_definitions(-DELYSIA_RUNTIME_BUILD_TYPE_RELEASE)
+    add_definitions(-DELYSIA_RUNTIME_BUILD_TYPE_RELEASE)
 else()
     # add_definitions(-DELYSIA_RUNTIME_BUILD_TYPE_DEBUG)
+endif()
+
+if (BUILD_VARIANT STREQUAL "mingw")
+    add_definitions(-DBUILD_VARIANT_MINGW)
+elseif(BUILD_VARIANT STREQUAL "msvc")
+    add_definitions(-DBUILD_VARIANT_MSVC)
 endif()
 
 # If CI presents, set ELYSIA_RUNTIME_DISABLE_BUILTIN_MEMORY_LEAK_DETECTOR
