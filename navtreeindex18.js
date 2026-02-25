@@ -1,5 +1,7 @@
 var NAVTREEINDEX18 =
 {
+"namespaceyoi.html#a85a5c3fdeea1b1b7bf09f0f79fa1bf4d":[31,0,1,269],
+"namespaceyoi.html#a85b420532ed69057ad764f367d13c152":[31,0,1,340],
 "namespaceyoi.html#a8669a943f205803aad9dbab4e88c63e5":[31,0,1,227],
 "namespaceyoi.html#a8d491143b88c0d46ac144df53ee1b35b":[31,0,1,249],
 "namespaceyoi.html#a8e64f3cb3f699410f5015730d01bcf52":[31,0,1,212],
@@ -247,7 +249,5 @@ var NAVTREEINDEX18 =
 "rtti_8cpp_source.html":[33,0,3,5,0],
 "rtti_8h.html":[33,0,3,5,1],
 "rtti_8h.html#a23a7bb83213753e98435b134a0bd9360":[33,0,3,5,1,4],
-"rtti_8h.html#a3b840338488ae42ae0f06fc9ff7a8cb2":[33,0,3,5,1,3],
-"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675":[33,0,3,5,1,2],
-"rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675a334c4a4c42fdb79d7ebc3e73b517e6f8":[33,0,3,5,1,2,14]
+"rtti_8h.html#a3b840338488ae42ae0f06fc9ff7a8cb2":[33,0,3,5,1,3]
 };

@@ -474,7 +474,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Could not remove cache file &#39;&quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0">yoi::wstring2string</a>(compilerCtx-&gt;getBuildConfig()-&gt;buildCachePath) &lt;&lt; <span class="stringliteral">&quot;&#39;: &quot;</span> &lt;&lt; ec_remove.message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>            }</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        }</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;e) {</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::logic_error &amp;e) {</div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        exitCode = 1; </div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    } <span class="comment">/* catch (const std::exception&amp; e) {</span></div>
