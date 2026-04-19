@@ -24,5 +24,6 @@ var structyoi_1_1IRBuildConfig =
     [ "marcos", "structyoi_1_1IRBuildConfig.html#a92616faabf3a5b7737e69f0237ec2772", null ],
     [ "preserveIntermediateFiles", "structyoi_1_1IRBuildConfig.html#a1a4a88a36dafa67834472e12d3d32b23", null ],
     [ "searchPaths", "structyoi_1_1IRBuildConfig.html#ad377858d628ceb6a9d78f47158131a55", null ],
+    [ "targetTriple", "structyoi_1_1IRBuildConfig.html#a1372156098664156024ead3d35e9564f", null ],
     [ "useObjectLinker", "structyoi_1_1IRBuildConfig.html#abeb6cfdef3e88814c01a088074c25d66", null ]
 ];

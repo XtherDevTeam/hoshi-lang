@@ -289,10 +289,10 @@ var NAVTREEINDEX =
 "namespaceyoi.html#a85a5c3fdeea1b1b7bf09f0f79fa1bf4d",
 "rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675",
 "structmagic__enum_1_1detail_1_1valid__count__t.html",
-"structyoi_1_1IRDebugInfo.html#a52f1a713696bc41540d60d59ab9ae177",
-"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a9a7e9e54aaf91da906084577251354aa",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae392b68fd19c9cbab33708f39b821b7c",
-"unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a9068fbafa9e2b115ec9312fa4ac93fc5"
+"structyoi_1_1IRDataStructDefinition_1_1Builder.html#ad3ad8ecc07d5f877c32a72c0f3672ab2",
+"structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#a581b93e533c8f6dc871eb0233c843d8a",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ae1ed6480eefefc22b89d2fbe59a6f086",
+"unionyoi_1_1lexer_1_1token_1_1vBasicValue.html#a4c4ee34a24d33067423078ea59d4e5e0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
