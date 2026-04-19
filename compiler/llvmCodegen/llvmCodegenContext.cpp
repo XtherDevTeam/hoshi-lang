@@ -16,6 +16,7 @@
 #include "llvm/IR/Function.h"
 #include "llvm/IR/Intrinsics.h"
 #include "llvm/IR/Value.h"
+#include "llvm/TargetParser/Triple.h"
 #include <algorithm>
 #include <cstddef>
 #include <iostream>
@@ -2619,12 +2620,25 @@ namespace yoi {
     }
 
     void LLVMCodegen::generateTargetObjectCode(LLVMModuleContext &llvmModCtx, const yoi::wstr &pathToOutput) {
-        auto TargetTriple = llvm::sys::getDefaultTargetTriple();
-        llvmModCtx.TheModule->setTargetTriple(llvm::Triple(TargetTriple));
+        auto TargetTriple = llvm::Triple(llvm::sys::getDefaultTargetTriple());
+
+        if (!compilerCtx->getBuildConfig()->targetTriple.empty()) {
+            TargetTriple = llvm::Triple(yoi::wstring2string(compilerCtx->getBuildConfig()->targetTriple));
+        } else {
+            #if defined(BUILD_VARIANT_MSVC)
+            TargetTriple.setEnvironment(llvm::Triple::MSVC);
+            #elif defined(BUILD_VARIANT_MINGW)
+            TargetTriple.setEnvironment(llvm::Triple::GNU);
+            #else
+            // leave it to system default
+            #endif
+        }
+
+        llvmModCtx.TheModule->setTargetTriple(TargetTriple);
         std::string Error;
         auto Target = llvm::TargetRegistry::lookupTarget(TargetTriple, Error);
         if (!Target) {
-            panic(0, 0, "Could not create target for " + TargetTriple + " (" + Error + ")");
+            panic(0, 0, "Could not create target for " + TargetTriple.str() + " (" + Error + ")");
         }
 
         auto CPU = llvm::sys::getHostCPUName();
@@ -2647,7 +2661,7 @@ namespace yoi {
         Target->createTargetMachine(llvm::Triple(TargetTriple), CPU, Features, Opt, RM, std::optional<llvm::CodeModel::Model>(), OptLevel));
 
         if (!TM) {
-            panic(0, 0, "Could not create TargetMachine for " + TargetTriple);
+            panic(0, 0, "Could not create TargetMachine for " + TargetTriple.str());
         }
 
         llvmModCtx.TheModule->setDataLayout(TM->createDataLayout());

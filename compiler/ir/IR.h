@@ -23,6 +23,7 @@ namespace yoi {
         enum class UseObjectLinker : yoi::indexT { cc = 0, cl, none } useObjectLinker;
         yoi::wstr buildPlatform;
         yoi::wstr buildArch;
+        yoi::wstr targetTriple;
         bool preserveIntermediateFiles;
         yoi::vec<yoi::wstr> searchPaths;
         yoi::vec<yoi::wstr> additionalLinkingFiles;
@@ -36,6 +37,7 @@ namespace yoi {
             UseObjectLinker useObjectLinker{UseObjectLinker::cc};
             yoi::wstr buildPlatform;
             yoi::wstr buildArch;
+            yoi::wstr targetTriple;
             bool preserveIntermediateFiles{false};
             yoi::vec<yoi::wstr> searchPaths{L""};
             yoi::vec<yoi::wstr> additionalLinkingFiles;
@@ -56,6 +58,8 @@ namespace yoi {
             Builder &setBuildPlatform(const yoi::wstr &buildPlatform);
 
             Builder &setBuildArch(const yoi::wstr &buildArch);
+
+            Builder &setTargetTriple(const yoi::wstr &targetTriple);
 
             Builder &setPreserveIntermediateFiles(bool preserveIntermediateFiles);
 

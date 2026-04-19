@@ -908,6 +908,7 @@ namespace yoi {
                                         useObjectLinker,
                                         buildPlatform,
                                         buildArch,
+                                        targetTriple,
                                         preserveIntermediateFiles,
                                         searchPaths,
                                         additionalLinkingFiles,
@@ -1709,5 +1710,10 @@ namespace yoi {
     IRTemplateBuilder::Argument::Argument(const std::shared_ptr<IRValueType> &templateType,
                                           const yoi::vec<externModuleAccessExpression *> &satisfyConditions) : templateType(templateType), satisfyCondition(satisfyConditions) {
             
+    }
+
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setTargetTriple(const yoi::wstr &targetTriple) {
+        this->targetTriple = targetTriple;
+        return *this;
     }
 } // namespace yoi

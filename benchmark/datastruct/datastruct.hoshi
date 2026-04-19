@@ -3,8 +3,8 @@ use str "str"
 use runtime "runtime"
 
 struct Time {
-    seconds: int,
-    nanoseconds: int,
+    datafield seconds: int,
+    datafield nanoseconds: int,
     constructor(seconds: int, nanoseconds: int),
     static operator-(t1: Time, t2: Time) : Time
 }

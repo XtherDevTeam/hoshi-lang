@@ -70,6 +70,7 @@ int main(int argc, const char **argv) {
     yoi::wstr projectCacheDir;
     std::wstring targetPlatform = yoi::string2wstring(YOI_PLATFORM); 
     std::wstring targetArch = yoi::string2wstring(YOI_ARCH);         
+    std::wstring targetTriple = L"";
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = strcmp(YOI_PLATFORM, "win32") == 0 ? yoi::IRBuildConfig::UseObjectLinker::cl : yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
     yoi::vec<yoi::wstr> additionalLinkingFiles = yoi::ObjectLinker::defaultAdditionalLinkingFiles();
@@ -146,6 +147,8 @@ int main(int argc, const char **argv) {
         } else if (arg == "-I" || arg == "--include") {
             yoi::wstr includeDir = yoi::string2wstring(argv[++i]);
             includeDirs.push_back(includeDir);
+        } else if (arg == "-t" || arg == "--target") {
+            targetTriple = yoi::string2wstring(argv[++i]);
         } else if (arg == "--preserve-intermediate") {
             preserveIntermediateFiles = true;
         } else if (arg == "--help" || arg == "-h") {
@@ -285,6 +288,7 @@ int main(int argc, const char **argv) {
                                         .setBuildPlatform(yoi::string2wstring(YOI_PLATFORM))
                                         .setBuildMode(buildMode)
                                         .setBuildArch(yoi::string2wstring(YOI_ARCH))
+                                        .setTargetTriple(L"")
                                         .setUseObjectLinker(useObjectLinker)
                                         .setPreserveIntermediateFiles(preserveIntermediateFiles) 
                                         .setImmediatelyClearupCache(projectCacheDir.empty())
@@ -369,7 +373,7 @@ int main(int argc, const char **argv) {
                 std::cerr << "Warning: Could not remove cache file '" << yoi::wstring2string(compilerCtx->getBuildConfig()->buildCachePath) << "': " << ec_remove.message() << "\n";
             }
         }
-    } catch (const std::logic_error &e) {
+    } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         exitCode = 1; 
     } /* catch (const std::exception& e) {
