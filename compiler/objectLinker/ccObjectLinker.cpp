@@ -87,6 +87,11 @@ namespace yoi {
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
             command += " -Wl,--end-group";
 
+        // add additional linker options
+        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
+            command += " " + yoi::wstring2string(option);
+        }
+
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
 

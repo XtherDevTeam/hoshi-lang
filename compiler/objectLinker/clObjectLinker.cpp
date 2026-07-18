@@ -216,6 +216,11 @@ namespace yoi {
             command += L" \"" + file + L"\"";
         }
 
+        // add additional linker options
+        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
+            command += L" " + option;
+        }
+
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {

@@ -55,6 +55,8 @@ void printUsage(const char* programName) {
               << "  -E <key>, --error <key>             Treat error for a specific category as a warning.\n"
               << "  -C <path>, --project-cache <path>   Set project cache directory.\n"
               << "  --preserve-intermediate             Explicitly preserve intermediate files.\n"
+              << "  --linker-option <flag>, -L <flag>    Pass an additional flag to the linker.\n"
+              << "                                      This option can be used multiple times.\n"
               << "  --whereami, -w                      Print the path to the hoshi-lang installation directory.\n"
               << "  --build-number                      Print the build number of hoshi-lang.\n"
               << "  -h, --help                          Display this help message.\n";
@@ -74,6 +76,7 @@ int main(int argc, const char **argv) {
     yoi::IRBuildConfig::UseObjectLinker useObjectLinker = strcmp(YOI_PLATFORM, "win32") == 0 ? yoi::IRBuildConfig::UseObjectLinker::cl : yoi::IRBuildConfig::UseObjectLinker::cc;
     yoi::vec<yoi::wstr> includeDirs{L"", (std::filesystem::path(yoi::whereIsHoshiLang()) / ".." / "lib").wstring()};
     yoi::vec<yoi::wstr> additionalLinkingFiles = yoi::ObjectLinker::defaultAdditionalLinkingFiles();
+    yoi::vec<yoi::wstr> additionalLinkerOptions;
     yoi::vec<std::pair<yoi::wstr, yoi::wstr>> macroDefs;
     bool preserveIntermediateFiles = false; 
 
@@ -151,6 +154,14 @@ int main(int argc, const char **argv) {
             targetTriple = yoi::string2wstring(argv[++i]);
         } else if (arg == "--preserve-intermediate") {
             preserveIntermediateFiles = true;
+        } else if (arg == "--linker-option" || arg == "-L") {
+            if (i + 1 < argc) {
+                additionalLinkerOptions.push_back(yoi::string2wstring(argv[++i]));
+            } else {
+                std::cerr << "Error: " << arg << " requires a flag argument.\n";
+                printUsage(argv[0]);
+                return 1;
+            }
         } else if (arg == "--help" || arg == "-h") {
             printUsage(argv[0]);
             return 0; 
@@ -299,6 +310,7 @@ int main(int argc, const char **argv) {
                                         .setMarco(L"hoshi_feature_version", yoi::string2wstring(HOSHI_LANG_VERSION))
                                         .setMarco(L"hoshi_lang_commit", yoi::string2wstring(HOSHI_LANG_GIT_COMMIT_HASH))
                                         .setAdditionalLinkingFiles(additionalLinkingFiles)
+                                        .setAdditionalLinkerOptions(additionalLinkerOptions)
                                         .yield());
         
         for (auto &macro : macroDefs) {

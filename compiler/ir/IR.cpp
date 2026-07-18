@@ -912,6 +912,7 @@ namespace yoi {
                                         preserveIntermediateFiles,
                                         searchPaths,
                                         additionalLinkingFiles,
+                                        additionalLinkerOptions,
                                         marcos,
                                         buildCachePath,
                                         immediatelyClearupCache});
@@ -1546,6 +1547,11 @@ namespace yoi {
 
     IRBuildConfig::Builder &IRBuildConfig::Builder::setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles) {
         this->additionalLinkingFiles = additionalLinkingFiles;
+        return *this;
+    }
+
+    IRBuildConfig::Builder &IRBuildConfig::Builder::setAdditionalLinkerOptions(const yoi::vec<yoi::wstr> &additionalLinkerOptions) {
+        this->additionalLinkerOptions = additionalLinkerOptions;
         return *this;
     }
 

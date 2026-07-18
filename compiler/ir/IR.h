@@ -27,6 +27,7 @@ namespace yoi {
         bool preserveIntermediateFiles;
         yoi::vec<yoi::wstr> searchPaths;
         yoi::vec<yoi::wstr> additionalLinkingFiles;
+        yoi::vec<yoi::wstr> additionalLinkerOptions;
         std::map<yoi::wstr, yoi::wstr> marcos;
         yoi::wstr buildCachePath;
         bool immediatelyClearupCache;
@@ -41,10 +42,11 @@ namespace yoi {
             bool preserveIntermediateFiles{false};
             yoi::vec<yoi::wstr> searchPaths{L""};
             yoi::vec<yoi::wstr> additionalLinkingFiles;
+            yoi::vec<yoi::wstr> additionalLinkerOptions;
             std::map<yoi::wstr, yoi::wstr> marcos;
             yoi::wstr buildCachePath{
               (std::filesystem::temp_directory_path() / 
-                (L"zyy-" + std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count()))).wstring()};
+                (L"hanabi-" + std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count()))).wstring()};
             bool immediatelyClearupCache{true};
 
             Builder() = default;
@@ -70,6 +72,8 @@ namespace yoi {
             Builder &setMarco(const yoi::wstr &name, const yoi::wstr &value);
 
             Builder &setAdditionalLinkingFiles(const yoi::vec<yoi::wstr> &additionalLinkingFiles);
+
+            Builder &setAdditionalLinkerOptions(const yoi::vec<yoi::wstr> &additionalLinkerOptions);
 
             Builder &setBuildCachePath(const yoi::wstr &buildCachePath);
 
