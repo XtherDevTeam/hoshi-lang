@@ -14,6 +14,7 @@ var structyoi_1_1IRBuildConfig =
       [ "cl", "structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a161747ec4dc9f55f1760195593742232", null ],
       [ "none", "structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010a334c4a4c42fdb79d7ebc3e73b517e6f8", null ]
     ] ],
+    [ "additionalLinkerOptions", "structyoi_1_1IRBuildConfig.html#a63a9e9a2c176ec8d1d1bf2dbfcd09dd0", null ],
     [ "additionalLinkingFiles", "structyoi_1_1IRBuildConfig.html#a1b94b4a3fe10af4660ed5c0ce6f93b5d", null ],
     [ "buildArch", "structyoi_1_1IRBuildConfig.html#a2c8321663f9f80d832a940ba78027260", null ],
     [ "buildCachePath", "structyoi_1_1IRBuildConfig.html#aa4fa04b7c455057982b3edd359a97da8", null ],

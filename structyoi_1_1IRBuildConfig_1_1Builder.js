@@ -2,6 +2,7 @@ var structyoi_1_1IRBuildConfig_1_1Builder =
 [
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html#a127ac7aab5c87bd7df242644885320ac", null ],
     [ "addSearchPath", "structyoi_1_1IRBuildConfig_1_1Builder.html#a018974377dbe893144969b5a486fe294", null ],
+    [ "setAdditionalLinkerOptions", "structyoi_1_1IRBuildConfig_1_1Builder.html#adb260caf7886672c9262c7872690eb34", null ],
     [ "setAdditionalLinkingFiles", "structyoi_1_1IRBuildConfig_1_1Builder.html#a2a4187f64449346be1cd4481316418d3", null ],
     [ "setBuildArch", "structyoi_1_1IRBuildConfig_1_1Builder.html#a7b76e3dbe10d916d23e94cd6efc5b071", null ],
     [ "setBuildCachePath", "structyoi_1_1IRBuildConfig_1_1Builder.html#a218829c9ce5b820c4f0306558beef6ef", null ],
@@ -15,6 +16,7 @@ var structyoi_1_1IRBuildConfig_1_1Builder =
     [ "setTargetTriple", "structyoi_1_1IRBuildConfig_1_1Builder.html#a5e48dafd436ebd63a183e750f57d7001", null ],
     [ "setUseObjectLinker", "structyoi_1_1IRBuildConfig_1_1Builder.html#aefb6a8b5bcc92590094c48743377d845", null ],
     [ "yield", "structyoi_1_1IRBuildConfig_1_1Builder.html#a2209e6b0997839bdd10821c6abe11117", null ],
+    [ "additionalLinkerOptions", "structyoi_1_1IRBuildConfig_1_1Builder.html#a63a9e9a2c176ec8d1d1bf2dbfcd09dd0", null ],
     [ "additionalLinkingFiles", "structyoi_1_1IRBuildConfig_1_1Builder.html#a1b94b4a3fe10af4660ed5c0ce6f93b5d", null ],
     [ "buildArch", "structyoi_1_1IRBuildConfig_1_1Builder.html#a2c8321663f9f80d832a940ba78027260", null ],
     [ "buildCachePath", "structyoi_1_1IRBuildConfig_1_1Builder.html#aa4fa04b7c455057982b3edd359a97da8", null ],

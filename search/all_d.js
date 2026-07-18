@@ -4,7 +4,7 @@ var searchData=
   ['ejecttemporaryconceptevaluationenvironment_1',['ejectTemporaryConceptEvaluationEnvironment',['../classyoi_1_1visitor.html#af53f4aa8c0f3d259d6c2ed149da12eb1',1,'yoi::visitor']]],
   ['element_20access_2',['Element Access',['../md_docs_2Array.html#autotoc_md3',1,'']]],
   ['elifb_3',['elifB',['../classyoi_1_1ifStmt.html#a758f266336d15cc9c50ec3090af4ba92',1,'yoi::ifStmt']]],
-  ['elipsis_4',['elipsis',['../classyoi_1_1typeSpec.html#ae0736c616ef3e39df737e188707ae26c',1,'yoi::typeSpec::elipsis'],['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a13a8a59d7aff147d439634b3a24f8ccd',1,'yoi::typeSpec::Elipsis']]],
+  ['elipsis_4',['elipsis',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a13a8a59d7aff147d439634b3a24f8ccd',1,'yoi::typeSpec::Elipsis'],['../classyoi_1_1typeSpec.html#ae0736c616ef3e39df737e188707ae26c',1,'yoi::typeSpec::elipsis']]],
   ['elseb_5',['elseB',['../classyoi_1_1ifStmt.html#aa6d792054122d0e9bd6a3f2b74bceb39',1,'yoi::ifStmt']]],
   ['elysia_5fdisable_5fmemory_5fexecutable_5fmapping_5ffeature_6',['ELYSIA_DISABLE_MEMORY_EXECUTABLE_MAPPING_FEATURE',['../build__config_8h.html#af839a4c33bc8ce8c5d18cc60585be6fa',1,'build_config.h']]],
   ['elysia_5fmain_7',['elysia_main',['../runtime_8h.html#a3302890ca27fb35f72095c2e63cfae7d',1,'elysia_main(int argc, char *argv[]):&#160;runtime.cpp'],['../runtime_8cpp.html#a3302890ca27fb35f72095c2e63cfae7d',1,'elysia_main(int argc, char *argv[]):&#160;runtime.cpp']]],
