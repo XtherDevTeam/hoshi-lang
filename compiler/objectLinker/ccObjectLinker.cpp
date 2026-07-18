@@ -80,13 +80,14 @@ namespace yoi {
             // link as groups
             command += " \"" + yoi::wstring2string(file) + "\"";
         }
-        if (strcmp(YOI_PLATFORM, "darwin") != 0)
-            command += " -Wl,--end-group";
 
         for (const auto &objectPath : this->getObjectPaths()) {
             command += " \"";
             command += yoi::wstring2string(objectPath) + "\"";
         }
+
+        if (strcmp(YOI_PLATFORM, "darwin") != 0)
+            command += " -Wl,--end-group";
 
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
