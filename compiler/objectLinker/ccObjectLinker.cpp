@@ -71,10 +71,7 @@ namespace yoi {
         }
 
         std::string command = "\"" + yoi::wstring2string(this->getLinkerPath()) + "\"";
-        for (const auto &objectPath : this->getObjectPaths()) {
-            command += " \"";
-            command += yoi::wstring2string(objectPath) + "\"";
-        }
+
         // add additional linking files
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
             // if the platform is not darwin, we need to add -Wl,--start-group and -Wl,--end-group to link as groups
@@ -85,6 +82,11 @@ namespace yoi {
         }
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
             command += " -Wl,--end-group";
+
+        for (const auto &objectPath : this->getObjectPaths()) {
+            command += " \"";
+            command += yoi::wstring2string(objectPath) + "\"";
+        }
 
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
