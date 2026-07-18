@@ -75,7 +75,6 @@ namespace yoi {
             command += " \"";
             command += yoi::wstring2string(objectPath) + "\"";
         }
-
         // add additional linking files
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
             // if the platform is not darwin, we need to add -Wl,--start-group and -Wl,--end-group to link as groups
@@ -86,11 +85,6 @@ namespace yoi {
         }
         if (strcmp(YOI_PLATFORM, "darwin") != 0)
             command += " -Wl,--end-group";
-
-        // add additional linker options
-        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
-            command += " " + yoi::wstring2string(option);
-        }
 
         command += " -o \"";
         command += yoi::wstring2string(outputPath) + "\"";
@@ -123,6 +117,10 @@ namespace yoi {
         replace_all(command, std::string("\""), std::string("\\\""));
         command = "powershell.exe -Command \"&" + command + "\""; // fuck win32 command line
 #endif
+        // add additional linker options
+        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
+            command += " " + yoi::wstring2string(option);
+        }
 
         int result = std::system(command.c_str());
         if (result != 0) {

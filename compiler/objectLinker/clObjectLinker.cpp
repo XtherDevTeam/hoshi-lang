@@ -216,11 +216,6 @@ namespace yoi {
             command += L" \"" + file + L"\"";
         }
 
-        // add additional linker options
-        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
-            command += L" " + option;
-        }
-
         command += L" /Fe:\"" + output_fs_path.wstring() + L"\"";
 
         if (this->getConfig()->buildType == IRBuildConfig::BuildType::library) {
@@ -255,6 +250,11 @@ namespace yoi {
         replace_all(command, std::wstring(L"\""), std::wstring(L"\\\""));
         command = L"powershell.exe -Command \"& " + command + L"\""; // fuck win32 command line
 #endif
+
+        // add additional linker options
+        for (const auto &option : this->getConfig()->additionalLinkerOptions) {
+            command += L" " + option;
+        }
 
         int result = system(yoi::wstring2string(command).c_str());
 
