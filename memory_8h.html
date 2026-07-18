@@ -265,7 +265,7 @@ Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="astructYoiObject_html"><div class="ttname"><a href="structYoiObject.html">YoiObject</a></div><div class="ttdef"><b>Definition</b> <a href="memory_8h_source.html#l00013">memory.h:13</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00104">104</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00129">129</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -307,7 +307,7 @@ Functions</h2></td></tr>
 <div class="line">    }                                                                                       \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00116">116</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00141">141</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -568,7 +568,7 @@ Functions</h2></td></tr>
 
 <p class="reference">References <a class="el" href="memory_8cpp_source.html#l00065">runtime_finalize_object_report()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="time_8cpp_source.html#l00154">YoiIntAndIntObject::gc_refcount_decrease()</a>, <a class="el" href="memory_8cpp_source.html#l00102">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00334">runtime_ping_thread()</a>, <a class="el" href="signal_8cpp_source.html#l00144">runtime_signal_default()</a>, <a class="el" href="threading_8cpp_source.html#l00459">runtime_thread_condition_signal()</a>, <a class="el" href="threading_8cpp_source.html#l00466">runtime_thread_condition_wait()</a>, <a class="el" href="threading_8cpp_source.html#l00450">runtime_thread_finalize_condition()</a>, <a class="el" href="threading_8cpp_source.html#l00377">runtime_thread_finalize_mutex_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00316">runtime_thread_join()</a>, <a class="el" href="threading_8cpp_source.html#l00385">runtime_thread_mutex_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00399">runtime_thread_mutex_try_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00392">runtime_thread_mutex_unlock()</a>, and <a class="el" href="threading_8cpp_source.html#l00260">thread_starter_wrapper()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="time_8cpp_source.html#l00154">YoiIntAndIntObject::gc_refcount_decrease()</a>, <a class="el" href="memory_8cpp_source.html#l00170">YoiIntegerObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00236">YoiUnsignedObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00225">YoiStringObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00214">YoiBooleanObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00203">YoiDecimalObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00192">YoiCharObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00181">YoiShortObject::release()</a>, <a class="el" href="memory_8cpp_source.html#l00102">runtime_get_string_array_data_pointer()</a>, <a class="el" href="threading_8cpp_source.html#l00334">runtime_ping_thread()</a>, <a class="el" href="signal_8cpp_source.html#l00144">runtime_signal_default()</a>, <a class="el" href="threading_8cpp_source.html#l00459">runtime_thread_condition_signal()</a>, <a class="el" href="threading_8cpp_source.html#l00466">runtime_thread_condition_wait()</a>, <a class="el" href="threading_8cpp_source.html#l00450">runtime_thread_finalize_condition()</a>, <a class="el" href="threading_8cpp_source.html#l00377">runtime_thread_finalize_mutex_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00316">runtime_thread_join()</a>, <a class="el" href="threading_8cpp_source.html#l00385">runtime_thread_mutex_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00399">runtime_thread_mutex_try_lock()</a>, <a class="el" href="threading_8cpp_source.html#l00392">runtime_thread_mutex_unlock()</a>, and <a class="el" href="threading_8cpp_source.html#l00260">thread_starter_wrapper()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -592,35 +592,49 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph.png" border="0" usemap="#amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph" alt=""/></div>
 <map name="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph" id="amemory_8h_aadd6dcb4d367e405a3c4d02e248c4220_icgraph">
-<area shape="rect" title=" " alt="" coords="484,355,659,381"/>
+<area shape="rect" title=" " alt="" coords="484,522,659,547"/>
 <area shape="rect" href="structYoiIntAndIntObject.html#aec9a92a6f9b979a43d72c2884322d11b" title=" " alt="" coords="238,5,410,45"/>
-<area shape="poly" title=" " alt="" coords="564,342,552,284,528,207,511,167,490,128,465,91,434,59,409,44,412,39,438,55,469,88,495,125,516,165,533,205,557,282,569,341"/>
-<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="248,69,400,109"/>
-<area shape="poly" title=" " alt="" coords="561,343,545,295,519,236,483,175,460,148,434,124,399,105,401,100,438,119,464,144,487,172,524,234,550,294,566,341"/>
-<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="245,134,403,159"/>
-<area shape="poly" title=" " alt="" coords="558,343,540,305,513,258,478,212,435,173,402,158,404,153,437,168,482,208,518,255,544,302,562,341"/>
-<area shape="rect" href="signal_8cpp.html#aa16d4c62e620fb34785983a32ef92edd" title=" " alt="" coords="238,183,410,209"/>
-<area shape="poly" title=" " alt="" coords="553,345,505,283,472,251,435,224,406,211,408,206,437,219,475,247,509,280,557,342"/>
-<area shape="rect" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8" title=" " alt="" coords="229,233,419,273"/>
-<area shape="poly" title=" " alt="" coords="540,350,492,318,435,288,404,276,406,271,437,283,495,314,543,345"/>
-<area shape="rect" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f" title=" " alt="" coords="212,298,436,323"/>
-<area shape="poly" title=" " alt="" coords="503,355,435,339,381,326,382,321,437,333,505,350"/>
-<area shape="rect" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a" title=" " alt="" coords="236,348,412,388"/>
-<area shape="poly" title=" " alt="" coords="470,371,412,371,412,365,470,365"/>
-<area shape="rect" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a" title=" " alt="" coords="236,412,412,452"/>
-<area shape="poly" title=" " alt="" coords="508,387,403,414,401,409,507,382"/>
-<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="247,477,401,502"/>
-<area shape="poly" title=" " alt="" coords="548,392,499,430,437,466,401,479,399,474,435,462,496,426,545,388"/>
-<area shape="rect" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b" title=" " alt="" coords="221,526,427,551"/>
-<area shape="poly" title=" " alt="" coords="557,394,509,455,475,488,437,516,408,528,406,523,435,511,472,484,505,452,553,390"/>
-<area shape="rect" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2" title=" " alt="" coords="239,576,409,616"/>
-<area shape="poly" title=" " alt="" coords="562,395,543,433,516,478,481,525,438,565,411,580,409,575,434,561,477,521,511,475,538,430,557,392"/>
-<area shape="rect" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac" title=" " alt="" coords="239,640,409,680"/>
-<area shape="poly" title=" " alt="" coords="566,395,551,445,526,508,489,574,465,604,438,630,411,646,408,641,434,626,461,600,484,571,521,506,546,443,561,394"/>
-<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="237,705,411,730"/>
-<area shape="poly" title=" " alt="" coords="570,395,559,456,536,537,519,580,497,622,470,661,438,694,413,709,410,704,434,690,466,657,493,619,514,578,531,536,554,455,565,394"/>
-<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,705,164,730"/>
-<area shape="poly" title=" " alt="" coords="223,720,164,720,164,715,223,715"/>
+<area shape="poly" title=" " alt="" coords="568,508,566,422,560,365,549,302,533,236,509,172,476,112,434,59,409,42,412,38,438,55,481,109,514,170,538,235,555,301,565,364,571,422,574,508"/>
+<area shape="rect" href="structYoiIntegerObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="232,70,416,95"/>
+<area shape="poly" title=" " alt="" coords="568,508,563,430,556,378,545,322,528,264,505,208,474,155,434,110,415,97,418,93,438,106,478,152,510,205,533,262,550,321,561,377,568,429,573,508"/>
+<area shape="rect" href="structYoiUnsignedObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="249,120,399,160"/>
+<area shape="poly" title=" " alt="" coords="566,509,556,441,535,351,518,303,496,256,468,212,434,174,418,162,398,153,401,149,420,157,438,170,472,209,501,253,523,301,540,350,562,441,571,508"/>
+<area shape="rect" href="structYoiStringObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="236,185,412,210"/>
+<area shape="poly" title=" " alt="" coords="564,508,553,449,530,371,513,330,492,291,466,255,434,223,411,210,414,205,438,219,470,251,496,288,518,328,535,369,558,447,569,507"/>
+<area shape="rect" href="structYoiBooleanObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="229,234,419,259"/>
+<area shape="poly" title=" " alt="" coords="562,509,548,458,523,394,486,328,462,298,434,273,416,262,418,257,438,269,466,295,490,325,528,392,553,457,567,508"/>
+<area shape="rect" href="structYoiDecimalObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="228,283,420,309"/>
+<area shape="poly" title=" " alt="" coords="559,509,542,467,516,416,480,365,458,342,435,322,414,311,416,306,437,318,462,338,484,362,520,414,547,465,564,507"/>
+<area shape="rect" href="structYoiCharObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="240,333,408,358"/>
+<area shape="poly" title=" " alt="" coords="555,511,535,479,508,441,474,403,435,372,407,359,409,354,437,367,478,399,512,437,540,476,559,508"/>
+<area shape="rect" href="structYoiShortObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="238,382,410,407"/>
+<area shape="poly" title=" " alt="" coords="548,513,499,467,468,443,435,422,402,410,404,405,437,418,471,438,503,463,552,510"/>
+<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="248,432,400,472"/>
+<area shape="poly" title=" " alt="" coords="525,519,435,487,397,475,399,470,437,481,527,514"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="245,497,403,522"/>
+<area shape="poly" title=" " alt="" coords="470,527,403,520,403,515,470,522"/>
+<area shape="rect" href="signal_8cpp.html#aa16d4c62e620fb34785983a32ef92edd" title=" " alt="" coords="238,546,410,571"/>
+<area shape="poly" title=" " alt="" coords="470,547,411,553,410,548,470,542"/>
+<area shape="rect" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8" title=" " alt="" coords="229,596,419,636"/>
+<area shape="poly" title=" " alt="" coords="524,555,437,585,395,598,393,593,435,580,522,550"/>
+<area shape="rect" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f" title=" " alt="" coords="212,661,436,686"/>
+<area shape="poly" title=" " alt="" coords="551,559,503,606,471,630,437,650,404,663,402,658,435,646,468,626,499,602,548,556"/>
+<area shape="rect" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a" title=" " alt="" coords="236,711,412,751"/>
+<area shape="poly" title=" " alt="" coords="559,561,511,629,477,667,437,700,412,713,410,708,435,695,473,663,507,626,554,558"/>
+<area shape="rect" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a" title=" " alt="" coords="236,775,412,815"/>
+<area shape="poly" title=" " alt="" coords="564,562,548,606,521,661,485,717,463,742,438,765,414,779,411,774,434,761,459,739,481,713,517,658,543,604,559,560"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="247,839,401,865"/>
+<area shape="poly" title=" " alt="" coords="568,562,556,618,532,690,515,728,493,765,468,799,438,829,421,840,402,847,400,842,418,835,434,825,464,796,489,762,510,726,527,688,551,616,563,560"/>
+<area shape="rect" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b" title=" " alt="" coords="221,889,427,914"/>
+<area shape="poly" title=" " alt="" coords="570,561,561,626,539,712,522,757,499,801,472,842,438,878,417,891,415,886,434,874,468,839,495,799,517,755,534,710,556,625,565,561"/>
+<area shape="rect" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2" title=" " alt="" coords="239,939,409,979"/>
+<area shape="poly" title=" " alt="" coords="572,561,564,633,543,731,526,784,504,836,474,885,438,927,411,945,408,940,434,923,470,881,499,834,521,782,538,730,559,633,566,561"/>
+<area shape="rect" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac" title=" " alt="" coords="239,1003,409,1043"/>
+<area shape="poly" title=" " alt="" coords="573,561,569,644,563,699,552,760,535,822,511,884,479,942,438,993,411,1011,408,1006,434,989,475,939,507,882,530,821,547,758,558,698,564,644,568,561"/>
+<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="237,1067,411,1093"/>
+<area shape="poly" title=" " alt="" coords="569,561,554,669,527,818,509,893,488,962,464,1018,438,1057,413,1073,410,1068,434,1053,460,1016,483,960,504,892,522,817,549,668,564,561"/>
+<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,1067,164,1093"/>
+<area shape="poly" title=" " alt="" coords="223,1083,164,1083,164,1077,223,1077"/>
 </map>
 </div>
 
@@ -644,7 +658,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00065">65</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="hperf_8cpp_source.html#l00107">hperf_report_mem_free()</a>, <a class="el" href="memory_8h_source.html#l00069">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00068">AllocatedMemoryList::prev</a>, <a class="el" href="rtti_8h_source.html#l00056">rtti_table</a>, <a class="el" href="memory_8h_source.html#l00015">YoiObject::type_id</a>, and <a class="el" href="rtti_8h_source.html#l00038">YoiTypeInfo::type_name</a>.</p>
+<p class="reference">References <a class="el" href="hperf_8cpp_source.html#l00107">hperf_report_mem_free()</a>, <a class="el" href="memory_8h_source.html#l00094">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00093">AllocatedMemoryList::prev</a>, <a class="el" href="rtti_8h_source.html#l00056">rtti_table</a>, <a class="el" href="memory_8h_source.html#l00015">YoiObject::type_id</a>, and <a class="el" href="rtti_8h_source.html#l00038">YoiTypeInfo::type_name</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00090">runtime_finalize_object()</a>.</p>
 <div class="dynheader">
@@ -668,37 +682,51 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="memory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph.png" border="0" usemap="#amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" alt=""/></div>
 <map name="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph" id="amemory_8h_a9a1ef7e1e26adc283a63e6e1d8c957e8_icgraph">
-<area shape="rect" title=" " alt="" coords="707,348,881,388"/>
-<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="484,355,659,381"/>
-<area shape="poly" title=" " alt="" coords="693,371,659,371,659,365,693,365"/>
+<area shape="rect" title=" " alt="" coords="707,515,881,555"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="484,522,659,547"/>
+<area shape="poly" title=" " alt="" coords="693,537,659,537,659,532,693,532"/>
 <area shape="rect" href="structYoiIntAndIntObject.html#aec9a92a6f9b979a43d72c2884322d11b" title=" " alt="" coords="238,5,410,45"/>
-<area shape="poly" title=" " alt="" coords="564,342,552,284,528,207,511,167,490,128,465,91,434,59,409,44,412,39,438,55,469,88,495,125,516,165,533,205,557,282,569,341"/>
-<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="248,69,400,109"/>
-<area shape="poly" title=" " alt="" coords="561,343,545,295,519,236,483,175,460,148,434,124,399,105,401,100,438,119,464,144,487,172,524,234,550,294,566,341"/>
-<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="245,134,403,159"/>
-<area shape="poly" title=" " alt="" coords="558,343,540,305,513,258,478,212,435,173,402,158,404,153,437,168,482,208,518,255,544,302,562,341"/>
-<area shape="rect" href="signal_8cpp.html#aa16d4c62e620fb34785983a32ef92edd" title=" " alt="" coords="238,183,410,209"/>
-<area shape="poly" title=" " alt="" coords="553,345,505,283,472,251,435,224,406,211,408,206,437,219,475,247,509,280,557,342"/>
-<area shape="rect" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8" title=" " alt="" coords="229,233,419,273"/>
-<area shape="poly" title=" " alt="" coords="540,350,492,318,435,288,404,276,406,271,437,283,495,314,543,345"/>
-<area shape="rect" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f" title=" " alt="" coords="212,298,436,323"/>
-<area shape="poly" title=" " alt="" coords="503,355,435,339,381,326,382,321,437,333,505,350"/>
-<area shape="rect" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a" title=" " alt="" coords="236,348,412,388"/>
-<area shape="poly" title=" " alt="" coords="470,371,412,371,412,365,470,365"/>
-<area shape="rect" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a" title=" " alt="" coords="236,412,412,452"/>
-<area shape="poly" title=" " alt="" coords="508,387,403,414,401,409,507,382"/>
-<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="247,477,401,502"/>
-<area shape="poly" title=" " alt="" coords="548,392,499,430,437,466,401,479,399,474,435,462,496,426,545,388"/>
-<area shape="rect" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b" title=" " alt="" coords="221,526,427,551"/>
-<area shape="poly" title=" " alt="" coords="557,394,509,455,475,488,437,516,408,528,406,523,435,511,472,484,505,452,553,390"/>
-<area shape="rect" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2" title=" " alt="" coords="239,576,409,616"/>
-<area shape="poly" title=" " alt="" coords="562,395,543,433,516,478,481,525,438,565,411,580,409,575,434,561,477,521,511,475,538,430,557,392"/>
-<area shape="rect" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac" title=" " alt="" coords="239,640,409,680"/>
-<area shape="poly" title=" " alt="" coords="566,395,551,445,526,508,489,574,465,604,438,630,411,646,408,641,434,626,461,600,484,571,521,506,546,443,561,394"/>
-<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="237,705,411,730"/>
-<area shape="poly" title=" " alt="" coords="570,395,559,456,536,537,519,580,497,622,470,661,438,694,413,709,410,704,434,690,466,657,493,619,514,578,531,536,554,455,565,394"/>
-<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,705,164,730"/>
-<area shape="poly" title=" " alt="" coords="223,720,164,720,164,715,223,715"/>
+<area shape="poly" title=" " alt="" coords="568,508,566,422,560,365,549,302,533,236,509,172,476,112,434,59,409,42,412,38,438,55,481,109,514,170,538,235,555,301,565,364,571,422,574,508"/>
+<area shape="rect" href="structYoiIntegerObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="232,70,416,95"/>
+<area shape="poly" title=" " alt="" coords="568,508,563,430,556,378,545,322,528,264,505,208,474,155,434,110,415,97,418,93,438,106,478,152,510,205,533,262,550,321,561,377,568,429,573,508"/>
+<area shape="rect" href="structYoiUnsignedObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="249,120,399,160"/>
+<area shape="poly" title=" " alt="" coords="566,509,556,441,535,351,518,303,496,256,468,212,434,174,418,162,398,153,401,149,420,157,438,170,472,209,501,253,523,301,540,350,562,441,571,508"/>
+<area shape="rect" href="structYoiStringObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="236,185,412,210"/>
+<area shape="poly" title=" " alt="" coords="564,508,553,449,530,371,513,330,492,291,466,255,434,223,411,210,414,205,438,219,470,251,496,288,518,328,535,369,558,447,569,507"/>
+<area shape="rect" href="structYoiBooleanObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="229,234,419,259"/>
+<area shape="poly" title=" " alt="" coords="562,509,548,458,523,394,486,328,462,298,434,273,416,262,418,257,438,269,466,295,490,325,528,392,553,457,567,508"/>
+<area shape="rect" href="structYoiDecimalObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="228,283,420,309"/>
+<area shape="poly" title=" " alt="" coords="559,509,542,467,516,416,480,365,458,342,435,322,414,311,416,306,437,318,462,338,484,362,520,414,547,465,564,507"/>
+<area shape="rect" href="structYoiCharObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="240,333,408,358"/>
+<area shape="poly" title=" " alt="" coords="555,511,535,479,508,441,474,403,435,372,407,359,409,354,437,367,478,399,512,437,540,476,559,508"/>
+<area shape="rect" href="structYoiShortObject.html#a23b477d0e2d399f75d585d154c346591" title=" " alt="" coords="238,382,410,407"/>
+<area shape="poly" title=" " alt="" coords="548,513,499,467,468,443,435,422,402,410,404,405,437,418,471,438,503,463,552,510"/>
+<area shape="rect" href="memory_8cpp.html#a4d3593e8023da81de12e2c623c71488d" title=" " alt="" coords="248,432,400,472"/>
+<area shape="poly" title=" " alt="" coords="525,519,435,487,397,475,399,470,437,481,527,514"/>
+<area shape="rect" href="threading_8cpp.html#a4d2015cc45ad286767cf3c05ed4e8ad5" title=" " alt="" coords="245,497,403,522"/>
+<area shape="poly" title=" " alt="" coords="470,527,403,520,403,515,470,522"/>
+<area shape="rect" href="signal_8cpp.html#aa16d4c62e620fb34785983a32ef92edd" title=" " alt="" coords="238,546,410,571"/>
+<area shape="poly" title=" " alt="" coords="470,547,411,553,410,548,470,542"/>
+<area shape="rect" href="threading_8cpp.html#ac175047930bdf10df93e70fd0d79ebd8" title=" " alt="" coords="229,596,419,636"/>
+<area shape="poly" title=" " alt="" coords="524,555,437,585,395,598,393,593,435,580,522,550"/>
+<area shape="rect" href="threading_8cpp.html#a34e525c4bc3b459cf83851a6e0f59f3f" title=" " alt="" coords="212,661,436,686"/>
+<area shape="poly" title=" " alt="" coords="551,559,503,606,471,630,437,650,404,663,402,658,435,646,468,626,499,602,548,556"/>
+<area shape="rect" href="threading_8cpp.html#ada1a8647c9fcdee49287ce5d8de9f09a" title=" " alt="" coords="236,711,412,751"/>
+<area shape="poly" title=" " alt="" coords="559,561,511,629,477,667,437,700,412,713,410,708,435,695,473,663,507,626,554,558"/>
+<area shape="rect" href="threading_8cpp.html#a6011a952cfc243fdc1375c39db6fe46a" title=" " alt="" coords="236,775,412,815"/>
+<area shape="poly" title=" " alt="" coords="564,562,548,606,521,661,485,717,463,742,438,765,414,779,411,774,434,761,459,739,481,713,517,658,543,604,559,560"/>
+<area shape="rect" href="threading_8cpp.html#a05e877ccdd9015f0515a5925085584b5" title=" " alt="" coords="247,839,401,865"/>
+<area shape="poly" title=" " alt="" coords="568,562,556,618,532,690,515,728,493,765,468,799,438,829,421,840,402,847,400,842,418,835,434,825,464,796,489,762,510,726,527,688,551,616,563,560"/>
+<area shape="rect" href="threading_8cpp.html#a2d76322afbf604e7fd11b475654d217b" title=" " alt="" coords="221,889,427,914"/>
+<area shape="poly" title=" " alt="" coords="570,561,561,626,539,712,522,757,499,801,472,842,438,878,417,891,415,886,434,874,468,839,495,799,517,755,534,710,556,625,565,561"/>
+<area shape="rect" href="threading_8cpp.html#ac9f6cb4e5d86e8a84b688a3c0b3276a2" title=" " alt="" coords="239,939,409,979"/>
+<area shape="poly" title=" " alt="" coords="572,561,564,633,543,731,526,784,504,836,474,885,438,927,411,945,408,940,434,923,470,881,499,834,521,782,538,730,559,633,566,561"/>
+<area shape="rect" href="threading_8cpp.html#a5c010abc32b1204a203514442e284cac" title=" " alt="" coords="239,1003,409,1043"/>
+<area shape="poly" title=" " alt="" coords="573,561,569,644,563,699,552,760,535,822,511,884,479,942,438,993,411,1011,408,1006,434,989,475,939,507,882,530,821,547,758,558,698,564,644,568,561"/>
+<area shape="rect" href="threading_8cpp.html#a4e3aa11ce37849e7544c074a43bf6854" title=" " alt="" coords="237,1067,411,1093"/>
+<area shape="poly" title=" " alt="" coords="569,561,554,669,527,818,509,893,488,962,464,1018,438,1057,413,1073,410,1068,434,1053,460,1016,483,960,504,892,522,817,549,668,564,561"/>
+<area shape="rect" href="threading_8cpp.html#a524018bbcc3335e63d3f0b7057a23c98" title=" " alt="" coords="5,1067,164,1093"/>
+<area shape="poly" title=" " alt="" coords="223,1083,164,1083,164,1077,223,1077"/>
 </map>
 </div>
 
@@ -863,7 +891,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00037">37</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="hperf_8cpp_source.html#l00095">hperf_report_mem_alloc()</a>, <a class="el" href="memory_8h_source.html#l00070">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00069">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00068">AllocatedMemoryList::prev</a>, and <a class="el" href="memory_8h_source.html#l00071">AllocatedMemoryList::size</a>.</p>
+<p class="reference">References <a class="el" href="hperf_8cpp_source.html#l00095">hperf_report_mem_alloc()</a>, <a class="el" href="memory_8h_source.html#l00095">AllocatedMemoryList::memory</a>, <a class="el" href="memory_8h_source.html#l00094">AllocatedMemoryList::next</a>, <a class="el" href="memory_8h_source.html#l00093">AllocatedMemoryList::prev</a>, and <a class="el" href="memory_8h_source.html#l00096">AllocatedMemoryList::size</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00096">runtime_object_alloc()</a>.</p>
 <div class="dynheader">

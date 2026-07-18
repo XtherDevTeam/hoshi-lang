@@ -1073,492 +1073,496 @@ $(document).ready(function(){initNavTree('compiler_2frontend_2formatter_8cpp_sou
 <div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>    }</div>
 <div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>    os &lt;&lt; L<span class="stringliteral">&quot;{&quot;</span>;</div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>    indentLevel++;</div>
-<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> pair : node-&gt;<a class="code hl_variable" href="classyoi_1_1implInner.html#a8100cab6a8139996187672bb59077aae">inner</a>) {</div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>        <span class="keywordflow">if</span> (!printComments(pair)) {</div>
-<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>            newLine();</div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>        }</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>        format(pair);</div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>        lastLine = std::max(lastLine, pair-&gt;getLine());</div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>        printComments(pair-&gt;getLine(), -1);</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>    }</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>    indentLevel--;</div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>    newLine();</div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>}</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1implInner.html#a8100cab6a8139996187672bb59077aae">inner</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1implInner.html#a8100cab6a8139996187672bb59077aae">inner</a>.end(); it++) {</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>        <span class="keyword">auto</span> pair = *it;</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>        <span class="keywordflow">if</span> (!printComments(pair)) {</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>            newLine();</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>        }</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>        format(pair);</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>        <span class="keywordflow">if</span> (it + 1 != node-&gt;<a class="code hl_variable" href="classyoi_1_1implInner.html#a8100cab6a8139996187672bb59077aae">inner</a>.end()) {</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>            os &lt;&lt; L<span class="stringliteral">&quot;,&quot;</span>;</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>        }</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>        lastLine = std::max(lastLine, pair-&gt;getLine());</div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>        printComments(pair-&gt;getLine(), -1);</div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>    }</div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>    indentLevel--;</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    newLine();</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>}</div>
 </div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span> </div>
-<div class="foldopen" id="foldopen00884" data-start="{" data-end="}">
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a6527be62c1df8ec5f477f2ca7c8ea6aa">  884</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1implStmt.html">implStmt</a> *node) {</div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>    write(L<span class="stringliteral">&quot;impl &quot;</span>);</div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#ac2f44df845684bd8da6ee0c3b88c0982">interfaceName</a>) {</div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#a835a78fb455cf493a5869b2f3f3830c0">structName</a>);</div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>        write(L<span class="stringliteral">&quot; : &quot;</span>);</div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#ac2f44df845684bd8da6ee0c3b88c0982">interfaceName</a>);</div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span> </div>
+<div class="foldopen" id="foldopen00888" data-start="{" data-end="}">
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a6527be62c1df8ec5f477f2ca7c8ea6aa">  888</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1implStmt.html">implStmt</a> *node) {</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>    write(L<span class="stringliteral">&quot;impl &quot;</span>);</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#ac2f44df845684bd8da6ee0c3b88c0982">interfaceName</a>) {</div>
 <div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#a835a78fb455cf493a5869b2f3f3830c0">structName</a>);</div>
-<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>    }</div>
-<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#a2e4155d09fd35361c82cafdb5adeaeef">inner</a>);</div>
-<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>}</div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>        write(L<span class="stringliteral">&quot; : &quot;</span>);</div>
+<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#ac2f44df845684bd8da6ee0c3b88c0982">interfaceName</a>);</div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#a835a78fb455cf493a5869b2f3f3830c0">structName</a>);</div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span>    }</div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1implStmt.html#a2e4155d09fd35361c82cafdb5adeaeef">inner</a>);</div>
+<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span>}</div>
 </div>
-<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span> </div>
-<div class="foldopen" id="foldopen00897" data-start="{" data-end="}">
-<div class="line"><a id="l00897" name="l00897"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aa65814342c53b477a494a02942e5e5f8">  897</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPair.html">letAssignmentPair</a> *node) {</div>
-<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a0a807c1021383e4b6487d3b1beb02347">lhs</a>);</div>
-<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>) {</div>
-<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
-<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
-<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>    }</div>
-<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78">rhs</a>) {</div>
-<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>        os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
-<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78">rhs</a>);</div>
+<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span> </div>
+<div class="foldopen" id="foldopen00901" data-start="{" data-end="}">
+<div class="line"><a id="l00901" name="l00901"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aa65814342c53b477a494a02942e5e5f8">  901</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPair.html">letAssignmentPair</a> *node) {</div>
+<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a0a807c1021383e4b6487d3b1beb02347">lhs</a>);</div>
+<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>) {</div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
+<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>    }</div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>}</div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78">rhs</a>) {</div>
+<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span>        os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
+<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPair.html#a5302972f187401d035de1b8f17e96f78">rhs</a>);</div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>    }</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>}</div>
 </div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span> </div>
-<div class="foldopen" id="foldopen00910" data-start="{" data-end="}">
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac4ed8c5c53815eefd9e9066e21906fff">  910</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letStmt.html">letStmt</a> *node) {</div>
-<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>    os &lt;&lt; L<span class="stringliteral">&quot;let &quot;</span>;</div>
-<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1letStmt.html#ae464c58c92d663b5a203ecd885d44bf9">terms</a>.size(); ++i) {</div>
-<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letStmt.html#ae464c58c92d663b5a203ecd885d44bf9">terms</a>[i]);</div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;terms.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>    }</div>
-<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>}</div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span> </div>
+<div class="foldopen" id="foldopen00914" data-start="{" data-end="}">
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac4ed8c5c53815eefd9e9066e21906fff">  914</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letStmt.html">letStmt</a> *node) {</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>    os &lt;&lt; L<span class="stringliteral">&quot;let &quot;</span>;</div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1letStmt.html#ae464c58c92d663b5a203ecd885d44bf9">terms</a>.size(); ++i) {</div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letStmt.html#ae464c58c92d663b5a203ecd885d44bf9">terms</a>[i]);</div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;terms.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>    }</div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>}</div>
 </div>
-<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span> </div>
-<div class="foldopen" id="foldopen00919" data-start="{" data-end="}">
-<div class="line"><a id="l00919" name="l00919"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a82dbe57488a59fabe61b3ea1f940caba">  919</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1globalStmt.html">globalStmt</a> *node) {</div>
-<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1">marco</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1">marco</a>);</div>
-<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span>    <span class="keywordflow">switch</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ad38547a24d0bb38586a3e75ef26cb715">kind</a>) {</div>
-<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a185f486108c6b985a09070078a604451">useStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87">globalStmt::vKind::funcDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd">funcDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea68398d9b72fed7f20446726901c874e5">globalStmt::vKind::interfaceDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a3bd87bd24229bdec229bbf49fe4e3cf8">interfaceDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2c20afdf1688ddbb342927c36509c891">globalStmt::vKind::structDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#ad4c685cda5e13fdbc4e358861f6fae92">structDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea416d4bfacccc9770c74d984b66cd862d">globalStmt::vKind::dataStructDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a0b332f5a81ef199e4b81b1d170ad29bb">dataStructDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200">globalStmt::vKind::implStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a1fc4dc25ec688d44ae069a3446934b97">implStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99">globalStmt::vKind::letStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb">letStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#af7ca634c2bafa3a4c74e89f0d461754d">importDeclVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea5a76dc0e6abdfb1d3b38d6b64fe0b555">globalStmt::vKind::exportDecl</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870">exportDeclVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea71126f8b13a7000ae9a312452c259020">globalStmt::vKind::typeAliasStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#ac56456d70cd9e6fcfedcf84ce3abd164">typeAliasStmtVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d">globalStmt::vKind::enumerationDef</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a0e27a0bf2b1c1dafe04a1e79d5cee552">enumerationDefVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea723646ba2379f58847f411211799cfcf">globalStmt::vKind::conceptDef</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a8851943f4d7de02820ff8f692262add8">conceptDefVal</a>); <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>    }</div>
-<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>}</div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span> </div>
+<div class="foldopen" id="foldopen00923" data-start="{" data-end="}">
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a82dbe57488a59fabe61b3ea1f940caba">  923</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1globalStmt.html">globalStmt</a> *node) {</div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1">marco</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ade670788993aac3544d4123d723d0af1">marco</a>);</div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span>    <span class="keywordflow">switch</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#ad38547a24d0bb38586a3e75ef26cb715">kind</a>) {</div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a185f486108c6b985a09070078a604451">useStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa914b129a6df1adf08dcf4c34a77aa87">globalStmt::vKind::funcDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a9c79c79cceef82d5d16ba8bc8f1e83bd">funcDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea68398d9b72fed7f20446726901c874e5">globalStmt::vKind::interfaceDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a3bd87bd24229bdec229bbf49fe4e3cf8">interfaceDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2c20afdf1688ddbb342927c36509c891">globalStmt::vKind::structDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#ad4c685cda5e13fdbc4e358861f6fae92">structDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea416d4bfacccc9770c74d984b66cd862d">globalStmt::vKind::dataStructDefStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a0b332f5a81ef199e4b81b1d170ad29bb">dataStructDefStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea2ae43b8c08e38cfc7b128e9378e76200">globalStmt::vKind::implStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a1fc4dc25ec688d44ae069a3446934b97">implStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea84fd711536bc117a59435c47fe022f99">globalStmt::vKind::letStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a4d203a8d3c7c74be2ee87e0bed0a57fb">letStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#af7ca634c2bafa3a4c74e89f0d461754d">importDeclVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea5a76dc0e6abdfb1d3b38d6b64fe0b555">globalStmt::vKind::exportDecl</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#acec1723a484d6f12bda99ef1dffae870">exportDeclVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea71126f8b13a7000ae9a312452c259020">globalStmt::vKind::typeAliasStmt</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#ac56456d70cd9e6fcfedcf84ce3abd164">typeAliasStmtVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d">globalStmt::vKind::enumerationDef</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a0e27a0bf2b1c1dafe04a1e79d5cee552">enumerationDefVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea723646ba2379f58847f411211799cfcf">globalStmt::vKind::conceptDef</a>: format(node-&gt;<a class="code hl_variable" href="classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2">value</a>.<a class="code hl_variable" href="unionyoi_1_1globalStmt_1_1vValue.html#a8851943f4d7de02820ff8f692262add8">conceptDefVal</a>); <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>    }</div>
+<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>}</div>
 </div>
-<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span> </div>
-<div class="foldopen" id="foldopen00938" data-start="{" data-end="}">
-<div class="line"><a id="l00938" name="l00938"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#adc84572bcc59ec33fc2566ba63135647">  938</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1exportDecl.html">exportDecl</a> *node) {</div>
-<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
-<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>    }</div>
-<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>    os &lt;&lt; L<span class="stringliteral">&quot;export &quot;</span>;</div>
-<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4">from</a>);</div>
-<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a35ac8ffbe3a1aa6b574b65b011fdf495">as</a>) {</div>
-<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>        os &lt;&lt; L<span class="stringliteral">&quot; as &quot;</span>;</div>
-<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a35ac8ffbe3a1aa6b574b65b011fdf495">as</a>);</div>
-<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>    }</div>
-<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>}</div>
+<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span> </div>
+<div class="foldopen" id="foldopen00942" data-start="{" data-end="}">
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#adc84572bcc59ec33fc2566ba63135647">  942</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1exportDecl.html">exportDecl</a> *node) {</div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
+<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
+<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>    }</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>    os &lt;&lt; L<span class="stringliteral">&quot;export &quot;</span>;</div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a0e3ff95e2fe59acc67560233cfc1b3d4">from</a>);</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a35ac8ffbe3a1aa6b574b65b011fdf495">as</a>) {</div>
+<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>        os &lt;&lt; L<span class="stringliteral">&quot; as &quot;</span>;</div>
+<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1exportDecl.html#a35ac8ffbe3a1aa6b574b65b011fdf495">as</a>);</div>
+<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>    }</div>
+<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>}</div>
 </div>
-<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span> </div>
-<div class="foldopen" id="foldopen00952" data-start="{" data-end="}">
-<div class="line"><a id="l00952" name="l00952"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ae7086b77337f8af5863c7d2031b31f50">  952</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1importDecl.html">importDecl</a> *node) {</div>
-<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>    os &lt;&lt; L<span class="stringliteral">&quot;import &quot;</span>;</div>
-<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1importDecl.html#a70e95930cc931b4923176f3306ec7cb1">inner</a>);</div>
-<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>    os &lt;&lt; L<span class="stringliteral">&quot; from \&quot;&quot;</span>;</div>
-<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>    os &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299">from_path</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
-<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>    os &lt;&lt; L<span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
-<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>}</div>
+<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span> </div>
+<div class="foldopen" id="foldopen00956" data-start="{" data-end="}">
+<div class="line"><a id="l00956" name="l00956"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ae7086b77337f8af5863c7d2031b31f50">  956</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1importDecl.html">importDecl</a> *node) {</div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>    os &lt;&lt; L<span class="stringliteral">&quot;import &quot;</span>;</div>
+<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1importDecl.html#a70e95930cc931b4923176f3306ec7cb1">inner</a>);</div>
+<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>    os &lt;&lt; L<span class="stringliteral">&quot; from \&quot;&quot;</span>;</div>
+<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span>    os &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1importDecl.html#a00e8a649f83f70fd95dcf0628ba09299">from_path</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
+<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>    os &lt;&lt; L<span class="stringliteral">&quot;\&quot;&quot;</span>;</div>
+<div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span>}</div>
 </div>
-<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span> </div>
-<div class="foldopen" id="foldopen00961" data-start="{" data-end="}">
-<div class="line"><a id="l00961" name="l00961"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a749c4b1c10bd2171bdc1e897e07099e6">  961</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(importInner *node) {</div>
-<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>}</div>
+<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span> </div>
+<div class="foldopen" id="foldopen00965" data-start="{" data-end="}">
+<div class="line"><a id="l00965" name="l00965"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a749c4b1c10bd2171bdc1e897e07099e6">  965</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(importInner *node) {</div>
+<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>}</div>
 </div>
-<div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span> </div>
-<div class="foldopen" id="foldopen00964" data-start="{" data-end="}">
-<div class="line"><a id="l00964" name="l00964"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a8ff527b86d669bb35b00c216eba88f7c">  964</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1throwStmt.html">throwStmt</a> *node) {</div>
-<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>    os &lt;&lt; L<span class="stringliteral">&quot;throw &quot;</span>;</div>
-<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>}</div>
+<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span> </div>
+<div class="foldopen" id="foldopen00968" data-start="{" data-end="}">
+<div class="line"><a id="l00968" name="l00968"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a8ff527b86d669bb35b00c216eba88f7c">  968</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1throwStmt.html">throwStmt</a> *node) {</div>
+<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>    os &lt;&lt; L<span class="stringliteral">&quot;throw &quot;</span>;</div>
+<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>}</div>
 </div>
-<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span> </div>
-<div class="foldopen" id="foldopen00970" data-start="{" data-end="}">
-<div class="line"><a id="l00970" name="l00970"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#abd61bb0b8ad223fdd8c67fe12278bbab">  970</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1catchParam.html">catchParam</a> *node) {</div>
-<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>    os &lt;&lt; L<span class="stringliteral">&quot;catch (&quot;</span>;</div>
-<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
-<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>    os &lt;&lt; L<span class="stringliteral">&quot;: &quot;</span>;</div>
-<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
-<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>    os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
-<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>}</div>
+<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span> </div>
+<div class="foldopen" id="foldopen00974" data-start="{" data-end="}">
+<div class="line"><a id="l00974" name="l00974"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#abd61bb0b8ad223fdd8c67fe12278bbab">  974</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1catchParam.html">catchParam</a> *node) {</div>
+<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>    os &lt;&lt; L<span class="stringliteral">&quot;catch (&quot;</span>;</div>
+<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
+<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>    os &lt;&lt; L<span class="stringliteral">&quot;: &quot;</span>;</div>
+<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
+<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>    os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1catchParam.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
+<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>}</div>
 </div>
-<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span> </div>
-<div class="foldopen" id="foldopen00980" data-start="{" data-end="}">
-<div class="line"><a id="l00980" name="l00980"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a7ef8d938365b06376f4569ba8a440e14">  980</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1tryCatchStmt.html">tryCatchStmt</a> *node) {</div>
-<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>    os &lt;&lt; L<span class="stringliteral">&quot;try&quot;</span>;</div>
-<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a5dab6b819df9349edbd4090d2ed8059d">tryBlock</a>);</div>
-<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> cp : node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a4078853ab8383898e03f07e52015ad5d">catchParams</a>) {</div>
-<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>        format(cp);</div>
-<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>    }</div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a9c29ecfe2b10fe1b89a2fc253f3c1f3e">finallyBlock</a>) {</div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>        os &lt;&lt; L<span class="stringliteral">&quot; finally&quot;</span>;</div>
-<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a9c29ecfe2b10fe1b89a2fc253f3c1f3e">finallyBlock</a>);</div>
+<div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span> </div>
+<div class="foldopen" id="foldopen00984" data-start="{" data-end="}">
+<div class="line"><a id="l00984" name="l00984"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a7ef8d938365b06376f4569ba8a440e14">  984</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1tryCatchStmt.html">tryCatchStmt</a> *node) {</div>
+<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>    os &lt;&lt; L<span class="stringliteral">&quot;try&quot;</span>;</div>
+<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a5dab6b819df9349edbd4090d2ed8059d">tryBlock</a>);</div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> cp : node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a4078853ab8383898e03f07e52015ad5d">catchParams</a>) {</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>        format(cp);</div>
 <div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>    }</div>
-<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>}</div>
+<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a9c29ecfe2b10fe1b89a2fc253f3c1f3e">finallyBlock</a>) {</div>
+<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>        os &lt;&lt; L<span class="stringliteral">&quot; finally&quot;</span>;</div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1tryCatchStmt.html#a9c29ecfe2b10fe1b89a2fc253f3c1f3e">finallyBlock</a>);</div>
+<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>    }</div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>}</div>
 </div>
-<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span> </div>
-<div class="foldopen" id="foldopen00994" data-start="{" data-end="}">
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aa0381812186a2c2c0c1cf06935862d13">  994</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1dynCastExpression.html">dynCastExpression</a> *node) {</div>
-<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>    os &lt;&lt; L<span class="stringliteral">&quot;dyn_cast&lt;&quot;</span>;</div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1dynCastExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
-<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>    os &lt;&lt; L<span class="stringliteral">&quot;&gt;(&quot;</span>;</div>
-<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>    os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>}</div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span> </div>
+<div class="foldopen" id="foldopen00998" data-start="{" data-end="}">
+<div class="line"><a id="l00998" name="l00998"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aa0381812186a2c2c0c1cf06935862d13">  998</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1dynCastExpression.html">dynCastExpression</a> *node) {</div>
+<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>    os &lt;&lt; L<span class="stringliteral">&quot;dyn_cast&lt;&quot;</span>;</div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1dynCastExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>    os &lt;&lt; L<span class="stringliteral">&quot;&gt;(&quot;</span>;</div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1dynCastExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>    os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>}</div>
 </div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span> </div>
-<div class="foldopen" id="foldopen01003" data-start="{" data-end="}">
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#af7221c60737acda0136379352b4835f4"> 1003</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1typeIdExpression.html">typeIdExpression</a> *node) {</div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>    os &lt;&lt; L<span class="stringliteral">&quot;type_id&quot;</span>;</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>) {</div>
-<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>        os &lt;&lt; L<span class="stringliteral">&quot;&lt;&quot;</span>;</div>
-<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
-<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>        os &lt;&lt; L<span class="stringliteral">&quot;&gt;&quot;</span>;</div>
-<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>    }</div>
-<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>) {</div>
-<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>        os &lt;&lt; L<span class="stringliteral">&quot;(&quot;</span>;</div>
-<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>        os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>    }</div>
-<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>}</div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span> </div>
+<div class="foldopen" id="foldopen01007" data-start="{" data-end="}">
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#af7221c60737acda0136379352b4835f4"> 1007</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1typeIdExpression.html">typeIdExpression</a> *node) {</div>
+<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>    os &lt;&lt; L<span class="stringliteral">&quot;type_id&quot;</span>;</div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>) {</div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>        os &lt;&lt; L<span class="stringliteral">&quot;&lt;&quot;</span>;</div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#afc93ea2c2b48dca8ee5ce7c669ad106f">type</a>);</div>
+<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>        os &lt;&lt; L<span class="stringliteral">&quot;&gt;&quot;</span>;</div>
+<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span>    }</div>
+<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>) {</div>
+<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span>        os &lt;&lt; L<span class="stringliteral">&quot;(&quot;</span>;</div>
+<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeIdExpression.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span>        os &lt;&lt; L<span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>    }</div>
+<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>}</div>
 </div>
-<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span> </div>
-<div class="foldopen" id="foldopen01018" data-start="{" data-end="}">
-<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac544d434ccc37cffdd05fd19109fd260"> 1018</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1newExpression.html">newExpression</a> *node) {</div>
-<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span>    os &lt;&lt; L<span class="stringliteral">&quot;new &quot;</span>;</div>
-<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#ab6d638ffee2b9de8f09d3132914a689d">type</a>);</div>
-<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a532c5d8b36dd8296a2b1f5906571e441">length</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a532c5d8b36dd8296a2b1f5906571e441">length</a>);</div>
-<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a94b03dcafc209aa0ff5ffd4fb29d7cda">args</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a94b03dcafc209aa0ff5ffd4fb29d7cda">args</a>);</div>
-<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>}</div>
+<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span> </div>
+<div class="foldopen" id="foldopen01022" data-start="{" data-end="}">
+<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac544d434ccc37cffdd05fd19109fd260"> 1022</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1newExpression.html">newExpression</a> *node) {</div>
+<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>    os &lt;&lt; L<span class="stringliteral">&quot;new &quot;</span>;</div>
+<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#ab6d638ffee2b9de8f09d3132914a689d">type</a>);</div>
+<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a532c5d8b36dd8296a2b1f5906571e441">length</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a532c5d8b36dd8296a2b1f5906571e441">length</a>);</div>
+<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a94b03dcafc209aa0ff5ffd4fb29d7cda">args</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1newExpression.html#a94b03dcafc209aa0ff5ffd4fb29d7cda">args</a>);</div>
+<div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>}</div>
 </div>
-<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span> </div>
-<div class="foldopen" id="foldopen01026" data-start="{" data-end="}">
-<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac8cdec886e12e6c3c47e4ad17ce1a704"> 1026</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1lambdaExpr.html">lambdaExpr</a> *node) {</div>
-<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>    os &lt;&lt; L<span class="stringliteral">&quot;func[&quot;</span>;</div>
-<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f">captures</a>.size(); ++i) {</div>
-<div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f">captures</a>[i]);</div>
-<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;captures.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>    }</div>
-<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>    os &lt;&lt; L<span class="stringliteral">&quot;] &quot;</span>;</div>
-<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
-<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>    os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
-<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
-<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
-<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>}</div>
+<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span> </div>
+<div class="foldopen" id="foldopen01030" data-start="{" data-end="}">
+<div class="line"><a id="l01030" name="l01030"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac8cdec886e12e6c3c47e4ad17ce1a704"> 1030</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1lambdaExpr.html">lambdaExpr</a> *node) {</div>
+<div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>    os &lt;&lt; L<span class="stringliteral">&quot;func[&quot;</span>;</div>
+<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f">captures</a>.size(); ++i) {</div>
+<div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#aac2ba7a331180f956d7fb15dcd850b9f">captures</a>[i]);</div>
+<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;captures.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>    }</div>
+<div class="line"><a id="l01037" name="l01037"></a><span class="lineno"> 1037</span>    os &lt;&lt; L<span class="stringliteral">&quot;] &quot;</span>;</div>
+<div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
+<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>    os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
+<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
+<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1lambdaExpr.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
+<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>}</div>
 </div>
-<div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span> </div>
-<div class="foldopen" id="foldopen01040" data-start="{" data-end="}">
-<div class="line"><a id="l01040" name="l01040"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#acf5c9d7de50a3759910a2a92a0d82cb1"> 1040</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1unnamedDefinitionArguments.html">unnamedDefinitionArguments</a> *node) {</div>
-<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>    write(L<span class="stringliteral">&quot; (&quot;</span>);</div>
-<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>.size(); ++i) {</div>
-<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>[i]);</div>
-<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;types.size() - 1) write(L<span class="stringliteral">&quot;, &quot;</span>);</div>
-<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span>    }</div>
-<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>    write(L<span class="stringliteral">&quot;)&quot;</span>);</div>
-<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>}</div>
+<div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span> </div>
+<div class="foldopen" id="foldopen01044" data-start="{" data-end="}">
+<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#acf5c9d7de50a3759910a2a92a0d82cb1"> 1044</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1unnamedDefinitionArguments.html">unnamedDefinitionArguments</a> *node) {</div>
+<div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span>    write(L<span class="stringliteral">&quot; (&quot;</span>);</div>
+<div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>.size(); ++i) {</div>
+<div class="line"><a id="l01048" name="l01048"></a><span class="lineno"> 1048</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1unnamedDefinitionArguments.html#a999d990e21cde589e17b8f98ebdef406">types</a>[i]);</div>
+<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;types.size() - 1) write(L<span class="stringliteral">&quot;, &quot;</span>);</div>
+<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"> 1050</span>    }</div>
+<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>    write(L<span class="stringliteral">&quot;)&quot;</span>);</div>
+<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>}</div>
 </div>
-<div class="line"><a id="l01049" name="l01049"></a><span class="lineno"> 1049</span> </div>
-<div class="foldopen" id="foldopen01050" data-start="{" data-end="}">
-<div class="line"><a id="l01050" name="l01050"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a27ba4fbda0f441177c63248092c8e9d8"> 1050</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1marcoPair.html">marcoPair</a> *node) {</div>
-<div class="line"><a id="l01051" name="l01051"></a><span class="lineno"> 1051</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01052" name="l01052"></a><span class="lineno"> 1052</span>    os &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#a97b69a3524742e516298dacafd0a1780">identifier</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
-<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#abf19e92dfdefca4a5731ca7858fff3f9">constraint</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">kind</a> != <a class="code hl_enumvalue" href="structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a">lexer::token::tokenKind::unknown</a>) {</div>
-<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"> 1054</span>        os &lt;&lt; L<span class="stringliteral">&quot;: &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#abf19e92dfdefca4a5731ca7858fff3f9">constraint</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
-<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>    }</div>
-<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span>    os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#aa75dcd78bcfa24a697a2979e5b923747">rhs</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
-<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span>}</div>
+<div class="line"><a id="l01053" name="l01053"></a><span class="lineno"> 1053</span> </div>
+<div class="foldopen" id="foldopen01054" data-start="{" data-end="}">
+<div class="line"><a id="l01054" name="l01054"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a27ba4fbda0f441177c63248092c8e9d8"> 1054</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1marcoPair.html">marcoPair</a> *node) {</div>
+<div class="line"><a id="l01055" name="l01055"></a><span class="lineno"> 1055</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01056" name="l01056"></a><span class="lineno"> 1056</span>    os &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#a97b69a3524742e516298dacafd0a1780">identifier</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
+<div class="line"><a id="l01057" name="l01057"></a><span class="lineno"> 1057</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#abf19e92dfdefca4a5731ca7858fff3f9">constraint</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">kind</a> != <a class="code hl_enumvalue" href="structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a">lexer::token::tokenKind::unknown</a>) {</div>
+<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span>        os &lt;&lt; L<span class="stringliteral">&quot;: &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#abf19e92dfdefca4a5731ca7858fff3f9">constraint</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
+<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"> 1059</span>    }</div>
+<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span>    os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoPair.html#aa75dcd78bcfa24a697a2979e5b923747">rhs</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a>;</div>
+<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>}</div>
 </div>
-<div class="line"><a id="l01058" name="l01058"></a><span class="lineno"> 1058</span> </div>
-<div class="foldopen" id="foldopen01059" data-start="{" data-end="}">
-<div class="line"><a id="l01059" name="l01059"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a1472315c485c65d1139043965c5089d7"> 1059</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1marcoDescriptor.html">marcoDescriptor</a> *node) {</div>
-<div class="line"><a id="l01060" name="l01060"></a><span class="lineno"> 1060</span>    <span class="keywordflow">if</span> (!node || node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>.empty()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01061" name="l01061"></a><span class="lineno"> 1061</span>    os &lt;&lt; L<span class="stringliteral">&quot;#(&quot;</span>;</div>
-<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>.size(); ++i) {</div>
-<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>[i]);</div>
-<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;pairs.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>    }</div>
-<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>    os &lt;&lt; L<span class="stringliteral">&quot;) &quot;</span>;</div>
-<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>}</div>
+<div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span> </div>
+<div class="foldopen" id="foldopen01063" data-start="{" data-end="}">
+<div class="line"><a id="l01063" name="l01063"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a1472315c485c65d1139043965c5089d7"> 1063</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1marcoDescriptor.html">marcoDescriptor</a> *node) {</div>
+<div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>    <span class="keywordflow">if</span> (!node || node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>.empty()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>    os &lt;&lt; L<span class="stringliteral">&quot;#(&quot;</span>;</div>
+<div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>.size(); ++i) {</div>
+<div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1marcoDescriptor.html#afc1ecedfd0a6543d61baa11b09a236af">pairs</a>[i]);</div>
+<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;pairs.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>    }</div>
+<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>    os &lt;&lt; L<span class="stringliteral">&quot;) &quot;</span>;</div>
+<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>}</div>
 </div>
-<div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span> </div>
-<div class="foldopen" id="foldopen01069" data-start="{" data-end="}">
-<div class="line"><a id="l01069" name="l01069"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a55e3b9eb0ab8f50c0ed038f20b06d6e5"> 1069</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1typeAliasStmt.html">typeAliasStmt</a> *node) {</div>
-<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>    os &lt;&lt; L<span class="stringliteral">&quot;alias &quot;</span>;</div>
-<div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeAliasStmt.html#a720985c1cf8523ed83be4c19610bacd5">lhs</a>);</div>
-<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>    os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
-<div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeAliasStmt.html#a828589ca92faa14bfc1afb8ab3c3d6a0">rhs</a>);</div>
-<div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>}</div>
+<div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span> </div>
+<div class="foldopen" id="foldopen01073" data-start="{" data-end="}">
+<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a55e3b9eb0ab8f50c0ed038f20b06d6e5"> 1073</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1typeAliasStmt.html">typeAliasStmt</a> *node) {</div>
+<div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>    os &lt;&lt; L<span class="stringliteral">&quot;alias &quot;</span>;</div>
+<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeAliasStmt.html#a720985c1cf8523ed83be4c19610bacd5">lhs</a>);</div>
+<div class="line"><a id="l01077" name="l01077"></a><span class="lineno"> 1077</span>    os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
+<div class="line"><a id="l01078" name="l01078"></a><span class="lineno"> 1078</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1typeAliasStmt.html#a828589ca92faa14bfc1afb8ab3c3d6a0">rhs</a>);</div>
+<div class="line"><a id="l01079" name="l01079"></a><span class="lineno"> 1079</span>}</div>
 </div>
-<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span> </div>
-<div class="foldopen" id="foldopen01077" data-start="{" data-end="}">
-<div class="line"><a id="l01077" name="l01077"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a44bde5738bbde632446ffff116f8b713"> 1077</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1finalizerDef.html">finalizerDef</a> *node) {</div>
-<div class="line"><a id="l01078" name="l01078"></a><span class="lineno"> 1078</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01079" name="l01079"></a><span class="lineno"> 1079</span>    os &lt;&lt; L<span class="stringliteral">&quot;finalizer&quot;</span>;</div>
-<div class="line"><a id="l01080" name="l01080"></a><span class="lineno"> 1080</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1finalizerDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
-<div class="line"><a id="l01081" name="l01081"></a><span class="lineno"> 1081</span>}</div>
+<div class="line"><a id="l01080" name="l01080"></a><span class="lineno"> 1080</span> </div>
+<div class="foldopen" id="foldopen01081" data-start="{" data-end="}">
+<div class="line"><a id="l01081" name="l01081"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a44bde5738bbde632446ffff116f8b713"> 1081</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1finalizerDef.html">finalizerDef</a> *node) {</div>
+<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span>    os &lt;&lt; L<span class="stringliteral">&quot;finalizer&quot;</span>;</div>
+<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1finalizerDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
+<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span>}</div>
 </div>
-<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span> </div>
-<div class="foldopen" id="foldopen01083" data-start="{" data-end="}">
-<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ad486a5416262973193c2c56ee069d76d"> 1083</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1finalizerDecl.html">finalizerDecl</a> *node) {</div>
-<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span>    os &lt;&lt; L<span class="stringliteral">&quot;finalizer&quot;</span>;</div>
-<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span>}</div>
+<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span> </div>
+<div class="foldopen" id="foldopen01087" data-start="{" data-end="}">
+<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ad486a5416262973193c2c56ee069d76d"> 1087</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1finalizerDecl.html">finalizerDecl</a> *node) {</div>
+<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"> 1088</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span>    os &lt;&lt; L<span class="stringliteral">&quot;finalizer&quot;</span>;</div>
+<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>}</div>
 </div>
-<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"> 1087</span> </div>
-<div class="foldopen" id="foldopen01088" data-start="{" data-end="}">
-<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a08fbf2c7faccc2a284e6913ed551c8d8"> 1088</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1funcExpr.html">funcExpr</a> *node) {</div>
-<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>    os &lt;&lt; L<span class="stringliteral">&quot;func &quot;</span>;</div>
-<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#a4dbc9a58ac683cfa466ca89ff05640f2">name</a>);</div>
-<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#acd305f57b7b77d5e3a3950dd5728ead9">args</a>);</div>
-<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>}</div>
+<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span> </div>
+<div class="foldopen" id="foldopen01092" data-start="{" data-end="}">
+<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a08fbf2c7faccc2a284e6913ed551c8d8"> 1092</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1funcExpr.html">funcExpr</a> *node) {</div>
+<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    os &lt;&lt; L<span class="stringliteral">&quot;func &quot;</span>;</div>
+<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#a4dbc9a58ac683cfa466ca89ff05640f2">name</a>);</div>
+<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#acd305f57b7b77d5e3a3950dd5728ead9">args</a>);</div>
+<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>}</div>
 </div>
-<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span> </div>
-<div class="foldopen" id="foldopen01095" data-start="{" data-end="}">
-<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a77df4326349ff6e0fe0f1e8899dbf928"> 1095</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPairLHS.html">letAssignmentPairLHS</a> *node) {</div>
-<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#afd3a38f0c7cf331db50414efa64d9f58">kind</a> == <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9eaf393f3f5e496869a15bc72cbfd56f541">letAssignmentPairLHS::vKind::identifier</a>) {</div>
-<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#aeb120908e79b4a919cdc8252bf1fd4e0">id</a>);</div>
-<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"> 1099</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>        os &lt;&lt; L<span class="stringliteral">&quot;[&quot;</span>;</div>
-<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#a0213451c6a2082bbaad1a367540971e0">list</a>.size(); ++i) {</div>
-<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span>            <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#a0213451c6a2082bbaad1a367540971e0">list</a>[i]);</div>
-<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"> 1103</span>            <span class="keywordflow">if</span> (i &lt; node-&gt;list.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span>        }</div>
-<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span>        os &lt;&lt; L<span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a id="l01106" name="l01106"></a><span class="lineno"> 1106</span>    }</div>
-<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>}</div>
+<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span> </div>
+<div class="foldopen" id="foldopen01099" data-start="{" data-end="}">
+<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a77df4326349ff6e0fe0f1e8899dbf928"> 1099</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPairLHS.html">letAssignmentPairLHS</a> *node) {</div>
+<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#afd3a38f0c7cf331db50414efa64d9f58">kind</a> == <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9eaf393f3f5e496869a15bc72cbfd56f541">letAssignmentPairLHS::vKind::identifier</a>) {</div>
+<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#aeb120908e79b4a919cdc8252bf1fd4e0">id</a>);</div>
+<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"> 1103</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span>        os &lt;&lt; L<span class="stringliteral">&quot;[&quot;</span>;</div>
+<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#a0213451c6a2082bbaad1a367540971e0">list</a>.size(); ++i) {</div>
+<div class="line"><a id="l01106" name="l01106"></a><span class="lineno"> 1106</span>            <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, node-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#a0213451c6a2082bbaad1a367540971e0">list</a>[i]);</div>
+<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>            <span class="keywordflow">if</span> (i &lt; node-&gt;list.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span>        }</div>
+<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"> 1109</span>        os &lt;&lt; L<span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span>    }</div>
+<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>}</div>
 </div>
-<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span> </div>
-<div class="foldopen" id="foldopen01109" data-start="{" data-end="}">
-<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a9c36853dafd33602d18908cc93677128"> 1109</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1enumerationDefinition.html">enumerationDefinition</a> *node) {</div>
-<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>    os &lt;&lt; L<span class="stringliteral">&quot;enum &quot;</span>;</div>
-<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
-<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"> 1113</span>    os &lt;&lt; L<span class="stringliteral">&quot; {&quot;</span>;</div>
-<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span>    indentLevel++;</div>
-<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>.size(); ++i) {</div>
-<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>        <span class="keywordflow">if</span> (!printComments(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i])) {</div>
-<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>            newLine();</div>
-<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>        }</div>
-<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]);</div>
-<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"> 1120</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;values.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;,&quot;</span>;</div>
-<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span>        lastLine = std::max(lastLine, node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]-&gt;getLine());</div>
-<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>        printComments(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]-&gt;getLine(), -1);</div>
-<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>    }</div>
-<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>    indentLevel--;</div>
-<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span>    newLine();</div>
-<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>}</div>
+<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span> </div>
+<div class="foldopen" id="foldopen01113" data-start="{" data-end="}">
+<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a9c36853dafd33602d18908cc93677128"> 1113</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1enumerationDefinition.html">enumerationDefinition</a> *node) {</div>
+<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span>    os &lt;&lt; L<span class="stringliteral">&quot;enum &quot;</span>;</div>
+<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
+<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>    os &lt;&lt; L<span class="stringliteral">&quot; {&quot;</span>;</div>
+<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>    indentLevel++;</div>
+<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>.size(); ++i) {</div>
+<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"> 1120</span>        <span class="keywordflow">if</span> (!printComments(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i])) {</div>
+<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span>            newLine();</div>
+<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>        }</div>
+<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]);</div>
+<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;values.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;,&quot;</span>;</div>
+<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span>        lastLine = std::max(lastLine, node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]-&gt;getLine());</div>
+<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>        printComments(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>[i]-&gt;getLine(), -1);</div>
+<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>    }</div>
+<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>    indentLevel--;</div>
+<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span>    newLine();</div>
+<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span>}</div>
 </div>
-<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span> </div>
-<div class="foldopen" id="foldopen01129" data-start="{" data-end="}">
-<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac3468170d758e3aaff550b6a23e9f9d3"> 1129</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1enumerationPair.html">enumerationPair</a> *node) {</div>
-<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
-<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a0a2183ce7789eae74df4344e4a160f8f">value</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">kind</a> != <a class="code hl_enumvalue" href="structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a">lexer::token::tokenKind::unknown</a>) {</div>
-<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"> 1133</span>        os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
-<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a0a2183ce7789eae74df4344e4a160f8f">value</a>);</div>
-<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>    }</div>
-<div class="line"><a id="l01136" name="l01136"></a><span class="lineno"> 1136</span>}</div>
+<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span> </div>
+<div class="foldopen" id="foldopen01133" data-start="{" data-end="}">
+<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ac3468170d758e3aaff550b6a23e9f9d3"> 1133</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1enumerationPair.html">enumerationPair</a> *node) {</div>
+<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
+<div class="line"><a id="l01136" name="l01136"></a><span class="lineno"> 1136</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a0a2183ce7789eae74df4344e4a160f8f">value</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a64e45c406ac5aafbb31718f15be66216">kind</a> != <a class="code hl_enumvalue" href="structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aad921d60486366258809553a3db49a4a">lexer::token::tokenKind::unknown</a>) {</div>
+<div class="line"><a id="l01137" name="l01137"></a><span class="lineno"> 1137</span>        os &lt;&lt; L<span class="stringliteral">&quot; = &quot;</span>;</div>
+<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"> 1138</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, node-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a0a2183ce7789eae74df4344e4a160f8f">value</a>);</div>
+<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>    }</div>
+<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span>}</div>
 </div>
-<div class="line"><a id="l01137" name="l01137"></a><span class="lineno"> 1137</span> </div>
-<div class="foldopen" id="foldopen01138" data-start="{" data-end="}">
-<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a204bd5d1cab07f65cd757b1ab1cd88da"> 1138</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1bracedInitalizerList.html">bracedInitalizerList</a> *node) {</div>
-<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span>    os &lt;&lt; L<span class="stringliteral">&quot;{&quot;</span>;</div>
-<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>.size(); ++i) {</div>
-<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"> 1142</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>[i]);</div>
-<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;exprs.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>    }</div>
-<div class="line"><a id="l01145" name="l01145"></a><span class="lineno"> 1145</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line"><a id="l01146" name="l01146"></a><span class="lineno"> 1146</span>}</div>
+<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span> </div>
+<div class="foldopen" id="foldopen01142" data-start="{" data-end="}">
+<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a204bd5d1cab07f65cd757b1ab1cd88da"> 1142</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1bracedInitalizerList.html">bracedInitalizerList</a> *node) {</div>
+<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>    os &lt;&lt; L<span class="stringliteral">&quot;{&quot;</span>;</div>
+<div class="line"><a id="l01145" name="l01145"></a><span class="lineno"> 1145</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>.size(); ++i) {</div>
+<div class="line"><a id="l01146" name="l01146"></a><span class="lineno"> 1146</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>[i]);</div>
+<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span>        <span class="keywordflow">if</span> (i &lt; node-&gt;exprs.size() - 1) os &lt;&lt; L<span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>    }</div>
+<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>    os &lt;&lt; L<span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>}</div>
 </div>
-<div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span> </div>
-<div class="foldopen" id="foldopen01148" data-start="{" data-end="}">
-<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#adec3add0fb40c7aefe0160d88c5c7cc4"> 1148</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1hoshiModule.html">hoshiModule</a> *node) {</div>
-<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.end(); ++it) {</div>
-<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.begin()) {</div>
-<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>            <span class="keyword">auto</span> prev = std::prev(it);</div>
-<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>            <span class="keywordflow">if</span> (((*prev)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a> || (*prev)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>) &amp;&amp;</div>
-<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>                ((*it)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a> || (*it)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>)) {</div>
-<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span>                os &lt;&lt; L<span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span>                <span class="comment">// indent();</span></div>
-<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>                os &lt;&lt; L<span class="stringliteral">&quot;\n\n&quot;</span>;</div>
-<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>                <span class="comment">// indent();</span></div>
-<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>            }</div>
-<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>        }</div>
-<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span> </div>
-<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>        <span class="keywordtype">bool</span> printedStandalone = printComments(*it);</div>
-<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        format(*it);</div>
-<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>        lastLine = std::max(lastLine, (*it)-&gt;getLine());</div>
-<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>        printComments((*it)-&gt;getLine(), -1);</div>
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>    }</div>
-<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>    printComments(-1, -1);</div>
-<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>}</div>
+<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span> </div>
+<div class="foldopen" id="foldopen01152" data-start="{" data-end="}">
+<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#adec3add0fb40c7aefe0160d88c5c7cc4"> 1152</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1hoshiModule.html">hoshiModule</a> *node) {</div>
+<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.end(); ++it) {</div>
+<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981">stmts</a>.begin()) {</div>
+<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span>            <span class="keyword">auto</span> prev = std::prev(it);</div>
+<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>            <span class="keywordflow">if</span> (((*prev)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a> || (*prev)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>) &amp;&amp;</div>
+<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>                ((*it)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea6c711f67ce8f5cca4cbf512a64e48cbb">globalStmt::vKind::useStmt</a> || (*it)-&gt;kind == <a class="code hl_enumvalue" href="classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea769b7fb50316e0f27157a47427ed20d5">globalStmt::vKind::importDecl</a>)) {</div>
+<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>                os &lt;&lt; L<span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>                <span class="comment">// indent();</span></div>
+<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>                os &lt;&lt; L<span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>                <span class="comment">// indent();</span></div>
+<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>            }</div>
+<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>        }</div>
+<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span> </div>
+<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>        <span class="keywordtype">bool</span> printedStandalone = printComments(*it);</div>
+<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>        format(*it);</div>
+<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>        lastLine = std::max(lastLine, (*it)-&gt;getLine());</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>        printComments((*it)-&gt;getLine(), -1);</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>    }</div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>    printComments(-1, -1);</div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>}</div>
 </div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span> </div>
-<div class="foldopen" id="foldopen01171" data-start="{" data-end="}">
-<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a0f8fe29eb11d696d5aabe1c707c40dd1"> 1171</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1innerMethodDecl.html">innerMethodDecl</a> *node) {</div>
-<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
-<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
-<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>    }</div>
-<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#aaea3f20f3d7ce755069f7c000ddb4d70">name</a>);</div>
-<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
-<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>) {</div>
-<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
-<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
-<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>    }</div>
-<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>}</div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span> </div>
+<div class="foldopen" id="foldopen01175" data-start="{" data-end="}">
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a0f8fe29eb11d696d5aabe1c707c40dd1"> 1175</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1innerMethodDecl.html">innerMethodDecl</a> *node) {</div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>    }</div>
+<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#aaea3f20f3d7ce755069f7c000ddb4d70">name</a>);</div>
+<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>) {</div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDecl.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>    }</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>}</div>
 </div>
-<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span> </div>
-<div class="foldopen" id="foldopen01185" data-start="{" data-end="}">
-<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a1285d4b6d20d8bdc6d49f6231190376c"> 1185</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1innerMethodDef.html">innerMethodDef</a> *node) {</div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
-<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
-<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>    }</div>
-<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#af19a6387a352d5154ae7cd9a5c7835dd">name</a>);</div>
-<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
-<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>) {</div>
-<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
-<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
-<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>    }</div>
-<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
-<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>}</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span> </div>
+<div class="foldopen" id="foldopen01189" data-start="{" data-end="}">
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a1285d4b6d20d8bdc6d49f6231190376c"> 1189</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1innerMethodDef.html">innerMethodDef</a> *node) {</div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;attr : node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4">attrs</a>) {</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>        <a class="code hl_function" href="namespaceyoi.html#a799e2a85fbcfc92f92cb2205650c1452">formatToken</a>(os, option, attr);</div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>        os &lt;&lt; L<span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>    }</div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#af19a6387a352d5154ae7cd9a5c7835dd">name</a>);</div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>) {</div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>        os &lt;&lt; L<span class="stringliteral">&quot; : &quot;</span>;</div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>        format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a67afdbc72ce006bb1991d891a3764dda">resultType</a>);</div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>    }</div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1innerMethodDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>}</div>
 </div>
-<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span> </div>
-<div class="foldopen" id="foldopen01200" data-start="{" data-end="}">
-<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a7d263ff0a52c5ea7e504ee3ddb948918"> 1200</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1constructorDecl.html">constructorDecl</a> *node) {</div>
-<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>    os &lt;&lt; L<span class="stringliteral">&quot;constructor&quot;</span>;</div>
-<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#a4336f6ea7140fc6157e0c7604c4ac0a2">tempArgs</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#a4336f6ea7140fc6157e0c7604c4ac0a2">tempArgs</a>);</div>
-<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
-<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>}</div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span> </div>
+<div class="foldopen" id="foldopen01204" data-start="{" data-end="}">
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a7d263ff0a52c5ea7e504ee3ddb948918"> 1204</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1constructorDecl.html">constructorDecl</a> *node) {</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>    os &lt;&lt; L<span class="stringliteral">&quot;constructor&quot;</span>;</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#a4336f6ea7140fc6157e0c7604c4ac0a2">tempArgs</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#a4336f6ea7140fc6157e0c7604c4ac0a2">tempArgs</a>);</div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDecl.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>}</div>
 </div>
-<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span> </div>
-<div class="foldopen" id="foldopen01207" data-start="{" data-end="}">
-<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a648fbe071e65feeff5f9872077fb2e42"> 1207</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1constructorDef.html">constructorDef</a> *node) {</div>
-<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>    os &lt;&lt; L<span class="stringliteral">&quot;constructor&quot;</span>;</div>
-<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a399c754ff0e2cf91155570d319f692c3">tempArgs</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a399c754ff0e2cf91155570d319f692c3">tempArgs</a>);</div>
-<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
-<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
-<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>}</div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span> </div>
+<div class="foldopen" id="foldopen01211" data-start="{" data-end="}">
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a648fbe071e65feeff5f9872077fb2e42"> 1211</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1constructorDef.html">constructorDef</a> *node) {</div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>    os &lt;&lt; L<span class="stringliteral">&quot;constructor&quot;</span>;</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>    <span class="keywordflow">if</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a399c754ff0e2cf91155570d319f692c3">tempArgs</a>) format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a399c754ff0e2cf91155570d319f692c3">tempArgs</a>);</div>
+<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#ad073861ccdab59de05eb8d34e9f0a34f">args</a>);</div>
+<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1constructorDef.html#a07f9633ac52baaaf0c76bd380f688487">block</a>);</div>
+<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>}</div>
 </div>
-<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span> </div>
-<div class="foldopen" id="foldopen01215" data-start="{" data-end="}">
-<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#acc2d63a19ea7017cc891f3afa2219620"> 1215</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1yieldStmt.html">yieldStmt</a> *node) {</div>
-<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>    os &lt;&lt; L<span class="stringliteral">&quot;yield &quot;</span>;</div>
-<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>}</div>
+<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span> </div>
+<div class="foldopen" id="foldopen01219" data-start="{" data-end="}">
+<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#acc2d63a19ea7017cc891f3afa2219620"> 1219</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1yieldStmt.html">yieldStmt</a> *node) {</div>
+<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>    os &lt;&lt; L<span class="stringliteral">&quot;yield &quot;</span>;</div>
+<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span>}</div>
 </div>
-<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span> </div>
-<div class="foldopen" id="foldopen01221" data-start="{" data-end="}">
-<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a4dca54e92ee8875e48bfffdc3b370b53"> 1221</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1decltypeExpr.html">decltypeExpr</a> *node) {</div>
-<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>    os &lt;&lt; <span class="stringliteral">&quot;decltype(&quot;</span>;</div>
-<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1decltypeExpr.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span>    os &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>}</div>
+<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span> </div>
+<div class="foldopen" id="foldopen01225" data-start="{" data-end="}">
+<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a4dca54e92ee8875e48bfffdc3b370b53"> 1225</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1decltypeExpr.html">decltypeExpr</a> *node) {</div>
+<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>    os &lt;&lt; <span class="stringliteral">&quot;decltype(&quot;</span>;</div>
+<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1decltypeExpr.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>    os &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>}</div>
 </div>
-<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span> </div>
-<div class="foldopen" id="foldopen01227" data-start="{" data-end="}">
-<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ad3827896175c3ad57a0a1e1b63d3efaa"> 1227</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1conceptDefinition.html">conceptDefinition</a> *node) {</div>
-<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>    os &lt;&lt; L<span class="stringliteral">&quot;concept &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#ac00917a86fcef89247ad50f4361dbb70">name</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a> &lt;&lt; L<span class="stringliteral">&quot;&lt;&quot;</span>;</div>
-<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.end(); it++) {</div>
-<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.begin()) {</div>
-<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>        }</div>
-<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>        os &lt;&lt; it-&gt;strVal;</div>
-<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>    }</div>
-<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>    os &lt;&lt; <span class="stringliteral">&quot;&gt;(&quot;</span>;</div>
-<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.end(); it++) {</div>
-<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.begin()) {</div>
-<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>        }</div>
-<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>        format(*it);</div>
-<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>    }</div>
-<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>    os &lt;&lt; <span class="stringliteral">&quot;) {&quot;</span>;</div>
-<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    indentLevel++;</div>
-<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>.end(); it++) {</div>
-<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>        newLine();</div>
-<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>        format(*it);</div>
-<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>    }</div>
-<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>    indentLevel--;</div>
-<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>    newLine();</div>
-<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>    os &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>}</div>
+<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span> </div>
+<div class="foldopen" id="foldopen01231" data-start="{" data-end="}">
+<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#ad3827896175c3ad57a0a1e1b63d3efaa"> 1231</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1conceptDefinition.html">conceptDefinition</a> *node) {</div>
+<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>    os &lt;&lt; L<span class="stringliteral">&quot;concept &quot;</span> &lt;&lt; node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#ac00917a86fcef89247ad50f4361dbb70">name</a>.<a class="code hl_variable" href="structyoi_1_1lexer_1_1token.html#a88aa8101bb3872d89b9968664c5f8c14">strVal</a> &lt;&lt; L<span class="stringliteral">&quot;&lt;&quot;</span>;</div>
+<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.end(); it++) {</div>
+<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#aa7841859b9fc890052c59a9587f9aeac">typeParams</a>.begin()) {</div>
+<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>        }</div>
+<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        os &lt;&lt; it-&gt;strVal;</div>
+<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>    }</div>
+<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>    os &lt;&lt; <span class="stringliteral">&quot;&gt;(&quot;</span>;</div>
+<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.end(); it++) {</div>
+<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>.begin()) {</div>
+<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>        }</div>
+<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>        format(*it);</div>
+<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>    }</div>
+<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>    os &lt;&lt; <span class="stringliteral">&quot;) {&quot;</span>;</div>
+<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>    indentLevel++;</div>
+<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>.end(); it++) {</div>
+<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>        newLine();</div>
+<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>        format(*it);</div>
+<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>    }</div>
+<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>    indentLevel--;</div>
+<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>    newLine();</div>
+<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>    os &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>}</div>
 </div>
-<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span> </div>
-<div class="foldopen" id="foldopen01254" data-start="{" data-end="}">
-<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a11e004f7396ed74a28fa8ccd0e73dcd1"> 1254</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1conceptStmt.html">conceptStmt</a> *node) {</div>
-<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>    <span class="keywordflow">switch</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#afc7ecd207ec6a92f8955fd885c12d6ea">kind</a>) {</div>
-<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043">conceptStmt::Kind::Expression</a>: {</div>
-<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span>            format(node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#ad5b6a12e39dd5f99b1c7df7fa9e771d8">expression</a>);</div>
-<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>        }</div>
-<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baf95c41a638ed468f2772cec8ddb9fcea">conceptStmt::Kind::SatisfyStmt</a>: {</div>
-<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>            format(node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#a72ec5682fc56c9c3a815e088079491d5">satisfyStmt</a>);</div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span> </div>
+<div class="foldopen" id="foldopen01258" data-start="{" data-end="}">
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a11e004f7396ed74a28fa8ccd0e73dcd1"> 1258</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1conceptStmt.html">conceptStmt</a> *node) {</div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>    <span class="keywordflow">if</span> (!node) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>    <span class="keywordflow">switch</span> (node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#afc7ecd207ec6a92f8955fd885c12d6ea">kind</a>) {</div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043">conceptStmt::Kind::Expression</a>: {</div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>            format(node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#ad5b6a12e39dd5f99b1c7df7fa9e771d8">expression</a>);</div>
 <div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>            <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>        }</div>
-<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>    }</div>
-<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>}</div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baf95c41a638ed468f2772cec8ddb9fcea">conceptStmt::Kind::SatisfyStmt</a>: {</div>
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>            format(node-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#a72ec5682fc56c9c3a815e088079491d5">satisfyStmt</a>);</div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>        }</div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>        <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>    }</div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>}</div>
 </div>
-<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span> </div>
-<div class="foldopen" id="foldopen01270" data-start="{" data-end="}">
-<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aabed0ebcb40c4b782b841c1b659aef80"> 1270</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1satisfyStmt.html">satisfyStmt</a> *node) {</div>
-<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>    os &lt;&lt; L<span class="stringliteral">&quot;satisfy &quot;</span>;</div>
-<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyStmt.html#a4a2721ed9fd6a7186fdd2c7ff4c0675a">emae</a>);</div>
-<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>}</div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span> </div>
+<div class="foldopen" id="foldopen01274" data-start="{" data-end="}">
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#aabed0ebcb40c4b782b841c1b659aef80"> 1274</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1satisfyStmt.html">satisfyStmt</a> *node) {</div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>    os &lt;&lt; L<span class="stringliteral">&quot;satisfy &quot;</span>;</div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>    format(node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyStmt.html#a4a2721ed9fd6a7186fdd2c7ff4c0675a">emae</a>);</div>
+<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span>}</div>
 </div>
-<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span> </div>
-<div class="foldopen" id="foldopen01275" data-start="{" data-end="}">
-<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a849a794db9f3bf0dbc94ab804b7fb19b"> 1275</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1satisfyClause.html">satisfyClause</a> *node) {</div>
-<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>    os &lt;&lt; L<span class="stringliteral">&quot;satisfy(&quot;</span>;</div>
-<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.end(); it++) {</div>
-<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.begin()) {</div>
-<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span>        }</div>
-<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>        format(*it);</div>
-<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span>    }</div>
-<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span>    os &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span>}</div>
+<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span> </div>
+<div class="foldopen" id="foldopen01279" data-start="{" data-end="}">
+<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"><a class="line" href="classyoi_1_1Formatter.html#a849a794db9f3bf0dbc94ab804b7fb19b"> 1279</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classyoi_1_1Formatter.html#a43e5bac20f5556caffbbe0ca0b784c64">yoi::Formatter::format</a>(<a class="code hl_class" href="classyoi_1_1satisfyClause.html">satisfyClause</a> *node) {</div>
+<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span>    os &lt;&lt; L<span class="stringliteral">&quot;satisfy(&quot;</span>;</div>
+<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.begin(); it != node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.end(); it++) {</div>
+<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span>        <span class="keywordflow">if</span> (it != node-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>.begin()) {</div>
+<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span>            os &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span>        }</div>
+<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span>        format(*it);</div>
+<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>    }</div>
+<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span>    os &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>}</div>
 </div>
 <div class="ttc" id="aclassyoi_1_1AST_html"><div class="ttname"><a href="classyoi_1_1AST.html">yoi::AST</a></div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00015">ast.hpp:15</a></div></div>
 <div class="ttc" id="aclassyoi_1_1AST_html_a43f2be4f2bb4b38ba53a0d33b9eb3e8c"><div class="ttname"><a href="classyoi_1_1AST.html#a43f2be4f2bb4b38ba53a0d33b9eb3e8c">yoi::AST::getColumn</a></div><div class="ttdeci">yoi::indexT getColumn()</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l01037">ast.cpp:1037</a></div></div>

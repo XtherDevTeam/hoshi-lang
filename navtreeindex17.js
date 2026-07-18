@@ -1,5 +1,13 @@
 var NAVTREEINDEX17 =
 {
+"moduleContext_8cpp.html":[33,0,1,9],
+"moduleContext_8cpp_source.html":[33,0,1,9],
+"moduleContext_8h.html":[33,0,1,10],
+"moduleContext_8h_source.html":[33,0,1,10],
+"namespacemagic__enum.html":[31,0,0],
+"namespacemagic__enum.html#a04e7ccc8b7750c42679ac9c43e106501":[31,0,0,13],
+"namespacemagic__enum.html#a0834fe0b701892852ec14cddfb9d9e84":[31,0,0,31],
+"namespacemagic__enum.html#a1458dab86a6ec81fe789fa1ea94905c5":[31,0,0,22],
 "namespacemagic__enum.html#a1b85e069563a6c9c29a65fb5fd110321":[31,0,0,35],
 "namespacemagic__enum.html#a23e4463cad64a4fb5f8e4cf7acafec27":[31,0,0,9],
 "namespacemagic__enum.html#a2704cef6acf1306d7a163def915ef3b0":[31,0,0,30],
@@ -92,8 +100,8 @@ var NAVTREEINDEX17 =
 "namespacemagic__enum_1_1detail.html#aeb24ce9f57fa538036bc1b5e7612f045":[31,0,0,2,24],
 "namespacemagic__enum_1_1detail.html#aecb503bf656bb14b3d2d3fa9198c3f04":[31,0,0,2,31],
 "namespacemagic__enum_1_1detail.html#aeed0690739f2ba6e082f95b0c719afaf":[31,0,0,2,30],
-"namespacemembers.html":[31,1,0],
 "namespacemembers.html":[31,1,0,0],
+"namespacemembers.html":[31,1,0],
 "namespacemembers_a.html":[31,1,0,1],
 "namespacemembers_c.html":[31,1,0,2],
 "namespacemembers_d.html":[31,1,0,3],
@@ -241,13 +249,5 @@ var NAVTREEINDEX17 =
 "namespaceyoi.html#a7a1e71f3996bd7e72df92edf4feb89e8":[31,0,1,172],
 "namespaceyoi.html#a7ab5fc93d3c5f47611fd3d87b5883d20":[31,0,1,162],
 "namespaceyoi.html#a7e38b7dc326434b90a5960920775f893":[31,0,1,145],
-"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa":[31,0,1,145,1],
-"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627":[31,0,1,145,0],
-"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893ad4dbdf6f8e0aa2f9cb0e0efa247d4762":[31,0,1,145,2],
-"namespaceyoi.html#a7e6d49c2baf5a9e588bf42ec8626777f":[31,0,1,289],
-"namespaceyoi.html#a800a1b5e25ba1e21ba4ccf25e437bbcf":[31,0,1,146],
-"namespaceyoi.html#a807c90715ad772fafda4bd579c1e959e":[31,0,1,320],
-"namespaceyoi.html#a8162a293864d33f6df103754942452d7":[31,0,1,264],
-"namespaceyoi.html#a83dda98187b49736d8c0e3fe0f1c1647":[31,0,1,287],
-"namespaceyoi.html#a85930150373b5070a43cabf5798095a5":[31,0,1,250]
+"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa":[31,0,1,145,1]
 };

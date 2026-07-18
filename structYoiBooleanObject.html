@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('structYoiBooleanObject.html',''); init
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structYoiBooleanObject-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">YoiBooleanObject Struct Reference</div></div>
@@ -99,6 +100,13 @@ $(document).ready(function(){initNavTree('structYoiBooleanObject.html',''); init
 
 <p><code>#include &lt;<a class="el" href="memory_8h_source.html">memory.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:af9f5b35a212d21af601a8213ed325871" id="r_af9f5b35a212d21af601a8213ed325871"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiBooleanObject.html#af9f5b35a212d21af601a8213ed325871">acquire</a> ()</td></tr>
+<tr class="separator:af9f5b35a212d21af601a8213ed325871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23b477d0e2d399f75d585d154c346591" id="r_a23b477d0e2d399f75d585d154c346591"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiBooleanObject.html#a23b477d0e2d399f75d585d154c346591">release</a> ()</td></tr>
+<tr class="separator:a23b477d0e2d399f75d585d154c346591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a1871146973c12628deff2a413c04f3ff" id="r_a1871146973c12628deff2a413c04f3ff"><td class="memItemLeft" align="right" valign="top">unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structYoiBooleanObject.html#a1871146973c12628deff2a413c04f3ff">gc_refcount</a></td></tr>
@@ -110,8 +118,71 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00043">43</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00054">54</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af9f5b35a212d21af601a8213ed325871" name="af9f5b35a212d21af601a8213ed325871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9f5b35a212d21af601a8213ed325871">&#9670;&#160;</a></span>acquire()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void acquire </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00221">221</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00055">gc_refcount</a>.</p>
+
+</div>
+</div>
+<a id="a23b477d0e2d399f75d585d154c346591" name="a23b477d0e2d399f75d585d154c346591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23b477d0e2d399f75d585d154c346591">&#9670;&#160;</a></span>release()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void release </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="memory_8cpp_source.html#l00214">214</a> of file <a class="el" href="memory_8cpp_source.html">memory.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="memory_8h_source.html#l00055">gc_refcount</a>, and <a class="el" href="memory_8cpp_source.html#l00090">runtime_finalize_object()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structYoiBooleanObject_a23b477d0e2d399f75d585d154c346591_cgraph.png" border="0" usemap="#astructYoiBooleanObject_a23b477d0e2d399f75d585d154c346591_cgraph" alt=""/></div>
+<map name="astructYoiBooleanObject_a23b477d0e2d399f75d585d154c346591_cgraph" id="astructYoiBooleanObject_a23b477d0e2d399f75d585d154c346591_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,76,80"/>
+<area shape="rect" href="memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="124,55,299,80"/>
+<area shape="poly" title=" " alt="" coords="76,65,111,65,111,70,76,70"/>
+<area shape="rect" href="memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="347,47,521,87"/>
+<area shape="poly" title=" " alt="" coords="299,65,333,65,333,70,299,70"/>
+<area shape="rect" href="hperf_8cpp.html#aaf58587f9ab0e21837b7911a6c5d7a4e" title=" " alt="" coords="569,55,745,80"/>
+<area shape="poly" title=" " alt="" coords="522,65,556,65,556,70,522,70"/>
+<area shape="rect" href="hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="793,5,980,31"/>
+<area shape="poly" title=" " alt="" coords="716,52,813,31,814,36,718,57"/>
+<area shape="rect" href="hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="817,55,957,80"/>
+<area shape="poly" title=" " alt="" coords="746,65,803,65,803,70,746,70"/>
+<area shape="rect" href="threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="802,104,971,129"/>
+<area shape="poly" title=" " alt="" coords="718,77,814,98,813,104,716,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a1871146973c12628deff2a413c04f3ff" name="a1871146973c12628deff2a413c04f3ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1871146973c12628deff2a413c04f3ff">&#9670;&#160;</a></span>gc_refcount</h2>
 
@@ -124,7 +195,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00044">44</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00055">55</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="memory_8cpp_source.html#l00221">acquire()</a>, and <a class="el" href="memory_8cpp_source.html#l00214">release()</a>.</p>
 
 </div>
 </div>
@@ -140,7 +213,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00045">45</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00056">56</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -156,12 +229,13 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00046">46</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00057">57</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>runtime/memory/<a class="el" href="memory_8h_source.html">memory.h</a></li>
+<li>runtime/memory/<a class="el" href="memory_8cpp_source.html">memory.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
