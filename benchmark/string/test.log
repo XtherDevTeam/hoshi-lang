@@ -1,7 +1,7 @@
-❯ clang++ benchmark/string/string.cpp -o string -std=c++20
+❯ g++ benchmark/string/string.cpp -o string -std=c++20
 ❯ time ./string &> test.log
 ./string &> test.log  0.40s user 1.01s system 78% cpu 1.800 total
-❯ clang++ benchmark/string/string.cpp -o string -std=c++20 -O3
+❯ g++ benchmark/string/string.cpp -o string -std=c++20 -O3
 ❯ time ./string &> test.log
 ./string &> test.log  0.21s user 0.99s system 79% cpu 1.506 total
 ❯ time python benchmark/string/string.py &> test.log

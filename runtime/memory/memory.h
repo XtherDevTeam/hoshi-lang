@@ -26,42 +26,67 @@ struct YoiIntegerObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     long long value;
+
+    void acquire();
+
+    void release();
 };
 
 struct YoiUnsignedObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     unsigned long long value;
+
+    void acquire();
+
+    void release();
 };
 
 struct YoiStringObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     char *value;
+
+    void acquire();
+    void release();
 };
 
 struct YoiBooleanObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     bool value;
+
+    void acquire();
+
+    void release();
 };
 
 struct YoiDecimalObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     double value;
+
+    void acquire();
+
+    void release();
 };
 
 struct YoiCharObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     wchar_t value;
+
+    void acquire();
+    void release();
 };
 
 struct YoiShortObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
     int16_t value;
+
+    void acquire();
+    void release();
 };
 
 struct AllocatedMemoryList {

@@ -1,9 +1,9 @@
-❯ clang++ benchmark/fib/fib.cpp -o fib
+❯ g++ benchmark/fib/fib.cpp -o fib
 ❯ time ./fib
 ./fib  0.58s user 0.00s system 63% cpu 0.934 total
 ❯ time python benchmark/fib/fib.py
 python benchmark/fib/fib.py  10.23s user 0.03s system 99% cpu 10.328 total
-❯ ./cmake-build-release/hoshi_lang benchmark/fib/fib.hoshi -o fib --build-mode release
+❯ hoshi_lang benchmark/fib/fib.hoshi -o fib --build-mode release
 Linking Yoi IR modules...
 Generating target object code...
 Target triple arm64-apple-darwin22.6.0, using CPU apple-m1 with features 

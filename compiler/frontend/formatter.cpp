@@ -868,11 +868,15 @@ void yoi::Formatter::format(implInner *node) {
     }
     os << L"{";
     indentLevel++;
-    for (auto pair : node->inner) {
+    for (auto it = node->inner.begin(); it != node->inner.end(); it++) {
+        auto pair = *it;
         if (!printComments(pair)) {
             newLine();
         }
         format(pair);
+        if (it + 1 != node->inner.end()) {
+            os << L",";
+        }
         lastLine = std::max(lastLine, pair->getLine());
         printComments(pair->getLine(), -1);
     }

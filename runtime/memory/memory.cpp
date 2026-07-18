@@ -166,3 +166,80 @@ void runtime_exec_permit_free(void *ptr) {
 }
 
 #endif
+
+void YoiIntegerObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiIntegerObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiShortObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiShortObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiCharObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiCharObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiDecimalObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiDecimalObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiBooleanObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiBooleanObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiStringObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiStringObject::acquire() {
+    gc_refcount++;
+}
+
+void YoiUnsignedObject::release() {
+    gc_refcount--;
+    if (gc_refcount <= 0) {
+        runtime_finalize_object((YoiObject *)this);
+    }
+}
+
+void YoiUnsignedObject::acquire() {
+    gc_refcount++;
+}
