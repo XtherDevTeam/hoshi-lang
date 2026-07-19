@@ -46,6 +46,7 @@ namespace yoi {
         if (filepath != L"builtin") {
             for (auto &prep : buildConfig->searchPaths) {
                 std::filesystem::path final = prep / std::filesystem::path(filepath);
+                // printf("searching for %s\n", wstring2string(prep).c_str());
                 rFilepath = realpath(final.wstring());
                 if (std::filesystem::exists(rFilepath) && std::filesystem::is_regular_file(rFilepath)) {
                     break;
@@ -77,7 +78,7 @@ namespace yoi {
 
             // temporarily add current directory to search path
             buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().wstring());
-            buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().append(".pardo_modules").wstring());
+            buildConfig->searchPaths.push_back(std::filesystem::path(rFilepath).parent_path().append(".tsuki_modules").wstring());
 
             fseek(fp, 0, SEEK_END);
             auto size = ftell(fp);
