@@ -10,7 +10,7 @@ var searchData=
   ['checkconceptsatisfaction_7',['checkconceptsatisfaction',['../classyoi_1_1visitor.html#af61b30815c8c8fecb4fb10a931210f87',1,'yoi::visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt, const yoi::wstr &amp;paramName, const std::shared_ptr&lt; IRValueType &gt; &amp;args)'],['../classyoi_1_1visitor.html#ac08c1a0a457fa3f2696e254e5e5fe10a',1,'yoi::visitor::checkConceptSatisfaction(yoi::externModuleAccessExpression *stmt)']]],
   ['checklength_8',['checkLength',['../classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6',1,'utf8Unicode']]],
   ['checkmarcosatisfaction_9',['checkMarcoSatisfaction',['../classyoi_1_1visitor.html#a87f9e0165bcc1efb98600218aa102587',1,'yoi::visitor']]],
-  ['clear_10',['clear',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ac8bb3912a3ce86b15842e79d0b421204',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
+  ['clear_10',['clear',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ac8bb3912a3ce86b15842e79d0b421204',1,'yoi::LLVMCodegen::ValueStackWithPhi::clear()'],['../structSmallVector.html#ac8bb3912a3ce86b15842e79d0b421204',1,'SmallVector::clear()']]],
   ['clobjectlinker_11',['clObjectLinker',['../classyoi_1_1clObjectLinker.html#a626f94b76a379198851457336d7f03c9',1,'yoi::clObjectLinker']]],
   ['cmp_5fequal_12',['cmp_equal',['../namespacemagic__enum_1_1detail.html#a6ce6c4f058540f1e3478588012025432',1,'magic_enum::detail']]],
   ['cmp_5fless_13',['cmp_less',['../namespacemagic__enum_1_1detail.html#a27b4d347d4933013a63d9b87d3ed3d1e',1,'magic_enum::detail']]],
@@ -40,10 +40,11 @@ var searchData=
   ['createcodeblock_37',['createCodeBlock',['../classyoi_1_1IRBuilder.html#a4aa94f40ff61c2e2e8922f36223305e9',1,'yoi::IRBuilder']]],
   ['createdynamicarrayobject_38',['createDynamicArrayObject',['../classyoi_1_1LLVMCodegen.html#a2fab73b4608faf6b7bdf188c53c9bf8c',1,'yoi::LLVMCodegen']]],
   ['createentryfunction_39',['createEntryFunction',['../classyoi_1_1IRLinker.html#aa084af92b6186844440e11da2e2d4331',1,'yoi::IRLinker']]],
-  ['creategeneratorcontext_40',['createGeneratorContext',['../classyoi_1_1LLVMCodegen.html#a29a453731be05572154276e1b4f12820',1,'yoi::LLVMCodegen']]],
-  ['createlambdaunnamedstruct_41',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
-  ['createlocalvar_42',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
-  ['createscope_43',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
-  ['createstructobject_44',['createStructObject',['../classyoi_1_1LLVMCodegen.html#a9ee5b8fa544f607ff11c3b50bb08ba54',1,'yoi::LLVMCodegen']]],
-  ['customize_5ft_45',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
+  ['createfieldoffsetarray_40',['createFieldOffsetArray',['../classyoi_1_1LLVMCodegen.html#a288b3829873e061413e9245f90ac610b',1,'yoi::LLVMCodegen']]],
+  ['creategeneratorcontext_41',['createGeneratorContext',['../classyoi_1_1LLVMCodegen.html#a29a453731be05572154276e1b4f12820',1,'yoi::LLVMCodegen']]],
+  ['createlambdaunnamedstruct_42',['createLambdaUnnamedStruct',['../classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab',1,'yoi::visitor']]],
+  ['createlocalvar_43',['createLocalVar',['../classyoi_1_1IRBuilder.html#a927ffaa35c44f86219386ccbf3ca698e',1,'yoi::IRBuilder']]],
+  ['createscope_44',['createScope',['../classyoi_1_1IRVariableTable.html#a697aaff4057f6e8a42149de2711da149',1,'yoi::IRVariableTable']]],
+  ['createstructobject_45',['createStructObject',['../classyoi_1_1LLVMCodegen.html#a9ee5b8fa544f607ff11c3b50bb08ba54',1,'yoi::LLVMCodegen']]],
+  ['customize_5ft_46',['customize_t',['../classmagic__enum_1_1customize_1_1customize__t.html#a20f92c150080dfaefd1c55d7b3e34ec2',1,'magic_enum::customize::customize_t::customize_t(string_view srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a5140f571e8c0c3ea6426cf0fb934b40e',1,'magic_enum::customize::customize_t::customize_t(const char_type *srt)'],['../classmagic__enum_1_1customize_1_1customize__t.html#a02643d4b13ba58b5dbeecd72b61b8e09',1,'magic_enum::customize::customize_t::customize_t(detail::customize_tag tag)']]]
 ];

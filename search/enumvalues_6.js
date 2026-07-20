@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['garbage_0',['Garbage',['../structBaconMark.html#ab87bacfdad76e61b9412d7124be44c1ca661f19f9766fa5c89584846296d8b40b',1,'BaconMark']]],
+  ['garbage_0',['Garbage',['../classBaconMark.html#a90a8ed22a30db478964823313a1b16ffa8c97626c3bda0721059f5eddbd2d255d',1,'BaconMark']]],
   ['generator_1',['Generator',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a92a8f0b9d28a89b480bd1d29f46f0484',1,'yoi::IRFunctionDefinition']]],
   ['globalvar_2',['globalvar',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206afd997be2a00c7a4a5920fd759028457c',1,'yoi::IROperand::globalVar'],['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7afd997be2a00c7a4a5920fd759028457c',1,'yoi::IRExternEntry::globalVar']]],
   ['greater_5fequal_3',['greater_equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a5675102b0e596d9d43bbb0e0f8ea07e2',1,'yoi::IR']]],

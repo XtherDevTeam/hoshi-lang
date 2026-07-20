@@ -1,16 +1,14 @@
 <map id="runtime/time/time.h" name="runtime/time/time.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="384,5,537,31"/>
-<area shape="rect" id="Node000002" href="$hperf_8h.html" title=" " alt="" coords="287,79,447,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="437,41,384,81,381,76,433,37"/>
-<area shape="rect" id="Node000007" href="$time_8cpp.html" title=" " alt="" coords="471,79,639,104"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="488,37,541,76,538,81,485,41"/>
-<area shape="rect" id="Node000003" href="$debug_8cpp.html" title=" " alt="" coords="5,152,193,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,110,143,154,142,149,310,105"/>
-<area shape="rect" id="Node000004" href="$hperf_8cpp.html" title=" " alt="" coords="217,152,392,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="350,116,317,154,313,150,346,113"/>
-<area shape="rect" id="Node000005" href="$runtime_8cpp.html" title=" " alt="" coords="406,225,561,251"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="387,113,476,223,472,227,383,117"/>
-<area shape="rect" id="Node000006" href="$runtime_8h.html" title=" " alt="" coords="468,152,608,177"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="409,107,511,149,509,154,406,112"/>
-<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="523,190,494,227,490,224,519,187"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="235,5,388,31"/>
+<area shape="rect" id="Node000002" href="$hperf_8h.html" title=" " alt="" coords="138,79,298,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,41,235,81,232,76,284,37"/>
+<area shape="rect" id="Node000006" href="$time_8cpp.html" title=" " alt="" coords="322,79,490,104"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="339,37,392,76,389,81,336,41"/>
+<area shape="rect" id="Node000003" href="$hperf_8cpp.html" title=" " alt="" coords="5,152,180,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="187,113,114,154,112,149,185,108"/>
+<area shape="rect" id="Node000004" href="$runtime_8cpp.html" title=" " alt="" coords="194,225,349,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="228,117,247,176,268,224,263,226,242,178,222,118"/>
+<area shape="rect" id="Node000005" href="$runtime_8h.html" title=" " alt="" coords="256,152,396,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="248,109,310,150,307,154,245,114"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="311,190,282,227,278,224,307,187"/>
 </map>

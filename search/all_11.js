@@ -175,7 +175,7 @@ var searchData=
   ['is1bytetype_172',['is1ByteType',['../classyoi_1_1IRValueType.html#a67688acef17fadd244d1c476fa749b75',1,'yoi::IRValueType']]],
   ['is_5farray_173',['is_array',['../structYoiTypeInfo.html#aacd2997079d6a0e2cc5eb7a23bd8289b',1,'YoiTypeInfo']]],
   ['is_5farray_5fobject_174',['is_array_object',['../structYoiTypeInfoObject.html#a56dbfdd805af5ef734129bac451919b9',1,'YoiTypeInfoObject']]],
-  ['is_5fbuffered_175',['is_buffered',['../structBaconMark.html#af3e1016b7417f9510a106ffe17e3c939',1,'BaconMark']]],
+  ['is_5fbuffered_175',['is_buffered',['../classBaconMark.html#af3e1016b7417f9510a106ffe17e3c939',1,'BaconMark']]],
   ['is_5fdefault_5fpredicate_176',['is_default_predicate',['../namespacemagic__enum_1_1detail.html#a039f507885d54fbf7faf3306e58bd57c',1,'magic_enum::detail']]],
   ['is_5fenum_5fv_177',['is_enum_v',['../namespacemagic__enum_1_1detail.html#a4b43ce4d692cabf9e9e569bc813f910e',1,'magic_enum::detail']]],
   ['is_5fmagic_5fenum_5fsupported_178',['is_magic_enum_supported',['../namespacemagic__enum.html#a6022bcf6fca6a72012e4e78f0996a4fe',1,'magic_enum']]],
