@@ -220,6 +220,7 @@ namespace yoi {
         void generateDescription(LLVMModuleContext &llvmModCtx);
         void generateRTTIDeclaration(LLVMModuleContext &llvmModCtx);
         void generateRTTIImplmentation(LLVMModuleContext &llvmModCtx);
+        llvm::Constant *createFieldOffsetArray(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &yoiType);
         void generateGeneratorContextInitialization(LLVMModuleContext &llvmModCtx);
         llvm::Value *createGeneratorContext(LLVMModuleContext &llvmModCtx, llvm::Value *coro_handle);
         void storeYieldValue(LLVMModuleContext &llvmModCtx, llvm::Value *value, const std::shared_ptr<IRValueType> &yoiType);

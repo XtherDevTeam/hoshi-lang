@@ -40,6 +40,8 @@ struct YoiTypeInfo {
     int64_t type_affiliate_module;
     int64_t type_index;
     int64_t is_array;
+    const int64_t *field_offsets; // null-terminated array of byte offsets to GC-reference fields
+    void (*finalizer)(void *);   // finalizer function pointer (void(void*) or null)
 };
 
 struct YoiTypeInfoObject {

@@ -1,4 +1,5 @@
 #include "runtime/threading/threading.h"
+#include "runtime/bacon/bacon.h"
 #include "runtime/memory/memory.h"
 #include <cstdint>
 #include <errno.h>
@@ -267,7 +268,9 @@ void* thread_starter_wrapper(void* args) {
     }
     #endif
 
+    __atomic_fetch_add(&bacon_current_active_threads, 1, __ATOMIC_RELEASE);
     callable->callable(callable->this_ptr);
+    __atomic_fetch_sub(&bacon_current_active_threads, 1, __ATOMIC_RELEASE);
 
     // now that the thread's work is done, we can release the callable.
     if (--callable->gc_refcount == 0) {

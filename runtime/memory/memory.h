@@ -7,31 +7,30 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <runtime/build_config.h>
 #include <runtime/rtti/rtti.h>
 
-struct BaconMark {
-    enum Color {
-        Survive = 0b00000000,
-        Garbage = 0b00000001,
-        AttempedDec = 0b00000010,
-        Candidate = 0b00000100
-    };
-    // Color: 0-3
-    // 0: Survive
-    // 1: Garbage
-    // 2: AttempedDec
-    // 3: Candidate
-    // 4: Buffered
-    unsigned long long data;
+class BaconMark {
+public:
+    enum class Color : unsigned long long { Survive = 0b00, Garbage = 0b01, Attempted = 0b10, Candidate = 0b11 };
 
+private:
+    unsigned long long data{0};
+
+    static constexpr unsigned long long COLOR_MASK = 0b011;
+    static constexpr unsigned long long BUFFERED_MASK = 0b100;
+
+public:
     Color get_color() const;
-
-    void set_color(Color color);
 
     bool is_buffered() const;
 
+    void set_color(Color color);
+
     void set_buffered(bool buffered);
+
+    bool try_mark_candidate();
 };
 
 struct YoiObject {
@@ -149,6 +148,8 @@ extern "C" void *runtime_object_alloc(unsigned long size);
 
 extern "C" YoiIntegerObject *runtime_get_string_array_data_pointer(YoiObjectArray *array);
 
+void runtime_trace_yoi_object(YoiObject *obj, void (*callback)(YoiObject *obj, void*), void* context);
+
 #ifndef ELYSIA_DISABLE_MEMORY_EXECUTABLE_MAPPING_FEATURE
 
 extern "C" void *runtime_exec_permit_alloc(unsigned long size);
@@ -157,32 +158,31 @@ extern "C" void runtime_exec_permit_free(void *ptr);
 
 #endif
 
+#define GC_WRAPPER_IMPL(X, U)                                                                                                                        \
+    extern "C" void basic_##X##_gc_refcount_increase(U *obj) { obj->gc_refcount++; }                                                                 \
+                                                                                                                                                     \
+    extern "C" void basic_##X##_gc_refcount_decrease(U *obj) {                                                                                       \
+        obj->gc_refcount--;                                                                                                                          \
+        if (obj->gc_refcount <= 0) {                                                                                                                 \
+            runtime_finalize_object((YoiObject *)obj);                                                                                               \
+        }                                                                                                                                            \
+    }
 
-
-#define GC_WRAPPER_IMPL(X, U) extern "C" void basic_##X##_gc_refcount_increase(U* obj) {     \
-    obj->gc_refcount++;                                                                     \
-}                                                                                           \
-                                                                                            \
-extern "C" void basic_##X##_gc_refcount_decrease(U* obj) {                                  \
-    obj->gc_refcount--;                                                                     \
-    if (obj->gc_refcount <= 0) {                                                            \
-        runtime_finalize_object((YoiObject*)obj);                                            \
-    }                                                                                       \
-}
-
-
-#define GC_WRAPPER_INLINE(X, U) static inline void basic_##X##_gc_refcount_increase(U* obj) {     \
-    if (!obj) return; \
-    obj->gc_refcount++;                                                                     \
-}                                                                                           \
-                                                                                            \
-static inline void basic_##X##_gc_refcount_decrease(U* obj) {                                  \
-    if (!obj) return; \
-    obj->gc_refcount--;                                                                     \
-    if (obj->gc_refcount <= 0) {                                                            \
-        runtime_finalize_object((YoiObject*)obj);                                            \
-    }                                                                                       \
-}
+#define GC_WRAPPER_INLINE(X, U)                                                                                                                      \
+    static inline void basic_##X##_gc_refcount_increase(U *obj) {                                                                                    \
+        if (!obj)                                                                                                                                    \
+            return;                                                                                                                                  \
+        obj->gc_refcount++;                                                                                                                          \
+    }                                                                                                                                                \
+                                                                                                                                                     \
+    static inline void basic_##X##_gc_refcount_decrease(U *obj) {                                                                                    \
+        if (!obj)                                                                                                                                    \
+            return;                                                                                                                                  \
+        obj->gc_refcount--;                                                                                                                          \
+        if (obj->gc_refcount <= 0) {                                                                                                                 \
+            runtime_finalize_object((YoiObject *)obj);                                                                                               \
+        }                                                                                                                                            \
+    }
 
 GC_WRAPPER_INLINE(int, YoiIntegerObject);
 
@@ -198,4 +198,4 @@ GC_WRAPPER_INLINE(unsigned, YoiUnsignedObject);
 
 GC_WRAPPER_INLINE(short, YoiShortObject);
 
-#endif //HOSHI_LANG_MEMORY_H
+#endif // HOSHI_LANG_MEMORY_H

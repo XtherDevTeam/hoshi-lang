@@ -100,7 +100,7 @@ void *runtime_object_alloc(unsigned long size) {
 }
 
 YoiIntegerObject *runtime_get_string_array_data_pointer(YoiObjectArray *array) {
-    auto raw = reinterpret_cast<int64_t>(&array->data);
+    auto raw = (int64_t)(&array->data);
     auto *obj = (YoiIntegerObject *)runtime_object_alloc(sizeof(YoiIntegerObject));
     obj->gc_refcount = 1;
     obj->type_id = 0;
@@ -245,21 +245,48 @@ void YoiUnsignedObject::acquire() {
 }
 
 BaconMark::Color BaconMark::get_color() const {
-    // color located at the 0-3 bit, remove the buffered flag (4th bit)
-    return static_cast<Color>(data & 0b00000111);
+    // memory_order_relaxed
+    unsigned long long val = __atomic_load_n(&data, __ATOMIC_RELAXED);
+    return static_cast<Color>(val & COLOR_MASK);
 }
-
-void BaconMark::set_color(Color color) {
-    // set only the color bits (0-3)
-    data = (data & 0b11111000) | (static_cast<unsigned long long>(color) & 0b00000111);
-}
-
 bool BaconMark::is_buffered() const {
-    // check the buffered flag (4th bit)
-    return (data & 0b00000100) != 0;
+    unsigned long long val = __atomic_load_n(&data, __ATOMIC_RELAXED);
+    return (val & BUFFERED_MASK) != 0;
+}
+void BaconMark::set_color(Color color) {
+    unsigned long long current = __atomic_load_n(&data, __ATOMIC_RELAXED);
+    unsigned long long desired;
+    do {
+        desired = (current & ~COLOR_MASK) | static_cast<unsigned long long>(color);
+    } while (!__atomic_compare_exchange_n(&data, &current, desired, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED));
+}
+void BaconMark::set_buffered(bool buffered) {
+    if (buffered) {
+        __atomic_fetch_or(&data, BUFFERED_MASK, __ATOMIC_RELEASE);
+    } else {
+        __atomic_fetch_and(&data, ~BUFFERED_MASK, __ATOMIC_RELEASE);
+    }
+}
+bool BaconMark::try_mark_candidate() {
+    unsigned long long current = __atomic_load_n(&data, __ATOMIC_RELAXED);
+    unsigned long long desired;
+    do {
+        if ((current & BUFFERED_MASK) != 0) {
+            return false;
+        }
+
+        desired = (current & ~COLOR_MASK) | BUFFERED_MASK | static_cast<unsigned long long>(Color::Candidate);
+
+    } while (!__atomic_compare_exchange_n(&data, &current, desired, true, __ATOMIC_ACQUIRE, __ATOMIC_RELAXED));
+    return true;
 }
 
-void BaconMark::set_buffered(bool buffered) {
-    // set the buffered flag (4th bit)
-    data = (data & 0b11111000) | (buffered ? 0b00000100ULL : 0ULL);
+void runtime_trace_yoi_object(YoiObject *obj, void (*callback)(YoiObject *, void*), void* context) {
+    auto &rtti_query = rtti_table[obj->type_id];
+    for (auto field = (int64_t *)rtti_query.field_offsets; field; field++) {
+        auto field_ptr = (char *)obj + *field;
+        if (*field_ptr) {
+            callback(*(YoiObject**)(field_ptr), context);
+        }
+    }
 }

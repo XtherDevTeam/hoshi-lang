@@ -3760,6 +3760,115 @@ namespace yoi {
         }
     }
 
+    llvm::Constant *LLVMCodegen::createFieldOffsetArray(LLVMModuleContext &llvmModCtx, const std::shared_ptr<IRValueType> &yoiType) {
+        auto &DL = llvmModCtx.TheModule->getDataLayout();
+        auto *i64Ty = llvm::Type::getInt64Ty(*llvmModCtx.TheContext);
+        auto *nullPtr = llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
+
+        // Helper lambda to check if a type is a GC-managed reference type
+        auto isRefType = [](const std::shared_ptr<IRValueType> &t) -> bool {
+            if (t->isBasicType() && t->hasAttribute(IRValueType::ValueAttr::Raw))
+                return false; // raw scalar, no reference
+            if (t->type == IRValueType::valueType::none || t->type == IRValueType::valueType::null)
+                return false;
+            return true; // struct, interface, string, array, basic-boxed objects are all references
+        };
+
+        yoi::vec<int64_t> offsets;
+
+        switch (yoiType->type) {
+            case IRValueType::valueType::structObject: {
+                auto structKey = std::make_tuple(IRValueType::valueType::structObject,
+                                                 yoiType->typeAffiliateModule, yoiType->typeIndex);
+                if (!llvmModCtx.structTypeMap.count(structKey)) break;
+                auto *llvmStructType = llvmModCtx.structTypeMap.at(structKey);
+                const auto *layout = DL.getStructLayout(llvmStructType);
+                auto structDef = yoiModule->structTable[yoiType->typeIndex];
+                for (yoi::indexT i = 0; i < structDef->fieldTypes.size(); i++) {
+                    if (isRefType(structDef->fieldTypes[i])) {
+                        // field at LLVM struct index i + 3 (skip refcount, typeid, bacon_mark)
+                        offsets.push_back(static_cast<int64_t>(layout->getElementOffset(i + 3)));
+                    }
+                }
+                break;
+            }
+            case IRValueType::valueType::interfaceObject: {
+                auto interfaceKey = std::make_tuple(IRValueType::valueType::interfaceObject,
+                                                    yoiType->typeAffiliateModule, yoiType->typeIndex);
+                if (!llvmModCtx.structTypeMap.count(interfaceKey)) break;
+                auto *llvmInterfaceType = llvmModCtx.structTypeMap.at(interfaceKey);
+                const auto *layout = DL.getStructLayout(llvmInterfaceType);
+                // Interface has one reference: the `this` pointer at LLVM struct index 3
+                offsets.push_back(static_cast<int64_t>(layout->getElementOffset(3)));
+                break;
+            }
+            case IRValueType::valueType::datastructObject: {
+                auto dsKey = std::make_tuple(IRValueType::valueType::datastructObject,
+                                             yoiType->typeAffiliateModule, yoiType->typeIndex);
+                if (!llvmModCtx.structTypeMap.count(dsKey)) break;
+                auto *llvmObjectType = llvmModCtx.structTypeMap.at(dsKey);
+                const auto *objLayout = DL.getStructLayout(llvmObjectType);
+                auto dataRegionOffset = static_cast<int64_t>(objLayout->getElementOffset(3));
+                auto dataStructDef = yoiModule->dataStructTable[yoiType->typeIndex];
+                auto *dataRegionType = llvmModCtx.dataStructDataRegionMap.at(yoiType->typeIndex);
+                const auto *regionLayout = DL.getStructLayout(dataRegionType);
+                for (yoi::indexT i = 0; i < dataStructDef->fieldTypes.size(); i++) {
+                    if (isRefType(dataStructDef->fieldTypes[i])) {
+                        offsets.push_back(dataRegionOffset + static_cast<int64_t>(regionLayout->getElementOffset(i)));
+                    }
+                }
+                break;
+            }
+            default: {
+                // Check if it's an array type
+                if (yoiType->isArrayType() || yoiType->isDynamicArrayType()) {
+                    auto arraySize = yoiType->isArrayType()
+                        ? ([&]() { yoi::indexT s = 1; for (auto d : yoiType->dimensions) s *= d; return s; })()
+                        : static_cast<yoi::indexT>(-1);
+                    auto arrayKey = std::make_tuple(yoiType->type, yoiType->typeAffiliateModule, yoiType->typeIndex, arraySize);
+                    if (llvmModCtx.arrayTypeMap.count(arrayKey)) {
+                        auto *arrayStructType = llvmModCtx.arrayTypeMap.at(arrayKey);
+                        const auto *layout = DL.getStructLayout(arrayStructType);
+                        auto elementType = managedPtr(yoiType->getElementType());
+                        if (isRefType(elementType)) {
+                            // Elements are at index 4 (data region)
+                            offsets.push_back(static_cast<int64_t>(layout->getElementOffset(4)));
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+        if (offsets.empty()) {
+            return nullPtr;
+        }
+
+        // Add null terminator
+        offsets.push_back(0);
+
+        // Create the static constant array
+        auto *arrayType = llvm::ArrayType::get(i64Ty, offsets.size());
+        yoi::vec<llvm::Constant *> offsetConstants;
+        for (auto off : offsets) {
+            offsetConstants.push_back(llvm::ConstantInt::get(i64Ty, off, true));
+        }
+        auto *arrayInit = llvm::ConstantArray::get(arrayType, offsetConstants);
+
+        static int fieldOffsetCounter = 0;
+        auto globalName = "rtti_field_offsets." + std::to_string(fieldOffsetCounter++);
+        auto *globalArray = new llvm::GlobalVariable(
+            *llvmModCtx.TheModule,
+            arrayType,
+            true, // isConstant
+            llvm::GlobalValue::InternalLinkage,
+            arrayInit,
+            globalName
+        );
+
+        return globalArray;
+    }
+
     void LLVMCodegen::generateRTTIImplmentation(LLVMModuleContext &llvmModCtx) {
         // Generate the RTTI for the Yoi types.
         yoi::vec<llvm::Constant *> rttiFields(llvmModCtx.typeIDMap.size());
@@ -3783,13 +3892,15 @@ namespace yoi {
                 }
             }
 
-            std::array<llvm::Constant *, 6> rtti_entry_field{
+            std::array<llvm::Constant *, 8> rtti_entry_field{
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), typeId),
                 llvmModCtx.Builder->CreateGlobalString(typenameString, "rtti_type_name"),
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), static_cast<yoi::indexT>(std::get<0>(typeIndexPair.first))),
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), std::get<1>(typeIndexPair.first)),
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), std::get<2>(typeIndexPair.first)),
                 llvm::ConstantInt::get(llvm::Type::getInt64Ty(*llvmModCtx.TheContext), std::get<3>(typeIndexPair.first)),
+                llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0)),
+                llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0)),
             };
             rttiFields[typeId] = llvm::ConstantStruct::get(llvmModCtx.RTTIEntryType, rtti_entry_field);
         }
@@ -3918,6 +4029,8 @@ namespace yoi {
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type affiliate module
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // type index
             llvm::Type::getInt64Ty(*llvmModCtx.TheContext), // array size if provided, otherwise 0
+            llvm::PointerType::get(*llvmModCtx.TheContext, 0), // field_offsets (null-terminated i64[] for GC tracing)
+            llvm::PointerType::get(*llvmModCtx.TheContext, 0), // finalizer (void(i8*) or null)
         });
         auto RTTITableType = llvm::ArrayType::get(llvmModCtx.RTTIEntryType, llvmModCtx.typeIDMap.size());
         llvmModCtx.RTTITable = new llvm::GlobalVariable(*llvmModCtx.TheModule, RTTITableType, true, llvm::GlobalValue::LinkageTypes::ExternalLinkage, nullptr, "rtti_table");

@@ -1,4 +1,5 @@
 #include "runtime.h"
+#include "runtime/bacon/bacon.h"
 #include "runtime/hperf/hperf.h"
 #include "runtime/memory/memory.h"
 
@@ -34,6 +35,7 @@ int elysia_main(int argc, char *argv[]) {
     #if defined(ELYSIA_RUNTIME_BUILD_TYPE_DEBUG) || defined(ELYSIA_RUNTIME_BUILD_PRESERVE_BASIC_INFORMATION)
     printf("[Elysia/DEBUG] hoshi-lang descriptor: %s, build_type: %llu. Runtime linked, invoking yoimiya_entry()...\n", &yoi_desc, yoi_build_type);
     #endif
+    bacon_init();
     YoiIntegerObject *result = yoimiya_entry();
     int resultVal = static_cast<int>(result->value);
     basic_int_gc_refcount_decrease(result);
