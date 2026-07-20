@@ -186,6 +186,7 @@ var annotated_dup =
     [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", "structruntime__signal__handler__info" ],
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", "structThreadStarterArgs" ],
     [ "utf8Unicode", "classutf8Unicode.html", "classutf8Unicode" ],
+    [ "WeakSlot", "structWeakSlot.html", "structWeakSlot" ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", "structYoiBooleanObject" ],
     [ "YoiCharObject", "structYoiCharObject.html", "structYoiCharObject" ],
     [ "YoiDecimalObject", "structYoiDecimalObject.html", "structYoiDecimalObject" ],

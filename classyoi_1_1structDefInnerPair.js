@@ -2,7 +2,8 @@ var classyoi_1_1structDefInnerPair =
 [
     [ "Modifier", "classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd", [
       [ "None", "classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdda6adf97f83acf6453d4a6a4b1070f3754", null ],
-      [ "DataField", "classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdda9bf9d3abf8593e11d26885db06c895f9", null ]
+      [ "DataField", "classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdda9bf9d3abf8593e11d26885db06c895f9", null ],
+      [ "Weak", "classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdda7324e3727807d95037eb19d304fd91ec", null ]
     ] ],
     [ "getConstructor", "classyoi_1_1structDefInnerPair.html#a676ee68000cdfa4227e0d10bc1597a96", null ],
     [ "getFinalizer", "classyoi_1_1structDefInnerPair.html#ad16fab5ead8619ae67d55b0533424adf", null ],

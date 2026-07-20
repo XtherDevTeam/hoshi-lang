@@ -251,6 +251,7 @@ var hierarchy =
     [ "visitor", "classyoi_1_1visitor.html", null ],
     [ "vValue", "unionyoi_1_1globalStmt_1_1vValue.html", null ],
     [ "vValue", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html", null ],
+    [ "WeakSlot", "structWeakSlot.html", null ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", null ],
     [ "YoiCharObject", "structYoiCharObject.html", null ],
     [ "YoiDecimalObject", "structYoiDecimalObject.html", null ],
