@@ -10,7 +10,6 @@ var classyoi_1_1LLVMCodegen =
     [ "createArrayObject", "classyoi_1_1LLVMCodegen.html#a4a96df806b704384c5932a31b921691c", null ],
     [ "createBasicObject", "classyoi_1_1LLVMCodegen.html#a0df23449efec0f5cd7980f8c0f995665", null ],
     [ "createDynamicArrayObject", "classyoi_1_1LLVMCodegen.html#a2fab73b4608faf6b7bdf188c53c9bf8c", null ],
-    [ "createFieldOffsetArray", "classyoi_1_1LLVMCodegen.html#a288b3829873e061413e9245f90ac610b", null ],
     [ "createGeneratorContext", "classyoi_1_1LLVMCodegen.html#a29a453731be05572154276e1b4f12820", null ],
     [ "createStructObject", "classyoi_1_1LLVMCodegen.html#a9ee5b8fa544f607ff11c3b50bb08ba54", null ],
     [ "declareRuntimeFunctions", "classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322", null ],

@@ -81,14 +81,13 @@ var searchData=
   ['as_5fflags_78',['as_flags',['../namespacemagic__enum.html#a0834fe0b701892852ec14cddfb9d9e84',1,'magic_enum']]],
   ['assignment_79',['直接赋值 (Direct assignment)',['../md_docs_2Direct_01Assignment.html',1,'']]],
   ['assignsign_80',['assignSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a9487bfa7d8372f25426f24998a50c2b3',1,'yoi::lexer::token']]],
-  ['ast_81',['ast',['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()'],['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST(lexer::token token)'],['../classyoi_1_1AST.html',1,'AST']]],
+  ['ast_81',['ast',['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST()'],['../classyoi_1_1AST.html',1,'AST'],['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()']]],
   ['ast_2ecpp_82',['ast.cpp',['../ast_8cpp.html',1,'']]],
   ['ast_2ehpp_83',['ast.hpp',['../ast_8hpp.html',1,'']]],
   ['asterisk_84',['asterisk',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8',1,'yoi::lexer::token']]],
   ['asteriskstart_85',['asteriskStart',['../classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417',1,'yoi::lexer']]],
   ['asttofinalize_86',['astToFinalize',['../classyoi_1_1compilerContext.html#a4198dadc50abd75ca5b76b7045369b11',1,'yoi::compilerContext']]],
-  ['attached_87',['attached',['../structyoi_1_1FormatOption.html#ab8a140fca39974bd0e12d402013c6387',1,'yoi::FormatOption::Attached'],['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa41f0e4643baa1a38c319cb96c9deaa99',1,'yoi::FormatOption::Attached']]],
-  ['attempted_88',['Attempted',['../classBaconMark.html#a90a8ed22a30db478964823313a1b16ffac52c6eeafe7207599f51d08a22226ca8',1,'BaconMark']]],
-  ['attributes_89',['attributes',['../classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84',1,'yoi::IRValueType']]],
-  ['attrs_90',['attrs',['../classyoi_1_1funcDefStmt.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::funcDefStmt::attrs'],['../classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDecl::attrs'],['../classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDef::attrs'],['../classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::exportDecl::attrs'],['../classyoi_1_1IRFunctionDefinition.html#ae643a272623efd1e91bd878d757579ed',1,'yoi::IRFunctionDefinition::attrs'],['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#ae643a272623efd1e91bd878d757579ed',1,'yoi::IRFunctionDefinition::Builder::attrs']]]
+  ['attached_87',['attached',['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa41f0e4643baa1a38c319cb96c9deaa99',1,'yoi::FormatOption::Attached'],['../structyoi_1_1FormatOption.html#ab8a140fca39974bd0e12d402013c6387',1,'yoi::FormatOption::Attached']]],
+  ['attributes_88',['attributes',['../classyoi_1_1IRValueType.html#abfeb28802308bd90c67bd71c9030cd84',1,'yoi::IRValueType']]],
+  ['attrs_89',['attrs',['../structyoi_1_1IRFunctionDefinition_1_1Builder.html#ae643a272623efd1e91bd878d757579ed',1,'yoi::IRFunctionDefinition::Builder::attrs'],['../classyoi_1_1IRFunctionDefinition.html#ae643a272623efd1e91bd878d757579ed',1,'yoi::IRFunctionDefinition::attrs'],['../classyoi_1_1exportDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::exportDecl::attrs'],['../classyoi_1_1innerMethodDef.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDef::attrs'],['../classyoi_1_1innerMethodDecl.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::innerMethodDecl::attrs'],['../classyoi_1_1funcDefStmt.html#a726b6789532ce6f35a0b7d5b941989f4',1,'yoi::funcDefStmt::attrs']]]
 ];

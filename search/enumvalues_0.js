@@ -7,6 +7,5 @@ var searchData=
   ['array_5flength_4',['array_length',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a56819a6d5e48912fcb294546e6913182',1,'yoi::IR']]],
   ['assignsign_5',['assignSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a9487bfa7d8372f25426f24998a50c2b3',1,'yoi::lexer::token']]],
   ['asterisk_6',['asterisk',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8',1,'yoi::lexer::token']]],
-  ['attached_7',['Attached',['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa41f0e4643baa1a38c319cb96c9deaa99',1,'yoi::FormatOption']]],
-  ['attempted_8',['Attempted',['../classBaconMark.html#a90a8ed22a30db478964823313a1b16ffac52c6eeafe7207599f51d08a22226ca8',1,'BaconMark']]]
+  ['attached_7',['Attached',['../structyoi_1_1FormatOption.html#a26d53020eefb93178889aa20ebb799faa41f0e4643baa1a38c319cb96c9deaa99',1,'yoi::FormatOption']]]
 ];

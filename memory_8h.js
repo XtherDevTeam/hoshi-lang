@@ -1,6 +1,5 @@
 var memory_8h =
 [
-    [ "BaconMark", "classBaconMark.html", "classBaconMark" ],
     [ "YoiObject", "structYoiObject.html", "structYoiObject" ],
     [ "YoiObjectArray", "structYoiObjectArray.html", "structYoiObjectArray" ],
     [ "YoiIntegerObject", "structYoiIntegerObject.html", "structYoiIntegerObject" ],
@@ -26,6 +25,5 @@ var memory_8h =
     [ "runtime_finalize_object_report", "memory_8h.html#a9a1ef7e1e26adc283a63e6e1d8c957e8", null ],
     [ "runtime_get_string_array_data_pointer", "memory_8h.html#a4d3593e8023da81de12e2c623c71488d", null ],
     [ "runtime_object_alloc", "memory_8h.html#a77e252460b25bfcbcb0745e81860a2ec", null ],
-    [ "runtime_object_alloc_report", "memory_8h.html#ae9e6484dd2ff6cf4355506d3c336b90e", null ],
-    [ "runtime_trace_yoi_object", "memory_8h.html#aaa25f5f8859b1094d63c1d52ae579fd5", null ]
+    [ "runtime_object_alloc_report", "memory_8h.html#ae9e6484dd2ff6cf4355506d3c336b90e", null ]
 ];

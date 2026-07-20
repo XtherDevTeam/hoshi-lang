@@ -22,6 +22,5 @@ var searchData=
   ['structtype_19',['structType',['../classyoi_1_1IRExternEntry.html#a5f8ceb788ee36d45815bf2a6a499eed7af3dfe2dc33df285b284ccbbb4f65d086',1,'yoi::IRExternEntry']]],
   ['sub_20',['sub',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a8a68dc3e925eacf92633be230722a140',1,'yoi::IR']]],
   ['subtractionassignment_21',['subtractionAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a24913b1abeac61926c5e25a068f518ac',1,'yoi::lexer::token']]],
-  ['suppress_22',['Suppress',['../namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627',1,'yoi']]],
-  ['survive_23',['Survive',['../classBaconMark.html#a90a8ed22a30db478964823313a1b16ffa0f96337be1814a9d00be881426036e01',1,'BaconMark']]]
+  ['suppress_22',['Suppress',['../namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627',1,'yoi']]]
 ];

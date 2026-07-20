@@ -92,14 +92,12 @@ var hierarchy =
       [ "whileStmt", "classyoi_1_1whileStmt.html", null ],
       [ "yieldStmt", "classyoi_1_1yieldStmt.html", null ]
     ] ],
-    [ "BaconMark", "classBaconMark.html", null ],
     [ "bool_constant", null, [
       [ "has_is_flags< T, std::void_t< decltype(customize::enum_range< T >::is_flags)> >", "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html", null ],
       [ "is_reflected< E, S >", "structmagic__enum_1_1detail_1_1is__reflected.html", null ],
       [ "is_scoped_enum< T, true >", "structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html", null ],
       [ "is_unscoped_enum< T, true >", "structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html", null ]
     ] ],
-    [ "BufferNode", "structBufferNode.html", null ],
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRDataStructDefinition_1_1Builder.html", null ],
     [ "Builder", "classyoi_1_1IREnumerationType_1_1Builder.html", null ],
@@ -217,7 +215,6 @@ var hierarchy =
     [ "lexerState", "structyoi_1_1lexer_1_1lexerState.html", null ],
     [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html", null ],
     [ "LLVMModuleContext", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html", null ],
-    [ "LocalBufferNode", "structLocalBufferNode.html", null ],
     [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", null ],
     [ "moduleContext", "classyoi_1_1moduleContext.html", null ],
     [ "nameInfo", "structyoi_1_1IRStructDefinition_1_1nameInfo.html", null ],
@@ -234,7 +231,6 @@ var hierarchy =
     [ "PossibleValue", "unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html", null ],
     [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", null ],
     [ "SimulationStack", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html", null ],
-    [ "SmallVector", "structSmallVector.html", null ],
     [ "StackValue", "structyoi_1_1LLVMCodegen_1_1StackValue.html", null ],
     [ "static_str< N >", "classmagic__enum_1_1detail_1_1static__str.html", null ],
     [ "static_str< 0 >", "classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html", null ],

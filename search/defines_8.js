@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['parse_5fbinary_5fexpr_0',['PARSE_BINARY_EXPR',['../parser_8cpp.html#a9beeb41ff1a58cdc83d2e66d651c0cee',1,'parser.cpp']]],
-  ['path_5fseparator_1',['PATH_SEPARATOR',['../fs_8cpp.html#a256a5721249aa3309437212cc21a9fe4',1,'fs.cpp']]]
+  ['stat_5ffunc_0',['stat_func',['../fs_8cpp.html#ad7b8d61359a8fe66187f413470913f9e',1,'fs.cpp']]],
+  ['stat_5fstruct_1',['stat_struct',['../fs_8cpp.html#a798e8244d5a44230f893edaacd35a8df',1,'fs.cpp']]]
 ];
