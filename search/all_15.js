@@ -35,7 +35,7 @@ var searchData=
   ['maxwidth_32',['maxWidth',['../structyoi_1_1FormatOption.html#a22780129854e1085d833501dccd5c135',1,'yoi::FormatOption']]],
   ['mechanism_33',['Underlying mechanism',['../md_docs_2Datastruct.html#autotoc_md27',1,'']]],
   ['mechanisms_34',['Underlying mechanisms',['../md_docs_2Data_01Fields_01in_01Legacy_01Struct.html#autotoc_md23',1,'']]],
-  ['member_35',['member',['../classyoi_1_1typeSpec.html#a610d25aeaec72997c0412a8af6f70d76',1,'yoi::typeSpec::member'],['../classyoi_1_1primary.html#a6d93cd5e69cd6787791e5a53de459937',1,'yoi::primary::member'],['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a858ba4765e53c712ef672a9570474b1d',1,'yoi::typeSpec::Member']]],
+  ['member_35',['member',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a858ba4765e53c712ef672a9570474b1d',1,'yoi::typeSpec::Member'],['../classyoi_1_1typeSpec.html#a610d25aeaec72997c0412a8af6f70d76',1,'yoi::typeSpec::member'],['../classyoi_1_1primary.html#a6d93cd5e69cd6787791e5a53de459937',1,'yoi::primary::member']]],
   ['memberexpr_36',['memberexpr',['../classyoi_1_1memberExpr.html',1,'memberExpr'],['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894aeec6e150b2b178713e8fd0e7af207568',1,'yoi::primary::memberExpr']]],
   ['memory_37',['memory',['../structAllocatedMemoryList.html#a9824c7cb7e4069084cbbd4458efd3faf',1,'AllocatedMemoryList']]],
   ['memory_20layout_38',['Memory Layout',['../md_docs_2Datastruct.html#autotoc_md26',1,'']]],

@@ -174,6 +174,7 @@ var annotated_dup =
       [ "yieldStmt", "classyoi_1_1yieldStmt.html", "classyoi_1_1yieldStmt" ]
     ] ],
     [ "AllocatedMemoryList", "structAllocatedMemoryList.html", "structAllocatedMemoryList" ],
+    [ "BaconMark", "structBaconMark.html", "structBaconMark" ],
     [ "HPerfContext", "structHPerfContext.html", "structHPerfContext" ],
     [ "HPerfEvent", "structHPerfEvent.html", "structHPerfEvent" ],
     [ "HPerfEventFuncEnter", "structHPerfEventFuncEnter.html", "structHPerfEventFuncEnter" ],

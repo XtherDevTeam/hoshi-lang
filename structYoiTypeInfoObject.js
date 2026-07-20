@@ -1,5 +1,6 @@
 var structYoiTypeInfoObject =
 [
+    [ "bacon_mark", "structYoiTypeInfoObject.html#a506fdcd61ced8d5078ac45ef79c2e617", null ],
     [ "gc_refcount", "structYoiTypeInfoObject.html#afa4b5b0fdea193c3f53ef94cd5c128ee", null ],
     [ "is_array_object", "structYoiTypeInfoObject.html#a56dbfdd805af5ef734129bac451919b9", null ],
     [ "type_affiliate_module_object", "structYoiTypeInfoObject.html#a15cb2f1e3f4f085e4f1f9e24975832a9", null ],

@@ -1,5 +1,6 @@
 var structYoiVoidCallableInterface =
 [
+    [ "bacon_mark", "structYoiVoidCallableInterface.html#a506fdcd61ced8d5078ac45ef79c2e617", null ],
     [ "callable", "structYoiVoidCallableInterface.html#a87cbde5c607ba2663ff8b4c876bdad2c", null ],
     [ "gc_dec_func", "structYoiVoidCallableInterface.html#a7c9bc7500ffb10c1ee04b39f3059a8d1", null ],
     [ "gc_inc_func", "structYoiVoidCallableInterface.html#a692ac7735b5ca75bce4036e05ced960c", null ],

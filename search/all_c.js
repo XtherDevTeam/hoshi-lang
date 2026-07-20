@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_0',['data',['../structHPerfPage.html#aace491703a45784c195f8773970ece18',1,'HPerfPage::data'],['../structHPerfEvent.html#ab1055414c77e467f8b365391147e9938',1,'HPerfEvent::data'],['../structYoiObjectArray.html#a735984d41155bc1032e09bece8f8d66d',1,'YoiObjectArray::data'],['../classmagic__enum_1_1detail_1_1static__str.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str::data()'],['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str&lt; 0 &gt;::data()']]],
+  ['data_0',['data',['../structBaconMark.html#a00a74c27393c85f543e01cac5931caf0',1,'BaconMark::data'],['../structHPerfPage.html#aace491703a45784c195f8773970ece18',1,'HPerfPage::data'],['../structHPerfEvent.html#ab1055414c77e467f8b365391147e9938',1,'HPerfEvent::data'],['../structYoiObjectArray.html#a735984d41155bc1032e09bece8f8d66d',1,'YoiObjectArray::data'],['../classmagic__enum_1_1detail_1_1static__str.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str::data()'],['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str&lt; 0 &gt;::data()']]],
   ['data_20fields_20in_20legacy_20struct_1',['data fields in legacy struct',['../md_docs_2Data_01Fields_01in_01Legacy_01Struct.html',1,'The purposal of introducing data fields in legacy struct'],['../md_docs_2Data_01Fields_01in_01Legacy_01Struct.html#autotoc_md22',1,'The syntax of data fields in legacy struct']]],
   ['data_20fields_20in_20legacy_20struct_2emd_2',['Data Fields in Legacy Struct.md',['../Data_01Fields_01in_01Legacy_01Struct_8md.html',1,'']]],
   ['data_20struct_20in_20hoshi_20lang_3',['Data struct in hoshi-lang',['../md_docs_2Datastruct.html',1,'']]],
@@ -34,7 +34,7 @@ var searchData=
   ['def_31',['def',['../classyoi_1_1IRConcept.html#a1eaa5e4df5d3ab4d6577bf5066f8f714',1,'yoi::IRConcept']]],
   ['def_2ecpp_32',['def.cpp',['../def_8cpp.html',1,'']]],
   ['def_2ehpp_33',['def.hpp',['../def_8hpp.html',1,'']]],
-  ['default_5ftag_34',['default_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81',1,'magic_enum::customize::detail::default_tag'],['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize::default_tag']]],
+  ['default_5ftag_34',['default_tag',['../namespacemagic__enum_1_1customize.html#a07f8012248e0629a203b62661ec6a860',1,'magic_enum::customize::default_tag'],['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81',1,'magic_enum::customize::detail::default_tag']]],
   ['defaultadditionallinkingfiles_35',['defaultAdditionalLinkingFiles',['../classyoi_1_1ObjectLinker.html#a4ce42dd3dff8cd40a766f1bb81323b61',1,'yoi::ObjectLinker']]],
   ['defined_20macros_36',['Pre-defined Macros',['../md_docs_2Macros.html#autotoc_md85',1,'']]],
   ['defines_2eh_37',['defines.h',['../defines_8h.html',1,'']]],
@@ -56,7 +56,7 @@ var searchData=
   ['discardstate_53',['discardState',['../classyoi_1_1IRBuilder.html#a74b54cdec7f9c8eb15faef3eb21728ac',1,'yoi::IRBuilder']]],
   ['discardstateuntil_54',['discardStateUntil',['../classyoi_1_1IRBuilder.html#a769ee7597972c1a34ef63332018311b8',1,'yoi::IRBuilder']]],
   ['dispatch_55',['dispatch',['../classyoi_1_1CodegenTaskDispatcher.html#a17a7964b99958447f16943ab5f7cf6d9',1,'yoi::CodegenTaskDispatcher']]],
-  ['div_56',['div',['../classyoi_1_1IRFunctionOptimizer.html#a357777ddce050ef6bbbf79cfafc29acd',1,'yoi::IRFunctionOptimizer::div()'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a',1,'yoi::IR::div']]],
+  ['div_56',['div',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a',1,'yoi::IR::div'],['../classyoi_1_1IRFunctionOptimizer.html#a357777ddce050ef6bbbf79cfafc29acd',1,'yoi::IRFunctionOptimizer::div()']]],
   ['divisionassignment_57',['divisionAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a95da522d005dab6fff2c0e2f6d1ce400',1,'yoi::lexer::token']]],
   ['documentation_58',['Documentation',['../index.html#autotoc_md177',1,'']]],
   ['dooptimizationforcurrentfunction_59',['doOptimizationForCurrentFunction',['../classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c',1,'yoi::IRFunctionOptimizer']]],

@@ -249,6 +249,7 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ],
         [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -284,15 +285,15 @@ var NAVTREEINDEX =
 "classyoi_1_1throwStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742",
 "classyoi_1_1visitor.html#aad8edcba4cd9f694223a0a0f17e542d1",
 "fs_8cpp.html#ac909f13cba1c032ef67b9d579a417b83",
-"magic__enum_8h.html#a600f8adca491196ab63f2b8ed64e61a5",
-"moduleContext_8cpp.html",
-"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a853fbbeb76e35bea97202cc179baa627",
-"random_8h.html#a8510da1707504fef6c807c9f4c91296f",
-"structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html",
-"structyoi_1_1IRBuildConfig_1_1Builder.html#adf6b227fb18251b1811b85d01fb907ff",
-"structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html#a3720cad0a27eb2e13f41021721f3a7fe",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ab6d00dc1ba038e5901cd6c06b2daa192",
-"unionyoi_1_1inCodeBlockStmt_1_1vValue.html#a34ad018dbaf263f8c11bfac5317aeb8b"
+"magic__enum_8h.html#a53822aabcfcede0941025bf8c6e3cb42",
+"memory_8h_source.html",
+"namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa",
+"random_8h.html#a69c8ccbe3c734799df9cfa1f2b682bb8",
+"structmagic__enum_1_1customize_1_1enum__range.html",
+"structyoi_1_1IRBuildConfig_1_1Builder.html#a46dfd232459c9f2ba98015cc3600efd7",
+"structyoi_1_1IRStructDefinition_1_1nameInfo.html",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa557264a7d6c783f6fb57fb7d0b9d6b0",
+"unionyoi_1_1globalStmt_1_1vValue.html#a8851943f4d7de02820ff8f692262add8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

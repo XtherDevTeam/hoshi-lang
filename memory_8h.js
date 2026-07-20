@@ -1,5 +1,6 @@
 var memory_8h =
 [
+    [ "BaconMark", "structBaconMark.html", "structBaconMark" ],
     [ "YoiObject", "structYoiObject.html", "structYoiObject" ],
     [ "YoiObjectArray", "structYoiObjectArray.html", "structYoiObjectArray" ],
     [ "YoiIntegerObject", "structYoiIntegerObject.html", "structYoiIntegerObject" ],

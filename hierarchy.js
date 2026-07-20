@@ -92,6 +92,7 @@ var hierarchy =
       [ "whileStmt", "classyoi_1_1whileStmt.html", null ],
       [ "yieldStmt", "classyoi_1_1yieldStmt.html", null ]
     ] ],
+    [ "BaconMark", "structBaconMark.html", null ],
     [ "bool_constant", null, [
       [ "has_is_flags< T, std::void_t< decltype(customize::enum_range< T >::is_flags)> >", "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html", null ],
       [ "is_reflected< E, S >", "structmagic__enum_1_1detail_1_1is__reflected.html", null ],

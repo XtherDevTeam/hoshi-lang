@@ -54,7 +54,7 @@ var searchData=
   ['fs_2ecpp_51',['fs.cpp',['../fs_8cpp.html',1,'']]],
   ['fs_2eh_52',['fs.h',['../fs_8h.html',1,'']]],
   ['full_20example_53',['4. Full Example',['../md_docs_2IR.html#autotoc_md78',1,'']]],
-  ['func_54',['func',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::typeSpec::Func'],['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func'],['../classyoi_1_1primary.html#a419f7a5d3a7f40d75326ac74d842a9f7',1,'yoi::primary::func']]],
+  ['func_54',['func',['../classyoi_1_1primary.html#a419f7a5d3a7f40d75326ac74d842a9f7',1,'yoi::primary::func'],['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a00d0b4f2d7dcdaaef835b97cf5d1e0df',1,'yoi::typeSpec::Func'],['../classyoi_1_1typeSpec.html#a8bfa3bf6753afc1b913227f7087508e4',1,'yoi::typeSpec::func']]],
   ['func_20tt_20type_55',['1. Callable Objects and &lt;tt&gt;func&lt;/tt&gt; type',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md8',1,'']]],
   ['func_20tt_20type_20syntax_56',['&lt;tt&gt;func&lt;/tt&gt; Type Syntax',['../md_docs_2Callable_01_6_01Lambda.html#autotoc_md9',1,'']]],
   ['func_5fname_57',['func_name',['../structHPerfEventFuncLeave.html#a0ec1958bc64e47b7629ce65b76414ce0',1,'HPerfEventFuncLeave::func_name'],['../structHPerfEventFuncEnter.html#a0ec1958bc64e47b7629ce65b76414ce0',1,'HPerfEventFuncEnter::func_name']]],
