@@ -92,6 +92,17 @@ namespace yoi {
         llvmModCtx.runtimeFunctions[L"finalize_object"] = llvm::Function::Create(finalizeType, llvm::Function::LinkOnceODRLinkage, "finalize_object", llvmModCtx.TheModule.get());
         llvmModCtx.runtimeFunctions[L"finalize_object"]->addFnAttr(llvm::Attribute::AlwaysInline);
 
+        // Bacon's Algorithm runtime functions
+        // void bacon_push_to_local_buffer(void* objectPtr)
+        llvmModCtx.runtimeFunctions[L"bacon_push_to_local_buffer"] = llvm::Function::Create(finalizeType, llvm::Function::ExternalLinkage, "bacon_push_to_local_buffer", llvmModCtx.TheModule.get());
+        // void bacon_poll(void)
+        llvm::FunctionType* baconPollType = llvm::FunctionType::get(llvmModCtx.Builder->getVoidTy(), {}, false);
+        llvmModCtx.runtimeFunctions[L"bacon_poll"] = llvm::Function::Create(baconPollType, llvm::Function::ExternalLinkage, "bacon_poll", llvmModCtx.TheModule.get());
+        // void bacon_enter_ffi(void)
+        llvmModCtx.runtimeFunctions[L"bacon_enter_ffi"] = llvm::Function::Create(baconPollType, llvm::Function::ExternalLinkage, "bacon_enter_ffi", llvmModCtx.TheModule.get());
+        // void bacon_leave_ffi(void)
+        llvmModCtx.runtimeFunctions[L"bacon_leave_ffi"] = llvm::Function::Create(baconPollType, llvm::Function::ExternalLinkage, "bacon_leave_ffi", llvmModCtx.TheModule.get());
+
         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
             // void runtime_debug_report_current_function(const char *function_name);
             llvm::Type* constCharPtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
@@ -857,6 +868,9 @@ namespace yoi {
                     callGcFunction(llvmModCtx, objPtr, varYoiType, false, true);
                 }, true);
         }
+
+        // Bacon's Algorithm: poll for GC synchronization on function exit
+        llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_poll"]);
     }
 
     void LLVMCodegen::generateCodeBlock(LLVMModuleContext &llvmModCtx, IRCodeBlock& block, yoi::indexT fromBlock, yoi::indexT toBlock, llvm::BasicBlock *actualFromBlock) {
@@ -3004,7 +3018,9 @@ namespace yoi {
                     }
 
                     if (funcDef->returnType->type == IRValueType::valueType::none) {
+                        llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_enter_ffi"]);
                         llvmModCtx.Builder->CreateCall(externFuncDecl, args);
+                        llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_leave_ffi"]);
                         if (compilerCtx->getBuildConfig()->buildMode == IRBuildConfig::BuildMode::debug) {
                             // print function name
                             std::string funcName = wstring2string(funcDef->name);
@@ -3015,7 +3031,9 @@ namespace yoi {
                         }
                         llvmModCtx.Builder->CreateRetVoid();
                     } else {
+                        llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_enter_ffi"]);
                         auto result = llvmModCtx.Builder->CreateCall(externFuncDecl, args, "result");
+                        llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_leave_ffi"]);
 
                         llvm::Value *actualResultVal = nullptr;
                         if (funcDef->returnType->isForeignBasicType()) {
@@ -4734,7 +4752,22 @@ namespace yoi {
         }
         if (yoiType->hasAttribute(IRValueType::ValueAttr::Borrow) && !forceForBorrow)
             return;
-        
+
+        if (!isIncrease) {
+            // Bacon's Algorithm: route all GC decreases through bacon_push_to_local_buffer
+            auto f = [&]() {
+                auto* ptrArg = llvmModCtx.Builder->CreateBitCast(objectPtr, llvm::PointerType::get(*llvmModCtx.TheContext, 0));
+                llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions[L"bacon_push_to_local_buffer"], ptrArg);
+            };
+            if (forceForBorrow) {
+                auto nullableType = managedPtr(IRValueType{*yoiType}.addAttribute(IRValueType::ValueAttr::Nullable));
+                generateIfTargetNotNull(llvmModCtx, objectPtr, nullableType, f);
+            } else {
+                generateIfTargetNotNull(llvmModCtx, objectPtr, yoiType, f);
+            }
+            return;
+        }
+
         auto gcFunc = getGcFunction(llvmModCtx, yoiType, isIncrease);
         if (gcFunc == nullptr) return;
 

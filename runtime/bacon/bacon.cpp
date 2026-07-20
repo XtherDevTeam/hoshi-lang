@@ -17,6 +17,7 @@ unsigned int current_global_buffer_page_count;
 pthread_t bacon_thread_handle;
 
 void bacon_flush_local_buffer() {
+    // printf("[Elysia/INFO] Local buffer flushed\n");
     if (local_buffer.count == 0)
         return;
 
@@ -47,11 +48,11 @@ void bacon_flush_global_buffer() {
     current_global_buffer_page_count = 0; // reset page count
 }
 void bacon_push_to_local_buffer(YoiObject *object) {
-    if (object->bacon_mark.is_buffered())
+    if (!object || object->bacon_mark.is_buffered())
         return;
 
+    auto &rtti_query = rtti_table[object->type_id];
     if (__atomic_sub_fetch(&object->gc_refcount, 1, __ATOMIC_RELEASE) == 0) {
-        auto &rtti_query = rtti_table[object->type_id];
         if (rtti_query.finalizer) {
             rtti_query.finalizer(object);
         }
@@ -69,6 +70,7 @@ void bacon_push_to_local_buffer(YoiObject *object) {
         }
     }
 }
+
 void bacon_poll() {
     if (UNLIKELY(__atomic_load_n(&local_thread_should_sleep, __ATOMIC_RELAXED) == 1)) {
         bacon_flush_local_buffer();
@@ -83,6 +85,7 @@ void bacon_poll() {
         __atomic_fetch_add(&bacon_current_active_threads, 1, __ATOMIC_RELEASE);
     }
 }
+
 void bacon_mark_grey(YoiObject *object) {
     if (object->bacon_mark.get_color() != BaconMark::Color::Attempted) {
 
@@ -96,6 +99,7 @@ void bacon_mark_grey(YoiObject *object) {
             nullptr);
     }
 }
+
 void bacon_scan_black(YoiObject *obj) {
     obj->bacon_mark.set_color(BaconMark::Color::Survive);
     runtime_trace_yoi_object(
@@ -108,6 +112,7 @@ void bacon_scan_black(YoiObject *obj) {
         },
         nullptr);
 }
+
 void bacon_scan(YoiObject *obj) {
     if (obj->bacon_mark.get_color() == BaconMark::Color::Attempted) {
         if (obj->gc_refcount > 0) {
@@ -119,6 +124,7 @@ void bacon_scan(YoiObject *obj) {
         }
     }
 }
+
 void bacon_collect_white(SmallVector &result, YoiObject *obj) {
     if (obj->bacon_mark.get_color() == BaconMark::Color::Garbage) {
         obj->bacon_mark.set_color(BaconMark::Color::Survive); // avoid double free
@@ -135,6 +141,7 @@ void bacon_collect_white(SmallVector &result, YoiObject *obj) {
     }
 }
 void bacon_stw() {
+    // printf("[Elysia/INFO] STW triggered\n");
     // stop-the-world
     __atomic_store_n(&local_thread_should_sleep, 1, __ATOMIC_RELEASE);
     while (__atomic_load_n(&bacon_current_active_threads, __ATOMIC_ACQUIRE) > 0)
@@ -202,4 +209,12 @@ void bacon_init() {
         fprintf(stderr, "[Elysia/ERROR] hoshi-lang runtime: failed to create bacon thread\n");
         exit(1);
     }
+}
+
+void bacon_enter_ffi() {
+    __atomic_fetch_sub(&bacon_current_active_threads, 1, __ATOMIC_RELEASE);
+}
+
+void bacon_leave_ffi() {
+    __atomic_fetch_add(&bacon_current_active_threads, 1, __ATOMIC_RELEASE);
 }

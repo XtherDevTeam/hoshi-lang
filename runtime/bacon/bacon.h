@@ -51,13 +51,13 @@ extern unsigned int local_thread_should_sleep;
 extern int bacon_current_active_threads;
 extern pthread_t bacon_thread_handle;
 
-void bacon_flush_local_buffer();
+extern "C" void bacon_flush_local_buffer();
 
-void bacon_flush_global_buffer();
+extern "C" void bacon_flush_global_buffer();
 
-void bacon_push_to_local_buffer(YoiObject *object);
+extern "C" void bacon_push_to_local_buffer(YoiObject *object);
 
-void bacon_poll();
+extern "C" void bacon_poll();
 
 void bacon_mark_grey(YoiObject *object);
 
@@ -67,10 +67,13 @@ void bacon_scan(YoiObject *obj);
 
 void bacon_collect_white(SmallVector &result, YoiObject *obj);
 
-void bacon_stw();
+extern "C" void bacon_stw();
 
 void *bacon_recycler_thread(void *args);
 
-void bacon_init();
+extern "C" void bacon_init();
+
+extern "C" void bacon_enter_ffi();
+extern "C" void bacon_leave_ffi();
 
 #endif // HOSHI_BACON_HPP
