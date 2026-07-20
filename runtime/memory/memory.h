@@ -10,14 +10,40 @@
 #include <runtime/build_config.h>
 #include <runtime/rtti/rtti.h>
 
+struct BaconMark {
+    enum Color {
+        Survive = 0b00000000,
+        Garbage = 0b00000001,
+        AttempedDec = 0b00000010,
+        Candidate = 0b00000100
+    };
+    // Color: 0-3
+    // 0: Survive
+    // 1: Garbage
+    // 2: AttempedDec
+    // 3: Candidate
+    // 4: Buffered
+    unsigned long long data;
+
+    Color get_color() const;
+
+    void set_color(Color color);
+
+    bool is_buffered() const;
+
+    void set_buffered(bool buffered);
+};
+
 struct YoiObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
 };
 
 struct YoiObjectArray {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     unsigned long long length;
     void *data;
 };
@@ -25,6 +51,7 @@ struct YoiObjectArray {
 struct YoiIntegerObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     long long value;
 
     void acquire();
@@ -35,6 +62,7 @@ struct YoiIntegerObject {
 struct YoiUnsignedObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     unsigned long long value;
 
     void acquire();
@@ -45,6 +73,7 @@ struct YoiUnsignedObject {
 struct YoiStringObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     char *value;
 
     void acquire();
@@ -54,6 +83,7 @@ struct YoiStringObject {
 struct YoiBooleanObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     bool value;
 
     void acquire();
@@ -64,6 +94,7 @@ struct YoiBooleanObject {
 struct YoiDecimalObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     double value;
 
     void acquire();
@@ -74,6 +105,7 @@ struct YoiDecimalObject {
 struct YoiCharObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     wchar_t value;
 
     void acquire();
@@ -83,6 +115,7 @@ struct YoiCharObject {
 struct YoiShortObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    BaconMark bacon_mark;
     int16_t value;
 
     void acquire();

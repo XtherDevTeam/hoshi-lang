@@ -243,3 +243,23 @@ void YoiUnsignedObject::release() {
 void YoiUnsignedObject::acquire() {
     gc_refcount++;
 }
+
+BaconMark::Color BaconMark::get_color() const {
+    // color located at the 0-3 bit, remove the buffered flag (4th bit)
+    return static_cast<Color>(data & 0b00000111);
+}
+
+void BaconMark::set_color(Color color) {
+    // set only the color bits (0-3)
+    data = (data & 0b11111000) | (static_cast<unsigned long long>(color) & 0b00000111);
+}
+
+bool BaconMark::is_buffered() const {
+    // check the buffered flag (4th bit)
+    return (data & 0b00000100) != 0;
+}
+
+void BaconMark::set_buffered(bool buffered) {
+    // set the buffered flag (4th bit)
+    data = (data & 0b11111000) | (buffered ? 0b00000100ULL : 0ULL);
+}

@@ -45,6 +45,7 @@ struct YoiTypeInfo {
 struct YoiTypeInfoObject {
     int64_t gc_refcount;
     int64_t type_info_struct_type_id;
+    unsigned long long bacon_mark;
     int64_t type_id_object;
     char *type_name_object;
     int64_t type_enum_object;

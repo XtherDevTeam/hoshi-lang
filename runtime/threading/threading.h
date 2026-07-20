@@ -23,6 +23,7 @@ typedef pthread_t YoiThreadId;
 struct YoiVoidCallableInterface {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    unsigned long long bacon_mark;
     void *this_ptr;
     void *(*gc_inc_func)(void *this_ptr);
     void *(*gc_dec_func)(void *this_ptr);
@@ -32,6 +33,7 @@ struct YoiVoidCallableInterface {
 struct YoiResultUnsignedAndIntObject {
     unsigned long long gc_refcount;
     unsigned long long type_id;
+    unsigned long long bacon_mark;
     YoiUnsignedObject *ok;
     YoiIntegerObject *err;
 };
