@@ -2088,6 +2088,9 @@ namespace yoi {
                         if (i->modifier == structDefInnerPair::Modifier::DataField) {
                             memberType->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
                         }
+                        if (i->modifier == structDefInnerPair::Modifier::Weak) {
+                            memberType->addAttribute(IRValueType::ValueAttr::WeakRef);
+                        }
                         builder.addField(memberName, memberType);
                         break;
                     }
@@ -3354,6 +3357,9 @@ namespace yoi {
                 auto memberType = managedPtr(parseTypeSpec(field->getVar().spec));
                 if (field->modifier == structDefInnerPair::Modifier::DataField) {
                     memberType->metadata.setMetadata(L"STRUCT_DATAFIELD", true);
+                }
+                if (field->modifier == structDefInnerPair::Modifier::Weak) {
+                    memberType->addAttribute(IRValueType::ValueAttr::WeakRef);
                 }
                 builder.addField(memberName, memberType);
             } else if (field->kind == 2 && field->getMethod().getName().hasDefTemplateArg()) {

@@ -674,7 +674,7 @@ namespace yoi {
       public:
         // 0 is member 1 is constructor 2 is method, 3 is finalizer
         int8_t kind;
-        enum class Modifier {None, DataField} modifier;
+        enum class Modifier {None, DataField, Weak} modifier;
         // member var
         identifierWithTypeSpec *var;
         // constructor

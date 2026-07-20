@@ -118,6 +118,7 @@ namespace yoi {
                 kEnum,
                 kDataStruct,
                 kDataField,
+                kWeak,
                 kYield,
                 kDecltype,
                 kConcept,

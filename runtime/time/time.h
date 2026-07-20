@@ -25,6 +25,7 @@ struct YoiIntAndIntObject {
     unsigned long long type_id;
     unsigned long long seconds;
     unsigned long long nanoseconds;
+    void *weak_slots_head;
 
     static void gc_refcount_decrease(YoiIntAndIntObject *obj);
 

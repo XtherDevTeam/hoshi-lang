@@ -1003,7 +1003,10 @@ namespace yoi {
         lexer::token node_start_token = lex.curToken;
         structDefInnerPair::Modifier mod{structDefInnerPair::Modifier::None};
 
-        if (lex.curToken.kind == lexer::token::tokenKind::kDataField) {
+        if (lex.curToken.kind == lexer::token::tokenKind::kWeak) {
+            mod = structDefInnerPair::Modifier::Weak;
+            lex.scan();
+        } else if (lex.curToken.kind == lexer::token::tokenKind::kDataField) {
             mod = structDefInnerPair::Modifier::DataField;
             lex.scan();
         }

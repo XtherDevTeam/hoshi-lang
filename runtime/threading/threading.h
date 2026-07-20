@@ -34,6 +34,7 @@ struct YoiResultUnsignedAndIntObject {
     unsigned long long type_id;
     YoiUnsignedObject *ok;
     YoiIntegerObject *err;
+    void *weak_slots_head;
 };
 
 extern "C" YoiResultUnsignedAndIntObject *runtime_start_thread(YoiVoidCallableInterface *callable);

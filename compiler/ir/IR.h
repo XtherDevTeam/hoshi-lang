@@ -113,7 +113,7 @@ namespace yoi {
 
     class IRValueType {
       public:
-        enum class ValueAttr : yoi::indexT { Nullable, Raw, PermanentInCurrentScope, Borrow, NoBorrow };
+        enum class ValueAttr : yoi::indexT { Nullable, Raw, PermanentInCurrentScope, Borrow, NoBorrow, WeakRef };
         enum class valueType : yoi::indexT {
             integerRaw = 0,
             decimalRaw,

@@ -291,6 +291,9 @@ void yoi::formatToken(std::wostream &os, FormatOption option, const lexer::token
         case lexer::token::tokenKind::kDataField:
             os << L"datafield";
             break;
+        case lexer::token::tokenKind::kWeak:
+            os << L"weak";
+            break;
         case lexer::token::tokenKind::kGenerator:
             os << L"generator";
             break;
@@ -804,6 +807,7 @@ void yoi::Formatter::format(structDefInnerPair *node) {
     switch (node->kind) {
         case 0: 
             if (node->modifier == structDefInnerPair::Modifier::DataField) write(L"datafield ");
+            if (node->modifier == structDefInnerPair::Modifier::Weak) write(L"weak ");
             format(node->var); 
             break;
         case 1: format(node->con); break;

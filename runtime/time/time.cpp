@@ -163,6 +163,7 @@ YoiIntAndIntObject *YoiIntAndIntObject::create(int64_t seconds, int64_t nanoseco
     obj->type_id = 0;
     obj->seconds = seconds;
     obj->nanoseconds = nanoseconds;
+    obj->weak_slots_head = nullptr;
     return obj;
 }
 

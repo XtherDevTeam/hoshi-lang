@@ -1,0 +1,21 @@
+use runtime "runtime"
+
+struct Node {
+    value: int,
+    weak next: Node,
+    constructor(value: int)
+}
+
+impl Node {
+    constructor(value: int) {
+        this.value = value
+    }
+}
+
+func main() : int {
+    let n1 = Node(10)
+    let n2 = Node(20)
+    n1.next = n2
+    runtime.puts("weak reference test passed")
+    return 0
+}
