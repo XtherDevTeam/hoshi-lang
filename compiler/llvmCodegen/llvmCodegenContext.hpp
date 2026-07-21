@@ -250,7 +250,7 @@ namespace yoi {
         void callGcFunction(LLVMModuleContext &llvmModCtx, llvm::Value *objectPtr, const std::shared_ptr<IRValueType> &yoiType, bool isIncrease, bool forceForPermanent = false, bool forceForBorrow = false);
         llvm::Value *emitWeakSlotAlloc(LLVMModuleContext &llvmModCtx, llvm::Value *targetPtr, const std::shared_ptr<IRValueType> &targetYoiType);
         void emitWeakSlotFree(LLVMModuleContext &llvmModCtx, llvm::Value *slotPtr, const std::shared_ptr<IRValueType> &targetYoiType);
-        std::shared_ptr<IRStructDefinition> getStructDefFromType(const std::shared_ptr<IRValueType> &type);
+        llvm::StructType *findStructLLVMType(const std::shared_ptr<IRValueType> &type);
         llvm::Value *
         handleForeignTypeConv(LLVMModuleContext &llvmModCtx, llvm::Value *val, yoi::indexT foreignTypeIndex, yoi::indexT isArray, bool convertToForeign = false);
         llvm::Value *handleForeignTypeConv(LLVMModuleContext &llvmModCtx, llvm::Value *val,

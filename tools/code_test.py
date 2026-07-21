@@ -75,6 +75,7 @@ TEST_CASES = {
     "datastruct-test": {"type": "executable", "return_code": 0},
     "datafield": {"type": "executable", "return_code": 0},
     "generator": {"type": "executable", "return_code": 0},
+    "self-ref": {"type": "executable", "return_code": 0},
 }
 
 

@@ -4957,8 +4957,18 @@ namespace yoi {
             yoi::vec<std::shared_ptr<IRValueType>> argTypes;
             moduleContext->getIRBuilder().newStructOp(index);
             for (auto &i : lambdaExpr->captures) {
-                visit(i);
+                visit(i->identifier);
                 argTypes.push_back(managedPtr(*moduleContext->getIRBuilder().getRhsFromTempVarStack()));
+                switch (i->attr) {
+                    case structDefInnerPair::Modifier::DataField:
+                        // capture by value
+                        argTypes.back()->addAttribute(IRValueType::ValueAttr::Raw);
+                    case structDefInnerPair::Modifier::Weak:
+                        // nothing
+                        break;
+                    case structDefInnerPair::Modifier::None:
+                        break;
+                }
             }
             auto funcName = structName + L"::constructor" + getFuncUniqueNameStr(argTypes);
             moduleContext->getIRBuilder().invokeMethodOp(
@@ -4998,12 +5008,26 @@ namespace yoi {
         argTypes.clear();
         moduleContext->getIRBuilder().newStructOp(structIndex);
         for (auto &i : lambdaExpr->captures) {
-            visit(i);
+            // get attributes
+            visit(i->identifier);
             auto capturedVar = moduleContext->getIRBuilder().getRhsFromTempVarStack();
+            auto fieldType = managedPtr(*capturedVar);
+            switch (i->attr) {
+                case structDefInnerPair::Modifier::DataField:
+                    // capture by value
+                    argTypes.back()->addAttribute(IRValueType::ValueAttr::Raw);
+                case structDefInnerPair::Modifier::Weak:
+                    capturedVar->addAttribute(IRValueType::ValueAttr::Nullable);
+                    fieldType->addAttribute(IRValueType::ValueAttr::WeakRef);
+                    break;
+                case structDefInnerPair::Modifier::None:
+                    capturedVar->addAttribute(IRValueType::ValueAttr::Nullable);
+                    break;
+            }
             // i guess the IRValueType here is referenceable.
-            capturedVar->addAttribute(IRValueType::ValueAttr::Nullable);
             argTypes.push_back(managedPtr(*capturedVar));
-            builder.addField(i->node.strVal, managedPtr(*capturedVar));
+            builder.addField(i->identifier->node.strVal, fieldType);
+
         }
         // add the constructor method
         IRFunctionDefinition::Builder constructorBuilder;
@@ -5012,7 +5036,7 @@ namespace yoi {
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::Constructor);
         constructorBuilder.addAttr(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization);
         for (yoi::indexT i = 0; i < argTypes.size(); ++i) {
-            constructorBuilder.addArgument(L"capture#" + lambdaExpr->captures[i]->node.strVal, argTypes[i]);
+            constructorBuilder.addArgument(L"capture#" + lambdaExpr->captures[i]->identifier->node.strVal, argTypes[i]);
         }
         constructorBuilder.setReturnType(structType);
         constructorBuilder.setName(structName + L"::constructor" + getFuncUniqueNameStr(argTypes));
@@ -5079,6 +5103,7 @@ namespace yoi {
         auto returnType = callableFunc->returnType;
 
         auto interfaceSrc = std::pair{HOSHI_COMPILER_CTX_GLOB_ID_CONST, createCallableInterface(argTypes, returnType)};
+        auto interfaceDef = moduleContext->getCompilerContext()->getImportedModule(interfaceSrc.first)->interfaceTable[interfaceSrc.second];
         auto interfaceImpl = getInterfaceImplName(interfaceSrc, moduleContext->getIRBuilder().getRhsFromTempVarStack());
 
         if (irModule->interfaceImplementationTable.contains(interfaceImpl)) {
@@ -5092,6 +5117,7 @@ namespace yoi {
             .setName(interfaceImpl)
             .addVirtualMethod(callableName, managedPtr(IRValueType{IRValueType::valueType::virtualMethod, moduleIndex, callableIndex}));
         auto implIndex = irModule->interfaceImplementationTable.put_create(interfaceImpl, builder.yield());
+        interfaceDef->implementations.emplace_back(std::tuple{IRValueType::valueType::structObject, currentModuleIndex, implIndex});
 
         return {implIndex, interfaceSrc};
     }

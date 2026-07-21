@@ -1294,4 +1294,8 @@ namespace yoi {
             finalizeAST(i);
         delete ptr;
     }
+
+    void finalizeAST(lambdaCapture *ptr) {
+        delete ptr;
+    }
 } // namespace yoi

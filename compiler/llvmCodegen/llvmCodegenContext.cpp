@@ -472,6 +472,7 @@ namespace yoi {
                 auto virtualFuncType = llvm::FunctionType::get(funcType->getReturnType(), virtualArgTypes, false);
                 memberTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0));
             }
+            memberTypes.push_back(llvm::PointerType::get(*llvmModCtx.TheContext, 0)); // weak_slots_head
 
             if (llvmInterfaceType->isOpaque()) {
                 llvmInterfaceType->setBody(memberTypes);
@@ -668,6 +669,11 @@ namespace yoi {
             llvmModCtx.Builder->CreateCondBr(shouldFinalize, decFinalizeBlock, decContinueBlock);
 
             llvmModCtx.Builder->SetInsertPoint(decFinalizeBlock);
+
+            // Nullify all weak slots pointing to this interface before freeing
+            auto weakSlotsHeadIdx = llvmInterfaceType->getNumElements() - 1;
+            auto* weakSlotsHeadPtr = llvmModCtx.Builder->CreateStructGEP(llvmInterfaceType, thisPtr, weakSlotsHeadIdx, "weak_slots_head_ptr");
+            llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_nullify_all"), {weakSlotsHeadPtr});
 
             auto* concreteThisPtr = llvmModCtx.Builder->CreateStructGEP(llvmInterfaceType, thisPtr, 2, "this_ptr_field");
             auto* loadedConcreteThis = llvmModCtx.Builder->CreateLoad(i8PtrTy, concreteThisPtr, "concrete_this");
@@ -1260,15 +1266,17 @@ namespace yoi {
                     llvmModCtx.Builder->SetInsertPoint(retainTargetBB);
                     auto loadedType = managedPtr(IRValueType{*memberYoiType}.removeAttribute(IRValueType::ValueAttr::WeakRef));
                     callGcFunction(llvmModCtx, targetPtr, loadedType, true);
-                    llvmModCtx.valueStackPhi.push_back({targetPtr, loadedType});
                     llvmModCtx.Builder->CreateBr(doneWeakLoadBB);
 
                     llvmModCtx.Builder->SetInsertPoint(pushNullBB);
-                    auto nullType = managedPtr(IRValueType{*memberYoiType}.removeAttribute(IRValueType::ValueAttr::WeakRef));
-                    llvmModCtx.valueStackPhi.push_back({llvm::ConstantPointerNull::get(i8PtrTy), nullType});
                     llvmModCtx.Builder->CreateBr(doneWeakLoadBB);
 
                     llvmModCtx.Builder->SetInsertPoint(doneWeakLoadBB);
+                    auto nullType = managedPtr(IRValueType{*memberYoiType}.removeAttribute(IRValueType::ValueAttr::WeakRef));
+                    auto* phi = llvmModCtx.Builder->CreatePHI(i8PtrTy, 2, "weak_load_phi");
+                    phi->addIncoming(targetPtr, retainTargetBB);
+                    phi->addIncoming(llvm::ConstantPointerNull::get(i8PtrTy), pushNullBB);
+                    llvmModCtx.valueStackPhi.push_back({phi, nullType});
                     callGcFunction(llvmModCtx, structVal.llvmValue, structVal.yoiType, false);
                     break;
                 }
@@ -1287,6 +1295,7 @@ namespace yoi {
             case IR::Opcode::store_member: {
                 auto structVal = llvmModCtx.valueStackPhi.back(); llvmModCtx.valueStackPhi.pop_back();
                 auto valueToStore = llvmModCtx.valueStackPhi.back(); llvmModCtx.valueStackPhi.pop_back();
+                valueToStore = promiseInterfaceObjectIfInterface(llvmModCtx, valueToStore);
 
                 auto memberIndex = instr.operands[0].value.symbolIndex;
                 storeMember(llvmModCtx, valueToStore, structVal, memberIndex);
@@ -4827,33 +4836,22 @@ namespace yoi {
         storeMember(llvmModCtx, {value, yoiType}, {llvmModCtx.currentGeneratorContextValue, llvmModCtx.currentFunctionDef->returnType}, 1);
     }
 
-    std::shared_ptr<IRStructDefinition> LLVMCodegen::getStructDefFromType(const std::shared_ptr<IRValueType> &type) {
-        if (type->type != IRValueType::valueType::structObject) return nullptr;
-        auto moduleId = type->typeAffiliateModule;
-        auto structIdx = type->typeIndex;
-        auto &compiledMods = compilerCtx->getCompiledModules();
-        if (auto it = compiledMods.find(moduleId); it != compiledMods.end()) {
-            auto &mod = it->second;
-            try {
-                return mod->structTable[structIdx];
-            } catch (const std::out_of_range &) {
-                return nullptr;
-            }
+    llvm::StructType *LLVMCodegen::findStructLLVMType(const std::shared_ptr<IRValueType> &targetYoiType) {
+        auto targetKey = std::make_tuple(targetYoiType->type, targetYoiType->typeAffiliateModule, targetYoiType->typeIndex);
+        for (auto &[_, ctx] : llvmModuleContext) {
+            if (ctx->structTypeMap.count(targetKey))
+                return ctx->structTypeMap.at(targetKey);
         }
         return nullptr;
     }
 
     llvm::Value *LLVMCodegen::emitWeakSlotAlloc(LLVMModuleContext &llvmModCtx, llvm::Value *targetPtr, const std::shared_ptr<IRValueType> &targetYoiType) {
         auto* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
-        auto targetKey = std::make_tuple(IRValueType::valueType::structObject, targetYoiType->typeAffiliateModule, targetYoiType->typeIndex);
-        if (llvmModCtx.structTypeMap.count(targetKey)) {
-            auto* targetLLVMType = llvmModCtx.structTypeMap.at(targetKey);
-            auto targetStructDef = getStructDefFromType(targetYoiType);
-            if (targetStructDef) {
-                auto targetWeakSlotsIdx = 2 + targetStructDef->fieldTypes.size();
-                auto* targetWeakSlotsPtr = llvmModCtx.Builder->CreateStructGEP(targetLLVMType, targetPtr, targetWeakSlotsIdx, "target_weak_slots");
-                return llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_alloc"), {targetPtr, targetWeakSlotsPtr}, "new_weak_slot");
-            }
+        auto* targetLLVMType = findStructLLVMType(targetYoiType);
+        if (targetLLVMType) {
+            auto targetWeakSlotsIdx = targetLLVMType->getNumElements() - 1;
+            auto* targetWeakSlotsPtr = llvmModCtx.Builder->CreateStructGEP(targetLLVMType, targetPtr, targetWeakSlotsIdx, "target_weak_slots");
+            return llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_alloc"), {targetPtr, targetWeakSlotsPtr}, "new_weak_slot");
         }
         return llvm::ConstantPointerNull::get(i8PtrTy);
     }
@@ -4861,16 +4859,12 @@ namespace yoi {
     void LLVMCodegen::emitWeakSlotFree(LLVMModuleContext &llvmModCtx, llvm::Value *slotPtr, const std::shared_ptr<IRValueType> &targetYoiType) {
         auto* i8PtrTy = llvm::PointerType::get(*llvmModCtx.TheContext, 0);
         auto* targetPtr = llvmModCtx.Builder->CreateLoad(i8PtrTy, slotPtr, "slot_target_for_free");
-        auto targetKey = std::make_tuple(IRValueType::valueType::structObject, targetYoiType->typeAffiliateModule, targetYoiType->typeIndex);
-        if (llvmModCtx.structTypeMap.count(targetKey)) {
-            auto* targetLLVMType = llvmModCtx.structTypeMap.at(targetKey);
-            auto targetStructDef = getStructDefFromType(targetYoiType);
-            if (targetStructDef) {
-                auto targetWeakSlotsIdx = 2 + targetStructDef->fieldTypes.size();
-                auto* targetWeakSlotsPtr = llvmModCtx.Builder->CreateStructGEP(targetLLVMType, targetPtr, targetWeakSlotsIdx, "target_weak_slots_for_free");
-                llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_free"), {slotPtr, targetWeakSlotsPtr});
-                return;
-            }
+        auto* targetLLVMType = findStructLLVMType(targetYoiType);
+        if (targetLLVMType) {
+            auto targetWeakSlotsIdx = targetLLVMType->getNumElements() - 1;
+            auto* targetWeakSlotsPtr = llvmModCtx.Builder->CreateStructGEP(targetLLVMType, targetPtr, targetWeakSlotsIdx, "target_weak_slots_for_free");
+            llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_free"), {slotPtr, targetWeakSlotsPtr});
+            return;
         }
         llvmModCtx.Builder->CreateCall(llvmModCtx.runtimeFunctions.at(L"runtime_weak_slot_free"), {slotPtr, llvm::ConstantPointerNull::get(llvm::PointerType::get(*llvmModCtx.TheContext, 0))});
     }

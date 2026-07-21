@@ -2462,17 +2462,17 @@ namespace yoi {
             return;
         }
         lex.scan();
-        vec<yoi::identifier *> captures;
-        while (lex.curToken.kind == lexer::token::tokenKind::identifier) {
-            identifier *capture = nullptr;
+        vec<yoi::lambdaCapture *> captures;
+        while (lex.curToken.kind != lexer::token::tokenKind::rightBracket) {
+            yoi::lambdaCapture *capture = nullptr;
             parse(capture, lex);
-            captures.push_back(capture);
             if (!capture) {
                 for (auto c : captures)
                     finalizeAST(c);
                 o = nullptr;
                 panic(lex.line, lex.col, "expected identifier in capture list in lambda expression");
             }
+            captures.push_back(capture);
             if (lex.curToken.kind != lexer::token::tokenKind::comma) {
                 break;
             }
@@ -3030,6 +3030,32 @@ namespace yoi {
         }
         lex.scan();
         o = new satisfyClause{node_start_token, specs};
+    }
+
+    void parse(lambdaCapture *&o, lexer &lex) {
+        lexer::token node_start_token = lex.curToken;
+        structDefInnerPair::Modifier mod{structDefInnerPair::Modifier::None};
+
+        if (lex.curToken.kind == lexer::token::tokenKind::kWeak) {
+            mod = structDefInnerPair::Modifier::Weak;
+            lex.scan();
+        } else if (lex.curToken.kind == lexer::token::tokenKind::kDataField) {
+            mod = structDefInnerPair::Modifier::DataField;
+            lex.scan();
+        }
+
+        if (lex.curToken.kind != lexer::token::tokenKind::identifier) {
+            o = nullptr;
+            return;
+        }
+        identifier *name = nullptr;
+        parse(name, lex);
+        if (!name) {
+            o = nullptr;
+            return;
+        }
+
+        o = new lambdaCapture{node_start_token, mod, name};
     }
 } // namespace yoi
 

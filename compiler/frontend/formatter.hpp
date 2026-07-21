@@ -227,6 +227,8 @@ namespace yoi {
         void format(satisfyClause *node);
 
         void format(conceptDefinition *node);
+
+        void format(lambdaCapture *node);
     };
 }
 

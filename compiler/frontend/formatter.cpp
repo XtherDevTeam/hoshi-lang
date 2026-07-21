@@ -1290,3 +1290,17 @@ void yoi::Formatter::format(satisfyClause *node) {
     }
     os << ")";
 }
+
+void yoi::Formatter::format(lambdaCapture *node) {
+    switch (node->attr) {
+        case structDefInnerPair::Modifier::Weak:
+            os << L"weak ";
+            break;
+        case structDefInnerPair::Modifier::DataField:
+            os << L"datafield ";
+            break;
+        default:
+            break;
+    }
+    format(node->identifier);
+}

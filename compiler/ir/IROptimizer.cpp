@@ -2318,9 +2318,10 @@ namespace yoi {
                 }
             }
             blockInStates[currentBlockIdx] = inState;
-            
+
             set_current_file_path(targetFunction->debugInfo.sourceFile);
-            // warning(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "Performing nullable optmization on " + yoi::wstring2string(targetFunction->name));
+            // warning(targetFunction->debugInfo.line, targetFunction->debugInfo.column, "Performing nullable optmization on " +
+            // yoi::wstring2string(targetFunction->name));
             AnalysisState newOutState = analyzeBlockForNullable(currentBlockIdx, inState);
 
             if (blockOutStates.find(currentBlockIdx) == blockOutStates.end() || blockOutStates[currentBlockIdx] != newOutState) {
@@ -2436,7 +2437,7 @@ namespace yoi {
                     // deprecated: we no longer inherit Nullable attributes from parent sign
                     // unless they are passed to another function as a parameter, or
                     // they got direct assignment, thus we need another label to mark this para-state.
-                    
+
                     break;
                 }
                 case IR::Opcode::load_local: {
@@ -2630,9 +2631,8 @@ namespace yoi {
                     auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                        ins.operands[1].value.symbolIndex,
                                                        ins.operands[2].value.symbolIndex,
-                                                       ins.operands[3].value.symbolIndex
-                                                       ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
-                                                       : yoi::vec<yoi::indexT>{}});
+                                                       ins.operands[3].value.symbolIndex ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
+                                                                                         : yoi::vec<yoi::indexT>{}});
                     type->addAttribute(IRValueType::ValueAttr::Nullable);
                     simulationStack.pop();
                     simulationStack.push(type, {});
@@ -2659,7 +2659,7 @@ namespace yoi {
                     simulationStack.push(resultType, {});
                     break;
                 }
-                case IR::Opcode::ret: 
+                case IR::Opcode::ret:
                 case IR::Opcode::ret_none: {
                     return terminatorFound();
                 }
@@ -2682,7 +2682,7 @@ namespace yoi {
                 // Other instructions with stack effects
                 case IR::Opcode::direct_assign: {
                     simulationStack.pop(); // rhs
-                    auto lhs = simulationStack.peek(0);  
+                    auto lhs = simulationStack.peek(0);
                     simulationStack.pop(); // lhs
                     simulationStack.push(std::make_shared<IRValueType>(*lhs.type), {});
                     break;
@@ -2775,7 +2775,7 @@ namespace yoi {
         for (yoi::indexT i = 0; i < targetFunction->variableTable.getVariables().size(); ++i) {
             auto varType = std::make_shared<IRValueType>(*targetFunction->variableTable.get(i));
             if (varType->isBasicRawType() || (varType->isBasicType() && !varType->isArrayType() && !varType->isDynamicArrayType() &&
-                !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)))
+                                              !targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::NoRawAndNullOptimization)))
                 varType->addAttribute(IRValueType::ValueAttr::Raw);
             else
                 varType->removeAttribute(IRValueType::ValueAttr::Raw);
@@ -2851,13 +2851,15 @@ namespace yoi {
             }
 
             targetFunction->variableTable.get(varIndex) = managedPtr(*targetFunction->variableTable.get(varIndex));
-            if (isRaw && targetFunction->variableTable.get(varIndex)->isBasicType() && !targetFunction->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Nullable)) {
+            if (isRaw && targetFunction->variableTable.get(varIndex)->isBasicType() &&
+                !targetFunction->variableTable.get(varIndex)->hasAttribute(IRValueType::ValueAttr::Nullable)) {
                 targetFunction->variableTable.get(varIndex)->addAttribute(IRValueType::ValueAttr::Raw);
             } else {
                 targetFunction->variableTable.get(varIndex)->removeAttribute(IRValueType::ValueAttr::Raw);
             }
 
-            if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator) && globalAnalysisResults[currentFuncId].isYieldValueRaw) {
+            if (targetFunction->hasAttribute(IRFunctionDefinition::FunctionAttrs::Generator) &&
+                globalAnalysisResults[currentFuncId].isYieldValueRaw) {
                 auto ctxIndex = targetFunction->getVariableTable().lookup(L"__context__");
                 auto ctxType = targetFunction->getVariableTable().get(ctxIndex);
                 auto yieldField = compilerCtx->getImportedModule(HOSHI_COMPILER_CTX_GLOB_ID_CONST)->structTable[ctxType->typeIndex]->fieldTypes[1];
@@ -3239,8 +3241,9 @@ namespace yoi {
         // printf("%s (block %llu): Variable extra infos cleared.\n", wstring2string(targetFunction->name).c_str(), blockIndex);
         for (const auto &[idx, state] : inState.variableStates) {
             // if (!state.possibleValue.metadata.metadata.empty())
-                // printf("%llu: persist metadata %s\n", idx, wstring2string(state.possibleValue.metadata.to_string()).c_str());
-            variablesExtraInfo[idx] = {false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}, state.possibleValue.metadata}};
+            // printf("%llu: persist metadata %s\n", idx, wstring2string(state.possibleValue.metadata.to_string()).c_str());
+            variablesExtraInfo[idx] = {
+                false, true, {std::make_shared<IRValueType>(*state.possibleValue.type), false, {}, state.possibleValue.metadata}};
         }
 
         auto getVarType = [&](indexT varIndex) {
@@ -3284,7 +3287,7 @@ namespace yoi {
                 case IR::Opcode::store_local: {
                     auto value = simulationStack.peek(0);
                     simulationStack.pop();
-                    
+
                     auto varType = getVarType(ins.operands[0].value.symbolIndex);
                     // still check incompatible metadatas, if anything go wrong, remove it
                     if (variablesExtraInfo[ins.operands[0].value.symbolIndex].possibleValue.metadata.hasMetadata(L"delayed_interface_impl") &&
@@ -3456,7 +3459,8 @@ namespace yoi {
                         mergedMetadata.setMetadata(L"delayed_interface_impl", impl1);
                     } else {
                         // different implementations or one is not optimized, cannot keep optimization
-                        // printf("(block %llu) %llu: discarded metadata %s\n", currentCodeBlockIndex, key, wstring2string(it2->second.possibleValue.metadata.to_string()).c_str());
+                        // printf("(block %llu) %llu: discarded metadata %s\n", currentCodeBlockIndex, key,
+                        // wstring2string(it2->second.possibleValue.metadata.to_string()).c_str());
                         mergedMetadata.setMetadata(L"delayed_interface_impl", std::pair<yoi::indexT, yoi::indexT>{-1, -1});
                     }
                 }
@@ -4223,9 +4227,8 @@ namespace yoi {
                 auto type = managedPtr(IRValueType{static_cast<IRValueType::valueType>(ins.operands[0].value.symbolIndex),
                                                    ins.operands[1].value.symbolIndex,
                                                    ins.operands[2].value.symbolIndex,
-                                                   ins.operands[3].value.symbolIndex 
-                                                   ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
-                                                   : yoi::vec<yoi::indexT>{}});
+                                                   ins.operands[3].value.symbolIndex ? yoi::vec<yoi::indexT>{ins.operands[3].value.symbolIndex}
+                                                                                     : yoi::vec<yoi::indexT>{}});
                 type->addAttribute(IRValueType::ValueAttr::Nullable);
                 simulationStack.pop();
                 simulationStack.push(type, {currentCodeBlockIndex, {insIndex}, false});
@@ -4401,7 +4404,7 @@ namespace yoi {
 
     bool FunctionAnalysisInfo::operator!=(const FunctionAnalysisInfo &other) const {
         bool is_param_equal = other.paramStates.size() == paramStates.size();
-        for (yoi::indexT i = 0;i < other.paramStates.size() && is_param_equal;i++)
+        for (yoi::indexT i = 0; i < other.paramStates.size() && is_param_equal; i++)
             is_param_equal = other.paramStates[i] == paramStates[i];
         return isReturnValueNullable != other.isReturnValueNullable || isReturnValueRaw != other.isReturnValueRaw || !is_param_equal;
     }
@@ -4757,7 +4760,8 @@ namespace yoi {
             }
 
             if (currentInfo.isReturnValueNullable != newIsNullable || currentInfo.isReturnValueRaw != newIsRaw ||
-                !paramStateComparator(paramStates, currentInfo.paramStates) || oldYieldValueNullable != currentInfo.isYieldValueNullable || oldYieldValueRaw != currentInfo.isYieldValueRaw) {
+                !paramStateComparator(paramStates, currentInfo.paramStates) || oldYieldValueNullable != currentInfo.isYieldValueNullable ||
+                oldYieldValueRaw != currentInfo.isYieldValueRaw) {
                 // update the global results
                 currentInfo.isReturnValueNullable = newIsNullable;
                 currentInfo.isReturnValueRaw = newIsRaw;
@@ -4767,7 +4771,9 @@ namespace yoi {
                 if (callGraph.callerGraph.count(funcId)) {
                     for (const auto &callerId : callGraph.callerGraph.at(funcId)) {
                         set_current_file_path(func->debugInfo.sourceFile);
-                        // warning(func->debugInfo.line, func->debugInfo.column, "Function " + wstring2string(func->name) + " has been updated, adding its callers back to the worklist. \nBefore:" + wstring2string(paramStateToString(currentInfo.paramStates)) + "\nAfter :" + wstring2string(paramStateToString(paramStates)) + "\n");
+                        // warning(func->debugInfo.line, func->debugInfo.column, "Function " + wstring2string(func->name) + " has been updated, adding
+                        // its callers back to the worklist. \nBefore:" + wstring2string(paramStateToString(currentInfo.paramStates)) + "\nAfter :" +
+                        // wstring2string(paramStateToString(paramStates)) + "\n");
                         worklist.push(callerId);
                     }
                 }

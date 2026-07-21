@@ -1,5 +1,6 @@
 #include <ctime>
 #include <runtime/time/time.h>
+#include <runtime/memory/weak.h>
 
 #include <stdio.h>
 
@@ -153,6 +154,7 @@ long get_tm_gmtoff(struct tm *t) {
 
 void YoiIntAndIntObject::gc_refcount_decrease(YoiIntAndIntObject *obj) {
     if (--obj->gc_refcount == 0) {
+        runtime_weak_slot_nullify_all((WeakSlot **)&obj->weak_slots_head);
         runtime_finalize_object((YoiObject *)obj);
     }
 }

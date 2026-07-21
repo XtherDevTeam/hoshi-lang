@@ -1,0 +1,26 @@
+use runtime "runtime"
+
+struct A {
+    a: int,
+    fn: func () : int,
+    constructor()
+}
+
+impl A {
+    constructor() {
+        this.a = 10
+        this.fn = func[weak this] () : int {
+            this.this.a = this.this.a + 114514
+            return this.this.a
+        }
+    }
+}
+
+func main() : int {
+    let test = A()
+    runtime.runtime_debug_print_int_1(114514)
+    for (let i = 0; i < 10; i += 1) {
+        runtime.runtime_debug_print_int_1(test.fn())
+    }
+    return 0
+}

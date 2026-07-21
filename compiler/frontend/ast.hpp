@@ -211,6 +211,8 @@ namespace yoi {
 
     class satisfyClause;
 
+    class lambdaCapture;
+
     class bracedInitalizerList : public AST {
       public:
         yoi::vec<yoi::rExpr *> exprs;
@@ -232,14 +234,6 @@ namespace yoi {
     class marcoDescriptor : public AST {
       public:
         yoi::vec<marcoPair *> pairs;
-    };
-
-    class lambdaExpr : public AST {
-      public:
-        vec<yoi::identifier *> captures;
-        definitionArguments *args;
-        typeSpec *resultType;
-        codeBlock *block;
     };
 
     class funcExpr : public AST {
@@ -691,6 +685,20 @@ namespace yoi {
         innerMethodDecl &getMethod();
 
         finalizerDecl &getFinalizer();
+    };
+
+    class lambdaCapture : public AST {
+      public:
+        structDefInnerPair::Modifier attr;
+        yoi::identifier *identifier;
+    };
+
+    class lambdaExpr : public AST {
+      public:
+        vec<yoi::lambdaCapture *> captures;
+        definitionArguments *args;
+        typeSpec *resultType;
+        codeBlock *block;
     };
 
     class structDefInner : public AST {
@@ -1307,6 +1315,8 @@ namespace yoi {
     void finalizeAST(bracedInitalizerList *ptr);
 
     void finalizeAST(yieldStmt *ptr);
+
+    void finalizeAST(lambdaCapture *ptr);
 } // namespace yoi
 #endif // HOSHI_LANG_AST_HPP
 #pragma clang diagnostic pop
