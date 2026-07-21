@@ -55,6 +55,7 @@ var hierarchy =
       [ "interfaceDefInnerPair", "classyoi_1_1interfaceDefInnerPair.html", null ],
       [ "interfaceDefStmt", "classyoi_1_1interfaceDefStmt.html", null ],
       [ "invocationArguments", "classyoi_1_1invocationArguments.html", null ],
+      [ "lambdaCapture", "classyoi_1_1lambdaCapture.html", null ],
       [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", null ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", null ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", null ],

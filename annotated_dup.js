@@ -131,6 +131,7 @@ var annotated_dup =
       [ "IRTypeAlias", "classyoi_1_1IRTypeAlias.html", "classyoi_1_1IRTypeAlias" ],
       [ "IRValueType", "classyoi_1_1IRValueType.html", "classyoi_1_1IRValueType" ],
       [ "IRVariableTable", "classyoi_1_1IRVariableTable.html", "classyoi_1_1IRVariableTable" ],
+      [ "lambdaCapture", "classyoi_1_1lambdaCapture.html", "classyoi_1_1lambdaCapture" ],
       [ "lambdaExpr", "classyoi_1_1lambdaExpr.html", "classyoi_1_1lambdaExpr" ],
       [ "leftExpr", "classyoi_1_1leftExpr.html", "classyoi_1_1leftExpr" ],
       [ "letAssignmentPair", "classyoi_1_1letAssignmentPair.html", "classyoi_1_1letAssignmentPair" ],

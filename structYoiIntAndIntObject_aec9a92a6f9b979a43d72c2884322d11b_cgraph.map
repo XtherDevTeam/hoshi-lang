@@ -1,15 +1,17 @@
 <map id="gc_refcount_decrease" name="gc_refcount_decrease">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,169,80"/>
-<area shape="rect" id="Node000002" href="$memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="217,55,392,80"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,65,203,65,203,70,170,70"/>
-<area shape="rect" id="Node000003" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="440,47,615,87"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,65,426,65,426,70,392,70"/>
-<area shape="rect" id="Node000004" href="$hperf_8cpp.html#aaf58587f9ab0e21837b7911a6c5d7a4e" title=" " alt="" coords="663,55,839,80"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="615,65,649,65,649,70,615,70"/>
-<area shape="rect" id="Node000005" href="$hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="887,5,1073,31"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="810,52,906,31,907,36,811,57"/>
-<area shape="rect" id="Node000006" href="$hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="910,55,1050,80"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="839,65,896,65,896,70,839,70"/>
-<area shape="rect" id="Node000007" href="$threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="895,104,1065,129"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="811,77,907,98,906,104,810,83"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,169,105"/>
+<area shape="rect" id="Node000002" href="$memory_8cpp.html#aadd6dcb4d367e405a3c4d02e248c4220" title=" " alt="" coords="238,55,413,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,81,224,75,224,81,170,87"/>
+<area shape="rect" id="Node000008" href="$weak_8cpp.html#a96cb61c83a72ba3803146d5da2342301" title=" " alt="" coords="217,104,433,129"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="170,98,204,102,203,107,169,104"/>
+<area shape="rect" id="Node000003" href="$memory_8cpp.html#a9a1ef7e1e26adc283a63e6e1d8c957e8" title=" " alt="" coords="481,47,656,87"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="413,65,468,65,468,70,413,70"/>
+<area shape="rect" id="Node000004" href="$hperf_8cpp.html#aaf58587f9ab0e21837b7911a6c5d7a4e" title=" " alt="" coords="704,55,880,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="657,65,690,65,690,70,657,70"/>
+<area shape="rect" id="Node000005" href="$hperf_8cpp.html#ae5c0aa6b1fd738b24c08e6d93ae7302d" title=" " alt="" coords="928,5,1115,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="851,52,947,31,949,36,852,57"/>
+<area shape="rect" id="Node000006" href="$hperf_8cpp.html#a04bedf29bc6690c89cd06904036aa334" title=" " alt="" coords="951,55,1091,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="880,65,938,65,938,70,880,70"/>
+<area shape="rect" id="Node000007" href="$threading_8cpp.html#a938ca90c1828b71db528aee755a79baf" title=" " alt="" coords="937,104,1106,129"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="852,77,949,98,947,104,851,83"/>
 </map>

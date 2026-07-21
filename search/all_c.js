@@ -27,7 +27,7 @@ var searchData=
   ['decivalue_24',['deciValue',['../unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html#aed6968ad55daa7546c8e358e813fb55f',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::PossibleValue']]],
   ['declaration_20and_20initialization_25',['declaration and initialization',['../md_docs_2Array.html#autotoc_md5',1,'Declaration and Initialization'],['../md_docs_2Array.html#autotoc_md2',1,'Declaration and Initialization']]],
   ['declareruntimefunctions_26',['declareRuntimeFunctions',['../classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322',1,'yoi::LLVMCodegen']]],
-  ['decltypeexpr_27',['decltypeexpr',['../classyoi_1_1decltypeExpr.html',1,'decltypeExpr'],['../classyoi_1_1primary.html#a7de9373d9ee62125ba912cb94b2a7bdd',1,'yoi::primary::decltypeExpr'],['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a459eab97433f8085f5cf9da2fd1116ce',1,'yoi::typeSpec::DecltypeExpr']]],
+  ['decltypeexpr_27',['decltypeexpr',['../classyoi_1_1decltypeExpr.html',1,'decltypeExpr'],['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a459eab97433f8085f5cf9da2fd1116ce',1,'yoi::typeSpec::DecltypeExpr'],['../classyoi_1_1primary.html#a7de9373d9ee62125ba912cb94b2a7bdd',1,'yoi::primary::decltypeExpr']]],
   ['decltypeexpression_28',['decltypeExpression',['../classyoi_1_1typeSpec.html#a001bbccdc36cf8bfa8d01dffa7c5f24e',1,'yoi::typeSpec']]],
   ['decrement_29',['decrement',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afc05f9565a0d3be36cba41084eb987c1',1,'yoi::IR']]],
   ['decrementsign_30',['decrementSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a6258cce631b789eccd9479b03b5a9e40',1,'yoi::lexer::token']]],
