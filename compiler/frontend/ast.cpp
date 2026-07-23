@@ -755,27 +755,32 @@ namespace yoi {
     }
 
     void finalizeAST(implInnerPair *ptr) {
+        if (!ptr) return;
         if (ptr->isConstructor()) {
             finalizeAST(ptr->con);
         } else if (ptr->isFinalizer()) {
             finalizeAST(ptr->finalizer);
-        } else {
+        } else if (ptr->met) {
             finalizeAST(ptr->met);
         }
         delete ptr;
     }
 
     void finalizeAST(implInner *ptr) {
+        if (!ptr) return;
         for (auto &i : ptr->getInner())
             finalizeAST(i);
         delete ptr;
     }
 
     void finalizeAST(implStmt *ptr) {
+        if (!ptr) return;
         if (ptr->isImplForStmt())
             finalizeAST(ptr->interfaceName);
-        finalizeAST(ptr->structName);
-        finalizeAST(ptr->inner);
+        if (ptr->structName)
+            finalizeAST(ptr->structName);
+        if (ptr->inner)
+            finalizeAST(ptr->inner);
         delete ptr;
     }
 

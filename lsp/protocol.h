@@ -412,7 +412,7 @@ inline void to_json(json &j, const TextDocumentSyncOptions &o) {
 
 struct CompletionOptions {
     bool resolveProvider = false;
-    std::vector<std::string> triggerCharacters = {".", ":"};
+    std::vector<std::string> triggerCharacters = {".", ":", "\"", "/"};
 };
 
 inline void to_json(json &j, const CompletionOptions &o) {

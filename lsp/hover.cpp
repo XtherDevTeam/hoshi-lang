@@ -109,7 +109,8 @@ std::optional<Hover> HoverProvider::hoverOnSymbol(Document *doc, const Position 
 
     // Search in document-local symbols
     for (auto &sym : doc->symbols) {
-        if (sym.name == wWord && static_cast<int>(sym.line) == line) {
+        if (sym.name == wWord && static_cast<int>(sym.line) == line &&
+            isSymbolVisibleAt(doc->symbols, sym, static_cast<yoi::indexT>(line))) {
             return makeHoverForSymbol(sym);
         }
         // Check children
@@ -123,6 +124,7 @@ std::optional<Hover> HoverProvider::hoverOnSymbol(Document *doc, const Position 
     // If we have a parent (dot access), search cross-module symbols under that parent
     if (!parentName.empty()) {
         for (auto &cross : doc->crossModuleSymbols) {
+            if (cross.isLocal) continue;
             if (cross.name == wWord && cross.parentName == parentName) {
                 return makeHoverForSymbol(cross);
             }
@@ -131,6 +133,7 @@ std::optional<Hover> HoverProvider::hoverOnSymbol(Document *doc, const Position 
 
     // Broader search: any local symbol with matching name (any line)
     for (auto &sym : doc->symbols) {
+        if (!isSymbolVisibleAt(doc->symbols, sym, static_cast<yoi::indexT>(line))) continue;
         if (sym.name == wWord) {
             return makeHoverForSymbol(sym);
         }
@@ -143,6 +146,7 @@ std::optional<Hover> HoverProvider::hoverOnSymbol(Document *doc, const Position 
 
     // Cross-module search (any parent)
     for (auto &cross : doc->crossModuleSymbols) {
+        if (cross.isLocal) continue;
         if (cross.name == wWord) {
             return makeHoverForSymbol(cross);
         }

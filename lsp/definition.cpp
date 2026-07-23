@@ -96,6 +96,7 @@ DefinitionResult DefinitionProvider::provide(Document *doc, const Position &pos,
 
     // Search document-local symbols
     for (auto &sym : doc->symbols) {
+        if (!isSymbolVisibleAt(doc->symbols, sym, static_cast<yoi::indexT>(pos.line))) continue;
         if (sym.name == wWord) {
             result.push_back(makeLocation(fileUri, sym.line, sym.column, word.size()));
             return result;
@@ -111,6 +112,7 @@ DefinitionResult DefinitionProvider::provide(Document *doc, const Position &pos,
     // Dot-access: search cross-module symbols
     if (!parentName.empty()) {
         for (auto &cross : doc->crossModuleSymbols) {
+            if (cross.isLocal) continue;
             if (cross.name == wWord && cross.parentName == parentName) {
                 if (!cross.sourceFile.empty()) {
                     result.push_back(makeLocation("file://" + yoi::wstring2string(cross.sourceFile), cross.line, cross.column, word.size()));
@@ -124,6 +126,7 @@ DefinitionResult DefinitionProvider::provide(Document *doc, const Position &pos,
 
     // Cross-module search without parent
     for (auto &cross : doc->crossModuleSymbols) {
+        if (cross.isLocal) continue;
         if (cross.name == wWord) {
             if (!cross.sourceFile.empty()) {
                 result.push_back(makeLocation("file://" + yoi::wstring2string(cross.sourceFile), cross.line, cross.column, word.size()));

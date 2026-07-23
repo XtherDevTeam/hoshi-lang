@@ -91,13 +91,37 @@ void SymbolExtractor::visitFuncDef(yoi::funcDefStmt *stmt) {
     if (stmt->resultType) {
         sym.typeInfo = formatTypeSpec(stmt->resultType);
     }
+    if (stmt->block) {
+        sym.endLine = stmt->block->endLine;
+        sym.endColumn = stmt->block->endColumn + 1;
+    }
 
     symbols.push_back(sym);
+
+    // Extract parameters as local variables
+    if (stmt->args) {
+        for (auto *arg : stmt->args->spec) {
+            if (arg && arg->id) {
+                Symbol param;
+                param.kind = HoshiSymbolKind::Variable;
+                param.line = arg->getLine();
+                param.column = arg->getColumn();
+                param.name = tokenStrVal(arg->id->node);
+                param.parentName = sym.name;
+                param.isLocal = true;
+                param.ownerLine = sym.line;
+                if (arg->spec) param.typeInfo = formatTypeSpec(arg->spec);
+                param.detail = L"param " + param.name;
+                if (!param.typeInfo.empty()) param.detail += L": " + param.typeInfo;
+                symbols.push_back(param);
+            }
+        }
+    }
 
     // Visit function body for local symbols
     if (stmt->block) {
         for (auto *cbStmt : stmt->block->stmts) {
-            visitInCodeBlock(cbStmt, sym.name);
+            visitInCodeBlock(cbStmt, sym.name, sym.line);
         }
     }
 }
@@ -262,7 +286,8 @@ static yoi::wstr tryExtractTypeFromExpr(yoi::rExpr *expr) {
     return L"";
 }
 
-void SymbolExtractor::visitLetStmt(yoi::letStmt *stmt, const yoi::wstr &inParent) {
+void SymbolExtractor::visitLetStmt(yoi::letStmt *stmt, const yoi::wstr &inParent,
+                                   yoi::indexT ownerLine) {
     if (!stmt) return;
 
     for (auto *pair : stmt->terms) {
@@ -273,6 +298,8 @@ void SymbolExtractor::visitLetStmt(yoi::letStmt *stmt, const yoi::wstr &inParent
         sym.line = pair->getLine();
         sym.column = pair->getColumn();
         sym.parentName = inParent;
+        sym.isLocal = !inParent.empty();
+        sym.ownerLine = ownerLine;
 
         if (pair->lhs->kind == yoi::letAssignmentPairLHS::vKind::identifier && pair->lhs->id) {
             sym.name = tokenStrVal(pair->lhs->id->node);
@@ -412,18 +439,97 @@ void SymbolExtractor::visitImpl(yoi::implStmt *stmt) {
                     sym.detail += L": " + formatTypeSpec(pair->met->resultType);
                     sym.typeInfo = formatTypeSpec(pair->met->resultType);
                 }
+                if (pair->met->block) {
+                    sym.endLine = pair->met->block->endLine;
+                    sym.endColumn = pair->met->block->endColumn + 1;
+                }
+                // Synthetic 'this' variable for member access completion
+                if (!structName.empty()) {
+                    Symbol thisSym;
+                    thisSym.kind = HoshiSymbolKind::Variable;
+                    thisSym.name = L"this";
+                    thisSym.parentName = sym.name;
+                    thisSym.isLocal = true;
+                    thisSym.ownerLine = sym.line;
+                    thisSym.typeInfo = structName;
+                    thisSym.detail = L"this: " + structName;
+                    thisSym.line = sym.line;
+                    thisSym.column = sym.column;
+                    symbols.push_back(thisSym);
+                }
+                // Extract parameters as local variables
+                if (pair->met->args) {
+                    for (auto *arg : pair->met->args->spec) {
+                        if (arg && arg->id) {
+                            Symbol param;
+                            param.kind = HoshiSymbolKind::Variable;
+                            param.line = arg->getLine();
+                            param.column = arg->getColumn();
+                            param.name = tokenStrVal(arg->id->node);
+                            param.parentName = sym.name;
+                            param.isLocal = true;
+                            param.ownerLine = sym.line;
+                            if (arg->spec) param.typeInfo = formatTypeSpec(arg->spec);
+                            param.detail = L"param " + param.name;
+                            if (!param.typeInfo.empty()) param.detail += L": " + param.typeInfo;
+                            symbols.push_back(param);
+                        }
+                    }
+                }
+                // Visit method body for local variables
+                if (pair->met->block) {
+                    for (auto *cbStmt : pair->met->block->stmts) {
+                        visitInCodeBlock(cbStmt, sym.name, sym.line);
+                    }
+                }
             } else if (pair->con) {
                 sym.kind = HoshiSymbolKind::Constructor;
                 sym.line = pair->getLine();
                 sym.column = pair->getColumn();
                 sym.name = L"constructor";
                 sym.detail = L"constructor" + formatDefinitionArgs(pair->con->args);
+                if (pair->con->block) {
+                    sym.endLine = pair->con->block->endLine;
+                    sym.endColumn = pair->con->block->endColumn + 1;
+                }
+                // Extract constructor parameters
+                if (pair->con->args) {
+                    for (auto *arg : pair->con->args->spec) {
+                        if (arg && arg->id) {
+                            Symbol param;
+                            param.kind = HoshiSymbolKind::Variable;
+                            param.line = arg->getLine();
+                            param.column = arg->getColumn();
+                            param.name = tokenStrVal(arg->id->node);
+                            param.parentName = L"constructor";
+                            param.isLocal = true;
+                            param.ownerLine = sym.line;
+                            if (arg->spec) param.typeInfo = formatTypeSpec(arg->spec);
+                            param.detail = L"param " + param.name;
+                            if (!param.typeInfo.empty()) param.detail += L": " + param.typeInfo;
+                            symbols.push_back(param);
+                        }
+                    }
+                }
+                // Visit constructor body
+                if (pair->con->block) {
+                    for (auto *cbStmt : pair->con->block->stmts) {
+                        visitInCodeBlock(cbStmt, L"constructor", sym.line);
+                    }
+                }
             } else if (pair->finalizer) {
                 sym.kind = HoshiSymbolKind::Finalizer;
                 sym.line = pair->getLine();
                 sym.column = pair->getColumn();
                 sym.name = L"finalizer";
                 sym.detail = L"finalizer()";
+                if (pair->finalizer->block) {
+                    sym.endLine = pair->finalizer->block->endLine;
+                    sym.endColumn = pair->finalizer->block->endColumn + 1;
+                    for (auto *cbStmt : pair->finalizer->block->stmts) {
+                        visitInCodeBlock(cbStmt, sym.name, sym.line);
+                    }
+                }
             }
 
             if (!sym.name.empty())
@@ -474,18 +580,19 @@ void SymbolExtractor::visitConceptDef(yoi::conceptDefinition *stmt) {
     symbols.push_back(sym);
 }
 
-void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::wstr &inParent) {
+void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::wstr &inParent,
+                                       yoi::indexT ownerLine) {
     if (!stmt) return;
 
     switch (stmt->kind) {
         case yoi::inCodeBlockStmt::vKind::letStmt:
-            visitLetStmt(static_cast<yoi::letStmt *>(stmt->value.ptr), inParent);
+            visitLetStmt(static_cast<yoi::letStmt *>(stmt->value.ptr), inParent, ownerLine);
             break;
         case yoi::inCodeBlockStmt::vKind::codeBlock: {
             auto *cb = static_cast<yoi::codeBlock *>(stmt->value.ptr);
             if (cb) {
                 for (auto *s : cb->stmts)
-                    visitInCodeBlock(s, inParent);
+                    visitInCodeBlock(s, inParent, ownerLine);
             }
             break;
         }
@@ -494,14 +601,14 @@ void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::ws
             if (ifs) {
                 if (ifs->ifB.block)
                     for (auto *s : ifs->ifB.block->stmts)
-                        visitInCodeBlock(s, inParent);
+                        visitInCodeBlock(s, inParent, ownerLine);
                 for (auto &elif : ifs->elifB)
                     if (elif.block)
                         for (auto *s : elif.block->stmts)
-                            visitInCodeBlock(s, inParent);
+                            visitInCodeBlock(s, inParent, ownerLine);
                 if (ifs->elseB)
                     for (auto *s : ifs->elseB->stmts)
-                        visitInCodeBlock(s, inParent);
+                        visitInCodeBlock(s, inParent, ownerLine);
             }
             break;
         }
@@ -509,17 +616,17 @@ void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::ws
             auto *ws = static_cast<yoi::whileStmt *>(stmt->value.ptr);
             if (ws && ws->block)
                 for (auto *s : ws->block->stmts)
-                    visitInCodeBlock(s, inParent);
+                    visitInCodeBlock(s, inParent, ownerLine);
             break;
         }
         case yoi::inCodeBlockStmt::vKind::forStmt: {
             auto *fs = static_cast<yoi::forStmt *>(stmt->value.ptr);
             if (fs) {
-                if (fs->initStmt) visitInCodeBlock(fs->initStmt, inParent);
-                if (fs->afterStmt) visitInCodeBlock(fs->afterStmt, inParent);
+                if (fs->initStmt) visitInCodeBlock(fs->initStmt, inParent, ownerLine);
+                if (fs->afterStmt) visitInCodeBlock(fs->afterStmt, inParent, ownerLine);
                 if (fs->block)
                     for (auto *s : fs->block->stmts)
-                        visitInCodeBlock(s, inParent);
+                        visitInCodeBlock(s, inParent, ownerLine);
             }
             break;
         }
@@ -533,11 +640,13 @@ void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::ws
                 sym.name = tokenStrVal(fes->var->node);
                 sym.detail = L"foreach " + sym.name;
                 sym.parentName = inParent;
+                sym.isLocal = true;
+                sym.ownerLine = ownerLine;
                 symbols.push_back(sym);
             }
             if (fes && fes->block)
                 for (auto *s : fes->block->stmts)
-                    visitInCodeBlock(s, inParent);
+                    visitInCodeBlock(s, inParent, ownerLine);
             break;
         }
         case yoi::inCodeBlockStmt::vKind::tryCatchStmt: {
@@ -545,7 +654,7 @@ void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::ws
             if (tcs) {
                 if (tcs->tryBlock)
                     for (auto *s : tcs->tryBlock->stmts)
-                        visitInCodeBlock(s, inParent);
+                        visitInCodeBlock(s, inParent, ownerLine);
                 for (auto *cp : tcs->catchParams) {
                     if (cp && cp->name) {
                         Symbol sym;
@@ -555,15 +664,17 @@ void SymbolExtractor::visitInCodeBlock(yoi::inCodeBlockStmt *stmt, const yoi::ws
                         sym.name = tokenStrVal(cp->name->node);
                         sym.detail = L"catch " + sym.name;
                         sym.parentName = inParent;
+                        sym.isLocal = true;
+                        sym.ownerLine = ownerLine;
                         symbols.push_back(sym);
                     }
                     if (cp && cp->block)
                         for (auto *s : cp->block->stmts)
-                            visitInCodeBlock(s, inParent);
+                            visitInCodeBlock(s, inParent, ownerLine);
                 }
                 if (tcs->finallyBlock)
                     for (auto *s : tcs->finallyBlock->stmts)
-                        visitInCodeBlock(s, inParent);
+                        visitInCodeBlock(s, inParent, ownerLine);
             }
             break;
         }

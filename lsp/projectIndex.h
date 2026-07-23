@@ -21,6 +21,7 @@ public:
 
     void setSearchPaths(const std::vector<std::string> &paths);
     void addSearchPath(const std::string &path);
+    const std::vector<std::string> &getSearchPaths() const { return searchPaths; }
 
     /// Resolve an import path string to an absolute file path.
     /// @param importPath  The path string from use/import statement (e.g. "lib/math")

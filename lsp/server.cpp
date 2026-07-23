@@ -366,6 +366,42 @@ static lsp::SymbolKind mapSymbolKind(HoshiSymbolKind k) {
     }
 }
 
+static DocumentSymbol documentSymbolFor(const Symbol &symbol) {
+    DocumentSymbol result;
+    result.name = yoi::wstring2string(symbol.name);
+    result.detail = yoi::wstring2string(symbol.detail);
+    result.kind = mapSymbolKind(symbol.kind);
+
+    const int startLine = safeInt(symbol.line);
+    const int startColumn = safeInt(symbol.column);
+    const bool hasEnd = symbol.endLine != 0 || symbol.endColumn != 0;
+    int endLine = safeInt(hasEnd ? symbol.endLine : symbol.line);
+    int endColumn = safeInt(hasEnd ? symbol.endColumn :
+                            symbol.column + symbol.name.size());
+    if (endLine < startLine) endLine = startLine;
+    if (endLine == startLine && endColumn <= startColumn) endColumn = startColumn + 1;
+
+    result.range.start.line = startLine;
+    result.range.start.character = startColumn;
+    result.range.end.line = endLine;
+    result.range.end.character = endColumn;
+    result.selectionRange.start.line = startLine;
+    result.selectionRange.start.character = startColumn;
+    result.selectionRange.end.line = startLine;
+    result.selectionRange.end.character = startColumn + safeInt(symbol.name.size());
+    if (result.selectionRange.end.character <= startColumn) {
+        result.selectionRange.end.character = startColumn + 1;
+    }
+    return result;
+}
+
+static void extendRangeToInclude(Range &range, const Range &child) {
+    if (child.end.line > range.end.line ||
+        (child.end.line == range.end.line && child.end.character > range.end.character)) {
+        range.end = child.end;
+    }
+}
+
 void LspServer::handleDocumentSymbol(const json &id, const json &params) {
     auto uri = params["textDocument"]["uri"].get<std::string>();
     Document *doc = documents.getDocument(uri);
@@ -374,44 +410,30 @@ void LspServer::handleDocumentSymbol(const json &id, const json &params) {
 
     if (doc && doc->parseSucceeded) {
         for (auto &sym : doc->symbols) {
-            DocumentSymbol ds;
-            ds.name = yoi::wstring2string(sym.name);
-            ds.detail = yoi::wstring2string(sym.detail);
-            ds.kind = mapSymbolKind(sym.kind);
+            if (sym.isLocal) continue;
 
-            int sl = safeInt(sym.line);
-            int sc = safeInt(sym.column);
-            int el = safeInt(sym.endLine > 0 ? sym.endLine : sym.line);
-            int ec = safeInt(sym.endColumn > 0 ? sym.endColumn : sym.column + sym.name.size());
-            // Ensure end >= start
-            if (ec <= sc) ec = sc + 1;
-            if (el < sl) el = sl;
-
-            ds.range.start.line = sl;
-            ds.range.start.character = sc;
-            ds.range.end.line = el;
-            ds.range.end.character = ec;
-            ds.selectionRange = ds.range;
+            DocumentSymbol ds = documentSymbolFor(sym);
+            const Range selectionRange = ds.selectionRange;
 
             for (auto &child : sym.children) {
-                DocumentSymbol cs;
-                cs.name = yoi::wstring2string(child.name);
-                cs.detail = yoi::wstring2string(child.detail);
-                cs.kind = mapSymbolKind(child.kind);
-
-                int cl = safeInt(child.line);
-                int cc = safeInt(child.column);
-                int cel = cl;
-                int cec = cc + safeInt(child.name.size());
-                if (cec <= cc) cec = cc + 1;
-
-                cs.range.start.line = cl;
-                cs.range.start.character = cc;
-                cs.range.end.line = cel;
-                cs.range.end.character = cec;
-                cs.selectionRange = cs.range;
-                ds.children.push_back(cs);
+                DocumentSymbol childSymbol = documentSymbolFor(child);
+                extendRangeToInclude(ds.range, childSymbol.range);
+                ds.children.push_back(std::move(childSymbol));
             }
+
+            // Function parameters and body declarations live in the extractor's
+            // lookup index. Present them as children rather than top-level Outline entries.
+            for (auto &local : doc->symbols) {
+                if (!local.isLocal || local.parentName != sym.name ||
+                    local.ownerLine != sym.line) {
+                    continue;
+                }
+                DocumentSymbol localSymbol = documentSymbolFor(local);
+                extendRangeToInclude(ds.range, localSymbol.range);
+                ds.children.push_back(std::move(localSymbol));
+            }
+
+            ds.selectionRange = selectionRange;
 
             result.push_back(ds);
         }

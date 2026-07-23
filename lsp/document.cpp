@@ -200,6 +200,7 @@ void DocumentStore::resolveAndIndexImports(const std::string &uri, Document &doc
 
         // Tag symbols with module alias and add to crossModuleSymbols
         for (const auto &sym : modSymbols) {
+            if (sym.isLocal) continue;
             Symbol tagged = sym;
             tagged.sourceFile = yoi::string2wstring(resolvedPath);
             // Set module alias as parent for top-level symbols only.

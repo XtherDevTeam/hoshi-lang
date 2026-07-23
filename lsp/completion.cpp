@@ -5,9 +5,36 @@
 #include "completion.h"
 #include <algorithm>
 #include <compiler/ir/IR.h>
+#include <filesystem>
+#include <set>
 #include <share/def.hpp>
 
 namespace lsp {
+
+namespace fs = std::filesystem;
+
+static std::string documentFilePath(const Document *doc) {
+    if (!doc) return "";
+    std::string path = doc->uri;
+    if (path.rfind("file://", 0) == 0) path = path.substr(7);
+    return path;
+}
+
+static std::vector<fs::path> moduleSearchRoots(const Document *doc) {
+    std::vector<fs::path> roots;
+    const std::string documentPath = documentFilePath(doc);
+    if (!documentPath.empty()) {
+        const fs::path parent = fs::path(documentPath).parent_path();
+        roots.push_back(parent);
+        roots.push_back(parent / ".tsuki_modules");
+    }
+    if (doc && doc->projectIndex) {
+        for (const auto &searchPath : doc->projectIndex->getSearchPaths()) {
+            if (!searchPath.empty()) roots.emplace_back(searchPath);
+        }
+    }
+    return roots;
+}
 
 // Look up a function's return type from the visitor's IR module.
 static std::string getReturnTypeFromIR(Document *doc, const std::string &funcName) {
@@ -124,7 +151,21 @@ CompletionList CompletionProvider::provide(Document *doc, const Position &pos) {
     }
 
     // Gather completions
-    if (!doc->parseSucceeded && afterDot && !dotPrefix.empty()) {
+    const std::string beforeCursor = charPos >= 0 && charPos <= static_cast<int>(lineText.size())
+        ? lineText.substr(0, charPos) : lineText;
+    const size_t firstNonSpace = beforeCursor.find_first_not_of(" \t");
+    const std::string useText = firstNonSpace == std::string::npos ? "" : beforeCursor.substr(firstNonSpace);
+    if (useText.rfind("use", 0) == 0 &&
+        (useText.size() == 3 || std::isspace(static_cast<unsigned char>(useText[3])))) {
+        const std::string useTail = useText.substr(3);
+        const size_t quote = useTail.find('"');
+        if (quote != std::string::npos && useTail.find('"', quote + 1) == std::string::npos) {
+            result.items = usePathCompletions(doc, useTail.substr(quote + 1));
+        } else if (quote == std::string::npos) {
+            result.items = useModuleCompletions(doc, prefix);
+        }
+        return result;
+    } else if (!doc->parseSucceeded && afterDot && !dotPrefix.empty()) {
         // Parse failed but we have a dot-prefix — try to resolve the module
         // from the raw text. This handles incomplete code like "str." where
         // the parser throws on the trailing dot.
@@ -140,10 +181,10 @@ CompletionList CompletionProvider::provide(Document *doc, const Position &pos) {
         return result;
     } else if (afterDot && !dotPrefix.empty()) {
         // Member access — try to match dotPrefix to a module alias or struct
-        result.items = memberCompletions(doc, dotPrefix, prefix);
+        result.items = memberCompletions(doc, dotPrefix, prefix, lineNum);
         // If member completions returned nothing, fall back to global completions
         if (result.items.empty()) {
-            result.items = symbolCompletions(doc, prefix);
+            result.items = symbolCompletions(doc, prefix, lineNum);
             auto crossItems = crossModuleCompletions(doc, prefix);
             result.items.insert(result.items.end(), crossItems.begin(), crossItems.end());
             auto kwCompletions = keywordCompletions(prefix);
@@ -152,14 +193,14 @@ CompletionList CompletionProvider::provide(Document *doc, const Position &pos) {
     } else if (afterDot) {
         // Dot without a clear prefix (e.g., at start of line, or after a number)
         // Fall through to global completions instead of returning empty
-        result.items = symbolCompletions(doc, prefix);
+        result.items = symbolCompletions(doc, prefix, lineNum);
         auto crossItems = crossModuleCompletions(doc, prefix);
         result.items.insert(result.items.end(), crossItems.begin(), crossItems.end());
         auto kwCompletions = keywordCompletions(prefix);
         result.items.insert(result.items.end(), kwCompletions.begin(), kwCompletions.end());
     } else {
         // Symbol + keyword completions (global scope)
-        result.items = symbolCompletions(doc, prefix);
+        result.items = symbolCompletions(doc, prefix, lineNum);
         auto crossItems = crossModuleCompletions(doc, prefix);
         result.items.insert(result.items.end(), crossItems.begin(), crossItems.end());
         auto kwCompletions = keywordCompletions(prefix);
@@ -175,12 +216,35 @@ CompletionList CompletionProvider::provide(Document *doc, const Position &pos) {
     return result;
 }
 
-std::vector<CompletionItem> CompletionProvider::memberCompletions(Document *doc, const std::string &parent, const std::string &prefix) {
+std::vector<CompletionItem> CompletionProvider::memberCompletions(Document *doc, const std::string &parent, const std::string &prefix, int cursorLine) {
     std::vector<CompletionItem> result;
     yoi::wstr wParent = yoi::string2wstring(parent);
 
-    // Check document-local symbols: find a struct/interface or variable with name == parent
+    // Find all symbols matching parent name
+    std::vector<const Symbol *> matching;
     for (auto &sym : doc->symbols) {
+        if (cursorLine >= 0 &&
+            !isSymbolVisibleAt(doc->symbols, sym, static_cast<yoi::indexT>(cursorLine))) {
+            continue;
+        }
+        if (sym.name == wParent) matching.push_back(&sym);
+    }
+    // If multiple matches, pick the one closest to cursorLine (innermost scope)
+    const Symbol *bestMatch = nullptr;
+    if (!matching.empty()) {
+        bestMatch = matching[0];
+        if (cursorLine >= 0 && matching.size() > 1) {
+            for (auto *m : matching) {
+                if (static_cast<int>(m->line) <= cursorLine &&
+                    static_cast<int>(m->line) > static_cast<int>(bestMatch->line)) {
+                    bestMatch = m;
+                }
+            }
+        }
+    }
+
+    if (bestMatch) {
+        const auto &sym = *bestMatch;
         if (sym.name == wParent) {
             // Case 1: struct/interface — offer its children
             if (!sym.children.empty()) {
@@ -258,6 +322,7 @@ std::vector<CompletionItem> CompletionProvider::crossModuleCompletions(Document 
     if (!doc) return result;
 
     for (auto &sym : doc->crossModuleSymbols) {
+        if (sym.isLocal) continue;
         std::string name = yoi::wstring2string(sym.name);
         if (name.rfind(prefix, 0) != 0) continue;
 
@@ -372,12 +437,89 @@ std::vector<CompletionItem> CompletionProvider::keywordCompletions(const std::st
     return result;
 }
 
-std::vector<CompletionItem> CompletionProvider::symbolCompletions(Document *doc, const std::string &prefix) {
+std::vector<CompletionItem> CompletionProvider::useModuleCompletions(
+        Document *doc, const std::string &prefix) {
+    std::vector<CompletionItem> result;
+    std::set<std::string> moduleNames = {"builtin"};
+
+    for (const auto &root : moduleSearchRoots(doc)) {
+        std::error_code ec;
+        if (!fs::is_directory(root, ec)) continue;
+        for (const auto &entry : fs::directory_iterator(root, ec)) {
+            if (ec) break;
+            const fs::path path = entry.path();
+            if (entry.is_regular_file(ec) && path.extension() == ".hoshi") {
+                moduleNames.insert(path.stem().string());
+            } else if (entry.is_directory(ec) && fs::is_regular_file(path / "index.hoshi", ec)) {
+                moduleNames.insert(path.filename().string());
+            }
+        }
+    }
+
+    for (const auto &name : moduleNames) {
+        if (!prefix.empty() && name.rfind(prefix, 0) != 0) continue;
+        CompletionItem item;
+        item.label = name;
+        item.kind = CompletionItemKind::Module;
+        item.detail = "use " + name + " \"" + name + "\"";
+        item.insertText = name + " \"" + name + "\"";
+        item.sortText = name;
+        result.push_back(std::move(item));
+    }
+    return result;
+}
+
+std::vector<CompletionItem> CompletionProvider::usePathCompletions(
+        Document *doc, const std::string &pathPrefix) {
+    std::vector<CompletionItem> result;
+    const size_t slash = pathPrefix.find_last_of("/\\");
+    const std::string directoryPart = slash == std::string::npos ? "" : pathPrefix.substr(0, slash + 1);
+    const std::string entryPrefix = slash == std::string::npos ? pathPrefix : pathPrefix.substr(slash + 1);
+    std::set<std::string> entries;
+
+    for (const auto &root : moduleSearchRoots(doc)) {
+        const fs::path directory = root / fs::path(directoryPart);
+        std::error_code ec;
+        if (!fs::is_directory(directory, ec)) continue;
+        for (const auto &entry : fs::directory_iterator(directory, ec)) {
+            if (ec) break;
+            const std::string name = entry.path().filename().string();
+            if (name.empty() || name[0] == '.' ||
+                (!entryPrefix.empty() && name.rfind(entryPrefix, 0) != 0)) {
+                continue;
+            }
+            if (entry.is_directory(ec)) {
+                entries.insert(name + "/");
+            } else if (entry.is_regular_file(ec) && entry.path().extension() == ".hoshi") {
+                entries.insert(name);
+            }
+        }
+    }
+
+    for (const auto &entry : entries) {
+        CompletionItem item;
+        item.label = directoryPart + entry;
+        item.kind = entry.back() == '/' ? CompletionItemKind::Folder : CompletionItemKind::File;
+        item.detail = entry.back() == '/' ? "directory" : "Hoshi module";
+        item.insertText = entry;
+        item.sortText = entry;
+        result.push_back(std::move(item));
+    }
+    return result;
+}
+
+std::vector<CompletionItem> CompletionProvider::symbolCompletions(Document *doc,
+                                                                    const std::string &prefix,
+                                                                    int cursorLine) {
     std::vector<CompletionItem> result;
 
     if (!doc || !doc->parseSucceeded) return result;
 
     for (auto &sym : doc->symbols) {
+        if (cursorLine >= 0 &&
+            !isSymbolVisibleAt(doc->symbols, sym, static_cast<yoi::indexT>(cursorLine))) {
+            continue;
+        }
         std::string name = yoi::wstring2string(sym.name);
         if (name.rfind(prefix, 0) != 0) continue;
 
@@ -532,6 +674,7 @@ std::vector<CompletionItem> CompletionProvider::resolveModuleCompletionsFromText
 
     // Build completion items
     for (const auto &sym : modSymbols) {
+        if (sym.isLocal) continue;
         std::string name = yoi::wstring2string(sym.name);
         if (!prefix.empty() && name.rfind(prefix, 0) != 0) continue;
 

@@ -16,9 +16,12 @@ public:
 
 private:
     std::vector<CompletionItem> keywordCompletions(const std::string &prefix);
-    std::vector<CompletionItem> symbolCompletions(Document *doc, const std::string &prefix);
+    std::vector<CompletionItem> useModuleCompletions(Document *doc, const std::string &prefix);
+    std::vector<CompletionItem> usePathCompletions(Document *doc, const std::string &pathPrefix);
+    std::vector<CompletionItem> symbolCompletions(Document *doc, const std::string &prefix,
+                                                   int cursorLine);
     std::vector<CompletionItem> crossModuleCompletions(Document *doc, const std::string &prefix);
-    std::vector<CompletionItem> memberCompletions(Document *doc, const std::string &parent, const std::string &prefix);
+    std::vector<CompletionItem> memberCompletions(Document *doc, const std::string &parent, const std::string &prefix, int cursorLine = -1);
     std::vector<CompletionItem> resolveModuleCompletionsFromText(Document *doc, const std::string &parent, const std::string &prefix);
     std::vector<CompletionItem> completionsForType(Document *doc, const yoi::wstr &typeName, const std::string &prefix);
     std::vector<CompletionItem> completionsForTypeNameFromModules(Document *doc, const std::string &typeName, const std::string &prefix);

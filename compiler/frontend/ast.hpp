@@ -1021,6 +1021,9 @@ namespace yoi {
     class codeBlock : public AST {
       public:
         vec<inCodeBlockStmt *> stmts;
+        // Set by the parser from the closing brace; AST's base token is the opening brace.
+        yoi::indexT endLine = 0;
+        yoi::indexT endColumn = 0;
 
         vec<inCodeBlockStmt *> &getStmts();
     };

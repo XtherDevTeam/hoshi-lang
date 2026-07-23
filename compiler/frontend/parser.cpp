@@ -872,8 +872,12 @@ namespace yoi {
                 stmt = nullptr; // Reset stmt for the next parse call
             }
             if (lex.curToken.kind == lexer::token::tokenKind::rightBraces) {
+                yoi::indexT endLine = lex.curToken.line;
+                yoi::indexT endColumn = lex.curToken.col;
                 lex.scan();
                 o = new codeBlock{node_start_token, stmts};
+                o->endLine = endLine;
+                o->endColumn = endColumn;
             } else {
                 finalizeAST_vec(stmts);
                 panic(lex.line, lex.col, "expected `}` to close codeBlock");

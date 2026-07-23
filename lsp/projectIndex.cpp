@@ -152,6 +152,7 @@ const yoi::vec<Symbol> *ProjectIndex::getModuleSymbols(const std::string &absolu
 void ProjectIndex::getAllSymbols(yoi::vec<Symbol> &out) {
     for (auto &[path, mod] : modules) {
         for (auto &sym : mod.symbols) {
+            if (sym.isLocal) continue;
             // Tag with source module path
             Symbol tagged = sym;
             // Store the source file path so we can navigate to it
