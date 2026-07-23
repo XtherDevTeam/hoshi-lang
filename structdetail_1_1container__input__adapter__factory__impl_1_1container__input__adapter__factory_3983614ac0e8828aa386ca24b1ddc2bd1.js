@@ -1,0 +1,5 @@
+var structdetail_1_1container__input__adapter__factory__impl_1_1container__input__adapter__factory_3983614ac0e8828aa386ca24b1ddc2bd1 =
+[
+    [ "adapter_type", "structdetail_1_1container__input__adapter__factory__impl_1_1container__input__adapter__factory_3983614ac0e8828aa386ca24b1ddc2bd1.html#a1cd0538caf52d4cc724f9749e09ee864", null ],
+    [ "create", "structdetail_1_1container__input__adapter__factory__impl_1_1container__input__adapter__factory_3983614ac0e8828aa386ca24b1ddc2bd1.html#a7d67e4d966208307203a03e3cbedb101", null ]
+];

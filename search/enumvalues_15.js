@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['yield_0',['yield',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a16f10dfd541c23362492b4e513adf0a1',1,'yoi::IR']]],
-  ['yield_5fnone_1',['yield_none',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad806586077350986f2bd9f869cd33e48',1,'yoi::IR']]],
-  ['yieldstmt_2',['yieldStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaa10f4454acc5ff676371e8b759cd0f81',1,'yoi::inCodeBlockStmt']]]
+  ['warning_0',['warning',['../namespaceyoi.html#a149b04a4da5c2d7cf8e789d6629ccf33a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'yoi::Warning'],['../namespaceyoi.html#a7e38b7dc326434b90a5960920775f893a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'yoi::Warning'],['../namespacelsp.html#a149b04a4da5c2d7cf8e789d6629ccf33a0eaadb4fcb48a0a0ed7bc9868be9fbaa',1,'lsp::Warning']]],
+  ['weak_1',['Weak',['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdda7324e3727807d95037eb19d304fd91ec',1,'yoi::structDefInnerPair']]],
+  ['weakref_2',['WeakRef',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fabcb3dc62f0b14fbf1aa01243ea6fc696',1,'yoi::IRValueType']]],
+  ['whilestmt_3',['whileStmt',['../classyoi_1_1inCodeBlockStmt.html#a8841073ebfcb23c592e02a483d1c8c9eaf95500e8a7762c39754fbf16df53cb7e',1,'yoi::inCodeBlockStmt']]]
 ];

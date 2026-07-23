@@ -1512,7 +1512,7 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span> </div>
 <div class="line"><a id="l01033" name="l01033"></a><span class="lineno"><a class="line" href="classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7"> 1033</a></span>    <a class="code hl_function" href="classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7">AST::AST</a>() : <a class="code hl_variable" href="classyoi_1_1AST.html#a5a761eb47db5b8e0294ed353d409f819">token</a>() {}</div>
 <div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span> </div>
-<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"><a class="line" href="classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e"> 1035</a></span>    <a class="code hl_function" href="classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7">AST::AST</a>(<a class="code hl_struct" href="structyoi_1_1lexer_1_1token.html">lexer::token</a> token) : token(std::move(token)) {}</div>
+<div class="line"><a id="l01035" name="l01035"></a><span class="lineno"><a class="line" href="classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e"> 1035</a></span>    <a class="code hl_function" href="classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7">AST::AST</a>(<a class="code hl_struct" href="structyoi_1_1lexer_1_1token.html">lexer::token</a> token) : token(<a class="code hl_namespace" href="namespacestd.html">std</a>::move(token)) {}</div>
 <div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span> </div>
 <div class="foldopen" id="foldopen01037" data-start="{" data-end="}">
 <div class="line"><a id="l01037" name="l01037"></a><span class="lineno"><a class="line" href="classyoi_1_1AST.html#a43f2be4f2bb4b38ba53a0d33b9eb3e8c"> 1037</a></span>    <a class="code hl_typedef" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> <a class="code hl_function" href="classyoi_1_1AST.html#a43f2be4f2bb4b38ba53a0d33b9eb3e8c">AST::getColumn</a>() {</div>
@@ -1759,112 +1759,114 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span> </div>
 <div class="foldopen" id="foldopen01218" data-start="{" data-end="}">
 <div class="line"><a id="l01218" name="l01218"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a44ac071c6201fe3f369912d370bda5d4"> 1218</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1funcExpr.html">funcExpr</a> *ptr) {</div>
-<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#acd305f57b7b77d5e3a3950dd5728ead9">args</a>);</div>
-<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#a4dbc9a58ac683cfa466ca89ff05640f2">name</a>);</div>
-<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>    }</div>
+<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>        <span class="keywordflow">if</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#acd305f57b7b77d5e3a3950dd5728ead9">args</a>)</div>
+<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#acd305f57b7b77d5e3a3950dd5728ead9">args</a>);</div>
+<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>        </div>
+<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1funcExpr.html#a4dbc9a58ac683cfa466ca89ff05640f2">name</a>);</div>
+<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span>    }</div>
 </div>
-<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span> </div>
-<div class="foldopen" id="foldopen01224" data-start="{" data-end="}">
-<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a77450020b168c6b27031ad6ea4ac72b5"> 1224</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPairLHS.html">letAssignmentPairLHS</a> *ptr) {</div>
-<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>        <span class="keywordflow">switch</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#afd3a38f0c7cf331db50414efa64d9f58">kind</a>) {</div>
-<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9eaf393f3f5e496869a15bc72cbfd56f541">letAssignmentPairLHS::vKind::identifier</a>:</div>
-<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#aeb120908e79b4a919cdc8252bf1fd4e0">id</a>);</div>
-<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9ea10ae9fc7d453b0dd525d0edf2ede7961">letAssignmentPairLHS::vKind::list</a>:</div>
+<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span> </div>
+<div class="foldopen" id="foldopen01226" data-start="{" data-end="}">
+<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a77450020b168c6b27031ad6ea4ac72b5"> 1226</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1letAssignmentPairLHS.html">letAssignmentPairLHS</a> *ptr) {</div>
+<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>        <span class="keywordflow">switch</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#afd3a38f0c7cf331db50414efa64d9f58">kind</a>) {</div>
+<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9eaf393f3f5e496869a15bc72cbfd56f541">letAssignmentPairLHS::vKind::identifier</a>:</div>
+<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1letAssignmentPairLHS.html#aeb120908e79b4a919cdc8252bf1fd4e0">id</a>);</div>
 <div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>        }</div>
-<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>    }</div>
+<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1letAssignmentPairLHS.html#a8841073ebfcb23c592e02a483d1c8c9ea10ae9fc7d453b0dd525d0edf2ede7961">letAssignmentPairLHS::vKind::list</a>:</div>
+<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>        }</div>
+<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>    }</div>
 </div>
-<div class="foldopen" id="foldopen01234" data-start="{" data-end="}">
-<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a4634aec703455a268e0dc1fe01761aec"> 1234</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1enumerationDefinition.html">enumerationDefinition</a> *ptr) {</div>
-<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
-<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>)</div>
-<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
-<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>    }</div>
+<div class="foldopen" id="foldopen01236" data-start="{" data-end="}">
+<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a4634aec703455a268e0dc1fe01761aec"> 1236</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1enumerationDefinition.html">enumerationDefinition</a> *ptr) {</div>
+<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
+<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationDefinition.html#a881b9af2d88872c27bd28dcf0c413567">values</a>)</div>
+<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
+<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>    }</div>
 </div>
-<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span> </div>
-<div class="foldopen" id="foldopen01241" data-start="{" data-end="}">
-<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aabc8a7fa468f67ec790695b05034fd0a"> 1241</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1enumerationPair.html">enumerationPair</a> *ptr) {</div>
-<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
-<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    }</div>
+<div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span> </div>
+<div class="foldopen" id="foldopen01243" data-start="{" data-end="}">
+<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aabc8a7fa468f67ec790695b05034fd0a"> 1243</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1enumerationPair.html">enumerationPair</a> *ptr) {</div>
+<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1enumerationPair.html#a1a54c58ff64ff8f9011b651b81c0499e">name</a>);</div>
+<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>    }</div>
 </div>
-<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span> </div>
-<div class="foldopen" id="foldopen01246" data-start="{" data-end="}">
-<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"><a class="line" href="namespaceyoi.html#afda441dad03c5684fbb7efc672260ad3"> 1246</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1bracedInitalizerList.html">bracedInitalizerList</a> *ptr) {</div>
-<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;expr : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>)</div>
-<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(expr);</div>
-<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>    }</div>
+<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span> </div>
+<div class="foldopen" id="foldopen01248" data-start="{" data-end="}">
+<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"><a class="line" href="namespaceyoi.html#afda441dad03c5684fbb7efc672260ad3"> 1248</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1bracedInitalizerList.html">bracedInitalizerList</a> *ptr) {</div>
+<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;expr : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1bracedInitalizerList.html#abb78f3227b0a6f64d258e4c9f9279601">exprs</a>)</div>
+<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(expr);</div>
+<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>    }</div>
 </div>
-<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>    </div>
-<div class="foldopen" id="foldopen01252" data-start="{" data-end="}">
-<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aed7adb79d19f7e7ab303ece0047d8654"> 1252</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1yieldStmt.html">yieldStmt</a> *ptr) {</div>
-<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>        <span class="keywordflow">if</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>) {</div>
-<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>        }</div>
-<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>    }</div>
+<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>    </div>
+<div class="foldopen" id="foldopen01254" data-start="{" data-end="}">
+<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aed7adb79d19f7e7ab303ece0047d8654"> 1254</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1yieldStmt.html">yieldStmt</a> *ptr) {</div>
+<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>        <span class="keywordflow">if</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>) {</div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>        }</div>
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>    }</div>
 </div>
-<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span> </div>
-<div class="foldopen" id="foldopen01259" data-start="{" data-end="}">
-<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a6a30bb05965377ae908e2e7e341e34da"> 1259</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1decltypeExpr.html">decltypeExpr</a> *ptr) {</div>
-<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1decltypeExpr.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
-<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>    }</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span> </div>
+<div class="foldopen" id="foldopen01261" data-start="{" data-end="}">
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a6a30bb05965377ae908e2e7e341e34da"> 1261</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1decltypeExpr.html">decltypeExpr</a> *ptr) {</div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1decltypeExpr.html#a81b237c5abdaf1c7cb969dcdf6e24742">expr</a>);</div>
+<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>    }</div>
 </div>
-<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span> </div>
-<div class="foldopen" id="foldopen01264" data-start="{" data-end="}">
-<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a20e7d137436b7ad16f5766de249882bc"> 1264</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1conceptStmt.html">conceptStmt</a> *ptr) {</div>
-<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        <span class="keywordflow">switch</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#afc7ecd207ec6a92f8955fd885c12d6ea">kind</a>) {</div>
-<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043">conceptStmt::Kind::Expression</a>: {</div>
-<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#ad5b6a12e39dd5f99b1c7df7fa9e771d8">expression</a>);</div>
-<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>            }</div>
-<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baf95c41a638ed468f2772cec8ddb9fcea">conceptStmt::Kind::SatisfyStmt</a>: {</div>
-<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#a72ec5682fc56c9c3a815e088079491d5">satisfyStmt</a>);</div>
-<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>            }</div>
-<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>        }</div>
-<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>    }</div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span> </div>
+<div class="foldopen" id="foldopen01266" data-start="{" data-end="}">
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a20e7d137436b7ad16f5766de249882bc"> 1266</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1conceptStmt.html">conceptStmt</a> *ptr) {</div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>        <span class="keywordflow">switch</span> (ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#afc7ecd207ec6a92f8955fd885c12d6ea">kind</a>) {</div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043">conceptStmt::Kind::Expression</a>: {</div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#ad5b6a12e39dd5f99b1c7df7fa9e771d8">expression</a>);</div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>            }</div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baf95c41a638ed468f2772cec8ddb9fcea">conceptStmt::Kind::SatisfyStmt</a>: {</div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>                <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptStmt.html#a3745a9bb41a6ab9c387d6b50c5f52471">value</a>.<a class="code hl_variable" href="unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html#a72ec5682fc56c9c3a815e088079491d5">satisfyStmt</a>);</div>
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span>            }</div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>        }</div>
+<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span>    }</div>
 </div>
-<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span> </div>
-<div class="foldopen" id="foldopen01278" data-start="{" data-end="}">
-<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a5a0abe2033a27a160b452717e2ae717a"> 1278</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1satisfyStmt.html">satisfyStmt</a> *ptr) {</div>
-<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyStmt.html#a4a2721ed9fd6a7186fdd2c7ff4c0675a">emae</a>);</div>
-<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>    }</div>
+<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span> </div>
+<div class="foldopen" id="foldopen01280" data-start="{" data-end="}">
+<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a5a0abe2033a27a160b452717e2ae717a"> 1280</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1satisfyStmt.html">satisfyStmt</a> *ptr) {</div>
+<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span>        <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(ptr-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyStmt.html#a4a2721ed9fd6a7186fdd2c7ff4c0675a">emae</a>);</div>
+<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span>    }</div>
 </div>
-<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span> </div>
-<div class="foldopen" id="foldopen01283" data-start="{" data-end="}">
-<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aa64c5fa4b4185fc87b68885051092a7d"> 1283</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1satisfyClause.html">satisfyClause</a> *ptr) {</div>
-<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>)</div>
-<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
-<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span>    }</div>
+<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span> </div>
+<div class="foldopen" id="foldopen01285" data-start="{" data-end="}">
+<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"><a class="line" href="namespaceyoi.html#aa64c5fa4b4185fc87b68885051092a7d"> 1285</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1satisfyClause.html">satisfyClause</a> *ptr) {</div>
+<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1satisfyClause.html#a06c9904b424134973cfedda9e2397ab0">emaes</a>)</div>
+<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
+<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span>    }</div>
 </div>
-<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>    </div>
-<div class="foldopen" id="foldopen01289" data-start="{" data-end="}">
-<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"><a class="line" href="namespaceyoi.html#ac939288c5e6898584a2ed17daa784145"> 1289</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1conceptDefinition.html">conceptDefinition</a> *ptr) {</div>
-<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>)</div>
-<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
-<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span> </div>
-<div class="line"><a id="l01293" name="l01293"></a><span class="lineno"> 1293</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>)</div>
-<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
-<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span>    }</div>
+<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span>    </div>
+<div class="foldopen" id="foldopen01291" data-start="{" data-end="}">
+<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"><a class="line" href="namespaceyoi.html#ac939288c5e6898584a2ed17daa784145"> 1291</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1conceptDefinition.html">conceptDefinition</a> *ptr) {</div>
+<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#abea3fbb71ed4a918092eb425581aca22">conceptBlock</a>)</div>
+<div class="line"><a id="l01293" name="l01293"></a><span class="lineno"> 1293</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
+<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span> </div>
+<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : ptr-&gt;<a class="code hl_variable" href="classyoi_1_1conceptDefinition.html#a3093cbe5cbea5ee5fbe71e591c405448">algebraParams</a>)</div>
+<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span>            <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(i);</div>
+<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"> 1298</span>    }</div>
 </div>
-<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span> </div>
-<div class="foldopen" id="foldopen01298" data-start="{" data-end="}">
-<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a4f6bc61314d5f64c2cdf3d00b48a5cff"> 1298</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1lambdaCapture.html">lambdaCapture</a> *ptr) {</div>
-<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span>        <span class="keyword">delete</span> ptr;</div>
-<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"> 1300</span>    }</div>
+<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span> </div>
+<div class="foldopen" id="foldopen01300" data-start="{" data-end="}">
+<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"><a class="line" href="namespaceyoi.html#a4f6bc61314d5f64c2cdf3d00b48a5cff"> 1300</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">finalizeAST</a>(<a class="code hl_class" href="classyoi_1_1lambdaCapture.html">lambdaCapture</a> *ptr) {</div>
+<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span>        <span class="keyword">delete</span> ptr;</div>
+<div class="line"><a id="l01302" name="l01302"></a><span class="lineno"> 1302</span>    }</div>
 </div>
-<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span>} <span class="comment">// namespace yoi</span></div>
+<div class="line"><a id="l01303" name="l01303"></a><span class="lineno"> 1303</span>} <span class="comment">// namespace yoi</span></div>
 <div class="ttc" id="aast_8hpp_html"><div class="ttname"><a href="ast_8hpp.html">ast.hpp</a></div></div>
 <div class="ttc" id="aclassyoi_1_1AST_html_a43f2be4f2bb4b38ba53a0d33b9eb3e8c"><div class="ttname"><a href="classyoi_1_1AST.html#a43f2be4f2bb4b38ba53a0d33b9eb3e8c">yoi::AST::getColumn</a></div><div class="ttdeci">yoi::indexT getColumn()</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l01037">ast.cpp:1037</a></div></div>
 <div class="ttc" id="aclassyoi_1_1AST_html_a5a761eb47db5b8e0294ed353d409f819"><div class="ttname"><a href="classyoi_1_1AST.html#a5a761eb47db5b8e0294ed353d409f819">yoi::AST::token</a></div><div class="ttdeci">lexer::token token</div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00016">ast.hpp:16</a></div></div>
@@ -2300,10 +2302,11 @@ $(document).ready(function(){initNavTree('ast_8cpp_source.html',''); initResizab
 <div class="ttc" id="aclassyoi_1_1whileStmt_html_a8342ddcd6ca0160da8328bbdf6d696f1"><div class="ttname"><a href="classyoi_1_1whileStmt.html#a8342ddcd6ca0160da8328bbdf6d696f1">yoi::whileStmt::cond</a></div><div class="ttdeci">rExpr * cond</div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00868">ast.hpp:868</a></div></div>
 <div class="ttc" id="aclassyoi_1_1yieldStmt_html"><div class="ttname"><a href="classyoi_1_1yieldStmt.html">yoi::yieldStmt</a></div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l01105">ast.hpp:1105</a></div></div>
 <div class="ttc" id="aclassyoi_1_1yieldStmt_html_a81b237c5abdaf1c7cb969dcdf6e24742"><div class="ttname"><a href="classyoi_1_1yieldStmt.html#a81b237c5abdaf1c7cb969dcdf6e24742">yoi::yieldStmt::expr</a></div><div class="ttdeci">rExpr * expr</div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l01107">ast.hpp:1107</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition</b> <a href="json_8hpp_source.html#l05638">json.hpp:5639</a></div></div>
 <div class="ttc" id="anamespaceyoi_html"><div class="ttname"><a href="namespaceyoi.html">yoi</a></div><div class="ttdef"><b>Definition</b> <a href="builtinModule_8cpp_source.html#l00007">builtinModule.cpp:7</a></div></div>
-<div class="ttc" id="anamespaceyoi_html_a467112ed789564244f414efb801bf606"><div class="ttname"><a href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a></div><div class="ttdeci">std::vector&lt; t &gt; vec</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00053">def.hpp:53</a></div></div>
+<div class="ttc" id="anamespaceyoi_html_a467112ed789564244f414efb801bf606"><div class="ttname"><a href="namespaceyoi.html#a467112ed789564244f414efb801bf606">yoi::vec</a></div><div class="ttdeci">std::vector&lt; t &gt; vec</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00056">def.hpp:56</a></div></div>
 <div class="ttc" id="anamespaceyoi_html_ad29f4cef2f4dd7cc9f82b53aa220f1fe"><div class="ttname"><a href="namespaceyoi.html#ad29f4cef2f4dd7cc9f82b53aa220f1fe">yoi::finalizeAST</a></div><div class="ttdeci">void finalizeAST(funcTypeSpec *ptr)</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l00475">ast.cpp:475</a></div></div>
-<div class="ttc" id="anamespaceyoi_html_adb858077f604461fe6aba9936e092c59"><div class="ttname"><a href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a></div><div class="ttdeci">uint64_t indexT</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00051">def.hpp:51</a></div></div>
+<div class="ttc" id="anamespaceyoi_html_adb858077f604461fe6aba9936e092c59"><div class="ttname"><a href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a></div><div class="ttdeci">uint64_t indexT</div><div class="ttdef"><b>Definition</b> <a href="def_8hpp_source.html#l00054">def.hpp:54</a></div></div>
 <div class="ttc" id="astructyoi_1_1ifStmt_1_1ifBlock_html"><div class="ttname"><a href="structyoi_1_1ifStmt_1_1ifBlock.html">yoi::ifStmt::ifBlock</a></div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00844">ast.hpp:844</a></div></div>
 <div class="ttc" id="astructyoi_1_1ifStmt_1_1ifBlock_html_a07f9633ac52baaaf0c76bd380f688487"><div class="ttname"><a href="structyoi_1_1ifStmt_1_1ifBlock.html#a07f9633ac52baaaf0c76bd380f688487">yoi::ifStmt::ifBlock::block</a></div><div class="ttdeci">codeBlock * block</div><div class="ttdef"><b>Definition</b> <a href="ast_8hpp_source.html#l00846">ast.hpp:846</a></div></div>
 <div class="ttc" id="astructyoi_1_1ifStmt_1_1ifBlock_html_a356c3c41410b1d7e896acc3977402da4"><div class="ttname"><a href="structyoi_1_1ifStmt_1_1ifBlock.html#a356c3c41410b1d7e896acc3977402da4">yoi::ifStmt::ifBlock::getBlock</a></div><div class="ttdeci">codeBlock &amp; getBlock()</div><div class="ttdef"><b>Definition</b> <a href="ast_8cpp_source.html#l00399">ast.cpp:399</a></div></div>

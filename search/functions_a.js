@@ -1,29 +1,5 @@
 var searchData=
 [
-  ['leftbracesstart_0',['leftBracesStart',['../classyoi_1_1lexer.html#ace8a7b16b764e7f10764ba196c92e2bf',1,'yoi::lexer']]],
-  ['leftbracketstart_1',['leftBracketStart',['../classyoi_1_1lexer.html#ad8919db02a1306423680cd0a212f868c',1,'yoi::lexer']]],
-  ['leftparenthesesstart_2',['leftParenthesesStart',['../classyoi_1_1lexer.html#a6f8fd8887795d83608dfd04477d1717e',1,'yoi::lexer']]],
-  ['lessstart_3',['lessStart',['../classyoi_1_1lexer.html#af05da5f9c8f5703ee28d28c69627cfd7',1,'yoi::lexer']]],
-  ['lessthan_4',['lessThan',['../classyoi_1_1IRFunctionOptimizer.html#a969fec9b5397f86e8b2b9b0de7643e2d',1,'yoi::IRFunctionOptimizer']]],
-  ['lessthanorequal_5',['lessThanOrEqual',['../classyoi_1_1IRFunctionOptimizer.html#a0c205cbb52cfd5f38fc18b817fb17af1',1,'yoi::IRFunctionOptimizer']]],
-  ['lexer_6',['lexer',['../classyoi_1_1lexer.html#a3e70362cee7281a81eeda9cf15c431b9',1,'yoi::lexer']]],
-  ['lexerstate_7',['lexerstate',['../structyoi_1_1lexer_1_1lexerState.html#a4310b1342800b0d4d15fbfd9c42f1b9c',1,'yoi::lexer::lexerState::lexerState()'],['../structyoi_1_1lexer_1_1lexerState.html#a2523d6aa620784df882eccca379ab6f7',1,'yoi::lexer::lexerState::lexerState(int64_t line, int64_t col, std::istream::pos_type pos, wchar curCh, lexer::token curToken)']]],
-  ['link_8',['link',['../classyoi_1_1IRLinker.html#a85d12b46568af8240d98793975258055',1,'yoi::IRLinker::link()'],['../classyoi_1_1ccObjectLinker.html#a88535eb12674f44d463684c24b042796',1,'yoi::ccObjectLinker::link()'],['../classyoi_1_1clObjectLinker.html#a88535eb12674f44d463684c24b042796',1,'yoi::clObjectLinker::link()'],['../classyoi_1_1ObjectLinker.html#abf3eeb00b9123177fee9bf0cd8dacf26',1,'yoi::ObjectLinker::link()']]],
-  ['linkdatastructs_9',['linkDataStructs',['../classyoi_1_1IRLinker.html#a6bbde9c3360fe1be7cb23bde6ee30f70',1,'yoi::IRLinker']]],
-  ['linkfunctions_10',['linkFunctions',['../classyoi_1_1IRLinker.html#ae68d50e49807a0a7ccd2d3c034ff4ddb',1,'yoi::IRLinker']]],
-  ['linkglobals_11',['linkGlobals',['../classyoi_1_1IRLinker.html#a26d595530d9be8841f7525d1b5a790ef',1,'yoi::IRLinker']]],
-  ['linkinterfaceimplementations_12',['linkInterfaceImplementations',['../classyoi_1_1IRLinker.html#a20d7184f8379eb2520bf427b79d8fe96',1,'yoi::IRLinker']]],
-  ['linkmetadata_13',['linkMetadata',['../classyoi_1_1IRLinker.html#ac80c633b34938139555e30aa01cc5d9a',1,'yoi::IRLinker']]],
-  ['linkstringliterals_14',['linkStringLiterals',['../classyoi_1_1IRLinker.html#a3063d4c1a27f7cdaa23f5efd4563900e',1,'yoi::IRLinker']]],
-  ['linkstructsandinterfaces_15',['linkStructsAndInterfaces',['../classyoi_1_1IRLinker.html#a559cad0c47bafda74cc4655844447752',1,'yoi::IRLinker']]],
-  ['llvmcodegen_16',['LLVMCodegen',['../classyoi_1_1LLVMCodegen.html#abe737b08bbea2ab093a1cd472ab6d60b',1,'yoi::LLVMCodegen']]],
-  ['llvmmodulecontext_17',['LLVMModuleContext',['../classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#a2f1e789ad71b7b1a9ee3b60136037a5f',1,'yoi::LLVMCodegen::LLVMModuleContext']]],
-  ['loadarrayelement_18',['loadArrayElement',['../classyoi_1_1LLVMCodegen.html#a4f2b59b3cde85f85039438386a163a19',1,'yoi::LLVMCodegen']]],
-  ['loadfieldop_19',['loadFieldOp',['../classyoi_1_1IRBuilder.html#a57a61de621491190c2dd56b4b45d66c9',1,'yoi::IRBuilder']]],
-  ['loadifdatastructobject_20',['loadIfDataStructObject',['../classyoi_1_1LLVMCodegen.html#a2bbbfd685e3fb848cfb60855ad433e33',1,'yoi::LLVMCodegen']]],
-  ['loadmemberop_21',['loadMemberOp',['../classyoi_1_1IRBuilder.html#a929108fd017267ee3de6c55f07383e95',1,'yoi::IRBuilder']]],
-  ['loadop_22',['loadOp',['../classyoi_1_1IRBuilder.html#a62af10556fd0b343fc291d6f2ac8407a',1,'yoi::IRBuilder']]],
-  ['log2_23',['log2',['../namespacemagic__enum_1_1detail.html#aa5cd07d5e927019f4334ceff84b6efa3',1,'magic_enum::detail']]],
-  ['lookup_24',['lookup',['../classyoi_1_1IRVariableTable.html#a7cd25b7e613a55a001832da74b9660c8',1,'yoi::IRVariableTable']]],
-  ['lookupname_25',['lookupName',['../classyoi_1_1IRStructDefinition.html#a76b34d519d3e12727df4979e2b1d069f',1,'yoi::IRStructDefinition']]]
+  ['key_0',['key',['../classdetail_1_1iteration__proxy__value.html#abc3ac7627d8224586acc61d67642c437',1,'detail::iteration_proxy_value::key()'],['../structjson__sax.html#af0c21952a55e3e160164edacbd8e299b',1,'json_sax::key()'],['../classdetail_1_1json__sax__dom__parser.html#a782946a5e5130d52b22b4431e8d362ac',1,'detail::json_sax_dom_parser::key()'],['../classdetail_1_1json__sax__dom__callback__parser.html#a782946a5e5130d52b22b4431e8d362ac',1,'detail::json_sax_dom_callback_parser::key()'],['../classdetail_1_1json__sax__acceptor.html#a79f63b679fb384cf2666f9a6ca84dd85',1,'detail::json_sax_acceptor::key()'],['../classdetail_1_1iter__impl.html#a7114d4ce21cacb91c15551ff869509ac',1,'detail::iter_impl::key()'],['../classdetail_1_1json__reverse__iterator.html#a1359d494f51ba1623240b074019a163c',1,'detail::json_reverse_iterator::key()']]],
+  ['keywordcompletions_1',['keywordCompletions',['../classlsp_1_1CompletionProvider.html#a5320304e94e257c0b5222ee7ad67ce7b',1,'lsp::CompletionProvider']]]
 ];

@@ -1,19 +1,9 @@
 var searchData=
 [
-  ['yieldstmt_0',['yieldStmt',['../classyoi_1_1yieldStmt.html',1,'yoi']]],
-  ['yoibooleanobject_1',['YoiBooleanObject',['../structYoiBooleanObject.html',1,'']]],
-  ['yoicharobject_2',['YoiCharObject',['../structYoiCharObject.html',1,'']]],
-  ['yoidecimalobject_3',['YoiDecimalObject',['../structYoiDecimalObject.html',1,'']]],
-  ['yoiintandintobject_4',['YoiIntAndIntObject',['../structYoiIntAndIntObject.html',1,'']]],
-  ['yoiintegerobject_5',['YoiIntegerObject',['../structYoiIntegerObject.html',1,'']]],
-  ['yoiobject_6',['YoiObject',['../structYoiObject.html',1,'']]],
-  ['yoiobjectarray_7',['YoiObjectArray',['../structYoiObjectArray.html',1,'']]],
-  ['yoiresultunsignedandintobject_8',['YoiResultUnsignedAndIntObject',['../structYoiResultUnsignedAndIntObject.html',1,'']]],
-  ['yoishortobject_9',['YoiShortObject',['../structYoiShortObject.html',1,'']]],
-  ['yoistringobject_10',['YoiStringObject',['../structYoiStringObject.html',1,'']]],
-  ['yoitypeinfo_11',['YoiTypeInfo',['../structYoiTypeInfo.html',1,'']]],
-  ['yoitypeinfoobject_12',['YoiTypeInfoObject',['../structYoiTypeInfoObject.html',1,'']]],
-  ['yoiunsignedobject_13',['YoiUnsignedObject',['../structYoiUnsignedObject.html',1,'']]],
-  ['yoivoidcallableinterface_14',['YoiVoidCallableInterface',['../structYoiVoidCallableInterface.html',1,'']]],
-  ['yoivoidintcallableinterface_15',['YoiVoidIntCallableInterface',['../structYoiVoidIntCallableInterface.html',1,'']]]
+  ['weakslot_0',['WeakSlot',['../structWeakSlot.html',1,'']]],
+  ['whilestmt_1',['whileStmt',['../classyoi_1_1whileStmt.html',1,'yoi']]],
+  ['wide_5fstring_5finput_5fadapter_2',['wide_string_input_adapter',['../classdetail_1_1wide__string__input__adapter.html',1,'detail']]],
+  ['wide_5fstring_5finput_5fhelper_3',['wide_string_input_helper',['../structdetail_1_1wide__string__input__helper.html',1,'detail']]],
+  ['wide_5fstring_5finput_5fhelper_3c_20baseinputadapter_2c_202_20_3e_4',['wide_string_input_helper&lt; BaseInputAdapter, 2 &gt;',['../structdetail_1_1wide__string__input__helper_3_01BaseInputAdapter_00_012_01_4.html',1,'detail']]],
+  ['wide_5fstring_5finput_5fhelper_3c_20baseinputadapter_2c_204_20_3e_5',['wide_string_input_helper&lt; BaseInputAdapter, 4 &gt;',['../structdetail_1_1wide__string__input__helper_3_01BaseInputAdapter_00_014_01_4.html',1,'detail']]]
 ];

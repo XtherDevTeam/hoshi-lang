@@ -1,0 +1,36 @@
+<map id="create" name="create">
+<area shape="rect" id="Node000001" title=" " alt="" coords="679,203,741,228"/>
+<area shape="rect" id="Node000002" href="$classjson__pointer.html#aa2295b37d3287629ac3db2838aa611e4" title=" " alt="" coords="455,39,599,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="697,191,671,141,652,115,629,93,598,77,601,72,632,89,656,112,675,138,701,188"/>
+<area shape="rect" id="Node000003" href="$classjson__pointer.html#a74270c14c64336e6740ee9e5838d1067" title="return last reference token" alt="" coords="457,153,598,179"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="665,204,630,194,582,181,583,176,631,189,666,199"/>
+<area shape="rect" id="Node000006" href="$classjson__pointer.html#abd8c83b452e3f88b55cab9b650ecad2b" title=" " alt="" coords="432,104,623,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="688,194,662,167,629,143,603,132,605,127,632,138,666,163,692,190"/>
+<area shape="rect" id="Node000011" href="$classjson__pointer.html#aedb59f9cbf330484bbc909f0af8a0b0c" title=" " alt="" coords="432,203,623,228"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="665,218,623,218,623,213,665,213"/>
+<area shape="rect" id="Node000012" href="$classjson__pointer.html#ad480d571b332a1152c5de644135662c5" title="return a reference to the pointed to value" alt="" coords="424,351,631,376"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="702,242,676,293,656,319,632,342,611,353,609,348,629,337,652,316,671,290,697,240"/>
+<area shape="rect" id="Node000015" href="$classjson__pointer.html#a5d52bdf1f5daec77b0b63466d395cdda" title="return a const reference to the pointed to value" alt="" coords="424,301,631,327"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="692,241,666,268,632,292,605,304,603,299,629,288,662,264,688,237"/>
+<area shape="rect" id="Node000016" href="$classjson__pointer.html#a058bda4957df6a97b1ea6c9fd783f672" title="remove last reference token" alt="" coords="441,252,613,277"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="666,233,631,243,587,254,586,249,630,238,665,227"/>
+<area shape="rect" id="Node000004" href="$classbasic__json.html#a16263286e449a4f812fdb0a57dc674f7" title="applies a JSON patch in&#45;place without copying the object" alt="" coords="188,203,376,228"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="451,184,347,205,346,200,449,179"/>
+<area shape="rect" id="Node000005" href="$classbasic__json.html#a614dd03ce3e99e79c52bedcf55945645" title="applies a JSON patch to a copy of the current object" alt="" coords="5,203,140,228"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="174,218,141,218,141,213,174,213"/>
+<area shape="rect" id="Node000007" href="$classbasic__json.html#a4d402bba79c6c22a6399472f5ffa748e" title="access specified element via JSON Pointer" alt="" coords="227,5,337,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="439,102,423,94,407,81,398,68,389,56,375,44,337,29,339,24,377,40,393,52,402,65,411,78,425,89,442,97"/>
+<area shape="rect" id="Node000008" href="$classbasic__json.html#a64916a31807a0cf9c5dbb16d228a4d5a" title="access specified element via JSON Pointer" alt="" coords="227,55,337,80"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="450,104,337,81,338,76,451,99"/>
+<area shape="rect" id="Node000009" href="$classbasic__json.html#a77672b7083a6ef8963e9fdf2b457e8cb" title="access specified object element via JSON Pointer with default value" alt="" coords="215,104,349,129"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="418,119,350,119,350,114,418,114"/>
+<area shape="rect" id="Node000010" href="$classbasic__json.html#a7aff120c4509ae79149d01e6f26c2952" title="access specified object element via JSON Pointer with default value" alt="" coords="215,153,349,179"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="451,135,347,156,346,151,449,129"/>
+<area shape="rect" id="Node000013" href="$classbasic__json.html#af16e882a2401f188f4b26d728c5fc2ed" title="access specified element via JSON Pointer" alt="" coords="201,333,363,359"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="410,358,363,354,364,349,410,352"/>
+<area shape="rect" id="Node000014" href="$classbasic__json.html#a3ac9a62afdca75d5793047e6913e5ab1" title="access specified element via JSON Pointer" alt="" coords="201,383,363,408"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="417,380,364,387,363,382,416,375"/>
+<area shape="poly" id="edge17_Node000016_Node000004" title=" " alt="" coords="449,252,346,231,347,225,451,247"/>
+<area shape="rect" id="Node000017" href="$classjson__pointer.html#ab6c65f69131ac8f3b95e5aaf5fdc14d0" title="returns the parent of this JSON pointer" alt="" coords="206,253,358,293"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="428,271,358,273,358,268,428,265"/>
+</map>

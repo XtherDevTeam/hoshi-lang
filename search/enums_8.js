@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['nametype_0',['nameType',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html#a5a23b037529794129c29b82304127dd0',1,'yoi::IRStructDefinition::nameInfo']]]
+  ['mode_0',['Mode',['../classyoi_1_1DiagnosticEngine.html#a46c8a310cf4c094f8c80e1cb8dc1f911',1,'yoi::DiagnosticEngine']]],
+  ['modifier_1',['Modifier',['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd',1,'yoi::structDefInnerPair']]]
 ];

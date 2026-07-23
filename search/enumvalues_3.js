@@ -14,9 +14,12 @@ var searchData=
   ['default_5ftag_11',['default_tag',['../namespacemagic__enum_1_1customize_1_1detail.html#a968be91f69d941a6e0c671c1d4ddebedad2cbf4a95ec1a25747fed3acf4c69f81',1,'magic_enum::customize::detail']]],
   ['direct_5fassign_12',['direct_assign',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a61b3ab147c3ed552692e9b3b620e7f15',1,'yoi::IR']]],
   ['directassignsign_13',['directAssignSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa61c6640d67ee42dee6c9755a9130aa9',1,'yoi::lexer::token']]],
-  ['div_14',['div',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a',1,'yoi::IR']]],
-  ['divisionassignment_15',['divisionAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a95da522d005dab6fff2c0e2f6d1ce400',1,'yoi::lexer::token']]],
-  ['dot_16',['dot',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a69eb76c88557a8211cbfc9beda5fc062',1,'yoi::lexer::token']]],
-  ['dyn_5fcast_5fany_17',['dyn_cast_any',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942',1,'yoi::IR']]],
-  ['dyncastexpression_18',['dynCastExpression',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a31f87f0953204f20a6ff5ebb9a78a74e',1,'yoi::primary']]]
+  ['discarded_14',['discarded',['../namespacedetail.html#aa0235be1ddaa994850c2bf8e0eff8945a94708897ec9db8647dfe695714c98e46',1,'detail']]],
+  ['div_15',['div',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a38696558dc98494c08d951c052900a2a',1,'yoi::IR']]],
+  ['divisionassignment_16',['divisionAssignment',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a95da522d005dab6fff2c0e2f6d1ce400',1,'yoi::lexer::token']]],
+  ['dot_17',['dot',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a69eb76c88557a8211cbfc9beda5fc062',1,'yoi::lexer::token']]],
+  ['draft2_18',['draft2',['../namespacedetail.html#abd44ea9cea6666d2d88ae9afe8a33d8baad7a9bad4532dc7571e87bb05e56660d',1,'detail']]],
+  ['draft3_19',['draft3',['../namespacedetail.html#abd44ea9cea6666d2d88ae9afe8a33d8ba5981540be7e4abfc0ca74258526e6b07',1,'detail']]],
+  ['dyn_5fcast_5fany_20',['dyn_cast_any',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3bdebc793f6d895260a05d9b7b04a942',1,'yoi::IR']]],
+  ['dyncastexpression_21',['dynCastExpression',['../classyoi_1_1primary.html#a436d924fe7de14180235e4eef8740894a31f87f0953204f20a6ff5ebb9a78a74e',1,'yoi::primary']]]
 ];

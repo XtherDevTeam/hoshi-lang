@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['objectlinker_0',['ObjectLinker',['../classyoi_1_1ObjectLinker.html',1,'yoi']]],
-  ['operandvalue_1',['operandValue',['../unionyoi_1_1IROperand_1_1operandValue.html',1,'yoi::IROperand']]],
-  ['overloadresult_2',['OverloadResult',['../structyoi_1_1visitor_1_1OverloadResult.html',1,'yoi::visitor']]]
+  ['nameinfo_0',['nameInfo',['../structyoi_1_1IRStructDefinition_1_1nameInfo.html',1,'yoi::IRStructDefinition']]],
+  ['negation_1',['negation',['../structdetail_1_1negation.html',1,'detail']]],
+  ['newexpression_2',['newExpression',['../classyoi_1_1newExpression.html',1,'yoi']]],
+  ['nonesuch_3',['nonesuch',['../structdetail_1_1nonesuch.html',1,'detail']]]
 ];

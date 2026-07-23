@@ -1,5 +1,6 @@
 var dir_e955afc72e8af59637c9070b8690ff98 =
 [
+    [ "diagnostics", "dir_e6dbd01f3a8d1d40cd9b1498f7bdd4ac.html", "dir_e6dbd01f3a8d1d40cd9b1498f7bdd4ac" ],
     [ "frontend", "dir_b39aeecaa19ddbcde04a3e84c918be44.html", "dir_b39aeecaa19ddbcde04a3e84c918be44" ],
     [ "ir", "dir_5ac02bc4c7160d821e951888f3dd3321.html", "dir_5ac02bc4c7160d821e951888f3dd3321" ],
     [ "llvmCodegen", "dir_dbd8d4bb83627d071258a47709316d35.html", "dir_dbd8d4bb83627d071258a47709316d35" ],

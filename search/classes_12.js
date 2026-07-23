@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['valid_5fcount_5ft_0',['valid_count_t',['../structmagic__enum_1_1detail_1_1valid__count__t.html',1,'magic_enum::detail']]],
-  ['valuestackwithphi_1',['ValueStackWithPhi',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html',1,'yoi::LLVMCodegen']]],
-  ['variablesextrainfo_2',['VariablesExtraInfo',['../structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html',1,'yoi::IRFunctionOptimizer']]],
-  ['vbasicvalue_3',['vBasicValue',['../unionyoi_1_1lexer_1_1token_1_1vBasicValue.html',1,'yoi::lexer::token']]],
-  ['visitor_4',['visitor',['../classyoi_1_1visitor.html',1,'yoi']]],
-  ['vvalue_5',['vvalue',['../unionyoi_1_1globalStmt_1_1vValue.html',1,'globalStmt::vValue'],['../unionyoi_1_1inCodeBlockStmt_1_1vValue.html',1,'inCodeBlockStmt::vValue']]]
+  ['underlying_5ftype_0',['underlying_type',['../structmagic__enum_1_1detail_1_1underlying__type.html',1,'underlying_type&lt; T, bool &gt;'],['../structmagic__enum_1_1underlying__type.html',1,'underlying_type&lt; T &gt;']]],
+  ['underlying_5ftype_3c_20t_2c_20true_20_3e_1',['underlying_type&lt; T, true &gt;',['../structmagic__enum_1_1detail_1_1underlying__type_3_01T_00_01true_01_4.html',1,'magic_enum::detail']]],
+  ['uniqueexpr_2',['uniqueExpr',['../classyoi_1_1uniqueExpr.html',1,'yoi']]],
+  ['unnameddefinitionarguments_3',['unnamedDefinitionArguments',['../classyoi_1_1unnamedDefinitionArguments.html',1,'yoi']]],
+  ['usestmt_4',['useStmt',['../classyoi_1_1useStmt.html',1,'yoi']]],
+  ['utf8unicode_5',['utf8Unicode',['../classutf8Unicode.html',1,'']]]
 ];

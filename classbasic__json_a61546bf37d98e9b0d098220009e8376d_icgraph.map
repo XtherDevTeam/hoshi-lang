@@ -1,0 +1,9 @@
+<map id="insert" name="insert">
+<area shape="rect" id="Node000001" title="inserts element into array" alt="" coords="272,31,331,56"/>
+<area shape="rect" id="Node000002" href="$classbasic__json.html#a6d4ea8d68ca832e209500fcf2ce23729" title="creates a diff as a JSON patch" alt="" coords="147,5,189,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="258,38,189,25,190,19,259,33"/>
+<area shape="rect" id="Node000003" href="$classbasic__json.html#a16263286e449a4f812fdb0a57dc674f7" title="applies a JSON patch in&#45;place without copying the object" alt="" coords="112,55,224,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,54,225,60,224,55,258,48"/>
+<area shape="rect" id="Node000004" href="$classbasic__json.html#a614dd03ce3e99e79c52bedcf55945645" title="applies a JSON patch to a copy of the current object" alt="" coords="5,55,64,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="98,70,64,70,64,65,98,65"/>
+</map>

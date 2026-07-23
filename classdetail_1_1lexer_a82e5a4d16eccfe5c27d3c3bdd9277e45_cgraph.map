@@ -1,0 +1,16 @@
+<map id="scan_string" name="scan_string">
+<area shape="rect" id="Node000001" title="scan a string literal" alt="" coords="5,83,101,108"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1lexer.html#ad76e899cd354b9b982dac0fb47b42e28" title="add a character to token_buffer" alt="" coords="348,7,395,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,81,98,47,122,30,148,17,198,6,249,3,296,5,335,10,334,15,295,10,249,8,199,11,150,22,125,35,102,51,67,85"/>
+<area shape="rect" id="Node000003" href="$classdetail_1_1lexer.html#a38cd6be79a2e16b9590350c1fa20e2d6" title=" " alt="" coords="350,83,393,108"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="102,93,337,93,337,98,102,98"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1lexer.html#a481d21529ffe29267979606e30197e87" title="get codepoint from 4 hex characters following \u" alt="" coords="167,134,282,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="98,106,168,127,167,132,96,111"/>
+<area shape="rect" id="Node000005" href="$classdetail_1_1lexer.html#abe640d54354fdd148f6a3ccf92a677c2" title="check if the next byte(s) are inside a given range" alt="" coords="149,32,300,58"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="96,80,167,59,168,64,98,86"/>
+<area shape="rect" id="Node000006" href="$classdetail_1_1lexer.html#a20194325f0380eb3bbc6bc6c8b2697d9" title="reset token_buffer; current character is beginning of token" alt="" coords="197,183,252,208"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="69,107,105,138,151,169,185,184,183,188,148,174,101,142,66,111"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="261,131,336,105,338,110,263,136"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="298,30,334,23,335,29,299,35"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="263,55,338,82,336,87,261,60"/>
+</map>

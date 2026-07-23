@@ -179,8 +179,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ade15a10b40c7c25be3a18aa4d465fdd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4167f0bdd822c6d4e78802e5564228ff" id="r_a4167f0bdd822c6d4e78802e5564228ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a4167f0bdd822c6d4e78802e5564228ff">setBuildConfig</a> (const std::shared_ptr&lt; <a class="el" href="structyoi_1_1IRBuildConfig.html">IRBuildConfig</a> &gt; &amp;<a class="el" href="classyoi_1_1compilerContext.html#a01671892f454a6b5e9c001a6c2343dbb">buildConfig</a>)</td></tr>
 <tr class="separator:a4167f0bdd822c6d4e78802e5564228ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a657866af472b6317bd9c20be01e523cc" id="r_a657866af472b6317bd9c20be01e523cc"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a657866af472b6317bd9c20be01e523cc">getDiagnosticEngine</a> () const</td></tr>
+<tr class="separator:a657866af472b6317bd9c20be01e523cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9ec167fa341f0f1347cb0b51b5785e" id="r_adc9ec167fa341f0f1347cb0b51b5785e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#adc9ec167fa341f0f1347cb0b51b5785e">setDiagnosticEngine</a> (const std::shared_ptr&lt; <a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a> &gt; &amp;engine)</td></tr>
+<tr class="separator:adc9ec167fa341f0f1347cb0b51b5785e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77767dd0f2c2939c1ca6ffe930aa2be4" id="r_a77767dd0f2c2939c1ca6ffe930aa2be4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRFFITable.html">IRFFITable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a77767dd0f2c2939c1ca6ffe930aa2be4">getIRFFITable</a> ()</td></tr>
 <tr class="separator:a77767dd0f2c2939c1ca6ffe930aa2be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a161d75a220f87c68d6975112f0bff3f6" id="r_a161d75a220f87c68d6975112f0bff3f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a161d75a220f87c68d6975112f0bff3f6">isInitialized</a> () const</td></tr>
+<tr class="separator:a161d75a220f87c68d6975112f0bff3f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3354bb71dff850f00d40071f51e1d182" id="r_a3354bb71dff850f00d40071f51e1d182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a3354bb71dff850f00d40071f51e1d182">registerModule</a> (<a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a> idx, std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt; mod)</td></tr>
+<tr class="separator:a3354bb71dff850f00d40071f51e1d182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe31b1fe910dbd2547cc06213ea20f9e" id="r_abe31b1fe910dbd2547cc06213ea20f9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#abe31b1fe910dbd2547cc06213ea20f9e">runOptimizer</a> ()</td></tr>
 <tr class="separator:abe31b1fe910dbd2547cc06213ea20f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf82832c0a47ae6d87616853e2c98d1d" id="r_aaf82832c0a47ae6d87616853e2c98d1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#aaf82832c0a47ae6d87616853e2c98d1d">~compilerContext</a> ()</td></tr>
@@ -206,10 +214,12 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a4198dadc50abd75ca5b76b7045369b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fcef451b02b4d81c9661f95bafb7839" id="r_a0fcef451b02b4d81c9661f95bafb7839"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1moduleContext.html">moduleContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#a0fcef451b02b4d81c9661f95bafb7839">builtinModuleContext</a></td></tr>
 <tr class="separator:a0fcef451b02b4d81c9661f95bafb7839"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3bd9ae88791383ce3aa1b862f6eeb48" id="r_af3bd9ae88791383ce3aa1b862f6eeb48"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoi_1_1compilerContext.html#af3bd9ae88791383ce3aa1b862f6eeb48">diagnosticEngine</a></td></tr>
+<tr class="separator:af3bd9ae88791383ce3aa1b862f6eeb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00035">35</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00036">36</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a20a81d02d116e13a93ffcdeeef161fb0" name="a20a81d02d116e13a93ffcdeeef161fb0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20a81d02d116e13a93ffcdeeef161fb0">&#9670;&#160;</a></span>compilerContext() <span class="overload">[1/2]</span></h2>
@@ -277,9 +287,9 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00200">200</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00227">227</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::astToFinalize</a>, and <a class="el" href="ast_8cpp_source.html#l00475">yoi::finalizeAST()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::astToFinalize</a>, and <a class="el" href="ast_8cpp_source.html#l00475">yoi::finalizeAST()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -311,109 +321,118 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00044">44</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00052">52</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="def_8cpp_source.html#l00014">yoi::__current_file_path</a>, <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00041">compilerContext::buildConfig</a>, <a class="el" href="def_8hpp_source.html#l00198">indexTable&lt; A, B &gt;::getIndex()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>, <a class="el" href="compilerContext_8h_source.html#l00036">compilerContext::modules</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="def_8hpp_source.html#l00161">indexTable&lt; A, B &gt;::put()</a>, <a class="el" href="def_8cpp_source.html#l00190">yoi::realpath()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="def_8cpp_source.html#l00113">yoi::set_current_file_path()</a>, <a class="el" href="def_8cpp_source.html#l00178">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00184">yoi::wstring2string()</a>.</p>
+<p class="reference">References <a class="el" href="def_8cpp_source.html#l00015">yoi::__current_file_path</a>, <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::buildConfig</a>, <a class="el" href="compilerContext_8h_source.html#l00047">compilerContext::diagnosticEngine</a>, <a class="el" href="def_8hpp_source.html#l00209">indexTable&lt; A, B &gt;::getIndex()</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>, <a class="el" href="compilerContext_8h_source.html#l00037">compilerContext::modules</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="def_8hpp_source.html#l00172">indexTable&lt; A, B &gt;::put()</a>, <a class="el" href="def_8cpp_source.html#l00236">yoi::realpath()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="def_8cpp_source.html#l00123">yoi::set_current_file_path()</a>, <a class="el" href="def_8cpp_source.html#l00019">yoi::set_diagnostic_engine()</a>, <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>, and <a class="el" href="def_8cpp_source.html#l00230">yoi::wstring2string()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1compilerContext_a8e997394cfa7bbf6a3f68f66b5935f2c_cgraph.png" border="0" usemap="#aclassyoi_1_1compilerContext_a8e997394cfa7bbf6a3f68f66b5935f2c_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1compilerContext_a8e997394cfa7bbf6a3f68f66b5935f2c_cgraph" id="aclassyoi_1_1compilerContext_a8e997394cfa7bbf6a3f68f66b5935f2c_cgraph">
-<area shape="rect" title=" " alt="" coords="5,851,128,876"/>
+<area shape="rect" title=" " alt="" coords="5,931,128,956"/>
 <area shape="rect" href="classyoi_1_1indexTable.html#a741ac5ddd3ef961363997aeed13625c4" title=" " alt="" coords="177,5,362,31"/>
-<area shape="poly" title=" " alt="" coords="65,850,67,704,80,463,93,335,112,216,138,117,155,78,174,48,188,36,192,40,178,52,160,81,143,119,117,217,98,336,85,464,72,704,71,850"/>
-<area shape="rect" href="namespaceyoi.html#aeb85681966b20de1c447f55e27b8b20c" title=" " alt="" coords="226,825,313,851"/>
-<area shape="poly" title=" " alt="" coords="128,853,212,842,213,848,128,858"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a22359d6cf8e440f564bb2ca956cee6cf" title=" " alt="" coords="411,851,531,876"/>
-<area shape="poly" title=" " alt="" coords="128,861,397,861,397,866,128,866"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1531,483,1673,508"/>
-<area shape="poly" title=" " alt="" coords="66,850,74,733,93,547,107,448,125,356,147,279,160,248,174,224,236,149,266,121,298,100,333,84,373,74,418,68,469,66,1259,66,1297,70,1332,80,1365,95,1396,116,1424,141,1451,169,1496,233,1533,300,1562,366,1596,468,1591,470,1557,368,1528,303,1492,236,1446,173,1421,145,1393,120,1363,100,1330,85,1296,75,1259,71,469,71,418,73,374,79,335,89,301,105,269,126,239,153,178,228,165,251,152,281,130,357,112,449,98,548,79,734,71,851"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1531,1029,1673,1055"/>
-<area shape="poly" title=" " alt="" coords="71,876,74,939,84,1041,103,1168,136,1304,158,1371,185,1435,218,1494,255,1546,299,1590,349,1624,405,1645,436,1651,469,1653,1259,1653,1307,1647,1350,1633,1389,1609,1424,1578,1454,1541,1481,1499,1505,1453,1525,1405,1556,1305,1577,1209,1590,1127,1596,1068,1601,1069,1595,1128,1582,1210,1561,1306,1530,1407,1510,1456,1486,1502,1459,1544,1427,1582,1392,1613,1352,1637,1308,1653,1259,1658,469,1658,436,1656,404,1650,346,1628,296,1594,251,1550,213,1497,181,1437,153,1373,131,1305,98,1169,78,1042,69,940,66,877"/>
-<area shape="rect" href="classyoi_1_1indexTable.html#a7802446afcec55dfb890eb12e08ba2d5" title=" " alt="" coords="195,1693,344,1719"/>
-<area shape="poly" title=" " alt="" coords="71,876,73,1022,85,1261,98,1389,117,1507,144,1606,160,1644,178,1672,192,1684,188,1688,174,1676,155,1646,139,1607,112,1509,93,1390,80,1262,67,1022,65,876"/>
-<area shape="rect" href="namespaceyoi.html#a4a59d5413d6da04facbe9ac48e2f7fff" title=" " alt="" coords="1363,483,1467,508"/>
-<area shape="poly" title=" " alt="" coords="66,850,71,790,82,694,104,575,139,447,162,384,189,323,222,268,259,218,303,176,352,144,407,124,469,117,1109,117,1143,120,1174,128,1203,142,1230,160,1278,206,1319,261,1352,320,1378,378,1409,469,1404,470,1373,380,1347,323,1314,264,1274,210,1227,164,1200,147,1172,133,1142,125,1109,122,469,122,408,129,354,149,306,180,263,221,226,270,194,326,167,386,144,449,109,576,87,695,76,791,71,851"/>
-<area shape="rect" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7" title=" " alt="" coords="176,1743,363,1768"/>
-<area shape="poly" title=" " alt="" coords="70,877,70,1033,73,1155,80,1290,92,1427,112,1554,125,1610,140,1659,158,1699,178,1730,181,1732,177,1736,174,1733,153,1702,135,1661,119,1612,106,1555,87,1428,74,1291,67,1155,65,1033,65,877"/>
-<area shape="poly" title=" " alt="" coords="313,841,397,851,396,857,312,846"/>
+<area shape="poly" title=" " alt="" coords="65,930,65,771,68,646,75,507,88,365,107,234,120,175,136,124,153,81,174,48,188,36,192,39,178,52,158,84,141,126,126,177,113,235,93,366,81,507,73,646,70,771,70,930"/>
+<area shape="rect" href="namespaceyoi.html#aeb85681966b20de1c447f55e27b8b20c" title=" " alt="" coords="226,880,313,905"/>
+<area shape="poly" title=" " alt="" coords="118,928,212,904,213,909,119,933"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a22359d6cf8e440f564bb2ca956cee6cf" title=" " alt="" coords="411,880,531,905"/>
+<area shape="poly" title=" " alt="" coords="128,938,237,930,362,915,409,906,410,911,363,921,238,936,128,943"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1769,925,1912,951"/>
+<area shape="poly" title=" " alt="" coords="66,930,72,800,89,589,103,477,121,372,144,284,158,249,174,222,205,180,235,147,266,119,298,99,333,83,373,73,418,68,469,66,1431,66,1466,68,1499,74,1559,97,1612,132,1658,178,1697,233,1730,296,1758,363,1780,434,1799,507,1813,580,1831,718,1840,833,1842,911,1837,911,1835,833,1826,718,1808,581,1794,508,1775,436,1753,365,1725,298,1692,236,1654,181,1609,136,1557,101,1498,79,1465,73,1431,71,469,71,418,73,374,79,335,88,301,103,269,124,239,150,209,184,178,225,163,251,149,286,126,373,108,477,94,590,77,800,71,931"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1769,1047,1912,1072"/>
+<area shape="poly" title=" " alt="" coords="80,954,353,1318,580,1616,625,1638,665,1652,702,1660,738,1662,815,1657,912,1653,1431,1653,1481,1648,1527,1633,1569,1610,1607,1581,1642,1545,1674,1504,1702,1460,1727,1413,1769,1316,1799,1223,1820,1143,1832,1085,1837,1086,1825,1144,1805,1224,1774,1318,1732,1415,1707,1462,1678,1507,1646,1548,1611,1585,1572,1615,1529,1638,1482,1653,1431,1658,912,1658,815,1663,738,1667,701,1665,664,1658,623,1643,577,1620,348,1321,75,958"/>
+<area shape="rect" href="classyoi_1_1indexTable.html#a7802446afcec55dfb890eb12e08ba2d5" title=" " alt="" coords="195,1348,344,1373"/>
+<area shape="poly" title=" " alt="" coords="70,956,72,1021,85,1120,98,1175,117,1230,143,1281,178,1327,194,1340,191,1344,174,1331,139,1284,112,1232,93,1176,79,1121,67,1022,65,956"/>
+<area shape="rect" href="namespaceyoi.html#a4a59d5413d6da04facbe9ac48e2f7fff" title=" " alt="" coords="1588,896,1692,921"/>
+<area shape="poly" title=" " alt="" coords="65,930,68,865,76,759,94,627,125,485,147,414,175,347,207,285,246,230,291,183,343,148,402,125,435,119,469,117,1259,117,1321,124,1376,144,1424,176,1466,217,1502,267,1533,323,1559,384,1580,448,1611,579,1629,704,1638,809,1641,882,1636,882,1633,810,1624,705,1606,580,1575,450,1554,386,1528,325,1497,270,1462,221,1420,180,1373,149,1319,129,1259,122,469,122,435,124,403,130,345,152,294,187,250,233,212,288,179,349,152,416,130,486,99,628,81,760,73,866,71,930"/>
+<area shape="rect" href="namespaceyoi.html#aa35210b71ccd4b7364bd60156755f2f7" title=" " alt="" coords="176,1397,363,1423"/>
+<area shape="poly" title=" " alt="" coords="72,956,83,1042,104,1171,119,1239,136,1300,156,1351,178,1384,182,1388,178,1392,174,1388,151,1353,131,1302,114,1240,99,1172,78,1043,67,957"/>
+<area shape="rect" href="namespaceyoi.html#a9cd0735525a34f3140f4ba875eb1b44e" title=" " alt="" coords="197,1447,341,1487"/>
+<area shape="poly" title=" " alt="" coords="72,956,82,1050,103,1193,117,1269,135,1338,155,1395,178,1434,187,1442,183,1446,174,1437,150,1397,130,1339,112,1270,97,1194,77,1050,66,956"/>
+<area shape="poly" title=" " alt="" coords="313,890,397,890,397,895,313,895"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc" title=" " alt="" coords="599,1440,757,1465"/>
-<area shape="poly" title=" " alt="" coords="475,876,482,985,500,1154,514,1244,532,1326,554,1393,567,1418,581,1438,589,1445,586,1449,577,1441,562,1421,549,1395,526,1327,508,1245,494,1155,477,985,470,876"/>
+<area shape="poly" title=" " alt="" coords="475,905,483,1009,501,1170,515,1254,533,1332,555,1395,567,1420,581,1438,589,1445,586,1449,577,1441,563,1422,550,1397,528,1333,510,1255,496,1171,478,1009,470,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a8681018b11c6579e04ba611130c8cc78" title=" " alt="" coords="849,827,977,852"/>
-<area shape="poly" title=" " alt="" coords="471,850,480,766,500,642,515,577,532,519,553,472,577,441,603,423,628,411,653,403,677,401,702,404,727,412,779,441,821,480,853,527,877,579,894,633,905,686,911,736,915,813,910,813,906,737,900,687,888,634,872,581,848,529,816,483,776,445,725,416,701,409,677,406,654,409,630,416,606,428,580,445,557,475,537,521,520,579,506,643,486,767,476,851"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1215,1059,1300,1084"/>
-<area shape="poly" title=" " alt="" coords="474,876,475,1010,478,1112,486,1225,498,1338,517,1441,530,1486,544,1524,561,1555,580,1577,602,1591,630,1601,663,1608,700,1611,785,1608,876,1595,966,1573,1050,1544,1118,1511,1145,1494,1165,1476,1183,1448,1199,1406,1224,1297,1242,1183,1251,1098,1256,1098,1247,1184,1230,1298,1204,1407,1188,1450,1169,1480,1148,1498,1121,1516,1052,1549,968,1578,877,1600,785,1613,700,1616,662,1613,628,1606,600,1596,577,1581,557,1558,540,1526,525,1487,512,1442,493,1338,480,1225,473,1112,470,1010,469,876"/>
+<area shape="poly" title=" " alt="" coords="470,879,479,791,498,657,513,588,530,525,551,474,564,455,577,441,603,423,628,411,653,403,677,401,702,404,727,411,779,441,821,480,853,527,877,579,894,633,905,686,911,736,915,813,910,813,906,737,900,687,888,634,872,581,848,529,816,483,776,445,725,416,701,409,677,406,654,408,630,415,606,428,580,445,568,458,556,477,535,527,518,589,504,658,484,791,476,880"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1215,1096,1300,1121"/>
+<area shape="poly" title=" " alt="" coords="476,905,488,1042,511,1259,526,1369,543,1467,562,1540,571,1564,581,1577,602,1591,630,1601,663,1608,700,1611,784,1608,875,1594,966,1572,1049,1544,1118,1511,1144,1494,1165,1476,1181,1451,1197,1413,1222,1316,1240,1214,1250,1135,1256,1136,1245,1214,1227,1317,1202,1415,1186,1453,1169,1480,1148,1498,1120,1516,1051,1549,968,1577,876,1599,785,1613,700,1616,662,1613,628,1606,600,1596,577,1581,566,1566,556,1542,538,1468,521,1370,506,1259,482,1042,470,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a3470a39cb02cb8b1f41fd1c4fe58a707" title=" " alt="" coords="605,456,751,481"/>
-<area shape="poly" title=" " alt="" coords="469,851,470,787,482,690,495,636,514,583,541,534,577,491,591,480,594,485,580,495,545,537,519,586,500,638,487,691,475,787,474,851"/>
+<area shape="poly" title=" " alt="" coords="471,879,483,801,505,684,536,568,555,522,577,491,591,480,594,484,581,495,560,524,541,569,510,685,488,802,476,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417" title=" " alt="" coords="591,505,765,531"/>
-<area shape="poly" title=" " alt="" coords="469,850,473,794,488,710,501,664,520,619,545,577,577,540,582,536,585,540,581,544,549,580,525,621,506,666,493,712,479,795,475,851"/>
+<area shape="poly" title=" " alt="" coords="469,880,471,819,484,727,497,677,516,627,543,581,577,540,582,536,585,540,581,544,547,584,521,629,502,679,489,729,477,819,474,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#ad2fc283e0d94fb9f8ea52974bc8140e0" title=" " alt="" coords="600,555,756,580"/>
-<area shape="poly" title=" " alt="" coords="470,850,477,801,494,730,508,692,526,655,549,620,577,589,586,583,589,587,580,593,553,623,530,657,513,694,499,732,482,802,476,851"/>
+<area shape="poly" title=" " alt="" coords="470,879,475,826,490,747,504,705,522,663,546,623,577,589,586,583,589,587,580,593,551,627,527,665,509,707,496,749,480,826,475,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#af0232f66a65f67e370deb9964a92a3c8" title=" " alt="" coords="593,604,763,629"/>
-<area shape="poly" title=" " alt="" coords="472,850,481,809,500,751,531,691,552,663,577,639,584,634,587,638,580,643,556,666,536,693,505,754,486,810,477,851"/>
+<area shape="poly" title=" " alt="" coords="471,879,479,834,496,769,510,733,528,699,550,666,577,639,583,634,586,638,580,643,554,670,533,701,515,735,502,770,484,835,476,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a7a91c62a65e18e31a082b16ff0f1a039" title=" " alt="" coords="603,1541,753,1567"/>
-<area shape="poly" title=" " alt="" coords="475,876,480,998,496,1192,510,1294,528,1389,552,1467,565,1498,581,1520,595,1533,592,1537,577,1524,561,1500,547,1469,523,1390,505,1295,491,1192,475,998,470,876"/>
+<area shape="poly" title=" " alt="" coords="475,906,481,1022,498,1207,512,1305,530,1395,553,1470,566,1499,581,1520,595,1533,592,1537,577,1524,561,1501,548,1472,524,1397,506,1306,493,1208,476,1023,470,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6" title=" " alt="" coords="607,653,749,679"/>
-<area shape="poly" title=" " alt="" coords="474,850,486,817,507,773,537,727,577,688,592,679,595,684,580,692,542,730,512,775,491,819,479,851"/>
+<area shape="poly" title=" " alt="" coords="472,879,483,841,503,789,534,735,554,710,577,688,592,678,595,683,580,692,558,713,538,738,508,792,488,843,477,881"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a1286bad3868e3bb8c18bb74c945261f1" title=" " alt="" coords="599,703,757,728"/>
-<area shape="poly" title=" " alt="" coords="477,849,515,795,544,764,577,738,592,731,594,735,580,743,547,768,519,799,482,852"/>
+<area shape="poly" title=" " alt="" coords="475,878,488,849,510,811,540,771,577,737,587,731,590,736,580,741,544,774,515,814,493,851,480,881"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a4bfe830a28614ff2d3268f21261f4424" title=" " alt="" coords="594,752,762,777"/>
-<area shape="poly" title=" " alt="" coords="485,848,525,818,578,788,600,779,602,784,580,792,528,822,488,853"/>
+<area shape="poly" title=" " alt="" coords="479,878,518,833,546,808,577,786,591,780,594,784,580,791,549,812,522,837,483,882"/>
 <area shape="rect" href="classyoi_1_1lexer.html#ace8a7b16b764e7f10764ba196c92e2bf" title=" " alt="" coords="585,801,771,827"/>
-<area shape="poly" title=" " alt="" coords="524,848,610,827,611,833,525,853"/>
+<area shape="poly" title=" " alt="" coords="493,877,532,857,578,837,605,828,607,833,580,842,534,862,496,882"/>
 <area shape="rect" href="classyoi_1_1lexer.html#ad8919db02a1306423680cd0a212f868c" title=" " alt="" coords="583,851,773,876"/>
-<area shape="poly" title=" " alt="" coords="531,861,569,861,569,866,531,866"/>
+<area shape="poly" title=" " alt="" coords="531,882,574,875,575,881,532,887"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a6f8fd8887795d83608dfd04477d1717e" title=" " alt="" coords="583,901,773,941"/>
-<area shape="poly" title=" " alt="" coords="518,873,593,894,592,900,517,879"/>
+<area shape="poly" title=" " alt="" coords="532,898,569,903,569,909,531,903"/>
 <area shape="rect" href="classyoi_1_1lexer.html#af05da5f9c8f5703ee28d28c69627cfd7" title=" " alt="" coords="605,965,751,991"/>
-<area shape="poly" title=" " alt="" coords="486,874,525,912,551,933,580,950,599,959,597,963,577,955,548,937,522,916,482,878"/>
+<area shape="poly" title=" " alt="" coords="493,903,532,927,580,950,605,959,604,964,578,955,529,932,490,908"/>
 <area shape="rect" href="classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1" title=" " alt="" coords="597,1015,759,1040"/>
-<area shape="poly" title=" " alt="" coords="480,875,517,936,545,971,580,1001,590,1007,587,1011,577,1006,541,975,512,939,476,877"/>
+<area shape="poly" title=" " alt="" coords="483,904,521,952,549,979,580,1001,593,1007,590,1012,577,1006,545,983,517,955,479,907"/>
 <area shape="rect" href="classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24" title=" " alt="" coords="607,1064,749,1089"/>
-<area shape="poly" title=" " alt="" coords="478,875,489,911,510,959,540,1009,559,1031,580,1051,596,1060,593,1064,577,1055,555,1035,535,1012,505,961,484,913,473,877"/>
+<area shape="poly" title=" " alt="" coords="479,904,492,935,514,974,543,1016,580,1051,595,1059,592,1064,577,1055,539,1019,509,977,487,937,474,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49" title=" " alt="" coords="611,1113,745,1139"/>
-<area shape="poly" title=" " alt="" coords="476,876,485,919,503,980,534,1045,555,1074,580,1100,599,1111,596,1116,577,1104,551,1078,530,1048,498,982,480,920,471,877"/>
+<area shape="poly" title=" " alt="" coords="477,905,487,943,507,996,537,1053,557,1078,580,1100,599,1111,596,1116,577,1104,553,1082,533,1055,502,999,482,945,472,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a099b462e84ac9b58b70b404350309b6c" title=" " alt="" coords="579,1163,777,1188"/>
-<area shape="poly" title=" " alt="" coords="475,876,481,928,497,1002,511,1042,529,1081,552,1118,580,1149,586,1154,583,1158,577,1153,547,1121,524,1084,506,1044,492,1003,476,928,470,877"/>
+<area shape="poly" title=" " alt="" coords="476,905,483,952,501,1018,514,1054,532,1089,554,1121,580,1149,586,1154,583,1158,577,1153,550,1125,527,1092,510,1056,496,1020,478,953,471,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a8d874d349fcbb8c3534c35d86fff0b37" title=" " alt="" coords="604,1212,752,1237"/>
-<area shape="poly" title=" " alt="" coords="475,876,478,935,491,1022,504,1070,523,1117,548,1161,580,1199,593,1208,590,1212,577,1203,544,1164,518,1119,499,1072,486,1023,472,935,469,876"/>
+<area shape="poly" title=" " alt="" coords="475,905,480,959,495,1039,508,1082,526,1125,550,1164,580,1199,593,1208,590,1212,577,1203,546,1168,521,1127,503,1084,489,1040,474,960,470,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a12b2fbbb16f8041e08ee499a16b39e0b" title=" " alt="" coords="581,1261,775,1287"/>
-<area shape="poly" title=" " alt="" coords="474,876,474,942,485,1043,498,1098,517,1153,544,1204,581,1248,585,1252,581,1256,577,1252,540,1207,512,1155,493,1099,480,1044,469,943,469,876"/>
+<area shape="poly" title=" " alt="" coords="474,905,476,967,489,1059,502,1110,521,1161,546,1207,581,1248,585,1252,582,1256,577,1252,542,1210,516,1163,496,1112,483,1060,471,967,469,905"/>
 <area shape="rect" href="classyoi_1_1lexer.html#aa09f40e2882f2056e06b2f87e52871bc" title=" " alt="" coords="593,1311,763,1351"/>
-<area shape="poly" title=" " alt="" coords="476,876,487,961,509,1088,524,1154,540,1214,560,1264,581,1298,584,1301,581,1305,577,1301,555,1266,535,1216,518,1155,504,1089,482,961,471,877"/>
+<area shape="poly" title=" " alt="" coords="476,905,488,985,511,1103,542,1220,561,1267,581,1298,584,1301,581,1305,577,1301,556,1269,537,1222,506,1104,483,986,471,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#af5a7c493f08b8e6fadc4798b790bbd80" title=" " alt="" coords="579,1375,777,1415"/>
-<area shape="poly" title=" " alt="" coords="476,876,485,971,505,1118,520,1194,537,1265,557,1322,581,1362,584,1365,580,1368,577,1365,552,1325,532,1266,514,1195,500,1119,480,972,470,877"/>
+<area shape="poly" title=" " alt="" coords="476,905,486,995,507,1133,521,1205,538,1271,558,1325,581,1362,584,1365,580,1369,577,1365,553,1327,533,1272,516,1206,502,1134,481,996,471,906"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a2f0c80d4ea2591bb608b0662fcb40c8f" title=" " alt="" coords="584,207,772,232"/>
-<area shape="poly" title=" " alt="" coords="470,850,475,734,491,551,505,454,523,365,547,292,561,263,577,242,580,238,584,242,581,245,566,266,552,294,529,367,510,455,497,552,481,735,475,851"/>
+<area shape="poly" title=" " alt="" coords="470,880,474,759,490,567,503,465,522,372,546,294,560,264,577,242,580,238,584,242,581,245,565,267,551,296,527,373,508,466,495,567,480,759,475,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#ab6cdf69f04dd87caf9100c688d724028" title=" " alt="" coords="599,256,757,281"/>
-<area shape="poly" title=" " alt="" coords="470,850,477,743,494,574,508,486,526,404,549,337,562,311,577,291,586,283,589,287,581,294,567,313,554,339,531,405,514,487,500,575,482,743,475,851"/>
+<area shape="poly" title=" " alt="" coords="470,880,476,767,493,590,506,496,525,410,548,339,561,312,577,291,586,283,589,287,581,294,566,314,553,341,530,412,512,497,498,590,481,767,475,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a971f9ff65b52c70eb02783703c43334d" title=" " alt="" coords="601,305,755,331"/>
-<area shape="poly" title=" " alt="" coords="470,850,479,753,498,603,512,524,530,452,551,393,577,352,594,340,613,332,615,337,596,344,581,356,556,395,535,454,518,526,503,604,484,753,476,851"/>
+<area shape="poly" title=" " alt="" coords="470,880,478,777,496,619,510,535,528,459,550,395,563,371,577,352,593,340,613,332,615,337,596,344,581,356,567,374,555,398,533,460,516,536,502,619,483,778,476,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a4245a46d19c13a95a71ce94fb24daa75" title=" " alt="" coords="609,157,747,183"/>
-<area shape="poly" title=" " alt="" coords="470,850,474,727,488,528,502,423,520,327,545,247,560,216,577,192,594,179,597,183,581,196,564,218,550,249,526,328,507,424,494,529,479,727,475,851"/>
+<area shape="poly" title=" " alt="" coords="469,880,473,751,487,544,500,434,519,333,544,249,559,217,577,192,594,179,597,183,581,196,564,220,549,251,524,334,505,435,492,545,478,751,475,880"/>
 <area shape="rect" href="classyoi_1_1lexer.html#a6bd6ac4da70d5ee139b48a91301df5ee" title=" " alt="" coords="607,355,749,380"/>
-<area shape="poly" title=" " alt="" coords="471,850,481,761,502,625,517,554,534,489,554,435,577,398,593,384,597,388,581,401,559,437,539,490,522,555,507,626,486,761,476,851"/>
-<area shape="poly" title=" " alt="" coords="629,1443,601,1434,577,1417,551,1375,530,1315,512,1241,498,1161,480,1003,471,890,476,890,485,1003,504,1160,517,1240,535,1313,556,1373,581,1413,603,1429,631,1437"/>
+<area shape="poly" title=" " alt="" coords="470,880,480,785,500,641,515,565,532,495,553,437,577,398,593,384,597,388,581,401,557,440,537,497,520,566,506,642,485,786,476,880"/>
+<area shape="poly" title=" " alt="" coords="629,1442,601,1434,577,1417,552,1378,531,1321,514,1252,500,1176,481,1027,471,919,477,919,486,1026,505,1175,519,1250,536,1319,557,1376,581,1413,603,1429,631,1437"/>
 <area shape="poly" title=" " alt="" coords="756,1439,775,1425,790,1407,803,1383,828,1318,849,1240,867,1154,893,985,907,865,912,866,899,986,872,1155,854,1241,833,1320,808,1385,794,1410,779,1429,759,1444"/>
 <area shape="rect" href="classyoi_1_1lexer.html#aee400f5ef44b7c11cd38fad90c05c5df" title=" " alt="" coords="825,1440,1001,1465"/>
 <area shape="poly" title=" " alt="" coords="757,1450,811,1450,811,1455,757,1455"/>
-<area shape="poly" title=" " alt="" coords="935,850,1227,1049,1224,1053,932,854"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1348,994,1483,1034"/>
-<area shape="poly" title=" " alt="" coords="1292,1056,1346,1036,1348,1041,1294,1061"/>
-<area shape="poly" title=" " alt="" coords="1300,1065,1517,1047,1517,1052,1300,1070"/>
-<area shape="poly" title=" " alt="" coords="1421,993,1589,520,1594,522,1426,995"/>
-<area shape="poly" title=" " alt="" coords="1483,1021,1518,1027,1517,1032,1483,1027"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1721,483,1924,508"/>
-<area shape="poly" title=" " alt="" coords="1674,493,1708,493,1708,498,1674,498"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1972,483,2163,508"/>
-<area shape="poly" title=" " alt="" coords="1924,493,1958,493,1958,498,1924,498"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1721,1029,1924,1055"/>
-<area shape="poly" title=" " alt="" coords="1674,1039,1708,1039,1708,1045,1674,1045"/>
-<area shape="poly" title=" " alt="" coords="859,1468,786,1483,703,1494,628,1496,598,1491,577,1480,560,1461,545,1436,521,1370,503,1287,489,1196,474,1017,470,890,475,890,479,1017,494,1195,508,1286,526,1368,550,1434,565,1458,580,1476,600,1486,628,1491,703,1489,785,1477,858,1463"/>
-<area shape="poly" title=" " alt="" coords="924,1438,1233,1093,1237,1096,928,1442"/>
+<area shape="poly" title=" " alt="" coords="933,850,1231,1085,1227,1090,929,854"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1573,946,1707,986"/>
+<area shape="poly" title=" " alt="" coords="1273,1094,1306,1070,1347,1046,1401,1024,1456,1006,1559,979,1560,984,1458,1011,1402,1029,1349,1051,1309,1074,1276,1098"/>
+<area shape="poly" title=" " alt="" coords="1300,1108,1348,1110,1429,1113,1510,1110,1646,1093,1765,1072,1766,1077,1647,1099,1511,1115,1429,1118,1348,1115,1300,1114"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#aaee11174c12852b03dd916ce7f6f367c" title=" " alt="" coords="1348,1061,1511,1101"/>
+<area shape="poly" title=" " alt="" coords="1300,1099,1334,1093,1335,1099,1301,1104"/>
+<area shape="poly" title=" " alt="" coords="1707,954,1756,947,1756,952,1708,959"/>
+<area shape="poly" title=" " alt="" coords="1695,984,1722,996,1806,1038,1803,1043,1720,1000,1693,989"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1960,925,2163,951"/>
+<area shape="poly" title=" " alt="" coords="1912,935,1946,935,1946,941,1912,941"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2211,925,2401,951"/>
+<area shape="poly" title=" " alt="" coords="2163,935,2197,935,2197,941,2163,941"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1960,1047,2163,1072"/>
+<area shape="poly" title=" " alt="" coords="1912,1057,1946,1057,1946,1062,1912,1062"/>
+<area shape="poly" title=" " alt="" coords="1511,1074,1756,1061,1756,1066,1511,1079"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#a2c9f30bc7e130708c4cdd2b0587eaefa" title=" " alt="" coords="1559,1010,1721,1050"/>
+<area shape="poly" title=" " alt="" coords="1510,1058,1545,1050,1546,1055,1512,1064"/>
+<area shape="poly" title=" " alt="" coords="1693,1007,1720,996,1802,955,1805,960,1722,1000,1695,1012"/>
+<area shape="poly" title=" " alt="" coords="1722,1039,1756,1044,1755,1050,1721,1045"/>
+<area shape="poly" title=" " alt="" coords="859,1468,786,1483,703,1494,628,1496,598,1491,577,1480,561,1462,547,1439,523,1376,505,1297,491,1211,475,1041,470,920,475,919,481,1041,497,1211,510,1296,528,1374,552,1436,565,1459,580,1476,600,1486,628,1490,703,1489,785,1477,858,1463"/>
+<area shape="poly" title=" " alt="" coords="926,1438,1232,1129,1236,1133,930,1441"/>
 <area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1049,1440,1167,1465"/>
 <area shape="poly" title=" " alt="" coords="1002,1450,1035,1450,1035,1455,1002,1455"/>
-<area shape="poly" title=" " alt="" coords="1112,1439,1244,1096,1249,1098,1117,1441"/>
+<area shape="poly" title=" " alt="" coords="1112,1439,1243,1133,1248,1135,1117,1441"/>
 <area shape="poly" title=" " alt="" coords="752,475,779,491,813,527,841,569,863,614,881,660,903,747,912,813,907,814,898,748,876,662,859,616,837,572,809,530,776,495,749,480"/>
 <area shape="poly" title=" " alt="" coords="761,529,779,540,810,570,835,605,857,643,874,682,898,755,911,812,905,814,893,757,869,684,852,645,831,608,805,574,776,544,758,533"/>
 <area shape="poly" title=" " alt="" coords="757,577,779,589,806,614,829,642,867,703,892,764,908,812,903,814,887,766,862,706,825,645,802,617,776,593,755,582"/>
@@ -421,8 +440,8 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="703,1539,741,1513,760,1496,775,1477,818,1395,851,1307,875,1217,892,1128,902,1045,908,971,910,866,915,866,913,972,907,1046,897,1129,880,1218,856,1309,823,1397,780,1479,764,1500,744,1518,706,1544"/>
 <area shape="poly" title=" " alt="" coords="733,1539,1001,1475,1040,1466,1041,1471,1002,1481,734,1544"/>
 <area shape="poly" title=" " alt="" coords="750,675,779,688,817,716,851,750,899,814,895,817,847,754,814,720,776,692,748,680"/>
-<area shape="poly" title=" " alt="" coords="744,726,778,738,841,776,890,815,886,819,837,780,776,743,742,731"/>
-<area shape="poly" title=" " alt="" coords="733,775,778,787,868,819,866,824,777,793,732,780"/>
+<area shape="poly" title=" " alt="" coords="748,726,778,737,841,775,890,815,887,819,838,780,776,742,746,731"/>
+<area shape="poly" title=" " alt="" coords="737,775,778,786,870,819,868,824,777,791,735,780"/>
 <area shape="poly" title=" " alt="" coords="772,821,836,828,835,834,771,827"/>
 <area shape="poly" title=" " alt="" coords="773,851,836,845,836,850,774,856"/>
 <area shape="poly" title=" " alt="" coords="741,898,776,886,865,854,866,859,778,891,743,903"/>
@@ -437,15 +456,15 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="761,1373,775,1362,800,1323,823,1267,844,1198,862,1122,890,973,906,865,911,866,895,974,867,1123,849,1199,828,1268,805,1326,779,1365,764,1377"/>
 <area shape="poly" title=" " alt="" coords="764,230,779,241,794,261,809,286,834,352,855,432,873,519,899,691,912,812,907,813,894,691,868,520,850,433,829,353,804,289,790,264,775,245,761,234"/>
 <area shape="poly" title=" " alt="" coords="758,277,779,291,807,331,831,391,852,464,870,543,897,700,912,812,906,813,892,701,865,545,847,465,826,393,802,334,775,295,755,281"/>
-<area shape="poly" title=" " alt="" coords="602,318,581,332,556,370,536,427,519,498,505,575,485,727,476,837,471,837,480,727,499,574,513,496,531,426,552,368,577,328,599,313"/>
+<area shape="poly" title=" " alt="" coords="602,317,581,332,568,349,555,372,534,433,517,508,503,590,484,751,476,866,471,866,479,751,497,589,511,507,529,432,550,370,563,346,577,328,599,313"/>
 <area shape="poly" title=" " alt="" coords="757,325,779,340,805,377,828,430,848,495,867,567,895,709,911,812,906,813,889,710,861,569,843,497,823,432,800,379,775,344,754,330"/>
 <area shape="poly" title=" " alt="" coords="748,174,765,181,779,192,796,213,810,241,837,313,859,401,876,496,901,683,913,813,908,813,896,683,871,497,853,402,832,315,806,243,791,216,775,196,762,186,746,179"/>
-<area shape="poly" title=" " alt="" coords="733,155,794,146,865,146,902,150,938,159,972,173,1003,193,1029,220,1054,258,1077,303,1099,356,1140,478,1175,612,1204,747,1227,871,1255,1045,1250,1045,1222,872,1199,748,1169,613,1135,480,1094,358,1072,306,1049,260,1025,224,1000,197,970,178,936,164,901,155,865,151,794,152,734,160"/>
+<area shape="poly" title=" " alt="" coords="733,155,794,146,865,145,902,150,938,159,972,173,1003,193,1030,222,1055,261,1079,309,1102,364,1142,492,1177,632,1206,773,1229,902,1255,1082,1250,1083,1224,903,1201,774,1172,633,1137,493,1097,366,1074,311,1051,263,1026,225,1000,197,970,178,936,164,901,155,865,151,794,152,733,160"/>
 <area shape="rect" href="namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d" title=" " alt="" coords="851,208,975,233"/>
 <area shape="poly" title=" " alt="" coords="739,180,841,202,840,208,737,185"/>
 <area shape="poly" title=" " alt="" coords="749,378,779,397,819,447,850,503,874,562,891,622,902,680,909,733,915,813,909,813,904,734,897,681,885,623,868,564,845,505,815,450,776,401,746,382"/>
-<area shape="poly" title=" " alt="" coords="1467,493,1517,493,1517,498,1467,498"/>
-<area shape="poly" title=" " alt="" coords="1424,507,1594,1015,1589,1017,1419,509"/>
+<area shape="poly" title=" " alt="" coords="1693,914,1756,923,1755,928,1692,919"/>
+<area shape="poly" title=" " alt="" coords="1693,918,1723,932,1754,955,1782,983,1825,1034,1821,1037,1779,986,1751,959,1720,936,1691,923"/>
 </map>
 </div>
 
@@ -467,9 +486,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00146">146</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00173">173</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -498,9 +517,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00171">171</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00198">198</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00041">compilerContext::buildConfig</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::buildConfig</a>.</p>
 
 </div>
 </div>
@@ -520,9 +539,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00158">158</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00185">185</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -554,7 +573,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00035">35</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>.</p>
 
 </div>
 </div>
@@ -574,11 +593,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00150">150</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00177">177</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00215">compilerContext::normalizeForeignBasicType()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00242">compilerContext::normalizeForeignBasicType()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -602,6 +621,27 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a657866af472b6317bd9c20be01e523cc" name="a657866af472b6317bd9c20be01e523cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a657866af472b6317bd9c20be01e523cc">&#9670;&#160;</a></span>getDiagnosticEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a> &gt; getDiagnosticEngine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00044">44</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00047">compilerContext::diagnosticEngine</a>.</p>
+
+</div>
+</div>
 <a id="a020ef8d5e11b48b50c9b200d200d0a64" name="a020ef8d5e11b48b50c9b200d200d0a64"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a020ef8d5e11b48b50c9b200d200d0a64">&#9670;&#160;</a></span>getForeignFloatObjectType()</h2>
 
@@ -617,9 +657,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00188">188</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00215">215</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -638,9 +678,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00184">184</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00211">211</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -669,7 +709,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00023">23</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>, and <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>, and <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -710,7 +750,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00019">19</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>.</p>
 
 </div>
 </div>
@@ -730,11 +770,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00142">142</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00169">169</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00215">compilerContext::normalizeForeignBasicType()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00242">compilerContext::normalizeForeignBasicType()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -773,9 +813,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00180">180</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00207">207</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::irFFITable</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::irFFITable</a>.</p>
 
 </div>
 </div>
@@ -794,9 +834,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00119">119</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00137">137</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::irObjectFile</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00041">compilerContext::irObjectFile</a>.</p>
 
 </div>
 </div>
@@ -824,9 +864,9 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00196">196</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00223">223</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::builtinModuleContext</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, and <a class="el" href="compilerContext_8h_source.html#l00036">compilerContext::modules</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00046">compilerContext::builtinModuleContext</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, and <a class="el" href="compilerContext_8h_source.html#l00037">compilerContext::modules</a>.</p>
 
 </div>
 </div>
@@ -861,7 +901,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00040">40</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="def_8hpp_source.html#l00198">indexTable&lt; A, B &gt;::getIndex()</a>, and <a class="el" href="compilerContext_8h_source.html#l00036">compilerContext::modules</a>.</p>
+<p class="reference">References <a class="el" href="def_8hpp_source.html#l00209">indexTable&lt; A, B &gt;::getIndex()</a>, and <a class="el" href="compilerContext_8h_source.html#l00037">compilerContext::modules</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00023">compilerContext::getImportedModule()</a>.</p>
 <div class="dynheader">
@@ -902,9 +942,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00162">162</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00189">189</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -923,9 +963,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00192">192</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00219">219</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -944,9 +984,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00212">212</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00239">239</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -966,9 +1006,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00231">231</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00258">258</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -998,9 +1038,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00154">154</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00181">181</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1030,11 +1070,11 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00235">235</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00262">262</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00324">yoi::managedPtr()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, and <a class="el" href="def_8hpp_source.html#l00335">yoi::managedPtr()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00215">compilerContext::normalizeForeignBasicType()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00242">compilerContext::normalizeForeignBasicType()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1073,132 +1113,162 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00123">123</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00141">141</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00008">__yoi_builtin_module_hoshi</a>, <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::builtinModuleBuilder</a>, <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::builtinModuleContext</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::irFFITable</a>, <a class="el" href="compilerContext_8h_source.html#l00039">compilerContext::moduleImported</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, and <a class="el" href="def_8cpp_source.html#l00178">yoi::string2wstring()</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00008">__yoi_builtin_module_hoshi</a>, <a class="el" href="compilerContext_8h_source.html#l00045">compilerContext::astToFinalize</a>, <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>, <a class="el" href="compilerContext_8h_source.html#l00046">compilerContext::builtinModuleContext</a>, <a class="el" href="compilerContext_8h_source.html#l00047">compilerContext::diagnosticEngine</a>, <a class="el" href="builtinModule_8hpp_source.html#l00008">HOSHI_COMPILER_CTX_GLOB_ID_CONST</a>, <a class="el" href="compilerContext_8h_source.html#l00043">compilerContext::irFFITable</a>, <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="def_8cpp_source.html#l00019">yoi::set_diagnostic_engine()</a>, and <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1compilerContext_a92fb762cae04d5701345764007ddeb28_cgraph.png" border="0" usemap="#aclassyoi_1_1compilerContext_a92fb762cae04d5701345764007ddeb28_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1compilerContext_a92fb762cae04d5701345764007ddeb28_cgraph" id="aclassyoi_1_1compilerContext_a92fb762cae04d5701345764007ddeb28_cgraph">
-<area shape="rect" title=" " alt="" coords="5,844,177,869"/>
-<area shape="rect" href="namespaceyoi.html#aeb85681966b20de1c447f55e27b8b20c" title=" " alt="" coords="225,844,312,869"/>
-<area shape="poly" title=" " alt="" coords="177,854,212,854,212,859,177,859"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a22359d6cf8e440f564bb2ca956cee6cf" title=" " alt="" coords="360,793,480,819"/>
-<area shape="poly" title=" " alt="" coords="159,841,225,830,346,813,347,818,226,835,160,847"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1480,1336,1623,1361"/>
-<area shape="poly" title=" " alt="" coords="95,869,96,926,102,1016,115,1128,140,1247,158,1306,179,1362,206,1414,237,1460,273,1498,315,1527,364,1546,419,1553,1208,1553,1260,1547,1310,1532,1358,1509,1402,1481,1477,1421,1528,1370,1532,1373,1481,1425,1405,1486,1360,1514,1312,1537,1261,1552,1208,1558,419,1558,362,1551,313,1532,270,1502,233,1463,201,1417,174,1364,153,1308,135,1249,110,1129,96,1017,91,926,90,869"/>
-<area shape="poly" title=" " alt="" coords="307,841,368,821,369,826,308,846"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc" title=" " alt="" coords="549,1441,706,1467"/>
-<area shape="poly" title=" " alt="" coords="424,819,429,937,445,1125,459,1224,477,1316,501,1391,515,1419,530,1440,538,1447,534,1451,526,1444,510,1422,496,1392,472,1317,454,1225,440,1126,424,938,419,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a8681018b11c6579e04ba611130c8cc78" title=" " alt="" coords="799,793,927,819"/>
-<area shape="poly" title=" " alt="" coords="421,793,433,722,455,620,486,520,505,482,526,457,578,428,602,421,627,418,651,421,676,429,728,457,766,490,795,530,819,575,836,622,856,711,863,779,858,780,851,712,831,623,814,577,791,533,762,494,725,462,674,433,650,426,627,424,603,426,580,433,530,461,510,485,491,522,460,621,438,723,426,794"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1164,1235,1249,1260"/>
-<area shape="poly" title=" " alt="" coords="418,793,419,661,430,447,443,335,462,232,474,187,489,148,506,116,526,93,580,53,632,25,685,8,738,3,790,9,844,26,898,54,952,93,986,129,1017,178,1044,239,1069,310,1092,389,1112,474,1146,654,1171,834,1189,999,1206,1221,1201,1221,1184,999,1166,834,1140,655,1107,475,1087,391,1064,312,1039,241,1012,181,982,132,949,97,895,59,842,31,789,14,738,8,686,13,634,30,582,58,530,97,511,119,494,150,479,188,467,233,448,335,435,447,424,661,424,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a3470a39cb02cb8b1f41fd1c4fe58a707" title=" " alt="" coords="555,472,700,497"/>
-<area shape="poly" title=" " alt="" coords="419,793,424,740,440,663,454,620,472,579,496,540,526,507,541,497,544,501,530,511,500,543,477,581,459,622,445,664,430,741,425,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417" title=" " alt="" coords="541,521,714,547"/>
-<area shape="poly" title=" " alt="" coords="420,792,428,747,446,683,460,649,478,615,500,583,526,556,532,552,535,556,530,560,504,587,483,617,465,651,452,685,434,748,426,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#ad2fc283e0d94fb9f8ea52974bc8140e0" title=" " alt="" coords="549,571,705,596"/>
-<area shape="poly" title=" " alt="" coords="422,792,433,755,453,704,484,651,503,626,526,605,535,599,538,604,530,609,507,630,488,654,458,707,438,757,427,794"/>
-<area shape="rect" href="classyoi_1_1lexer.html#af0232f66a65f67e370deb9964a92a3c8" title=" " alt="" coords="542,620,713,645"/>
-<area shape="poly" title=" " alt="" coords="424,792,460,726,490,687,526,655,536,649,539,653,530,659,494,691,464,729,429,795"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a7a91c62a65e18e31a082b16ff0f1a039" title=" " alt="" coords="552,1392,703,1417"/>
-<area shape="poly" title=" " alt="" coords="425,819,431,927,449,1096,463,1184,481,1266,503,1333,516,1358,530,1378,541,1387,538,1391,526,1381,511,1361,498,1335,476,1267,458,1185,444,1096,426,927,419,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6" title=" " alt="" coords="556,669,699,695"/>
-<area shape="poly" title=" " alt="" coords="429,792,469,749,496,725,527,705,545,697,547,702,529,710,499,729,473,753,433,795"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a1286bad3868e3bb8c18bb74c945261f1" title=" " alt="" coords="549,719,706,744"/>
-<area shape="poly" title=" " alt="" coords="445,791,527,754,556,745,557,750,529,759,447,796"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a4bfe830a28614ff2d3268f21261f4424" title=" " alt="" coords="543,768,711,793"/>
-<area shape="poly" title=" " alt="" coords="480,796,529,790,530,795,481,801"/>
-<area shape="rect" href="classyoi_1_1lexer.html#ace8a7b16b764e7f10764ba196c92e2bf" title=" " alt="" coords="534,817,721,843"/>
-<area shape="poly" title=" " alt="" coords="481,810,520,815,520,820,480,816"/>
-<area shape="rect" href="classyoi_1_1lexer.html#ad8919db02a1306423680cd0a212f868c" title=" " alt="" coords="532,867,723,892"/>
-<area shape="poly" title=" " alt="" coords="446,816,529,853,554,861,552,866,527,858,444,821"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a6f8fd8887795d83608dfd04477d1717e" title=" " alt="" coords="532,917,723,957"/>
-<area shape="poly" title=" " alt="" coords="434,817,473,859,500,882,529,902,542,909,539,914,527,907,497,886,470,863,430,821"/>
-<area shape="rect" href="classyoi_1_1lexer.html#af05da5f9c8f5703ee28d28c69627cfd7" title=" " alt="" coords="554,981,701,1007"/>
-<area shape="poly" title=" " alt="" coords="428,818,442,849,463,889,492,931,530,967,542,974,540,979,526,971,488,935,458,892,437,851,424,820"/>
-<area shape="rect" href="classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1" title=" " alt="" coords="547,1031,708,1056"/>
-<area shape="poly" title=" " alt="" coords="426,818,436,858,456,912,486,969,506,995,530,1017,536,1022,533,1026,526,1021,502,999,482,972,451,914,431,859,421,820"/>
-<area shape="rect" href="classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24" title=" " alt="" coords="556,1080,699,1105"/>
-<area shape="poly" title=" " alt="" coords="425,818,432,866,450,933,463,969,481,1005,503,1038,530,1067,545,1077,542,1081,526,1071,499,1042,476,1008,458,971,444,935,427,867,420,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49" title=" " alt="" coords="560,1129,695,1155"/>
-<area shape="poly" title=" " alt="" coords="424,819,429,874,443,954,457,998,475,1041,499,1081,530,1116,548,1128,546,1133,526,1120,495,1085,470,1044,452,1000,438,956,423,874,419,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a099b462e84ac9b58b70b404350309b6c" title=" " alt="" coords="528,1179,727,1204"/>
-<area shape="poly" title=" " alt="" coords="424,819,425,881,437,975,450,1026,469,1077,496,1124,530,1166,534,1169,531,1173,526,1169,491,1127,465,1079,445,1028,432,976,420,881,418,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a8d874d349fcbb8c3534c35d86fff0b37" title=" " alt="" coords="553,1228,701,1253"/>
-<area shape="poly" title=" " alt="" coords="426,818,437,899,459,1019,490,1138,509,1184,530,1215,543,1224,539,1229,526,1219,504,1187,485,1140,454,1020,432,900,420,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a12b2fbbb16f8041e08ee499a16b39e0b" title=" " alt="" coords="530,1277,725,1303"/>
-<area shape="poly" title=" " alt="" coords="425,819,435,908,456,1042,470,1113,487,1177,507,1229,530,1264,534,1268,530,1272,526,1268,503,1232,482,1178,465,1114,450,1043,430,908,420,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#aa09f40e2882f2056e06b2f87e52871bc" title=" " alt="" coords="543,1327,712,1367"/>
-<area shape="poly" title=" " alt="" coords="425,819,434,915,454,1064,468,1143,486,1214,506,1274,530,1314,534,1317,530,1321,526,1317,501,1276,481,1216,463,1144,449,1065,429,916,420,819"/>
-<area shape="rect" href="classyoi_1_1lexer.html#af5a7c493f08b8e6fadc4798b790bbd80" title=" " alt="" coords="528,158,727,198"/>
-<area shape="poly" title=" " alt="" coords="419,793,426,682,444,506,458,414,476,328,498,257,511,230,526,208,529,205,533,209,530,212,516,232,503,259,481,330,463,415,449,507,431,682,425,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a2f0c80d4ea2591bb608b0662fcb40c8f" title=" " alt="" coords="533,223,721,248"/>
-<area shape="poly" title=" " alt="" coords="419,793,427,689,445,528,459,444,477,366,499,301,512,276,526,258,529,254,533,258,530,261,516,279,504,303,482,367,464,445,450,529,432,690,425,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#ab6cdf69f04dd87caf9100c688d724028" title=" " alt="" coords="549,272,706,297"/>
-<area shape="poly" title=" " alt="" coords="420,793,429,697,448,551,462,475,480,404,501,346,526,307,535,299,539,303,530,310,506,349,485,406,468,476,453,552,434,698,425,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a971f9ff65b52c70eb02783703c43334d" title=" " alt="" coords="550,321,705,347"/>
-<area shape="poly" title=" " alt="" coords="420,793,431,708,452,580,467,514,484,453,503,403,526,368,544,356,564,348,565,353,546,360,530,372,508,405,489,455,472,515,457,581,436,709,426,794"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a4245a46d19c13a95a71ce94fb24daa75" title=" " alt="" coords="558,108,697,133"/>
-<area shape="poly" title=" " alt="" coords="419,793,423,670,439,475,452,372,471,277,495,198,510,167,526,144,543,131,547,135,530,148,514,170,500,200,476,278,457,373,444,476,429,671,424,793"/>
-<area shape="rect" href="classyoi_1_1lexer.html#a6bd6ac4da70d5ee139b48a91301df5ee" title=" " alt="" coords="557,371,698,396"/>
-<area shape="poly" title=" " alt="" coords="418,793,419,727,431,626,444,570,463,513,490,460,526,414,543,400,546,404,530,417,495,463,468,516,449,571,436,627,424,727,423,793"/>
-<area shape="poly" title=" " alt="" coords="574,1444,548,1435,526,1420,511,1400,498,1373,475,1305,457,1223,443,1132,426,957,420,833,425,832,432,956,449,1132,462,1222,480,1304,503,1371,516,1397,530,1416,551,1431,576,1439"/>
-<area shape="poly" title=" " alt="" coords="705,1442,725,1428,740,1409,754,1382,780,1314,801,1230,819,1138,844,959,857,832,862,833,849,960,824,1139,806,1231,785,1316,759,1385,744,1412,728,1432,708,1446"/>
-<area shape="rect" href="classyoi_1_1lexer.html#aee400f5ef44b7c11cd38fad90c05c5df" title=" " alt="" coords="775,1441,951,1467"/>
-<area shape="poly" title=" " alt="" coords="706,1451,761,1451,761,1457,706,1457"/>
-<area shape="poly" title=" " alt="" coords="876,817,1189,1222,1185,1225,872,820"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1297,1285,1432,1325"/>
-<area shape="poly" title=" " alt="" coords="1243,1258,1297,1277,1295,1282,1242,1263"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1480,1264,1623,1289"/>
-<area shape="poly" title=" " alt="" coords="1250,1248,1466,1267,1466,1272,1249,1254"/>
-<area shape="poly" title=" " alt="" coords="1433,1318,1484,1330,1483,1335,1432,1323"/>
-<area shape="poly" title=" " alt="" coords="1432,1292,1466,1287,1467,1292,1433,1297"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1671,1336,1873,1361"/>
-<area shape="poly" title=" " alt="" coords="1623,1346,1657,1346,1657,1351,1623,1351"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1921,1336,2112,1361"/>
-<area shape="poly" title=" " alt="" coords="1874,1346,1907,1346,1907,1351,1874,1351"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1671,1264,1873,1289"/>
-<area shape="poly" title=" " alt="" coords="1623,1274,1657,1274,1657,1279,1623,1279"/>
-<area shape="poly" title=" " alt="" coords="836,1469,775,1494,735,1506,693,1515,648,1519,605,1516,563,1504,526,1481,508,1461,492,1433,466,1359,448,1268,434,1167,421,970,419,833,424,833,426,970,440,1167,453,1267,472,1358,497,1431,512,1458,530,1477,565,1499,606,1511,648,1514,692,1510,734,1501,773,1489,834,1464"/>
-<area shape="poly" title=" " alt="" coords="951,1463,992,1462,1035,1458,1077,1446,1115,1426,1133,1411,1148,1393,1173,1351,1189,1309,1198,1273,1203,1274,1194,1310,1177,1354,1153,1396,1136,1415,1117,1431,1079,1451,1036,1463,992,1468,951,1468"/>
-<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="999,1391,1116,1416"/>
-<area shape="poly" title=" " alt="" coords="912,1439,994,1417,995,1422,913,1444"/>
-<area shape="poly" title=" " alt="" coords="1069,1389,1182,1268,1186,1272,1073,1392"/>
-<area shape="poly" title=" " alt="" coords="702,492,728,507,759,537,785,572,806,610,823,648,847,722,860,779,855,780,842,724,818,650,801,612,780,575,755,540,725,511,699,496"/>
-<area shape="poly" title=" " alt="" coords="709,545,728,556,755,580,779,608,816,670,842,731,857,779,852,780,837,732,811,673,774,611,751,584,725,560,706,549"/>
-<area shape="poly" title=" " alt="" coords="706,594,728,605,772,645,808,693,835,740,854,779,849,781,831,743,804,696,769,649,725,610,704,598"/>
-<area shape="poly" title=" " alt="" coords="703,643,728,654,767,683,800,717,849,780,844,784,796,720,763,687,725,659,701,648"/>
-<area shape="poly" title=" " alt="" coords="702,1393,725,1377,739,1360,752,1336,776,1274,798,1197,816,1113,842,949,856,832,861,833,847,950,821,1114,803,1199,781,1275,757,1338,743,1363,728,1381,704,1397"/>
-<area shape="poly" title=" " alt="" coords="703,1402,985,1401,985,1406,703,1407"/>
-<area shape="poly" title=" " alt="" coords="694,692,728,705,790,743,839,782,836,786,787,747,726,710,692,697"/>
-<area shape="poly" title=" " alt="" coords="683,742,727,754,817,786,816,791,726,759,681,747"/>
-<area shape="poly" title=" " alt="" coords="712,787,785,795,784,800,711,792"/>
-<area shape="poly" title=" " alt="" coords="721,818,784,811,785,817,721,823"/>
-<area shape="poly" title=" " alt="" coords="685,864,726,853,816,821,818,826,727,858,686,869"/>
-<area shape="poly" title=" " alt="" coords="698,914,725,902,786,864,835,826,838,830,789,869,728,907,700,919"/>
-<area shape="poly" title=" " alt="" coords="699,979,725,966,764,935,798,898,846,829,850,832,802,902,768,939,728,971,701,984"/>
-<area shape="poly" title=" " alt="" coords="705,1028,725,1017,749,997,770,974,806,923,833,872,850,831,855,833,838,875,811,926,774,978,753,1001,728,1022,707,1033"/>
-<area shape="poly" title=" " alt="" coords="698,1081,725,1067,752,1041,776,1011,814,946,839,882,853,831,858,833,844,883,818,948,781,1014,756,1045,728,1071,700,1086"/>
-<area shape="poly" title=" " alt="" coords="694,1132,725,1116,756,1085,782,1048,803,1009,820,968,844,891,855,832,861,833,849,892,825,970,808,1011,786,1051,760,1088,728,1120,696,1137"/>
-<area shape="poly" title=" " alt="" coords="708,1176,725,1165,759,1128,788,1085,810,1038,827,990,848,900,857,832,862,833,853,901,832,992,815,1040,792,1087,764,1131,728,1169,711,1181"/>
-<area shape="poly" title=" " alt="" coords="700,1230,725,1215,763,1171,793,1121,816,1067,833,1012,852,908,858,832,864,833,858,909,838,1013,821,1069,798,1123,767,1174,728,1219,703,1234"/>
-<area shape="poly" title=" " alt="" coords="709,1275,725,1264,767,1214,799,1157,823,1095,840,1033,850,972,856,916,859,832,865,833,862,917,856,973,845,1034,828,1097,804,1159,771,1217,728,1268,712,1279"/>
-<area shape="poly" title=" " alt="" coords="710,1325,725,1314,749,1276,772,1222,792,1155,810,1081,839,937,855,832,860,833,844,938,815,1083,797,1156,777,1224,754,1279,729,1317,714,1329"/>
-<area shape="poly" title=" " alt="" coords="715,196,729,208,754,244,768,277,774,309,774,342,770,411,771,450,777,494,819,657,856,779,851,781,814,658,772,495,765,450,765,411,769,341,769,310,763,279,749,246,725,212,711,200"/>
-<area shape="poly" title=" " alt="" coords="714,246,729,257,751,286,764,313,770,340,772,367,770,424,771,457,777,493,820,656,856,779,851,781,815,658,772,495,766,458,764,425,766,367,765,340,759,315,747,289,725,261,711,250"/>
-<area shape="poly" title=" " alt="" coords="708,293,728,307,747,329,759,350,765,371,768,393,769,439,777,493,856,779,851,781,772,495,764,439,762,393,760,372,754,352,743,332,725,311,705,297"/>
-<area shape="poly" title=" " alt="" coords="551,334,530,348,509,380,489,428,473,488,458,554,437,684,426,780,421,780,432,683,453,553,468,487,484,427,504,378,526,344,548,329"/>
-<area shape="poly" title=" " alt="" coords="707,342,729,356,752,416,790,539,857,779,852,781,784,541,747,418,725,360,704,346"/>
-<area shape="poly" title=" " alt="" coords="698,125,714,133,729,144,745,174,756,214,767,313,770,415,777,494,818,657,855,779,850,781,813,658,772,494,765,416,762,313,751,215,741,176,725,148,712,137,696,130"/>
-<area shape="poly" title=" " alt="" coords="698,127,728,144,785,196,833,247,872,297,905,347,931,397,952,447,983,548,1032,771,1066,898,1089,966,1118,1038,1197,1221,1192,1223,1114,1040,1084,968,1061,899,1026,772,978,550,947,448,926,399,900,350,868,300,829,251,782,200,725,148,696,132"/>
-<area shape="rect" href="namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d" title=" " alt="" coords="801,108,925,133"/>
-<area shape="poly" title=" " alt="" coords="697,118,787,118,787,123,697,123"/>
-<area shape="poly" title=" " alt="" coords="697,394,728,413,749,442,770,483,807,587,838,697,858,779,853,781,833,698,802,589,765,485,745,445,725,417,695,398"/>
+<area shape="rect" title=" " alt="" coords="5,1153,177,1179"/>
+<area shape="rect" href="namespaceyoi.html#aeb85681966b20de1c447f55e27b8b20c" title=" " alt="" coords="254,848,341,873"/>
+<area shape="poly" title=" " alt="" coords="99,1152,278,883,282,886,103,1155"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a22359d6cf8e440f564bb2ca956cee6cf" title=" " alt="" coords="417,764,537,789"/>
+<area shape="poly" title=" " alt="" coords="104,1151,452,797,456,801,107,1155"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1776,1419,1919,1444"/>
+<area shape="poly" title=" " alt="" coords="101,1177,145,1254,181,1307,226,1362,279,1415,338,1459,371,1476,404,1489,440,1498,476,1501,1437,1501,1535,1495,1632,1481,1719,1463,1789,1445,1791,1450,1720,1468,1633,1486,1536,1500,1437,1506,476,1506,439,1503,403,1494,368,1481,336,1464,275,1419,222,1366,177,1310,141,1257,97,1180"/>
+<area shape="rect" href="namespaceyoi.html#a9cd0735525a34f3140f4ba875eb1b44e" title=" " alt="" coords="225,1541,369,1581"/>
+<area shape="poly" title=" " alt="" coords="97,1179,107,1238,129,1327,146,1378,168,1428,195,1476,227,1520,239,1531,235,1535,223,1524,191,1479,163,1430,141,1380,124,1329,102,1239,92,1179"/>
+<area shape="poly" title=" " alt="" coords="324,845,435,793,438,798,327,850"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a62f5792763fde6e35ac89ab4fe5dbefc" title=" " alt="" coords="606,1339,763,1364"/>
+<area shape="poly" title=" " alt="" coords="482,789,489,896,507,1062,521,1149,539,1229,561,1294,574,1319,587,1338,595,1345,592,1349,583,1341,569,1322,556,1296,534,1230,516,1150,502,1063,484,897,477,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a8681018b11c6579e04ba611130c8cc78" title=" " alt="" coords="856,691,984,716"/>
+<area shape="poly" title=" " alt="" coords="477,763,487,680,507,555,521,491,539,432,559,385,584,355,610,337,635,324,659,317,684,315,708,318,733,326,786,354,823,387,853,427,876,472,893,519,913,609,920,677,915,677,908,609,888,520,871,474,848,430,819,391,782,359,731,330,707,323,683,320,660,322,637,329,612,341,587,359,564,388,544,434,527,492,512,556,492,680,483,764"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="1221,1297,1307,1323"/>
+<area shape="poly" title=" " alt="" coords="481,790,484,911,497,1103,510,1204,529,1295,554,1369,570,1396,587,1416,625,1443,666,1462,709,1474,754,1481,801,1481,848,1477,942,1458,1031,1427,1113,1392,1180,1357,1230,1328,1233,1332,1183,1361,1115,1397,1033,1432,943,1463,848,1483,801,1487,754,1486,708,1480,664,1467,622,1447,584,1420,565,1399,550,1371,524,1297,505,1204,492,1104,479,911,476,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a3470a39cb02cb8b1f41fd1c4fe58a707" title=" " alt="" coords="612,369,757,395"/>
+<area shape="poly" title=" " alt="" coords="475,764,477,700,488,603,501,550,521,497,548,447,584,404,598,394,601,398,587,408,552,450,526,499,507,551,494,604,482,700,481,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a7858df88c9240c44f98a10f42d948417" title=" " alt="" coords="598,419,771,444"/>
+<area shape="poly" title=" " alt="" coords="476,764,480,707,494,624,508,578,527,532,551,490,583,453,588,449,592,453,587,457,556,493,531,535,513,580,500,625,485,708,481,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#ad2fc283e0d94fb9f8ea52974bc8140e0" title=" " alt="" coords="607,468,763,493"/>
+<area shape="poly" title=" " alt="" coords="477,763,484,714,501,644,514,605,532,568,555,533,584,503,592,496,596,500,587,507,559,536,537,571,519,608,506,645,489,715,482,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#af0232f66a65f67e370deb9964a92a3c8" title=" " alt="" coords="599,517,770,543"/>
+<area shape="poly" title=" " alt="" coords="478,763,488,722,507,665,538,604,559,576,584,552,590,547,593,551,587,556,563,580,543,607,512,667,493,723,483,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a7a91c62a65e18e31a082b16ff0f1a039" title=" " alt="" coords="609,1289,760,1315"/>
+<area shape="poly" title=" " alt="" coords="482,789,491,885,511,1032,525,1109,542,1179,563,1236,587,1275,599,1284,596,1288,583,1278,558,1239,537,1180,520,1110,506,1033,486,886,477,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6" title=" " alt="" coords="613,567,756,592"/>
+<area shape="poly" title=" " alt="" coords="480,763,493,730,514,686,544,640,584,601,599,592,602,597,587,605,548,644,518,689,498,732,485,765"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a1286bad3868e3bb8c18bb74c945261f1" title=" " alt="" coords="606,616,763,641"/>
+<area shape="poly" title=" " alt="" coords="484,762,521,708,550,677,584,650,596,644,598,649,587,655,554,681,526,711,488,765"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a4bfe830a28614ff2d3268f21261f4424" title=" " alt="" coords="601,665,769,691"/>
+<area shape="poly" title=" " alt="" coords="491,762,532,731,584,700,603,692,605,697,586,704,535,735,495,766"/>
+<area shape="rect" href="classyoi_1_1lexer.html#ace8a7b16b764e7f10764ba196c92e2bf" title=" " alt="" coords="591,715,778,740"/>
+<area shape="poly" title=" " alt="" coords="531,761,617,741,618,746,532,767"/>
+<area shape="rect" href="classyoi_1_1lexer.html#ad8919db02a1306423680cd0a212f868c" title=" " alt="" coords="589,764,780,789"/>
+<area shape="poly" title=" " alt="" coords="538,774,576,774,576,779,538,779"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a6f8fd8887795d83608dfd04477d1717e" title=" " alt="" coords="589,814,780,854"/>
+<area shape="poly" title=" " alt="" coords="525,787,600,808,598,813,523,792"/>
+<area shape="rect" href="classyoi_1_1lexer.html#af05da5f9c8f5703ee28d28c69627cfd7" title=" " alt="" coords="611,879,758,904"/>
+<area shape="poly" title=" " alt="" coords="492,788,532,826,558,846,587,864,606,872,604,877,584,868,555,851,528,830,489,792"/>
+<area shape="rect" href="classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1" title=" " alt="" coords="604,928,765,953"/>
+<area shape="poly" title=" " alt="" coords="487,788,524,849,552,884,587,913,600,920,597,925,584,918,549,887,519,852,483,791"/>
+<area shape="rect" href="classyoi_1_1lexer.html#aeb5446747079c8500688aa8099cc0a24" title=" " alt="" coords="613,977,756,1003"/>
+<area shape="poly" title=" " alt="" coords="485,789,496,824,516,872,546,922,565,944,587,964,602,973,599,978,584,968,562,948,542,925,512,874,491,826,480,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a96b0e9bb78226f2f6784e6cf03540c49" title=" " alt="" coords="617,1027,752,1052"/>
+<area shape="poly" title=" " alt="" coords="483,789,492,832,510,893,541,958,562,988,587,1013,606,1025,603,1029,584,1017,558,991,536,961,505,895,486,833,478,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a099b462e84ac9b58b70b404350309b6c" title=" " alt="" coords="585,1076,784,1101"/>
+<area shape="poly" title=" " alt="" coords="482,790,488,841,504,915,517,955,535,995,558,1031,587,1063,592,1067,589,1071,584,1067,554,1034,531,997,512,957,499,916,483,842,477,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a8d874d349fcbb8c3534c35d86fff0b37" title=" " alt="" coords="611,1125,759,1151"/>
+<area shape="poly" title=" " alt="" coords="481,790,484,848,498,935,511,983,530,1030,555,1074,587,1112,600,1121,597,1126,584,1116,550,1077,525,1033,506,985,493,937,479,849,476,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a12b2fbbb16f8041e08ee499a16b39e0b" title=" " alt="" coords="587,1175,782,1200"/>
+<area shape="poly" title=" " alt="" coords="481,790,481,856,492,956,505,1011,524,1066,551,1117,587,1161,592,1165,588,1169,583,1165,547,1120,519,1068,499,1013,487,957,476,856,475,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#aa09f40e2882f2056e06b2f87e52871bc" title=" " alt="" coords="600,1225,769,1265"/>
+<area shape="poly" title=" " alt="" coords="483,789,494,874,516,1001,530,1067,547,1128,566,1177,587,1211,591,1214,587,1218,583,1214,561,1180,542,1129,525,1068,510,1002,489,875,478,790"/>
+<area shape="rect" href="classyoi_1_1lexer.html#af5a7c493f08b8e6fadc4798b790bbd80" title=" " alt="" coords="585,55,784,95"/>
+<area shape="poly" title=" " alt="" coords="476,764,481,641,497,443,510,338,529,242,553,161,567,130,583,106,586,102,590,106,587,109,572,132,558,163,534,243,516,339,502,444,487,641,482,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a2f0c80d4ea2591bb608b0662fcb40c8f" title=" " alt="" coords="591,120,779,145"/>
+<area shape="poly" title=" " alt="" coords="476,764,482,648,498,464,512,368,530,279,554,205,568,176,583,155,587,152,590,155,587,158,572,179,559,207,535,280,517,369,503,465,487,648,482,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#ab6cdf69f04dd87caf9100c688d724028" title=" " alt="" coords="606,169,763,195"/>
+<area shape="poly" title=" " alt="" coords="477,764,483,656,501,488,515,399,533,317,555,250,569,224,583,204,592,196,596,200,587,208,573,227,560,252,538,319,520,400,506,488,489,656,482,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a971f9ff65b52c70eb02783703c43334d" title=" " alt="" coords="607,219,762,244"/>
+<area shape="poly" title=" " alt="" coords="477,763,486,666,505,516,519,438,537,366,558,306,583,266,600,253,619,245,621,250,603,258,587,269,563,308,542,367,524,439,510,517,491,666,482,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a4245a46d19c13a95a71ce94fb24daa75" title=" " alt="" coords="615,5,754,31"/>
+<area shape="poly" title=" " alt="" coords="476,764,479,630,492,412,505,297,524,190,549,102,565,68,583,41,601,28,605,32,587,45,570,70,554,104,529,191,510,298,497,413,484,630,481,764"/>
+<area shape="rect" href="classyoi_1_1lexer.html#a6bd6ac4da70d5ee139b48a91301df5ee" title=" " alt="" coords="614,268,755,293"/>
+<area shape="poly" title=" " alt="" coords="477,763,488,674,509,538,523,467,540,402,560,348,583,311,600,297,603,302,587,314,565,350,546,404,528,469,514,539,493,675,483,764"/>
+<area shape="poly" title=" " alt="" coords="633,1341,606,1333,583,1317,558,1277,537,1218,519,1146,506,1068,487,914,478,803,483,803,492,914,511,1067,525,1145,542,1216,563,1274,587,1313,609,1328,634,1336"/>
+<area shape="poly" title=" " alt="" coords="762,1339,782,1325,797,1306,811,1280,837,1211,859,1128,876,1036,902,856,914,730,919,730,907,857,882,1037,864,1129,842,1213,816,1282,802,1309,786,1329,765,1344"/>
+<area shape="rect" href="classyoi_1_1lexer.html#aee400f5ef44b7c11cd38fad90c05c5df" title=" " alt="" coords="832,1340,1008,1365"/>
+<area shape="poly" title=" " alt="" coords="763,1349,818,1349,818,1355,763,1354"/>
+<area shape="poly" title=" " alt="" coords="931,715,1251,1283,1246,1286,926,717"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="1579,1411,1714,1451"/>
+<area shape="poly" title=" " alt="" coords="1293,1320,1356,1346,1466,1381,1567,1409,1566,1414,1464,1387,1354,1351,1291,1325"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1776,1327,1919,1352"/>
+<area shape="poly" title=" " alt="" coords="1301,1295,1354,1282,1459,1272,1542,1274,1624,1286,1729,1306,1791,1320,1790,1326,1727,1311,1623,1292,1542,1279,1460,1277,1355,1287,1302,1300"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#aaee11174c12852b03dd916ce7f6f367c" title=" " alt="" coords="1355,1297,1517,1337"/>
+<area shape="poly" title=" " alt="" coords="1307,1309,1341,1310,1341,1316,1307,1314"/>
+<area shape="poly" title=" " alt="" coords="1714,1429,1762,1429,1762,1434,1714,1434"/>
+<area shape="poly" title=" " alt="" coords="1699,1409,1727,1397,1809,1356,1812,1361,1729,1402,1701,1414"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1967,1419,2169,1444"/>
+<area shape="poly" title=" " alt="" coords="1919,1429,1953,1429,1953,1434,1919,1434"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="2217,1419,2408,1444"/>
+<area shape="poly" title=" " alt="" coords="2170,1429,2203,1429,2203,1434,2170,1434"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1967,1327,2169,1352"/>
+<area shape="poly" title=" " alt="" coords="1919,1337,1953,1337,1953,1342,1919,1342"/>
+<area shape="poly" title=" " alt="" coords="1518,1318,1763,1332,1762,1337,1517,1324"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#a2c9f30bc7e130708c4cdd2b0587eaefa" title=" " alt="" coords="1565,1347,1728,1387"/>
+<area shape="poly" title=" " alt="" coords="1518,1334,1553,1342,1551,1347,1517,1339"/>
+<area shape="poly" title=" " alt="" coords="1711,1385,1794,1412,1793,1417,1709,1390"/>
+<area shape="poly" title=" " alt="" coords="1728,1353,1762,1349,1763,1354,1729,1359"/>
+<area shape="poly" title=" " alt="" coords="893,1368,832,1392,792,1404,750,1412,706,1416,662,1413,621,1401,584,1379,567,1361,553,1336,529,1271,510,1190,497,1102,481,927,476,803,482,803,487,926,502,1101,516,1189,534,1269,558,1334,572,1357,587,1375,623,1397,663,1408,706,1411,749,1407,791,1399,830,1387,891,1363"/>
+<area shape="poly" title=" " alt="" coords="1008,1343,1173,1325,1207,1319,1208,1324,1174,1330,1009,1349"/>
+<area shape="rect" href="namespaceyoi.html#a85b420532ed69057ad764f367d13c152" title="Asserts a condition that would be true and throws a runtime_error if it is false." alt="" coords="1056,1289,1173,1315"/>
+<area shape="poly" title=" " alt="" coords="969,1337,1051,1316,1053,1321,970,1342"/>
+<area shape="poly" title=" " alt="" coords="1174,1302,1208,1304,1207,1310,1173,1308"/>
+<area shape="poly" title=" " alt="" coords="759,389,786,404,816,434,842,469,863,507,881,546,905,619,917,676,912,678,899,621,876,548,858,509,837,472,812,438,782,408,756,394"/>
+<area shape="poly" title=" " alt="" coords="766,442,786,453,812,478,836,506,873,567,899,628,915,676,909,678,894,630,868,570,832,509,809,481,782,457,763,446"/>
+<area shape="poly" title=" " alt="" coords="764,491,786,502,830,543,866,590,893,637,911,676,906,679,888,640,861,593,826,546,782,507,761,496"/>
+<area shape="poly" title=" " alt="" coords="760,540,785,552,824,580,858,614,906,678,902,681,854,618,820,584,783,556,758,545"/>
+<area shape="poly" title=" " alt="" coords="759,1290,782,1275,796,1257,809,1233,834,1171,855,1095,873,1011,899,847,913,729,919,730,905,847,878,1012,860,1096,839,1172,814,1235,801,1260,786,1279,762,1294"/>
+<area shape="poly" title=" " alt="" coords="760,1299,1042,1299,1042,1305,760,1305"/>
+<area shape="poly" title=" " alt="" coords="755,590,785,601,848,639,897,679,894,683,845,644,783,606,753,595"/>
+<area shape="poly" title=" " alt="" coords="744,639,785,650,876,683,875,688,783,655,742,644"/>
+<area shape="poly" title=" " alt="" coords="769,684,842,692,842,698,768,690"/>
+<area shape="poly" title=" " alt="" coords="778,715,842,709,842,714,779,720"/>
+<area shape="poly" title=" " alt="" coords="738,761,783,749,872,718,874,723,785,754,739,767"/>
+<area shape="poly" title=" " alt="" coords="753,811,783,798,843,761,892,723,895,727,846,765,785,803,755,816"/>
+<area shape="poly" title=" " alt="" coords="756,876,783,864,822,833,856,796,903,726,907,730,860,799,825,836,785,868,758,881"/>
+<area shape="poly" title=" " alt="" coords="759,926,783,913,806,893,827,870,863,819,890,769,907,728,912,730,895,771,868,822,831,874,810,897,785,918,762,930"/>
+<area shape="poly" title=" " alt="" coords="755,978,782,964,810,938,833,909,871,843,896,779,910,728,916,730,901,781,876,845,838,912,814,942,786,968,758,983"/>
+<area shape="poly" title=" " alt="" coords="751,1030,782,1013,813,982,839,946,860,906,878,866,901,788,913,729,918,730,906,790,883,867,865,908,844,948,817,985,786,1017,753,1034"/>
+<area shape="poly" title=" " alt="" coords="765,1074,782,1063,817,1025,845,982,867,935,884,887,906,797,914,729,920,730,911,798,889,889,872,937,850,985,821,1028,786,1067,768,1078"/>
+<area shape="poly" title=" " alt="" coords="757,1127,782,1112,820,1068,851,1018,874,964,891,909,910,805,916,730,921,730,915,806,896,910,879,966,855,1021,825,1072,786,1116,760,1131"/>
+<area shape="poly" title=" " alt="" coords="767,1172,782,1161,824,1112,856,1054,880,993,897,930,908,869,914,813,917,730,922,730,919,814,913,870,902,931,885,994,861,1057,828,1115,786,1165,770,1177"/>
+<area shape="poly" title=" " alt="" coords="768,1222,782,1211,806,1174,829,1119,849,1052,868,979,896,834,912,729,918,730,901,835,873,980,855,1054,834,1121,811,1176,786,1214,771,1227"/>
+<area shape="poly" title=" " alt="" coords="772,93,786,106,811,141,825,174,831,207,832,239,827,308,828,347,835,391,877,554,913,677,908,678,871,555,829,392,823,347,822,308,826,239,826,207,820,176,807,144,782,109,769,97"/>
+<area shape="poly" title=" " alt="" coords="771,143,786,155,808,183,822,210,828,237,829,264,827,322,828,354,835,391,878,554,913,677,908,678,872,555,829,392,823,355,822,322,824,264,822,238,817,212,804,186,782,159,768,148"/>
+<area shape="poly" title=" " alt="" coords="765,190,786,204,805,226,816,248,823,269,825,290,826,336,835,391,914,676,909,678,829,392,821,336,820,290,817,270,811,250,800,229,782,208,762,195"/>
+<area shape="poly" title=" " alt="" coords="608,231,587,245,563,283,542,341,525,411,511,488,492,640,483,750,477,750,487,640,506,487,520,410,537,339,558,281,583,241,605,227"/>
+<area shape="poly" title=" " alt="" coords="764,239,786,254,810,314,847,436,914,677,909,678,842,438,805,315,782,257,761,244"/>
+<area shape="poly" title=" " alt="" coords="755,22,772,30,786,42,803,71,814,111,824,210,828,313,835,391,876,554,913,677,908,678,870,556,829,392,822,313,819,211,809,112,798,73,782,45,769,34,753,27"/>
+<area shape="poly" title=" " alt="" coords="756,24,786,41,847,99,898,155,940,211,974,265,1001,320,1023,375,1054,487,1076,605,1098,732,1128,872,1149,948,1176,1029,1223,1172,1257,1283,1252,1284,1218,1174,1171,1031,1144,950,1123,874,1093,733,1071,605,1049,488,1018,377,996,322,969,268,935,214,894,159,843,103,782,45,753,29"/>
+<area shape="rect" href="namespaceyoi.html#a3e22de04e90e79c45c3e57ed7705df7d" title=" " alt="" coords="858,5,982,31"/>
+<area shape="poly" title=" " alt="" coords="755,15,844,15,844,21,755,21"/>
+<area shape="poly" title=" " alt="" coords="755,291,786,311,807,339,827,380,865,485,895,594,915,677,910,678,890,595,859,486,822,382,802,342,782,315,752,296"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a161d75a220f87c68d6975112f0bff3f6" name="a161d75a220f87c68d6975112f0bff3f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a161d75a220f87c68d6975112f0bff3f6">&#9670;&#160;</a></span>isInitialized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isInitialized </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00266">266</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00044">compilerContext::builtinModuleBuilder</a>.</p>
 
 </div>
 </div>
@@ -1228,9 +1298,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00215">215</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00242">242</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a">IRValueType::foreignFloatType</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc">IRValueType::foreignInt32Type</a>, <a class="el" href="compilerContext_8cpp_source.html#l00150">compilerContext::getDeciObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00142">compilerContext::getIntObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00235">compilerContext::getUnsignedObjectType()</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9">IRValueType::pointer</a>.</p>
+<p class="reference">References <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85aed9ea5b4d20c5145dcfb4ddd34ddd56a">IRValueType::foreignFloatType</a>, <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ad5493486c999a3f1b5898b82dfea19cc">IRValueType::foreignInt32Type</a>, <a class="el" href="compilerContext_8cpp_source.html#l00177">compilerContext::getDeciObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00169">compilerContext::getIntObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00262">compilerContext::getUnsignedObjectType()</a>, and <a class="el" href="classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9">IRValueType::pointer</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1252,6 +1322,38 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a3354bb71dff850f00d40071f51e1d182" name="a3354bb71dff850f00d40071f51e1d182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3354bb71dff850f00d40071f51e1d182">&#9670;&#160;</a></span>registerModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void registerModule </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceyoi.html#adb858077f604461fe6aba9936e092c59">yoi::indexT</a>&#160;</td>
+          <td class="paramname"><em>idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classyoi_1_1IRModule.html">IRModule</a> &gt;&#160;</td>
+          <td class="paramname"><em>mod</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00270">270</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::moduleImported</a>.</p>
+
+</div>
+</div>
 <a id="abe31b1fe910dbd2547cc06213ea20f9e" name="abe31b1fe910dbd2547cc06213ea20f9e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abe31b1fe910dbd2547cc06213ea20f9e">&#9670;&#160;</a></span>runOptimizer()</h2>
 
@@ -1267,7 +1369,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00206">206</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00233">233</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="IROptimizer_8cpp_source.html#l04334">IROptimizer::buildCallGraph()</a>.</p>
 <div class="dynheader">
@@ -1275,28 +1377,35 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoi_1_1compilerContext_abe31b1fe910dbd2547cc06213ea20f9e_cgraph.png" border="0" usemap="#aclassyoi_1_1compilerContext_abe31b1fe910dbd2547cc06213ea20f9e_cgraph" alt=""/></div>
 <map name="aclassyoi_1_1compilerContext_abe31b1fe910dbd2547cc06213ea20f9e_cgraph" id="aclassyoi_1_1compilerContext_abe31b1fe910dbd2547cc06213ea20f9e_cgraph">
-<area shape="rect" title=" " alt="" coords="5,55,112,80"/>
-<area shape="rect" href="classyoi_1_1IROptimizer.html#aee239745b9245cd62923a29f011623d2" title=" " alt="" coords="160,47,352,87"/>
-<area shape="poly" title=" " alt="" coords="112,65,146,65,146,70,112,70"/>
-<area shape="rect" href="structyoi_1_1CallGraph.html#a6c608d0782ac71b58de7aecbeacf8bdb" title=" " alt="" coords="403,5,573,31"/>
-<area shape="poly" title=" " alt="" coords="350,45,414,31,415,36,351,50"/>
-<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="445,55,531,80"/>
-<area shape="poly" title=" " alt="" coords="353,65,432,65,432,70,353,70"/>
-<area shape="rect" href="structyoi_1_1CallGraph.html#a6b48c59be20b76b1ed08325cd78c5ec3" title=" " alt="" coords="400,105,576,145"/>
-<area shape="poly" title=" " alt="" coords="338,85,394,99,393,104,337,90"/>
-<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="624,18,759,58"/>
-<area shape="poly" title=" " alt="" coords="531,59,610,47,611,52,531,64"/>
-<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="807,79,949,104"/>
-<area shape="poly" title=" " alt="" coords="531,67,793,83,793,89,531,73"/>
-<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="807,25,949,51"/>
-<area shape="poly" title=" " alt="" coords="759,35,793,35,793,41,759,41"/>
-<area shape="poly" title=" " alt="" coords="760,55,821,72,819,77,758,60"/>
-<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="997,25,1200,51"/>
-<area shape="poly" title=" " alt="" coords="950,35,984,35,984,41,950,41"/>
-<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1248,25,1439,51"/>
-<area shape="poly" title=" " alt="" coords="1200,35,1234,35,1234,41,1200,41"/>
-<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="997,79,1200,104"/>
-<area shape="poly" title=" " alt="" coords="950,89,984,89,984,94,950,94"/>
+<area shape="rect" title=" " alt="" coords="5,102,112,127"/>
+<area shape="rect" href="classyoi_1_1IROptimizer.html#aee239745b9245cd62923a29f011623d2" title=" " alt="" coords="160,95,352,135"/>
+<area shape="poly" title=" " alt="" coords="112,112,146,112,146,117,112,117"/>
+<area shape="rect" href="structyoi_1_1CallGraph.html#a6c608d0782ac71b58de7aecbeacf8bdb" title=" " alt="" coords="403,53,573,78"/>
+<area shape="poly" title=" " alt="" coords="350,92,414,78,415,84,351,97"/>
+<area shape="rect" href="namespaceyoi.html#af1b2d50f7eb8d8e78be001987ad48ab6" title=" " alt="" coords="445,102,531,127"/>
+<area shape="poly" title=" " alt="" coords="353,112,432,112,432,117,353,117"/>
+<area shape="rect" href="structyoi_1_1CallGraph.html#a6b48c59be20b76b1ed08325cd78c5ec3" title=" " alt="" coords="400,152,576,192"/>
+<area shape="poly" title=" " alt="" coords="338,132,394,146,393,151,337,137"/>
+<area shape="rect" href="namespaceyoi.html#a9b1a87fa4d0a59f9b776d685d6873353" title=" " alt="" coords="849,5,983,45"/>
+<area shape="poly" title=" " alt="" coords="530,102,623,80,834,38,835,43,625,85,532,107"/>
+<area shape="rect" href="namespaceyoi.html#a013871d7f7daabfe45cda14e4dade8b0" title=" " alt="" coords="1045,103,1188,129"/>
+<area shape="poly" title=" " alt="" coords="531,125,576,136,624,144,734,151,845,148,947,139,1031,128,1032,133,947,144,845,153,734,156,624,149,575,141,530,130"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#aaee11174c12852b03dd916ce7f6f367c" title=" " alt="" coords="624,95,787,135"/>
+<area shape="poly" title=" " alt="" coords="531,112,610,112,610,117,531,117"/>
+<area shape="rect" href="namespaceyoi.html#a49de16146e5ab66039f7f95b79a82023" title=" " alt="" coords="1045,50,1188,75"/>
+<area shape="poly" title=" " alt="" coords="984,35,1035,45,1034,50,983,40"/>
+<area shape="poly" title=" " alt="" coords="972,43,999,55,1047,84,1071,96,1068,100,1044,89,996,60,970,48"/>
+<area shape="rect" href="classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707" title=" " alt="" coords="1236,50,1439,75"/>
+<area shape="poly" title=" " alt="" coords="1188,60,1222,60,1222,65,1188,65"/>
+<area shape="rect" href="classutf8Unicode.html#ad3c7405efd16b01eb3b76f0f4bc683e6" title=" " alt="" coords="1487,50,1677,75"/>
+<area shape="poly" title=" " alt="" coords="1439,60,1473,60,1473,65,1439,65"/>
+<area shape="rect" href="classutf8Unicode.html#aff37372afc65f9252f5b28ba15a87f90" title=" " alt="" coords="1236,103,1439,129"/>
+<area shape="poly" title=" " alt="" coords="1188,113,1222,113,1222,119,1188,119"/>
+<area shape="poly" title=" " alt="" coords="787,117,835,119,997,119,1031,118,1032,123,997,124,835,124,787,122"/>
+<area shape="rect" href="classyoi_1_1DiagnosticEngine.html#a2c9f30bc7e130708c4cdd2b0587eaefa" title=" " alt="" coords="835,69,997,109"/>
+<area shape="poly" title=" " alt="" coords="787,102,821,98,822,103,787,108"/>
+<area shape="poly" title=" " alt="" coords="998,76,1031,71,1032,77,998,81"/>
+<area shape="poly" title=" " alt="" coords="998,98,1032,102,1031,107,998,103"/>
 </map>
 </div>
 
@@ -1318,9 +1427,31 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00175">175</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00202">202</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00041">compilerContext::buildConfig</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00042">compilerContext::buildConfig</a>.</p>
+
+</div>
+</div>
+<a id="adc9ec167fa341f0f1347cb0b51b5785e" name="adc9ec167fa341f0f1347cb0b51b5785e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9ec167fa341f0f1347cb0b51b5785e">&#9670;&#160;</a></span>setDiagnosticEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setDiagnosticEngine </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00048">48</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00047">compilerContext::diagnosticEngine</a>.</p>
 
 </div>
 </div>
@@ -1340,9 +1471,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00166">166</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8cpp_source.html#l00193">193</a> of file <a class="el" href="compilerContext_8cpp_source.html">compilerContext.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00040">compilerContext::irObjectFile</a>.</p>
+<p class="reference">References <a class="el" href="compilerContext_8h_source.html#l00041">compilerContext::irObjectFile</a>.</p>
 
 </div>
 </div>
@@ -1367,9 +1498,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00044">44</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00045">45</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00123">compilerContext::initializeSharedObjects()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00200">compilerContext::~compilerContext()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00052">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00227">compilerContext::~compilerContext()</a>.</p>
 
 </div>
 </div>
@@ -1393,9 +1524,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00041">41</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00042">42</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00171">compilerContext::getBuildConfig()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00175">compilerContext::setBuildConfig()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00052">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00198">compilerContext::getBuildConfig()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00202">compilerContext::setBuildConfig()</a>.</p>
 
 </div>
 </div>
@@ -1419,9 +1550,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00043">43</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00044">44</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00146">compilerContext::getBoolObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00158">compilerContext::getCharObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00150">compilerContext::getDeciObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00188">compilerContext::getForeignFloatObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00184">compilerContext::getForeignInt32ObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00142">compilerContext::getIntObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00162">compilerContext::getNoneObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00192">compilerContext::getNullInterfaceType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00212">compilerContext::getPointerType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00231">compilerContext::getShortObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00154">compilerContext::getStrObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00235">compilerContext::getUnsignedObjectType()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00123">compilerContext::initializeSharedObjects()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00173">compilerContext::getBoolObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00185">compilerContext::getCharObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00177">compilerContext::getDeciObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00215">compilerContext::getForeignFloatObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00211">compilerContext::getForeignInt32ObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00169">compilerContext::getIntObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00189">compilerContext::getNoneObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00219">compilerContext::getNullInterfaceType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00239">compilerContext::getPointerType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00258">compilerContext::getShortObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00181">compilerContext::getStrObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00262">compilerContext::getUnsignedObjectType()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00266">compilerContext::isInitialized()</a>.</p>
 
 </div>
 </div>
@@ -1445,9 +1576,35 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00045">45</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00046">46</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00196">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00123">compilerContext::initializeSharedObjects()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00223">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>.</p>
+
+</div>
+</div>
+<a id="af3bd9ae88791383ce3aa1b862f6eeb48" name="af3bd9ae88791383ce3aa1b862f6eeb48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3bd9ae88791383ce3aa1b862f6eeb48">&#9670;&#160;</a></span>diagnosticEngine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classyoi_1_1DiagnosticEngine.html">DiagnosticEngine</a>&gt; diagnosticEngine</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00047">47</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00052">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::getDiagnosticEngine()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00048">compilerContext::setDiagnosticEngine()</a>.</p>
 
 </div>
 </div>
@@ -1471,9 +1628,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00042">42</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00043">43</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00180">compilerContext::getIRFFITable()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00123">compilerContext::initializeSharedObjects()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00207">compilerContext::getIRFFITable()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>.</p>
 
 </div>
 </div>
@@ -1497,9 +1654,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00040">40</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00041">41</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00119">compilerContext::getIRObjectFile()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00166">compilerContext::setIRObjectFile()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00137">compilerContext::getIRObjectFile()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00193">compilerContext::setIRObjectFile()</a>.</p>
 
 </div>
 </div>
@@ -1523,9 +1680,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00039">39</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00040">40</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00035">compilerContext::getCompiledModules()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00023">compilerContext::getImportedModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00019">compilerContext::getImportedModule()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00123">compilerContext::initializeSharedObjects()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00052">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00035">compilerContext::getCompiledModules()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00023">compilerContext::getImportedModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00019">compilerContext::getImportedModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00141">compilerContext::initializeSharedObjects()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00270">compilerContext::registerModule()</a>.</p>
 
 </div>
 </div>
@@ -1549,9 +1706,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00036">36</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00037">37</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00044">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00196">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="compilerContext_8cpp_source.html#l00052">compilerContext::compileModule()</a>, <a class="el" href="compilerContext_8cpp_source.html#l00223">compilerContext::getModuleContext()</a>, and <a class="el" href="compilerContext_8cpp_source.html#l00040">compilerContext::getModuleIndexByRealPath()</a>.</p>
 
 </div>
 </div>
@@ -1575,7 +1732,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00037">37</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compilerContext_8h_source.html#l00038">38</a> of file <a class="el" href="compilerContext_8h_source.html">compilerContext.h</a>.</p>
 
 </div>
 </div>

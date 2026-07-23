@@ -229,6 +229,7 @@ var NAVTREE =
     [ "TODO List", "md_TODO.html", [
       [ "Known issues", "md_TODO.html#autotoc_md180", null ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -247,8 +248,9 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
-        [ "Typedefs", "functions_type.html", null ],
+        [ "Typedefs", "functions_type.html", "functions_type" ],
         [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ],
         [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -256,11 +258,11 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", null ],
+        [ "Functions", "globals_func.html", "globals_func" ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -269,7 +271,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IRLinker_8cpp.html",
-"classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html",
+"classbasic__json.html#a1b4fcb5b9927fe24d7831adbbd88c405",
+"classbasic__json.html#adf2e047597ae1fdb8d0e501cbf79afa8",
+"classdetail_1_1binary__writer.html#aac64bc201fda2938bbf6fec496d3c799",
+"classdetail_1_1iteration__proxy__value.html#abc14888ae5a53293ccf3445724aa1585",
+"classdetail_1_1json__sax__dom__parser.html#a74d4930870a831a12c34b92bf45e4860",
+"classdetail_1_1parser.html#a0d441ad519e823ca28c69053cb174331",
+"classlsp_1_1DocumentStore.html#a42369259990fd88ede6bf65ffb0ae446",
+"classyoi_1_1BuiltinModuleBuilder.html#a4781b83d7331406ecadae2255a8dc4a8",
 "classyoi_1_1Formatter.html#a82dbe57488a59fabe61b3ea1f940caba",
 "classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a9e2d168a2bc7024c8c98e02ec1241cca",
 "classyoi_1_1IRConcept.html#a9d24a0275ba98a7726bfe14c798f9850",
@@ -277,22 +286,30 @@ var NAVTREEINDEX =
 "classyoi_1_1IROperand.html#a871fdb7683d8f38cb75e7f3ed1727c91",
 "classyoi_1_1IRVariableTable.html#a3ffd235378944edd973631e0d8df4b16",
 "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html#ace32b6d8fae5f03431b356f018c582ac",
-"classyoi_1_1constructorDef.html#a399c754ff0e2cf91155570d319f692c3",
-"classyoi_1_1hoshiModule.html#a9bef35a9b135a914a9f48b5f1f41f981",
-"classyoi_1_1indexTable_1_1iterator.html#a74202cdd96628bc49a756e5fc87d22de",
-"classyoi_1_1logicalAndExpr.html#a4635f7ab4094c12d7e418ef210869b62",
-"classyoi_1_1subscriptExpr.html#a1e5d8a52b81784de65b5bf1ccd6bba28",
-"classyoi_1_1visitor.html#a931efb8489b9f0657d78333528294bba",
-"fs_8cpp.html#a1c09202644cd55514af266932e1b4abb",
-"magic__enum_8h.html#a1c39f200e074038afe693c2231e0bca3",
-"memory_8cpp.html#ae9e6484dd2ff6cf4355506d3c336b90e",
-"namespaceyoi.html#a5e7d8b79acb93394d81ae80802d2e3db",
-"parser_8hpp.html#adee639850865542c6832aa3fd18867f0",
-"structYoiVoidIntCallableInterface.html#a692ac7735b5ca75bce4036e05ced960c",
-"structyoi_1_1IRBuildConfig_1_1Builder.html#a2d2af0daacf38ca61cfda1b702a40bdf",
-"structyoi_1_1IRStructDefinition_1_1Builder.html#adaa74788fe0e46b2366340a32cbb7f0a",
-"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32aa00aace6e961960b7c37ce3df0a8ac81",
-"unionyoi_1_1globalStmt_1_1vValue.html#a1fc4dc25ec688d44ae069a3446934b97"
+"classyoi_1_1constructorDecl.html#a59414f4e4334b99d5bf2acfd43af9830",
+"classyoi_1_1globalStmt.html#a954f36dd85dca6dcf379e8905a3f42a2",
+"classyoi_1_1indexTable_1_1iterator.html#a4738635aff9c2bb2c8ccc2875ae72496",
+"classyoi_1_1lexer.html#af0232f66a65f67e370deb9964a92a3c8",
+"classyoi_1_1subscript.html#a81b237c5abdaf1c7cb969dcdf6e24742",
+"classyoi_1_1visitor.html#a87f9e0165bcc1efb98600218aa102587",
+"diagnostic_8h.html#a006a37a038a183fdba0862174791e403a92e9d6227d5534e7afc27a11179c808e",
+"globals_j.html",
+"json_8hpp.html#a6125ffd318b2d6698faad4175a6e7c56",
+"json_8hpp.html#ae8f8a24666d18dfc3f97c86d952d7ce1",
+"md_docs_2IR.html#autotoc_md78",
+"namespacedetail.html#ab81d596afb13a9ffe7289a8dbb12568e",
+"namespacemagic__enum_1_1detail.html#a1c39f200e074038afe693c2231e0bca3",
+"namespaceyoi.html#aae29ed4276b5599030faac228b9a06ae",
+"protocol_8h.html#a149b04a4da5c2d7cf8e789d6629ccf33aa82be0f551b8708bc08eb33cd9ded0cf",
+"structYoiResultUnsignedAndIntObject.html#a1871146973c12628deff2a413c04f3ff",
+"structdetail_1_1is__basic__json.html",
+"structdetail_1_1json__default__base.html",
+"structlsp_1_1HoverParams.html",
+"structordered__map.html#afdd942485fc3c19cb7dfbce66e3ab13d",
+"structyoi_1_1IRBuilder_1_1LoopContext.html",
+"structyoi_1_1LLVMCodegen_1_1StackValue.html",
+"structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ac7b244209d68f4dd53036c789e7e8aca",
+"unionyoi_1_1globalStmt_1_1vValue.html#ac56456d70cd9e6fcfedcf84ce3abd164"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

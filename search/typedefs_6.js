@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['names_5ft_0',['names_t',['../namespacemagic__enum_1_1detail.html#a403958fcd1868f0cf75af3d255c1b48f',1,'magic_enum::detail']]]
+  ['get_5ftemplate_5ffunction_0',['get_template_function',['../namespacedetail.html#a4bdddb0ac03f5fffc9291b9a799db0c0',1,'detail']]]
 ];

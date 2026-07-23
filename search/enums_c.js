@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tokenkind_0',['tokenKind',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32',1,'yoi::lexer::token']]],
-  ['typespeckind_1',['typeSpecKind',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2',1,'yoi::typeSpec']]]
+  ['stackstate_0',['StackState',['../structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html#ad2f66c8832d815fe00002d74e568a4e4',1,'yoi::LLVMCodegen::ValueStackWithPhi']]],
+  ['symbolkind_1',['SymbolKind',['../namespacelsp.html#a05812818de02fb4b202d7513ce50745d',1,'lsp']]]
 ];

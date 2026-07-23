@@ -1,26 +1,43 @@
 <map id="pushIRBuilder" name="pushIRBuilder">
-<area shape="rect" id="Node000001" title=" " alt="" coords="280,333,392,358"/>
-<area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a231ba12509219e01ed03011935919225" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="18,5,219,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="330,319,323,264,307,194,294,158,277,122,256,88,230,59,214,48,217,43,234,55,260,85,282,119,299,156,312,193,329,264,336,318"/>
-<area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="23,69,215,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="327,320,317,277,298,224,270,169,252,145,230,123,213,112,216,107,234,119,256,141,274,167,303,222,322,275,333,319"/>
-<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa" title="Get or fetch generator context type for specific function." alt="" coords="26,133,211,173"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="323,321,289,254,262,218,230,187,210,175,213,171,234,183,266,214,293,251,327,319"/>
-<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#aa29fc600c0c15916608b6b349f58116e" title=" " alt="" coords="5,197,232,237"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="313,324,277,286,231,252,205,240,207,235,233,247,281,282,317,320"/>
-<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="37,261,201,301"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="281,331,231,316,190,304,192,299,233,311,283,326"/>
-<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="27,325,211,365"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="266,348,211,348,211,343,266,343"/>
-<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="33,389,205,429"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="283,365,233,380,192,392,190,387,231,375,281,360"/>
-<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a13c3cd4936c6a740e5568c06d4a9d19a" title=" " alt="" coords="34,453,203,493"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="317,371,281,408,233,444,205,457,203,452,231,439,277,404,313,367"/>
-<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="55,542,182,567"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="326,372,291,438,265,475,234,507,200,529,165,544,163,539,198,525,230,503,261,472,286,436,322,370"/>
-<area shape="rect" id="Node000011" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="55,591,182,617"/>
-<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="334,372,324,418,305,474,276,532,257,558,234,581,210,595,183,603,181,598,207,590,230,577,253,554,272,529,300,472,319,416,328,371"/>
-<area shape="rect" id="Node000012" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="55,641,182,666"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="336,372,329,426,312,496,299,533,282,568,261,601,234,630,210,645,183,653,181,648,207,640,230,626,256,598,278,566,294,531,307,495,324,426,331,372"/>
-<area shape="poly" id="edge10_Node000010_Node000010" title=" " alt="" coords="157,532,147,524,119,521,96,523,83,528,81,533,87,540,83,544,76,534,80,524,94,518,119,515,149,519,161,528"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="1511,333,1623,358"/>
+<area shape="rect" id="Node000002" href="$classyoi_1_1visitor.html#a231ba12509219e01ed03011935919225" title="Create a Callable Implementation For Function object also create a unnamed struct for the function an..." alt="" coords="1249,5,1450,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1561,319,1554,264,1538,194,1525,158,1508,122,1487,88,1461,59,1445,48,1448,43,1464,55,1491,85,1512,119,1529,156,1543,193,1559,264,1566,318"/>
+<area shape="rect" id="Node000003" href="$classyoi_1_1visitor.html#a5556008060d304b8cd917c73e60e42ab" title="Create a Lambda Unnamed Struct object." alt="" coords="1253,69,1445,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1558,320,1547,277,1529,224,1500,169,1482,145,1461,123,1443,112,1446,107,1464,119,1486,141,1505,167,1534,222,1553,275,1563,319"/>
+<area shape="rect" id="Node000004" href="$classyoi_1_1visitor.html#af9ec847c5c3b7fd871c5ed3ecd6215fa" title="Get or fetch generator context type for specific function." alt="" coords="1257,133,1442,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1553,321,1519,254,1493,218,1461,187,1441,175,1443,171,1464,183,1497,214,1524,251,1558,319"/>
+<area shape="rect" id="Node000005" href="$classyoi_1_1visitor.html#aa29fc600c0c15916608b6b349f58116e" title=" " alt="" coords="1236,197,1463,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1544,324,1508,286,1461,252,1436,240,1438,235,1464,247,1511,282,1548,320"/>
+<area shape="rect" id="Node000006" href="$classyoi_1_1visitor.html#a95a5bb481142e4b64bbbd01df2a3bdcd" title=" " alt="" coords="1267,261,1431,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1512,331,1462,316,1421,304,1423,299,1463,311,1513,326"/>
+<area shape="rect" id="Node000007" href="$classyoi_1_1visitor.html#ab86b617b89d280f260b345fdd9734554" title=" " alt="" coords="1257,325,1441,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1497,348,1442,348,1442,343,1497,343"/>
+<area shape="rect" id="Node000008" href="$classyoi_1_1visitor.html#a26c69b97ee6f2783f762b3945c3a7208" title=" " alt="" coords="1263,389,1435,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1513,365,1463,380,1423,392,1421,387,1462,375,1512,360"/>
+<area shape="rect" id="Node000009" href="$classyoi_1_1visitor.html#a13c3cd4936c6a740e5568c06d4a9d19a" title=" " alt="" coords="1265,453,1434,493"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1548,371,1511,408,1464,444,1436,457,1433,452,1461,439,1508,404,1544,367"/>
+<area shape="rect" id="Node000010" href="$classyoi_1_1visitor.html#a290cd40b9220b8a1008dd0773a03f9e8" title=" " alt="" coords="1286,542,1413,567"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1557,372,1522,438,1496,475,1464,507,1431,529,1396,544,1394,539,1429,525,1461,503,1491,472,1517,436,1552,370"/>
+<area shape="rect" id="Node000019" href="$classyoi_1_1visitor.html#aa623b762287853e92cde2f0b0a50ddef" title=" " alt="" coords="1286,591,1413,617"/>
+<area shape="poly" id="edge20_Node000001_Node000019" title=" " alt="" coords="1564,372,1555,418,1536,475,1507,533,1488,559,1464,582,1440,596,1414,604,1412,599,1438,591,1461,578,1484,556,1503,530,1531,473,1550,417,1559,371"/>
+<area shape="rect" id="Node000020" href="$classyoi_1_1visitor.html#ab1b2a4971e236283e451d81ab9a71012" title=" " alt="" coords="1286,641,1413,666"/>
+<area shape="poly" id="edge21_Node000001_Node000020" title=" " alt="" coords="1567,372,1560,427,1544,497,1530,534,1513,570,1491,603,1464,631,1440,646,1413,654,1412,649,1438,641,1461,627,1487,599,1509,567,1525,532,1538,496,1555,426,1561,372"/>
+<area shape="poly" id="edge19_Node000010_Node000010" title=" " alt="" coords="1388,532,1377,524,1349,521,1326,523,1314,528,1312,533,1318,540,1314,544,1306,534,1310,524,1325,518,1349,515,1379,519,1391,528"/>
+<area shape="rect" id="Node000011" href="$classlsp_1_1DocumentStore.html#a42369259990fd88ede6bf65ffb0ae446" title=" " alt="" coords="1037,535,1188,575"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="1273,557,1188,557,1188,552,1273,552"/>
+<area shape="rect" id="Node000012" href="$classlsp_1_1DocumentStore.html#a259c65337de62cf9a3448fc242741466" title=" " alt="" coords="839,503,989,543"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1023,543,989,537,990,532,1024,538"/>
+<area shape="rect" id="Node000017" href="$classlsp_1_1DocumentStore.html#aeedb758ab1a810980e9c0237bd9e4937" title=" " alt="" coords="839,567,989,607"/>
+<area shape="poly" id="edge16_Node000011_Node000017" title=" " alt="" coords="1024,572,990,577,989,572,1023,566"/>
+<area shape="rect" id="Node000013" href="$classlsp_1_1LspServer.html#a07b4a1847bb13bd990826b4f50ba0039" title=" " alt="" coords="569,513,791,538"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="825,526,791,527,791,521,825,521"/>
+<area shape="rect" id="Node000014" href="$classlsp_1_1LspServer.html#abface5e5fc91ac2cbff61ddd7426b844" title=" " alt="" coords="299,543,521,569"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="556,542,522,546,521,541,556,537"/>
+<area shape="rect" id="Node000015" href="$classlsp_1_1LspServer.html#a13a43e6d814de94978c515cb084873b1" title=" " alt="" coords="108,543,251,569"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="285,559,251,559,251,553,285,553"/>
+<area shape="rect" id="Node000016" href="$lsp_2main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,543,60,569"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="94,559,60,559,60,553,94,553"/>
+<area shape="rect" id="Node000018" href="$classlsp_1_1LspServer.html#a5f54eee4f634c3995feae76c0fa5d20f" title=" " alt="" coords="587,564,773,604"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="824,588,773,588,774,582,824,583"/>
+<area shape="poly" id="edge18_Node000018_Node000014" title=" " alt="" coords="573,576,521,570,522,565,573,570"/>
 </map>

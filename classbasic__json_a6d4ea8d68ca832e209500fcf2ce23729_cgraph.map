@@ -1,0 +1,32 @@
+<map id="diff" name="diff">
+<area shape="rect" id="Node000001" title="creates a diff as a JSON patch" alt="" coords="5,228,48,253"/>
+<area shape="rect" id="Node000002" href="$classbasic__json.html#a979556eb331ec35eb33472a90a160f99" title="returns an iterator to the first element" alt="" coords="123,5,182,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="26,227,31,191,42,142,62,88,76,63,94,40,109,29,113,33,98,44,81,66,67,91,47,143,36,192,32,228"/>
+<area shape="rect" id="Node000003" href="$classbasic__json.html#abeb76f7f3414f270020e6f467586bd93" title="returns a const iterator to the first element" alt="" coords="120,55,185,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="28,227,48,163,67,124,94,89,106,80,109,85,98,93,72,127,53,165,33,228"/>
+<area shape="rect" id="Node000004" href="$classbasic__json.html#a9859a454bb6f50c654e280274d6a9d13" title="returns an iterator to one past the last element" alt="" coords="126,104,179,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="31,227,55,184,73,160,94,139,112,127,115,132,98,143,77,164,60,187,36,229"/>
+<area shape="rect" id="Node000005" href="$classbasic__json.html#afc5380afa64b233d0df01a147616974b" title="returns an iterator to one past the last element" alt="" coords="129,153,176,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="41,226,95,188,116,177,118,182,97,192,45,230"/>
+<area shape="rect" id="Node000006" href="$namespacedetail.html#a210f8ef57e69810a5c5e65f5be52d854" title="string escaping as described in RFC 6901 (Sect. 4)" alt="" coords="96,203,209,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="48,234,82,227,83,232,49,239"/>
+<area shape="rect" id="Node000008" href="$classbasic__json.html#a362672f378a5caa7940c6d6e0378719f" title="find an element in a JSON object" alt="" coords="129,252,176,277"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="49,242,116,255,115,260,48,247"/>
+<area shape="rect" id="Node000009" href="$classbasic__json.html#a61546bf37d98e9b0d098220009e8376d" title="inserts element into array" alt="" coords="123,301,182,327"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="46,251,97,286,112,294,110,299,95,291,43,256"/>
+<area shape="rect" id="Node000013" href="$classbasic__json.html#aaf38acbc4aaada0a40549bc606f99c4f" title="add an object to an array" alt="" coords="107,351,198,376"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="37,252,60,293,78,316,98,336,105,341,102,346,94,340,73,319,56,296,32,255"/>
+<area shape="rect" id="Node000014" href="$classbasic__json.html#a0801762a3fe36fe32dca5f16e515478d" title="returns the number of elements" alt="" coords="129,400,177,425"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="33,253,53,315,72,352,98,385,117,399,114,403,94,389,68,355,49,317,28,254"/>
+<area shape="rect" id="Node000015" href="$classbasic__json.html#adb8999aa40f92f1a176d8b43dc0ab25b" title="return the type of the JSON value (explicit)" alt="" coords="127,449,178,475"/>
+<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="32,253,36,288,48,336,67,388,81,413,98,435,116,448,113,453,94,439,77,416,62,391,42,338,31,289,26,254"/>
+<area shape="rect" id="Node000007" href="$namespacedetail.html#a8e7a007413fe6d7680a50c167f983fbd" title="replace all occurrences of a substring by another string" alt="" coords="257,203,440,228"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="209,213,244,213,244,218,209,218"/>
+<area shape="rect" id="Node000010" href="$namespacedetail.html#a54705e78df59a0d6f3e58d8b032713b8" title=" " alt="" coords="293,325,404,351"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="182,315,280,327,279,332,182,320"/>
+<area shape="rect" id="Node000011" href="$namespacedetail.html#ae033addd8f992f8fb3024d9005cd4670" title=" " alt="" coords="496,300,639,325"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="404,329,482,320,483,325,405,334"/>
+<area shape="rect" id="Node000012" href="$namespacedetail.html#aabd487fb25c7a4384fce14e8fa6ef8b7" title=" " alt="" coords="488,349,647,375"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="405,341,474,349,474,354,404,347"/>
+<area shape="poly" id="edge13_Node000013_Node000010" title=" " alt="" coords="198,355,279,344,280,349,199,360"/>
+</map>

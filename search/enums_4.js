@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hperfeventtype_0',['HPerfEventType',['../hperf_8h.html#acb508c53cd407367bcd55fec03e39fbc',1,'hperf.h']]]
+  ['functionattrs_0',['FunctionAttrs',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445',1,'yoi::IRFunctionDefinition']]]
 ];

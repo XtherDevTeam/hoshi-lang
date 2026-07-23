@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['underlyingtype_0',['UnderlyingType',['../classyoi_1_1IREnumerationType.html#aaaf91a8097d88fcf9daa98a42270ab41',1,'yoi::IREnumerationType']]],
-  ['useobjectlinker_1',['UseObjectLinker',['../structyoi_1_1IRBuildConfig.html#ac349892b20a306b6c2a89db26d24c010',1,'yoi::IRBuildConfig']]]
+  ['token_5ftype_0',['token_type',['../classdetail_1_1lexer__base.html#afe5ef662303b6b710ea6ee1a944bad0d',1,'detail::lexer_base']]],
+  ['tokenkind_1',['tokenKind',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32',1,'yoi::lexer::token']]],
+  ['typespeckind_2',['typeSpecKind',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2',1,'yoi::typeSpec']]]
 ];

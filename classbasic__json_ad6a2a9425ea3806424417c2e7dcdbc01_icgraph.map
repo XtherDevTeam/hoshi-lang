@@ -1,0 +1,11 @@
+<map id="is_object" name="is_object">
+<area shape="rect" id="Node000001" title="return whether value is an object" alt="" coords="272,55,352,80"/>
+<area shape="rect" id="Node000002" href="$classbasic__json.html#a4526cff33a3eec027009ebe109072430" title=" " alt="" coords="133,5,203,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="261,53,203,33,205,27,262,48"/>
+<area shape="rect" id="Node000003" href="$classbasic__json.html#aee782303a1802f55463be1f793dbb395" title="applies a JSON Merge Patch" alt="" coords="115,55,221,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,70,221,70,221,65,258,65"/>
+<area shape="rect" id="Node000004" href="$classbasic__json.html#a16263286e449a4f812fdb0a57dc674f7" title="applies a JSON patch in&#45;place without copying the object" alt="" coords="112,104,224,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="262,87,207,106,205,101,261,82"/>
+<area shape="rect" id="Node000005" href="$classbasic__json.html#a614dd03ce3e99e79c52bedcf55945645" title="applies a JSON patch to a copy of the current object" alt="" coords="5,104,64,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="98,119,64,119,64,114,98,114"/>
+</map>

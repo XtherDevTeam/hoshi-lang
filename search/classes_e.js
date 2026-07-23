@@ -1,11 +1,15 @@
 var searchData=
 [
-  ['range_5fmax_0',['range_max',['../structmagic__enum_1_1detail_1_1range__max.html',1,'magic_enum::detail']]],
-  ['range_5fmax_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28customize_3a_3aenum_5frange_3c_20t_20_3e_3a_3amax_29_3e_20_3e_1',['range_max&lt; T, std::void_t&lt; decltype(customize::enum_range&lt; T &gt;::max)&gt; &gt;',['../structmagic__enum_1_1detail_1_1range__max_3_01T_00_01std_1_1void__t_3_01decltype_07customize_1_1376f6eb50191a2e253cb2b0e1d2386a7.html',1,'magic_enum::detail']]],
-  ['range_5fmin_2',['range_min',['../structmagic__enum_1_1detail_1_1range__min.html',1,'magic_enum::detail']]],
-  ['range_5fmin_3c_20t_2c_20std_3a_3avoid_5ft_3c_20decltype_28customize_3a_3aenum_5frange_3c_20t_20_3e_3a_3amin_29_3e_20_3e_3',['range_min&lt; T, std::void_t&lt; decltype(customize::enum_range&lt; T &gt;::min)&gt; &gt;',['../structmagic__enum_1_1detail_1_1range__min_3_01T_00_01std_1_1void__t_3_01decltype_07customize_1_14afc0df766d6bd32918519501ffe6473.html',1,'magic_enum::detail']]],
-  ['relationalexpr_4',['relationalExpr',['../classyoi_1_1relationalExpr.html',1,'yoi']]],
-  ['returnstmt_5',['returnStmt',['../classyoi_1_1returnStmt.html',1,'yoi']]],
-  ['rexpr_6',['rExpr',['../classyoi_1_1rExpr.html',1,'yoi']]],
-  ['runtime_5fsignal_5fhandler_5finfo_7',['runtime_signal_handler_info',['../structruntime__signal__handler__info.html',1,'']]]
+  ['parse_5ferror_0',['parse_error',['../classdetail_1_1parse__error.html',1,'detail']]],
+  ['parser_1',['parser',['../classdetail_1_1parser.html',1,'detail']]],
+  ['point_2',['Point',['../structPoint.html',1,'']]],
+  ['position_3',['Position',['../structlsp_1_1Position.html',1,'lsp']]],
+  ['position_5ft_4',['position_t',['../structdetail_1_1position__t.html',1,'detail']]],
+  ['possiblevalue_5',['PossibleValue',['../unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html',1,'yoi::IRFunctionOptimizer::SimulationStack::Item']]],
+  ['primary_6',['primary',['../classyoi_1_1primary.html',1,'yoi']]],
+  ['primitive_5fiterator_5ft_7',['primitive_iterator_t',['../classdetail_1_1primitive__iterator__t.html',1,'detail']]],
+  ['priority_5ftag_8',['priority_tag',['../structdetail_1_1priority__tag.html',1,'detail']]],
+  ['priority_5ftag_3c_200_20_3e_9',['priority_tag&lt; 0 &gt;',['../structdetail_1_1priority__tag_3_010_01_4.html',1,'detail']]],
+  ['projectindex_10',['ProjectIndex',['../classlsp_1_1ProjectIndex.html',1,'lsp']]],
+  ['publishdiagnosticsparams_11',['PublishDiagnosticsParams',['../structlsp_1_1PublishDiagnosticsParams.html',1,'lsp']]]
 ];

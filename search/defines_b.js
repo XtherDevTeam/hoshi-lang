@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['yoi_5farch_0',['YOI_ARCH',['../def_8hpp.html#a33f92dd81296c001a9ef7eb731c7920a',1,'def.hpp']]],
-  ['yoi_5fdylib_5fsuffix_1',['YOI_DYLIB_SUFFIX',['../def_8hpp.html#aeeae3414d9d18975fedb7091a16421f9',1,'def.hpp']]],
-  ['yoi_5fplatform_2',['YOI_PLATFORM',['../def_8hpp.html#a245bc66c9343610dd3565b85b598fa4f',1,'def.hpp']]]
+  ['stat_5ffunc_0',['stat_func',['../fs_8cpp.html#ad7b8d61359a8fe66187f413470913f9e',1,'fs.cpp']]],
+  ['stat_5fstruct_1',['stat_struct',['../fs_8cpp.html#a798e8244d5a44230f893edaacd35a8df',1,'fs.cpp']]]
 ];

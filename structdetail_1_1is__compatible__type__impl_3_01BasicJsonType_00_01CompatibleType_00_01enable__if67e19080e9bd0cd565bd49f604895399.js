@@ -1,0 +1,4 @@
+var structdetail_1_1is__compatible__type__impl_3_01BasicJsonType_00_01CompatibleType_00_01enable__if67e19080e9bd0cd565bd49f604895399 =
+[
+    [ "value", "structdetail_1_1is__compatible__type__impl_3_01BasicJsonType_00_01CompatibleType_00_01enable__if67e19080e9bd0cd565bd49f604895399.html#a5b4ee4ae6cba6bb75200ba7af1910873", null ]
+];

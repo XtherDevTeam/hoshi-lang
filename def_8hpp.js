@@ -21,6 +21,7 @@ var def_8hpp =
       [ "Panic", "def_8hpp.html#a7e38b7dc326434b90a5960920775f893ad4dbdf6f8e0aa2f9cb0e0efa247d4762", null ]
     ] ],
     [ "escapeString", "def_8hpp.html#a800a1b5e25ba1e21ba4ccf25e437bbcf", null ],
+    [ "get_diagnostic_engine", "def_8hpp.html#a61417058d9e3bb9a753c376ac20cc81a", null ],
     [ "get_line_hint_for_error", "def_8hpp.html#a9b1a87fa4d0a59f9b776d685d6873353", null ],
     [ "managedPtr", "def_8hpp.html#a134082ec04392c8d0e1fdf698a3fd3bd", null ],
     [ "panic", "def_8hpp.html#af1b2d50f7eb8d8e78be001987ad48ab6", null ],
@@ -28,6 +29,7 @@ var def_8hpp =
     [ "realpath", "def_8hpp.html#a4a59d5413d6da04facbe9ac48e2f7fff", null ],
     [ "replace_all", "def_8hpp.html#a40058c28605a70c5ad52a979a3b551a7", null ],
     [ "set_current_file_path", "def_8hpp.html#aa35210b71ccd4b7364bd60156755f2f7", null ],
+    [ "set_diagnostic_engine", "def_8hpp.html#a9cd0735525a34f3140f4ba875eb1b44e", null ],
     [ "string2wstring", "def_8hpp.html#a49de16146e5ab66039f7f95b79a82023", null ],
     [ "trim", "def_8hpp.html#adeb98337be9ad826e93f1fb1f03c0df1", null ],
     [ "warning", "def_8hpp.html#a2d71150c6b3a47496cfc00a017d8617f", null ],

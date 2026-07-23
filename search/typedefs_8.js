@@ -1,6 +1,26 @@
 var searchData=
 [
-  ['reference_0',['reference',['../classyoi_1_1indexTable_1_1iterator.html#a74202cdd96628bc49a756e5fc87d22de',1,'yoi::indexTable::iterator']]],
-  ['runtime_5fsignal_5fhandler_5fbare_5ft_1',['runtime_signal_handler_bare_t',['../signal_8h.html#a9554e4d795733685341fc98eca523e98',1,'signal.h']]],
-  ['runtime_5fsignal_5fhandler_5ft_2',['runtime_signal_handler_t',['../signal_8h.html#a65d937df4b0f0461e7ff0653bd88bffb',1,'signal.h']]]
+  ['index_5fsequence_0',['index_sequence',['../namespacedetail.html#a33001ed5c77ab9b11b8087ad8cdee95f',1,'detail']]],
+  ['index_5fsequence_5ffor_1',['index_sequence_for',['../namespacedetail.html#a26067497a55e3c8f6ecd471f268f1996',1,'detail']]],
+  ['indext_2',['indexT',['../namespaceyoi.html#adb858077f604461fe6aba9936e092c59',1,'yoi']]],
+  ['initializer_5flist_5ft_3',['initializer_list_t',['../classbasic__json.html#a9129614a8dbc70466e0aab1adde48445',1,'basic_json']]],
+  ['input_5fformat_5ft_4',['input_format_t',['../classbasic__json.html#a7f3ef7ae45e654fba20a05fff2e0eb3c',1,'basic_json']]],
+  ['int_5ftype_5',['int_type',['../structdetail_1_1char__traits_3_01unsigned_01char_01_4.html#a6e6bb967c40e082e7f9d9c1c21e92241',1,'detail::char_traits&lt; unsigned char &gt;::int_type'],['../structdetail_1_1char__traits_3_01signed_01char_01_4.html#a6e6bb967c40e082e7f9d9c1c21e92241',1,'detail::char_traits&lt; signed char &gt;::int_type']]],
+  ['internal_5fiterator_6',['internal_iterator',['../classbasic__json.html#a5cfe4116c731de7f0b8b65d05a5d161a',1,'basic_json']]],
+  ['invalid_5fiterator_7',['invalid_iterator',['../classbasic__json.html#a83e85bb8f014ffeaab15db68aa93a963',1,'basic_json']]],
+  ['is_5fc_5fstring_5funcvref_8',['is_c_string_uncvref',['../namespacedetail.html#adf00cbdcd99f6685da46c4145dde2b2c',1,'detail']]],
+  ['is_5fcomparable_5fwith_5fobject_5fkey_9',['is_comparable_with_object_key',['../classbasic__json.html#ae0ceb75074afe4f7efc7906c97394a05',1,'basic_json']]],
+  ['is_5fdetected_10',['is_detected',['../namespacedetail.html#ad95232bc8cf8b41fbc45525f13fbcd58',1,'detail']]],
+  ['is_5fdetected_5fconvertible_11',['is_detected_convertible',['../namespacedetail.html#ac286f275998780a3a3ce9fe2795db6aa',1,'detail']]],
+  ['is_5fdetected_5fexact_12',['is_detected_exact',['../namespacedetail.html#a54efded7d5471a1b8d88f5c2422a767e',1,'detail']]],
+  ['is_5fjson_5fpointer_13',['is_json_pointer',['../namespacedetail.html#a3023113f5b736e87a5b6ececad473a8d',1,'detail']]],
+  ['is_5fusable_5fas_5fbasic_5fjson_5fkey_5ftype_14',['is_usable_as_basic_json_key_type',['../namespacedetail.html#a12966bc7f9f087e6ebfd6261a0fd1971',1,'detail']]],
+  ['is_5fusable_5fas_5fkey_5ftype_15',['is_usable_as_key_type',['../namespacedetail.html#a6bc4be82db8412d98f0dfcedc207a77a',1,'detail']]],
+  ['iter_5fimpl_16',['iter_impl',['../classbasic__json.html#a60baa9588524b420d1b017b4ba33ea90',1,'basic_json']]],
+  ['iteration_5fproxy_17',['iteration_proxy',['../classbasic__json.html#a301c21a62040479716e12d43fdbd1674',1,'basic_json']]],
+  ['iterator_18',['iterator',['../structordered__map.html#a026824bea52faa6311d5fc973f216e40',1,'ordered_map::iterator'],['../classbasic__json.html#a241034c44708fd20925e6ae18efcfb56',1,'basic_json::iterator'],['../structdetail_1_1is__range.html#a13ebb62bf6b8d54f4d176ed0eb0b5a8b',1,'detail::is_range::iterator']]],
+  ['iterator_5fcategory_19',['iterator_category',['../classdetail_1_1iteration__proxy__value.html#a6b137a24d9328a60aef01d0f938cf0c3',1,'detail::iteration_proxy_value::iterator_category'],['../classdetail_1_1iter__impl.html#a13fe24ca0865b19fbff05ff095c4ffea',1,'detail::iter_impl::iterator_category'],['../structdetail_1_1iterator__traits_3_01T_01_5_00_01enable__if__t_3_01std_1_1is__object_3_01T_01_4_1_1value_01_4_01_4.html#a8806ca091813ced0b0658fedaa448357',1,'detail::iterator_traits&lt; T *, enable_if_t&lt; std::is_object&lt; T &gt;::value &gt; &gt;::iterator_category'],['../structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#a27257098a154b3fb65d99a45c785e1ec',1,'detail::iterator_types&lt; It, void_t&lt; typename It::difference_type, typename It::value_type, typename It::pointer, typename It::reference, typename It::iterator_category &gt; &gt;::iterator_category'],['../classyoi_1_1indexTable_1_1iterator.html#a8806ca091813ced0b0658fedaa448357',1,'yoi::indexTable::iterator::iterator_category']]],
+  ['iterator_5fcategory_5ft_20',['iterator_category_t',['../namespacedetail.html#a12f8a5c384451e411ee710b30a07ed67',1,'detail']]],
+  ['iterator_5ft_21',['iterator_t',['../namespacedetail.html#a61f488879572bc70fe5d09dc08a37a08',1,'detail']]],
+  ['iterator_5ftype_22',['iterator_type',['../structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a4661405adf470734e0d6d876282ad25e',1,'detail::iterator_input_adapter_factory&lt; IteratorType, enable_if_t&lt; is_iterator_of_multibyte&lt; IteratorType &gt;::value &gt; &gt;::iterator_type'],['../structdetail_1_1iterator__input__adapter__factory.html#a4661405adf470734e0d6d876282ad25e',1,'detail::iterator_input_adapter_factory::iterator_type']]]
 ];

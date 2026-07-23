@@ -1,0 +1,15 @@
+<map id="replace_substring" name="replace_substring">
+<area shape="rect" id="Node000001" title="replace all occurrences of a substring by another string" alt="" coords="525,80,663,105"/>
+<area shape="rect" id="Node000002" href="$namespacedetail.html#a210f8ef57e69810a5c5e65f5be52d854" title="string escaping as described in RFC 6901 (Sect. 4)" alt="" coords="401,55,469,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="512,82,469,75,470,70,512,77"/>
+<area shape="rect" id="Node000006" href="$namespacedetail.html#ae8f8a24666d18dfc3f97c86d952d7ce1" title="string unescaping as described in RFC 6901 (Sect. 4)" alt="" coords="393,104,477,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="512,108,478,113,477,108,511,102"/>
+<area shape="rect" id="Node000003" href="$classbasic__json.html#a6d4ea8d68ca832e209500fcf2ce23729" title="creates a diff as a JSON patch" alt="" coords="210,5,329,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,56,312,33,314,28,389,51"/>
+<area shape="rect" id="Node000004" href="$classjson__pointer.html#afc6fab30a895a6575944f8f9b92c742d" title=" " alt="" coords="193,55,345,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="387,70,346,70,346,65,387,65"/>
+<area shape="rect" id="Node000005" href="$classbasic__json.html#a6a19297e3c35ea1836a330681443e241" title="return flattened JSON value" alt="" coords="5,55,145,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="179,70,146,70,146,65,179,65"/>
+<area shape="rect" id="Node000007" href="$classjson__pointer.html#a56330f063e22a40e9d76b0331202b22b" title="split the string input to reference tokens" alt="" coords="200,104,339,129"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="380,119,339,119,339,114,380,114"/>
+</map>

@@ -1,0 +1,8 @@
+var structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300 =
+[
+    [ "adapter_type", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a150275e130633157a0b5da4058f1de4e", null ],
+    [ "base_adapter_type", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a67d2443936365dedef897e5a347da0c6", null ],
+    [ "char_type", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a3bce8475d57a44bf526dcd5bc7a20db4", null ],
+    [ "iterator_type", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a4661405adf470734e0d6d876282ad25e", null ],
+    [ "create", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html#a5753b5208cc863851d75aa95fb9e84b6", null ]
+];

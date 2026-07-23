@@ -1,0 +1,41 @@
+<map id="scan" name="scan">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,177,57,203"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1lexer.html#af04215a2bacf1284be6c1167be8af30e" title="scan a comment" alt="" coords="110,201,231,227"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="58,192,97,199,96,204,57,197"/>
+<area shape="rect" id="Node000005" href="$classdetail_1_1lexer.html#aeb8bc253cd9dbc1d170041dac2b1f1f1" title=" " alt="" coords="311,5,408,31"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="34,176,56,120,76,88,104,61,150,37,201,22,252,14,297,12,297,18,252,20,202,27,152,42,107,65,81,91,61,122,39,178"/>
+<area shape="rect" id="Node000006" href="$classdetail_1_1lexer.html#afc4c8ec17d4706e61365f510dbd47a84" title="scan a number literal" alt="" coords="116,485,225,511"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="40,202,67,275,108,372,158,472,153,474,103,374,62,277,35,204"/>
+<area shape="rect" id="Node000010" href="$classdetail_1_1lexer.html#a82e5a4d16eccfe5c27d3c3bdd9277e45" title="scan a string literal" alt="" coords="123,335,219,360"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="46,201,151,322,147,326,42,205"/>
+<area shape="rect" id="Node000013" href="$classdetail_1_1lexer.html#a6d059481b8bbc4f72cdd4f62e38b35c0" title="skip the UTF&#45;8 byte order mark" alt="" coords="128,152,213,177"/>
+<area shape="poly" id="edge21_Node000001_Node000013" title=" " alt="" coords="57,183,114,172,115,177,58,188"/>
+<area shape="rect" id="Node000014" href="$classdetail_1_1lexer.html#ad286fa18439fbed14dec41adc407e71b" title=" " alt="" coords="105,76,236,101"/>
+<area shape="poly" id="edge24_Node000001_Node000014" title=" " alt="" coords="48,175,140,107,143,112,52,179"/>
+<area shape="rect" id="Node000003" href="$classdetail_1_1lexer.html#a38cd6be79a2e16b9590350c1fa20e2d6" title=" " alt="" coords="485,208,527,233"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,200,327,189,382,189,435,194,472,204,471,209,434,199,381,194,328,195,232,205"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1lexer.html#a98c4e2eed11d3c85b9e194d6e5630e42" title="unget current character (read it again on next get)" alt="" coords="330,208,389,233"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="231,213,316,217,316,222,231,219"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="407,28,436,48,463,83,482,123,495,161,503,194,498,195,490,163,477,125,458,86,433,52,404,33"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="209,508,259,520,318,527,349,526,379,521,407,511,433,496,446,479,459,454,478,384,492,308,499,247,505,248,497,309,483,385,464,456,451,482,436,500,410,516,380,526,349,532,318,532,258,526,208,513"/>
+<area shape="poly" id="edge11_Node000006_Node000004" title=" " alt="" coords="176,484,227,389,282,296,332,241,336,244,286,300,232,391,181,487"/>
+<area shape="rect" id="Node000007" href="$classdetail_1_1lexer.html#ad76e899cd354b9b982dac0fb47b42e28" title="add a character to token_buffer" alt="" coords="483,409,529,435"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="195,508,242,530,303,550,336,556,370,557,403,552,433,540,456,521,474,497,495,447,500,449,478,499,460,525,436,544,404,557,370,563,336,562,302,556,240,535,193,513"/>
+<area shape="rect" id="Node000008" href="$classdetail_1_1lexer.html#a20194325f0380eb3bbc6bc6c8b2697d9" title="reset token_buffer; current character is beginning of token" alt="" coords="332,460,387,485"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="225,488,318,475,318,481,226,493"/>
+<area shape="rect" id="Node000009" href="$classdetail_1_1lexer.html#a8511e7d2ce6220e96ee7a03e781bc073" title=" " alt="" coords="331,612,388,637"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="187,509,229,548,285,590,319,607,316,612,283,595,225,552,183,513"/>
+<area shape="poly" id="edge14_Node000010_Node000003" title=" " alt="" coords="198,332,283,296,358,269,434,243,471,230,473,235,436,249,360,274,285,300,200,337"/>
+<area shape="poly" id="edge13_Node000010_Node000007" title=" " alt="" coords="196,358,237,377,285,394,334,405,384,412,469,419,468,424,383,417,333,410,283,399,235,382,194,362"/>
+<area shape="poly" id="edge20_Node000010_Node000008" title=" " alt="" coords="187,358,229,397,285,438,320,456,318,461,283,443,225,401,183,362"/>
+<area shape="rect" id="Node000011" href="$classdetail_1_1lexer.html#a481d21529ffe29267979606e30197e87" title="get codepoint from 4 hex characters following \u" alt="" coords="302,309,417,335"/>
+<area shape="poly" id="edge15_Node000010_Node000011" title=" " alt="" coords="219,338,288,329,289,334,219,344"/>
+<area shape="rect" id="Node000012" href="$classdetail_1_1lexer.html#abe640d54354fdd148f6a3ccf92a677c2" title="check if the next byte(s) are inside a given range" alt="" coords="284,359,435,384"/>
+<area shape="poly" id="edge17_Node000010_Node000012" title=" " alt="" coords="219,351,271,357,270,363,219,356"/>
+<area shape="poly" id="edge16_Node000011_Node000003" title=" " alt="" coords="396,307,433,288,461,266,484,242,487,246,464,269,436,292,399,312"/>
+<area shape="poly" id="edge19_Node000012_Node000003" title=" " alt="" coords="415,356,433,345,455,323,472,296,494,245,499,247,477,299,459,326,436,349,417,361"/>
+<area shape="poly" id="edge18_Node000012_Node000007" title=" " alt="" coords="398,382,470,407,469,412,396,387"/>
+<area shape="poly" id="edge22_Node000013_Node000003" title=" " alt="" coords="214,157,260,153,316,153,376,158,436,171,460,183,481,197,478,201,457,187,434,177,376,163,316,158,260,159,214,162"/>
+<area shape="poly" id="edge23_Node000013_Node000004" title=" " alt="" coords="215,175,318,206,316,211,213,180"/>
+<area shape="poly" id="edge25_Node000014_Node000003" title=" " alt="" coords="237,89,283,95,334,105,386,121,436,144,467,168,490,195,486,198,463,172,433,148,385,126,333,110,282,100,236,95"/>
+</map>

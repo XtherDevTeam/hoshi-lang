@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['实现_20ffi_20的必经之路_0',['Export Wrapper - 实现 FFI 的必经之路',['../md_docs_2Wrapper.html',1,'']]]
+  ['复杂类型的_20export_20和_20import_0',['复杂类型的 export 和 import',['../md_docs_2Wrapper.html#autotoc_md156',1,'']]]
 ];

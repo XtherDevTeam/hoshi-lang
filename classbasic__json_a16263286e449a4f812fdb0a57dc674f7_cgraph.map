@@ -1,0 +1,48 @@
+<map id="patch_inplace" name="patch_inplace">
+<area shape="rect" id="Node000001" title="applies a JSON patch in&#45;place without copying the object" alt="" coords="5,332,117,357"/>
+<area shape="rect" id="Node000002" href="$classbasic__json.html#a3d5717f39bfe485057850f116fb2ed12" title="access specified array element with bounds checking" alt="" coords="442,56,481,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,331,68,286,84,222,97,188,114,154,136,124,164,99,196,79,231,66,268,58,305,53,374,54,429,60,428,65,374,59,305,59,268,63,232,71,198,84,167,103,140,128,119,157,102,190,89,224,73,287,66,332"/>
+<area shape="rect" id="Node000003" href="$namespacedetail.html#a54705e78df59a0d6f3e58d8b032713b8" title=" " alt="" coords="809,269,920,295"/>
+<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="62,331,71,292,89,240,119,186,139,163,164,144,189,133,219,127,295,126,384,138,482,159,673,213,817,262,816,267,671,218,480,164,383,143,294,132,220,132,190,138,167,148,143,167,123,189,94,242,76,294,67,332"/>
+<area shape="rect" id="Node000006" href="$classjson__pointer.html#a74270c14c64336e6740ee9e5838d1067" title="return last reference token" alt="" coords="181,407,322,432"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="87,355,166,393,187,400,186,405,164,398,84,360"/>
+<area shape="rect" id="Node000010" href="$classbasic__json.html#a979556eb331ec35eb33472a90a160f99" title="returns an iterator to the first element" alt="" coords="222,157,281,183"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="66,330,100,265,128,226,164,193,185,181,208,174,210,179,187,186,167,197,132,230,105,268,70,333"/>
+<area shape="rect" id="Node000011" href="$classjson__pointer.html#a3f6fc5de06a318920d84f3c3742db07f" title="return whether pointer points to the root document" alt="" coords="175,207,327,232"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="70,330,108,287,135,263,164,242,180,235,182,239,167,247,138,267,112,291,74,334"/>
+<area shape="rect" id="Node000012" href="$classbasic__json.html#afc5380afa64b233d0df01a147616974b" title="returns an iterator to one past the last element" alt="" coords="228,256,275,281"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="91,329,164,298,214,279,216,284,166,303,93,334"/>
+<area shape="rect" id="Node000013" href="$classbasic__json.html#a05a2d4678b130a13b4bcbc62f4318d72" title="remove element given an iterator" alt="" coords="432,288,491,313"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="117,336,418,303,419,308,118,341"/>
+<area shape="rect" id="Node000014" href="$classbasic__json.html#a362672f378a5caa7940c6d6e0378719f" title="find an element in a JSON object" alt="" coords="228,357,275,383"/>
+<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="118,349,215,363,214,368,117,355"/>
+<area shape="rect" id="Node000015" href="$classbasic__json.html#a61546bf37d98e9b0d098220009e8376d" title="inserts element into array" alt="" coords="644,545,703,571"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="66,357,71,404,87,469,100,504,117,537,139,566,167,590,195,607,225,619,288,634,353,638,419,633,482,621,540,606,631,573,633,578,542,611,483,626,420,638,353,643,287,639,223,624,193,611,164,595,135,570,112,540,95,506,82,471,66,405,61,358"/>
+<area shape="rect" id="Node000016" href="$classbasic__json.html#a286a1af9e72e4e41a359b6d01a7b9be9" title="return whether value is an array" alt="" coords="214,456,289,481"/>
+<area shape="poly" id="edge20_Node000001_Node000016" title=" " alt="" coords="74,356,112,398,138,422,167,442,202,457,200,462,164,447,134,426,108,402,70,359"/>
+<area shape="rect" id="Node000017" href="$classbasic__json.html#ad6a2a9425ea3806424417c2e7dcdbc01" title="return whether value is an object" alt="" coords="211,505,291,531"/>
+<area shape="poly" id="edge21_Node000001_Node000017" title=" " alt="" coords="70,356,104,422,132,460,167,492,199,507,197,512,164,496,128,463,100,424,66,359"/>
+<area shape="rect" id="Node000018" href="$classjson__pointer.html#a058bda4957df6a97b1ea6c9fd783f672" title="remove last reference token" alt="" coords="165,555,337,580"/>
+<area shape="poly" id="edge22_Node000001_Node000018" title=" " alt="" coords="68,357,78,394,98,443,127,496,145,520,167,541,173,546,170,550,164,545,141,524,122,499,93,446,73,395,63,358"/>
+<area shape="rect" id="Node000019" href="$classbasic__json.html#aaf38acbc4aaada0a40549bc606f99c4f" title="add an object to an array" alt="" coords="416,5,507,31"/>
+<area shape="poly" id="edge24_Node000001_Node000019" title=" " alt="" coords="60,332,64,279,79,204,92,163,110,124,133,87,164,56,191,38,221,24,284,8,347,4,402,7,402,12,347,9,285,14,222,29,193,42,167,60,137,90,114,126,97,165,84,205,70,280,66,332"/>
+<area shape="rect" id="Node000020" href="$classbasic__json.html#a0801762a3fe36fe32dca5f16e515478d" title="returns the number of elements" alt="" coords="227,656,275,681"/>
+<area shape="poly" id="edge26_Node000001_Node000020" title=" " alt="" coords="66,357,72,408,88,482,101,523,118,563,140,601,167,635,189,650,215,660,213,665,187,655,164,639,136,604,113,566,96,525,83,484,67,409,61,358"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="480,63,532,56,606,55,646,58,687,66,726,79,763,98,783,114,800,133,828,175,847,219,859,255,854,257,842,221,823,178,796,136,779,118,760,103,724,84,686,71,645,64,606,60,533,62,481,68"/>
+<area shape="rect" id="Node000004" href="$namespacedetail.html#ae033addd8f992f8fb3024d9005cd4670" title=" " alt="" coords="976,244,1119,269"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="920,272,961,266,962,271,920,277"/>
+<area shape="rect" id="Node000005" href="$namespacedetail.html#aabd487fb25c7a4384fce14e8fa6ef8b7" title=" " alt="" coords="968,293,1127,319"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="920,287,954,291,953,296,920,292"/>
+<area shape="rect" id="Node000007" href="$classdetail_1_1out__of__range.html#ac841838f1dfd0902d16facd9096f58c3" title=" " alt="" coords="385,399,537,439"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="322,417,372,417,372,422,322,422"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="538,436,590,443,647,445,705,439,733,431,760,420,792,397,817,367,837,335,851,306,856,309,842,337,822,370,795,401,763,424,735,436,706,444,647,451,589,448,537,441"/>
+<area shape="rect" id="Node000008" href="$classdetail_1_1exception.html#a4dcb085e2fec7d969c85624c6a77f167" title=" " alt="" coords="604,370,743,410"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="537,406,590,399,591,404,538,411"/>
+<area shape="rect" id="Node000009" href="$classdetail_1_1exception.html#a4a184b6296a34bd8410be9a8c9cc65cb" title=" " alt="" coords="585,320,761,345"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="498,397,584,356,609,347,611,352,586,360,500,401"/>
+<area shape="poly" id="edge10_Node000009_Node000003" title=" " alt="" coords="722,317,802,296,803,301,723,322"/>
+<area shape="poly" id="edge16_Node000013_Node000003" title=" " alt="" coords="491,297,795,282,796,288,491,302"/>
+<area shape="poly" id="edge19_Node000015_Node000003" title=" " alt="" coords="687,543,721,509,759,464,812,379,850,306,854,308,817,382,763,468,725,513,691,547"/>
+<area shape="poly" id="edge23_Node000018_Node000007" title=" " alt="" coords="311,552,336,541,365,521,392,497,435,449,439,452,396,500,369,525,339,546,314,557"/>
+<area shape="poly" id="edge25_Node000019_Node000003" title=" " alt="" coords="507,9,563,6,630,10,700,25,733,39,763,57,786,78,805,102,834,157,852,211,862,255,857,256,847,213,829,159,801,105,782,82,760,61,730,43,698,30,629,15,563,11,507,14"/>
+</map>

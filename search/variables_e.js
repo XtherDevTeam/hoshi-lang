@@ -1,13 +1,19 @@
 var searchData=
 [
-  ['object_5ffilename_0',['object_filename',['../structyoi_1_1CodegenObjectCacheEntry.html#a26dae856a1bba56a85ee3c7c1eb4dc23',1,'yoi::CodegenObjectCacheEntry']]],
-  ['objectpaths_1',['objectPaths',['../classyoi_1_1ObjectLinker.html#a6c861c390f46736688309aa1def900ff',1,'yoi::ObjectLinker']]],
-  ['ok_2',['ok',['../structYoiResultUnsignedAndIntObject.html#a25289c36b71273042f3ef19affbab763',1,'YoiResultUnsignedAndIntObject']]],
-  ['op_3',['op',['../classyoi_1_1abstractExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::abstractExpr::op'],['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op'],['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op']]],
-  ['opcode_4',['opcode',['../classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d',1,'yoi::IR']]],
-  ['operands_5',['operands',['../classyoi_1_1IR.html#a8ce7a5a8c6787e9812c15e35f5d0ce15',1,'yoi::IR']]],
-  ['ops_6',['ops',['../classyoi_1_1shiftExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::shiftExpr::ops'],['../classyoi_1_1logicalOrExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalOrExpr::ops'],['../classyoi_1_1logicalAndExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalAndExpr::ops'],['../classyoi_1_1inclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::inclusiveExpr::ops'],['../classyoi_1_1exclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::exclusiveExpr::ops'],['../classyoi_1_1andExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::andExpr::ops'],['../classyoi_1_1equalityExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::equalityExpr::ops'],['../classyoi_1_1relationalExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::relationalExpr::ops'],['../classyoi_1_1addExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::addExpr::ops'],['../classyoi_1_1mulExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::mulExpr::ops']]],
-  ['optimizable_7',['optimizable',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a010ddcc410eb8c270049186c685fd1c4',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet']]],
-  ['option_8',['option',['../classyoi_1_1Formatter.html#a019fa0c2a585bebc3c9521d734e838a3',1,'yoi::Formatter']]],
-  ['os_9',['os',['../classyoi_1_1Formatter.html#a89faa0dea781b6be2421553e62f41459',1,'yoi::Formatter']]]
+  ['oa_0',['oa',['../classdetail_1_1binary__writer.html#a4f525b679e9822178e726e930ac7de61',1,'detail::binary_writer::oa'],['../classdetail_1_1output__adapter.html#a4f525b679e9822178e726e930ac7de61',1,'detail::output_adapter::oa']]],
+  ['object_5felement_1',['object_element',['../classdetail_1_1json__sax__dom__parser.html#adf1b35401bfdbdb1c066ddf06a358c63',1,'detail::json_sax_dom_parser::object_element'],['../classdetail_1_1json__sax__dom__callback__parser.html#adf1b35401bfdbdb1c066ddf06a358c63',1,'detail::json_sax_dom_callback_parser::object_element']]],
+  ['object_5ffilename_2',['object_filename',['../structyoi_1_1CodegenObjectCacheEntry.html#a26dae856a1bba56a85ee3c7c1eb4dc23',1,'yoi::CodegenObjectCacheEntry']]],
+  ['object_5fiterator_3',['object_iterator',['../structdetail_1_1internal__iterator.html#aad66ddc23a7d6fe4ff7aec18ccf4bd1d',1,'detail::internal_iterator']]],
+  ['objectpaths_4',['objectPaths',['../classyoi_1_1ObjectLinker.html#a6c861c390f46736688309aa1def900ff',1,'yoi::ObjectLinker']]],
+  ['ok_5',['ok',['../structYoiResultUnsignedAndIntObject.html#a25289c36b71273042f3ef19affbab763',1,'YoiResultUnsignedAndIntObject']]],
+  ['op_6',['op',['../classyoi_1_1uniqueExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::uniqueExpr::op'],['../classyoi_1_1leftExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::leftExpr::op'],['../classyoi_1_1abstractExpr.html#a7b4e2f3d51eb67365b5f337b6de8c329',1,'yoi::abstractExpr::op']]],
+  ['opcode_7',['opcode',['../classyoi_1_1IR.html#a96e1385066659b03b5a687e99d668e2d',1,'yoi::IR']]],
+  ['openclose_8',['openClose',['../structlsp_1_1TextDocumentSyncOptions.html#aeab816e7c245f69400aa5720cfa14adc',1,'lsp::TextDocumentSyncOptions']]],
+  ['operands_9',['operands',['../classyoi_1_1IR.html#a8ce7a5a8c6787e9812c15e35f5d0ce15',1,'yoi::IR']]],
+  ['ops_10',['ops',['../classyoi_1_1mulExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::mulExpr::ops'],['../classyoi_1_1logicalOrExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalOrExpr::ops'],['../classyoi_1_1logicalAndExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::logicalAndExpr::ops'],['../classyoi_1_1inclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::inclusiveExpr::ops'],['../classyoi_1_1exclusiveExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::exclusiveExpr::ops'],['../classyoi_1_1andExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::andExpr::ops'],['../classyoi_1_1equalityExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::equalityExpr::ops'],['../classyoi_1_1relationalExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::relationalExpr::ops'],['../classyoi_1_1shiftExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::shiftExpr::ops'],['../classyoi_1_1addExpr.html#a4635f7ab4094c12d7e418ef210869b62',1,'yoi::addExpr::ops']]],
+  ['optimizable_11',['optimizable',['../structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html#a010ddcc410eb8c270049186c685fd1c4',1,'yoi::IRFunctionOptimizer::SimulationStack::Item::ContributedInstructionSet']]],
+  ['option_12',['option',['../classyoi_1_1Formatter.html#a019fa0c2a585bebc3c9521d734e838a3',1,'yoi::Formatter']]],
+  ['os_13',['os',['../classyoi_1_1Formatter.html#a89faa0dea781b6be2421553e62f41459',1,'yoi::Formatter']]],
+  ['other_5fiter_5fimpl_14',['other_iter_impl',['../classdetail_1_1iter__impl.html#a0d10783eed2fede37ddd72d368c5a6f9',1,'detail::iter_impl']]],
+  ['owned_5fvalue_15',['owned_value',['../classdetail_1_1json__ref.html#ac08dac9a00c922f73b3e31ffebf9bada',1,'detail::json_ref']]]
 ];

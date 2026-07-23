@@ -1,0 +1,8 @@
+var structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278 =
+[
+    [ "difference_type", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#ab530cf3478ab2845c4acbda9eee746c7", null ],
+    [ "iterator_category", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#a27257098a154b3fb65d99a45c785e1ec", null ],
+    [ "pointer", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#a3a97e2101b0993830fbf6684d2e9f960", null ],
+    [ "reference", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#a999bdc805710a84fc005967a5cb7ab00", null ],
+    [ "value_type", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html#a6739b5dcbf325a2bdf73bc2e155e4382", null ]
+];

@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "actual_object_comparator< BasicJsonType >", "structdetail_1_1actual__object__comparator.html", null ],
+    [ "adl_serializer< ValueType, typename >", "structadl__serializer.html", null ],
     [ "AllocatedMemoryList", "structAllocatedMemoryList.html", null ],
     [ "AnalysisState", "structyoi_1_1AnalysisState.html", null ],
     [ "Argument", "structyoi_1_1IRTemplateBuilder_1_1Argument.html", null ],
@@ -93,12 +95,25 @@ var hierarchy =
       [ "whileStmt", "classyoi_1_1whileStmt.html", null ],
       [ "yieldStmt", "classyoi_1_1yieldStmt.html", null ]
     ] ],
+    [ "B", null, [
+      [ "conjunction< B >", "structdetail_1_1conjunction_3_01B_01_4.html", null ]
+    ] ],
+    [ "binary_reader< BasicJsonType, InputAdapterType, SAX >", "classdetail_1_1binary__reader.html", null ],
+    [ "binary_writer< BasicJsonType, CharType >", "classdetail_1_1binary__writer.html", null ],
+    [ "BinaryType", null, [
+      [ "byte_container_with_subtype< BinaryType >", "classbyte__container__with__subtype.html", null ]
+    ] ],
+    [ "bool_constant", null, [
+      [ "is_c_string< T >", "structdetail_1_1is__c__string.html", null ],
+      [ "is_transparent< T >", "structdetail_1_1is__transparent.html", null ]
+    ] ],
     [ "bool_constant", null, [
       [ "has_is_flags< T, std::void_t< decltype(customize::enum_range< T >::is_flags)> >", "structmagic__enum_1_1detail_1_1has__is__flags_3_01T_00_01std_1_1void__t_3_01decltype_07customize13d690b0add06bd55a4dd8d99f1b8c51.html", null ],
       [ "is_reflected< E, S >", "structmagic__enum_1_1detail_1_1is__reflected.html", null ],
       [ "is_scoped_enum< T, true >", "structmagic__enum_1_1detail_1_1is__scoped__enum_3_01T_00_01true_01_4.html", null ],
       [ "is_unscoped_enum< T, true >", "structmagic__enum_1_1detail_1_1is__unscoped__enum_3_01T_00_01true_01_4.html", null ]
     ] ],
+    [ "boundaries", "structdetail_1_1dtoa__impl_1_1boundaries.html", null ],
     [ "Builder", "structyoi_1_1IRBuildConfig_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRDataStructDefinition_1_1Builder.html", null ],
     [ "Builder", "classyoi_1_1IREnumerationType_1_1Builder.html", null ],
@@ -107,15 +122,43 @@ var hierarchy =
     [ "Builder", "structyoi_1_1IRInterfaceInstanceDefinition_1_1Builder.html", null ],
     [ "Builder", "structyoi_1_1IRStructDefinition_1_1Builder.html", null ],
     [ "BuiltinModuleBuilder", "classyoi_1_1BuiltinModuleBuilder.html", null ],
+    [ "cached_power", "structdetail_1_1dtoa__impl_1_1cached__power.html", null ],
     [ "CallGraph", "structyoi_1_1CallGraph.html", null ],
     [ "case_insensitive< Op >", "classmagic__enum_1_1detail_1_1case__insensitive.html", null ],
+    [ "char_traits", null, [
+      [ "char_traits< char_type >", "structdetail_1_1char__traits.html", null ],
+      [ "char_traits< T >", "structdetail_1_1char__traits.html", null ],
+      [ "char_traits< signed char >", "structdetail_1_1char__traits_3_01signed_01char_01_4.html", null ],
+      [ "char_traits< unsigned char >", "structdetail_1_1char__traits_3_01unsigned_01char_01_4.html", null ]
+    ] ],
     [ "CodegenObjectCache", "classyoi_1_1CodegenObjectCache.html", null ],
     [ "CodegenObjectCacheEntry", "structyoi_1_1CodegenObjectCacheEntry.html", null ],
     [ "CodegenTaskDispatcher", "classyoi_1_1CodegenTaskDispatcher.html", null ],
     [ "Comment", "structyoi_1_1lexer_1_1Comment.html", null ],
+    [ "CompletionItem", "structlsp_1_1CompletionItem.html", null ],
+    [ "CompletionList", "structlsp_1_1CompletionList.html", null ],
+    [ "CompletionOptions", "structlsp_1_1CompletionOptions.html", null ],
+    [ "CompletionParams", "structlsp_1_1CompletionParams.html", null ],
+    [ "CompletionProvider", "classlsp_1_1CompletionProvider.html", null ],
     [ "ConceptStmtValue", "unionyoi_1_1conceptStmt_1_1ConceptStmtValue.html", null ],
+    [ "container_input_adapter_factory< ContainerType, Enable >", "structdetail_1_1container__input__adapter__factory__impl_1_1container__input__adapter__factory.html", null ],
+    [ "container_input_adapter_factory< ContainerType, void_t< decltype(begin(std::declval< ContainerType >()), end(std::declval< ContainerType >()))> >", "structdetail_1_1container__input__adapter__factory__impl_1_1container__input__adapter__factory_3983614ac0e8828aa386ca24b1ddc2bd1.html", null ],
     [ "ContributedInstructionSet", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet.html", null ],
     [ "ControlFlowAnalysis", "structyoi_1_1LLVMCodegen_1_1ControlFlowAnalysis.html", null ],
+    [ "DefinitionParams", "structlsp_1_1DefinitionParams.html", null ],
+    [ "DefinitionProvider", "classlsp_1_1DefinitionProvider.html", null ],
+    [ "detector< Default, AlwaysVoid, Op, Args >", "structdetail_1_1detector.html", null ],
+    [ "detector< Default, void_t< Op< Args... > >, Op, Args... >", "structdetail_1_1detector_3_01Default_00_01void__t_3_01Op_3_01Args_8_8_8_01_4_01_4_00_01Op_00_01Args_8_8_8_01_4.html", null ],
+    [ "Diagnostic", "structyoi_1_1Diagnostic.html", null ],
+    [ "DiagnosticEngine", "classyoi_1_1DiagnosticEngine.html", null ],
+    [ "DidChangeTextDocumentParams", "structlsp_1_1DidChangeTextDocumentParams.html", null ],
+    [ "DidCloseTextDocumentParams", "structlsp_1_1DidCloseTextDocumentParams.html", null ],
+    [ "DidOpenTextDocumentParams", "structlsp_1_1DidOpenTextDocumentParams.html", null ],
+    [ "diyfp", "structdetail_1_1dtoa__impl_1_1diyfp.html", null ],
+    [ "Document", "structlsp_1_1Document.html", null ],
+    [ "DocumentStore", "classlsp_1_1DocumentStore.html", null ],
+    [ "DocumentSymbol", "structlsp_1_1DocumentSymbol.html", null ],
+    [ "DocumentSymbolParams", "structlsp_1_1DocumentSymbolParams.html", null ],
     [ "enable_if_enum< bool, R >", "structmagic__enum_1_1detail_1_1enable__if__enum.html", null ],
     [ "enable_if_enum< true, R >", "structmagic__enum_1_1detail_1_1enable__if__enum_3_01true_00_01R_01_4.html", null ],
     [ "enable_shared_from_this", null, [
@@ -126,7 +169,57 @@ var hierarchy =
     [ "enum_range< enumT, TSize >", "classyoi_1_1enum__range.html", null ],
     [ "enum_range< Opcode >", "classyoi_1_1enum__range.html", null ],
     [ "enum_range< operandType >", "classyoi_1_1enum__range.html", null ],
+    [ "exception", null, [
+      [ "exception", "classdetail_1_1exception.html", [
+        [ "invalid_iterator", "classdetail_1_1invalid__iterator.html", null ],
+        [ "other_error", "classdetail_1_1other__error.html", null ],
+        [ "out_of_range", "classdetail_1_1out__of__range.html", null ],
+        [ "parse_error", "classdetail_1_1parse__error.html", null ],
+        [ "type_error", "classdetail_1_1type__error.html", null ]
+      ] ]
+    ] ],
+    [ "Extend< Seq, SeqSize, Rem >", "structdetail_1_1utility__internal_1_1Extend.html", null ],
+    [ "Extend< integer_sequence< T, Ints... >, SeqSize, 0 >", "structdetail_1_1utility__internal_1_1Extend_3_01integer__sequence_3_01T_00_01Ints_8_8_8_01_4_00_01SeqSize_00_010_01_4.html", null ],
+    [ "Extend< integer_sequence< T, Ints... >, SeqSize, 1 >", "structdetail_1_1utility__internal_1_1Extend_3_01integer__sequence_3_01T_00_01Ints_8_8_8_01_4_00_01SeqSize_00_011_01_4.html", null ],
+    [ "external_constructor< value_t >", "structdetail_1_1external__constructor.html", null ],
+    [ "external_constructor< value_t::array >", "structdetail_1_1external__constructor_3_01value__t_1_1array_01_4.html", null ],
+    [ "external_constructor< value_t::binary >", "structdetail_1_1external__constructor_3_01value__t_1_1binary_01_4.html", null ],
+    [ "external_constructor< value_t::boolean >", "structdetail_1_1external__constructor_3_01value__t_1_1boolean_01_4.html", null ],
+    [ "external_constructor< value_t::number_float >", "structdetail_1_1external__constructor_3_01value__t_1_1number__float_01_4.html", null ],
+    [ "external_constructor< value_t::number_integer >", "structdetail_1_1external__constructor_3_01value__t_1_1number__integer_01_4.html", null ],
+    [ "external_constructor< value_t::number_unsigned >", "structdetail_1_1external__constructor_3_01value__t_1_1number__unsigned_01_4.html", null ],
+    [ "external_constructor< value_t::object >", "structdetail_1_1external__constructor_3_01value__t_1_1object_01_4.html", null ],
+    [ "external_constructor< value_t::string >", "structdetail_1_1external__constructor_3_01value__t_1_1string_01_4.html", null ],
     [ "false_type", null, [
+      [ "has_from_json< BasicJsonType, T, typename >", "structdetail_1_1has__from__json.html", null ],
+      [ "has_non_default_from_json< BasicJsonType, T, typename >", "structdetail_1_1has__non__default__from__json.html", null ],
+      [ "has_to_json< BasicJsonType, T, typename >", "structdetail_1_1has__to__json.html", null ],
+      [ "is_basic_json< typename >", "structdetail_1_1is__basic__json.html", null ],
+      [ "is_comparable< Compare, A, B, typename >", "structdetail_1_1is__comparable.html", null ],
+      [ "is_compatible_array_type_impl< BasicJsonType, CompatibleArrayType, typename >", "structdetail_1_1is__compatible__array__type__impl.html", [
+        [ "is_compatible_array_type< BasicJsonType, CompatibleArrayType >", "structdetail_1_1is__compatible__array__type.html", null ]
+      ] ],
+      [ "is_compatible_integer_type_impl< RealIntegerType, CompatibleNumberIntegerType, typename >", "structdetail_1_1is__compatible__integer__type__impl.html", [
+        [ "is_compatible_integer_type< RealIntegerType, CompatibleNumberIntegerType >", "structdetail_1_1is__compatible__integer__type.html", null ]
+      ] ],
+      [ "is_compatible_object_type_impl< BasicJsonType, CompatibleObjectType, typename >", "structdetail_1_1is__compatible__object__type__impl.html", [
+        [ "is_compatible_object_type< BasicJsonType, CompatibleObjectType >", "structdetail_1_1is__compatible__object__type.html", null ]
+      ] ],
+      [ "is_compatible_type_impl< BasicJsonType, CompatibleType, typename >", "structdetail_1_1is__compatible__type__impl.html", [
+        [ "is_compatible_type< BasicJsonType, CompatibleType >", "structdetail_1_1is__compatible__type.html", null ]
+      ] ],
+      [ "is_complete_type< T, typename >", "structdetail_1_1is__complete__type.html", null ],
+      [ "is_constructible_array_type_impl< BasicJsonType, ConstructibleArrayType, typename >", "structdetail_1_1is__constructible__array__type__impl.html", [
+        [ "is_constructible_array_type< BasicJsonType, ConstructibleArrayType >", "structdetail_1_1is__constructible__array__type.html", null ]
+      ] ],
+      [ "is_constructible_object_type_impl< BasicJsonType, ConstructibleObjectType, typename >", "structdetail_1_1is__constructible__object__type__impl.html", [
+        [ "is_constructible_object_type< BasicJsonType, ConstructibleObjectType >", "structdetail_1_1is__constructible__object__type.html", null ]
+      ] ],
+      [ "is_constructible_tuple< T1, T2 >", "structdetail_1_1is__constructible__tuple.html", null ],
+      [ "is_iterator_traits< T, typename >", "structdetail_1_1is__iterator__traits.html", null ],
+      [ "is_json_iterator_of< BasicJsonType, T >", "structdetail_1_1is__json__iterator__of.html", null ],
+      [ "is_json_ref< typename >", "structdetail_1_1is__json__ref.html", null ],
+      [ "is_specialization_of< Primary, T >", "structdetail_1_1is__specialization__of.html", null ],
       [ "has_is_flags< T, typename >", "structmagic__enum_1_1detail_1_1has__is__flags.html", null ],
       [ "is_scoped_enum< T, bool >", "structmagic__enum_1_1detail_1_1is__scoped__enum.html", [
         [ "is_scoped_enum< T >", "structmagic__enum_1_1is__scoped__enum.html", null ]
@@ -136,9 +229,20 @@ var hierarchy =
       ] ],
       [ "supported< T >", "structmagic__enum_1_1detail_1_1supported.html", null ]
     ] ],
+    [ "file_input_adapter", "classdetail_1_1file__input__adapter.html", null ],
     [ "FormatOption", "structyoi_1_1FormatOption.html", null ],
     [ "Formatter", "classyoi_1_1Formatter.html", null ],
+    [ "from_json_fn", "structdetail_1_1from__json__fn.html", null ],
     [ "FunctionAnalysisInfo", "structyoi_1_1FunctionAnalysisInfo.html", null ],
+    [ "Gen< T, N >", "structdetail_1_1utility__internal_1_1Gen.html", null ],
+    [ "Gen< T, 0 >", "structdetail_1_1utility__internal_1_1Gen_3_01T_00_010_01_4.html", null ],
+    [ "has_from_json< BasicJsonType, T, enable_if_t< !is_basic_json< T >::value > >", "structdetail_1_1has__from__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_9is__basic__json_3_01T_01_4_1_1value_01_4_01_4.html", null ],
+    [ "has_non_default_from_json< BasicJsonType, T, enable_if_t< !is_basic_json< T >::value > >", "structdetail_1_1has__non__default__from__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_912047717fa07cfa9d99fe9eafcf1e11e.html", null ],
+    [ "has_to_json< BasicJsonType, T, enable_if_t< !is_basic_json< T >::value > >", "structdetail_1_1has__to__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_9is__basic__json_3_01T_01_4_1_1value_01_4_01_4.html", null ],
+    [ "hash< nlohmann::NLOHMANN_BASIC_JSON_TPL >", "structstd_1_1hash_3_01nlohmann_1_1NLOHMANN__BASIC__JSON__TPL_01_4.html", null ],
+    [ "Hover", "structlsp_1_1Hover.html", null ],
+    [ "HoverParams", "structlsp_1_1HoverParams.html", null ],
+    [ "HoverProvider", "classlsp_1_1HoverProvider.html", null ],
     [ "HPerfContext", "structHPerfContext.html", null ],
     [ "HPerfEvent", "structHPerfEvent.html", null ],
     [ "HPerfEventFuncEnter", "structHPerfEventFuncEnter.html", null ],
@@ -147,8 +251,10 @@ var hierarchy =
     [ "HPerfEventMemFree", "structHPerfEventMemFree.html", null ],
     [ "HPerfPage", "structHPerfPage.html", null ],
     [ "HPerfTimestamp", "structHPerfTimestamp.html", null ],
+    [ "identity_tag< T >", "structdetail_1_1identity__tag.html", null ],
     [ "ifBlock", "structyoi_1_1ifStmt_1_1ifBlock.html", null ],
     [ "ImportLibrary", "classyoi_1_1IRFFITable_1_1ImportLibrary.html", null ],
+    [ "IndexedModule", "structlsp_1_1ProjectIndex_1_1IndexedModule.html", null ],
     [ "indexPool< T >", "classyoi_1_1indexPool.html", null ],
     [ "indexPool< yoi::wstr >", "classyoi_1_1indexPool.html", null ],
     [ "indexTable< A, B >", "classyoi_1_1indexTable.html", null ],
@@ -167,12 +273,21 @@ var hierarchy =
     [ "indexTable< yoi::wstr, yoi::IRFFITable::ImportLibrary >", "classyoi_1_1indexTable.html", null ],
     [ "indexTable< yoi::wstr, yoi::IRTemplateBuilder::Argument >", "classyoi_1_1indexTable.html", null ],
     [ "indexTableDeprecated< A, B >", "classyoi_1_1indexTableDeprecated.html", null ],
+    [ "InitializeResult", "structlsp_1_1InitializeResult.html", null ],
+    [ "input_stream_adapter", "classdetail_1_1input__stream__adapter.html", null ],
+    [ "integer_sequence< T, Ints >", "structdetail_1_1integer__sequence.html", null ],
     [ "integral_constant", null, [
+      [ "has_key_compare< T >", "structdetail_1_1has__key__compare.html", null ],
+      [ "is_basic_json_context< BasicJsonContext >", "structdetail_1_1is__basic__json__context.html", null ],
+      [ "negation< B >", "structdetail_1_1negation.html", null ],
       [ "range_max< T, typename >", "structmagic__enum_1_1detail_1_1range__max.html", null ],
       [ "range_max< T, std::void_t< decltype(customize::enum_range< T >::max)> >", "structmagic__enum_1_1detail_1_1range__max_3_01T_00_01std_1_1void__t_3_01decltype_07customize_1_1376f6eb50191a2e253cb2b0e1d2386a7.html", null ],
       [ "range_min< T, typename >", "structmagic__enum_1_1detail_1_1range__min.html", null ],
-      [ "range_min< T, std::void_t< decltype(customize::enum_range< T >::min)> >", "structmagic__enum_1_1detail_1_1range__min_3_01T_00_01std_1_1void__t_3_01decltype_07customize_1_14afc0df766d6bd32918519501ffe6473.html", null ]
+      [ "range_min< T, std::void_t< decltype(customize::enum_range< T >::min)> >", "structmagic__enum_1_1detail_1_1range__min_3_01T_00_01std_1_1void__t_3_01decltype_07customize_1_14afc0df766d6bd32918519501ffe6473.html", null ],
+      [ "tuple_size<::nlohmann::detail::iteration_proxy_value< IteratorType > >", "classstd_1_1tuple__size_3_1_1nlohmann_1_1detail_1_1iteration__proxy__value_3_01IteratorType_01_4_01_4.html", null ]
     ] ],
+    [ "internal_iterator< BasicJsonType >", "structdetail_1_1internal__iterator.html", null ],
+    [ "internal_iterator< typename std::remove_const< BasicJsonType >::type >", "structdetail_1_1internal__iterator.html", null ],
     [ "IR", "classyoi_1_1IR.html", null ],
     [ "IRBuildConfig", "structyoi_1_1IRBuildConfig.html", null ],
     [ "IRBuilder", "classyoi_1_1IRBuilder.html", null ],
@@ -207,37 +322,162 @@ var hierarchy =
     [ "IRTypeAlias", "classyoi_1_1IRTypeAlias.html", null ],
     [ "IRValueType", "classyoi_1_1IRValueType.html", null ],
     [ "IRVariableTable", "classyoi_1_1IRVariableTable.html", null ],
+    [ "is_compatible_array_type_impl< BasicJsonType, CompatibleArrayType, enable_if_t< is_detected< iterator_t, CompatibleArrayType >::value &&is_iterator_traits< iterator_traits< detected_t< iterator_t, CompatibleArrayType > > >::value &&!std::is_same< CompatibleArrayType, detected_t< range_value_t, CompatibleArrayType > >::value > >", "structdetail_1_1is__compatible__array__type__impl_3_01BasicJsonType_00_01CompatibleArrayType_00_ba7b30737b5c65ad9adb609a3762b85a.html", null ],
+    [ "is_compatible_integer_type_impl< RealIntegerType, CompatibleNumberIntegerType, enable_if_t< std::is_integral< RealIntegerType >::value &&std::is_integral< CompatibleNumberIntegerType >::value &&!std::is_same< bool, CompatibleNumberIntegerType >::value > >", "structdetail_1_1is__compatible__integer__type__impl_3_01RealIntegerType_00_01CompatibleNumberInt5b484fcfc2d1ae63b1211da72eabe33b.html", null ],
+    [ "is_compatible_object_type_impl< BasicJsonType, CompatibleObjectType, enable_if_t< is_detected< mapped_type_t, CompatibleObjectType >::value &&is_detected< key_type_t, CompatibleObjectType >::value > >", "structdetail_1_1is__compatible__object__type__impl_3_01BasicJsonType_00_01CompatibleObjectType_01530c59509aa77cdb5f1e95cf109944f.html", null ],
+    [ "is_compatible_string_type< BasicJsonType, CompatibleStringType >", "structdetail_1_1is__compatible__string__type.html", null ],
+    [ "is_compatible_type_impl< BasicJsonType, CompatibleType, enable_if_t< is_complete_type< CompatibleType >::value > >", "structdetail_1_1is__compatible__type__impl_3_01BasicJsonType_00_01CompatibleType_00_01enable__if67e19080e9bd0cd565bd49f604895399.html", null ],
+    [ "is_constructible", null, [
+      [ "is_constructible< T, Args >", "structdetail_1_1is__constructible.html", null ]
+    ] ],
+    [ "is_constructible_array_type_impl< BasicJsonType, ConstructibleArrayType, enable_if_t< !std::is_same< ConstructibleArrayType, typename BasicJsonType::value_type >::value &&!is_compatible_string_type< BasicJsonType, ConstructibleArrayType >::value &&is_default_constructible< ConstructibleArrayType >::value &&(std::is_move_assignable< ConstructibleArrayType >::value||std::is_copy_assignable< ConstructibleArrayType >::value)&&is_detected< iterator_t, ConstructibleArrayType >::value &&is_iterator_traits< iterator_traits< detected_t< iterator_t, ConstructibleArrayType > > >::value &&is_detected< range_value_t, ConstructibleArrayType >::value &&!std::is_same< ConstructibleArrayType, detected_t< range_value_t, ConstructibleArrayType > >::value &&is_complete_type< detected_t< range_value_t, ConstructibleArrayType > >::value > >", "structdetail_1_1is__constructible__array__type__impl_3_01BasicJsonType_00_01ConstructibleArrayTy3a773789b90b07cf1d15e358c6d585ac.html", null ],
+    [ "is_constructible_object_type_impl< BasicJsonType, ConstructibleObjectType, enable_if_t< is_detected< mapped_type_t, ConstructibleObjectType >::value &&is_detected< key_type_t, ConstructibleObjectType >::value > >", "structdetail_1_1is__constructible__object__type__impl_3_01BasicJsonType_00_01ConstructibleObject435b838380c31b9738383402f7bb5943.html", null ],
+    [ "is_constructible_string_type< BasicJsonType, ConstructibleStringType >", "structdetail_1_1is__constructible__string__type.html", null ],
+    [ "is_default_constructible", null, [
+      [ "is_default_constructible< T >", "structdetail_1_1is__default__constructible.html", null ]
+    ] ],
+    [ "is_detected", null, [
+      [ "is_detected_lazy< Op, Args >", "structdetail_1_1is__detected__lazy.html", null ]
+    ] ],
+    [ "is_getable< BasicJsonType, T >", "structdetail_1_1is__getable.html", null ],
+    [ "is_iterator_of_multibyte< T >", "structdetail_1_1is__iterator__of__multibyte.html", null ],
+    [ "is_iterator_traits< iterator_traits< T > >", "structdetail_1_1is__iterator__traits_3_01iterator__traits_3_01T_01_4_01_4.html", null ],
+    [ "is_ordered_map< T >", "structdetail_1_1is__ordered__map.html", null ],
+    [ "is_range< T >", "structdetail_1_1is__range.html", null ],
+    [ "is_sax< SAX, BasicJsonType >", "structdetail_1_1is__sax.html", null ],
+    [ "is_sax_static_asserts< SAX, BasicJsonType >", "structdetail_1_1is__sax__static__asserts.html", null ],
     [ "Item", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item.html", null ],
+    [ "iter_impl< BasicJsonType >", "classdetail_1_1iter__impl.html", null ],
+    [ "iteration_proxy< IteratorType >", "classdetail_1_1iteration__proxy.html", null ],
+    [ "iteration_proxy_value< IteratorType >", "classdetail_1_1iteration__proxy__value.html", null ],
     [ "iterator", "classyoi_1_1enum__range_1_1iterator.html", null ],
     [ "iterator", "classyoi_1_1indexTable_1_1iterator.html", null ],
     [ "iterator", "classyoi_1_1indexTableDeprecated_1_1iterator.html", null ],
     [ "Iterator", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1ContributedInstructionSet_1_1Iterator.html", null ],
+    [ "iterator_input_adapter< IteratorType >", "classdetail_1_1iterator__input__adapter.html", null ],
+    [ "iterator_input_adapter_factory< IteratorType, Enable >", "structdetail_1_1iterator__input__adapter__factory.html", null ],
+    [ "iterator_input_adapter_factory< IteratorType, enable_if_t< is_iterator_of_multibyte< IteratorType >::value > >", "structdetail_1_1iterator__input__adapter__factory_3_01IteratorType_00_01enable__if__t_3_01is__it379df2cab17a32e3e44924a3e0b8f300.html", null ],
+    [ "iterator_traits< T, typename >", "structdetail_1_1iterator__traits.html", null ],
+    [ "iterator_traits< T *, enable_if_t< std::is_object< T >::value > >", "structdetail_1_1iterator__traits_3_01T_01_5_00_01enable__if__t_3_01std_1_1is__object_3_01T_01_4_1_1value_01_4_01_4.html", null ],
+    [ "iterator_types< It, typename >", "structdetail_1_1iterator__types.html", null ],
+    [ "iterator_types< It, void_t< typename It::difference_type, typename It::value_type, typename It::pointer, typename It::reference, typename It::iterator_category > >", "structdetail_1_1iterator__types_3_01It_00_01void__t_3_01typename_01It_1_1difference__type_00_01tce77e1bdc2e5b392df295e4bdf270278.html", null ],
+    [ "iterator_types< T >", "structdetail_1_1iterator__types.html", [
+      [ "iterator_traits< T, enable_if_t< !std::is_pointer< T >::value > >", "structdetail_1_1iterator__traits_3_01T_00_01enable__if__t_3_01_9std_1_1is__pointer_3_01T_01_4_1_1value_01_4_01_4.html", null ]
+    ] ],
+    [ "json_base_class", null, [
+      [ "basic_json< ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType, CustomBaseClass >", "classbasic__json.html", null ]
+    ] ],
+    [ "json_default_base", "structdetail_1_1json__default__base.html", null ],
+    [ "json_pointer< RefStringType >", "classjson__pointer.html", null ],
+    [ "json_ref< BasicJsonType >", "classdetail_1_1json__ref.html", null ],
+    [ "json_sax< BasicJsonType >", "structjson__sax.html", null ],
+    [ "json_sax_acceptor< BasicJsonType >", "classdetail_1_1json__sax__acceptor.html", null ],
+    [ "json_sax_dom_callback_parser< BasicJsonType, InputAdapterType >", "classdetail_1_1json__sax__dom__callback__parser.html", null ],
+    [ "json_sax_dom_parser< BasicJsonType, InputAdapterType >", "classdetail_1_1json__sax__dom__parser.html", null ],
+    [ "less< ::nlohmann::detail::value_t >", "structstd_1_1less_3_01_1_1nlohmann_1_1detail_1_1value__t_01_4.html", null ],
     [ "lexer", "classyoi_1_1lexer.html", null ],
+    [ "lexer_base< BasicJsonType >", "classdetail_1_1lexer__base.html", [
+      [ "lexer< BasicJsonType, InputAdapterType >", "classdetail_1_1lexer.html", null ]
+    ] ],
     [ "lexerState", "structyoi_1_1lexer_1_1lexerState.html", null ],
     [ "LLVMCodegen", "classyoi_1_1LLVMCodegen.html", null ],
     [ "LLVMModuleContext", "classyoi_1_1LLVMCodegen_1_1LLVMModuleContext.html", null ],
+    [ "Location", "structlsp_1_1Location.html", null ],
     [ "LoopContext", "structyoi_1_1IRBuilder_1_1LoopContext.html", null ],
+    [ "LspDiagnostic", "structlsp_1_1LspDiagnostic.html", null ],
+    [ "LspServer", "classlsp_1_1LspServer.html", null ],
+    [ "make_void< Ts >", "structdetail_1_1make__void.html", null ],
+    [ "MarkupContent", "structlsp_1_1MarkupContent.html", null ],
     [ "moduleContext", "classyoi_1_1moduleContext.html", null ],
     [ "nameInfo", "structyoi_1_1IRStructDefinition_1_1nameInfo.html", null ],
+    [ "nonesuch", "structdetail_1_1nonesuch.html", null ],
     [ "ObjectLinker", "classyoi_1_1ObjectLinker.html", [
       [ "ccObjectLinker", "classyoi_1_1ccObjectLinker.html", null ],
       [ "clObjectLinker", "classyoi_1_1clObjectLinker.html", null ]
     ] ],
     [ "operandValue", "unionyoi_1_1IROperand_1_1operandValue.html", null ],
+    [ "output_adapter< CharType, StringType >", "classdetail_1_1output__adapter.html", null ],
+    [ "output_adapter_protocol< CharType >", "structdetail_1_1output__adapter__protocol.html", [
+      [ "output_stream_adapter< CharType >", "classdetail_1_1output__stream__adapter.html", null ],
+      [ "output_string_adapter< CharType, StringType >", "classdetail_1_1output__string__adapter.html", null ],
+      [ "output_vector_adapter< CharType, AllocatorType >", "classdetail_1_1output__vector__adapter.html", null ]
+    ] ],
     [ "OverloadResult", "structyoi_1_1visitor_1_1OverloadResult.html", null ],
     [ "pair", null, [
       [ "customize_t", "classmagic__enum_1_1customize_1_1customize__t.html", null ]
     ] ],
+    [ "parser< BasicJsonType, InputAdapterType >", "classdetail_1_1parser.html", null ],
     [ "Point", "structPoint.html", null ],
+    [ "Position", "structlsp_1_1Position.html", null ],
+    [ "position_t", "structdetail_1_1position__t.html", null ],
     [ "PossibleValue", "unionyoi_1_1IRFunctionOptimizer_1_1SimulationStack_1_1Item_1_1PossibleValue.html", null ],
+    [ "primitive_iterator_t", "classdetail_1_1primitive__iterator__t.html", null ],
+    [ "priority_tag< N >", "structdetail_1_1priority__tag.html", null ],
+    [ "priority_tag< 0 >", "structdetail_1_1priority__tag_3_010_01_4.html", null ],
+    [ "ProjectIndex", "classlsp_1_1ProjectIndex.html", null ],
+    [ "PublishDiagnosticsParams", "structlsp_1_1PublishDiagnosticsParams.html", null ],
+    [ "Range", "structlsp_1_1Range.html", null ],
+    [ "ReferenceParams", "structlsp_1_1ReferenceParams.html", null ],
+    [ "reverse_iterator", null, [
+      [ "json_reverse_iterator< Base >", "classdetail_1_1json__reverse__iterator.html", null ]
+    ] ],
     [ "runtime_signal_handler_info", "structruntime__signal__handler__info.html", null ],
+    [ "serializer< BasicJsonType >", "classdetail_1_1serializer.html", null ],
+    [ "ServerCapabilities", "structlsp_1_1ServerCapabilities.html", null ],
+    [ "ServerInfo", "structlsp_1_1ServerInfo.html", null ],
     [ "SimulationStack", "structyoi_1_1IRFunctionOptimizer_1_1SimulationStack.html", null ],
+    [ "span_input_adapter", "classdetail_1_1span__input__adapter.html", null ],
     [ "StackValue", "structyoi_1_1LLVMCodegen_1_1StackValue.html", null ],
+    [ "static_const< T >", "structdetail_1_1static__const.html", null ],
     [ "static_str< N >", "classmagic__enum_1_1detail_1_1static__str.html", null ],
     [ "static_str< 0 >", "classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html", null ],
     [ "str_view", "structmagic__enum_1_1detail_1_1str__view.html", null ],
+    [ "string_t_helper< T >", "structjson__pointer_1_1string__t__helper.html", null ],
+    [ "string_t_helper< NLOHMANN_BASIC_JSON_TPL >", "structjson__pointer_1_1string__t__helper_3_01NLOHMANN__BASIC__JSON__TPL_01_4.html", null ],
+    [ "Symbol", "structlsp_1_1Symbol.html", null ],
+    [ "SymbolExtractor", "classlsp_1_1SymbolExtractor.html", null ],
+    [ "TextDocumentContentChangeEvent", "structlsp_1_1TextDocumentContentChangeEvent.html", null ],
+    [ "TextDocumentIdentifier", "structlsp_1_1TextDocumentIdentifier.html", null ],
+    [ "TextDocumentItem", "structlsp_1_1TextDocumentItem.html", null ],
+    [ "TextDocumentSyncOptions", "structlsp_1_1TextDocumentSyncOptions.html", null ],
     [ "ThreadStarterArgs", "structThreadStarterArgs.html", null ],
+    [ "to_json_fn", "structdetail_1_1to__json__fn.html", null ],
     [ "token", "structyoi_1_1lexer_1_1token.html", null ],
+    [ "true_type", null, [
+      [ "conjunction< is_constructible< T1, Args >... >", "structdetail_1_1conjunction.html", [
+        [ "is_constructible_tuple< T1, std::tuple< Args... > >", "structdetail_1_1is__constructible__tuple_3_01T1_00_01std_1_1tuple_3_01Args_8_8_8_01_4_01_4.html", null ]
+      ] ],
+      [ "conjunction< is_default_constructible< T1 >, is_default_constructible< T2 > >", "structdetail_1_1conjunction.html", [
+        [ "is_default_constructible< const std::pair< T1, T2 > >", "structdetail_1_1is__default__constructible_3_01const_01std_1_1pair_3_01T1_00_01T2_01_4_01_4.html", [
+          [ "is_constructible< const std::pair< T1, T2 > >", "structdetail_1_1is__constructible_3_01const_01std_1_1pair_3_01T1_00_01T2_01_4_01_4.html", null ]
+        ] ],
+        [ "is_default_constructible< std::pair< T1, T2 > >", "structdetail_1_1is__default__constructible_3_01std_1_1pair_3_01T1_00_01T2_01_4_01_4.html", [
+          [ "is_constructible< std::pair< T1, T2 > >", "structdetail_1_1is__constructible_3_01std_1_1pair_3_01T1_00_01T2_01_4_01_4.html", null ]
+        ] ]
+      ] ],
+      [ "conjunction< is_default_constructible< Ts >... >", "structdetail_1_1conjunction.html", [
+        [ "is_default_constructible< const std::tuple< Ts... > >", "structdetail_1_1is__default__constructible_3_01const_01std_1_1tuple_3_01Ts_8_8_8_01_4_01_4.html", [
+          [ "is_constructible< const std::tuple< Ts... > >", "structdetail_1_1is__constructible_3_01const_01std_1_1tuple_3_01Ts_8_8_8_01_4_01_4.html", null ]
+        ] ],
+        [ "is_default_constructible< std::tuple< Ts... > >", "structdetail_1_1is__default__constructible_3_01std_1_1tuple_3_01Ts_8_8_8_01_4_01_4.html", [
+          [ "is_constructible< std::tuple< Ts... > >", "structdetail_1_1is__constructible_3_01std_1_1tuple_3_01Ts_8_8_8_01_4_01_4.html", null ]
+        ] ]
+      ] ],
+      [ "conjunction<... >", "structdetail_1_1conjunction.html", null ],
+      [ "is_basic_json< NLOHMANN_BASIC_JSON_TPL >", "structdetail_1_1is__basic__json_3_01NLOHMANN__BASIC__JSON__TPL_01_4.html", null ],
+      [ "is_comparable< Compare, A, B, void_t< decltype(std::declval< Compare >()(std::declval< A >(), std::declval< B >())), decltype(std::declval< Compare >()(std::declval< B >(), std::declval< A >()))> >", "structdetail_1_1is__comparable_3_01Compare_00_01A_00_01B_00_01void__t_3_01decltype_07std_1_1decle5e3400d312093eca0a7154409c6a227.html", null ],
+      [ "is_complete_type< T, decltype(void(sizeof(T)))>", "structdetail_1_1is__complete__type_3_01T_00_01decltype_07void_07sizeof_07T_08_08_08_4.html", null ],
+      [ "is_constructible_array_type_impl< BasicJsonType, ConstructibleArrayType, enable_if_t< std::is_same< ConstructibleArrayType, typename BasicJsonType::value_type >::value > >", "structdetail_1_1is__constructible__array__type__impl_3_01BasicJsonType_00_01ConstructibleArrayTyff4af2af9684a1cc8580410ec8c319a4.html", null ],
+      [ "is_json_iterator_of< BasicJsonType, typename BasicJsonType::const_iterator >", "structdetail_1_1is__json__iterator__of_3_01BasicJsonType_00_01typename_01BasicJsonType_1_1const__iterator_01_4.html", null ],
+      [ "is_json_iterator_of< BasicJsonType, typename BasicJsonType::iterator >", "structdetail_1_1is__json__iterator__of_3_01BasicJsonType_00_01typename_01BasicJsonType_1_1iterator_01_4.html", null ],
+      [ "is_json_ref< json_ref< T > >", "structdetail_1_1is__json__ref_3_01json__ref_3_01T_01_4_01_4.html", null ],
+      [ "is_specialization_of< Primary, Primary< Args... > >", "structdetail_1_1is__specialization__of_3_01Primary_00_01Primary_3_01Args_8_8_8_01_4_01_4.html", null ]
+    ] ],
+    [ "tuple_element< N, ::nlohmann::detail::iteration_proxy_value< IteratorType > >", "classstd_1_1tuple__element_3_01N_00_01_1_1nlohmann_1_1detail_1_1iteration__proxy__value_3_01IteratorType_01_4_01_4.html", null ],
+    [ "two", "structdetail_1_1is__ordered__map_1_1two.html", null ],
+    [ "type", null, [
+      [ "conjunction< B, Bn... >", "structdetail_1_1conjunction_3_01B_00_01Bn_8_8_8_01_4.html", null ]
+    ] ],
     [ "underlying_type< T, bool >", "structmagic__enum_1_1detail_1_1underlying__type.html", [
       [ "underlying_type< T >", "structmagic__enum_1_1underlying__type.html", null ]
     ] ],
@@ -246,13 +486,29 @@ var hierarchy =
     ] ],
     [ "utf8Unicode", "classutf8Unicode.html", null ],
     [ "valid_count_t< N >", "structmagic__enum_1_1detail_1_1valid__count__t.html", null ],
+    [ "value_in_range_of_impl1< OfType, T, NeverOutOfRange, typename >", "structdetail_1_1value__in__range__of__impl1.html", null ],
+    [ "value_in_range_of_impl1< OfType, T, false >", "structdetail_1_1value__in__range__of__impl1_3_01OfType_00_01T_00_01false_01_4.html", null ],
+    [ "value_in_range_of_impl1< OfType, T, true >", "structdetail_1_1value__in__range__of__impl1_3_01OfType_00_01T_00_01true_01_4.html", null ],
+    [ "value_in_range_of_impl2< OfType, T, OfTypeSigned, TSigned >", "structdetail_1_1value__in__range__of__impl2.html", null ],
+    [ "value_in_range_of_impl2< OfType, T, false, false >", "structdetail_1_1value__in__range__of__impl2_3_01OfType_00_01T_00_01false_00_01false_01_4.html", null ],
+    [ "value_in_range_of_impl2< OfType, T, false, true >", "structdetail_1_1value__in__range__of__impl2_3_01OfType_00_01T_00_01false_00_01true_01_4.html", null ],
+    [ "value_in_range_of_impl2< OfType, T, true, false >", "structdetail_1_1value__in__range__of__impl2_3_01OfType_00_01T_00_01true_00_01false_01_4.html", null ],
+    [ "value_in_range_of_impl2< OfType, T, true, true >", "structdetail_1_1value__in__range__of__impl2_3_01OfType_00_01T_00_01true_00_01true_01_4.html", null ],
     [ "ValueStackWithPhi", "structyoi_1_1LLVMCodegen_1_1ValueStackWithPhi.html", null ],
     [ "VariablesExtraInfo", "structyoi_1_1IRFunctionOptimizer_1_1VariablesExtraInfo.html", null ],
     [ "vBasicValue", "unionyoi_1_1lexer_1_1token_1_1vBasicValue.html", null ],
+    [ "vector< std::pair< const Key, T >, std::allocator< std::pair< const Key, T > > >", null, [
+      [ "ordered_map< Key, T, IgnoredLess, Allocator >", "structordered__map.html", null ]
+    ] ],
+    [ "VersionedTextDocumentIdentifier", "structlsp_1_1VersionedTextDocumentIdentifier.html", null ],
     [ "visitor", "classyoi_1_1visitor.html", null ],
     [ "vValue", "unionyoi_1_1globalStmt_1_1vValue.html", null ],
     [ "vValue", "unionyoi_1_1inCodeBlockStmt_1_1vValue.html", null ],
     [ "WeakSlot", "structWeakSlot.html", null ],
+    [ "wide_string_input_adapter< BaseInputAdapter, WideCharType >", "classdetail_1_1wide__string__input__adapter.html", null ],
+    [ "wide_string_input_helper< BaseInputAdapter, T >", "structdetail_1_1wide__string__input__helper.html", null ],
+    [ "wide_string_input_helper< BaseInputAdapter, 2 >", "structdetail_1_1wide__string__input__helper_3_01BaseInputAdapter_00_012_01_4.html", null ],
+    [ "wide_string_input_helper< BaseInputAdapter, 4 >", "structdetail_1_1wide__string__input__helper_3_01BaseInputAdapter_00_014_01_4.html", null ],
     [ "YoiBooleanObject", "structYoiBooleanObject.html", null ],
     [ "YoiCharObject", "structYoiCharObject.html", null ],
     [ "YoiDecimalObject", "structYoiDecimalObject.html", null ],

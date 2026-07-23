@@ -1,0 +1,5 @@
+var structdetail_1_1has__from__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_9is__basic__json_3_01T_01_4_1_1value_01_4_01_4 =
+[
+    [ "serializer", "structdetail_1_1has__from__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_9is__basic__json_3_01T_01_4_1_1value_01_4_01_4.html#a7f02f708f746432a5386539350f451e8", null ],
+    [ "value", "structdetail_1_1has__from__json_3_01BasicJsonType_00_01T_00_01enable__if__t_3_01_9is__basic__json_3_01T_01_4_1_1value_01_4_01_4.html#a5b4ee4ae6cba6bb75200ba7af1910873", null ]
+];

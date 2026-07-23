@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['modifier_0',['Modifier',['../classyoi_1_1structDefInnerPair.html#a80f90997871cd543ddb0bf8d282becdd',1,'yoi::structDefInnerPair']]]
+  ['kind_0',['Kind',['../classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5b',1,'yoi::conceptStmt']]]
 ];

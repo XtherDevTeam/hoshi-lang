@@ -11,5 +11,7 @@ var searchData=
   ['codegentaskdispatcher_2ehpp_8',['codegenTaskDispatcher.hpp',['../codegenTaskDispatcher_8hpp.html',1,'']]],
   ['compilercontext_2ecpp_9',['compilerContext.cpp',['../compilerContext_8cpp.html',1,'']]],
   ['compilercontext_2eh_10',['compilerContext.h',['../compilerContext_8h.html',1,'']]],
-  ['console_2emd_11',['Console.md',['../Console_8md.html',1,'']]]
+  ['completion_2ecpp_11',['completion.cpp',['../completion_8cpp.html',1,'']]],
+  ['completion_2eh_12',['completion.h',['../completion_8h.html',1,'']]],
+  ['console_2emd_13',['Console.md',['../Console_8md.html',1,'']]]
 ];

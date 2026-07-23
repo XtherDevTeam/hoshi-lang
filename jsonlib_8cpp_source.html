@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('jsonlib_8cpp_source.html',''); initRes
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;nlohmann/json.hpp&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">// Use the library namespace</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="jsonlib_8cpp.html#ab701e3ac61a85b337ec5c1abaad6742d">    8</a></span><span class="keyword">using </span><a class="code hl_typedef" href="jsonlib_8cpp.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a> = nlohmann::json;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="jsonlib_8cpp.html#ab701e3ac61a85b337ec5c1abaad6742d">    8</a></span><span class="keyword">using </span><a class="code hl_class" href="classbasic__json.html">json</a> = nlohmann::json;</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// Equivalent to the iteration function</span></div>
 <div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('jsonlib_8cpp_source.html',''); initRes
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordflow">try</span> {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="comment">// Parse the string into a json object</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keyword">auto</span> j = json::parse(s);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    } <span class="keywordflow">catch</span> (json::parse_error&amp; e) {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    } <span class="keywordflow">catch</span> (<a class="code hl_class" href="classdetail_1_1parse__error.html">json::parse_error</a>&amp; e) {</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="comment">// Handle potential parse errors (optional, for safety)</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    }</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}</div>
@@ -150,8 +150,9 @@ $(document).ready(function(){initNavTree('jsonlib_8cpp_source.html',''); initRes
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
 </div>
+<div class="ttc" id="aclassbasic__json_html"><div class="ttname"><a href="classbasic__json.html">basic_json</a></div><div class="ttdoc">namespace for Niels Lohmann</div><div class="ttdef"><b>Definition</b> <a href="json_8hpp_source.html#l20112">json.hpp:20114</a></div></div>
+<div class="ttc" id="aclassdetail_1_1parse__error_html"><div class="ttname"><a href="classdetail_1_1parse__error.html">detail::parse_error</a></div><div class="ttdoc">exception indicating a parse error</div><div class="ttdef"><b>Definition</b> <a href="json_8hpp_source.html#l04626">json.hpp:4627</a></div></div>
 <div class="ttc" id="ajsonlib_8cpp_html_a9cd372c3ed2b19fc8be91fc488a22980"><div class="ttname"><a href="jsonlib_8cpp.html#a9cd372c3ed2b19fc8be91fc488a22980">iteration</a></div><div class="ttdeci">void iteration(const std::string &amp;s)</div><div class="ttdef"><b>Definition</b> <a href="jsonlib_8cpp_source.html#l00011">jsonlib.cpp:11</a></div></div>
-<div class="ttc" id="ajsonlib_8cpp_html_ab701e3ac61a85b337ec5c1abaad6742d"><div class="ttname"><a href="jsonlib_8cpp.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a></div><div class="ttdeci">nlohmann::json json</div><div class="ttdef"><b>Definition</b> <a href="jsonlib_8cpp_source.html#l00008">jsonlib.cpp:8</a></div></div>
 <div class="ttc" id="ajsonlib_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="jsonlib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="jsonlib_8cpp_source.html#l00020">jsonlib.cpp:20</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,23 +1,7 @@
 var searchData=
 [
-  ['panic_0',['Panic',['../namespaceyoi.html#a7e38b7dc326434b90a5960920775f893ad4dbdf6f8e0aa2f9cb0e0efa247d4762',1,'yoi']]],
-  ['percentsign_1',['percentSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32af3b0d7eb99acc93ea58a2751b70b1fe0',1,'yoi::lexer::token']]],
-  ['permanentincurrentscope_2',['PermanentInCurrentScope',['../classyoi_1_1IRValueType.html#ae512a76e6e645da2ab6f9153cba7831fa84ee3f5bbc2690a20887439bef21f3bc',1,'yoi::IRValueType']]],
-  ['plain_3',['Plain',['../structyoi_1_1FunctionAnalysisInfo.html#a02b832de27c9164e3fb0b166655d115ba4cd8413207629a963225f4314b53adcd',1,'yoi::FunctionAnalysisInfo']]],
-  ['plus_4',['plus',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32ad7d18cfb3a0d8293e2f5d94ea30e04d2',1,'yoi::lexer::token']]],
-  ['pointer_5',['pointer',['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85accac8a66d468e2522611be86933cc0d9',1,'yoi::IRValueType']]],
-  ['pointer_5fcast_6',['pointer_cast',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a3dc53891f7776356b25a5fbcd7d3c442',1,'yoi::IR']]],
-  ['pointerobject_7',['pointerobject',['../rtti_8h.html#a9600487ec2a7ad92fa85330bf2a48675ada67bae9e91e98a49d84f1510f994edc',1,'pointerObject:&#160;rtti.h'],['../classyoi_1_1IRValueType.html#a6a54d8929e41805f4a28e13ed08d4e85ada67bae9e91e98a49d84f1510f994edc',1,'yoi::IRValueType::pointerObject']]],
-  ['pop_8',['pop',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab21afc54fb48d153c19101658f4a2a48',1,'yoi::IR']]],
-  ['pop_5fexception_5fhandler_9',['pop_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a0234ee301782476fafbfec28816162d2',1,'yoi::IR']]],
-  ['preserve_10',['Preserve',['../classyoi_1_1IRFunctionDefinition.html#acf2fe838aef9496852dd242873f4b445a6d2a1af98f2cad1e5ec2dd0a75953919',1,'yoi::IRFunctionDefinition']]],
-  ['push_5fboolean_11',['push_boolean',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ad457c87a479f7105547cd4ce8295b04a',1,'yoi::IR']]],
-  ['push_5fcharacter_12',['push_character',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7afb6a04d1b184942ceb195a407f9a2f97',1,'yoi::IR']]],
-  ['push_5fdecimal_13',['push_decimal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a18756da0007888ddfebffd3405e945d1',1,'yoi::IR']]],
-  ['push_5fexception_5fhandler_14',['push_exception_handler',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7073575d0da91ba9b403a3c01de666e3',1,'yoi::IR']]],
-  ['push_5finteger_15',['push_integer',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7ab5136505df5c87638cdad3c622c4bb6f',1,'yoi::IR']]],
-  ['push_5fnull_16',['push_null',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a96c6cb0b7c8c2baed05f49c4f5378c90',1,'yoi::IR']]],
-  ['push_5fshort_17',['push_short',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a7af634e2e28fa7ae453b5820d75f6fc1',1,'yoi::IR']]],
-  ['push_5fstring_18',['push_string',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a036e58b5026d67bf8da33bd2d4658c3b',1,'yoi::IR']]],
-  ['push_5funsigned_19',['push_unsigned',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a167e288648eb6bbc68f157660cc2499a',1,'yoi::IR']]]
+  ['object_0',['object',['../namespacelsp.html#a05812818de02fb4b202d7513ce50745da497031794414a552435f90151ac3b54b',1,'lsp::Object'],['../namespacedetail.html#aa0235be1ddaa994850c2bf8e0eff8945aa8cfde6331bd59eb2ac96f8911c4b666',1,'detail::object']]],
+  ['object_5fend_1',['object_end',['../namespacedetail.html#a46eadfb625bcc098de3584e5b793ce41af63e2a2468a37aa4f394fcc3bcb8249c',1,'detail']]],
+  ['object_5fstart_2',['object_start',['../namespacedetail.html#a46eadfb625bcc098de3584e5b793ce41ae73f17027cb0acbb537f29d0a6944b26',1,'detail']]],
+  ['operator_3',['operator',['../namespacelsp.html#ac1b1cd8533a4cfe0e4641f489cb8b2aeae1b3ec89ead7f83a9245ed5c9cacfdbf',1,'lsp::Operator'],['../namespacelsp.html#a05812818de02fb4b202d7513ce50745dae1b3ec89ead7f83a9245ed5c9cacfdbf',1,'lsp::Operator']]]
 ];

@@ -1,0 +1,4 @@
+var structdetail_1_1is__compatible__array__type__impl_3_01BasicJsonType_00_01CompatibleArrayType_00_ba7b30737b5c65ad9adb609a3762b85a =
+[
+    [ "value", "structdetail_1_1is__compatible__array__type__impl_3_01BasicJsonType_00_01CompatibleArrayType_00_ba7b30737b5c65ad9adb609a3762b85a.html#a5b4ee4ae6cba6bb75200ba7af1910873", null ]
+];

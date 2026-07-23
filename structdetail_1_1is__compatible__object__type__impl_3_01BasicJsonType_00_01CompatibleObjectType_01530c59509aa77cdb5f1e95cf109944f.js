@@ -1,0 +1,5 @@
+var structdetail_1_1is__compatible__object__type__impl_3_01BasicJsonType_00_01CompatibleObjectType_01530c59509aa77cdb5f1e95cf109944f =
+[
+    [ "object_t", "structdetail_1_1is__compatible__object__type__impl_3_01BasicJsonType_00_01CompatibleObjectType_01530c59509aa77cdb5f1e95cf109944f.html#a85c6d867479d2957c3a6e9e76d354ab0", null ],
+    [ "value", "structdetail_1_1is__compatible__object__type__impl_3_01BasicJsonType_00_01CompatibleObjectType_01530c59509aa77cdb5f1e95cf109944f.html#a5b4ee4ae6cba6bb75200ba7af1910873", null ]
+];

@@ -1,0 +1,10 @@
+<map id="reset" name="reset">
+<area shape="rect" id="Node000001" title="reset token_buffer; current character is beginning of token" alt="" coords="263,31,317,56"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1lexer.html#afc4c8ec17d4706e61365f510dbd47a84" title="scan a number literal" alt="" coords="105,5,215,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,38,214,31,216,26,249,33"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1lexer.html#a82e5a4d16eccfe5c27d3c3bdd9277e45" title="scan a string literal" alt="" coords="112,55,208,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="250,53,209,61,208,56,249,48"/>
+<area shape="rect" id="Node000003" href="$classdetail_1_1lexer.html#a2920322e6387882767c3cea3224fffd8" title=" " alt="" coords="5,31,57,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,34,58,41,57,36,91,29"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="98,58,57,51,58,45,99,53"/>
+</map>

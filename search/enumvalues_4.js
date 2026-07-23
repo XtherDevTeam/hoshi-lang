@@ -1,11 +1,20 @@
 var searchData=
 [
   ['elipsis_0',['Elipsis',['../classyoi_1_1typeSpec.html#a36a1f58d1d231d8205f3d289858044b2a13a8a59d7aff147d439634b3a24f8ccd',1,'yoi::typeSpec']]],
-  ['enumerationdef_1',['enumerationDef',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d',1,'yoi::globalStmt']]],
-  ['eof_2',['eof',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b',1,'yoi::lexer::token']]],
-  ['equal_3',['equal',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a465289687a70db7aa7217cc240c29f0f',1,'yoi::lexer::token::equal'],['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f',1,'yoi::IR::equal']]],
-  ['executable_4',['executable',['../structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343',1,'yoi::IRBuildConfig']]],
-  ['exportdecl_5',['exportDecl',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea5a76dc0e6abdfb1d3b38d6b64fe0b555',1,'yoi::globalStmt']]],
-  ['expression_6',['Expression',['../classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043',1,'yoi::conceptStmt']]],
-  ['externvar_7',['externVar',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206af9c29c2de0fd3056abe1b5f184114824',1,'yoi::IROperand']]]
+  ['elysiaruntimenotfound_1',['ElysiaRuntimeNotFound',['../namespaceyoi.html#a006a37a038a183fdba0862174791e403a098c0e07260a12890d44be45de3cb1dc',1,'yoi']]],
+  ['end_5farray_2',['end_array',['../classdetail_1_1lexer__base.html#afe5ef662303b6b710ea6ee1a944bad0da2f3e68e7f111a1e5c7728742b3ca2b7f',1,'detail::lexer_base']]],
+  ['end_5fobject_3',['end_object',['../classdetail_1_1lexer__base.html#afe5ef662303b6b710ea6ee1a944bad0da7d5b4427866814de4d8f132721d59c87',1,'detail::lexer_base']]],
+  ['end_5fof_5finput_4',['end_of_input',['../classdetail_1_1lexer__base.html#afe5ef662303b6b710ea6ee1a944bad0daca11f56dd477c09e06583dbdcda0985f',1,'detail::lexer_base']]],
+  ['enum_5',['enum',['../namespacelsp.html#af110ebe0b2f6fc17cc1bfffd974e3f58acf20423ed48998082c20099488a0917c',1,'lsp::Enum'],['../namespacelsp.html#a05812818de02fb4b202d7513ce50745dacf20423ed48998082c20099488a0917c',1,'lsp::Enum'],['../namespacelsp.html#ac1b1cd8533a4cfe0e4641f489cb8b2aeacf20423ed48998082c20099488a0917c',1,'lsp::Enum']]],
+  ['enumerationdef_6',['enumerationDef',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea1ebedf2efd6bd0fa3872511208bae37d',1,'yoi::globalStmt']]],
+  ['enummember_7',['enummember',['../namespacelsp.html#ac1b1cd8533a4cfe0e4641f489cb8b2aea692ec2aadc30b3b8cc45b63c507e48a1',1,'lsp::EnumMember'],['../namespacelsp.html#a05812818de02fb4b202d7513ce50745da692ec2aadc30b3b8cc45b63c507e48a1',1,'lsp::EnumMember'],['../namespacelsp.html#af110ebe0b2f6fc17cc1bfffd974e3f58a692ec2aadc30b3b8cc45b63c507e48a1',1,'lsp::EnumMember']]],
+  ['eof_8',['eof',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a2e51b1ab42e8a4a67f3445174be5191b',1,'yoi::lexer::token']]],
+  ['equal_9',['equal',['../classyoi_1_1IR.html#a2112dbdb049f53df83b3ba6fcbf13dc7a465289687a70db7aa7217cc240c29f0f',1,'yoi::IR::equal'],['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a465289687a70db7aa7217cc240c29f0f',1,'yoi::lexer::token::equal']]],
+  ['error_10',['error',['../namespacedetail.html#a42db2ff333aaaf7ffbe27d161b3cae70acb5e100e5a9a3e7f6d1fd97512215282',1,'detail::error'],['../namespaceyoi.html#a149b04a4da5c2d7cf8e789d6629ccf33a902b0d55fddef6f8d651fe1035b7d4bd',1,'yoi::Error'],['../namespacelsp.html#a149b04a4da5c2d7cf8e789d6629ccf33a902b0d55fddef6f8d651fe1035b7d4bd',1,'lsp::Error']]],
+  ['event_11',['event',['../namespacelsp.html#ac1b1cd8533a4cfe0e4641f489cb8b2aeaa4ecfc70574394990cf17bd83df499f7',1,'lsp::Event'],['../namespacelsp.html#a05812818de02fb4b202d7513ce50745daa4ecfc70574394990cf17bd83df499f7',1,'lsp::Event']]],
+  ['executable_12',['executable',['../structyoi_1_1IRBuildConfig.html#a74d4c50eeb3a300bb9c8b70ff23f8c85aee7004c7949d83f130592f15d98ca343',1,'yoi::IRBuildConfig']]],
+  ['export_13',['Export',['../namespacelsp.html#af110ebe0b2f6fc17cc1bfffd974e3f58a0095a9fa74d1713e43e370a7d7846224',1,'lsp']]],
+  ['exportdecl_14',['exportDecl',['../classyoi_1_1globalStmt.html#a8841073ebfcb23c592e02a483d1c8c9ea5a76dc0e6abdfb1d3b38d6b64fe0b555',1,'yoi::globalStmt']]],
+  ['expression_15',['Expression',['../classyoi_1_1conceptStmt.html#aa10c9e8951b8ccf714a59ec321bdac5baa1a6657be79cc0fc1e9b23b9e108f043',1,'yoi::conceptStmt']]],
+  ['externvar_16',['externVar',['../classyoi_1_1IROperand.html#a23d3964a169ff65b751b87e5a6131206af9c29c2de0fd3056abe1b5f184114824',1,'yoi::IROperand']]]
 ];

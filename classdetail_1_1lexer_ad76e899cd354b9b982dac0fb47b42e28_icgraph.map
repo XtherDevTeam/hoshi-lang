@@ -1,0 +1,13 @@
+<map id="add" name="add">
+<area shape="rect" id="Node000001" title="add a character to token_buffer" alt="" coords="461,56,508,81"/>
+<area shape="rect" id="Node000002" href="$classdetail_1_1lexer.html#abe640d54354fdd148f6a3ccf92a677c2" title="check if the next byte(s) are inside a given range" alt="" coords="263,5,413,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="447,59,375,33,377,28,449,54"/>
+<area shape="rect" id="Node000003" href="$classdetail_1_1lexer.html#a82e5a4d16eccfe5c27d3c3bdd9277e45" title="scan a string literal" alt="" coords="112,56,208,81"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="448,71,208,71,208,66,448,66"/>
+<area shape="rect" id="Node000005" href="$classdetail_1_1lexer.html#afc4c8ec17d4706e61365f510dbd47a84" title="scan a number literal" alt="" coords="105,105,215,131"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="448,77,215,112,215,107,447,71"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="280,37,206,58,205,53,279,32"/>
+<area shape="rect" id="Node000004" href="$classdetail_1_1lexer.html#a2920322e6387882767c3cea3224fffd8" title=" " alt="" coords="5,81,57,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="99,83,58,92,57,86,98,78"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="91,108,57,101,58,96,92,103"/>
+</map>

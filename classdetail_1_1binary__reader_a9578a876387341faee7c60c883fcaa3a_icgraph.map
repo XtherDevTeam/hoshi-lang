@@ -1,0 +1,37 @@
+<map id="sax_parse" name="sax_parse">
+<area shape="rect" id="Node000001" title=" " alt="" coords="460,327,548,352"/>
+<area shape="rect" id="Node000002" href="$classbasic__json.html#a07565a1fa5b183fb2285fecde9973cfd" title="generate SAX events" alt="" coords="248,277,412,303"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="446,326,375,305,376,300,447,321"/>
+<area shape="rect" id="Node000003" href="$classbasic__json.html#ad3e6b17f032eaa149bbf63241f1275cd" title=" " alt="" coords="248,327,412,352"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="446,342,412,342,412,337,446,337"/>
+<area shape="rect" id="Node000018" href="$classbasic__json.html#a606a2cedf96be2f5f306fb4eb68d96c6" title="generate SAX events" alt="" coords="248,376,412,401"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="447,358,376,379,375,373,446,353"/>
+<area shape="rect" id="Node000004" href="$classbasic__json.html#a3c841927bbd7d5a0c1d142dd5872145b" title="create a JSON value from an input in BJData format" alt="" coords="14,5,191,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="251,321,246,316,224,281,215,245,217,211,222,177,228,143,229,110,220,77,198,44,184,33,187,29,202,40,225,75,234,109,233,143,228,178,222,211,221,245,229,278,250,312,255,317"/>
+<area shape="rect" id="Node000005" href="$classbasic__json.html#a532693aa7492a069c16967a23c61be87" title="create a JSON value from an input in BJData format" alt="" coords="14,55,191,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="251,321,246,316,227,287,219,258,219,230,222,202,225,174,225,147,217,120,198,93,184,82,187,78,202,89,222,118,230,146,231,174,227,202,224,230,224,258,232,285,250,312,255,317"/>
+<area shape="rect" id="Node000006" href="$classbasic__json.html#ac6ef25884c2bfc53ea8eda6a018e8bee" title=" " alt="" coords="19,104,186,129"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="252,321,246,316,230,294,222,271,222,227,221,184,214,163,198,143,183,132,186,127,202,139,219,161,226,183,227,227,228,270,235,291,250,312,256,317"/>
+<area shape="rect" id="Node000007" href="$classbasic__json.html#a277cd63936113b536a66f9a2dd2eb91b" title="create a JSON value from an input in BSON format" alt="" coords="19,153,186,179"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="254,322,246,316,233,300,226,284,222,252,218,221,211,206,198,192,181,181,184,176,202,188,215,203,223,219,227,251,231,282,238,297,250,312,257,318"/>
+<area shape="rect" id="Node000008" href="$classbasic__json.html#a4a85f39a593e4be39c4e1de49128d1ea" title="create a JSON value from an input in BSON format" alt="" coords="19,203,186,228"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="257,323,246,316,229,297,222,277,214,259,198,241,178,231,181,226,202,237,219,256,227,275,234,294,250,312,260,319"/>
+<area shape="rect" id="Node000009" href="$classbasic__json.html#acf61c7768d775937bb38893bfc64ccbd" title=" " alt="" coords="21,252,185,277"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="269,325,247,316,223,303,199,291,164,280,165,275,201,286,225,299,249,312,271,320"/>
+<area shape="rect" id="Node000010" href="$classbasic__json.html#a7ca7b27481e91838b882c50e3c4d217b" title="create a JSON value from an input in CBOR format" alt="" coords="21,301,185,327"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="234,331,185,326,185,320,234,326"/>
+<area shape="rect" id="Node000011" href="$classbasic__json.html#a57701044ff1d9c7765f754565deb32f7" title="create a JSON value from an input in CBOR format" alt="" coords="21,351,185,376"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="234,352,185,357,185,352,234,347"/>
+<area shape="rect" id="Node000012" href="$classbasic__json.html#ad256ee45900a75a59ef7fd764e76510d" title=" " alt="" coords="5,400,200,425"/>
+<area shape="poly" id="edge11_Node000003_Node000012" title=" " alt="" coords="269,359,249,366,201,390,161,403,159,397,199,385,247,361,267,354"/>
+<area shape="rect" id="Node000013" href="$classbasic__json.html#a2ef23d6669b6548c97d2ed96ec3b021d" title="create a JSON value from an input in MessagePack format" alt="" coords="5,449,200,475"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="257,360,250,365,234,383,227,401,219,420,202,439,178,452,175,447,198,435,214,417,222,399,230,380,246,361,254,356"/>
+<area shape="rect" id="Node000014" href="$classbasic__json.html#a081391d052a949323839149ad74c1ad4" title="create a JSON value from an input in MessagePack format" alt="" coords="5,499,200,524"/>
+<area shape="poly" id="edge13_Node000003_Node000014" title=" " alt="" coords="255,361,250,365,238,380,231,394,227,425,222,457,215,473,202,488,182,501,179,496,198,484,211,470,217,455,222,425,226,393,233,377,246,361,252,357"/>
+<area shape="rect" id="Node000015" href="$classbasic__json.html#a4cc043fa7c20069436c603a77b0e329c" title=" " alt="" coords="13,548,192,573"/>
+<area shape="poly" id="edge14_Node000003_Node000015" title=" " alt="" coords="254,362,250,365,235,386,228,407,227,450,226,493,218,516,202,537,184,550,181,546,198,533,214,513,221,492,222,450,222,406,230,383,246,362,250,358"/>
+<area shape="rect" id="Node000016" href="$classbasic__json.html#ad08f763f87de8aaf62de75ce2bbae1bb" title="create a JSON value from an input in UBJSON format" alt="" coords="13,597,192,623"/>
+<area shape="poly" id="edge15_Node000003_Node000016" title=" " alt="" coords="253,362,250,365,232,392,224,419,224,446,227,474,230,502,230,530,222,558,202,587,185,599,181,595,198,583,217,556,225,529,225,502,222,475,218,447,219,418,227,390,246,362,249,358"/>
+<area shape="rect" id="Node000017" href="$classbasic__json.html#a71d2e2370fc6ec66527f219af4b9d799" title="create a JSON value from an input in UBJSON format" alt="" coords="13,647,192,672"/>
+<area shape="poly" id="edge16_Node000003_Node000017" title=" " alt="" coords="253,362,250,365,228,398,220,432,222,465,227,499,233,533,234,567,225,601,202,636,185,649,182,644,198,632,220,599,228,566,227,533,222,500,216,466,215,431,224,396,246,362,249,358"/>
+</map>
