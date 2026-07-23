@@ -14,5 +14,7 @@ var searchData=
   ['update_11',['update',['../classbasic__json.html#a60e225501051d9a8ff43f771311d1cff',1,'basic_json::update(const_iterator first, const_iterator last, bool merge_objects=false)'],['../classbasic__json.html#ae35fb202afd0534f56af418add228255',1,'basic_json::update(const_reference j, bool merge_objects=false)']]],
   ['update_5flast_5fmodification_12',['update_last_modification',['../classyoi_1_1CodegenObjectCache.html#af172e0d0ba18883fb56f8feb863333eb',1,'yoi::CodegenObjectCache']]],
   ['updatedocument_13',['updateDocument',['../classlsp_1_1DocumentStore.html#aeedb758ab1a810980e9c0237bd9e4937',1,'lsp::DocumentStore']]],
-  ['utf8tounicode_14',['utf8ToUnicode',['../classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707',1,'utf8Unicode']]]
+  ['usemodulecompletions_14',['useModuleCompletions',['../classlsp_1_1CompletionProvider.html#af4582011e820236424739f8d680c2c67',1,'lsp::CompletionProvider']]],
+  ['usepathcompletions_15',['usePathCompletions',['../classlsp_1_1CompletionProvider.html#a260268dc818490cdddbfabce21b5f25b',1,'lsp::CompletionProvider']]],
+  ['utf8tounicode_16',['utf8ToUnicode',['../classutf8Unicode.html#ae35efd67fef81996addd9ac0473cc707',1,'utf8Unicode']]]
 ];

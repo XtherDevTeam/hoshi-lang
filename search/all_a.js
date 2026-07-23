@@ -102,7 +102,7 @@ var searchData=
   ['assert_5finvariant_99',['assert_invariant',['../classbasic__json.html#af3ff6a5b32f5e88a109ef05c572bc6a5',1,'basic_json']]],
   ['assignment_100',['直接赋值 (Direct assignment)',['../md_docs_2Direct_01Assignment.html',1,'']]],
   ['assignsign_101',['assignSign',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a9487bfa7d8372f25426f24998a50c2b3',1,'yoi::lexer::token']]],
-  ['ast_102',['ast',['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST(lexer::token token)'],['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()'],['../structlsp_1_1ProjectIndex_1_1IndexedModule.html#a096dee1b7ab5f82f13af6383871a8f68',1,'lsp::ProjectIndex::IndexedModule::ast'],['../structlsp_1_1Document.html#a096dee1b7ab5f82f13af6383871a8f68',1,'lsp::Document::ast'],['../classyoi_1_1AST.html',1,'AST']]],
+  ['ast_102',['ast',['../structlsp_1_1ProjectIndex_1_1IndexedModule.html#a096dee1b7ab5f82f13af6383871a8f68',1,'lsp::ProjectIndex::IndexedModule::ast'],['../structlsp_1_1Document.html#a096dee1b7ab5f82f13af6383871a8f68',1,'lsp::Document::ast'],['../classyoi_1_1AST.html#a357495ad29c8d099eaa2962fcc73210e',1,'yoi::AST::AST(lexer::token token)'],['../classyoi_1_1AST.html#ae6125ec5e278fe74c8abec858850f3d7',1,'yoi::AST::AST()'],['../classyoi_1_1AST.html',1,'AST']]],
   ['ast_2ecpp_103',['ast.cpp',['../ast_8cpp.html',1,'']]],
   ['ast_2ehpp_104',['ast.hpp',['../ast_8hpp.html',1,'']]],
   ['asterisk_105',['asterisk',['../structyoi_1_1lexer_1_1token.html#a813647b1bf8cc722a45770b5bee77f32a51e63a3da6425a39aecc045ec45f1ae8',1,'yoi::lexer::token']]],

@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['data_0',['data',['../classbasic__json.html#a704c6e6c7e4f847bac1742649be5d6ab',1,'basic_json::data(size_type cnt, const basic_json &amp;val)'],['../classbasic__json.html#ac886f4e04f360320345f7d3c1705e8e2',1,'basic_json::data() noexcept=default'],['../classbasic__json.html#a9a550575d828e1ef593129e6b568dc9f',1,'basic_json::data(data &amp;&amp;) noexcept=default'],['../classbasic__json.html#afeb805e5aca026196c33d3c0c90d796b',1,'basic_json::data(const data &amp;) noexcept=delete'],['../classmagic__enum_1_1detail_1_1static__str.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str::data()'],['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str&lt; 0 &gt;::data()'],['../classbasic__json.html#ad7291f0c517ed05ed15c5aa5b96a7753',1,'basic_json::data()']]],
+  ['data_0',['data',['../classbasic__json.html#a704c6e6c7e4f847bac1742649be5d6ab',1,'basic_json::data(size_type cnt, const basic_json &amp;val)'],['../classbasic__json.html#ad7291f0c517ed05ed15c5aa5b96a7753',1,'basic_json::data(const value_t v)'],['../classmagic__enum_1_1detail_1_1static__str_3_010_01_4.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str&lt; 0 &gt;::data()'],['../classmagic__enum_1_1detail_1_1static__str.html#ad06e5969bdb6a5cef8a02da11dee11de',1,'magic_enum::detail::static_str::data()'],['../classbasic__json.html#afeb805e5aca026196c33d3c0c90d796b',1,'basic_json::data(const data &amp;) noexcept=delete'],['../classbasic__json.html#a9a550575d828e1ef593129e6b568dc9f',1,'basic_json::data(data &amp;&amp;) noexcept=default'],['../classbasic__json.html#ac886f4e04f360320345f7d3c1705e8e2',1,'basic_json::data() noexcept=default']]],
   ['declareruntimefunctions_1',['declareRuntimeFunctions',['../classyoi_1_1LLVMCodegen.html#a7fa8b7bcbc87194cf3abb269d7c65322',1,'yoi::LLVMCodegen']]],
   ['defaultadditionallinkingfiles_2',['defaultAdditionalLinkingFiles',['../classyoi_1_1ObjectLinker.html#a4ce42dd3dff8cd40a766f1bb81323b61',1,'yoi::ObjectLinker']]],
   ['destroy_3',['destroy',['../classbasic__json.html#a4526cff33a3eec027009ebe109072430',1,'basic_json']]],
   ['diagnostic_4',['diagnostic',['../structyoi_1_1Diagnostic.html#a4bf16f5a66f1dd3a616d4502e3d60921',1,'yoi::Diagnostic::Diagnostic()=default'],['../structyoi_1_1Diagnostic.html#a65c2212f4046e866aff0d81350819215',1,'yoi::Diagnostic::Diagnostic(yoi::wstr file, yoi::indexT line, yoi::indexT col, std::string msg, DiagnosticSeverity sev=DiagnosticSeverity::Error, DiagnosticCategory cat=DiagnosticCategory::Generic)']]],
   ['diagnosticengine_5',['diagnosticengine',['../classyoi_1_1DiagnosticEngine.html#a967429ed16c1b29fc0ebd476ca912a7a',1,'yoi::DiagnosticEngine::DiagnosticEngine()'],['../classyoi_1_1DiagnosticEngine.html#a7892bf7e9a728d5c88524f96e446d128',1,'yoi::DiagnosticEngine::DiagnosticEngine(Mode mode)']]],
-  ['diagnostics_6',['diagnostics',['../classdetail_1_1exception.html#a375c5c3ae0f0eebddc508c0f61c5c984',1,'detail::exception::diagnostics(const BasicJsonType *leaf_element)'],['../classdetail_1_1exception.html#a4dcb085e2fec7d969c85624c6a77f167',1,'detail::exception::diagnostics(std::nullptr_t)']]],
+  ['diagnostics_6',['diagnostics',['../classdetail_1_1exception.html#a4dcb085e2fec7d969c85624c6a77f167',1,'detail::exception::diagnostics(std::nullptr_t)'],['../classdetail_1_1exception.html#a375c5c3ae0f0eebddc508c0f61c5c984',1,'detail::exception::diagnostics(const BasicJsonType *leaf_element)']]],
   ['diff_7',['diff',['../classbasic__json.html#a6d4ea8d68ca832e209500fcf2ce23729',1,'basic_json']]],
   ['digitstart_8',['digitStart',['../classyoi_1_1lexer.html#a7a91c62a65e18e31a082b16ff0f1a039',1,'yoi::lexer']]],
   ['discardstate_9',['discardState',['../classyoi_1_1IRBuilder.html#a74b54cdec7f9c8eb15faef3eb21728ac',1,'yoi::IRBuilder']]],
@@ -14,10 +14,12 @@ var searchData=
   ['dispatch_11',['dispatch',['../classyoi_1_1CodegenTaskDispatcher.html#a17a7964b99958447f16943ab5f7cf6d9',1,'yoi::CodegenTaskDispatcher']]],
   ['div_12',['div',['../classyoi_1_1IRFunctionOptimizer.html#a357777ddce050ef6bbbf79cfafc29acd',1,'yoi::IRFunctionOptimizer']]],
   ['diyfp_13',['diyfp',['../structdetail_1_1dtoa__impl_1_1diyfp.html#a208c36c1a0602ade9c9f21d7eeaeb654',1,'detail::dtoa_impl::diyfp']]],
-  ['dooptimizationforcurrentfunction_14',['doOptimizationForCurrentFunction',['../classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c',1,'yoi::IRFunctionOptimizer']]],
-  ['dotstart_15',['dotStart',['../classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6',1,'yoi::lexer']]],
-  ['dropstate_16',['dropState',['../classyoi_1_1lexer.html#afdc95fadf606bf742c2b0b549c09b1df',1,'yoi::lexer']]],
-  ['dump_17',['dump',['../classdetail_1_1serializer.html#a72c9fd04d2dcf5dfb433b0cbf6e99814',1,'detail::serializer::dump()'],['../classbasic__json.html#ac161365fa00825b47a94a9bafaa28724',1,'basic_json::dump()']]],
-  ['dumpir_18',['dumpIR',['../classyoi_1_1LLVMCodegen.html#a8e1a6b4cbc2931db884bd603119133c9',1,'yoi::LLVMCodegen']]],
-  ['dyncastop_19',['dynCastOp',['../classyoi_1_1IRBuilder.html#afa0d0eb43d3a88922310cd94abc22567',1,'yoi::IRBuilder']]]
+  ['documentfilepath_14',['documentFilePath',['../namespacelsp.html#aa48b5263d7546782574231bc6b760842',1,'lsp']]],
+  ['documentsymbolfor_15',['documentSymbolFor',['../namespacelsp.html#a25d816e515543f261fcde3359c8f6941',1,'lsp']]],
+  ['dooptimizationforcurrentfunction_16',['doOptimizationForCurrentFunction',['../classyoi_1_1IRFunctionOptimizer.html#a67136dab3c2f60d37bf2de2dcdcea73c',1,'yoi::IRFunctionOptimizer']]],
+  ['dotstart_17',['dotStart',['../classyoi_1_1lexer.html#abf725ee1f51a1341d5be290f9d7114c6',1,'yoi::lexer']]],
+  ['dropstate_18',['dropState',['../classyoi_1_1lexer.html#afdc95fadf606bf742c2b0b549c09b1df',1,'yoi::lexer']]],
+  ['dump_19',['dump',['../classdetail_1_1serializer.html#a72c9fd04d2dcf5dfb433b0cbf6e99814',1,'detail::serializer::dump()'],['../classbasic__json.html#ac161365fa00825b47a94a9bafaa28724',1,'basic_json::dump()']]],
+  ['dumpir_20',['dumpIR',['../classyoi_1_1LLVMCodegen.html#a8e1a6b4cbc2931db884bd603119133c9',1,'yoi::LLVMCodegen']]],
+  ['dyncastop_21',['dynCastOp',['../classyoi_1_1IRBuilder.html#afa0d0eb43d3a88922310cd94abc22567',1,'yoi::IRBuilder']]]
 ];

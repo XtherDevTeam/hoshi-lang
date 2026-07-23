@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['main_0',['main',['../jsonlib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;jsonlib.cpp'],['../fib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;fib.cpp'],['../datastruct_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;datastruct.cpp'],['../loop_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;loop.cpp'],['../string_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;string.cpp'],['../formatter_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;formatter.cpp'],['../lsp_2main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp'],['../main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp']]],
+  ['main_0',['main',['../main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp'],['../lsp_2main_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;main.cpp'],['../formatter_8cpp.html#a217dbf8b442f20279ea00b898af96f52',1,'main(int argc, const char **argv):&#160;formatter.cpp'],['../string_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;string.cpp'],['../jsonlib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;jsonlib.cpp'],['../fib_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;fib.cpp'],['../datastruct_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;datastruct.cpp'],['../loop_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;loop.cpp']]],
   ['make_5farray_1',['make_array',['../namespacedetail.html#a3b48eaaad41987ac63816651a12a1700',1,'detail']]],
   ['makehoverforsymbol_2',['makeHoverForSymbol',['../namespacelsp.html#a909e08dee4919ef0f0a8fab07db45166',1,'lsp']]],
   ['makelocation_3',['makeLocation',['../namespacelsp.html#a7e7c96d50e11ddb554c860434346e035',1,'lsp']]],
@@ -9,7 +9,7 @@ var searchData=
   ['mapenumtypetobasictype_6',['mapEnumTypeToBasicType',['../classyoi_1_1visitor.html#a1e2d350e0df8fbcb14f98644d9748564',1,'yoi::visitor']]],
   ['mapsymbolkind_7',['mapSymbolKind',['../namespacelsp.html#a934203580c2253d8090cff744021be86',1,'lsp']]],
   ['max_5fsize_8',['max_size',['../classbasic__json.html#ac2a85e463df4e95c1bf051cfb8237805',1,'basic_json']]],
-  ['membercompletions_9',['memberCompletions',['../classlsp_1_1CompletionProvider.html#a1ab534d7983bb6ec4ab64d64dc7b1fea',1,'lsp::CompletionProvider']]],
+  ['membercompletions_9',['memberCompletions',['../classlsp_1_1CompletionProvider.html#ae09e9a7c835f1a85e819ab4847fceba3',1,'lsp::CompletionProvider']]],
   ['merge_5fpatch_10',['merge_patch',['../classbasic__json.html#aee782303a1802f55463be1f793dbb395',1,'basic_json']]],
   ['mergestates_11',['mergeStates',['../namespaceyoi.html#ae9b0a7f39ca8518f2aeccf15983c579b',1,'yoi']]],
   ['mergestatesforinterfaceallocationreduction_12',['mergeStatesForInterfaceAllocationReduction',['../classyoi_1_1IRFunctionOptimizer.html#a0e32d62823f12be25cf48ca63e03a5a5',1,'yoi::IRFunctionOptimizer']]],
@@ -19,6 +19,7 @@ var searchData=
   ['minusstart_16',['minusStart',['../classyoi_1_1lexer.html#abaccde1be3ce32585931c0c36d8ea9e1',1,'yoi::lexer']]],
   ['mod_17',['mod',['../classyoi_1_1IRFunctionOptimizer.html#a870501eab1acb81ee141ef27d6c7bb39',1,'yoi::IRFunctionOptimizer']]],
   ['modulecontext_18',['moduleContext',['../classyoi_1_1moduleContext.html#aef836205cda58b0b2eb84c5a29ce5245',1,'yoi::moduleContext']]],
-  ['moved_5for_5fcopied_19',['moved_or_copied',['../classdetail_1_1json__ref.html#aa676aef1f050bb0a329107e4adf98412',1,'detail::json_ref']]],
-  ['mul_20',['mul',['../structdetail_1_1dtoa__impl_1_1diyfp.html#a7039166076531ed9dd07fe88428122c0',1,'detail::dtoa_impl::diyfp::mul()'],['../classyoi_1_1IRFunctionOptimizer.html#a4fcdca49c0bbb4fa4180991a7efae7ce',1,'yoi::IRFunctionOptimizer::mul()']]]
+  ['modulesearchroots_19',['moduleSearchRoots',['../namespacelsp.html#ad5786ed4cdf3df3f0b67903fbb71a975',1,'lsp']]],
+  ['moved_5for_5fcopied_20',['moved_or_copied',['../classdetail_1_1json__ref.html#aa676aef1f050bb0a329107e4adf98412',1,'detail::json_ref']]],
+  ['mul_21',['mul',['../structdetail_1_1dtoa__impl_1_1diyfp.html#a7039166076531ed9dd07fe88428122c0',1,'detail::dtoa_impl::diyfp::mul()'],['../classyoi_1_1IRFunctionOptimizer.html#a4fcdca49c0bbb4fa4180991a7efae7ce',1,'yoi::IRFunctionOptimizer::mul()']]]
 ];

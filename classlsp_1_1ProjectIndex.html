@@ -115,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa2f500bf3855d9a75cf3c51f8d770ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab1fc1a244f5206378a8adea681eca5e" id="r_aab1fc1a244f5206378a8adea681eca5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlsp_1_1ProjectIndex.html#aab1fc1a244f5206378a8adea681eca5e">addSearchPath</a> (const std::string &amp;path)</td></tr>
 <tr class="separator:aab1fc1a244f5206378a8adea681eca5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a963ecda95b3bd7f63197d38890b81d" id="r_a5a963ecda95b3bd7f63197d38890b81d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlsp_1_1ProjectIndex.html#a5a963ecda95b3bd7f63197d38890b81d">getSearchPaths</a> () const</td></tr>
+<tr class="separator:a5a963ecda95b3bd7f63197d38890b81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d43b60866782c7411fbbd7f24bc59b" id="r_a73d43b60866782c7411fbbd7f24bc59b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlsp_1_1ProjectIndex.html#a73d43b60866782c7411fbbd7f24bc59b">resolveModule</a> (const std::string &amp;importPath, const std::string &amp;relativeToFile)</td></tr>
 <tr class="separator:a73d43b60866782c7411fbbd7f24bc59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72adfa37c44244873ee1baf9a9d1e0af" id="r_a72adfa37c44244873ee1baf9a9d1e0af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlsp_1_1ProjectIndex.html#a72adfa37c44244873ee1baf9a9d1e0af">indexModule</a> (const std::string &amp;absolutePath)</td></tr>
@@ -188,7 +190,7 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00025">25</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00055">ProjectIndex::searchPaths</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::searchPaths</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="server_8cpp_source.html#l00152">LspServer::handleInitialize()</a>.</p>
 <div class="dynheader">
@@ -230,9 +232,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00152">152</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::modules</a>, <a class="el" href="symbolExtractor_8h_source.html#l00046">Symbol::sourceFile</a>, and <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00057">ProjectIndex::modules</a>, <a class="el" href="symbolExtractor_8h_source.html#l00046">Symbol::sourceFile</a>, and <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="completion_8cpp_source.html#l00549">CompletionProvider::completionsForType()</a>, <a class="el" href="completion_8cpp_source.html#l00623">CompletionProvider::completionsForTypeNameFromModules()</a>, <a class="el" href="hover_8cpp_source.html#l00054">HoverProvider::hoverOnSymbol()</a>, and <a class="el" href="completion_8cpp_source.html#l00394">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="completion_8cpp_source.html#l00692">CompletionProvider::completionsForType()</a>, <a class="el" href="completion_8cpp_source.html#l00766">CompletionProvider::completionsForTypeNameFromModules()</a>, <a class="el" href="hover_8cpp_source.html#l00054">HoverProvider::hoverOnSymbol()</a>, and <a class="el" href="completion_8cpp_source.html#l00536">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -261,7 +263,7 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="1666,138,1632,140,1516,144,1400,140,1346,135,1346,129,1400,135,1516,139,1632,135,1666,133"/>
 <area shape="rect" href="classlsp_1_1HoverProvider.html#a89da59df9277c774f679e5d7a76d366b" title=" " alt="" coords="1445,200,1587,240"/>
 <area shape="poly" title=" " alt="" coords="1701,152,1633,184,1582,202,1581,197,1631,179,1699,147"/>
-<area shape="rect" href="classlsp_1_1CompletionProvider.html#a1ab534d7983bb6ec4ab64d64dc7b1fea" title=" " alt="" coords="1129,17,1307,57"/>
+<area shape="rect" href="classlsp_1_1CompletionProvider.html#ae09e9a7c835f1a85e819ab4847fceba3" title=" " alt="" coords="1129,17,1307,57"/>
 <area shape="poly" title=" " alt="" coords="1413,32,1308,36,1307,31,1413,27"/>
 <area shape="rect" href="classlsp_1_1CompletionProvider.html#a864d319c20b789612345f02a8fed1a92" title=" " alt="" coords="857,92,1036,132"/>
 <area shape="poly" title=" " alt="" coords="1132,64,1021,95,1019,89,1131,58"/>
@@ -305,7 +307,63 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00146">146</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::modules</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00057">ProjectIndex::modules</a>.</p>
+
+</div>
+</div>
+<a id="a5a963ecda95b3bd7f63197d38890b81d" name="a5a963ecda95b3bd7f63197d38890b81d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a963ecda95b3bd7f63197d38890b81d">&#9670;&#160;</a></span>getSearchPaths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; std::string &gt; &amp; getSearchPaths </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="projectIndex_8h_source.html#l00024">24</a> of file <a class="el" href="projectIndex_8h_source.html">projectIndex.h</a>.</p>
+
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::searchPaths</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="completion_8cpp_source.html#l00023">lsp::moduleSearchRoots()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classlsp_1_1ProjectIndex_a5a963ecda95b3bd7f63197d38890b81d_icgraph.png" border="0" usemap="#aclasslsp_1_1ProjectIndex_a5a963ecda95b3bd7f63197d38890b81d_icgraph" alt=""/></div>
+<map name="aclasslsp_1_1ProjectIndex_a5a963ecda95b3bd7f63197d38890b81d_icgraph" id="aclasslsp_1_1ProjectIndex_a5a963ecda95b3bd7f63197d38890b81d_icgraph">
+<area shape="rect" title=" " alt="" coords="1541,45,1664,70"/>
+<area shape="rect" href="namespacelsp.html#ad5786ed4cdf3df3f0b67903fbb71a975" title=" " alt="" coords="1315,45,1493,70"/>
+<area shape="poly" title=" " alt="" coords="1527,60,1494,60,1494,55,1527,55"/>
+<area shape="rect" href="classlsp_1_1CompletionProvider.html#af4582011e820236424739f8d680c2c67" title=" " alt="" coords="1084,5,1267,45"/>
+<area shape="poly" title=" " alt="" coords="1301,46,1266,41,1267,35,1302,40"/>
+<area shape="rect" href="classlsp_1_1CompletionProvider.html#a260268dc818490cdddbfabce21b5f25b" title=" " alt="" coords="1086,69,1265,109"/>
+<area shape="poly" title=" " alt="" coords="1301,74,1265,79,1264,74,1301,69"/>
+<area shape="rect" href="classlsp_1_1CompletionProvider.html#a864d319c20b789612345f02a8fed1a92" title=" " alt="" coords="857,37,1036,77"/>
+<area shape="poly" title=" " alt="" coords="1070,43,1036,48,1036,42,1070,37"/>
+<area shape="rect" href="classlsp_1_1LspServer.html#ac026c342f73d77b075c9f26e47ce6b33" title=" " alt="" coords="569,45,809,70"/>
+<area shape="poly" title=" " alt="" coords="843,60,809,60,809,55,843,55"/>
+<area shape="rect" href="classlsp_1_1LspServer.html#abface5e5fc91ac2cbff61ddd7426b844" title=" " alt="" coords="299,45,521,70"/>
+<area shape="poly" title=" " alt="" coords="556,60,521,60,521,55,556,55"/>
+<area shape="rect" href="classlsp_1_1LspServer.html#a13a43e6d814de94978c515cb084873b1" title=" " alt="" coords="108,45,251,70"/>
+<area shape="poly" title=" " alt="" coords="285,60,251,60,251,55,285,55"/>
+<area shape="rect" href="lsp_2main_8cpp.html#a217dbf8b442f20279ea00b898af96f52" title=" " alt="" coords="5,45,60,70"/>
+<area shape="poly" title=" " alt="" coords="94,60,60,60,60,55,94,55"/>
+<area shape="poly" title=" " alt="" coords="1072,78,1036,72,1037,67,1073,72"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -327,11 +385,11 @@ Here is the caller graph for this function:</div>
 
 <p>Parse and index a module, then return its symbols. </p>
 
-<p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00166">166</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00167">167</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8cpp_source.html#l00092">ProjectIndex::indexModule()</a>, and <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::modules</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8cpp_source.html#l00092">ProjectIndex::indexModule()</a>, and <a class="el" href="projectIndex_8h_source.html#l00057">ProjectIndex::modules</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="completion_8cpp_source.html#l00623">CompletionProvider::completionsForTypeNameFromModules()</a>, <a class="el" href="hover_8cpp_source.html#l00054">HoverProvider::hoverOnSymbol()</a>, <a class="el" href="document_8cpp_source.html#l00160">DocumentStore::resolveAndIndexImports()</a>, and <a class="el" href="completion_8cpp_source.html#l00394">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="completion_8cpp_source.html#l00766">CompletionProvider::completionsForTypeNameFromModules()</a>, <a class="el" href="hover_8cpp_source.html#l00054">HoverProvider::hoverOnSymbol()</a>, <a class="el" href="document_8cpp_source.html#l00160">DocumentStore::resolveAndIndexImports()</a>, and <a class="el" href="completion_8cpp_source.html#l00536">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -537,9 +595,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00092">92</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="builtinModule_8h_source.html#l00012">__lsp_builtin_module</a>, <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::modules</a>, <a class="el" href="projectIndex_8cpp_source.html#l00123">ProjectIndex::parseAndIndex()</a>, <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>, and <a class="el" href="projectIndex_8h_source.html#l00052">ProjectIndex::IndexedModule::text</a>.</p>
+<p class="reference">References <a class="el" href="builtinModule_8h_source.html#l00012">__lsp_builtin_module</a>, <a class="el" href="projectIndex_8h_source.html#l00057">ProjectIndex::modules</a>, <a class="el" href="projectIndex_8cpp_source.html#l00123">ProjectIndex::parseAndIndex()</a>, <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>, and <a class="el" href="projectIndex_8h_source.html#l00053">ProjectIndex::IndexedModule::text</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00166">ProjectIndex::indexAndGet()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00167">ProjectIndex::indexAndGet()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -744,9 +802,9 @@ Here is the caller graph for this function:</div>
 
 <p>Clear a module from the cache (e.g., when it changes on disk). </p>
 
-<p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00176">176</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00177">177</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="ast_8cpp_source.html#l00475">yoi::finalizeAST()</a>, and <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::modules</a>.</p>
+<p class="reference">References <a class="el" href="ast_8cpp_source.html#l00475">yoi::finalizeAST()</a>, and <a class="el" href="projectIndex_8h_source.html#l00057">ProjectIndex::modules</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -803,7 +861,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00123">123</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="def_8cpp_source.html#l00015">yoi::__current_file_path</a>, <a class="el" href="projectIndex_8h_source.html#l00050">ProjectIndex::IndexedModule::ast</a>, <a class="el" href="symbolExtractor_8cpp_source.html#l00014">SymbolExtractor::extract()</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="def_8cpp_source.html#l00123">yoi::set_current_file_path()</a>, <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>, and <a class="el" href="projectIndex_8h_source.html#l00051">ProjectIndex::IndexedModule::symbols</a>.</p>
+<p class="reference">References <a class="el" href="def_8cpp_source.html#l00015">yoi::__current_file_path</a>, <a class="el" href="projectIndex_8h_source.html#l00051">ProjectIndex::IndexedModule::ast</a>, <a class="el" href="symbolExtractor_8cpp_source.html#l00014">SymbolExtractor::extract()</a>, <a class="el" href="parser_8cpp_source.html#l00025">yoi::parse()</a>, <a class="el" href="lexer_8cpp_source.html#l00029">lexer::scan()</a>, <a class="el" href="def_8cpp_source.html#l00123">yoi::set_current_file_path()</a>, <a class="el" href="def_8cpp_source.html#l00224">yoi::string2wstring()</a>, and <a class="el" href="projectIndex_8h_source.html#l00052">ProjectIndex::IndexedModule::symbols</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00092">ProjectIndex::indexModule()</a>.</p>
 <div class="dynheader">
@@ -1027,9 +1085,9 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00029">29</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00055">ProjectIndex::searchPaths</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00060">ProjectIndex::tryResolve()</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::searchPaths</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00060">ProjectIndex::tryResolve()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="definition_8cpp_source.html#l00046">DefinitionProvider::provide()</a>, <a class="el" href="document_8cpp_source.html#l00160">DocumentStore::resolveAndIndexImports()</a>, and <a class="el" href="completion_8cpp_source.html#l00394">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="definition_8cpp_source.html#l00046">DefinitionProvider::provide()</a>, <a class="el" href="document_8cpp_source.html#l00160">DocumentStore::resolveAndIndexImports()</a>, and <a class="el" href="completion_8cpp_source.html#l00536">CompletionProvider::resolveModuleCompletionsFromText()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1100,7 +1158,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="projectIndex_8cpp_source.html#l00021">21</a> of file <a class="el" href="projectIndex_8cpp_source.html">projectIndex.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00055">ProjectIndex::searchPaths</a>.</p>
+<p class="reference">References <a class="el" href="projectIndex_8h_source.html#l00056">ProjectIndex::searchPaths</a>.</p>
 
 </div>
 </div>
@@ -1206,9 +1264,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="projectIndex_8h_source.html#l00056">56</a> of file <a class="el" href="projectIndex_8h_source.html">projectIndex.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="projectIndex_8h_source.html#l00057">57</a> of file <a class="el" href="projectIndex_8h_source.html">projectIndex.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00152">ProjectIndex::getAllSymbols()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00146">ProjectIndex::getModuleSymbols()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00166">ProjectIndex::indexAndGet()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00092">ProjectIndex::indexModule()</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00176">ProjectIndex::invalidateModule()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00152">ProjectIndex::getAllSymbols()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00146">ProjectIndex::getModuleSymbols()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00167">ProjectIndex::indexAndGet()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00092">ProjectIndex::indexModule()</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00177">ProjectIndex::invalidateModule()</a>.</p>
 
 </div>
 </div>
@@ -1232,9 +1290,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="projectIndex_8h_source.html#l00055">55</a> of file <a class="el" href="projectIndex_8h_source.html">projectIndex.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="projectIndex_8h_source.html#l00056">56</a> of file <a class="el" href="projectIndex_8h_source.html">projectIndex.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00025">ProjectIndex::addSearchPath()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00029">ProjectIndex::resolveModule()</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00021">ProjectIndex::setSearchPaths()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="projectIndex_8cpp_source.html#l00025">ProjectIndex::addSearchPath()</a>, <a class="el" href="projectIndex_8h_source.html#l00024">ProjectIndex::getSearchPaths()</a>, <a class="el" href="projectIndex_8cpp_source.html#l00029">ProjectIndex::resolveModule()</a>, and <a class="el" href="projectIndex_8cpp_source.html#l00021">ProjectIndex::setSearchPaths()</a>.</p>
 
 </div>
 </div>

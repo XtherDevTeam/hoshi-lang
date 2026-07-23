@@ -99,7 +99,7 @@ var searchData=
   ['priority_5ftag_3c_200_20_3e_96',['priority_tag&lt; 0 &gt;',['../structdetail_1_1priority__tag_3_010_01_4.html',1,'detail']]],
   ['programming_20language_97',['The hoshi-lang Programming Language',['../index.html',1,'']]],
   ['programming_20with_20templates_98',['Generic Programming with Templates',['../md_docs_2Template.html',1,'']]],
-  ['projectindex_99',['projectindex',['../classlsp_1_1ProjectIndex.html',1,'ProjectIndex'],['../classlsp_1_1ProjectIndex.html#ab00e1a8f10a9192c4f022381a735e476',1,'lsp::ProjectIndex::ProjectIndex()'],['../classlsp_1_1LspServer.html#abf90c43daf29ee510eb575a54518f4d8',1,'lsp::LspServer::projectIndex'],['../classlsp_1_1DocumentStore.html#a6cbd79c205f89bb8999e26a070be14e1',1,'lsp::DocumentStore::projectIndex'],['../structlsp_1_1Document.html#a6cbd79c205f89bb8999e26a070be14e1',1,'lsp::Document::projectIndex']]],
+  ['projectindex_99',['projectindex',['../classlsp_1_1ProjectIndex.html',1,'ProjectIndex'],['../classlsp_1_1LspServer.html#abf90c43daf29ee510eb575a54518f4d8',1,'lsp::LspServer::projectIndex'],['../classlsp_1_1DocumentStore.html#a6cbd79c205f89bb8999e26a070be14e1',1,'lsp::DocumentStore::projectIndex'],['../structlsp_1_1Document.html#a6cbd79c205f89bb8999e26a070be14e1',1,'lsp::Document::projectIndex'],['../classlsp_1_1ProjectIndex.html#ab00e1a8f10a9192c4f022381a735e476',1,'lsp::ProjectIndex::ProjectIndex()']]],
   ['projectindex_2ecpp_100',['projectIndex.cpp',['../projectIndex_8cpp.html',1,'']]],
   ['projectindex_2eh_101',['projectIndex.h',['../projectIndex_8h.html',1,'']]],
   ['promiseinterfaceobjectifinterface_102',['promiseInterfaceObjectIfInterface',['../classyoi_1_1LLVMCodegen.html#a0e6ad8c75e0ec585347b9ed29af2b0cb',1,'yoi::LLVMCodegen']]],

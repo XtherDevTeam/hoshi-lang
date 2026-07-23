@@ -20,5 +20,7 @@ var symbolExtractor_8h =
       [ "Export", "symbolExtractor_8h.html#af110ebe0b2f6fc17cc1bfffd974e3f58a0095a9fa74d1713e43e370a7d7846224", null ],
       [ "Concept_", "symbolExtractor_8h.html#af110ebe0b2f6fc17cc1bfffd974e3f58ad3aea5ba15015f9cebf6593934fb81ae", null ],
       [ "Lambda", "symbolExtractor_8h.html#af110ebe0b2f6fc17cc1bfffd974e3f58a04a7da3c5b04cad85da1eebb92315b8b", null ]
-    ] ]
+    ] ],
+    [ "isCallableSymbol", "symbolExtractor_8h.html#aa00e64a148af20c32ecbbfdcce97fad6", null ],
+    [ "isSymbolVisibleAt", "symbolExtractor_8h.html#a04666dc1d31e7dff2fb2df65eed55965", null ]
 ];

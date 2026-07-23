@@ -5,6 +5,7 @@ var classlsp_1_1ProjectIndex =
     [ "addSearchPath", "classlsp_1_1ProjectIndex.html#aab1fc1a244f5206378a8adea681eca5e", null ],
     [ "getAllSymbols", "classlsp_1_1ProjectIndex.html#ad487c65d4984fce57395a3e0e4f64910", null ],
     [ "getModuleSymbols", "classlsp_1_1ProjectIndex.html#a5b36f4e2eea946ca2f503b8b816cc1ec", null ],
+    [ "getSearchPaths", "classlsp_1_1ProjectIndex.html#a5a963ecda95b3bd7f63197d38890b81d", null ],
     [ "indexAndGet", "classlsp_1_1ProjectIndex.html#a0eef9bea3332106301feeb03657ce1a7", null ],
     [ "indexModule", "classlsp_1_1ProjectIndex.html#a72adfa37c44244873ee1baf9a9d1e0af", null ],
     [ "invalidateModule", "classlsp_1_1ProjectIndex.html#a41a3326984a1be0487b4856404f49cfc", null ],
