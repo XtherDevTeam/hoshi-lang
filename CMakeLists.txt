@@ -72,6 +72,7 @@ file (GLOB HOSHI_LANG_INCLUDE
         compiler/ir/*.cpp
         compiler/llvmCodegen/*.cpp
         compiler/objectLinker/*.cpp
+        compiler/diagnostics/*.cpp
         share/*.cpp
         pass/*.cpp)
 
@@ -89,6 +90,23 @@ file (GLOB HOSHI_LANG_RUNTIME_INCLUDE
         runtime/hperf/*.cpp
 )
 
+# LSP server — frontend + visitor for type resolution, no LLVM codegen
+file (GLOB HOSHI_LSP_INCLUDE
+        lsp/*.cpp
+        compiler/diagnostics/*.cpp
+        compiler/frontend/ast.cpp
+        compiler/frontend/lexer.cpp
+        compiler/frontend/parser.cpp
+        compiler/visitor/visitor.cpp
+        compiler/ir/IR.cpp
+        compiler/ir/IROptimizer.cpp
+        compiler/compilerContext.cpp
+        compiler/moduleContext.cpp
+        compiler/builtinModule.cpp
+        share/def.cpp
+        share/whereami.cpp
+)
+
 add_executable(hoshi_lang main.cpp ${HOSHI_LANG_INCLUDE})
 
 target_compile_definitions(hoshi_lang PRIVATE DISABLE_SYMBOL_TRACING_FEATURE)
@@ -96,6 +114,8 @@ target_compile_definitions(hoshi_lang PRIVATE DISABLE_SYMBOL_TRACING_FEATURE)
 add_executable(hoshi-format formatter.cpp ${HOSHI_LANG_INCLUDE})
 
 target_compile_definitions(hoshi-format PRIVATE ENABLE_SYMBOL_TRACING_FEATURE)
+
+add_executable(hoshi-lsp ${HOSHI_LSP_INCLUDE})
 
 add_library(elysia_runtime STATIC runtime/runtime.cpp ${HOSHI_LANG_RUNTIME_INCLUDE})
 

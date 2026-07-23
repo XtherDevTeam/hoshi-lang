@@ -8,8 +8,8 @@ use console "console"
 
 func main() : int {
     let s = str.Str("{\"a\": \"Hello, world!\", \"b\": [1, 2, 3], \"c\": null}")
-
     let js = json.parse(s)
+    
     if (js.is_err()) {
         runtime.puts(js.unwrap_err().c_str())
         return 1

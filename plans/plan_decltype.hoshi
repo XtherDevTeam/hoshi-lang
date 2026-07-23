@@ -8,7 +8,8 @@ func generator gen() : int {
 }
 
 func main() : int {
-    let info : lang.TypeInfo = type_id<decltype(gen())> // GeneratorContext#gen
+    let x = gen()
+    let info : lang.TypeInfo = type_id<decltype(x)> // GeneratorContext#gen
     runtime.puts("Deduced type name: ")
     runtime.puts(info.name)
     return x.next()

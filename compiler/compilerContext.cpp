@@ -41,6 +41,14 @@ namespace yoi {
         return modules.getIndex(modRealPath);
     }
 
+    std::shared_ptr<DiagnosticEngine> compilerContext::getDiagnosticEngine() const {
+        return diagnosticEngine;
+    }
+
+    void compilerContext::setDiagnosticEngine(const std::shared_ptr<DiagnosticEngine> &engine) {
+        diagnosticEngine = engine;
+    }
+
     yoi::indexT compilerContext::compileModule(const yoi::wstr &filepath) {
         yoi::wstr rFilepath;
         if (filepath != L"builtin") {
@@ -94,6 +102,13 @@ namespace yoi {
             delete b;
             auto current_file = __current_file_path;
             set_current_file_path(rFilepath);
+
+            // Wire up diagnostic engine for this compilation unit
+            if (diagnosticEngine) {
+                diagnosticEngine->setCurrentFilePath(rFilepath);
+                set_diagnostic_engine(diagnosticEngine.get());
+            }
+
             hoshiModule *mod;
             yoi::parse(mod, l);
             std::shared_ptr<moduleContext> modCtx = std::make_shared<moduleContext>(shared_from_this(), rFilepath, mod);
@@ -104,7 +119,10 @@ namespace yoi {
             moduleImported[idx] = irMod;
             std::shared_ptr<visitor> vis = std::make_shared<visitor>(modCtx, irMod, idx);
             vis->visit();
-            
+
+            // Clear diagnostic engine for this compilation unit
+            set_diagnostic_engine(nullptr);
+
             astToFinalize.insert(mod);
             set_current_file_path(current_file);
 
@@ -122,12 +140,18 @@ namespace yoi {
 
     void compilerContext::initializeSharedObjects() {
         auto builtinModule = std::make_shared<IRModule>();
-        
+
         moduleImported[HOSHI_COMPILER_CTX_GLOB_ID_CONST] = builtinModule;
 
         builtinModuleBuilder = std::make_shared<BuiltinModuleBuilder>(builtinModule);
         builtinModuleBuilder->build();
         irFFITable = std::make_shared<IRFFITable>();
+
+        // Wire up diagnostic engine for builtin module compilation
+        if (diagnosticEngine) {
+            diagnosticEngine->setCurrentFilePath(L"builtin");
+            set_diagnostic_engine(diagnosticEngine.get());
+        }
 
         lexer l{std::wstringstream(yoi::string2wstring(__yoi_builtin_module_hoshi))};
         l.scan();
@@ -137,6 +161,9 @@ namespace yoi {
         std::shared_ptr<visitor> vis = std::make_shared<visitor>(builtinModuleContext, builtinModule, HOSHI_COMPILER_CTX_GLOB_ID_CONST);
         vis->visit();
         astToFinalize.insert(mod);
+
+        // Clear diagnostic engine
+        set_diagnostic_engine(nullptr);
     }
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getIntObjectType(bool forceRawAttr) {
@@ -234,5 +261,13 @@ namespace yoi {
 
     std::shared_ptr<yoi::IRValueType> compilerContext::getUnsignedObjectType(bool forceRawAttr) {
         return forceRawAttr ? managedPtr(builtinModuleBuilder->getUnsignedObject()) : managedPtr(*builtinModuleBuilder->sharedValueType[L"unsigned"]);
+    }
+    
+    bool compilerContext::isInitialized() const {
+        return builtinModuleBuilder != nullptr;
+    }
+    
+    void compilerContext::registerModule(yoi::indexT idx, std::shared_ptr<IRModule> mod) {
+        moduleImported[idx] = std::move(mod);
     }
 } // namespace yoi

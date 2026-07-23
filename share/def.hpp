@@ -45,6 +45,9 @@
 #endif
 
 namespace yoi {
+
+    class DiagnosticEngine;
+
     using wstr = std::wstring;
     using wchar = wstr::value_type;
     using vdeci = double;
@@ -52,6 +55,7 @@ namespace yoi {
     template<typename t>
     using vec = std::vector<t>;
     extern thread_local yoi::wstr __current_file_path;
+    extern thread_local DiagnosticEngine *__current_diagnostic_engine;
     extern std::mutex consoleMutex;
 
     enum class ExceptionHandleType {
@@ -61,6 +65,13 @@ namespace yoi {
     };
 
     extern std::map<std::string, ExceptionHandleType> exception_categories;
+
+    /// Set the thread-local diagnostic engine pointer.
+    /// All panic()/warning() calls on this thread will report to this engine.
+    void set_diagnostic_engine(DiagnosticEngine *engine);
+
+    /// Get the current thread-local diagnostic engine pointer (may be nullptr).
+    DiagnosticEngine *get_diagnostic_engine();
 
     void parseString(std::wistream &input, wstr &value);
 

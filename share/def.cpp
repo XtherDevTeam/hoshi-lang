@@ -8,11 +8,21 @@
 #include <fstream>
 #include <iostream>
 #include <share/def.hpp>
+#include <compiler/diagnostics/diagnosticEngine.h>
 #include <stdlib.h>
 
 namespace yoi {
     thread_local yoi::wstr __current_file_path = L"";
+    thread_local DiagnosticEngine *__current_diagnostic_engine = nullptr;
     std::mutex consoleMutex;
+
+    void set_diagnostic_engine(DiagnosticEngine *engine) {
+        __current_diagnostic_engine = engine;
+    }
+
+    DiagnosticEngine *get_diagnostic_engine() {
+        return __current_diagnostic_engine;
+    }
 
     std::map<std::string, ExceptionHandleType> exception_categories = {
         {"NULLABLE_VALUE_SUPPLY_TO_RAW", ExceptionHandleType::Suppress},
@@ -129,6 +139,17 @@ namespace yoi {
     }
 
     void panic(yoi::indexT line, yoi::indexT col, const std::string &msg) {
+        // If a diagnostic engine is registered, report the error through it first.
+        // The engine's report() will throw immediately in Immediate mode (default),
+        // or record and return in Collect mode.
+        if (__current_diagnostic_engine) {
+            __current_diagnostic_engine->report(line, col, msg,
+                                                DiagnosticSeverity::Error,
+                                                DiagnosticCategory::Generic);
+        }
+
+        // Fallback: format the message and throw (reached when no engine is set,
+        // or when the engine is in Collect mode and we still need to abort).
         auto message =  msg;
         if (!__current_file_path.empty()) {
             message += " near " + yoi::wstring2string(__current_file_path) + ":" + std::to_string(line + 1) + ":" + std::to_string(col + 1);
@@ -141,13 +162,38 @@ namespace yoi {
     }
 
     void warning(yoi::indexT line, yoi::indexT col, const std::string& msg, const std::string& label) {
-        if (exception_categories.find(label) == exception_categories.end() || exception_categories[label] == ExceptionHandleType::Suppress) {
-            return;
-        }
-        if (exception_categories[label] == ExceptionHandleType::Panic) {
-            panic(line, col, msg);
+        // Check legacy exception_categories first (backward compat with -W/-S/-E CLI flags).
+        if (exception_categories.find(label) != exception_categories.end()) {
+            if (exception_categories[label] == ExceptionHandleType::Suppress) {
+                return;
+            }
+            if (exception_categories[label] == ExceptionHandleType::Panic) {
+                panic(line, col, msg);
+                return;
+            }
         }
 
+        // Map legacy label to diagnostic category for structured reporting.
+        DiagnosticCategory cat = DiagnosticCategory::Generic;
+        if (label == "NULLABLE_VALUE_SUPPLY_TO_RAW") {
+            cat = DiagnosticCategory::NullableValue;
+        } else if (label == "UCRT_NOT_FOUND") {
+            cat = DiagnosticCategory::UCRTNotFound;
+        } else if (label == "ELYSIA_RUNTIME_NOT_FOUND") {
+            cat = DiagnosticCategory::ElysiaRuntimeNotFound;
+        } else if (label == "MODULE_NOT_MODIFIED") {
+            cat = DiagnosticCategory::ModuleNotModified;
+        } else if (label == "INTERNAL") {
+            cat = DiagnosticCategory::Internal;
+        }
+
+        // Report to diagnostic engine if available.
+        if (__current_diagnostic_engine) {
+            __current_diagnostic_engine->report(line, col, msg,
+                                                DiagnosticSeverity::Warning, cat);
+        }
+
+        // Existing stderr output behavior (preserved for CLI).
         auto message =  msg;
         if (!__current_file_path.empty()) {
             message += " near " + yoi::wstring2string(__current_file_path) + ":" + std::to_string(line + 1) + ":" + std::to_string(col + 1);

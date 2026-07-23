@@ -10,6 +10,7 @@ static const char *__yoi_builtin_module_hoshi =
     ;
 
 #include "share/def.hpp"
+#include <compiler/diagnostics/diagnosticEngine.h>
 #include <compiler/frontend/ast.hpp>
 #include <map>
 #include <memory>
@@ -43,6 +44,7 @@ namespace yoi {
         std::shared_ptr<BuiltinModuleBuilder> builtinModuleBuilder;
         std::set<hoshiModule *> astToFinalize;
         std::shared_ptr<moduleContext> builtinModuleContext;
+        std::shared_ptr<DiagnosticEngine> diagnosticEngine;
 
     public:
         compilerContext() = default;
@@ -128,10 +130,18 @@ namespace yoi {
 
         void setBuildConfig(const std::shared_ptr<IRBuildConfig> &buildConfig);
 
+        std::shared_ptr<DiagnosticEngine> getDiagnosticEngine() const;
+
+        void setDiagnosticEngine(const std::shared_ptr<DiagnosticEngine> &engine);
+
         std::shared_ptr<IRFFITable> getIRFFITable();
 
+        bool isInitialized() const;
+
+        void registerModule(yoi::indexT idx, std::shared_ptr<IRModule> mod);
+
         void runOptimizer();
-        
+
         ~compilerContext();
     };
 

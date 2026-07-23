@@ -1216,7 +1216,9 @@ namespace yoi {
     }
 
     void finalizeAST(funcExpr *ptr) {
-        finalizeAST(ptr->args);
+        if (ptr->args)
+            finalizeAST(ptr->args);
+        
         finalizeAST(ptr->name);
         delete ptr;
     }
